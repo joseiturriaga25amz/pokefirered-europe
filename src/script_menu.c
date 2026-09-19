@@ -314,13 +314,15 @@ static const struct MenuAction sMultichoiceList_BikeShop[] = {
     { gText_NoThanks }
 };
 
+static const u8 sText_FullPorygon5000Coins[] = _("PORYGON  5000 FICHAS");
+
 static const struct MenuAction sMultichoiceList_GameCornerPokemonPrizes[] = {
 #if defined(FIRERED)
     { gText_Abra_180Coins },
     { gText_Clefairy_500Coins },
     { gText_Dratini_2800Coins },
     { gText_Scyther_5500Coins },
-    { gText_Porygon_9999Coins },
+    { sText_FullPorygon5000Coins },
 #elif defined(LEAFGREEN)
     { gText_Abra_120Coins },
     { gText_Clefairy_750Coins },
