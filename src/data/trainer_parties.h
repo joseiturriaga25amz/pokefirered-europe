@@ -37,7 +37,33 @@ static const struct TrainerMonNoItemDefaultMoves sParty_RSBeauty[] = {DUMMY_TRAI
 static const struct TrainerMonNoItemDefaultMoves sParty_RichBoy[] = {DUMMY_TRAINER_MON};
 static const struct TrainerMonNoItemDefaultMoves sParty_RSPokemaniac[] = {DUMMY_TRAINER_MON};
 static const struct TrainerMonNoItemDefaultMoves sParty_RSSwimmerM[] = {DUMMY_TRAINER_MON};
-static const struct TrainerMonNoItemDefaultMoves sParty_RSBlackBelt[] = {DUMMY_TRAINER_MON_IV};
+static const struct TrainerMonNoItemDefaultMoves sParty_RSBlackBelt[] = {
+    {
+        .iv = 100,
+        .lvl = 43,
+        .species = SPECIES_PRIMEAPE,
+    },
+    {
+        .iv = 100,
+        .lvl = 44,
+        .species = SPECIES_POLIWRATH,
+    },
+    {
+        .iv = 100,
+        .lvl = 45,
+        .species = SPECIES_HITMONLEE,
+    },
+    {
+        .iv = 100,
+        .lvl = 45,
+        .species = SPECIES_HITMONCHAN,
+    },
+    {
+        .iv = 100,
+        .lvl = 47,
+        .species = SPECIES_MACHAMP,
+    },
+};
 static const struct TrainerMonNoItemDefaultMoves sParty_Guitarist[] = {DUMMY_TRAINER_MON};
 static const struct TrainerMonNoItemDefaultMoves sParty_Kindler[] = {DUMMY_TRAINER_MON};
 static const struct TrainerMonNoItemDefaultMoves sParty_RSCamper[] = {DUMMY_TRAINER_MON};
