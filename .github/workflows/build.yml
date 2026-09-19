@@ -1,9 +1,10 @@
-name: CI
+name: Upstream compatibility build
 
 on:
   push:
     branches: [ master ]
   pull_request:
+    branches: [ master ]
 
 jobs:
   build:
@@ -13,7 +14,7 @@ jobs:
       GAME_LANGUAGE: ENGLISH
       GAME_REVISION: 0
       MODERN: 0
-      COMPARE: 1
+      COMPARE: 0
     steps:
       - name: Checkout
         uses: actions/checkout@master
@@ -88,17 +89,3 @@ jobs:
         run: |
           make -j${nproc} all
 
-      - name: Move symfiles
-        if: ${{ github.event_name == 'push' }}
-        run: |
-          cp *.sym symbols/
-          echo "SYMBOLS_COMMIT_MSG=$( git log --format=%s ${GITHUB_SHA} )" >> $GITHUB_ENV
-
-      - name: Update symfiles
-        if: ${{ github.event_name == 'push' }}
-        uses: EndBug/add-and-commit@v7
-        with:
-          branch: symbols
-          cwd: "./symbols"
-          add: "*.sym"
-          message: ${{ env.SYMBOLS_COMMIT_MSG }}
