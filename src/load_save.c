@@ -72,7 +72,10 @@ void ClearSav1(void)
 
 bool32 IsFullSaveDataInitialized(void)
 {
-    return memcmp(gSaveBlock1Ptr->fullHeader.magic, sFullSaveMagic, sizeof(sFullSaveMagic)) == 0
+    return gSaveBlock1Ptr->fullHeader.magic[0] == sFullSaveMagic[0]
+        && gSaveBlock1Ptr->fullHeader.magic[1] == sFullSaveMagic[1]
+        && gSaveBlock1Ptr->fullHeader.magic[2] == sFullSaveMagic[2]
+        && gSaveBlock1Ptr->fullHeader.magic[3] == sFullSaveMagic[3]
         && gSaveBlock1Ptr->fullHeader.schemaVersion == FULL_SAVE_SCHEMA_VERSION;
 }
 
@@ -92,7 +95,10 @@ void InitFullSaveData(void)
         }
     }
     memset(&gSaveBlock1Ptr->fullHeader, 0, sizeof(gSaveBlock1Ptr->fullHeader));
-    memcpy(gSaveBlock1Ptr->fullHeader.magic, sFullSaveMagic, sizeof(sFullSaveMagic));
+    gSaveBlock1Ptr->fullHeader.magic[0] = sFullSaveMagic[0];
+    gSaveBlock1Ptr->fullHeader.magic[1] = sFullSaveMagic[1];
+    gSaveBlock1Ptr->fullHeader.magic[2] = sFullSaveMagic[2];
+    gSaveBlock1Ptr->fullHeader.magic[3] = sFullSaveMagic[3];
     gSaveBlock1Ptr->fullHeader.schemaVersion = FULL_SAVE_SCHEMA_VERSION;
 }
 
