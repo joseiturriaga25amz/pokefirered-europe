@@ -70,11 +70,17 @@ jobs:
       - name: Build firered_es_modern
         run: make -j2 firered_es_modern
 
-      - name: Verify Spanish localized small-font format
+      - name: Verify Spanish localized font wiring
         run: |
           test -f graphics/fonts/latin_small_es.latfont
-          test "$(stat -c%s graphics/fonts/latin_small_es.latfont)" -eq 16384
+          test -f graphics/fonts/latin_normal_es.latfont
+          test -f graphics/fonts/latin_male_es.latfont
+          test -f graphics/fonts/latin_female_es.latfont
           ! grep -q 'latin_small_es\.hwlatfont' src/text.c
+          grep -q 'latin_small_es\.latfont' src/text.c
+          grep -q 'latin_normal_es\.latfont' src/text.c
+          grep -q 'latin_male_es\.latfont' src/text.c
+          grep -q 'latin_female_es\.latfont' src/text.c
 
 
   package-myboy-smoke-patch:
@@ -120,8 +126,12 @@ jobs:
         working-directory: modified
         run: make -j2 firered_es_modern
 
-      - name: Verify Spanish small font matches vanilla baseline byte-for-byte
-        run: cmp vanilla/graphics/fonts/latin_small_es.latfont modified/graphics/fonts/latin_small_es.latfont
+      - name: Verify all Spanish Latin font assets match vanilla baseline byte-for-byte
+        run: |
+          cmp vanilla/graphics/fonts/latin_small_es.latfont modified/graphics/fonts/latin_small_es.latfont
+          cmp vanilla/graphics/fonts/latin_normal_es.latfont modified/graphics/fonts/latin_normal_es.latfont
+          cmp vanilla/graphics/fonts/latin_male_es.latfont modified/graphics/fonts/latin_male_es.latfont
+          cmp vanilla/graphics/fonts/latin_female_es.latfont modified/graphics/fonts/latin_female_es.latfont
 
       - name: Create IPS patch for MyBoy
         run: |
