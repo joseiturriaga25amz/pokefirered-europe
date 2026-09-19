@@ -83,7 +83,14 @@ void InitFullSaveData(void)
 
     // Schema 0 import: only Full-owned reserved bytes are initialized.
     // Standard FireRed save fields remain untouched.
-    memset(gSaveBlock1Ptr->bagPocket_ItemsExtra, 0, sizeof(gSaveBlock1Ptr->bagPocket_ItemsExtra));
+    {
+        u16 i;
+        for (i = 0; i < BAG_ITEMS_EXTRA_COUNT; i++)
+        {
+            gSaveBlock1Ptr->bagPocket_ItemsExtra[i].itemId = 0;
+            gSaveBlock1Ptr->bagPocket_ItemsExtra[i].quantity = (u16)gSaveBlock2Ptr->encryptionKey;
+        }
+    }
     memset(&gSaveBlock1Ptr->fullHeader, 0, sizeof(gSaveBlock1Ptr->fullHeader));
     memcpy(gSaveBlock1Ptr->fullHeader.magic, sFullSaveMagic, sizeof(sFullSaveMagic));
     gSaveBlock1Ptr->fullHeader.schemaVersion = FULL_SAVE_SCHEMA_VERSION;
@@ -260,9 +267,8 @@ void LoadPlayerBag(void)
 {
     int i;
 
-    // load player items.
-    for (i = 0; i < BAG_ITEMS_COUNT; i++)
-        gLoadedSaveData.items[i] = gSaveBlock1Ptr->bagPocket_Items[i];
+    // load the Full logical normal-items pocket.
+    LoadFullBagItemSlots();
 
     // load player key items.
     for (i = 0; i < BAG_KEYITEMS_COUNT; i++)
@@ -292,9 +298,8 @@ void SavePlayerBag(void)
     int i;
     u32 encryptionKeyBackup;
 
-    // save player items.
-    for (i = 0; i < BAG_ITEMS_COUNT; i++)
-        gSaveBlock1Ptr->bagPocket_Items[i] = gLoadedSaveData.items[i];
+    // save the Full logical normal-items pocket.
+    SaveFullBagItemSlots();
 
     // save player key items.
     for (i = 0; i < BAG_KEYITEMS_COUNT; i++)
