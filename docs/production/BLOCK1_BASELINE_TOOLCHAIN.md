@@ -116,3 +116,19 @@ The runtime gate remains OPEN until the corrected build is retested successfully
 ## Handoff hardening after second MyBoy failure
 
 The second MyBoy smoke again failed on compact UI text while boot/save/load and normal dialogue remained functional. Before issuing another user build, the CI gate was strengthened so that all four Spanish Latin font assets used at runtime (small, normal, male, female) must match the frozen vanilla baseline byte-for-byte, and Spanish runtime references must remain on the legacy European `.latfont` format. This is a pre-handoff invariant for Block 1, not merely a post-failure note.
+
+
+## MyBoy Revision 3 visual retest
+
+**Build:** SHA-1 `9904e96ac13c78b3a295d923f8325d2904334554`
+
+User-provided screenshots confirm that the previously corrupted compact Spanish text now renders correctly in:
+- Bag item/action UI.
+- Party screen.
+- Battle HUD.
+- Battle command menu.
+- Move-selection screen including move names, PP and type.
+
+**Visual regression status:** PASS.
+
+The Block 1 runtime gate remains pending only until save -> fully close MyBoy -> reopen -> Continue is explicitly confirmed on this exact Revision 3 build.
