@@ -8,6 +8,8 @@
 
 void ReadLatinFont(char *path, struct Image *image);
 void WriteLatinFont(char *path, struct Image *image);
+void ReadHalfWidthLatinFont(char *path, struct Image *image);
+void WriteHalfWidthLatinFont(char *path, struct Image *image);
 void ReadHalfwidthJapaneseFont(char *path, struct Image *image);
 void WriteHalfwidthJapaneseFont(char *path, struct Image *image);
 void ReadFullwidthJapaneseFont(char *path, struct Image *image);
