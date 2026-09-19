@@ -115,6 +115,7 @@ void NewGameInitData(void)
     ZeroEnemyPartyMons();
     ClearBattleTower();
     ClearSav1();
+    InitFullSaveData();
     ClearMailData();
     gSaveBlock2Ptr->specialSaveWarpFlags = 0;
     gSaveBlock2Ptr->gcnLinkFlags = 0;
