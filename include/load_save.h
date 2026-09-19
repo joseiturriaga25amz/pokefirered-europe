@@ -10,6 +10,8 @@ extern struct PokemonStorage gPokemonStorage;
 
 void ClearSav2(void);
 void ClearSav1(void);
+void InitFullSaveData(void);
+bool32 IsFullSaveDataInitialized(void);
 void CheckForFlashMemory(void);
 void MoveSaveBlocks_ResetHeap(void);
 bool32 GetSecretBase2Field_9(void);
