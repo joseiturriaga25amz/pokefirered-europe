@@ -177,20 +177,22 @@ jobs:
           s = s.replace(include_needle, include_needle + '#include "constants/items.h"\n', 1)
 
           needle = "    ClearBag();\n    NewGameInitPCItems();"
-          replacement = """    ClearBag();
-    {
-        u16 fullQaItemId;
-
-        // QA-only stress inventory: 50 distinct normal-pocket items.
-        // 39 items: Potion (13) through Green Shard (51).
-        for (fullQaItemId = ITEM_POTION; fullQaItemId <= ITEM_GREEN_SHARD; fullQaItemId++)
-            AddBagItem(fullQaItemId, 1);
-
-        // 11 more items: HP Up (63) through Guard Spec. (73).
-        for (fullQaItemId = ITEM_HP_UP; fullQaItemId <= ITEM_GUARD_SPEC; fullQaItemId++)
-            AddBagItem(fullQaItemId, 1);
-    }
-    NewGameInitPCItems();"""
+          replacement = "\n".join([
+              "    ClearBag();",
+              "    {",
+              "        u16 fullQaItemId;",
+              "",
+              "        // QA-only stress inventory: 50 distinct normal-pocket items.",
+              "        // 39 items: Potion (13) through Green Shard (51).",
+              "        for (fullQaItemId = ITEM_POTION; fullQaItemId <= ITEM_GREEN_SHARD; fullQaItemId++)",
+              "            AddBagItem(fullQaItemId, 1);",
+              "",
+              "        // 11 more items: HP Up (63) through Guard Spec. (73).",
+              "        for (fullQaItemId = ITEM_HP_UP; fullQaItemId <= ITEM_GUARD_SPEC; fullQaItemId++)",
+              "            AddBagItem(fullQaItemId, 1);",
+              "    }",
+              "    NewGameInitPCItems();",
+          ])
           if needle not in s:
               raise SystemExit("ClearBag injection anchor not found")
           s = s.replace(needle, replacement, 1)
