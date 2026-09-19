@@ -78,3 +78,7 @@ MtMoon_B2F_Text_ObtainedHelixFossil::
 
 MtMoon_B2F_Text_ObtainedDomeFossil::
     .string "¡Obtuviste el FÓSIL DOMO!$"
+
+MtMoon_B2F_Text_FoundBuriedFossil::
+    .string "Entre las rocas hay algo enterrado...\p"
+    .string "¡Es el otro fósil de MT. MOON!$"
