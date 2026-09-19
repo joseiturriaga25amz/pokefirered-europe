@@ -80,3 +80,14 @@ SixIsland_AlteringCave_EventScript_ResearcherChanged::
 SixIsland_AlteringCave_EventScript_ResearcherEnd::
 	release
 	end
+
+SixIsland_AlteringCave_Text_ResearcherIntro::
+	.string "Estoy estudiando los avistamientos de\\n"
+	.string "esta cueva tan extraña.\\p"
+	.string "Puedo ayudarte a buscar una especie\\n"
+	.string "concreta. ¿Cuál quieres rastrear?$"
+
+SixIsland_AlteringCave_Text_ResearcherChanged::
+	.string "Perfecto. He ajustado el seguimiento.\\p"
+	.string "La cueva debería mostrar ahora ese\\n"
+	.string "avistamiento.$"
