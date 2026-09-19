@@ -82,3 +82,7 @@ MtMoon_B2F_Text_ObtainedDomeFossil::
 MtMoon_B2F_Text_FoundBuriedFossil::
     .string "Entre las rocas hay algo enterrado...\p"
     .string "¡Es el otro fósil de MT. MOON!$"
+
+MtMoon_B2F_Text_NoRoomForSecondFossil::
+    .string "No tienes espacio para guardar el fósil.\p"
+    .string "Haz sitio en la BOLSA y vuelve por él.$"
