@@ -4903,7 +4903,7 @@
       "items": "",
       "doubleBattle": "FALSE",
       "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
-      "party": "NO_ITEM_DEFAULT_MOVES(sParty_RivalOaksLabSquirtle)"
+      "party": "NO_ITEM_CUSTOM_MOVES(sParty_RivalOaksLabSquirtle)"
     },
     {
       "id": "TRAINER_RIVAL_OAKS_LAB_BULBASAUR",
@@ -4918,7 +4918,7 @@
       "items": "",
       "doubleBattle": "FALSE",
       "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
-      "party": "NO_ITEM_DEFAULT_MOVES(sParty_RivalOaksLabBulbasaur)"
+      "party": "NO_ITEM_CUSTOM_MOVES(sParty_RivalOaksLabBulbasaur)"
     },
     {
       "id": "TRAINER_RIVAL_OAKS_LAB_CHARMANDER",
@@ -4933,7 +4933,7 @@
       "items": "",
       "doubleBattle": "FALSE",
       "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
-      "party": "NO_ITEM_DEFAULT_MOVES(sParty_RivalOaksLabCharmander)"
+      "party": "NO_ITEM_CUSTOM_MOVES(sParty_RivalOaksLabCharmander)"
     },
     {
       "id": "TRAINER_RIVAL_ROUTE22_EARLY_SQUIRTLE",
@@ -6403,7 +6403,7 @@
       "items": "",
       "doubleBattle": "FALSE",
       "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
-      "party": "NO_ITEM_DEFAULT_MOVES(sParty_RivalSsAnneSquirtle)"
+      "party": "NO_ITEM_CUSTOM_MOVES(sParty_RivalSsAnneSquirtle)"
     },
     {
       "id": "TRAINER_RIVAL_SS_ANNE_BULBASAUR",
@@ -6418,7 +6418,7 @@
       "items": "",
       "doubleBattle": "FALSE",
       "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
-      "party": "NO_ITEM_DEFAULT_MOVES(sParty_RivalSsAnneBulbasaur)"
+      "party": "NO_ITEM_CUSTOM_MOVES(sParty_RivalSsAnneBulbasaur)"
     },
     {
       "id": "TRAINER_RIVAL_SS_ANNE_CHARMANDER",
@@ -6433,7 +6433,7 @@
       "items": "",
       "doubleBattle": "FALSE",
       "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
-      "party": "NO_ITEM_DEFAULT_MOVES(sParty_RivalSsAnneCharmander)"
+      "party": "NO_ITEM_CUSTOM_MOVES(sParty_RivalSsAnneCharmander)"
     },
     {
       "id": "TRAINER_RIVAL_POKEMON_TOWER_SQUIRTLE",
@@ -6448,7 +6448,7 @@
       "items": "",
       "doubleBattle": "FALSE",
       "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
-      "party": "NO_ITEM_DEFAULT_MOVES(sParty_RivalPokemonTowerSquirtle)"
+      "party": "NO_ITEM_CUSTOM_MOVES(sParty_RivalPokemonTowerSquirtle)"
     },
     {
       "id": "TRAINER_RIVAL_POKEMON_TOWER_BULBASAUR",
@@ -6463,7 +6463,7 @@
       "items": "",
       "doubleBattle": "FALSE",
       "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
-      "party": "NO_ITEM_DEFAULT_MOVES(sParty_RivalPokemonTowerBulbasaur)"
+      "party": "NO_ITEM_CUSTOM_MOVES(sParty_RivalPokemonTowerBulbasaur)"
     },
     {
       "id": "TRAINER_RIVAL_POKEMON_TOWER_CHARMANDER",
@@ -6478,7 +6478,7 @@
       "items": "",
       "doubleBattle": "FALSE",
       "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
-      "party": "NO_ITEM_DEFAULT_MOVES(sParty_RivalPokemonTowerCharmander)"
+      "party": "NO_ITEM_CUSTOM_MOVES(sParty_RivalPokemonTowerCharmander)"
     },
     {
       "id": "TRAINER_RIVAL_SILPH_SQUIRTLE",
@@ -6493,7 +6493,7 @@
       "items": "",
       "doubleBattle": "FALSE",
       "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
-      "party": "NO_ITEM_DEFAULT_MOVES(sParty_RivalSilphSquirtle)"
+      "party": "ITEM_CUSTOM_MOVES(sParty_RivalSilphSquirtle)"
     },
     {
       "id": "TRAINER_RIVAL_SILPH_BULBASAUR",
@@ -6508,7 +6508,7 @@
       "items": "",
       "doubleBattle": "FALSE",
       "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
-      "party": "NO_ITEM_DEFAULT_MOVES(sParty_RivalSilphBulbasaur)"
+      "party": "ITEM_CUSTOM_MOVES(sParty_RivalSilphBulbasaur)"
     },
     {
       "id": "TRAINER_RIVAL_SILPH_CHARMANDER",
@@ -6523,7 +6523,7 @@
       "items": "",
       "doubleBattle": "FALSE",
       "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
-      "party": "NO_ITEM_DEFAULT_MOVES(sParty_RivalSilphCharmander)"
+      "party": "ITEM_CUSTOM_MOVES(sParty_RivalSilphCharmander)"
     },
     {
       "id": "TRAINER_RIVAL_ROUTE22_LATE_SQUIRTLE",
@@ -6538,7 +6538,7 @@
       "items": "",
       "doubleBattle": "FALSE",
       "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
-      "party": "NO_ITEM_CUSTOM_MOVES(sParty_RivalRoute22LateSquirtle)"
+      "party": "ITEM_CUSTOM_MOVES(sParty_RivalRoute22LateSquirtle)"
     },
     {
       "id": "TRAINER_RIVAL_ROUTE22_LATE_BULBASAUR",
@@ -6553,7 +6553,7 @@
       "items": "",
       "doubleBattle": "FALSE",
       "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
-      "party": "NO_ITEM_CUSTOM_MOVES(sParty_RivalRoute22LateBulbasaur)"
+      "party": "ITEM_CUSTOM_MOVES(sParty_RivalRoute22LateBulbasaur)"
     },
     {
       "id": "TRAINER_RIVAL_ROUTE22_LATE_CHARMANDER",
@@ -6568,7 +6568,7 @@
       "items": "",
       "doubleBattle": "FALSE",
       "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
-      "party": "NO_ITEM_CUSTOM_MOVES(sParty_RivalRoute22LateCharmander)"
+      "party": "ITEM_CUSTOM_MOVES(sParty_RivalRoute22LateCharmander)"
     },
     {
       "id": "TRAINER_CHAMPION_FIRST_SQUIRTLE",
@@ -6580,7 +6580,7 @@
       "trainerName_italian": "TERRY",
       "trainerName_french": "NOAH",
       "trainerName_german": "BJÖRN",
-      "items": "ITEM_FULL_RESTORE, ITEM_FULL_RESTORE, ITEM_FULL_RESTORE, ITEM_FULL_RESTORE",
+      "items": "ITEM_FULL_RESTORE, ITEM_FULL_RESTORE",
       "doubleBattle": "FALSE",
       "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
       "party": "ITEM_CUSTOM_MOVES(sParty_ChampionFirstSquirtle)"
@@ -6595,7 +6595,7 @@
       "trainerName_italian": "TERRY",
       "trainerName_french": "NOAH",
       "trainerName_german": "BJÖRN",
-      "items": "ITEM_FULL_RESTORE, ITEM_FULL_RESTORE, ITEM_FULL_RESTORE, ITEM_FULL_RESTORE",
+      "items": "ITEM_FULL_RESTORE, ITEM_FULL_RESTORE",
       "doubleBattle": "FALSE",
       "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
       "party": "ITEM_CUSTOM_MOVES(sParty_ChampionFirstBulbasaur)"
@@ -6610,7 +6610,7 @@
       "trainerName_italian": "TERRY",
       "trainerName_french": "NOAH",
       "trainerName_german": "BJÖRN",
-      "items": "ITEM_FULL_RESTORE, ITEM_FULL_RESTORE, ITEM_FULL_RESTORE, ITEM_FULL_RESTORE",
+      "items": "ITEM_FULL_RESTORE, ITEM_FULL_RESTORE",
       "doubleBattle": "FALSE",
       "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
       "party": "ITEM_CUSTOM_MOVES(sParty_ChampionFirstCharmander)"
@@ -11095,7 +11095,7 @@
       "trainerName_italian": "TERRY",
       "trainerName_french": "NOAH",
       "trainerName_german": "BJÖRN",
-      "items": "ITEM_FULL_RESTORE, ITEM_FULL_RESTORE, ITEM_FULL_RESTORE, ITEM_FULL_RESTORE",
+      "items": "ITEM_FULL_RESTORE, ITEM_FULL_RESTORE",
       "doubleBattle": "FALSE",
       "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
       "party": "ITEM_CUSTOM_MOVES(sParty_ChampionRematchSquirtle)"
@@ -11110,7 +11110,7 @@
       "trainerName_italian": "TERRY",
       "trainerName_french": "NOAH",
       "trainerName_german": "BJÖRN",
-      "items": "ITEM_FULL_RESTORE, ITEM_FULL_RESTORE, ITEM_FULL_RESTORE, ITEM_FULL_RESTORE",
+      "items": "ITEM_FULL_RESTORE, ITEM_FULL_RESTORE",
       "doubleBattle": "FALSE",
       "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
       "party": "ITEM_CUSTOM_MOVES(sParty_ChampionRematchBulbasaur)"
@@ -11125,7 +11125,7 @@
       "trainerName_italian": "TERRY",
       "trainerName_french": "NOAH",
       "trainerName_german": "BJÖRN",
-      "items": "ITEM_FULL_RESTORE, ITEM_FULL_RESTORE, ITEM_FULL_RESTORE, ITEM_FULL_RESTORE",
+      "items": "ITEM_FULL_RESTORE, ITEM_FULL_RESTORE",
       "doubleBattle": "FALSE",
       "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
       "party": "ITEM_CUSTOM_MOVES(sParty_ChampionRematchCharmander)"
