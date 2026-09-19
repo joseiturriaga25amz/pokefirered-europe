@@ -46,3 +46,18 @@ MyBoy QA for this reduced block checks:
 6. resumed game and Bag remain normal.
 
 The removed 142-slot implementation and its failed black-screen QA are historical evidence only and are not production requirements.
+
+
+## Reduced Block 2 CI result
+
+Head `d0622d917942fabe12141ac9cdbaf44c1dcf9bc1` completed all required automated checks successfully:
+- upstream compatibility build: PASS;
+- Block 1 regression workflow: PASS;
+- Block 2 Spanish modern build: PASS;
+- vanilla bag invariants: PASS;
+- Full header architecture: PASS;
+- Full persistent namespaces: PASS;
+- reduced schema model proving only the 16-byte Full header changes during schema-0 import: PASS;
+- MyBoy production patch packaging: PASS.
+
+Runtime acceptance in MyBoy remains pending.
