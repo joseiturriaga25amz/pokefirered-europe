@@ -1,0 +1,38 @@
+name: Full Gameplay Core
+
+on:
+  push:
+    branches:
+      - feature/full-gameplay-core
+
+jobs:
+  build:
+    name: Build Spanish modern gameplay core
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gcc-arm-none-eabi binutils-arm-none-eabi libpng-dev
+
+      - name: Build firered_es_modern
+        run: make -j2 firered_es_modern
+
+      - name: Verify Full gameplay invariants
+        run: |
+          grep -q 'u8 category;' include/pokemon.h
+          grep -q 'IS_MOVE_PHYSICAL' include/battle.h
+          grep -q '\.category = MOVE_CATEGORY_PHYSICAL' src/data/battle_moves.h
+          grep -q '\.category = MOVE_CATEGORY_SPECIAL' src/data/battle_moves.h
+          grep -q '\.category = MOVE_CATEGORY_STATUS' src/data/battle_moves.h
+          grep -q 'EVO_LEVEL, 36, SPECIES_ALAKAZAM' src/data/pokemon/evolution.h
+          grep -q 'EVO_LEVEL, 36, SPECIES_MACHAMP' src/data/pokemon/evolution.h
+          grep -q 'EVO_LEVEL, 36, SPECIES_GOLEM' src/data/pokemon/evolution.h
+          grep -q 'EVO_LEVEL, 36, SPECIES_GENGAR' src/data/pokemon/evolution.h
+          grep -q 'MOVE_POISON_FANG' src/data/pokemon/level_up_learnsets.h
+          grep -q 'MOVE_SHADOW_PUNCH' src/data/pokemon/level_up_learnsets.h
+
+      - name: Record ROM checksum
+        run: sha1sum pokefirered_modern_es.gba
