@@ -187,9 +187,13 @@ jobs:
               "        for (fullQaItemId = ITEM_POTION; fullQaItemId <= ITEM_GREEN_SHARD; fullQaItemId++)",
               "            AddBagItem(fullQaItemId, 1);",
               "",
-              "        // 11 more items: HP Up (63) through Guard Spec. (73).",
-              "        for (fullQaItemId = ITEM_HP_UP; fullQaItemId <= ITEM_GUARD_SPEC; fullQaItemId++)",
+              "        // 9 more items: HP Up (63) through PP Max (71).",
+              "        for (fullQaItemId = ITEM_HP_UP; fullQaItemId <= ITEM_PP_MAX; fullQaItemId++)",
               "            AddBagItem(fullQaItemId, 1);",
+              "",
+              "        // Skip unused ITEM_048 (72); add Guard Spec. and Dire Hit instead.",
+              "        AddBagItem(ITEM_GUARD_SPEC, 1);",
+              "        AddBagItem(ITEM_DIRE_HIT, 1);",
               "    }",
               "    NewGameInitPCItems();",
           ])
@@ -207,8 +211,8 @@ jobs:
         run: |
           python3 - <<'PY'
           first = list(range(13, 52))
-          second = list(range(63, 74))
-          ids = first + second
+          second = list(range(63, 72))
+          ids = first + second + [73, 74]
           assert len(ids) == 50
           assert len(set(ids)) == 50
           print("QA stress inventory: 50 distinct normal-item IDs")
