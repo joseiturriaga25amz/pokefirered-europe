@@ -1,7 +1,23 @@
 ViridianCity_Gym_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, ViridianCity_Gym_OnTransitionFull
 	.byte 0
 
+ViridianCity_Gym_OnTransitionFull::
+	goto_if_unset FLAG_DEFEATED_LEADER_GIOVANNI, EventScript_Return
+	goto_if_set FLAG_SYS_NATIONAL_DEX, ViridianCity_Gym_EventScript_ShowGiovanniFull
+	setflag FLAG_HIDE_VIRIDIAN_GIOVANNI
+	return
+
+ViridianCity_Gym_EventScript_ShowGiovanniFull::
+	clearflag FLAG_HIDE_VIRIDIAN_GIOVANNI
+	return
+
 ViridianCity_Gym_EventScript_Giovanni::
+	goto_if_unset FLAG_SYS_NATIONAL_DEX, ViridianCity_Gym_EventScript_GiovanniStory
+	goto_if_unset FLAG_GOT_TM26_FROM_GIOVANNI, ViridianCity_Gym_EventScript_GiovanniStory
+	goto ViridianCity_Gym_EventScript_FullRematchOffer
+
+ViridianCity_Gym_EventScript_GiovanniStory::
 	famechecker FAMECHECKER_GIOVANNI, FCPICKSTATE_COLORED, UpdatePickStateFromSpecialVar8005
 	trainerbattle_single TRAINER_LEADER_GIOVANNI, ViridianCity_Gym_Text_GiovanniIntro, ViridianCity_Gym_Text_GiovanniDefeat, ViridianCity_Gym_EventScript_DefeatedGiovanni, NO_MUSIC
 	goto_if_unset FLAG_GOT_TM26_FROM_GIOVANNI, ViridianCity_Gym_EventScript_GiveTM26
@@ -103,3 +119,36 @@ ViridianCity_Gym_EventScript_GymStatuePostVictory::
 	msgbox ViridianCity_Gym_Text_GymStatuePlayerWon
 	releaseall
 	end
+
+ViridianCity_Gym_EventScript_FullRematchOffer::
+	lock
+	faceplayer
+	msgbox ViridianCity_Gym_Text_FullRematchOffer, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, ViridianCity_Gym_EventScript_FullRematchDecline
+	cleartrainerflag TRAINER_RS_BEAUTY
+	trainerbattle_single TRAINER_RS_BEAUTY, ViridianCity_Gym_Text_FullRematchIntro, ViridianCity_Gym_Text_FullRematchDefeat, ViridianCity_Gym_EventScript_FullRematchWon
+	end
+
+ViridianCity_Gym_EventScript_FullRematchWon::
+	msgbox ViridianCity_Gym_Text_FullRematchAfter
+	release
+	end
+
+ViridianCity_Gym_EventScript_FullRematchDecline::
+	release
+	end
+
+ViridianCity_Gym_Text_FullRematchOffer::
+	.string "Has recorrido un largo camino desde\n"
+	.string "nuestro primer combate.\p"
+	.string "¿Quieres una revancha de verdad?$"
+
+ViridianCity_Gym_Text_FullRematchIntro::
+	.string "¡Entonces veamos cuánto has crecido!$"
+
+ViridianCity_Gym_Text_FullRematchDefeat::
+	.string "Excelente. Tu fuerza sigue creciendo.$"
+
+ViridianCity_Gym_Text_FullRematchAfter::
+	.string "Puedes volver cuando quieras.\p"
+	.string "Siempre aceptaré otra revancha.$"
