@@ -350,6 +350,29 @@ void HandleJascToGbaPaletteCommand(char *inputPath, char *outputPath, int argc, 
     WriteGbaPalette(outputPath, &palette);
 }
 
+void HandleHalfWidthLatinFontToPngCommand(char *inputPath, char *outputPath, int argc UNUSED, char **argv UNUSED)
+{
+    struct Image image;
+    image.tilemap.data.affine = NULL;
+
+    ReadHalfWidthLatinFont(inputPath, &image);
+    WritePng(outputPath, &image);
+
+    FreeImage(&image);
+}
+
+void HandlePngToHalfWidthLatinFontCommand(char *inputPath, char *outputPath, int argc UNUSED, char **argv UNUSED)
+{
+    struct Image image;
+    image.tilemap.data.affine = NULL;
+    image.bitDepth = 2;
+
+    ReadPng(inputPath, &image);
+    WriteHalfWidthLatinFont(outputPath, &image);
+
+    FreeImage(&image);
+}
+
 void HandleLatinFontToPngCommand(char *inputPath, char *outputPath, int argc UNUSED, char **argv UNUSED)
 {
     struct Image image;
@@ -607,6 +630,8 @@ int main(int argc, char **argv)
         { "pal", "gbapal", HandleJascToGbaPaletteCommand },
         { "latfont", "png", HandleLatinFontToPngCommand },
         { "png", "latfont", HandlePngToLatinFontCommand },
+        { "hwlatfont", "png", HandleHalfWidthLatinFontToPngCommand },
+        { "png", "hwlatfont", HandlePngToHalfWidthLatinFontCommand },
         { "hwjpnfont", "png", HandleHalfwidthJapaneseFontToPngCommand },
         { "png", "hwjpnfont", HandlePngToHalfwidthJapaneseFontCommand },
         { "fwjpnfont", "png", HandleFullwidthJapaneseFontToPngCommand },
