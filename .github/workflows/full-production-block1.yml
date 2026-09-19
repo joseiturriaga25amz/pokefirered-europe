@@ -1,0 +1,71 @@
+name: Full Production Block 1
+
+on:
+  push:
+    branches:
+      - feature/baseline-toolchain
+  pull_request:
+    branches:
+      - master
+
+permissions:
+  contents: write
+
+jobs:
+  baseline-spanish:
+    name: Verify Spanish vanilla baseline
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout frozen baseline
+        uses: actions/checkout@v4
+        with:
+          ref: e184c5cf898cd29efebd33bc1bfe5994277e21ab
+          fetch-depth: 0
+
+      - name: Checkout agbcc
+        uses: actions/checkout@v4
+        with:
+          repository: pret/agbcc
+          path: agbcc
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gcc-arm-none-eabi binutils-arm-none-eabi libpng-dev
+
+      - name: Install agbcc
+        working-directory: agbcc
+        run: |
+          ./build.sh
+          ./install.sh ../
+
+      - name: Compare Spanish FireRed
+        run: make -j2 compare_firered_es
+
+      - name: Verify documented SHA-1
+        run: grep -qi '^AB8F6BFE0CCDAF41188CD015C8C74C314D02296A[[:space:]]' firered_es.sha1
+
+      - name: Create immutable baseline tag if absent
+        if: github.event_name == 'push'
+        run: |
+          if git ls-remote --exit-code --tags origin refs/tags/baseline-spanish-vanilla >/dev/null 2>&1; then
+            echo "baseline-spanish-vanilla already exists"
+          else
+            git tag baseline-spanish-vanilla e184c5cf898cd29efebd33bc1bfe5994277e21ab
+            git push origin refs/tags/baseline-spanish-vanilla
+          fi
+
+  spanish-modern:
+    name: Build Spanish modern head
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout production branch
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gcc-arm-none-eabi binutils-arm-none-eabi libpng-dev
+
+      - name: Build firered_es_modern
+        run: make -j2 firered_es_modern
