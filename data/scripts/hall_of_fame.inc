@@ -15,6 +15,30 @@ EventScript_ResetLegendaries::
 	clearflag FLAG_LUGIA_FLEW_AWAY
 	clearflag FLAG_HO_OH_FLEW_AWAY
 	clearflag FLAG_DEOXYS_FLEW_AWAY
+	call_if_set FLAG_FULL_ZAPDOS_KO_PENDING, EventScript_FullResetZapdosAfterKO
+	call_if_set FLAG_FULL_ARTICUNO_KO_PENDING, EventScript_FullResetArticunoAfterKO
+	call_if_set FLAG_FULL_MOLTRES_KO_PENDING, EventScript_FullResetMoltresAfterKO
+	call_if_set FLAG_FULL_MEWTWO_KO_PENDING, EventScript_FullResetMewtwoAfterKO
+	return
+
+EventScript_FullResetZapdosAfterKO::
+	clearflag FLAG_FOUGHT_ZAPDOS
+	clearflag FLAG_FULL_ZAPDOS_KO_PENDING
+	return
+
+EventScript_FullResetArticunoAfterKO::
+	clearflag FLAG_FOUGHT_ARTICUNO
+	clearflag FLAG_FULL_ARTICUNO_KO_PENDING
+	return
+
+EventScript_FullResetMoltresAfterKO::
+	clearflag FLAG_FOUGHT_MOLTRES
+	clearflag FLAG_FULL_MOLTRES_KO_PENDING
+	return
+
+EventScript_FullResetMewtwoAfterKO::
+	clearflag FLAG_FOUGHT_MEWTWO
+	clearflag FLAG_FULL_MEWTWO_KO_PENDING
 	return
 
 EventScript_ResetEliteFourEnd::
