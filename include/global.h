@@ -832,8 +832,8 @@ struct SaveBlock1
 
 STATIC_ASSERT(sizeof(struct SaveBlock1) == 0x3D68, SaveBlock1SizeMustRemainVanilla);
 STATIC_ASSERT(sizeof(((struct SaveBlock1 *)0)->bagPocket_ItemsExtra) == 400, FullExtraBagSize);
-STATIC_ASSERT(__builtin_offsetof(struct SaveBlock1, bagPocket_ItemsExtra) == 0x348C, FullExtraBagOffset);
-STATIC_ASSERT(__builtin_offsetof(struct SaveBlock1, fullHeader) == 0x3D24, FullHeaderOffset);
+STATIC_ASSERT((u32)&((struct SaveBlock1 *)0)->bagPocket_ItemsExtra == 0x348C, FullExtraBagOffset);
+STATIC_ASSERT((u32)&((struct SaveBlock1 *)0)->fullHeader == 0x3D24, FullHeaderOffset);
 
 struct MapPosition
 {
