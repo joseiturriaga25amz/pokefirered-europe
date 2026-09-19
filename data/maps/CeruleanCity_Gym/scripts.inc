@@ -2,6 +2,11 @@ CeruleanCity_Gym_MapScripts::
 	.byte 0
 
 CeruleanCity_Gym_EventScript_Misty::
+	goto_if_unset FLAG_SYS_NATIONAL_DEX, CeruleanCity_Gym_EventScript_MistyStory
+	goto_if_unset FLAG_GOT_TM03_FROM_MISTY, CeruleanCity_Gym_EventScript_MistyStory
+	goto CeruleanCity_Gym_EventScript_FullRematchOffer
+
+CeruleanCity_Gym_EventScript_MistyStory::
 	famechecker FAMECHECKER_MISTY, FCPICKSTATE_COLORED, UpdatePickStateFromSpecialVar8005
 	trainerbattle_single TRAINER_LEADER_MISTY, CeruleanCity_Gym_Text_MistyIntro, CeruleanCity_Gym_Text_MistyDefeat, CeruleanCity_Gym_EventScript_MistyDefeated, NO_MUSIC
 	goto_if_unset FLAG_GOT_TM03_FROM_MISTY, CeruleanCity_Gym_EventScript_GiveTM03
@@ -68,3 +73,36 @@ CeruleanCity_Gym_EventScript_GymStatuePostVictory::
 	msgbox CeruleanCity_Gym_Text_GymStatuePlayerWon
 	releaseall
 	end
+
+CeruleanCity_Gym_EventScript_FullRematchOffer::
+	lock
+	faceplayer
+	msgbox CeruleanCity_Gym_Text_FullRematchOffer, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, CeruleanCity_Gym_EventScript_FullRematchDecline
+	cleartrainerflag TRAINER_RS_RUIN_MANIAC
+	trainerbattle_single TRAINER_RS_RUIN_MANIAC, CeruleanCity_Gym_Text_FullRematchIntro, CeruleanCity_Gym_Text_FullRematchDefeat, CeruleanCity_Gym_EventScript_FullRematchWon
+	end
+
+CeruleanCity_Gym_EventScript_FullRematchWon::
+	msgbox CeruleanCity_Gym_Text_FullRematchAfter
+	release
+	end
+
+CeruleanCity_Gym_EventScript_FullRematchDecline::
+	release
+	end
+
+CeruleanCity_Gym_Text_FullRematchOffer::
+	.string "Has recorrido un largo camino desde\n"
+	.string "nuestro primer combate.\p"
+	.string "¿Quieres una revancha de verdad?$"
+
+CeruleanCity_Gym_Text_FullRematchIntro::
+	.string "¡Entonces veamos cuánto has crecido!$"
+
+CeruleanCity_Gym_Text_FullRematchDefeat::
+	.string "Excelente. Tu fuerza sigue creciendo.$"
+
+CeruleanCity_Gym_Text_FullRematchAfter::
+	.string "Puedes volver cuando quieras.\p"
+	.string "Siempre aceptaré otra revancha.$"
