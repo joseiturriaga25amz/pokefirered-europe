@@ -1,3 +1,16 @@
+TwoIsland_House_Text_MoveReminderIntro::
+	.string "Je suis le DINGUE DES CAPACITES.\p"
+	.string "Je peux rappeler à un POKéMON\n"
+	.string "une capacité qu'il a oubliée.\p"
+	.string "Chaque leçon coûte 2000.$"
+
+TwoIsland_House_Text_NotEnoughMoney::
+	.string "Tu n'as pas assez d'argent.\p"
+	.string "Une leçon coûte 2000.$"
+
+TwoIsland_House_Text_PaidForMove::
+	.string "{PLAYER} paie 2000 pour la leçon.$"
+
 TwoIsland_House_Text_TeachMonMoveForMushroom::
 	.string "Je suis le DINGUE DES CAPACITES.\p"
 	.string "Je connais chaque capacité que\n"
