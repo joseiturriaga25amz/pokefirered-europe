@@ -571,8 +571,6 @@ TwoIsland_CapeBrink_House_EventScript_StarterTutor::
 	special QuestLog_CutRecording
 	lock
 	faceplayer
-	goto_if_set FLAG_LEARNED_ALL_MOVES_AT_CAPE_BRINK, CapeBrinkTutor_EventScript_TaughtAllMoves
-	goto_if_set FLAG_TEMP_2, CapeBrinkTutor_EventScript_MoveJustTaught
 	bufferleadmonspeciesname STR_VAR_1
 	msgbox Text_UltimateMoveThatMon
 	specialvar VAR_RESULT, CapeBrinkGetMoveToTeachLeadPokemon
@@ -582,10 +580,18 @@ TwoIsland_CapeBrink_House_EventScript_StarterTutor::
 	call_if_eq VAR_FACING, DIR_SOUTH, CapeBrinkTutor_EventScript_JumpInPlaceUp
 	call_if_eq VAR_FACING, DIR_EAST, CapeBrinkTutor_EventScript_JumpInPlaceLeft
 	call_if_eq VAR_FACING, DIR_WEST, CapeBrinkTutor_EventScript_JumpInPlaceRight
+	goto_if_eq VAR_0x8008, TRUE, CapeBrinkTutor_EventScript_RepeatOffer
 	msgbox Text_AllowMeToTeachMonUltimateMove, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, CapeBrinkTutor_EventScript_DeclineMove
-	call EventScript_CanOnlyBeLearnedOnce
+	goto CapeBrinkTutor_EventScript_StartTeaching
+
+CapeBrinkTutor_EventScript_RepeatOffer::
+	checkmoney 10000
+	goto_if_eq VAR_RESULT, FALSE, CapeBrinkTutor_EventScript_NotEnoughMoney
+	msgbox Text_FullCapeBrinkRepeat, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, CapeBrinkTutor_EventScript_DeclineMove
+
+CapeBrinkTutor_EventScript_StartTeaching::
 	msgbox Text_LetMeConferUltimateMove
 	closemessage
 	fadescreen FADE_TO_BLACK
@@ -609,6 +615,7 @@ CapeBrinkTutor_EventScript_TaughtAllMoves::
 
 CapeBrinkTutor_EventScript_TaughtMove::
 	copyvar VAR_0x8005, VAR_0x8009
+	call_if_eq VAR_0x8008, TRUE, CapeBrinkTutor_EventScript_ChargeRepeat
 	specialvar VAR_RESULT, HasLearnedAllMovesFromCapeBrinkTutor
 	goto_if_eq VAR_RESULT, TRUE, CapeBrinkTutor_EventScript_LearnedAllMoves
 	msgbox Text_TaughtMove
@@ -647,6 +654,15 @@ CapeBrinkTutor_EventScript_JumpInPlaceRight::
 	applymovement LOCALID_CAPE_BRINK_TUTOR, Movement_JumpInPlaceRight
 	waitmovement 0
 	return
+
+CapeBrinkTutor_EventScript_ChargeRepeat::
+	removemoney 10000
+	return
+
+CapeBrinkTutor_EventScript_NotEnoughMoney::
+	msgbox Text_FullCapeBrinkNotEnoughMoney
+	release
+	end
 
 CapeBrinkTutor_EventScript_DeclineMove::
 	msgbox Text_YouRejectIt
@@ -760,3 +776,12 @@ Text_FullTutorRepeat_BodySlam::
 	.string "Puedo enseñarlo otra vez por 6000.\n"
 	.string "¿Quieres otra lección?$"
 
+
+Text_FullCapeBrinkRepeat::
+	.string "Ya transmití este movimiento una vez.\p"
+	.string "Puedo enseñarlo de nuevo por 10000.\n"
+	.string "¿Quieres otra lección?$"
+
+Text_FullCapeBrinkNotEnoughMoney::
+	.string "Necesitas 10000 para repetir esta\n"
+	.string "lección.$"
