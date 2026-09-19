@@ -230,6 +230,11 @@ bool8 AddBagItem(u16 itemId, u16 count)
         if (gBagPockets[pocket].itemSlots[i].itemId == itemId)
         {
             u16 quantity;
+            // Full: technical machines are unique permanent unlocks.
+            // Reacquiring one is a successful no-op, keeping quantity at exactly 1.
+            if (pocket == POCKET_TM_CASE - 1 && itemId < ITEM_HM01)
+                return TRUE;
+
             // Does this stack have room for more??
             quantity = GetBagItemQuantity(&gBagPockets[pocket].itemSlots[i].quantity);
             if (quantity + count <= 999)
@@ -274,6 +279,8 @@ bool8 AddBagItem(u16 itemId, u16 count)
         return FALSE;
 
     gBagPockets[pocket].itemSlots[idx].itemId = itemId;
+    if (pocket == POCKET_TM_CASE - 1 && itemId < ITEM_HM01)
+        count = 1;
     SetBagItemQuantity(&gBagPockets[pocket].itemSlots[idx].quantity, count);
     return TRUE;
 }
