@@ -156,6 +156,32 @@ jobs:
           for name,want in bosses.items():
               assert normalized(name)==want, (name, normalized(name), want)
 
+          rematches = {
+              "sParty_RSAromaLady":[("VULPIX",60),("CROBAT",61),("FORRETRESS",62),("LUDICOLO",63),("MARSHTOMP",64),("STEELIX",66)],
+              "sParty_RSRuinManiac":[("CORSOLA",61),("LUVDISC",62),("POLITOED",63),("TOGETIC",63),("STARMIE",65),("GYARADOS",67)],
+              "sParty_RSTuberF":[("ELECTRODE",64),("MAGNETON",65),("ELECTABUZZ",66),("RAICHU",69)],
+              "sParty_RSTuberM":[("TANGELA",62),("JUMPLUFF",63),("BELLOSSOM",64),("VICTREEBEL",65),("VILEPLUME",66),("VILEPLUME",69)],
+              "sParty_RSCooltrainerM":[("ARIADOS",64),("FORRETRESS",65),("VENOMOTH",65),("MUK",67),("WEEZING",68),("CROBAT",71)],
+              "sParty_RSCooltrainerF":[("VENOMOTH",65),("MR_MIME",65),("KADABRA",66),("ESPEON",68),("GENGAR",69),("ALAKAZAM",72)],
+              "sParty_RSLady":[("NINETALES",66),("RAPIDASH",67),("ARCANINE",68),("MAGCARGO",68),("RHYDON",70),("MAGMAR",73)],
+              "sParty_RSBeauty":[("PERSIAN",67),("CLOYSTER",68),("MACHAMP",69),("NIDOQUEEN",70),("NIDOKING",71),("RHYDON",74)],
+          }
+          for name,want in rematches.items():
+              assert normalized(name)==want, (name, normalized(name), want)
+
+          rematch_healing = {
+              "TRAINER_RS_AROMA_LADY":"ITEM_HYPER_POTION, ITEM_HYPER_POTION",
+              "TRAINER_RS_RUIN_MANIAC":"ITEM_HYPER_POTION, ITEM_HYPER_POTION",
+              "TRAINER_RS_TUBER_F":"ITEM_HYPER_POTION, ITEM_HYPER_POTION",
+              "TRAINER_RS_TUBER_M":"ITEM_HYPER_POTION, ITEM_HYPER_POTION",
+              "TRAINER_RS_COOLTRAINER_M":"ITEM_FULL_RESTORE, ITEM_FULL_RESTORE",
+              "TRAINER_RS_COOLTRAINER_F":"ITEM_FULL_RESTORE, ITEM_FULL_RESTORE",
+              "TRAINER_RS_LADY":"ITEM_FULL_RESTORE, ITEM_FULL_RESTORE",
+              "TRAINER_RS_BEAUTY":"ITEM_FULL_RESTORE, ITEM_FULL_RESTORE",
+          }
+          for tid,items in rematch_healing.items():
+              assert by_id[tid]["items"] == items, (tid, by_id[tid]["items"], items)
+
           for tid in ("TRAINER_CHAMPION_FIRST_SQUIRTLE","TRAINER_CHAMPION_FIRST_BULBASAUR","TRAINER_CHAMPION_FIRST_CHARMANDER",
                       "TRAINER_CHAMPION_REMATCH_SQUIRTLE","TRAINER_CHAMPION_REMATCH_BULBASAUR","TRAINER_CHAMPION_REMATCH_CHARMANDER"):
               assert by_id[tid]["items"] == "ITEM_FULL_RESTORE, ITEM_FULL_RESTORE", tid
