@@ -85,3 +85,29 @@ Root cause: the initial multilingual `.hwlatfont` adaptation packed only 16 half
 Correction: restore 32-column half-width packing, correct the reverse conversion row count, and add a CI size guard for `latin_small_es.hwlatfont` before producing the MyBoy test artifact.
 
 The runtime gate remains OPEN until the corrected build is retested successfully in MyBoy.
+
+
+## Block 1 — exact MyBoy retest checklist
+
+**Purpose:** verify the corrected Spanish small-font path and basic runtime integrity of the baseline/toolchain fixes before merge.
+
+**Starting state:** use the freshly generated Block 1 ROM in MyBoy. Do not reuse the failed ROM build. A new game is preferred for this smoke.
+
+| Check | Action | Expected result | Fail / stop condition |
+|---|---|---|---|
+| 1. Boot | Launch the ROM from a cold start | Nintendo/Game Freak/title flow displays normally | Freeze, black screen, corrupted title/UI |
+| 2. New game text | Start a new game and advance through the opening dialogue/name flow | Spanish text is complete, legible, correctly spaced and accented | Missing letters, wrong glyphs, blank labels, garbled text |
+| 3. Overworld | Gain control of the player and move/interact normally | Movement and dialogue work without visual corruption | Lockup, input failure, broken dialogue |
+| 4. Party UI | Open Pokémon/party screen after obtaining the starter | Names, HP, level, menu labels and text render correctly | Missing/corrupt text or UI labels |
+| 5. Battle UI | Trigger the first rival battle | Pokémon names, HP boxes, battle messages and command text render correctly | Blank/corrupt text, broken battle flow |
+| 6. Move list | Open the move-selection screen during battle | Move names, PP and type labels render correctly | Missing glyphs/labels or corrupted move text |
+| 7. Bag UI | Open the Bag once available | Pocket title, item name, description and commands render correctly | Missing/corrupt text, broken navigation |
+| 8. Save | Save through the in-game menu | Save completes normally with no error | Save fails, hangs, corrupt message |
+| 9. Cold reload | Fully close MyBoy, reopen the ROM and choose Continue | Save is detected and loads to the correct state | No Continue option, load failure, corruption |
+| 10. Short regression | Move, open party and bag again after loading | Same UI remains correct after reload | Any post-load text/UI regression |
+
+**Evidence requested:** screenshots of (a) opening dialogue, (b) party screen, (c) battle move-selection screen, (d) bag, and (e) Continue after cold reload.
+
+**Stop point:** once check 10 passes. Do not progress further for Block 1.
+
+**PASS rule:** all 10 checks pass on the corrected build. Any one failure keeps Block 1 open.
