@@ -51,19 +51,19 @@ $(CASTFORMGFXDIR)/shiny.gbapal: $(CASTFORMGFXDIR)/normal/shiny.gbapal \
 									$(CASTFORMGFXDIR)/snowy/shiny.gbapal
 	@cat $^ >$@
 
-$(FONTGFXDIR)/latin_small.latfont: $(FONTGFXDIR)/latin_small.png
+$(FONTGFXDIR)/latin_small.hwlatfont: $(FONTGFXDIR)/latin_small.png
 	$(GFX) $< $@
 
-$(FONTGFXDIR)/latin_small_es.latfont: $(FONTGFXDIR)/latin_small_es.png
+$(FONTGFXDIR)/latin_small_es.hwlatfont: $(FONTGFXDIR)/latin_small_es.png
 	$(GFX) $< $@
 
-$(FONTGFXDIR)/latin_small_it.latfont: $(FONTGFXDIR)/latin_small_it.png
+$(FONTGFXDIR)/latin_small_it.hwlatfont: $(FONTGFXDIR)/latin_small_it.png
 	$(GFX) $< $@
 
-$(FONTGFXDIR)/latin_small_fr.latfont: $(FONTGFXDIR)/latin_small_fr.png
+$(FONTGFXDIR)/latin_small_fr.hwlatfont: $(FONTGFXDIR)/latin_small_fr.png
 	$(GFX) $< $@
 
-$(FONTGFXDIR)/latin_small_de.latfont: $(FONTGFXDIR)/latin_small_de.png
+$(FONTGFXDIR)/latin_small_de.hwlatfont: $(FONTGFXDIR)/latin_small_de.png
 	$(GFX) $< $@
 
 $(FONTGFXDIR)/japanese_small.fwjpnfont: $(FONTGFXDIR)/japanese_small.png
