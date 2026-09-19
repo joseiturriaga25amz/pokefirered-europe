@@ -1,16 +1,16 @@
-# Production Block 2 — Full save infrastructure, bag extension and namespaces
+# Production Block 2 — Full save header and persistent namespaces
 
-## Frozen scope
+## Approved scope after amendment A-002
 
-This block implements the frozen save architecture without changing `sizeof(struct SaveBlock1)`:
+Block 2 now implements only the persistent infrastructure needed by later Full events while preserving vanilla bag behavior.
 
 - SaveBlock1 remains exactly `0x3D68`.
-- `0x348C..0x361B` becomes 100 extra `ItemSlot` entries for the normal-items pocket.
-- Logical normal-items capacity is 42 + 100 = 142 slots.
+- The normal-items pocket remains vanilla: **42 slots**.
+- `0x348C..0x361B` remains `unused_348C[400]`; it is not used by the bag.
 - `0x3D24..0x3D33` becomes the 16-byte Full header: magic `RFFL`, `schemaVersion = 1`, remaining bytes reserved.
-- Persistent Full flags are reserved at `0x8C3..0x8E2`.
-- Persistent Full vars are reserved at `0x408C..0x409B`.
-- A save without the Full magic is treated as schema 0: extra item slots must be initialized empty and the Full header written without altering standard save fields.
+- Persistent Full flags remain reserved at `0x8C3..0x8E2`.
+- Persistent Full vars remain reserved at `0x408C..0x409B`.
+- A valid save without the Full magic is treated as schema 0: only the 16-byte Full header is initialized. Standard FireRed fields, including all bag data, remain untouched.
 
 ## Namespace assignments
 
@@ -35,23 +35,14 @@ Vars:
 
 The rest of both namespaces remains reserved.
 
-## Implementation sequence
+## Runtime acceptance
 
-1. Map the reserved bytes and namespaces while proving SaveBlock1 remains 0x3D68.
-2. Implement Full header initialization/import path.
-3. Implement 142-slot logical normal-items pocket without shifting vanilla SaveBlock1 fields.
-4. Validate encryption/re-key, add/remove/sort, save/reload and vanilla-save import.
-5. Build Spanish modern target and run MyBoy QA.
+MyBoy QA for this reduced block checks:
+1. normal boot/new game;
+2. vanilla Bag behavior remains normal;
+3. in-game save succeeds;
+4. fully close MyBoy;
+5. reopen and Continue;
+6. resumed game and Bag remain normal.
 
-## User runtime QA handoff
-
-The final MyBoy checklist for this block will explicitly cover:
-- importing/continuing a pre-Full Spanish save;
-- new-game save creation;
-- ordinary item acquisition/use/toss/sort;
-- filling beyond the original 42-slot normal-items limit;
-- save -> fully close MyBoy -> reopen -> Continue;
-- verifying items beyond slot 42 persist;
-- checking that key items, Poké Balls, TMs/HMs and berries remain unaffected.
-
-Block 2 is not complete until those checks pass.
+The removed 142-slot implementation and its failed black-screen QA are historical evidence only and are not production requirements.
