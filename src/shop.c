@@ -137,6 +137,8 @@ static void DebugFunc_PrintPurchaseDetails(u8 taskId);
 static void DebugFunc_PrintShopMenuHistoryBeforeClearMaybe(void);
 static void RecordTransactionForQuestLog(void);
 
+static const u8 sText_FullTmAlreadyOwned[] = _("Ya tienes esta MT.");
+
 static const struct MenuAction sShopMenuActions_BuySellQuit[] =
 {
     {gText_ShopBuy, {.void_u8 = Task_HandleShopMenuBuy}},
@@ -892,7 +894,11 @@ static void Task_BuyMenu(u8 taskId)
             BuyMenuPrintCursor(tListTaskId, 2);
             RecolorItemDescriptionBox(1);
             sShopData.itemPrice = ItemId_GetPrice(itemId);
-            if (!IsEnoughMoney(&gSaveBlock1Ptr->money, sShopData.itemPrice))
+            if (itemId >= ITEM_TM01 && itemId < ITEM_HM01 && BagGetQuantityByItemId(itemId) > 0)
+            {
+                BuyMenuDisplayMessage(taskId, sText_FullTmAlreadyOwned, BuyMenuReturnToItemList);
+            }
+            else if (!IsEnoughMoney(&gSaveBlock1Ptr->money, sShopData.itemPrice))
             {
                 BuyMenuDisplayMessage(taskId, gText_YouDontHaveMoney, BuyMenuReturnToItemList);
             }
