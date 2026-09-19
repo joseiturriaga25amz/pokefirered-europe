@@ -1,3 +1,16 @@
+TwoIsland_House_Text_MoveReminderIntro::
+    .string "Soy el TUTOR de MOVIMIENTOS.\p"
+    .string "Puedo hacer que un POKéMON recuerde\n"
+    .string "un movimiento que haya olvidado.\p"
+    .string "Cada lección cuesta 2000.$"
+
+TwoIsland_House_Text_NotEnoughMoney::
+    .string "No tienes suficiente dinero.\p"
+    .string "Una lección cuesta 2000.$"
+
+TwoIsland_House_Text_PaidForMove::
+    .string "{PLAYER} pagó 2000 por la lección.$"
+
 TwoIsland_House_Text_TeachMonMoveForMushroom::
     .string "Soy el TUTOR de MOVIMIENTOS.\p"
     .string "Me sé todos los movimientos que\n"
