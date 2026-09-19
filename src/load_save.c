@@ -20,7 +20,7 @@ static const u8 sFullSaveMagic[4] = {'R', 'F', 'F', 'L'};
 
 struct LoadedSaveData
 {
- /*0x0000*/ struct ItemSlot items[BAG_ITEMS_FULL_COUNT];
+ /*0x0000*/ struct ItemSlot items[BAG_ITEMS_COUNT];
  /*0x0078*/ struct ItemSlot keyItems[BAG_KEYITEMS_COUNT];
  /*0x00F0*/ struct ItemSlot pokeBalls[BAG_POKEBALLS_COUNT];
  /*0x0130*/ struct ItemSlot TMsHMs[BAG_TMHM_COUNT];
@@ -84,49 +84,14 @@ void InitFullSaveData(void)
     if (IsFullSaveDataInitialized())
         return;
 
-    // Schema 0 import: only Full-owned reserved bytes are initialized.
-    // Standard FireRed save fields remain untouched.
-    {
-        u16 i;
-        for (i = 0; i < BAG_ITEMS_EXTRA_COUNT; i++)
-        {
-            gSaveBlock1Ptr->bagPocket_ItemsExtra[i].itemId = 0;
-            gSaveBlock1Ptr->bagPocket_ItemsExtra[i].quantity = (u16)gSaveBlock2Ptr->encryptionKey;
-        }
-    }
+    // Schema 0 import: initialize only the Full-owned 16-byte header.
+    // Vanilla bag data and all standard save fields remain untouched.
     memset(&gSaveBlock1Ptr->fullHeader, 0, sizeof(gSaveBlock1Ptr->fullHeader));
     gSaveBlock1Ptr->fullHeader.magic[0] = sFullSaveMagic[0];
     gSaveBlock1Ptr->fullHeader.magic[1] = sFullSaveMagic[1];
     gSaveBlock1Ptr->fullHeader.magic[2] = sFullSaveMagic[2];
     gSaveBlock1Ptr->fullHeader.magic[3] = sFullSaveMagic[3];
     gSaveBlock1Ptr->fullHeader.schemaVersion = FULL_SAVE_SCHEMA_VERSION;
-}
-
-struct ItemSlot *GetFullBagItemSlots(void)
-{
-    return gLoadedSaveData.items;
-}
-
-void LoadFullBagItemSlots(void)
-{
-    u16 i;
-
-    for (i = 0; i < BAG_ITEMS_COUNT; i++)
-        gLoadedSaveData.items[i] = gSaveBlock1Ptr->bagPocket_Items[i];
-
-    for (i = 0; i < BAG_ITEMS_EXTRA_COUNT; i++)
-        gLoadedSaveData.items[BAG_ITEMS_COUNT + i] = gSaveBlock1Ptr->bagPocket_ItemsExtra[i];
-}
-
-void SaveFullBagItemSlots(void)
-{
-    u16 i;
-
-    for (i = 0; i < BAG_ITEMS_COUNT; i++)
-        gSaveBlock1Ptr->bagPocket_Items[i] = gLoadedSaveData.items[i];
-
-    for (i = 0; i < BAG_ITEMS_EXTRA_COUNT; i++)
-        gSaveBlock1Ptr->bagPocket_ItemsExtra[i] = gLoadedSaveData.items[BAG_ITEMS_COUNT + i];
 }
 
 void SetSaveBlocksPointers(void)
@@ -258,7 +223,6 @@ void LoadObjectEvents(void)
 
 void SaveSerializedGame(void)
 {
-    SaveFullBagItemSlots();
     SavePlayerParty();
     SaveObjectEvents();
 }
@@ -273,8 +237,9 @@ void LoadPlayerBag(void)
 {
     int i;
 
-    // load the Full logical normal-items pocket.
-    LoadFullBagItemSlots();
+    // load player items.
+    for (i = 0; i < BAG_ITEMS_COUNT; i++)
+        gLoadedSaveData.items[i] = gSaveBlock1Ptr->bagPocket_Items[i];
 
     // load player key items.
     for (i = 0; i < BAG_KEYITEMS_COUNT; i++)
@@ -304,8 +269,9 @@ void SavePlayerBag(void)
     int i;
     u32 encryptionKeyBackup;
 
-    // save the Full logical normal-items pocket.
-    SaveFullBagItemSlots();
+    // save player items.
+    for (i = 0; i < BAG_ITEMS_COUNT; i++)
+        gSaveBlock1Ptr->bagPocket_Items[i] = gLoadedSaveData.items[i];
 
     // save player key items.
     for (i = 0; i < BAG_KEYITEMS_COUNT; i++)
