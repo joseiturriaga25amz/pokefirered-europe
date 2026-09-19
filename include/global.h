@@ -756,6 +756,15 @@ struct ExternalEventFlags
 
 } __attribute__((packed));/*size = 0x15*/
 
+struct FullSaveHeader
+{
+    u8 magic[4];
+    u16 schemaVersion;
+    u8 reserved[10];
+};
+
+STATIC_ASSERT(sizeof(struct FullSaveHeader) == 16, FullSaveHeaderSize);
+
 struct SaveBlock1
 {
     /*0x0000*/ struct Coords16 pos;
@@ -806,7 +815,7 @@ struct SaveBlock1
     /*0x30D0*/ struct Roamer roamer;
     /*0x30EC*/ struct EnigmaBerry enigmaBerry;
     /*0x3120*/ struct MysteryGiftSave mysteryGift;
-    /*0x348C*/ u8 unused_348C[400];
+    /*0x348C*/ struct ItemSlot bagPocket_ItemsExtra[BAG_ITEMS_EXTRA_COUNT];
     /*0x361C*/ struct RamScript ramScript;
     /*0x3A08*/ struct RecordMixingGift recordMixingGift; // unused
     /*0x3A18*/ u8 seen2[DEX_FLAGS_NO];
@@ -816,10 +825,12 @@ struct SaveBlock1
     /*0x3AD4*/ u8 registeredTexts[UNION_ROOM_KB_ROW_COUNT][21];
     /*0x3BA8*/ struct TrainerNameRecord trainerNameRecords[20];
     /*0x3C98*/ struct DaycareMon route5DayCareMon;
-    /*0x3D24*/ u8 unused_3D24[16];
+    /*0x3D24*/ struct FullSaveHeader fullHeader;
     /*0x3D34*/ u32 towerChallengeId;
     /*0x3D38*/ struct TrainerTower trainerTower[NUM_TOWER_CHALLENGE_TYPES];
 }; // size: 0x3D68
+
+STATIC_ASSERT(sizeof(struct SaveBlock1) == 0x3D68, SaveBlock1SizeMustRemainVanilla);
 
 struct MapPosition
 {
