@@ -136,6 +136,7 @@ static void Cmd_end(void);
 static void Cmd_if_level_compare(void);
 static void Cmd_if_target_taunted(void);
 static void Cmd_if_target_not_taunted(void);
+static void Cmd_get_move_category_from_result(void);
 
 static void RecordLastUsedMoveByTarget(void);
 static void BattleAI_DoAIProcessing(void);
@@ -240,6 +241,7 @@ static const BattleAICmdFunc sBattleAICmdTable[] =
     Cmd_if_level_compare,                 // 0x5B
     Cmd_if_target_taunted,                // 0x5C
     Cmd_if_target_not_taunted,            // 0x5D
+    Cmd_get_move_category_from_result,    // 0x5E
 };
 
 static const u16 sDiscouragedPowerfulMoveEffects[] =
@@ -1833,6 +1835,13 @@ static void Cmd_get_move_type_from_result(void)
 static void Cmd_get_move_power_from_result(void)
 {
     AI_THINKING_STRUCT->funcResult = gBattleMoves[AI_THINKING_STRUCT->funcResult].power;
+
+    sAIScriptPtr += 1;
+}
+
+static void Cmd_get_move_category_from_result(void)
+{
+    AI_THINKING_STRUCT->funcResult = gBattleMoves[AI_THINKING_STRUCT->funcResult].category;
 
     sAIScriptPtr += 1;
 }
