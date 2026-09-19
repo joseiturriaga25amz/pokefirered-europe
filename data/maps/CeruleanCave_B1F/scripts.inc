@@ -40,6 +40,7 @@ CeruleanCave_B1F_EventScript_Mewtwo::
 	waitstate
 	clearflag FLAG_SYS_SPECIAL_WILD_BATTLE
 	specialvar VAR_RESULT, GetBattleOutcome
+	goto_if_eq VAR_RESULT, B_OUTCOME_CAUGHT, CeruleanCave_B1F_EventScript_CapturedMewtwo
 	goto_if_eq VAR_RESULT, B_OUTCOME_WON, CeruleanCave_B1F_EventScript_DefeatedMewtwo
 	goto_if_eq VAR_RESULT, B_OUTCOME_RAN, CeruleanCave_B1F_EventScript_RanFromMewtwo
 	goto_if_eq VAR_RESULT, B_OUTCOME_PLAYER_TELEPORTED, CeruleanCave_B1F_EventScript_RanFromMewtwo
@@ -47,7 +48,14 @@ CeruleanCave_B1F_EventScript_Mewtwo::
 	release
 	end
 
+CeruleanCave_B1F_EventScript_CapturedMewtwo::
+	clearflag FLAG_FULL_MEWTWO_KO_PENDING
+	setflag FLAG_FOUGHT_MEWTWO
+	release
+	end
+
 CeruleanCave_B1F_EventScript_DefeatedMewtwo::
+	setflag FLAG_FULL_MEWTWO_KO_PENDING
 	setflag FLAG_FOUGHT_MEWTWO
 	goto EventScript_RemoveStaticMon
 	end
