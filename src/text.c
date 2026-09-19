@@ -98,7 +98,7 @@ struct
 const u8 gKeypadIconTiles[] = INCBIN_U8("graphics/fonts/keypad_icons.4bpp");
 
 #if GAME_LANGUAGE == LANGUAGE_SPANISH
-static const u16 sFontSmallLatinGlyphs[] = INCBIN_U16("graphics/fonts/latin_small_es.latfont");
+static const u16 sFontSmallLatinGlyphs[] = INCBIN_U16("graphics/fonts/latin_small_es.hwlatfont");
 static const u8 sFontSmallLatinGlyphWidths[] =
 {
      5,  5,  5,  5,  5,  5,  5,  5,  5,  4,  5,  4,  4,  5,  5,  5,
@@ -135,7 +135,7 @@ static const u8 sFontSmallLatinGlyphWidths[] =
      8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  5
 };
 #elif GAME_LANGUAGE == LANGUAGE_ITALIAN
-static const u16 sFontSmallLatinGlyphs[] = INCBIN_U16("graphics/fonts/latin_small_it.latfont");
+static const u16 sFontSmallLatinGlyphs[] = INCBIN_U16("graphics/fonts/latin_small_it.hwlatfont");
 static const u8 sFontSmallLatinGlyphWidths[] =
 {
      5,  5,  5,  5,  5,  5,  5,  5,  5,  4,  5,  4,  4,  5,  5,  5,
@@ -172,7 +172,7 @@ static const u8 sFontSmallLatinGlyphWidths[] =
      8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  5
 };
 #elif GAME_LANGUAGE == LANGUAGE_FRENCH
-static const u16 sFontSmallLatinGlyphs[] = INCBIN_U16("graphics/fonts/latin_small_fr.latfont");
+static const u16 sFontSmallLatinGlyphs[] = INCBIN_U16("graphics/fonts/latin_small_fr.hwlatfont");
 static const u8 sFontSmallLatinGlyphWidths[] =
 {
      5,  5,  5,  5,  5,  5,  5,  5,  5,  4,  5,  4,  4,  5,  5,  5,
@@ -209,7 +209,7 @@ static const u8 sFontSmallLatinGlyphWidths[] =
      8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  5
 };
 #elif GAME_LANGUAGE == LANGUAGE_GERMAN
-static const u16 sFontSmallLatinGlyphs[] = INCBIN_U16("graphics/fonts/latin_small_de.latfont");
+static const u16 sFontSmallLatinGlyphs[] = INCBIN_U16("graphics/fonts/latin_small_de.hwlatfont");
 static const u8 sFontSmallLatinGlyphWidths[] =
 {
      5,  5,  5,  5,  5,  5,  5,  5,  5,  4,  5,  4,  4,  5,  5,  5,
@@ -246,7 +246,7 @@ static const u8 sFontSmallLatinGlyphWidths[] =
      8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  5
 };
 #else //LANGUAGE_ENGLISH
-static const u16 sFontSmallLatinGlyphs[] = INCBIN_U16("graphics/fonts/latin_small.latfont");
+static const u16 sFontSmallLatinGlyphs[] = INCBIN_U16("graphics/fonts/latin_small.hwlatfont");
 static const u8 sFontSmallLatinGlyphWidths[] = 
 {
      5,  5,  5,  5,  5,  5,  5,  5,  5,  4,  5,  4,  4,  5, 
