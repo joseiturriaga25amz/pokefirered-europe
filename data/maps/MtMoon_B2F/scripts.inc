@@ -148,7 +148,7 @@ MtMoon_B2F_EventScript_ExcavateSecondHelixFossil::
 	end
 
 MtMoon_B2F_EventScript_SecondFossilNoRoom::
-	msgbox Text_NoRoomForItem
+	msgbox MtMoon_B2F_Text_NoRoomForSecondFossil
 	release
 	end
 
