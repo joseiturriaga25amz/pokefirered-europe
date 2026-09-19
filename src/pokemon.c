@@ -5140,7 +5140,8 @@ u16 GetEvolutionTargetSpecies(struct Pokemon *mon, u8 type, u16 evolutionItem)
     case EVO_MODE_ITEM_CHECK:
         for (i = 0; i < EVOS_PER_MON; i++)
         {
-            if (gEvolutionTable[species][i].method == EVO_ITEM
+            if ((gEvolutionTable[species][i].method == EVO_ITEM
+              || gEvolutionTable[species][i].method == EVO_TRADE_ITEM)
              && gEvolutionTable[species][i].param == evolutionItem)
             {
                 targetSpecies = gEvolutionTable[species][i].targetSpecies;
