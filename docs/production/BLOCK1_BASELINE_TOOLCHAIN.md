@@ -111,3 +111,8 @@ The runtime gate remains OPEN until the corrected build is retested successfully
 **Stop point:** once check 10 passes. Do not progress further for Block 1.
 
 **PASS rule:** all 10 checks pass on the corrected build. Any one failure keeps Block 1 open.
+
+
+## Handoff hardening after second MyBoy failure
+
+The second MyBoy smoke again failed on compact UI text while boot/save/load and normal dialogue remained functional. Before issuing another user build, the CI gate was strengthened so that all four Spanish Latin font assets used at runtime (small, normal, male, female) must match the frozen vanilla baseline byte-for-byte, and Spanish runtime references must remain on the legacy European `.latfont` format. This is a pre-handoff invariant for Block 1, not merely a post-failure note.
