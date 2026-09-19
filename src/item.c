@@ -231,9 +231,9 @@ bool8 AddBagItem(u16 itemId, u16 count)
         {
             u16 quantity;
             // Full: technical machines are unique permanent unlocks.
-            // Reacquiring one is a successful no-op, keeping quantity at exactly 1.
+            // Reject a duplicate so shops/prize scripts cannot charge for a no-op.
             if (pocket == POCKET_TM_CASE - 1 && itemId < ITEM_HM01)
-                return TRUE;
+                return FALSE;
 
             // Does this stack have room for more??
             quantity = GetBagItemQuantity(&gBagPockets[pocket].itemSlots[i].quantity);
