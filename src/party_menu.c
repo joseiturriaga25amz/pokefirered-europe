@@ -5329,11 +5329,9 @@ static void CB2_UseEvolutionStone(void)
 
 static bool8 MonCanEvolve(void)
 {
-    if (!IsNationalPokedexEnabled()
-     && GetEvolutionTargetSpecies(&gPlayerParty[gPartyMenu.slotId], EVO_MODE_ITEM_USE, gSpecialVar_ItemId) > KANTO_DEX_COUNT)
-        return FALSE;
-    else
-        return TRUE;
+    // Full: cross-generation evolutions are mechanically available before
+    // Oak reveals the National Dex. The Pokédex UI progression remains unchanged.
+    return GetEvolutionTargetSpecies(&gPlayerParty[gPartyMenu.slotId], EVO_MODE_ITEM_USE, gSpecialVar_ItemId) != SPECIES_NONE;
 }
 
 u8 GetItemEffectType(u16 item)
