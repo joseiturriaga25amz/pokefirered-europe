@@ -20,7 +20,7 @@ static const u8 sFullSaveMagic[4] = {'R', 'F', 'F', 'L'};
 
 struct LoadedSaveData
 {
- /*0x0000*/ struct ItemSlot items[BAG_ITEMS_COUNT];
+ /*0x0000*/ struct ItemSlot items[BAG_ITEMS_FULL_COUNT];
  /*0x0078*/ struct ItemSlot keyItems[BAG_KEYITEMS_COUNT];
  /*0x00F0*/ struct ItemSlot pokeBalls[BAG_POKEBALLS_COUNT];
  /*0x0130*/ struct ItemSlot TMsHMs[BAG_TMHM_COUNT];
@@ -87,6 +87,33 @@ void InitFullSaveData(void)
     memset(&gSaveBlock1Ptr->fullHeader, 0, sizeof(gSaveBlock1Ptr->fullHeader));
     memcpy(gSaveBlock1Ptr->fullHeader.magic, sFullSaveMagic, sizeof(sFullSaveMagic));
     gSaveBlock1Ptr->fullHeader.schemaVersion = FULL_SAVE_SCHEMA_VERSION;
+}
+
+struct ItemSlot *GetFullBagItemSlots(void)
+{
+    return gLoadedSaveData.items;
+}
+
+void LoadFullBagItemSlots(void)
+{
+    u16 i;
+
+    for (i = 0; i < BAG_ITEMS_COUNT; i++)
+        gLoadedSaveData.items[i] = gSaveBlock1Ptr->bagPocket_Items[i];
+
+    for (i = 0; i < BAG_ITEMS_EXTRA_COUNT; i++)
+        gLoadedSaveData.items[BAG_ITEMS_COUNT + i] = gSaveBlock1Ptr->bagPocket_ItemsExtra[i];
+}
+
+void SaveFullBagItemSlots(void)
+{
+    u16 i;
+
+    for (i = 0; i < BAG_ITEMS_COUNT; i++)
+        gSaveBlock1Ptr->bagPocket_Items[i] = gLoadedSaveData.items[i];
+
+    for (i = 0; i < BAG_ITEMS_EXTRA_COUNT; i++)
+        gSaveBlock1Ptr->bagPocket_ItemsExtra[i] = gLoadedSaveData.items[BAG_ITEMS_COUNT + i];
 }
 
 void SetSaveBlocksPointers(void)
@@ -218,6 +245,7 @@ void LoadObjectEvents(void)
 
 void SaveSerializedGame(void)
 {
+    SaveFullBagItemSlots();
     SavePlayerParty();
     SaveObjectEvents();
 }
