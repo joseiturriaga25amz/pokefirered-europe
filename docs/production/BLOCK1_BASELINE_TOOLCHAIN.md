@@ -132,3 +132,19 @@ User-provided screenshots confirm that the previously corrupted compact Spanish 
 **Visual regression status:** PASS.
 
 The Block 1 runtime gate remains pending only until save -> fully close MyBoy -> reopen -> Continue is explicitly confirmed on this exact Revision 3 build.
+
+
+## Final MyBoy runtime result — PASS
+
+**Build tested:** Revision 3, SHA-1 `9904e96ac13c78b3a295d923f8325d2904334554`
+
+The user explicitly confirmed on MyBoy that:
+- the game boots normally;
+- compact Spanish UI text renders correctly in Bag, Party, battle HUD, battle command menu and move-selection UI;
+- in-game saving succeeds;
+- MyBoy can be fully closed and the same save can be reopened with Continue;
+- gameplay resumes successfully from the saved state.
+
+**Block 1 runtime smoke:** PASS.
+
+Together with the clean Spanish modern build, frozen vanilla SHA verification, upstream compatibility build, localized font byte-for-byte baseline gates and static source audits, the Block 1 acceptance gate is satisfied.
