@@ -46,6 +46,11 @@ CinnabarIsland_Gym_OnLoadOpenDoor6::
 	return
 
 CinnabarIsland_Gym_EventScript_Blaine::
+	goto_if_unset FLAG_SYS_NATIONAL_DEX, CinnabarIsland_Gym_EventScript_BlaineStory
+	goto_if_unset FLAG_GOT_TM38_FROM_BLAINE, CinnabarIsland_Gym_EventScript_BlaineStory
+	goto CinnabarIsland_Gym_EventScript_FullRematchOffer
+
+CinnabarIsland_Gym_EventScript_BlaineStory::
 	famechecker FAMECHECKER_BLAINE, FCPICKSTATE_COLORED, UpdatePickStateFromSpecialVar8005
 	trainerbattle_single TRAINER_LEADER_BLAINE, CinnabarIsland_Gym_Text_BlaineIntro, CinnabarIsland_Gym_Text_BlaineDefeat, CinnabarIsland_Gym_EventScript_DefeatedBlaine, NO_MUSIC
 	goto_if_unset FLAG_GOT_TM38_FROM_BLAINE, CinnabarIsland_Gym_EventScript_GiveTM38
@@ -708,3 +713,36 @@ CinnabarIsland_Gym_EventScript_OpenDoor6::
 	setmetatile  6, 10, METATILE_CinnabarGym_Floor, 0
 	setmetatile  7, 10, METATILE_CinnabarGym_Floor_ShadeDiagonal, 0
 	return
+
+CinnabarIsland_Gym_EventScript_FullRematchOffer::
+	lock
+	faceplayer
+	msgbox CinnabarIsland_Gym_Text_FullRematchOffer, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, CinnabarIsland_Gym_EventScript_FullRematchDecline
+	cleartrainerflag TRAINER_RS_LADY
+	trainerbattle_single TRAINER_RS_LADY, CinnabarIsland_Gym_Text_FullRematchIntro, CinnabarIsland_Gym_Text_FullRematchDefeat, CinnabarIsland_Gym_EventScript_FullRematchWon
+	end
+
+CinnabarIsland_Gym_EventScript_FullRematchWon::
+	msgbox CinnabarIsland_Gym_Text_FullRematchAfter
+	release
+	end
+
+CinnabarIsland_Gym_EventScript_FullRematchDecline::
+	release
+	end
+
+CinnabarIsland_Gym_Text_FullRematchOffer::
+	.string "Has recorrido un largo camino desde\n"
+	.string "nuestro primer combate.\p"
+	.string "¿Quieres una revancha de verdad?$"
+
+CinnabarIsland_Gym_Text_FullRematchIntro::
+	.string "¡Entonces veamos cuánto has crecido!$"
+
+CinnabarIsland_Gym_Text_FullRematchDefeat::
+	.string "Excelente. Tu fuerza sigue creciendo.$"
+
+CinnabarIsland_Gym_Text_FullRematchAfter::
+	.string "Puedes volver cuando quieras.\p"
+	.string "Siempre aceptaré otra revancha.$"
