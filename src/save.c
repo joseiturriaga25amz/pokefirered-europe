@@ -817,10 +817,7 @@ u8 LoadGameSave(u8 saveType)
     default:
         result = TryLoadSaveSlot(FULL_SAVE_SLOT, gRamSaveSectorLocations);
         if (result == SAVE_STATUS_OK)
-        {
             InitFullSaveData();
-            LoadFullBagItemSlots();
-        }
         LoadSerializedGame();
         gSaveFileStatus = result;
         gGameContinueCallback = NULL;
