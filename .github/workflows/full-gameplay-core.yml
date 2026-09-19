@@ -76,6 +76,14 @@ jobs:
               ("sSeafoamIslandsB1F_FireRed","land_mons","SPECIES_VAPOREON",4),
               ("sPowerPlant_FireRed","land_mons","SPECIES_JOLTEON",4),
               ("sPokemonMansion1F_FireRed","land_mons","SPECIES_FLAREON",4),
+              ("sFiveIslandLostCaveRoom1_FireRed","land_mons","SPECIES_MISDREAVUS",5),
+              ("sFiveIslandLostCaveRoom4_FireRed","land_mons","SPECIES_MISDREAVUS",5),
+              ("sFiveIslandLostCaveRoom10_FireRed","land_mons","SPECIES_MISDREAVUS",5),
+              ("sSafariZoneCenter_FireRed","land_mons","SPECIES_SCYTHER",15),
+              ("sSafariZoneCenter_FireRed","land_mons","SPECIES_PINSIR",15),
+              ("sSafariZoneEast_FireRed","land_mons","SPECIES_KANGASKHAN",15),
+              ("sSafariZoneNorth_FireRed","land_mons","SPECIES_CHANSEY",15),
+              ("sSafariZoneWest_FireRed","land_mons","SPECIES_TAUROS",15),
           ]
           for label, kind, species, want in expected:
               mons = encounters[label][kind]["mons"]
