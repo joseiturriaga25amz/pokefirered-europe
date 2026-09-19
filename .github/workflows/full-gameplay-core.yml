@@ -33,6 +33,56 @@ jobs:
           grep -q 'EVO_LEVEL, 36, SPECIES_GENGAR' src/data/pokemon/evolution.h
           grep -q 'MOVE_POISON_FANG' src/data/pokemon/level_up_learnsets.h
           grep -q 'MOVE_SHADOW_PUNCH' src/data/pokemon/level_up_learnsets.h
+          grep -q 'ABILITY_SYNCHRONIZE' src/wild_encounter.c
+          grep -q 'VAR_FULL_LAST_REPEL' include/constants/vars.h
+          grep -q 'ITEM_TM44' data/maps/CeladonCity_DepartmentStore_2F/scripts.inc
+          grep -q 'ITEM_PP_UP' data/maps/CeladonCity_DepartmentStore_5F/scripts.inc
+
+      - name: Validate approved wild encounter rates
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(Path("src/data/wild_encounters.json").read_text())
+          group = next(g for g in data["wild_encounter_groups"] if g["label"] == "gWildMonHeaders")
+          encounters = {e["base_label"]: e for e in group["encounters"]}
+          rates = {
+              "land_mons": [20,20,10,10,10,10,5,5,4,4,1,1],
+              "water_mons": [60,30,5,4,1],
+              "fishing_mons": [70,30,60,20,20,40,40,15,4,1],
+          }
+          expected = [
+              ("sRoute8_FireRed","land_mons","SPECIES_SANDSHREW",20),
+              ("sRoute8_FireRed","land_mons","SPECIES_VULPIX",20),
+              ("sRoute5_FireRed","land_mons","SPECIES_BELLSPROUT",25),
+              ("sRoute6_FireRed","water_mons","SPECIES_SLOWPOKE",100),
+              ("sVermilionCity_FireRed","fishing_mons","SPECIES_STARYU",40),
+              ("sMtEmberExterior_FireRed","land_mons","SPECIES_MAGMAR",5),
+              ("sSixIslandRuinValley_FireRed","land_mons","SPECIES_MARILL",10),
+              ("sFourIslandIcefallCave1F_FireRed","land_mons","SPECIES_SNEASEL",5),
+              ("sFiveIslandWaterLabyrinth_FireRed","fishing_mons","SPECIES_REMORAID",40),
+              ("sSevenIslandTanobyRuins_FireRed","water_mons","SPECIES_MANTINE",5),
+              ("sThreeIslandBerryForest_FireRed","land_mons","SPECIES_BULBASAUR",15),
+              ("sThreeIslandBerryForest_FireRed","land_mons","SPECIES_IVYSAUR",5),
+              ("sThreeIslandBerryForest_FireRed","land_mons","SPECIES_VENUSAUR",4),
+              ("sMtEmberExterior_FireRed","land_mons","SPECIES_CHARMANDER",15),
+              ("sMtEmberExterior_FireRed","land_mons","SPECIES_CHARMELEON",5),
+              ("sMtEmberExterior_FireRed","land_mons","SPECIES_CHARIZARD",4),
+              ("sSeafoamIslandsB1F_FireRed","land_mons","SPECIES_SQUIRTLE",15),
+              ("sSeafoamIslandsB1F_FireRed","land_mons","SPECIES_WARTORTLE",5),
+              ("sSeafoamIslandsB1F_FireRed","land_mons","SPECIES_BLASTOISE",4),
+              ("sRoute7_FireRed","land_mons","SPECIES_EEVEE",15),
+              ("sSeafoamIslandsB1F_FireRed","land_mons","SPECIES_VAPOREON",4),
+              ("sPowerPlant_FireRed","land_mons","SPECIES_JOLTEON",4),
+              ("sPokemonMansion1F_FireRed","land_mons","SPECIES_FLAREON",4),
+          ]
+          for label, kind, species, want in expected:
+              mons = encounters[label][kind]["mons"]
+              got = sum(r for m, r in zip(mons, rates[kind]) if m["species"] == species)
+              assert got == want, (label, species, got, want)
+          print(f"Validated {len(expected)} approved encounter rates")
+          PY
 
       - name: Record ROM checksum
         run: sha1sum pokefirered_modern_es.gba
