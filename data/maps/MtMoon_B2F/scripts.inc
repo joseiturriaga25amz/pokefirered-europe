@@ -129,6 +129,8 @@ MtMoon_B2F_EventScript_HelixFossil::
 
 MtMoon_B2F_EventScript_ExcavateSecondDomeFossil::
 	msgbox MtMoon_B2F_Text_FoundBuriedFossil
+	checkitemspace ITEM_DOME_FOSSIL, 1
+	goto_if_eq VAR_RESULT, FALSE, MtMoon_B2F_EventScript_SecondFossilNoRoom
 	giveitem_msg MtMoon_B2F_Text_ObtainedDomeFossil, ITEM_DOME_FOSSIL, 1, MUS_OBTAIN_KEY_ITEM
 	setflag FLAG_GOT_DOME_FOSSIL
 	setflag FLAG_HIDE_DOME_FOSSIL
@@ -137,9 +139,16 @@ MtMoon_B2F_EventScript_ExcavateSecondDomeFossil::
 
 MtMoon_B2F_EventScript_ExcavateSecondHelixFossil::
 	msgbox MtMoon_B2F_Text_FoundBuriedFossil
+	checkitemspace ITEM_HELIX_FOSSIL, 1
+	goto_if_eq VAR_RESULT, FALSE, MtMoon_B2F_EventScript_SecondFossilNoRoom
 	giveitem_msg MtMoon_B2F_Text_ObtainedHelixFossil, ITEM_HELIX_FOSSIL, 1, MUS_OBTAIN_KEY_ITEM
 	setflag FLAG_GOT_HELIX_FOSSIL
 	setflag FLAG_HIDE_HELIX_FOSSIL
+	release
+	end
+
+MtMoon_B2F_EventScript_SecondFossilNoRoom::
+	msgbox Text_NoRoomForItem
 	release
 	end
 
