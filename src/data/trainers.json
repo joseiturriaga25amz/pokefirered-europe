@@ -5260,10 +5260,10 @@
       "trainerName_italian": "GIOVANNI",
       "trainerName_french": "GIOVANNI",
       "trainerName_german": "GIOVANNI",
-      "items": "ITEM_HYPER_POTION, ITEM_HYPER_POTION, ITEM_FULL_HEAL",
+      "items": "ITEM_HYPER_POTION, ITEM_HYPER_POTION",
       "doubleBattle": "FALSE",
       "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
-      "party": "NO_ITEM_CUSTOM_MOVES(sParty_LeaderGiovanni)"
+      "party": "ITEM_CUSTOM_MOVES(sParty_LeaderGiovanni)"
     },
     {
       "id": "TRAINER_TEAM_ROCKET_GRUNT",
@@ -6220,10 +6220,10 @@
       "trainerName_italian": "BROCK",
       "trainerName_french": "PIERRE",
       "trainerName_german": "ROCKO",
-      "items": "",
+      "items": "ITEM_POTION",
       "doubleBattle": "FALSE",
       "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
-      "party": "NO_ITEM_CUSTOM_MOVES(sParty_LeaderBrock)"
+      "party": "ITEM_CUSTOM_MOVES(sParty_LeaderBrock)"
     },
     {
       "id": "TRAINER_LEADER_MISTY",
@@ -6238,7 +6238,7 @@
       "items": "ITEM_SUPER_POTION",
       "doubleBattle": "FALSE",
       "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
-      "party": "NO_ITEM_CUSTOM_MOVES(sParty_LeaderMisty)"
+      "party": "ITEM_CUSTOM_MOVES(sParty_LeaderMisty)"
     },
     {
       "id": "TRAINER_LEADER_LT_SURGE",
@@ -6250,10 +6250,10 @@
       "trainerName_italian": "LT. SURGE",
       "trainerName_french": "MAJOR BOB",
       "trainerName_german": "MAJOR BOB",
-      "items": "ITEM_SUPER_POTION, ITEM_FULL_HEAL",
+      "items": "ITEM_SUPER_POTION",
       "doubleBattle": "FALSE",
       "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
-      "party": "NO_ITEM_CUSTOM_MOVES(sParty_LeaderLtSurge)"
+      "party": "ITEM_CUSTOM_MOVES(sParty_LeaderLtSurge)"
     },
     {
       "id": "TRAINER_LEADER_ERIKA",
@@ -6265,10 +6265,10 @@
       "trainerName_italian": "ERIKA",
       "trainerName_french": "ERIKA",
       "trainerName_german": "ERIKA",
-      "items": "ITEM_HYPER_POTION, ITEM_FULL_HEAL",
+      "items": "ITEM_SUPER_POTION, ITEM_SUPER_POTION",
       "doubleBattle": "FALSE",
       "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
-      "party": "NO_ITEM_CUSTOM_MOVES(sParty_LeaderErika)"
+      "party": "ITEM_CUSTOM_MOVES(sParty_LeaderErika)"
     },
     {
       "id": "TRAINER_LEADER_KOGA",
@@ -6280,10 +6280,10 @@
       "trainerName_italian": "KOGA",
       "trainerName_french": "KOGA",
       "trainerName_german": "KOGA",
-      "items": "ITEM_HYPER_POTION, ITEM_HYPER_POTION, ITEM_FULL_HEAL",
+      "items": "ITEM_HYPER_POTION, ITEM_HYPER_POTION",
       "doubleBattle": "FALSE",
       "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
-      "party": "NO_ITEM_CUSTOM_MOVES(sParty_LeaderKoga)"
+      "party": "ITEM_CUSTOM_MOVES(sParty_LeaderKoga)"
     },
     {
       "id": "TRAINER_LEADER_BLAINE",
@@ -6295,10 +6295,10 @@
       "trainerName_italian": "BLAINE",
       "trainerName_french": "AUGUSTE",
       "trainerName_german": "PYRO",
-      "items": "ITEM_HYPER_POTION, ITEM_HYPER_POTION, ITEM_FULL_HEAL",
+      "items": "ITEM_HYPER_POTION, ITEM_HYPER_POTION",
       "doubleBattle": "FALSE",
       "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
-      "party": "NO_ITEM_CUSTOM_MOVES(sParty_LeaderBlaine)"
+      "party": "ITEM_CUSTOM_MOVES(sParty_LeaderBlaine)"
     },
     {
       "id": "TRAINER_LEADER_SABRINA",
@@ -6310,10 +6310,10 @@
       "trainerName_italian": "SABRINA",
       "trainerName_french": "MORGANE",
       "trainerName_german": "SABRINA",
-      "items": "ITEM_HYPER_POTION, ITEM_HYPER_POTION, ITEM_FULL_HEAL",
+      "items": "ITEM_HYPER_POTION, ITEM_HYPER_POTION",
       "doubleBattle": "FALSE",
       "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
-      "party": "NO_ITEM_CUSTOM_MOVES(sParty_LeaderSabrina)"
+      "party": "ITEM_CUSTOM_MOVES(sParty_LeaderSabrina)"
     },
     {
       "id": "TRAINER_GENTLEMAN_THOMAS",
