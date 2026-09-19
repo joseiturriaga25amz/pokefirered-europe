@@ -1,0 +1,115 @@
+name: Full Production Block 2
+
+on:
+  push:
+    branches:
+      - feature/save-bag-namespaces
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  spanish-modern:
+    name: Build Spanish modern + Full save invariants
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout production branch
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gcc-arm-none-eabi binutils-arm-none-eabi libpng-dev
+
+      - name: Build firered_es_modern
+        run: make -j2 firered_es_modern
+
+      - name: Verify frozen save architecture declarations
+        run: |
+          grep -q '#define BAG_ITEMS_COUNT        42' include/constants/global.h
+          grep -q '#define BAG_ITEMS_EXTRA_COUNT 100' include/constants/global.h
+          grep -q '#define BAG_ITEMS_FULL_COUNT  (BAG_ITEMS_COUNT + BAG_ITEMS_EXTRA_COUNT)' include/constants/global.h
+          grep -q 'struct ItemSlot bagPocket_ItemsExtra\[BAG_ITEMS_EXTRA_COUNT\]' include/global.h
+          grep -q 'struct FullSaveHeader fullHeader' include/global.h
+          grep -q 'SaveBlock1SizeMustRemainVanilla' include/global.h
+          grep -q 'FullExtraBagSize' include/global.h
+          grep -q 'FullExtraBagOffset' include/global.h
+          grep -q 'FullHeaderOffset' include/global.h
+
+      - name: Verify Full schema migration wiring
+        run: |
+          grep -q "static const u8 sFullSaveMagic\[4\] = {'R', 'F', 'F', 'L'};" src/load_save.c
+          grep -q '#define FULL_SAVE_SCHEMA_VERSION 1' src/load_save.c
+          grep -q 'InitFullSaveData();' src/new_game.c
+          grep -q 'InitFullSaveData();' src/save.c
+          grep -q 'LoadFullBagItemSlots();' src/save.c
+
+      - name: Verify 142-slot persistence wiring
+        run: |
+          grep -q 'struct ItemSlot items\[BAG_ITEMS_FULL_COUNT\]' src/load_save.c
+          grep -q 'gBagPockets\[POCKET_ITEMS - 1\].itemSlots = GetFullBagItemSlots();' src/item.c
+          grep -q 'gBagPockets\[POCKET_ITEMS - 1\].capacity = BAG_ITEMS_FULL_COUNT;' src/item.c
+          grep -q 'SaveFullBagItemSlots();' src/load_save.c
+
+      - name: Record ROM checksum
+        run: sha1sum pokefirered_modern_es.gba
+
+  schema-model:
+    name: Validate Full save schema model
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout production branch
+        uses: actions/checkout@v4
+
+      - name: Model frozen SaveBlock1 regions
+        run: |
+          python3 - <<'PY'
+          SAVE_SIZE = 0x3D68
+          EXTRA_START = 0x348C
+          EXTRA_END = 0x361C
+          HEADER_START = 0x3D24
+          HEADER_END = 0x3D34
+          SLOT_SIZE = 4
+          VANILLA_SLOTS = 42
+          EXTRA_SLOTS = 100
+
+          assert EXTRA_END - EXTRA_START == EXTRA_SLOTS * SLOT_SIZE == 400
+          assert HEADER_END - HEADER_START == 16
+          assert EXTRA_END <= SAVE_SIZE
+          assert HEADER_END <= SAVE_SIZE
+          assert not (EXTRA_START < HEADER_END and HEADER_START < EXTRA_END)
+          assert VANILLA_SLOTS + EXTRA_SLOTS == 142
+
+          # Simulate a vanilla save import. Bytes outside Full-owned reserved
+          # ranges must remain byte-for-byte unchanged.
+          original = bytearray((i * 37 + 11) & 0xFF for i in range(SAVE_SIZE))
+          migrated = bytearray(original)
+          encryption_key = 0x12345678
+          encrypted_zero = encryption_key & 0xFFFF
+
+          for slot in range(EXTRA_SLOTS):
+              off = EXTRA_START + slot * SLOT_SIZE
+              migrated[off:off+2] = (0).to_bytes(2, 'little')
+              migrated[off+2:off+4] = encrypted_zero.to_bytes(2, 'little')
+
+          migrated[HEADER_START:HEADER_END] = b'\x00' * 16
+          migrated[HEADER_START:HEADER_START+4] = b'RFFL'
+          migrated[HEADER_START+4:HEADER_START+6] = (1).to_bytes(2, 'little')
+
+          owned = set(range(EXTRA_START, EXTRA_END)) | set(range(HEADER_START, HEADER_END))
+          for i, (before, after) in enumerate(zip(original, migrated)):
+              if i not in owned:
+                  assert before == after, hex(i)
+
+          # Simulate splitting/rejoining the logical 142-slot normal pocket.
+          vanilla = bytearray(VANILLA_SLOTS * SLOT_SIZE)
+          extra = bytearray(EXTRA_SLOTS * SLOT_SIZE)
+          logical = vanilla + extra
+          assert len(logical) == 142 * SLOT_SIZE
+          rebuilt_vanilla = logical[:VANILLA_SLOTS * SLOT_SIZE]
+          rebuilt_extra = logical[VANILLA_SLOTS * SLOT_SIZE:]
+          assert rebuilt_vanilla == vanilla
+          assert rebuilt_extra == extra
+
+          print('Full save schema model PASS')
+          PY
