@@ -10,7 +10,7 @@ on:
 
 jobs:
   spanish-modern:
-    name: Build Spanish modern + Full save invariants
+    name: Build Spanish modern + Full header invariants
     runs-on: ubuntu-latest
     steps:
       - name: Checkout production branch
@@ -24,99 +24,75 @@ jobs:
       - name: Build firered_es_modern
         run: make -j2 firered_es_modern
 
-      - name: Verify frozen save architecture declarations
+      - name: Verify vanilla bag remains unchanged
         run: |
-          grep -q '#define BAG_ITEMS_COUNT        42' include/constants/global.h
-          grep -q '#define BAG_ITEMS_EXTRA_COUNT 100' include/constants/global.h
-          grep -q '#define BAG_ITEMS_FULL_COUNT  (BAG_ITEMS_COUNT + BAG_ITEMS_EXTRA_COUNT)' include/constants/global.h
-          grep -q 'struct ItemSlot bagPocket_ItemsExtra\[BAG_ITEMS_EXTRA_COUNT\]' include/global.h
+          grep -q '#define BAG_ITEMS_COUNT      42' include/constants/global.h
+          grep -q 'u8 unused_348C\[400\]' include/global.h
+          grep -q 'gBagPockets\[POCKET_ITEMS - 1\].itemSlots = gSaveBlock1Ptr->bagPocket_Items;' src/item.c
+          grep -q 'gBagPockets\[POCKET_ITEMS - 1\].capacity = BAG_ITEMS_COUNT;' src/item.c
+          ! grep -q 'BAG_ITEMS_FULL_COUNT' include/constants/global.h
+          ! grep -q 'bagPocket_ItemsExtra' include/global.h
+          ! grep -q 'GetFullBagItemSlots' src/load_save.c
+
+      - name: Verify Full header architecture
+        run: |
+          grep -q 'struct FullSaveHeader' include/global.h
           grep -q 'struct FullSaveHeader fullHeader' include/global.h
           grep -q 'SaveBlock1SizeMustRemainVanilla' include/global.h
-          grep -q 'FullExtraBagSize' include/global.h
-          grep -q 'FullExtraBagOffset' include/global.h
           grep -q 'FullHeaderOffset' include/global.h
-
-      - name: Verify Full schema migration wiring
-        run: |
           grep -q "static const u8 sFullSaveMagic\[4\] = {'R', 'F', 'F', 'L'};" src/load_save.c
           grep -q '#define FULL_SAVE_SCHEMA_VERSION 1' src/load_save.c
           grep -q 'InitFullSaveData();' src/new_game.c
           grep -q 'InitFullSaveData();' src/save.c
-          grep -q 'LoadFullBagItemSlots();' src/save.c
 
-      - name: Verify 142-slot persistence wiring
+      - name: Verify Full persistent namespaces
         run: |
-          grep -q 'struct ItemSlot items\[BAG_ITEMS_FULL_COUNT\]' src/load_save.c
-          grep -q 'gBagPockets\[POCKET_ITEMS - 1\].itemSlots = GetFullBagItemSlots();' src/item.c
-          grep -q 'gBagPockets\[POCKET_ITEMS - 1\].capacity = BAG_ITEMS_FULL_COUNT;' src/item.c
-          grep -q 'SaveFullBagItemSlots();' src/load_save.c
+          grep -q 'FLAG_FULL_START' include/constants/flags.h
+          grep -q 'FLAG_FULL_END' include/constants/flags.h
+          grep -q 'VAR_FULL_START' include/constants/vars.h
+          grep -q 'VAR_FULL_END' include/constants/vars.h
 
       - name: Record ROM checksum
         run: sha1sum pokefirered_modern_es.gba
 
   schema-model:
-    name: Validate Full save schema model
+    name: Validate reduced Full save schema model
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout production branch
-        uses: actions/checkout@v4
-
-      - name: Model frozen SaveBlock1 regions
+      - name: Model reduced schema
         run: |
           python3 - <<'PY'
           SAVE_SIZE = 0x3D68
-          EXTRA_START = 0x348C
-          EXTRA_END = 0x361C
           HEADER_START = 0x3D24
           HEADER_END = 0x3D34
-          SLOT_SIZE = 4
-          VANILLA_SLOTS = 42
-          EXTRA_SLOTS = 100
+          BAG_UNUSED_START = 0x348C
+          BAG_UNUSED_END = 0x361C
 
-          assert EXTRA_END - EXTRA_START == EXTRA_SLOTS * SLOT_SIZE == 400
           assert HEADER_END - HEADER_START == 16
-          assert EXTRA_END <= SAVE_SIZE
+          assert BAG_UNUSED_END - BAG_UNUSED_START == 400
           assert HEADER_END <= SAVE_SIZE
-          assert not (EXTRA_START < HEADER_END and HEADER_START < EXTRA_END)
-          assert VANILLA_SLOTS + EXTRA_SLOTS == 142
+          assert BAG_UNUSED_END <= SAVE_SIZE
+          assert not (HEADER_START < BAG_UNUSED_END and BAG_UNUSED_START < HEADER_END)
 
-          # Simulate a vanilla save import. Bytes outside Full-owned reserved
-          # ranges must remain byte-for-byte unchanged.
           original = bytearray((i * 37 + 11) & 0xFF for i in range(SAVE_SIZE))
           migrated = bytearray(original)
-          encryption_key = 0x12345678
-          encrypted_zero = encryption_key & 0xFFFF
-
-          for slot in range(EXTRA_SLOTS):
-              off = EXTRA_START + slot * SLOT_SIZE
-              migrated[off:off+2] = (0).to_bytes(2, 'little')
-              migrated[off+2:off+4] = encrypted_zero.to_bytes(2, 'little')
 
           migrated[HEADER_START:HEADER_END] = b'\x00' * 16
           migrated[HEADER_START:HEADER_START+4] = b'RFFL'
           migrated[HEADER_START+4:HEADER_START+6] = (1).to_bytes(2, 'little')
 
-          owned = set(range(EXTRA_START, EXTRA_END)) | set(range(HEADER_START, HEADER_END))
           for i, (before, after) in enumerate(zip(original, migrated)):
-              if i not in owned:
+              if not (HEADER_START <= i < HEADER_END):
                   assert before == after, hex(i)
 
-          # Simulate splitting/rejoining the logical 142-slot normal pocket.
-          vanilla = bytearray(VANILLA_SLOTS * SLOT_SIZE)
-          extra = bytearray(EXTRA_SLOTS * SLOT_SIZE)
-          logical = vanilla + extra
-          assert len(logical) == 142 * SLOT_SIZE
-          rebuilt_vanilla = logical[:VANILLA_SLOTS * SLOT_SIZE]
-          rebuilt_extra = logical[VANILLA_SLOTS * SLOT_SIZE:]
-          assert rebuilt_vanilla == vanilla
-          assert rebuilt_extra == extra
+          # Specifically prove the former bag-extension region is untouched.
+          assert migrated[BAG_UNUSED_START:BAG_UNUSED_END] == original[BAG_UNUSED_START:BAG_UNUSED_END]
 
-          print('Full save schema model PASS')
+          print('Reduced Full save schema model PASS')
           PY
 
-
-  package-myboy-qa:
-    name: Package Block 2 MyBoy production + 50-item stress patches
+  package-myboy:
+    name: Package Block 2 MyBoy production patch
     needs:
       - spanish-modern
       - schema-model
@@ -126,11 +102,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           path: modified
-
-      - name: Checkout QA stress copy
-        uses: actions/checkout@v4
-        with:
-          path: qa
 
       - name: Checkout frozen Spanish baseline
         uses: actions/checkout@v4
@@ -163,133 +134,66 @@ jobs:
         working-directory: modified
         run: make -j2 firered_es_modern
 
-      - name: Inject 50 safe normal items into QA-only new game
-        run: |
-          python3 - <<'PY'
-          from pathlib import Path
-
-          p = Path("qa/src/new_game.c")
-          s = p.read_text()
-
-          include_needle = '#include "item.h"\n'
-          if include_needle not in s:
-              raise SystemExit("item.h include anchor not found")
-          s = s.replace(include_needle, include_needle + '#include "constants/items.h"\n', 1)
-
-          needle = "    ClearBag();\n    NewGameInitPCItems();"
-          replacement = "\n".join([
-              "    ClearBag();",
-              "    {",
-              "        u16 fullQaItemId;",
-              "",
-              "        // QA-only stress inventory: 50 distinct normal-pocket items.",
-              "        // 39 items: Potion (13) through Green Shard (51).",
-              "        for (fullQaItemId = ITEM_POTION; fullQaItemId <= ITEM_GREEN_SHARD; fullQaItemId++)",
-              "            AddBagItem(fullQaItemId, 1);",
-              "",
-              "        // 9 more items: HP Up (63) through PP Max (71).",
-              "        for (fullQaItemId = ITEM_HP_UP; fullQaItemId <= ITEM_PP_MAX; fullQaItemId++)",
-              "            AddBagItem(fullQaItemId, 1);",
-              "",
-              "        // Skip unused ITEM_048 (72); add Guard Spec. and Dire Hit instead.",
-              "        AddBagItem(ITEM_GUARD_SPEC, 1);",
-              "        AddBagItem(ITEM_DIRE_HIT, 1);",
-              "    }",
-              "    NewGameInitPCItems();",
-          ])
-          if needle not in s:
-              raise SystemExit("ClearBag injection anchor not found")
-          s = s.replace(needle, replacement, 1)
-          p.write_text(s)
-          PY
-
-      - name: Build QA stress ROM
-        working-directory: qa
-        run: make -j2 firered_es_modern
-
-      - name: Verify QA stress source injects exactly 50 intended IDs
-        run: |
-          python3 - <<'PY'
-          first = list(range(13, 52))
-          second = list(range(63, 72))
-          ids = first + second + [73, 74]
-          assert len(ids) == 50
-          assert len(set(ids)) == 50
-          print("QA stress inventory: 50 distinct normal-item IDs")
-          PY
-
-      - name: Create production and QA IPS patches
+      - name: Create IPS patch
         run: |
           python3 - <<'PY'
           from pathlib import Path
 
           base = Path("vanilla/pokefirered_es.gba").read_bytes()
+          target = Path("modified/pokefirered_modern_es.gba").read_bytes()
+          out = Path("Pokemon_Rojo_Fuego_Full_Block2_PRODUCCION.ips")
 
-          def make_ips(target_path, out_path):
-              target = Path(target_path).read_bytes()
-              if len(base) > 0x1000000 or len(target) > 0x1000000:
-                  raise SystemExit("IPS packaging only supports addresses below 16 MiB for this project.")
+          patch = bytearray(b"PATCH")
+          i = 0
+          limit = max(len(base), len(target))
 
-              patch = bytearray(b"PATCH")
-              i = 0
-              limit = max(len(base), len(target))
+          while i < limit:
+              b = base[i] if i < len(base) else 0
+              t = target[i] if i < len(target) else 0
+              if b == t:
+                  i += 1
+                  continue
 
+              start = i
               while i < limit:
                   b = base[i] if i < len(base) else 0
                   t = target[i] if i < len(target) else 0
-                  if b == t:
-                      i += 1
-                      continue
+                  if b == t or i - start >= 0xFFFF:
+                      break
+                  i += 1
 
-                  start = i
-                  while i < limit:
-                      b = base[i] if i < len(base) else 0
-                      t = target[i] if i < len(target) else 0
-                      if b == t or i - start >= 0xFFFF:
-                          break
-                      i += 1
+              if start == 0x454F46:
+                  start -= 1
 
-                  if start == 0x454F46:
-                      start -= 1
+              data = target[start:i]
+              if not data:
+                  i += 1
+                  continue
 
-                  data = target[start:i]
-                  if not data:
-                      i += 1
-                      continue
+              patch.extend(start.to_bytes(3, "big"))
+              patch.extend(len(data).to_bytes(2, "big"))
+              patch.extend(data)
 
-                  patch.extend(start.to_bytes(3, "big"))
-                  patch.extend(len(data).to_bytes(2, "big"))
-                  patch.extend(data)
+          patch.extend(b"EOF")
+          if len(target) != len(base):
+              patch.extend(len(target).to_bytes(3, "big"))
 
-              patch.extend(b"EOF")
-              if len(target) != len(base):
-                  patch.extend(len(target).to_bytes(3, "big"))
-
-              Path(out_path).write_bytes(patch)
-              print(out_path, len(patch))
-
-          make_ips("modified/pokefirered_modern_es.gba", "Pokemon_Rojo_Fuego_Full_Block2_PRODUCCION.ips")
-          make_ips("qa/pokefirered_modern_es.gba", "Pokemon_Rojo_Fuego_Full_Block2_QA_50_Items.ips")
+          out.write_bytes(patch)
           PY
 
       - name: Record checksums
         run: |
           sha1sum vanilla/pokefirered_es.gba | tee baseline.sha1
           sha1sum modified/pokefirered_modern_es.gba | tee block2-production.sha1
-          sha1sum qa/pokefirered_modern_es.gba | tee block2-qa-50-items.sha1
           sha256sum Pokemon_Rojo_Fuego_Full_Block2_PRODUCCION.ips > block2-production-patch.sha256
-          sha256sum Pokemon_Rojo_Fuego_Full_Block2_QA_50_Items.ips > block2-qa-patch.sha256
 
-      - name: Upload Block 2 MyBoy QA artifacts
+      - name: Upload Block 2 MyBoy artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Pokemon_Rojo_Fuego_Full_Block2_MyBoy_QA
+          name: Pokemon_Rojo_Fuego_Full_Block2_MyBoy
           path: |
             Pokemon_Rojo_Fuego_Full_Block2_PRODUCCION.ips
-            Pokemon_Rojo_Fuego_Full_Block2_QA_50_Items.ips
             baseline.sha1
             block2-production.sha1
-            block2-qa-50-items.sha1
             block2-production-patch.sha256
-            block2-qa-patch.sha256
           if-no-files-found: error
