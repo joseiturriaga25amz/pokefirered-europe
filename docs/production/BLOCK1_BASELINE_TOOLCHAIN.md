@@ -72,3 +72,16 @@ QA-002 is only partially satisfied by CI: the Spanish modern ROM compiles succes
 Per production amendment A-001, **MyBoy is the primary emulator for this ordinary Android functional smoke**. mGBA is retained for QA cases that explicitly depend on it, especially later link/trade regression.
 
 No merge to `master` is authorized until the MyBoy runtime smoke is completed.
+
+
+## Runtime QA incident — MyBoy
+
+The first MyBoy runtime smoke exposed a real rendering regression before merge: normal gameplay booted, but multiple UI strings and labels rendered with missing/corrupted glyphs in the bag, battle UI, move list, and party screen.
+
+**Result:** FAIL. The user correctly stopped the test; no merge was performed.
+
+Root cause: the initial multilingual `.hwlatfont` adaptation packed only 16 half-width glyphs per 256-pixel row and emitted an 8192-byte Spanish small-font asset. The actual small-font layout is 32 glyphs per row (8x16 each), requiring a 16384-byte asset. This truncated/misaligned the glyph table used by `DecompressGlyph_Small`.
+
+Correction: restore 32-column half-width packing, correct the reverse conversion row count, and add a CI size guard for `latin_small_es.hwlatfont` before producing the MyBoy test artifact.
+
+The runtime gate remains OPEN until the corrected build is retested successfully in MyBoy.
