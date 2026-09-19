@@ -14,6 +14,10 @@
 
 #define SAVEBLOCK_MOVE_RANGE    128
 
+#define FULL_SAVE_SCHEMA_VERSION 1
+
+static const u8 sFullSaveMagic[4] = {'R', 'F', 'F', 'L'};
+
 struct LoadedSaveData
 {
  /*0x0000*/ struct ItemSlot items[BAG_ITEMS_COUNT];
@@ -64,6 +68,25 @@ void ClearSav2(void)
 void ClearSav1(void)
 {
     CpuFill16(0, &gSaveBlock1, sizeof(struct SaveBlock1) + sizeof(gSaveBlock1_DMA));
+}
+
+bool32 IsFullSaveDataInitialized(void)
+{
+    return memcmp(gSaveBlock1Ptr->fullHeader.magic, sFullSaveMagic, sizeof(sFullSaveMagic)) == 0
+        && gSaveBlock1Ptr->fullHeader.schemaVersion == FULL_SAVE_SCHEMA_VERSION;
+}
+
+void InitFullSaveData(void)
+{
+    if (IsFullSaveDataInitialized())
+        return;
+
+    // Schema 0 import: only Full-owned reserved bytes are initialized.
+    // Standard FireRed save fields remain untouched.
+    memset(gSaveBlock1Ptr->bagPocket_ItemsExtra, 0, sizeof(gSaveBlock1Ptr->bagPocket_ItemsExtra));
+    memset(&gSaveBlock1Ptr->fullHeader, 0, sizeof(gSaveBlock1Ptr->fullHeader));
+    memcpy(gSaveBlock1Ptr->fullHeader.magic, sFullSaveMagic, sizeof(sFullSaveMagic));
+    gSaveBlock1Ptr->fullHeader.schemaVersion = FULL_SAVE_SCHEMA_VERSION;
 }
 
 void SetSaveBlocksPointers(void)
