@@ -67,6 +67,8 @@ Inherited upstream CI was adapted for the Full fork so feature changes compile r
 
 QA-001 is satisfied by CI.
 
-QA-002 is only partially satisfied by CI: the Spanish modern ROM compiles successfully, but the frozen QA case explicitly also requires launching in mGBA, starting a game, and verifying save/load. That runtime smoke has not been falsely marked PASS.
+QA-002 is only partially satisfied by CI: the Spanish modern ROM compiles successfully, but the runtime smoke still requires booting the produced ROM, starting a game, and verifying in-game save/load.
 
-No merge to `master` is authorized until that runtime smoke is completed.
+Per production amendment A-001, **MyBoy is the primary emulator for this ordinary Android functional smoke**. mGBA is retained for QA cases that explicitly depend on it, especially later link/trade regression.
+
+No merge to `master` is authorized until the MyBoy runtime smoke is completed.
