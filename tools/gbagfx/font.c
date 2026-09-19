@@ -20,12 +20,11 @@ static void ConvertFromHalfWidthLatinFont(unsigned char *src, unsigned char *des
 {
     unsigned int srcPixelsOffset = 0;
 
-    // European source PNGs retain the legacy 16-column, 16x16-cell layout.
-    // The small Latin glyph occupies the left 8x16 half of each cell.
+    // Small Latin fonts store 32 half-width (8x16) glyphs per 256px row.
     for (unsigned int row = 0; row < numRows; row++) {
-        for (unsigned int column = 0; column < 16; column++) {
+        for (unsigned int column = 0; column < 32; column++) {
             for (unsigned int glyphTile = 0; glyphTile < 2; glyphTile++) {
-                unsigned int pixelsX = column * 16;
+                unsigned int pixelsX = column * 8;
 
                 for (unsigned int i = 0; i < 8; i++) {
                     unsigned int pixelsY = (row * 16) + (glyphTile * 8) + i;
@@ -46,9 +45,9 @@ static void ConvertToHalfWidthLatinFont(unsigned char *src, unsigned char *dest,
     unsigned int destPixelsOffset = 0;
 
     for (unsigned int row = 0; row < numRows; row++) {
-        for (unsigned int column = 0; column < 16; column++) {
+        for (unsigned int column = 0; column < 32; column++) {
             for (unsigned int glyphTile = 0; glyphTile < 2; glyphTile++) {
-                unsigned int pixelsX = column * 16;
+                unsigned int pixelsX = column * 8;
 
                 for (unsigned int i = 0; i < 8; i++) {
                     unsigned int pixelsY = (row * 16) + (glyphTile * 8) + i;
@@ -232,10 +231,10 @@ void ReadHalfWidthLatinFont(char *path, struct Image *image)
 
     int numGlyphs = fileSize / glyphSize;
 
-    if (numGlyphs % 16 != 0)
-        FATAL_ERROR("The number of glyphs (%d) is not a multiple of 16.\n", numGlyphs);
+    if (numGlyphs % 32 != 0)
+        FATAL_ERROR("The number of glyphs (%d) is not a multiple of 32.\n", numGlyphs);
 
-    int numRows = numGlyphs / 16;
+    int numRows = numGlyphs / 32;
     int imageSize = numRows * 16 * 64;
 
     image->width = 256;
@@ -260,7 +259,7 @@ void WriteHalfWidthLatinFont(char *path, struct Image *image)
         FATAL_ERROR("The height of the font image (%d) is not a multiple of 16.\n", image->height);
 
     int numRows = image->height / 16;
-    int bufferSize = numRows * 16 * 32;
+    int bufferSize = numRows * 16 * 64;
     unsigned char *buffer = malloc(bufferSize);
 
     if (buffer == NULL)
