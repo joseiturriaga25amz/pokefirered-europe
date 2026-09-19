@@ -120,7 +120,7 @@ jobs:
           from pathlib import Path
 
           base_path = Path("vanilla/pokefirered_es.gba")
-          mod_path = Path("modified/pokefirered_es.gba")
+          mod_path = Path("modified/pokefirered_modern_es.gba")
           out_path = Path("Pokemon_Rojo_Fuego_Full_Block1_MyBoy.ips")
 
           base = base_path.read_bytes()
@@ -173,7 +173,7 @@ jobs:
       - name: Record patch checksums
         run: |
           sha1sum vanilla/pokefirered_es.gba
-          sha1sum modified/pokefirered_es.gba
+          sha1sum modified/pokefirered_modern_es.gba
           sha256sum Pokemon_Rojo_Fuego_Full_Block1_MyBoy.ips | tee Pokemon_Rojo_Fuego_Full_Block1_MyBoy.sha256
 
       - name: Upload MyBoy IPS patch
