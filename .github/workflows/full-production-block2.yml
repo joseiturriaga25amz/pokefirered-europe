@@ -113,3 +113,177 @@ jobs:
 
           print('Full save schema model PASS')
           PY
+
+
+  package-myboy-qa:
+    name: Package Block 2 MyBoy production + 50-item stress patches
+    needs:
+      - spanish-modern
+      - schema-model
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout production branch
+        uses: actions/checkout@v4
+        with:
+          path: modified
+
+      - name: Checkout QA stress copy
+        uses: actions/checkout@v4
+        with:
+          path: qa
+
+      - name: Checkout frozen Spanish baseline
+        uses: actions/checkout@v4
+        with:
+          ref: e184c5cf898cd29efebd33bc1bfe5994277e21ab
+          path: vanilla
+
+      - name: Checkout agbcc for baseline
+        uses: actions/checkout@v4
+        with:
+          repository: pret/agbcc
+          path: vanilla/agbcc
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gcc-arm-none-eabi binutils-arm-none-eabi libpng-dev
+
+      - name: Install agbcc in baseline tree
+        working-directory: vanilla/agbcc
+        run: |
+          ./build.sh
+          ./install.sh ../
+
+      - name: Build and verify Spanish vanilla base
+        working-directory: vanilla
+        run: make -j2 compare_firered_es
+
+      - name: Build production Block 2 ROM
+        working-directory: modified
+        run: make -j2 firered_es_modern
+
+      - name: Inject 50 safe normal items into QA-only new game
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          p = Path("qa/src/new_game.c")
+          s = p.read_text()
+
+          include_needle = '#include "item.h"\n'
+          if include_needle not in s:
+              raise SystemExit("item.h include anchor not found")
+          s = s.replace(include_needle, include_needle + '#include "constants/items.h"\n', 1)
+
+          needle = "    ClearBag();\n    NewGameInitPCItems();"
+          replacement = """    ClearBag();
+    {
+        u16 fullQaItemId;
+
+        // QA-only stress inventory: 50 distinct normal-pocket items.
+        // 39 items: Potion (13) through Green Shard (51).
+        for (fullQaItemId = ITEM_POTION; fullQaItemId <= ITEM_GREEN_SHARD; fullQaItemId++)
+            AddBagItem(fullQaItemId, 1);
+
+        // 11 more items: HP Up (63) through Guard Spec. (73).
+        for (fullQaItemId = ITEM_HP_UP; fullQaItemId <= ITEM_GUARD_SPEC; fullQaItemId++)
+            AddBagItem(fullQaItemId, 1);
+    }
+    NewGameInitPCItems();"""
+          if needle not in s:
+              raise SystemExit("ClearBag injection anchor not found")
+          s = s.replace(needle, replacement, 1)
+          p.write_text(s)
+          PY
+
+      - name: Build QA stress ROM
+        working-directory: qa
+        run: make -j2 firered_es_modern
+
+      - name: Verify QA stress source injects exactly 50 intended IDs
+        run: |
+          python3 - <<'PY'
+          first = list(range(13, 52))
+          second = list(range(63, 74))
+          ids = first + second
+          assert len(ids) == 50
+          assert len(set(ids)) == 50
+          print("QA stress inventory: 50 distinct normal-item IDs")
+          PY
+
+      - name: Create production and QA IPS patches
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          base = Path("vanilla/pokefirered_es.gba").read_bytes()
+
+          def make_ips(target_path, out_path):
+              target = Path(target_path).read_bytes()
+              if len(base) > 0x1000000 or len(target) > 0x1000000:
+                  raise SystemExit("IPS packaging only supports addresses below 16 MiB for this project.")
+
+              patch = bytearray(b"PATCH")
+              i = 0
+              limit = max(len(base), len(target))
+
+              while i < limit:
+                  b = base[i] if i < len(base) else 0
+                  t = target[i] if i < len(target) else 0
+                  if b == t:
+                      i += 1
+                      continue
+
+                  start = i
+                  while i < limit:
+                      b = base[i] if i < len(base) else 0
+                      t = target[i] if i < len(target) else 0
+                      if b == t or i - start >= 0xFFFF:
+                          break
+                      i += 1
+
+                  if start == 0x454F46:
+                      start -= 1
+
+                  data = target[start:i]
+                  if not data:
+                      i += 1
+                      continue
+
+                  patch.extend(start.to_bytes(3, "big"))
+                  patch.extend(len(data).to_bytes(2, "big"))
+                  patch.extend(data)
+
+              patch.extend(b"EOF")
+              if len(target) != len(base):
+                  patch.extend(len(target).to_bytes(3, "big"))
+
+              Path(out_path).write_bytes(patch)
+              print(out_path, len(patch))
+
+          make_ips("modified/pokefirered_modern_es.gba", "Pokemon_Rojo_Fuego_Full_Block2_PRODUCCION.ips")
+          make_ips("qa/pokefirered_modern_es.gba", "Pokemon_Rojo_Fuego_Full_Block2_QA_50_Items.ips")
+          PY
+
+      - name: Record checksums
+        run: |
+          sha1sum vanilla/pokefirered_es.gba | tee baseline.sha1
+          sha1sum modified/pokefirered_modern_es.gba | tee block2-production.sha1
+          sha1sum qa/pokefirered_modern_es.gba | tee block2-qa-50-items.sha1
+          sha256sum Pokemon_Rojo_Fuego_Full_Block2_PRODUCCION.ips > block2-production-patch.sha256
+          sha256sum Pokemon_Rojo_Fuego_Full_Block2_QA_50_Items.ips > block2-qa-patch.sha256
+
+      - name: Upload Block 2 MyBoy QA artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: Pokemon_Rojo_Fuego_Full_Block2_MyBoy_QA
+          path: |
+            Pokemon_Rojo_Fuego_Full_Block2_PRODUCCION.ips
+            Pokemon_Rojo_Fuego_Full_Block2_QA_50_Items.ips
+            baseline.sha1
+            block2-production.sha1
+            block2-qa-50-items.sha1
+            block2-production-patch.sha256
+            block2-qa-patch.sha256
+          if-no-files-found: error
