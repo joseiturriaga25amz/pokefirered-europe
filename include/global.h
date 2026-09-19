@@ -815,7 +815,7 @@ struct SaveBlock1
     /*0x30D0*/ struct Roamer roamer;
     /*0x30EC*/ struct EnigmaBerry enigmaBerry;
     /*0x3120*/ struct MysteryGiftSave mysteryGift;
-    /*0x348C*/ struct ItemSlot bagPocket_ItemsExtra[BAG_ITEMS_EXTRA_COUNT];
+    /*0x348C*/ u8 unused_348C[400];
     /*0x361C*/ struct RamScript ramScript;
     /*0x3A08*/ struct RecordMixingGift recordMixingGift; // unused
     /*0x3A18*/ u8 seen2[DEX_FLAGS_NO];
@@ -831,8 +831,6 @@ struct SaveBlock1
 }; // size: 0x3D68
 
 STATIC_ASSERT(sizeof(struct SaveBlock1) == 0x3D68, SaveBlock1SizeMustRemainVanilla);
-STATIC_ASSERT(sizeof(((struct SaveBlock1 *)0)->bagPocket_ItemsExtra) == 400, FullExtraBagSize);
-STATIC_ASSERT((u32)&((struct SaveBlock1 *)0)->bagPocket_ItemsExtra == 0x348C, FullExtraBagOffset);
 STATIC_ASSERT((u32)&((struct SaveBlock1 *)0)->fullHeader == 0x3D24, FullHeaderOffset);
 
 struct MapPosition
