@@ -70,9 +70,11 @@ jobs:
       - name: Build firered_es_modern
         run: make -j2 firered_es_modern
 
-      - name: Verify Spanish small-font packing
+      - name: Verify Spanish localized small-font format
         run: |
-          test "$(stat -c%s graphics/fonts/latin_small_es.hwlatfont)" -eq 16384
+          test -f graphics/fonts/latin_small_es.latfont
+          test "$(stat -c%s graphics/fonts/latin_small_es.latfont)" -eq 16384
+          ! grep -q 'latin_small_es\.hwlatfont' src/text.c
 
 
   package-myboy-smoke-patch:
@@ -117,6 +119,9 @@ jobs:
       - name: Build current Spanish modern ROM
         working-directory: modified
         run: make -j2 firered_es_modern
+
+      - name: Verify Spanish small font matches vanilla baseline byte-for-byte
+        run: cmp vanilla/graphics/fonts/latin_small_es.latfont modified/graphics/fonts/latin_small_es.latfont
 
       - name: Create IPS patch for MyBoy
         run: |
