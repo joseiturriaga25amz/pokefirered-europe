@@ -92,5 +92,76 @@ jobs:
           print(f"Validated {len(expected)} approved encounter rates")
           PY
 
+      - name: Validate frozen Gary and boss rosters
+        run: |
+          python3 - <<'PY'
+          import json, re
+          from pathlib import Path
+
+          text = Path("src/data/trainer_parties.h").read_text()
+          trainers_json = json.loads(Path("src/data/trainers.json").read_text())
+          trainers = trainers_json.get("trainers", trainers_json)
+          by_id = {t["id"]: t for t in trainers}
+
+          def block(name):
+              m = re.search(r"static const struct [^ ]+ " + re.escape(name) + r"\[\] = \{(.*?)\n\};", text, re.S)
+              assert m, name
+              return m.group(1)
+
+          def roster(name):
+              body = block(name)
+              return [(m.group(1), int(m.group(2))) for m in re.finditer(
+                  r"\.lvl = (\d+),\s*\.species = SPECIES_([A-Z0-9_]+),", body
+              )]
+
+          # regex returns level/species groups in reverse construction below
+          def normalized(name):
+              body = block(name)
+              out=[]
+              for m in re.finditer(r"\.lvl = (\d+),\s*\.species = SPECIES_([A-Z0-9_]+),", body):
+                  out.append((m.group(2), int(m.group(1))))
+              return out
+
+          gary = {
+              "sParty_RivalOaksLabSquirtle":[("SQUIRTLE",5)],
+              "sParty_RivalRoute22EarlySquirtle":[("PIDGEY",10),("SQUIRTLE",12)],
+              "sParty_RivalCeruleanSquirtle":[("ABRA",18),("RATTATA",19),("PIDGEOTTO",20),("SQUIRTLE",22)],
+              "sParty_RivalSsAnneSquirtle":[("KRABBY",24),("PIDGEOTTO",25),("KADABRA",25),("WARTORTLE",28)],
+              "sParty_RivalPokemonTowerSquirtle":[("EXEGGCUTE",30),("PIDGEOTTO",31),("GROWLITHE",31),("KADABRA",32),("WARTORTLE",34)],
+              "sParty_RivalSilphSquirtle":[("EXEGGUTOR",43),("PIDGEOT",44),("GROWLITHE",44),("ALAKAZAM",46),("BLASTOISE",49)],
+              "sParty_RivalRoute22LateSquirtle":[("RHYHORN",56),("PIDGEOT",56),("NIDOKING",57),("ALAKAZAM",58),("ARCANINE",59),("BLASTOISE",61)],
+              "sParty_ChampionFirstSquirtle":[("PIDGEOT",64),("ALAKAZAM",65),("NIDOKING",65),("RHYDON",66),("ARCANINE",67),("BLASTOISE",69)],
+              "sParty_ChampionRematchSquirtle":[("NIDOQUEEN",80),("MAGMAR",80),("GOLEM",81),("SCIZOR",82),("ARCANINE",83),("BLASTOISE",85)],
+          }
+          for name, want in gary.items():
+              assert normalized(name) == want, (name, normalized(name), want)
+              for suffix in ("Bulbasaur","Charmander"):
+                  other = name.replace("Squirtle", suffix)
+                  assert re.sub(r"\s+"," ",block(other)).strip() == re.sub(r"\s+"," ",block(name)).strip(), other
+
+          bosses = {
+              "sParty_LeaderBrock":[("GEODUDE",14),("ONIX",17)],
+              "sParty_LeaderMisty":[("GOLDEEN",21),("STARYU",23),("STARMIE",26)],
+              "sParty_LeaderLtSurge":[("VOLTORB",25),("PIKACHU",26),("RAICHU",30)],
+              "sParty_LeaderErika":[("TANGELA",31),("WEEPINBELL",32),("VILEPLUME",33),("GLOOM",35)],
+              "sParty_LeaderKoga":[("VENOMOTH",40),("GOLBAT",41),("MUK",43),("WEEZING",46)],
+              "sParty_LeaderSabrina":[("MR_MIME",42),("VENOMOTH",43),("KADABRA",45),("ALAKAZAM",47)],
+              "sParty_LeaderBlaine":[("NINETALES",47),("RHYDON",48),("RAPIDASH",49),("ARCANINE",50),("MAGMAR",52)],
+              "sParty_LeaderGiovanni":[("PERSIAN",50),("KINGLER",51),("NIDOQUEEN",52),("NIDOKING",53),("GOLEM",54),("RHYDON",56)],
+              "sParty_EliteFourLorelei":[("DEWGONG",57),("SLOWBRO",58),("JYNX",59),("CLOYSTER",60),("LAPRAS",61)],
+              "sParty_EliteFourBruno":[("ONIX",58),("HITMONCHAN",59),("HITMONLEE",60),("ONIX",60),("MACHAMP",62)],
+              "sParty_EliteFourAgatha":[("HAUNTER",59),("GENGAR",60),("GOLBAT",60),("ARBOK",61),("GENGAR",63)],
+              "sParty_EliteFourLance":[("GYARADOS",61),("DRAGONAIR",61),("DRAGONAIR",62),("AERODACTYL",63),("DRAGONITE",65)],
+          }
+          for name,want in bosses.items():
+              assert normalized(name)==want, (name, normalized(name), want)
+
+          for tid in ("TRAINER_CHAMPION_FIRST_SQUIRTLE","TRAINER_CHAMPION_FIRST_BULBASAUR","TRAINER_CHAMPION_FIRST_CHARMANDER",
+                      "TRAINER_CHAMPION_REMATCH_SQUIRTLE","TRAINER_CHAMPION_REMATCH_BULBASAUR","TRAINER_CHAMPION_REMATCH_CHARMANDER"):
+              assert by_id[tid]["items"] == "ITEM_FULL_RESTORE, ITEM_FULL_RESTORE", tid
+
+          print("Frozen Gary and story boss rosters validated")
+          PY
+
       - name: Record ROM checksum
         run: sha1sum pokefirered_modern_es.gba
