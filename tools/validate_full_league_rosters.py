@@ -43,7 +43,7 @@ P231=231
 P239=239
 P247=247
 EXPECTED={
-" sParty_RivalOaksLabSquirtle".strip():[
+"sParty_RivalOaksLabSquirtle":[
 ("SQUIRTLE",5,P0,"NONE",("TACKLE","TAIL_WHIP","NONE","NONE")),
 ],
 "sParty_RivalRoute22EarlySquirtle":[
@@ -186,9 +186,45 @@ def main():
             other=block(name.replace("Squirtle", suffix))
             assert re.sub(r"\s+"," ",other).strip()==re.sub(r"\s+"," ",base).strip(), (name, suffix)
 
+    # RIV-001: every actual Gary battle route must use the Squirtle branch,
+    # independent of the player's starter. The old Bulbasaur/Charmander party
+    # definitions may remain as inert compatibility data, but scripts must not select them.
+    script_paths = (
+        "data/maps/PalletTown_ProfessorOaksLab/scripts.inc",
+        "data/maps/Route22/scripts.inc",
+        "data/maps/CeruleanCity/scripts.inc",
+        "data/maps/SSAnne_2F_Corridor/scripts.inc",
+        "data/maps/PokemonTower_2F/scripts.inc",
+        "data/maps/SilphCo_7F/scripts.inc",
+        "data/maps/PokemonLeague_ChampionsRoom/scripts.inc",
+    )
+    for script_path in script_paths:
+        text = (ROOT / script_path).read_text(encoding="utf-8")
+        for forbidden in (
+            "TRAINER_RIVAL_OAKS_LAB_BULBASAUR",
+            "TRAINER_RIVAL_OAKS_LAB_CHARMANDER",
+            "TRAINER_RIVAL_ROUTE22_EARLY_BULBASAUR",
+            "TRAINER_RIVAL_ROUTE22_EARLY_CHARMANDER",
+            "TRAINER_RIVAL_ROUTE22_LATE_BULBASAUR",
+            "TRAINER_RIVAL_ROUTE22_LATE_CHARMANDER",
+            "TRAINER_RIVAL_CERULEAN_BULBASAUR",
+            "TRAINER_RIVAL_CERULEAN_CHARMANDER",
+            "TRAINER_RIVAL_SS_ANNE_BULBASAUR",
+            "TRAINER_RIVAL_SS_ANNE_CHARMANDER",
+            "TRAINER_RIVAL_POKEMON_TOWER_BULBASAUR",
+            "TRAINER_RIVAL_POKEMON_TOWER_CHARMANDER",
+            "TRAINER_RIVAL_SILPH_BULBASAUR",
+            "TRAINER_RIVAL_SILPH_CHARMANDER",
+            "TRAINER_CHAMPION_FIRST_BULBASAUR",
+            "TRAINER_CHAMPION_FIRST_CHARMANDER",
+            "TRAINER_CHAMPION_REMATCH_BULBASAUR",
+            "TRAINER_CHAMPION_REMATCH_CHARMANDER",
+        ):
+            assert forbidden not in text, (script_path, forbidden)
+
     print(
         "Boss RC PASS: Gary progression plus first/rematch League "
-        "rosters/levels/IVs/items/moves exactly match freeze."
+        "rosters/levels/IVs/items/moves and fixed Squirtle battle routing match freeze."
     )
 
 if __name__=="__main__":
