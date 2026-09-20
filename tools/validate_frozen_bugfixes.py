@@ -163,6 +163,27 @@ def main():
     ):
         req(wireless_status, token, "RC-F034")
 
+    # Gate 2A / RC-F037: localized Spanish strings must use color changes
+    # rather than JP-font control codes when BUGFIX is enabled.
+    roof_text = read("data/maps/CeladonCity_DepartmentStore_Roof/text_es.inc")
+    req(roof_text, '#ifdef BUGFIX\n    .string "{COLOR DARK_GRAY}¿Le das algo de beber?$"', "RC-F037")
+
+    fossil_text = read("data/maps/CinnabarIsland_PokemonLab_ExperimentRoom/text_es.inc")
+    req(
+        fossil_text,
+        '#ifdef BUGFIX\n    .string "{COLOR DARK_GRAY}¡{PLAYER} le dio {STR_VAR_2}\\\\n"',
+        "RC-F037",
+    )
+
+    vermilion_text = read("data/maps/VermilionCity/text_es.inc")
+    for token in (
+        '#ifdef BUGFIX\n    .string "{COLOR DARK_GRAY}¡{PLAYER} enseñó el TICKET\\\\n"',
+        '#ifdef BUGFIX\n    .string "{COLOR BLUE}¡OK!\\\\n"',
+        '#ifdef BUGFIX\n    .string "{COLOR DARK_GRAY}{PLAYER} no tiene el TICKET del\\\\n"',
+        '#ifdef BUGFIX\n    .string "{COLOR BLUE}¡Lo siento!\\\\p"',
+    ):
+        req(vermilion_text, token, "RC-F037")
+
     # BUG-012: the Ruby object belongs to B5F. The script may remain physically
     # declared in the B3F script include, but B3F must not own the object.
     b3 = json.loads(read("data/maps/MtEmber_RubyPath_B3F/map.json"))
