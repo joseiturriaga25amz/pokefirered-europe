@@ -581,12 +581,12 @@ s8 Menu_ProcessInputNoWrapClearOnChoose(void)
 
 void DestroyYesNoMenu(void)
 {
-#if REVISION >= 0xA
+#if REVISION >= 0xA || defined(UBFIX)
     if (sYesNoWindowId == 0xFF) return;
 #endif
     ClearStdWindowAndFrameToTransparent(sYesNoWindowId, TRUE);
     RemoveWindow(sYesNoWindowId);
-#if REVISION >= 0xA
+#if REVISION >= 0xA || defined(UBFIX)
     sYesNoWindowId = 0xFF;
 #endif
 }
