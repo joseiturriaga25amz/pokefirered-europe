@@ -38,3 +38,10 @@ ThreeIsland_BerryForest_Text_BewareWildBerryLovingMons::
     .string "Atención:\n"
     .string "Presencia de POKéMON salvajes\l"
     .string "devoradores de BAYAS.$"
+
+
+ThreeIsland_BerryForest_Text_FullCelebiAppears::
+    .string "Las hojas comienzan a agitarse sin\n"
+    .string "que sople viento alguno...\p"
+    .string "Una luz verde rodea el árbol.\p"
+    .string "¡CELEBI ha aparecido!$"
