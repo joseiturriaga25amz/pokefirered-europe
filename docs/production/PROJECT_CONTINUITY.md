@@ -42,7 +42,7 @@ A historical frozen requirement superseded by an approved amendment must **not**
 - Repository: `joseiturriaga25amz/pokefirered-europe`.
 - Active production branch: `feature/full-gameplay-core`.
 - Frozen vanilla tag: `baseline-spanish-vanilla`.
-- Baseline commit: `e184c5cf898cd29efbd33bc1bfe5994277e21ab`.
+- Baseline commit: `e184c5cf898cd29efebd33bc1bfe5994277e21ab`.
 - Production target: `firered_es_modern`.
 - Baseline Spanish SHA-1: `ab8f6bfe0ccdaf41188cd015c8c74c314d02296a`.
 

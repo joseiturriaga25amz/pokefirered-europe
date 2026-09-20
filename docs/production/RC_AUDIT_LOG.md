@@ -229,3 +229,8 @@ Gate 2A reviewed current upstream localization bugfix work and confirmed the sam
 **Status:** FIXED / TOOLING PASS  
 The consolidated workflow was green through build, reproducibility and the earlier gameplay gates, then failed inside `validate_rc_freeze.py` while checking the TM sell function. The validator extracted a function using the first `\n}` after its signature, which is unsafe for any function containing nested braces and can truncate the inspected body. The actual TM sell path already contained `gText_OhNoICantBuyThat` and no `RemoveBagItem`; the CI failure was a validator parser defect rather than a gameplay regression. The RC validator now extracts complete C functions with balanced-brace parsing before asserting teaching/sell invariants.
 
+
+
+### RC-F039 — RC packaging and continuity used a malformed frozen-baseline commit SHA
+**Status:** FIXED / CI PENDING  
+The pre-freeze handoff review found that the newly added MyBoy RC packaging step and `PROJECT_CONTINUITY.md` referenced `e184c5cf898cd29efbd33bc1bfe5994277e21ab`, which does not resolve to a commit. The authoritative `baseline-spanish-vanilla` tag and the RC audit log point to `e184c5cf898cd29efebd33bc1bfe5994277e21ab`. Left uncorrected, the final artifact workflow would pass all gameplay gates and then fail while checking out the frozen Spanish baseline, and a resumed audit could inherit the wrong baseline identifier. The workflow and continuity record now use the exact tagged commit, and `validate_release_integrity.py` gates both references so this mismatch cannot recur silently.

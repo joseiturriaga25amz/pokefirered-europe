@@ -31,6 +31,15 @@ def main():
     require(workflow, "make -j2 firered_es_modern", "target")
     require(workflow, "branches:\n      - feature/full-gameplay-core", "branch")
 
+    # RC-F039: the RC handoff must rebuild against the exact frozen Spanish
+    # baseline commit, and continuity must name the same immutable commit.
+    baseline_sha = "e184c5cf898cd29efebd33bc1bfe5994277e21ab"
+    require(workflow, f"ref: {baseline_sha}", "RC frozen baseline")
+    continuity = read("docs/production/PROJECT_CONTINUITY.md")
+    require(continuity, baseline_sha, "continuity frozen baseline")
+    assert "e184c5cf898cd29efbd33bc1bfe5994277e21ab" not in workflow
+    assert "e184c5cf898cd29efbd33bc1bfe5994277e21ab" not in continuity
+
     validators = (
         "tools/validate_audited_data_blobs.py",
         "tools/validate_full_move_metadata.py",

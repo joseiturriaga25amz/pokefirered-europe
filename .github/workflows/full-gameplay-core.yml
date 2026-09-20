@@ -637,7 +637,7 @@ jobs:
       - name: Checkout frozen Spanish baseline for RC patch
         uses: actions/checkout@v4
         with:
-          ref: e184c5cf898cd29efbd33bc1bfe5994277e21ab
+          ref: e184c5cf898cd29efebd33bc1bfe5994277e21ab
           path: vanilla
 
       - name: Checkout agbcc for frozen baseline
