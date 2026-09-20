@@ -105,3 +105,12 @@ The two temporary tilemap buffers are now unconditionally freed after the two-mo
 ### RC-F009 — EVO-005..010 trade-item evolution UI route incomplete
 **Status:** FIXED / IN VALIDATION  
 `GetEvolutionTargetSpecies` already accepted `EVO_TRADE_ITEM` in item-use mode, but Metal Coat, Dragon Scale, Up-Grade and King's Rock still used `ITEM_TYPE_BAG_MENU`. Because `FieldUseFunc_EvoItem` obtains its next callback from the item type, those items lacked the party-selection callback. They now use `ITEM_TYPE_PARTY_MENU`, matching evolution stones while retaining their existing hold effects and evolution table semantics.
+
+
+### RC-F010 — ECO-004 berry shop and Emerald EV-berry behavior were absent
+**Status:** FIXED / IN VALIDATION  
+The frozen matrix required adventure/post-National berry inventories with approved prices and Emerald-style EV-reducing berries. The implementation still had vanilla Two Island stock, every approved berry retained the placeholder price 20, and Pomeg/Kelpsy/Qualot/Hondew/Grepa/Tamato had no field-use effect. Full now adds the staged Two Island berry inventory, all 28 frozen prices, direct party use for the six EV berries, -10 EV reduction with floor 0, and the Emerald friendship increase path (including friendship-only use when the target EV is already 0).
+
+### RC-F011 — Fossil/Dojo/Altering Cave/economy freeze lacked a consolidated static gate
+**Status:** FIXED / IN VALIDATION  
+Added `tools/validate_rc_freeze.py` and wired it into CI. It protects the frozen berry economy/effects, both-fossil recovery path, Cinnabar revival support, second Dojo state/reward invariants, Eevee/level evolution invariants, all nine Altering Cave tables/selector states, and the 5,000-coin Porygon price.
