@@ -34,3 +34,9 @@ PokemonMansion_1F_Text_MewGaveBirthToMewtwo::
     .string "Diario: 6 de febrero.\n"
     .string "MEW dio a luz.\p"
     .string "Llamamos al pequeño: MEWTWO.$"
+
+
+PokemonMansion_3F_Text_FullMewSighting3::
+    .string "La misma presencia vuelve a sentirse.\p"
+    .string "Esta vez desciende hacia las zonas\n"
+    .string "más profundas de la MANSIÓN.$"
