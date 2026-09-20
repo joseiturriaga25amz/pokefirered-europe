@@ -115,6 +115,9 @@ def main():
         "SPECIES_AERODACTYL",
         "SPECIES_HITMONLEE",
         "SPECIES_HITMONCHAN",
+        # Mew's Full event is variable/special-driven rather than an explicit
+        # setwildbattle/seteventmon command; its dedicated script path is locked below.
+        "SPECIES_MEW",
     }
     kanto_reachable = evolution_closure(kanto_direct, edges)
     missing_kanto = sorted(kanto_species() - kanto_reachable)
