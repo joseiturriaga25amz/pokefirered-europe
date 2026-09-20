@@ -62,15 +62,31 @@ VermilionCity_Text_DoYouHaveATicket::
     .string "Disculpe, ¿tiene su ticket?$"
 
 VermilionCity_Text_FlashedSSTicket::
+#ifdef BUGFIX
+    .string "{COLOR DARK_GRAY}¡{PLAYER} enseñó el TICKET\n"
+#else
     .string "{FONT_NORMAL}¡{PLAYER} enseñó el TICKET\n"
+#endif
     .string "del BARCO!\p"
+#ifdef BUGFIX
+    .string "{COLOR BLUE}¡OK!\n"
+#else
     .string "{FONT_MALE}¡OK!\n"
+#endif
     .string "¡Adelante!$"
 
 VermilionCity_Text_DontHaveNeededSSTicket::
+#ifdef BUGFIX
+    .string "{COLOR DARK_GRAY}{PLAYER} no tiene el TICKET del\n"
+#else
     .string "{FONT_NORMAL}{PLAYER} no tiene el TICKET del\n"
+#endif
     .string "BARCO.\p"
+#ifdef BUGFIX
+    .string "{COLOR BLUE}¡Lo siento!\p"
+#else
     .string "{FONT_MALE}¡Lo siento!\p"
+#endif
     .string "Necesita un ticket para subir a\n"
     .string "bordo.$"
 
