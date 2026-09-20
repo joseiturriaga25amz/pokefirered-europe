@@ -24,6 +24,12 @@ def block(text, label):
     return text[start:next_label]
 
 
+def c_function(text, signature):
+    start = text.index(signature)
+    end = text.index("\n}\n", start) + 2
+    return text[start:end]
+
+
 def check_kanto_static(path, prefix, species, fought, pending):
     text = read(path)
     main = block(text, f"{prefix}_EventScript_{species.title().replace('_', '')}")
@@ -179,9 +185,9 @@ def main():
         "CreateInitialRoamerMon();",
         "VarSet(VAR_FULL_ROAMER_SEQUENCE, 3);",
     )
-    update = block(roamer, "void UpdateRoamerHPStatus(struct Pokemon *mon)")
+    update = c_function(roamer, "void UpdateRoamerHPStatus(struct Pokemon *mon)")
     assert "VAR_FULL_ROAMER_SEQUENCE" not in update
-    inactive = block(roamer, "void SetRoamerInactive(void)")
+    inactive = c_function(roamer, "void SetRoamerInactive(void)")
     assert inactive.index("VarSet(VAR_FULL_ROAMER_SEQUENCE, sequence + 1);") < inactive.index("CreateInitialRoamerMon();")
 
     # Aurora quest is a 0 -> 1 (Celio signal) -> 2 (Pewter analysis) -> 3
