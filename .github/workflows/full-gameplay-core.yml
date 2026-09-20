@@ -57,6 +57,25 @@ jobs:
           grep -q 'VAR_FULL_AURORA_QUEST, 2' data/maps/PewterCity_Museum_1F/scripts.inc
           grep -q 'ITEM_AURORA_TICKET' data/maps/OneIsland_PokemonCenter_1F/scripts.inc
           grep -q 'FLAG_ENABLE_SHIP_BIRTH_ISLAND' data/maps/OneIsland_PokemonCenter_1F/scripts.inc
+          grep -q 'Full_CreateMewEventMon' src/script_pokemon_util.c
+          grep -q 'MOVE_POUND, 0' src/script_pokemon_util.c
+          grep -q 'MOVE_TRANSFORM, 1' src/script_pokemon_util.c
+          grep -q 'MOVE_MEGA_PUNCH, 2' src/script_pokemon_util.c
+          grep -q 'MOVE_METRONOME, 3' src/script_pokemon_util.c
+          grep -q 'MON_DATA_MODERN_FATEFUL_ENCOUNTER' src/script_pokemon_util.c
+          grep -q 'Full_CreateCelebiEventMon' src/script_pokemon_util.c
+          grep -q 'MOVE_PSYCHIC, 0' src/script_pokemon_util.c
+          grep -q 'MOVE_ANCIENT_POWER, 1' src/script_pokemon_util.c
+          grep -q 'MOVE_RECOVER, 2' src/script_pokemon_util.c
+          grep -q 'MOVE_HEAL_BELL, 3' src/script_pokemon_util.c
+          grep -q 'VAR_FULL_ROAMER_SEQUENCE, 3' data/maps/ThreeIsland_BerryForest/scripts.inc
+          grep -q 'FLAG_FULL_MEW_KO_PENDING' data/scripts/hall_of_fame.inc
+          grep -q 'FLAG_FULL_CELEBI_KO_PENDING' data/scripts/hall_of_fame.inc
+          grep -q 'BoxPokemonSizeMustRemainGen3Compatible' include/pokemon.h
+          grep -q 'PokemonSizeMustRemainGen3Compatible' include/pokemon.h
+          grep -q 'species2\[monIdx\] == SPECIES_EGG' src/trade.c
+          grep -q 'species2\[monIdx\] > KANTO_SPECIES_END' src/trade.c
+          grep -q 'MON_DATA_MODERN_FATEFUL_ENCOUNTER' src/trade.c
 
       - name: Validate approved wild encounter rates
         run: |
