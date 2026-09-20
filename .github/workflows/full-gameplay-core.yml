@@ -628,5 +628,8 @@ jobs:
       - name: Validate frozen technical bugfixes
         run: python3 tools/validate_frozen_bugfixes.py
 
+      - name: Validate second-pass release integrity
+        run: python3 tools/validate_release_integrity.py
+
       - name: Record ROM checksum
         run: sha1sum pokefirered_modern_es.gba
