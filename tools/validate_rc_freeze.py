@@ -223,6 +223,31 @@ def main() -> None:
         assert token in celio, token
     assert celio.count("special InitRoamer") == 1
 
+    # EVO-005..010: direct-use trade-evolution items must be recognized as
+    # Pokemon-usable items and carry the evolution-stone effect bit.
+    items_h = read("include/constants/items.h")
+    for token in (
+        "ITEM_KINGS_ROCK",
+        "ITEM_METAL_COAT",
+        "ITEM_DRAGON_SCALE",
+        "ITEM_UP_GRADE",
+    ):
+        assert token in items_h
+    assert "(item) == ITEM_KINGS_ROCK" in items_h
+    assert "(item) == ITEM_METAL_COAT" in items_h
+    assert "(item) == ITEM_DRAGON_SCALE" in items_h
+    assert "(item) == ITEM_UP_GRADE" in items_h
+
+    item_effects = read("src/data/pokemon/item_effects.h")
+    for token in (
+        "[ITEM_KINGS_ROCK - ITEM_POTION]    = sItemEffect_KingsRock",
+        "[ITEM_METAL_COAT - ITEM_POTION]    = sItemEffect_MetalCoat",
+        "[ITEM_DRAGON_SCALE - ITEM_POTION]  = sItemEffect_DragonScale",
+        "[ITEM_UP_GRADE - ITEM_POTION]      = sItemEffect_UpGrade",
+    ):
+        assert token in item_effects
+    assert item_effects.count("[4] = ITEM4_EVO_STONE") >= 10
+
     evo = read("src/data/pokemon/evolution.h")
     for token in (
         "{EVO_ITEM, ITEM_SUN_STONE, SPECIES_ESPEON}",
