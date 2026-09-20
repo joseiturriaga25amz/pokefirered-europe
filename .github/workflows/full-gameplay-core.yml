@@ -84,6 +84,22 @@ jobs:
           grep -q 'MON_DATA_HP_EV' src/pokemon_summary_screen.c
           grep -q 'MON_DATA_SPEED_EV' src/pokemon_summary_screen.c
           grep -q 'MAX. STAT 252 / TOTAL 510' src/pokemon_summary_screen.c
+          # Frozen bugfix audit (BUG-001..012 relevant source invariants)
+          grep -q 'u32 ivs = data\[0\].*data\[1\].*data\[2\].*data\[3\]' src/pokemon.c
+          grep -q 'if (gBattleOutcome == B_OUTCOME_CAUGHT)' src/battle_main.c
+          grep -q 'status = ROAMER->status' src/roamer.c
+          grep -q 'FISH_WILD_COUNT' src/wild_pokemon_area.c
+          grep -q 'species2\[monIdx\] == SPECIES_EGG' src/trade.c
+          grep -q 'if (currentHP <= 0)' src/pokemon.c
+          grep -q 'spriteIds\[1\] = CreateSprite' src/learn_move.c
+          grep -q 'gMain.heldKeysRaw == keyInput' src/main.c
+          grep -q 'gMain.newAndRepeatedKeys |= A_BUTTON' src/main.c
+          grep -q 'Free(sSlot1TilemapBuffer)' src/party_menu.c
+          grep -q 'Free(sSlot2TilemapBuffer)' src/party_menu.c
+          grep -q '#define field sparkleAmount' src/berry_crush.c
+          grep -q '#define UBFIX' include/config.h
+          test "$(grep -c 'LOCALID_RUBY' data/maps/MtEmber_RubyPath_B3F/map.json)" -eq 0
+          test "$(grep -c 'LOCALID_RUBY' data/maps/MtEmber_RubyPath_B5F/map.json)" -eq 1
 
       - name: Validate approved wild encounter rates
         run: |
