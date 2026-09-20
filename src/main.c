@@ -38,7 +38,13 @@ const u8 gGameVersion = GAME_VERSION;
 const u8 gGameLanguage = GAME_LANGUAGE;
 
 #if MODERN
-const char BuildDateTime[] = __DATE__ " " __TIME__;
+// Keep modern RC builds byte-reproducible. Use the retail timestamp for the
+// target Spanish build instead of compiler wall-clock macros.
+#if GAME_LANGUAGE == LANGUAGE_SPANISH
+const char BuildDateTime[] = "2004 07 20 15:50";
+#else
+const char BuildDateTime[] = "2004 04 26 11:20";
+#endif
 #elif GAME_LANGUAGE == LANGUAGE_SPANISH
 const char BuildDateTime[] = "2004 07 20 15:50";
 #elif GAME_LANGUAGE == LANGUAGE_ITALIAN
