@@ -101,6 +101,40 @@ jobs:
           test "$(grep -c 'LOCALID_RUBY' data/maps/MtEmber_RubyPath_B3F/map.json)" -eq 0
           test "$(grep -c 'LOCALID_RUBY' data/maps/MtEmber_RubyPath_B5F/map.json)" -eq 1
 
+      - name: Validate modern category and contact data
+        run: |
+          python3 - <<'PY'
+          import re
+          from pathlib import Path
+
+          text = Path("src/data/battle_moves.h").read_text()
+          def block(move):
+              m = re.search(r"\[" + move + r"\]\s*=\s*\{(.*?)(?=\n\s*\[MOVE_|\n\};)", text, re.S)
+              assert m, move
+              return m.group(1)
+
+          # Alias-sensitive category corrections found by comparison against
+          # modern Gen I-III move data.
+          for move in ("MOVE_HI_JUMP_KICK","MOVE_FAINT_ATTACK","MOVE_SMELLING_SALT"):
+              assert ".category = MOVE_CATEGORY_PHYSICAL" in block(move), move
+
+          # No move with nonzero base power may remain accidentally marked STATUS.
+          for m in re.finditer(r"\[(MOVE_[A-Z0-9_]+)\]\s*=\s*\{(.*?)(?=\n\s*\[MOVE_|\n\};)", text, re.S):
+              body=m.group(2)
+              p=re.search(r"\.power\s*=\s*(\d+)",body)
+              cat=re.search(r"\.category\s*=\s*MOVE_CATEGORY_(PHYSICAL|SPECIAL|STATUS)",body)
+              if p and cat and int(p.group(1)) > 0:
+                  assert cat.group(1) != "STATUS", m.group(1)
+
+          # The complete Gen III -> modern contact delta for Gen I-III moves.
+          for move in ("MOVE_ANCIENT_POWER","MOVE_OVERHEAT"):
+              assert "FLAG_MAKES_CONTACT" not in block(move), move
+          for move in ("MOVE_COVET","MOVE_FAINT_ATTACK","MOVE_FAKE_OUT"):
+              assert "FLAG_MAKES_CONTACT" in block(move), move
+
+          print("Modern category/contact invariants validated")
+          PY
+
       - name: Validate direct trade-item evolutions
         run: |
           python3 - <<'PY'
