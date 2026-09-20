@@ -2,6 +2,7 @@
 """Static obtainability audit for ENC-022 baby Pokémon and hidden breeding prerequisites."""
 
 import json
+import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -30,12 +31,97 @@ def wild_species():
     return found
 
 
+
+def all_map_script_species_sources():
+    """Species that are directly awarded or battled by explicit map-script commands."""
+    found = set()
+    patterns = (
+        r"\bgivemon\s+(SPECIES_[A-Z0-9_]+)",
+        r"\bgiveegg\s+(SPECIES_[A-Z0-9_]+)",
+        r"\bseteventmon\s+(SPECIES_[A-Z0-9_]+)",
+        r"\bsetwildbattle\s+(SPECIES_[A-Z0-9_]+)",
+    )
+    for path in (ROOT / "data/maps").glob("*/scripts.inc"):
+        text = path.read_text(encoding="utf-8")
+        for pattern in patterns:
+            found.update(re.findall(pattern, text))
+    return found
+
+
+def ingame_trade_species():
+    text = read("src/data/ingame_trades.h")
+    return set(re.findall(r"\.species\s*=\s*(SPECIES_[A-Z0-9_]+)", text))
+
+
+def evolution_edges():
+    """Parse source -> target evolution edges without depending on evolution method."""
+    text = read("src/data/pokemon/evolution.h")
+    edges = {}
+    current = None
+    for line in text.splitlines():
+        source = re.match(r"\s*\[(SPECIES_[A-Z0-9_]+)\]\s*=", line)
+        if source:
+            current = source.group(1)
+            edges.setdefault(current, set())
+            line = line[source.end():]
+        if current is not None:
+            for target in re.findall(r"SPECIES_[A-Z0-9_]+", line):
+                if target != current:
+                    edges[current].add(target)
+    return edges
+
+
+def kanto_species():
+    text = read("include/constants/species.h")
+    result = set()
+    for name, number in re.findall(r"#define\s+(SPECIES_[A-Z0-9_]+)\s+(\d+)", text):
+        if 1 <= int(number) <= 151:
+            result.add(name)
+    assert len(result) == 151, f"expected 151 Kanto species constants, got {len(result)}"
+    return result
+
+
+def evolution_closure(seed, edges):
+    reachable = set(seed)
+    changed = True
+    while changed:
+        changed = False
+        for source, targets in edges.items():
+            if source in reachable:
+                before = len(reachable)
+                reachable.update(targets)
+                changed |= len(reachable) != before
+    return reachable
+
 def require(text, token, source):
     assert token in text, f"{source}: missing {token}"
 
 
 def main():
     wild = wild_species()
+    scripted = all_map_script_species_sources()
+    trades_out = ingame_trade_species()
+    edges = evolution_edges()
+
+    # Gate 7 must prove the self-contained Kanto Pokédex, not merely sample a
+    # handful of FireRed families. Direct local sources include wild encounters,
+    # explicit map-script gifts/battles and in-game trade outputs. Fossil/Porygon
+    # paths use variable-driven scripts, so their source species are added only
+    # after their dedicated path checks below.
+    kanto_direct = wild | scripted | trades_out | {
+        "SPECIES_PORYGON",
+        "SPECIES_OMANYTE",
+        "SPECIES_KABUTO",
+        "SPECIES_AERODACTYL",
+        "SPECIES_HITMONLEE",
+        "SPECIES_HITMONCHAN",
+    }
+    kanto_reachable = evolution_closure(kanto_direct, edges)
+    missing_kanto = sorted(kanto_species() - kanto_reachable)
+    assert not missing_kanto, (
+        "Kanto one-save obtainability gap(s): " + ", ".join(missing_kanto)
+    )
+
 
     # FireRed remains the base table. Every representative family that was
     # already FireRed-exclusive stays locally catchable after the LG additions.
@@ -177,10 +263,15 @@ def main():
 
     # Renewable/direct evolution resources required by Full must be stocked on
     # the approved post-National path rather than depending on another cart.
+
+    # Evolution resources needed by the self-contained Kanto/approved Johto
+    # routes must themselves have local renewable or vanilla shop sources.
     celadon = read("data/maps/CeladonCity_DepartmentStore_4F/scripts.inc")
     for token in (
-        "ITEM_SUN_STONE", "ITEM_MOON_STONE", "ITEM_KINGS_ROCK",
-        "ITEM_METAL_COAT", "ITEM_DRAGON_SCALE", "ITEM_UP_GRADE",
+        "ITEM_FIRE_STONE", "ITEM_WATER_STONE", "ITEM_THUNDER_STONE",
+        "ITEM_LEAF_STONE", "ITEM_SUN_STONE", "ITEM_MOON_STONE",
+        "ITEM_KINGS_ROCK", "ITEM_METAL_COAT", "ITEM_DRAGON_SCALE",
+        "ITEM_UP_GRADE",
     ):
         require(celadon, token, "Celadon 4F scripts")
 
@@ -209,9 +300,9 @@ def main():
         require(togepi, token, "FiveIsland_WaterLabyrinth/scripts.inc")
 
     print(
-        "Gate 7 obtainability PASS: FireRed families are preserved; approved LeafGreen, "
-        "starter/Eevee/Safari/Altering Cave sources exist; fossils, direct evolutions, "
-        "event legends/mythicals and all Gen III baby prerequisites have one-save paths."
+        "Gate 7 static obtainability PASS: all 151 Kanto species close from local "
+        "sources/evolutions; frozen LeafGreen, starter/Eevee/Safari/Altering Cave, "
+        "fossil, event, direct-evolution and baby prerequisite paths are present."
     )
 
 
