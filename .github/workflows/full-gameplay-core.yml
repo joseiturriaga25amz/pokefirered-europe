@@ -580,5 +580,8 @@ jobs:
       - name: Validate Full save namespace ownership
         run: python3 tools/validate_full_save_namespace.py
 
+      - name: Validate persistent event state machines
+        run: python3 tools/validate_full_event_states.py
+
       - name: Record ROM checksum
         run: sha1sum pokefirered_modern_es.gba
