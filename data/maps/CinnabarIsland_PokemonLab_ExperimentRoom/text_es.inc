@@ -60,7 +60,11 @@ CinnabarIsland_PokemonLab_ExperimentRoom_Text_ThatFossilIsOfMonMakeItLiveAgain::
 @ TODO: Resolve text dump error below?
 CinnabarIsland_PokemonLab_ExperimentRoom_Text_HandedFossilToWeirdDoctor::
     .string "¡Date prisa y dame eso!\p"
+#ifdef BUGFIX
+    .string "{COLOR DARK_GRAY}¡{PLAYER} le dio {STR_VAR_2}\n"
+#else
     .string "{FONT_NORMAL}¡{PLAYER} le dio {STR_VAR_2}\n"
+#endif
     .string "al extraño científico!$"
 
 CinnabarIsland_PokemonLab_ExperimentRoom_Text_TakesTimeGoForWalk::
