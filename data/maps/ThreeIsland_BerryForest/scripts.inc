@@ -54,6 +54,48 @@ ThreeIsland_BerryForest_Movement_LostelleLookAround::
 	step_end
 
 ThreeIsland_BerryForest_EventScript_WelcomeSign::
+	goto_if_set FLAG_FULL_CELEBI_CAUGHT, ThreeIsland_BerryForest_EventScript_WelcomeSignVanilla
+	goto_if_set FLAG_FULL_CELEBI_KO_PENDING, ThreeIsland_BerryForest_EventScript_WelcomeSignVanilla
+	specialvar VAR_RESULT, IsNationalPokedexEnabled
+	goto_if_eq VAR_RESULT, FALSE, ThreeIsland_BerryForest_EventScript_WelcomeSignVanilla
+	goto_if_unset FLAG_SYS_CAN_LINK_WITH_RS, ThreeIsland_BerryForest_EventScript_WelcomeSignVanilla
+	goto_if_ne VAR_FULL_ROAMER_SEQUENCE, 3, ThreeIsland_BerryForest_EventScript_WelcomeSignVanilla
+	goto ThreeIsland_BerryForest_EventScript_FullCelebi
+	end
+
+ThreeIsland_BerryForest_EventScript_FullCelebi::
+	goto_if_questlog EventScript_ReleaseEnd
+	lockall
+	setvar VAR_FULL_CELEBI_QUEST, 1
+	waitse
+	playmoncry SPECIES_CELEBI, CRY_MODE_ENCOUNTER
+	msgbox ThreeIsland_BerryForest_Text_FullCelebiAppears
+	waitmoncry
+	special Full_CreateCelebiEventMon
+	setflag FLAG_SYS_SPECIAL_WILD_BATTLE
+	special StartLegendaryBattle
+	waitstate
+	clearflag FLAG_SYS_SPECIAL_WILD_BATTLE
+	specialvar VAR_RESULT, GetBattleOutcome
+	goto_if_eq VAR_RESULT, B_OUTCOME_CAUGHT, ThreeIsland_BerryForest_EventScript_FullCelebiCaught
+	goto_if_eq VAR_RESULT, B_OUTCOME_WON, ThreeIsland_BerryForest_EventScript_FullCelebiDefeated
+	releaseall
+	end
+
+ThreeIsland_BerryForest_EventScript_FullCelebiCaught::
+	setflag FLAG_FULL_CELEBI_CAUGHT
+	clearflag FLAG_FULL_CELEBI_KO_PENDING
+	setvar VAR_FULL_CELEBI_QUEST, 2
+	releaseall
+	end
+
+ThreeIsland_BerryForest_EventScript_FullCelebiDefeated::
+	setflag FLAG_FULL_CELEBI_KO_PENDING
+	setvar VAR_FULL_CELEBI_QUEST, 2
+	releaseall
+	end
+
+ThreeIsland_BerryForest_EventScript_WelcomeSignVanilla::
 	msgbox ThreeIsland_BerryForest_Text_WelcomeToBerryForest, MSGBOX_SIGN
 	end
 
