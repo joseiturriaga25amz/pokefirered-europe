@@ -21,6 +21,18 @@ PokemonMansion_2F_EventScript_DiaryJuly5th::
 	end
 
 PokemonMansion_2F_EventScript_DiaryJuly10th::
+	goto_if_ne VAR_FULL_MEW_QUEST, 1, PokemonMansion_2F_EventScript_DiaryJuly10thVanilla
+	lockall
+	waitse
+	playmoncry SPECIES_MEW, CRY_MODE_NORMAL
+	msgbox PokemonMansion_2F_Text_FullMewSighting2
+	waitmoncry
+	setvar VAR_FULL_MEW_QUEST, 2
+	msgbox PokemonMansion_1F_Text_ChristenedDiscoveredMonMew, MSGBOX_SIGN
+	releaseall
+	end
+
+PokemonMansion_2F_EventScript_DiaryJuly10thVanilla::
 	msgbox PokemonMansion_1F_Text_ChristenedDiscoveredMonMew, MSGBOX_SIGN
 	end
 
