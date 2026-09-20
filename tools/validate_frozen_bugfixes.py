@@ -78,8 +78,12 @@ def main():
     # declared in the B3F script include, but B3F must not own the object.
     b3 = json.loads(read("data/maps/MtEmber_RubyPath_B3F/map.json"))
     b5 = json.loads(read("data/maps/MtEmber_RubyPath_B5F/map.json"))
-    b3_ids = {obj["local_id"] for obj in b3.get("object_events", [])}
-    b5_ids = {obj["local_id"] for obj in b5.get("object_events", [])}
+    b3_ids = {
+        obj["local_id"] for obj in b3.get("object_events", []) if "local_id" in obj
+    }
+    b5_ids = {
+        obj["local_id"] for obj in b5.get("object_events", []) if "local_id" in obj
+    }
     assert "LOCALID_RUBY" not in b3_ids, "BUG-012: Ruby object still lives on B3F"
     assert "LOCALID_RUBY" in b5_ids, "BUG-012: Ruby object missing from B5F"
 
