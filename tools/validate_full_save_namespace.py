@@ -79,7 +79,7 @@ def main():
     assert not collisions, "Full namespace aliases are live elsewhere: " + ", ".join(collisions)
 
     load_save = read("src/load_save.c")
-    assert "memset(&gSaveBlock1Ptr->full, 0, sizeof(gSaveBlock1Ptr->full));" in load_save
+    assert "memset(&gSaveBlock1Ptr->fullHeader, 0, sizeof(gSaveBlock1Ptr->fullHeader));" in load_save
     assert "gSaveBlock1Ptr->bagPocket_Items" not in load_save
     assert "unused_348C" not in load_save
 
