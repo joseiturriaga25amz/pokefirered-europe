@@ -101,6 +101,25 @@ jobs:
           test "$(grep -c 'LOCALID_RUBY' data/maps/MtEmber_RubyPath_B3F/map.json)" -eq 0
           test "$(grep -c 'LOCALID_RUBY' data/maps/MtEmber_RubyPath_B5F/map.json)" -eq 1
 
+      - name: Validate direct trade-item evolutions
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(Path("src/data/items.json").read_text())["items"]
+          by_id = {x["itemId"]: x for x in data}
+          for item_id in ("ITEM_METAL_COAT","ITEM_DRAGON_SCALE","ITEM_UP_GRADE","ITEM_KINGS_ROCK"):
+              item = by_id[item_id]
+              assert item["fieldUseFunc"] == "FieldUseFunc_EvoItem", item_id
+              assert item["type"] == "ITEM_TYPE_PARTY_MENU", (item_id, item["type"])
+
+          evo = Path("src/pokemon.c").read_text()
+          assert "gEvolutionTable[species][i].method == EVO_TRADE_ITEM" in evo
+          assert "gEvolutionTable[species][i].param == evolutionItem" in evo
+          print("Direct trade-item evolution UI path validated")
+          PY
+
       - name: Validate approved wild encounter rates
         run: |
           python3 - <<'PY'
