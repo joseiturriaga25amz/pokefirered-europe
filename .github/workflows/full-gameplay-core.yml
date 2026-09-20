@@ -577,5 +577,8 @@ jobs:
       - name: Validate one-save baby obtainability
         run: python3 tools/validate_full_obtainability.py
 
+      - name: Validate Full save namespace ownership
+        run: python3 tools/validate_full_save_namespace.py
+
       - name: Record ROM checksum
         run: sha1sum pokefirered_modern_es.gba
