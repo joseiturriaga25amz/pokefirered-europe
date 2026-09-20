@@ -499,6 +499,9 @@ jobs:
           print(f"Validated {len(expected)} approved encounter rates")
           PY
 
+      - name: Lock semantically audited gameplay data blobs
+        run: python3 tools/validate_audited_data_blobs.py
+
       - name: Validate frozen Gary and boss rosters
         run: |
           python3 - <<'PY'
