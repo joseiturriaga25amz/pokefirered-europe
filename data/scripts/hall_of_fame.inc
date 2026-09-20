@@ -19,6 +19,8 @@ EventScript_ResetLegendaries::
 	call_if_set FLAG_FULL_ARTICUNO_KO_PENDING, EventScript_FullResetArticunoAfterKO
 	call_if_set FLAG_FULL_MOLTRES_KO_PENDING, EventScript_FullResetMoltresAfterKO
 	call_if_set FLAG_FULL_MEWTWO_KO_PENDING, EventScript_FullResetMewtwoAfterKO
+	call_if_set FLAG_FULL_MEW_KO_PENDING, EventScript_FullResetMewAfterKO
+	call_if_set FLAG_FULL_CELEBI_KO_PENDING, EventScript_FullResetCelebiAfterKO
 	return
 
 EventScript_FullResetZapdosAfterKO::
@@ -39,6 +41,16 @@ EventScript_FullResetMoltresAfterKO::
 EventScript_FullResetMewtwoAfterKO::
 	clearflag FLAG_FOUGHT_MEWTWO
 	clearflag FLAG_FULL_MEWTWO_KO_PENDING
+	return
+
+EventScript_FullResetMewAfterKO::
+	clearflag FLAG_FULL_MEW_KO_PENDING
+	setvar VAR_FULL_MEW_QUEST, 4
+	return
+
+EventScript_FullResetCelebiAfterKO::
+	clearflag FLAG_FULL_CELEBI_KO_PENDING
+	setvar VAR_FULL_CELEBI_QUEST, 0
 	return
 
 EventScript_ResetEliteFourEnd::
