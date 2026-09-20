@@ -197,9 +197,9 @@ Gate 11 found that the trainer-party data already cloned every Bulbasaur/Charman
 **Status:** FIXED / CI PENDING  
 During follow-up review of RC-F028, the new per-battler history path in `Cmd_get_hold_effect` called `ItemId_GetHoldEffect(BATTLE_HISTORY->itemEffects[battlerId])`. That history field is populated by `RecordItemEffectBattle` with the hold-effect value itself (for example `HOLD_EFFECT_FOCUS_BAND`), not an item ID. Passing that value back through the item-ID lookup could therefore return the hold effect of an unrelated low-numbered item and mislead AI decisions. The BUGFIX path now returns the recorded hold-effect value directly, matching the meaning of the stored field. `validate_frozen_bugfixes.py` now locks this invariant.
 
-### RC-F031 — QOL-007 Repel chaining was documented but not implemented
-**Status:** FIXED / CI PENDING  
-The frozen specification requires an immediate prompt when a Repel expires, with Yes/No handling and no invalid loop when stock is exhausted. The active `EventScript_RepelWoreOff` still only displayed the vanilla expiration message, even though `VAR_FULL_LAST_REPEL` was already recorded when using Repels. The script now prefers the last-used Repel type when another remains, otherwise falls back through Max/Super/normal Repel, asks before consuming it, reapplies the exact 250/200/100-step counter, and exits cleanly on No or no stock. `validate_rc_freeze.py` now gates the chaining state path; final interaction behavior remains a MyBoy requirement.
+### RC-F031 — QOL-007 Repel audit initially inspected the wrong language script
+**Status:** FALSE POSITIVE CORRECTED / STATIC PASS  
+The first recovery pass inspected `data/scripts/repel.inc`, but `firered_es_modern` actually compiles `data/scripts/spanish/repel.inc`. The Spanish script already contained the chained-Repel implementation before recovery: stock check, Yes/No prompt, preference for `VAR_FULL_LAST_REPEL`, fallback to another available Repel, exact 100/200/250-step counters, and clean no-stock/No exits. The temporary edit to the generic non-target script was reverted to baseline, and `validate_rc_freeze.py` now points at the Spanish script that is actually compiled. Final interaction behavior remains a MyBoy requirement.
 
 ### RC-F032 — MODERN revision-0 build was not inheriting tested link synchronization fixes
 **Status:** FIXED / CI PENDING  
