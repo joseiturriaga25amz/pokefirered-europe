@@ -583,5 +583,8 @@ jobs:
       - name: Validate persistent event state machines
         run: python3 tools/validate_full_event_states.py
 
+      - name: Validate frozen technical bugfixes
+        run: python3 tools/validate_frozen_bugfixes.py
+
       - name: Record ROM checksum
         run: sha1sum pokefirered_modern_es.gba
