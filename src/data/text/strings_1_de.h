@@ -293,6 +293,7 @@ const u8 gText_PkmnBecameHealthy[] = _("{STR_VAR_1} erholte sich.{PAUSE_UNTIL_PR
 const u8 gText_MovesPPIncreased[] = _("AP von {STR_VAR_1}\nwurden angehoben.{PAUSE_UNTIL_PRESS}");
 const u8 gText_PkmnElevatedToLvVar2[] = _("{STR_VAR_1} erreicht\nLv. {STR_VAR_2}.");
 const u8 gText_PkmnBaseVar2StatIncreased[] = _("{STR_VAR_2} von\n{STR_VAR_1} wurde angehoben.{PAUSE_UNTIL_PRESS}");
+const u8 gText_EvReducingBerryWorked[] = _("Die BEERE zeigte Wirkung\nbei {STR_VAR_1}.{PAUSE_UNTIL_PRESS}");
 const u8 gText_PkmnSnappedOutOfConfusion[] = _("{STR_VAR_1} ist nicht\nmehr verwirrt.{PAUSE_UNTIL_PRESS}");
 const u8 gText_PkmnGotOverInfatuation[] = _("{STR_VAR_1} fühlt sich nicht\nmehr angezogen.{PAUSE_UNTIL_PRESS}");
 ALIGNED(4) const u8 gText_OnlyPkmnForBattle[] = _("Das ist das einzige\nPOKéMON zum Kampf.");
