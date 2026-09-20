@@ -45,6 +45,12 @@ jobs:
           grep -q 'clearflag FLAG_LUGIA_FLEW_AWAY' data/scripts/hall_of_fame.inc
           grep -q 'clearflag FLAG_HO_OH_FLEW_AWAY' data/scripts/hall_of_fame.inc
           grep -q 'clearflag FLAG_DEOXYS_FLEW_AWAY' data/scripts/hall_of_fame.inc
+          grep -q 'VAR_FULL_ROAMER_SEQUENCE' src/roamer.c
+          grep -q 'return SPECIES_SUICUNE' src/roamer.c
+          grep -q 'return SPECIES_RAIKOU' src/roamer.c
+          grep -q 'return SPECIES_ENTEI' src/roamer.c
+          grep -q 'if (gBattleOutcome == B_OUTCOME_CAUGHT)' src/battle_main.c
+          grep -q 'special InitRoamer' data/maps/OneIsland_PokemonCenter_1F/scripts.inc
 
       - name: Validate approved wild encounter rates
         run: |
