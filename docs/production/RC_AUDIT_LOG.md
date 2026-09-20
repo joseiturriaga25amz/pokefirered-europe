@@ -221,3 +221,11 @@ The Spanish target includes `data/scripts/spanish/hall_of_fame.inc`, while Gate 
 **Status:** FIXED / DOCUMENTED  
 The second-pass audit found that `PROJECT_CONTINUITY.md` and `NEXT_SESSION.md` still described an older code-affecting commit and implied that later descendants were documentation-only / already covered by consolidated CI. Multiple functional audit repairs had been added after that state, so a crash or new session could incorrectly inherit an obsolete CI PASS or ROM checksum and freeze the wrong payload. Continuity has been rewritten to treat older CI/checksums as historical evidence only, require exact-current-HEAD CI before freeze, and include the new adversarial second-pass audit in the mandatory resume path.
 
+### RC-F037 — Three Spanish localized strings still used Japanese font-switch control codes
+**Status:** FIXED / CI PENDING  
+Gate 2A reviewed current upstream localization bugfix work and confirmed the same issue in the Spanish target: the Celadon rooftop drink prompt, Cinnabar fossil handoff text, and Vermilion S.S. Ticket messages used `FONT_NORMAL`/`FONT_MALE` control codes where localized builds should change text color instead. Under `BUGFIX`, the Spanish strings now use `COLOR DARK_GRAY` and `COLOR BLUE`, preserving the original fallback for non-BUGFIX builds. `validate_frozen_bugfixes.py` now gates the Spanish fixes.
+
+### RC-F038 — RC freeze validator truncated nested C functions and produced a false CI failure
+**Status:** FIXED / TOOLING PASS  
+The consolidated workflow was green through build, reproducibility and the earlier gameplay gates, then failed inside `validate_rc_freeze.py` while checking the TM sell function. The validator extracted a function using the first `\n}` after its signature, which is unsafe for any function containing nested braces and can truncate the inspected body. The actual TM sell path already contained `gText_OhNoICantBuyThat` and no `RemoveBagItem`; the CI failure was a validator parser defect rather than a gameplay regression. The RC validator now extracts complete C functions with balanced-brace parsing before asserting teaching/sell invariants.
+
