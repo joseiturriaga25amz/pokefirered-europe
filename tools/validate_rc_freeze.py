@@ -145,6 +145,25 @@ def main() -> None:
     assert "bagPocket_Items" not in init_full
     assert "unused_348C" not in init_full
 
+    # QOL-001 / unique-TM economy: TMs are permanent single-copy unlocks.
+    item_c = read("src/item.c")
+    assert "if (pocket == POCKET_TM_CASE - 1 && itemId < ITEM_HM01)" in item_c
+    assert "if (count != 1 || CheckBagHasItem(itemId, 1))" in item_c
+    assert "if (pocket == POCKET_TM_CASE - 1 && itemId < ITEM_HM01 && count != 1)" in item_c
+
+    shop_c = read("src/shop.c")
+    assert "if (itemId >= ITEM_TM01 && itemId < ITEM_HM01 && BagGetQuantityByItemId(itemId) > 0)" in shop_c
+    assert "if (tItemId >= ITEM_TM01 && tItemId < ITEM_HM01)" in shop_c
+    assert "sShopData.maxQuantity = 1;" in shop_c
+
+    tm_case = read("src/tm_case.c")
+    assert "static void Task_SelectedTMHM_Sell" in tm_case
+    sell_start = tm_case.index("static void Task_SelectedTMHM_Sell(u8 taskId)")
+    sell_end = tm_case.index("\n}", sell_start) + 2
+    sell_func = tm_case[sell_start:sell_end]
+    assert "RemoveBagItem" not in sell_func
+    assert "gText_OhNoICantBuyThat" in sell_func
+
     # COMP-001: do not extend Gen III species/move/item ID spaces.
     species_h = read("include/constants/species.h")
     moves_h = read("include/constants/moves.h")
