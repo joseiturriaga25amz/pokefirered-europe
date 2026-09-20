@@ -1238,7 +1238,7 @@ static void CB2_PreInitMultiBattle(void)
         }
         break;
     case 2:
-#if REVISION >= 0xA
+#if defined(BUGFIX) || REVISION >= 0xA
         if (IsLinkTaskFinished() && !gPaletteFade.active)
 #else
         if (!gPaletteFade.active)
