@@ -162,6 +162,157 @@ def main():
     museum = read("data/maps/PewterCity_Museum_1F/scripts.inc")
     require(museum, "VAR_FULL_AURORA_QUEST, 1", "setvar VAR_FULL_AURORA_QUEST, 2")
 
+    # Sequential roamers: capture advances Suicune -> Raikou -> Entei -> done,
+    # while KO heals/repositions the same identity and InitRoamer cannot restart a
+    # completed sequence.
+    roamer = read("src/roamer.c")
+    require(
+        roamer,
+        "case 0:\n        return SPECIES_SUICUNE;",
+        "case 1:\n        return SPECIES_RAIKOU;",
+        "case 2:\n        return SPECIES_ENTEI;",
+        "if (ROAMER->active || VarGet(VAR_FULL_ROAMER_SEQUENCE) >= 3)",
+        "if (ROAMER->hp == 0)",
+        "ROAMER->hp = GetMonData(mon, MON_DATA_MAX_HP);",
+        "RoamerMoveToOtherLocationSet();",
+        "VarSet(VAR_FULL_ROAMER_SEQUENCE, sequence + 1);",
+        "CreateInitialRoamerMon();",
+        "VarSet(VAR_FULL_ROAMER_SEQUENCE, 3);",
+    )
+    update = block(roamer, "void UpdateRoamerHPStatus(struct Pokemon *mon)")
+    assert "VAR_FULL_ROAMER_SEQUENCE" not in update
+    inactive = block(roamer, "void SetRoamerInactive(void)")
+    assert inactive.index("VarSet(VAR_FULL_ROAMER_SEQUENCE, sequence + 1);") < inactive.index("CreateInitialRoamerMon();")
+
+    # Aurora quest is a 0 -> 1 (Celio signal) -> 2 (Pewter analysis) -> 3
+    # (ticket delivered) machine. A full bag must not advance the final state.
+    museum = read("data/maps/PewterCity_Museum_1F/scripts.inc")
+    require(
+        celio,
+        "goto_if_eq VAR_FULL_AURORA_QUEST, 0, OneIsland_PokemonCenter_1F_EventScript_FullDetectAuroraSignal",
+        "goto_if_eq VAR_FULL_AURORA_QUEST, 2, OneIsland_PokemonCenter_1F_EventScript_FullGiveAuroraTicket",
+        "setvar VAR_FULL_AURORA_QUEST, 1",
+        "setvar VAR_FULL_AURORA_QUEST, 3",
+    )
+    require(
+        museum,
+        "goto_if_eq VAR_FULL_AURORA_QUEST, 1, PewterCity_Museum_1F_EventScript_FullAnalyzeAuroraSignal",
+        "setvar VAR_FULL_AURORA_QUEST, 2",
+    )
+    ticket_no_room = block(celio, "OneIsland_PokemonCenter_1F_EventScript_FullTicketNoRoom")
+    assert "setvar VAR_FULL_MYSTIC_QUEST" not in ticket_no_room
+    assert "setvar VAR_FULL_AURORA_QUEST" not in ticket_no_room
+
+    # MysticTicket is gated by all three captured birds, not merely prior fights
+    # that are still waiting for Hall-of-Fame KO recovery.
+    mystic = block(celio, "OneIsland_PokemonCenter_1F_EventScript_FullPostgameQuests")
+    for species in ("ARTICUNO", "ZAPDOS", "MOLTRES"):
+        require(
+            mystic,
+            f"goto_if_unset FLAG_FOUGHT_{species}",
+            f"goto_if_set FLAG_FULL_{species}_KO_PENDING",
+        )
+    require(
+        celio,
+        "setflag FLAG_RECEIVED_MYSTIC_TICKET",
+        "setflag FLAG_ENABLE_SHIP_NAVEL_ROCK",
+        "setvar VAR_FULL_MYSTIC_QUEST, 1",
+    )
+
+    # Altering Cave selector persists one of the nine original table indices.
+    cave = read("data/maps/SixIsland_AlteringCave/scripts.inc")
+    altering_species = (
+        "Zubat", "Mareep", "Pineco", "Houndour", "Teddiursa",
+        "Aipom", "Shuckle", "Stantler", "Smeargle",
+    )
+    for value, species in enumerate(altering_species):
+        require(
+            cave,
+            f"SixIsland_AlteringCave_EventScript_Set{species}::",
+            f"setvar VAR_ALTERING_CAVE_WILD_SET, {value}",
+        )
+    require(
+        cave,
+        "case 127, SixIsland_AlteringCave_EventScript_ResearcherEnd",
+        "SixIsland_AlteringCave_EventScript_ResearcherChanged::",
+    )
+
+    # Porygon remains a repeatable coin purchase: the species-specific branch
+    # sets the frozen price and returns to the generic prize path without a
+    # one-time ownership flag; successful party/PC awards both remove coins.
+    game_corner = read("data/maps/CeladonCity_GameCorner_PrizeRoom/scripts.inc")
+    porygon = block(game_corner, "CeladonCity_GameCorner_PrizeRoom_EventScript_Porygon")
+    require(porygon, "SPECIES_PORYGON", "setvar VAR_TEMP_2, 5000")
+    assert "setflag " not in porygon
+    require(
+        game_corner,
+        "CeladonCity_GameCorner_PrizeRoom_EventScript_GivePorygon::",
+        "givemon VAR_TEMP_1, 26",
+    )
+    for label in (
+        "CeladonCity_GameCorner_PrizeRoom_EventScript_ReceivedMonParty",
+        "CeladonCity_GameCorner_PrizeRoom_EventScript_ReceivedMonPC",
+    ):
+        require(block(game_corner, label), "removecoins VAR_TEMP_2")
+
+    # The 15 ordinary move tutors are first-use-free and repeat-paid. Their
+    # persisted vanilla tutor flag selects the repeat branch; payment happens
+    # only after a successful repeat teaching choice.
+    tutors = read("data/scripts/spanish/move_tutors.inc")
+    tutor_states = (
+        ("DoubleEdge", "FLAG_TUTOR_DOUBLE_EDGE", 5000),
+        ("ThunderWave", "FLAG_TUTOR_THUNDER_WAVE", 6500),
+        ("RockSlide", "FLAG_TUTOR_ROCK_SLIDE", 7500),
+        ("Explosion", "FLAG_TUTOR_EXPLOSION", 6000),
+        ("MegaPunch", "FLAG_TUTOR_MEGA_PUNCH", 1500),
+        ("MegaKick", "FLAG_TUTOR_MEGA_KICK", 2500),
+        ("DreamEater", "FLAG_TUTOR_DREAM_EATER", 3000),
+        ("Softboiled", "FLAG_TUTOR_SOFT_BOILED", 5000),
+        ("Substitute", "FLAG_TUTOR_SUBSTITUTE", 8000),
+        ("SwordsDance", "FLAG_TUTOR_SWORDS_DANCE", 10000),
+        ("SeismicToss", "FLAG_TUTOR_SEISMIC_TOSS", 3500),
+        ("Counter", "FLAG_TUTOR_COUNTER", 4000),
+        ("Metronome", "FLAG_TUTOR_METRONOME", 1000),
+        ("Mimic", "FLAG_TUTOR_MIMIC", 2000),
+        ("BodySlam", "FLAG_TUTOR_BODY_SLAM", 6000),
+    )
+    for name, flag, price in tutor_states:
+        require(tutors, f"goto_if_set {flag}, EventScript_{name}Repeat", f"setflag {flag}")
+        repeat = block(tutors, f"EventScript_{name}Repeat")
+        require(repeat, f"checkmoney {price}", f"removemoney {price}")
+        assert repeat.index(f"checkmoney {price}") < repeat.index(f"removemoney {price}")
+    require(
+        tutors,
+        "CapeBrinkTutor_EventScript_RepeatOffer::",
+        "checkmoney 10000",
+        "CapeBrinkTutor_EventScript_ChargeRepeat::",
+        "removemoney 10000",
+    )
+
+    # Two Island berry shop progression retains its staged vanilla flags and
+    # switches every stage to the common post-National stock after National Dex.
+    two_island = read("data/maps/TwoIsland/scripts.inc")
+    for value in range(1, 5):
+        require(two_island, f"setvar VAR_MAP_SCENE_TWO_ISLAND, {value}")
+    for flag in (
+        "FLAG_TWO_ISLAND_SHOP_INTRODUCED",
+        "FLAG_TWO_ISLAND_SHOP_EXPANDED_1",
+        "FLAG_TWO_ISLAND_SHOP_EXPANDED_2",
+        "FLAG_TWO_ISLAND_SHOP_EXPANDED_3",
+    ):
+        require(two_island, f"setflag {flag}")
+    assert two_island.count(
+        "goto_if_set FLAG_SYS_NATIONAL_DEX, TwoIsland_EventScript_ShopPostNational"
+    ) == 4
+    for berry in (
+        "ITEM_POMEG_BERRY", "ITEM_KELPSY_BERRY", "ITEM_QUALOT_BERRY",
+        "ITEM_HONDEW_BERRY", "ITEM_GREPA_BERRY", "ITEM_TAMATO_BERRY",
+        "ITEM_LIECHI_BERRY", "ITEM_GANLON_BERRY", "ITEM_SALAC_BERRY",
+        "ITEM_PETAYA_BERRY", "ITEM_APICOT_BERRY", "ITEM_LANSAT_BERRY",
+        "ITEM_STARF_BERRY",
+    ):
+        require(two_island, berry)
+
     print("Persistent event-state audit PASS: terminal branches and recovery transitions are locked.")
 
 
