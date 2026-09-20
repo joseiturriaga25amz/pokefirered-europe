@@ -3302,13 +3302,10 @@ static void Task_SlideSelectedSlotsOnscreen(u8 taskId)
         PutWindowTilemap(sPartyMenuBoxes[gPartyMenu.slotId].windowId);
         PutWindowTilemap(sPartyMenuBoxes[gPartyMenu.slotId2].windowId);
         ScheduleBgCopyTilemapToVram(0);
-        // BUG: memory leak
-        // Free(sSlot1TilemapBuffer);
-        // Free(sSlot2TilemapBuffer);
-#if GAME_LANGUAGE != LANGUAGE_ENGLISH
+        // Full: both temporary slot buffers are owned by this two-mon
+        // animation and must be released in every language/build.
         Free(sSlot1TilemapBuffer);
         Free(sSlot2TilemapBuffer);
-#endif
         FinishTwoMonAction(taskId);
     }
     // Continue sliding
