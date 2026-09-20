@@ -13,6 +13,22 @@ def read(path: str) -> str:
     return (ROOT / path).read_text()
 
 
+def c_function(text: str, signature: str) -> str:
+    """Return a complete C function body using balanced braces."""
+    start = text.index(signature)
+    open_brace = text.index("{", start)
+    depth = 0
+    for i in range(open_brace, len(text)):
+        ch = text[i]
+        if ch == "{":
+            depth += 1
+        elif ch == "}":
+            depth -= 1
+            if depth == 0:
+                return text[start:i + 1]
+    raise AssertionError(f"unterminated function: {signature}")
+
+
 def main() -> None:
     prices = {
         "ITEM_CHERI_BERRY": 200,
@@ -197,19 +213,13 @@ def main() -> None:
     tm_case = read("src/tm_case.c")
     assert "static void Task_SelectedTMHM_Sell" in tm_case
     party_menu = read("src/party_menu.c")
-    learned_start = party_menu.index("static void Task_LearnedMove(u8 taskId)")
-    learned_end = party_menu.index("\n}", learned_start) + 2
-    learned_func = party_menu[learned_start:learned_end]
+    learned_func = c_function(party_menu, "static void Task_LearnedMove(u8 taskId)")
     assert "RemoveBagItem" not in learned_func
 
-    replace_start = party_menu.index("static void Task_ReplaceMoveWithTMHM(u8 taskId)")
-    replace_end = party_menu.index("\n}", replace_start) + 2
-    replace_func = party_menu[replace_start:replace_end]
+    replace_func = c_function(party_menu, "static void Task_ReplaceMoveWithTMHM(u8 taskId)")
     assert "RemoveBagItem" not in replace_func
 
-    sell_start = tm_case.index("static void Task_SelectedTMHM_Sell(u8 taskId)")
-    sell_end = tm_case.index("\n}", sell_start) + 2
-    sell_func = tm_case[sell_start:sell_end]
+    sell_func = c_function(tm_case, "static void Task_SelectedTMHM_Sell(u8 taskId)")
     assert "RemoveBagItem" not in sell_func
     assert "gText_OhNoICantBuyThat" in sell_func
 
