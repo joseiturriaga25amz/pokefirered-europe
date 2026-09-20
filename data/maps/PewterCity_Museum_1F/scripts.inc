@@ -132,7 +132,17 @@ PewterCity_Museum_1F_Movement_ApproachCounterRight::
 	step_end
 
 PewterCity_Museum_1F_EventScript_Scientist2::
-	msgbox PewterCity_Museum_1F_Text_WeHaveTwoFossilsOnExhibit, MSGBOX_NPC
+	lock
+	faceplayer
+	goto_if_eq VAR_FULL_AURORA_QUEST, 1, PewterCity_Museum_1F_EventScript_FullAnalyzeAuroraSignal
+	msgbox PewterCity_Museum_1F_Text_WeHaveTwoFossilsOnExhibit
+	release
+	end
+
+PewterCity_Museum_1F_EventScript_FullAnalyzeAuroraSignal::
+	msgbox PewterCity_Museum_1F_Text_FullAuroraSignal
+	setvar VAR_FULL_AURORA_QUEST, 2
+	release
 	end
 
 PewterCity_Museum_1F_EventScript_OldMan::
