@@ -20,6 +20,18 @@ jobs:
       - name: Build firered_es_modern
         run: make -j2 firered_es_modern
 
+      - name: Verify reproducible ROM build
+        run: |
+          cp pokefirered_modern_es.gba /tmp/pokefirered_modern_es.first.gba
+          make clean
+          make -j2 firered_es_modern
+          sha1sum /tmp/pokefirered_modern_es.first.gba pokefirered_modern_es.gba
+          if ! cmp -s /tmp/pokefirered_modern_es.first.gba pokefirered_modern_es.gba; then
+            echo "ROM build is not byte-for-byte reproducible"
+            cmp -l /tmp/pokefirered_modern_es.first.gba pokefirered_modern_es.gba | head -n 64 || true
+            exit 1
+          fi
+
       - name: Verify Full gameplay invariants
         run: |
           grep -q 'u8 category;' include/pokemon.h
