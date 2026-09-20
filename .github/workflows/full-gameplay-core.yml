@@ -466,6 +466,36 @@ jobs:
               mons = encounters[label][kind]["mons"]
               got = sum(r for m, r in zip(mons, rates[kind]) if m["species"] == species)
               assert got == want, (label, species, got, want)
+          # Gate 2 collateral-diff manifest: baseline audit found exactly these
+          # 21 FireRed encounter tables changed by the frozen ENC requirements.
+          approved_changed_tables = {
+              "sPokemonMansion1F_FireRed",
+              "sSafariZoneCenter_FireRed",
+              "sSafariZoneEast_FireRed",
+              "sSafariZoneNorth_FireRed",
+              "sSafariZoneWest_FireRed",
+              "sSeafoamIslandsB1F_FireRed",
+              "sPowerPlant_FireRed",
+              "sMtEmberExterior_FireRed",
+              "sThreeIslandBerryForest_FireRed",
+              "sFourIslandIcefallCave1F_FireRed",
+              "sFiveIslandLostCaveRoom1_FireRed",
+              "sFiveIslandLostCaveRoom4_FireRed",
+              "sFiveIslandLostCaveRoom10_FireRed",
+              "sFiveIslandWaterLabyrinth_FireRed",
+              "sSixIslandRuinValley_FireRed",
+              "sSevenIslandTanobyRuins_FireRed",
+              "sRoute5_FireRed",
+              "sRoute6_FireRed",
+              "sRoute7_FireRed",
+              "sRoute8_FireRed",
+              "sVermilionCity_FireRed",
+          }
+          touched_by_expected = {label for label, _, _, _ in expected}
+          assert touched_by_expected == approved_changed_tables, (
+              touched_by_expected ^ approved_changed_tables
+          )
+
           print(f"Validated {len(expected)} approved encounter rates")
           PY
 
