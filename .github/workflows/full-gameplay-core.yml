@@ -523,6 +523,9 @@ jobs:
           print("Frozen Gary, bosses and Resort Gorgeous payout identities validated")
           PY
 
+      - name: Validate frozen RC invariants
+        run: python3 tools/validate_rc_freeze.py
+
       - name: Validate Full trainer legality
         run: python3 tools/validate_full_trainer_sets.py
 
