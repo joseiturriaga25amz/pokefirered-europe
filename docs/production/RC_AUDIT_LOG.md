@@ -173,3 +173,7 @@ The current `validate_full_obtainability.py` prints a broad Gate 7 PASS after ch
 **Status:** FIXED / CI PENDING  
 `validate_full_obtainability.py` originally walked the entire dual-version `wild_encounters.json`, so a species present only in a LeafGreen table could incorrectly satisfy the FireRed Full one-save proof. It also seeded every in-game trade output without first proving that the requested species was obtainable. The validator now restricts wild-source discovery to `_FireRed` encounter records and closes in-game trades only when each requested species is already reachable. This hardens Gate 7 without changing gameplay data.
 
+### RC-F025 — Vanilla-save migration initializer was not invoked on Continue
+**Status:** FIXED / CI PENDING  
+`InitFullSaveData()` existed and correctly limited migration writes to the 16-byte Full header, but it was only called from new-game initialization. A valid vanilla Spanish save loaded through CONTINUE could therefore enter gameplay without receiving the required `RFFL` magic/schema header, contradicting SAVE-003/SAVE-004 and QA-004. The continue paths in `src/overworld.c` now call `InitFullSaveData()` before normal field restoration, including the Quest Log return path. This changes only the Full-owned header when the magic/version are absent.
+
