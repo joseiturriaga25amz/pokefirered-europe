@@ -890,7 +890,7 @@ void Task_LinkFullSave(u8 taskId)
         gTasks[taskId].data[0] = 1;
         break;
     case 1:
-#if REVISION >= 0xA
+#if defined(BUGFIX) || REVISION >= 0xA
         if (!IsLinkTaskFinished()) break;
 #endif
         SetLinkStandbyCallback();
