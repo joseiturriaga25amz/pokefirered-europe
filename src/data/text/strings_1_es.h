@@ -293,6 +293,7 @@ const u8 gText_PkmnBecameHealthy[] = _("{STR_VAR_1} recuperó\nsu estado.{PAUSE_
 const u8 gText_MovesPPIncreased[] = _("PP de {STR_VAR_1} subieron.{PAUSE_UNTIL_PRESS}");
 const u8 gText_PkmnElevatedToLvVar2[] = _("{STR_VAR_1} subió al \nnivel {STR_VAR_2}.");
 const u8 gText_PkmnBaseVar2StatIncreased[] = _("{STR_VAR_2} de\n{STR_VAR_1} subió.{PAUSE_UNTIL_PRESS}");
+const u8 gText_EvReducingBerryWorked[] = _("La BAYA hizo efecto\nen {STR_VAR_1}.{PAUSE_UNTIL_PRESS}");
 const u8 gText_PkmnSnappedOutOfConfusion[] = _("{STR_VAR_1} ya no está\nconfuso.{PAUSE_UNTIL_PRESS}");
 const u8 gText_PkmnGotOverInfatuation[] = _("{STR_VAR_1} ya no está\nenamorado.{PAUSE_UNTIL_PRESS}");
 ALIGNED(4) const u8 gText_OnlyPkmnForBattle[] = _("Es el único con el\nque puedes luchar.");
