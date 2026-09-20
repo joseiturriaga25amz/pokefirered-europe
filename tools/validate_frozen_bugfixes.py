@@ -127,6 +127,29 @@ def main():
     union_battle = read("src/union_room_battle.c")
     assert union_battle.count("#if defined(BUGFIX) || REVISION >= 0xA") >= 3
 
+    # Gate 2A / RC-F033: UBFIX must not rely on two-argument functions being
+    # aliases of three-argument functions with incompatible signatures.
+    pokemon_h = read("include/pokemon.h")
+    for token in (
+        "static inline u32 GetMonData2(struct Pokemon *mon, s32 field)",
+        "return GetMonData3(mon, field, NULL);",
+        "static inline u32 GetBoxMonData2(struct BoxPokemon *boxMon, s32 field)",
+        "return GetBoxMonData3(boxMon, field, NULL);",
+    ):
+        req(pokemon_h, token, "RC-F033")
+
+    pokemon_c = read("src/pokemon.c")
+    req(
+        pokemon_c,
+        '#ifndef UBFIX\nu32 GetMonData2(struct Pokemon *mon, s32 field) __attribute__((alias("GetMonData3")));',
+        "RC-F033",
+    )
+    req(
+        pokemon_c,
+        '#ifndef UBFIX\nu32 GetBoxMonData2(struct BoxPokemon *boxMon, s32 field) __attribute__((alias("GetBoxMonData3")));',
+        "RC-F033",
+    )
+
     # BUG-012: the Ruby object belongs to B5F. The script may remain physically
     # declared in the B3F script include, but B3F must not own the object.
     b3 = json.loads(read("data/maps/MtEmber_RubyPath_B3F/map.json"))
@@ -140,7 +163,7 @@ def main():
     assert "LOCALID_RUBY" not in b3_ids, "BUG-012: Ruby object still lives on B3F"
     assert "LOCALID_RUBY" in b5_ids, "BUG-012: Ruby object missing from B5F"
 
-    print("BUG-001..BUG-012 + RC-F028/030/032 static audit PASS: frozen, AI and link-path technical repairs remain present.")
+    print("BUG-001..BUG-012 + RC-F028/030/032/033 static audit PASS: frozen, AI, link and UBFIX accessor repairs remain present.")
 
 
 if __name__ == "__main__":
