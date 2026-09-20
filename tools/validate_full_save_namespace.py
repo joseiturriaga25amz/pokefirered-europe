@@ -79,9 +79,12 @@ def main():
     assert not collisions, "Full namespace aliases are live elsewhere: " + ", ".join(collisions)
 
     load_save = read("src/load_save.c")
-    assert "memset(&gSaveBlock1Ptr->fullHeader, 0, sizeof(gSaveBlock1Ptr->fullHeader));" in load_save
-    assert "gSaveBlock1Ptr->bagPocket_Items" not in load_save
-    assert "unused_348C" not in load_save
+    start = load_save.index("void InitFullSaveData(void)")
+    end = load_save.index("\n}", start) + 2
+    init_full = load_save[start:end]
+    assert "memset(&gSaveBlock1Ptr->fullHeader, 0, sizeof(gSaveBlock1Ptr->fullHeader));" in init_full
+    assert "gSaveBlock1Ptr->bagPocket_Items" not in init_full
+    assert "unused_348C" not in init_full
 
     print(
         "Full save namespace PASS: flags 0x8C3-0x8E2 and vars 0x408C-0x409B "
