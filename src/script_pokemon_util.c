@@ -9,6 +9,7 @@
 #include "pokedex.h"
 #include "script_pokemon_util.h"
 #include "constants/items.h"
+#include "constants/moves.h"
 #include "constants/pokemon.h"
 
 static void CB2_ReturnFromChooseHalfParty(void);
@@ -137,6 +138,27 @@ void CreateScriptedWildMon(u16 species, u8 level, u16 item)
         heldItem[1] = item >> 8;
         SetMonData(&gEnemyParty[0], MON_DATA_HELD_ITEM, heldItem);
     }
+}
+
+void Full_CreateMewEventMon(void)
+{
+    bool8 isModernFatefulEncounter = TRUE;
+
+    CreateScriptedWildMon(SPECIES_MEW, 50, ITEM_NONE);
+    SetMonMoveSlot(&gEnemyParty[0], MOVE_POUND, 0);
+    SetMonMoveSlot(&gEnemyParty[0], MOVE_TRANSFORM, 1);
+    SetMonMoveSlot(&gEnemyParty[0], MOVE_MEGA_PUNCH, 2);
+    SetMonMoveSlot(&gEnemyParty[0], MOVE_METRONOME, 3);
+    SetMonData(&gEnemyParty[0], MON_DATA_MODERN_FATEFUL_ENCOUNTER, &isModernFatefulEncounter);
+}
+
+void Full_CreateCelebiEventMon(void)
+{
+    CreateScriptedWildMon(SPECIES_CELEBI, 50, ITEM_NONE);
+    SetMonMoveSlot(&gEnemyParty[0], MOVE_PSYCHIC, 0);
+    SetMonMoveSlot(&gEnemyParty[0], MOVE_ANCIENT_POWER, 1);
+    SetMonMoveSlot(&gEnemyParty[0], MOVE_RECOVER, 2);
+    SetMonMoveSlot(&gEnemyParty[0], MOVE_HEAL_BELL, 3);
 }
 
 void ScriptSetMonMoveSlot(u8 monIndex, u16 move, u8 slot)
