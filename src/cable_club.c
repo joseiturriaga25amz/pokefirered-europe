@@ -724,7 +724,7 @@ static void Task_StartWirelessCableClubBattle(u8 taskId)
             tState = 5;
         break;
     case 5:
-#if REVISION >= 0xA
+#if defined(BUGFIX) || REVISION >= 0xA
         if (!IsLinkTaskFinished()) break;
 #endif
         SetLinkStandbyCallback();
@@ -929,7 +929,7 @@ static void Task_StartWirelessTrade(u8 taskId)
             tState++;
         break;
     case 2:
-#if REVISION >= 0xA
+#if defined(BUGFIX) || REVISION >= 0xA
         if (!IsLinkTaskFinished()) break;
 #endif
         gSelectedTradeMonPositions[TRADE_PLAYER] = 0;
