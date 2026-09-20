@@ -17,6 +17,50 @@ PokemonMansion_B1F_EventScript_Statue::
 	end
 
 PokemonMansion_B1F_EventScript_DiarySep1st::
+	goto_if_eq VAR_FULL_MEW_QUEST, 3, PokemonMansion_B1F_EventScript_FullMewFinalAppearance
+	goto_if_eq VAR_FULL_MEW_QUEST, 4, PokemonMansion_B1F_EventScript_FullMewBattle
+	msgbox PokemonMansion_B1F_Text_MewtwoIsFarTooPowerful, MSGBOX_SIGN
+	end
+
+PokemonMansion_B1F_EventScript_FullMewFinalAppearance::
+	setvar VAR_FULL_MEW_QUEST, 4
+	goto PokemonMansion_B1F_EventScript_FullMewBattle
+	end
+
+PokemonMansion_B1F_EventScript_FullMewBattle::
+	goto_if_set FLAG_FULL_MEW_CAUGHT, PokemonMansion_B1F_EventScript_DiarySep1stVanilla
+	goto_if_set FLAG_FULL_MEW_KO_PENDING, PokemonMansion_B1F_EventScript_DiarySep1stVanilla
+	goto_if_questlog EventScript_ReleaseEnd
+	lockall
+	waitse
+	playmoncry SPECIES_MEW, CRY_MODE_ENCOUNTER
+	msgbox PokemonMansion_B1F_Text_FullMewFinalAppearance
+	waitmoncry
+	special Full_CreateMewEventMon
+	setflag FLAG_SYS_SPECIAL_WILD_BATTLE
+	special StartLegendaryBattle
+	waitstate
+	clearflag FLAG_SYS_SPECIAL_WILD_BATTLE
+	specialvar VAR_RESULT, GetBattleOutcome
+	goto_if_eq VAR_RESULT, B_OUTCOME_CAUGHT, PokemonMansion_B1F_EventScript_FullMewCaught
+	goto_if_eq VAR_RESULT, B_OUTCOME_WON, PokemonMansion_B1F_EventScript_FullMewDefeated
+	releaseall
+	end
+
+PokemonMansion_B1F_EventScript_FullMewCaught::
+	setflag FLAG_FULL_MEW_CAUGHT
+	clearflag FLAG_FULL_MEW_KO_PENDING
+	setvar VAR_FULL_MEW_QUEST, 5
+	releaseall
+	end
+
+PokemonMansion_B1F_EventScript_FullMewDefeated::
+	setflag FLAG_FULL_MEW_KO_PENDING
+	setvar VAR_FULL_MEW_QUEST, 5
+	releaseall
+	end
+
+PokemonMansion_B1F_EventScript_DiarySep1stVanilla::
 	msgbox PokemonMansion_B1F_Text_MewtwoIsFarTooPowerful, MSGBOX_SIGN
 	end
 
