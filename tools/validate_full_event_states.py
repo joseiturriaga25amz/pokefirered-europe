@@ -319,6 +319,33 @@ def main():
     ):
         require(two_island, berry)
 
+    # BOSS-002: all eight Gym Leader rematches remain indefinitely repeatable.
+    # Each post-National leader route must clear its repurposed trainer flag
+    # immediately before battle and must not persist a one-shot rematch flag.
+    gym_rematches = (
+        ("PewterCity_Gym", "Brock", "FLAG_GOT_TM39_FROM_BROCK", "TRAINER_RS_AROMA_LADY"),
+        ("CeruleanCity_Gym", "Misty", "FLAG_GOT_TM03_FROM_MISTY", "TRAINER_RS_RUIN_MANIAC"),
+        ("VermilionCity_Gym", "LtSurge", "FLAG_GOT_TM34_FROM_SURGE", "TRAINER_RS_TUBER_F"),
+        ("CeladonCity_Gym", "Erika", "FLAG_GOT_TM19_FROM_ERIKA", "TRAINER_RS_TUBER_M"),
+        ("FuchsiaCity_Gym", "Koga", "FLAG_GOT_TM06_FROM_KOGA", "TRAINER_RS_COOLTRAINER_M"),
+        ("SaffronCity_Gym", "Sabrina", "FLAG_GOT_TM04_FROM_SABRINA", "TRAINER_RS_COOLTRAINER_F"),
+        ("CinnabarIsland_Gym", "Blaine", "FLAG_GOT_TM38_FROM_BLAINE", "TRAINER_RS_LADY"),
+        ("ViridianCity_Gym", "Giovanni", "FLAG_GOT_TM26_FROM_GIOVANNI", "TRAINER_RS_BEAUTY"),
+    )
+    for map_name, leader, tm_flag, trainer in gym_rematches:
+        script = read(f"data/maps/{map_name}/scripts.inc")
+        require(
+            script,
+            "goto_if_unset FLAG_SYS_NATIONAL_DEX",
+            f"goto_if_unset {tm_flag}",
+            f"cleartrainerflag {trainer}",
+            f"trainerbattle_single {trainer}",
+        )
+        offer = block(script, f"{map_name}_EventScript_FullRematchOffer")
+        assert offer.index(f"cleartrainerflag {trainer}") < offer.index(f"trainerbattle_single {trainer}")
+        assert "setflag FLAG_FULL" not in offer
+        assert "setvar VAR_FULL" not in offer
+
     print("Persistent event-state audit PASS: terminal branches and recovery transitions are locked.")
 
 
