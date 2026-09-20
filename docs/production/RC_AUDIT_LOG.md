@@ -130,3 +130,8 @@ The implementation already preserved `SaveBlock1 == 0x3D68`, the Full header at 
 ### RC-F014 — COMP-001 vanilla ID-space compatibility lacked an explicit RC gate
 **Status:** FIXED / IN VALIDATION  
 Direct baseline comparison confirms the ID spaces are unchanged: `SPECIES_EGG = 412` / `NUM_SPECIES = SPECIES_EGG`, `MOVES_COUNT = 355`, and `ITEMS_COUNT = 375`. The RC validator now locks those values so Full cannot silently introduce incompatible Pokémon, move or item IDs.
+
+
+### RC-F015 — Frozen item economy was correct but incompletely protected
+**Status:** FIXED / IN VALIDATION  
+The approved prices for all 16 type boosters, special held items, renewable evolution items, PP consumables, Lucky Egg and TM44 were present, and the post-National Celadon stock was correctly gated. The RC validator now locks those prices, requires post-National-only stock where specified, and rejects the explicitly excluded Exp. Share, Amulet Coin, Soothe Bell and Macho Brace from that shop.
