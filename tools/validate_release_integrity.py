@@ -83,6 +83,66 @@ def main():
     ):
         require(audited, f'"{path}"', "second-pass blob lock")
 
+    # Cross-layer Altering Cave audit: map object -> menu -> selector value ->
+    # runtime table index -> actual FireRed table species must all agree.
+    cave_map = __import__("json").loads(read("data/maps/SixIsland_AlteringCave/map.json"))
+    researcher = [
+        obj for obj in cave_map["object_events"]
+        if obj.get("script") == "SixIsland_AlteringCave_EventScript_Researcher"
+    ]
+    assert len(researcher) == 1, researcher
+
+    menu_h = read("include/constants/menu.h")
+    require(menu_h, "#define MULTICHOICE_FULL_ALTERING_CAVE_PAGE1", "Altering Cave menu id")
+    require(menu_h, "#define MULTICHOICE_FULL_ALTERING_CAVE_PAGE2", "Altering Cave menu id")
+
+    menu_c = read("src/script_menu.c")
+    for token in (
+        "sMultichoiceList_FullAlteringCavePage1",
+        "sMultichoiceList_FullAlteringCavePage2",
+        "[MULTICHOICE_FULL_ALTERING_CAVE_PAGE1]",
+        "[MULTICHOICE_FULL_ALTERING_CAVE_PAGE2]",
+    ):
+        require(menu_c, token, "Altering Cave menu registry")
+
+    cave = read("data/maps/SixIsland_AlteringCave/scripts.inc")
+    species = (
+        ("Zubat", "SPECIES_ZUBAT"),
+        ("Mareep", "SPECIES_MAREEP"),
+        ("Pineco", "SPECIES_PINECO"),
+        ("Houndour", "SPECIES_HOUNDOUR"),
+        ("Teddiursa", "SPECIES_TEDDIURSA"),
+        ("Aipom", "SPECIES_AIPOM"),
+        ("Shuckle", "SPECIES_SHUCKLE"),
+        ("Stantler", "SPECIES_STANTLER"),
+        ("Smeargle", "SPECIES_SMEARGLE"),
+    )
+    for value, (label, _) in enumerate(species):
+        require(cave, f"SixIsland_AlteringCave_EventScript_Set{label}::", "Altering Cave selector")
+        require(cave, f"setvar VAR_ALTERING_CAVE_WILD_SET, {value}", "Altering Cave selector")
+    require(cave, "case 127, SixIsland_AlteringCave_EventScript_ResearcherEnd", "Altering Cave cancel")
+
+    wild_c = read("src/wild_encounter.c")
+    require(wild_c, "if (alteringCaveId >= NUM_ALTERING_CAVE_TABLES)", "Altering Cave bounds")
+    require(wild_c, "i += alteringCaveId;", "Altering Cave table selection")
+    wild_h = read("include/wild_encounter.h")
+    require(wild_h, "#define NUM_ALTERING_CAVE_TABLES 9", "Altering Cave table count")
+
+    encounters = __import__("json").loads(read("src/data/wild_encounters.json"))
+    fire_tables = []
+    for group in encounters["wild_encounter_groups"]:
+        for encounter in group.get("encounters", []):
+            if (
+                encounter.get("map") == "MAP_SIX_ISLAND_ALTERING_CAVE"
+                and "FireRed" in encounter.get("base_label", "")
+            ):
+                fire_tables.append(encounter)
+    assert len(fire_tables) == 9, len(fire_tables)
+    for i, (_, expected_species) in enumerate(species):
+        mons = fire_tables[i]["land_mons"]["mons"]
+        assert mons, i
+        assert all(mon["species"] == expected_species for mon in mons), (i, expected_species)
+
     # Recovery findings must be recorded, including the corrected false positive.
     audit_log = read("docs/production/RC_AUDIT_LOG.md")
     require(audit_log, "RC-F031", "audit traceability")
