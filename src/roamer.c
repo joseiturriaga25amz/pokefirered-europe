@@ -1,9 +1,11 @@
 #include "global.h"
+#include "event_data.h"
 #include "random.h"
 #include "overworld.h"
 #include "field_specials.h"
 #include "constants/maps.h"
 #include "constants/region_map_sections.h"
+#include "constants/vars.h"
 
 // Despite having a variable to track it, the roamer is
 // hard-coded to only ever be in map group 3
@@ -79,27 +81,29 @@ void ClearRoamerData(void)
     }
 }
 
-#define GetRoamerSpecies() ({\
-    u16 a;\
-    switch (GetStarterSpecies())\
-    {\
-    default:\
-        a = SPECIES_RAIKOU;\
-        break;\
-    case SPECIES_BULBASAUR:\
-        a = SPECIES_ENTEI;\
-        break;\
-    case SPECIES_CHARMANDER:\
-        a = SPECIES_SUICUNE;\
-        break;\
-    }\
-    a;\
-})
+static u16 GetRoamerSpecies(void)
+{
+    switch (VarGet(VAR_FULL_ROAMER_SEQUENCE))
+    {
+    case 0:
+        return SPECIES_SUICUNE;
+    case 1:
+        return SPECIES_RAIKOU;
+    case 2:
+        return SPECIES_ENTEI;
+    default:
+        return SPECIES_NONE;
+    }
+}
 
 void CreateInitialRoamerMon(void)
 {
     struct Pokemon * mon = &gEnemyParty[0];
     u16 species = GetRoamerSpecies();
+
+    if (species == SPECIES_NONE)
+        return;
+
     CreateMon(mon, species, 50, USE_RANDOM_IVS, FALSE, 0, OT_ID_PLAYER_ID, 0);
     ROAMER->species = species;
     ROAMER->level = 50;
@@ -119,6 +123,9 @@ void CreateInitialRoamerMon(void)
 
 void InitRoamer(void)
 {
+    if (ROAMER->active || VarGet(VAR_FULL_ROAMER_SEQUENCE) >= 3)
+        return;
+
     ClearRoamerData();
     CreateInitialRoamerMon();
 }
@@ -242,12 +249,35 @@ void UpdateRoamerHPStatus(struct Pokemon *mon)
     ROAMER->hp = GetMonData(mon, MON_DATA_HP);
     ROAMER->status = GetMonData(mon, MON_DATA_STATUS);
 
+    // Full: a KO does not destroy the roamer. It returns on another route
+    // fully healed while retaining species, PID, IVs and shiny identity.
+    if (ROAMER->hp == 0)
+    {
+        ROAMER->hp = GetMonData(mon, MON_DATA_MAX_HP);
+        ROAMER->status = 0;
+    }
+
     RoamerMoveToOtherLocationSet();
 }
 
 void SetRoamerInactive(void)
 {
+    u16 sequence = VarGet(VAR_FULL_ROAMER_SEQUENCE);
+
     ROAMER->active = FALSE;
+
+    // Full: capturing one beast advances the fixed Suicune -> Raikou -> Entei
+    // sequence. 3 is the completed state and leaves no active roamer.
+    if (sequence < 2)
+    {
+        VarSet(VAR_FULL_ROAMER_SEQUENCE, sequence + 1);
+        ClearRoamerData();
+        CreateInitialRoamerMon();
+    }
+    else
+    {
+        VarSet(VAR_FULL_ROAMER_SEQUENCE, 3);
+    }
 }
 
 void GetRoamerLocation(u8 *mapGroup, u8 *mapNum)
