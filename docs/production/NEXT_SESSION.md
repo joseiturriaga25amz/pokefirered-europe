@@ -11,6 +11,7 @@ Read, in this order:
 3. `docs/production/RC_AUDIT_LOG.md`
 4. `docs/production/FINAL_AUDIT_PLAN.md`
 5. `docs/production/RC_MYBOY_CHECKLIST.md`
+6. `docs/production/SECOND_PASS_AUDIT.md`
 
 Only consult `docs/spec/` when a frozen design detail is needed.
 
@@ -18,7 +19,7 @@ Only consult `docs/spec/` when a frozen design detail is needed.
 
 The project is in **Release Candidate final audit**, not broad implementation.
 
-The code payload equivalent to the current candidate has already passed the consolidated CI and both major custom validators. The most recent commits after the validated code payload are documentation/continuity changes only. Confirm the current HEAD and its latest workflow result before doing anything else.
+The branch has received additional code-affecting audit fixes after the last historically validated payload. Do **not** inherit an older CI PASS or ROM checksum. Confirm the exact current HEAD and its consolidated workflow result before any RC freeze.
 
 ## What to do next
 
@@ -26,14 +27,14 @@ Continue the **exhaustive final audit** in `FINAL_AUDIT_PLAN.md`.
 
 Priority:
 
-1. finish the 154-requirement reconciliation;
-2. audit the RC diff against `baseline-spanish-vanilla`;
-3. identify static blind spots not yet represented by validators;
-4. specifically verify obtainability/breeding/resource prerequisites and persistent event state machines;
-5. correct any real implementation defects found;
-6. keep `RC_AUDIT_LOG.md` updated;
-7. once static audit has no open release-blocking finding, freeze one exact RC SHA + ROM SHA-1;
-8. then execute the final MyBoy runtime checklist.
+1. finish the remaining first-pass static sweep;
+2. continue the independent second-pass audit in `SECOND_PASS_AUDIT.md`;
+3. verify target-language/compiled-path correctness and semantic baseline diff coverage;
+4. correct any real implementation or validator defects found;
+5. keep `RC_AUDIT_LOG.md` and `PROJECT_CONTINUITY.md` synchronized;
+6. require exact current HEAD consolidated CI green;
+7. freeze one reproducible RC ROM + SHA-1 only after that green result;
+8. execute the final MyBoy runtime checklist on that exact ROM.
 
 Do **not** ask the user to repeat earlier decisions or reconstruct deleted chats.
 
