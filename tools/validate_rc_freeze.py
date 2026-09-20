@@ -162,24 +162,26 @@ def main() -> None:
     assert "bagPocket_Items" not in init_full
     assert "unused_348C" not in init_full
 
-    # QOL-007: Repel expiration must offer an immediate reusable prompt when
-    # another Repel exists, while cleanly ending when there is no stock.
-    repel = read("data/scripts/repel.inc")
+    # QOL-007: validate the Spanish script actually compiled by firered_es_modern.
+    repel = read("data/scripts/spanish/repel.inc")
     for token in (
-        "checkitem VAR_FULL_LAST_REPEL, 1",
-        "checkitem ITEM_MAX_REPEL, 1",
-        "checkitem ITEM_SUPER_REPEL, 1",
-        "checkitem ITEM_REPEL, 1",
-        "msgbox Text_RepelWoreOffUseAnother, MSGBOX_YESNO",
-        "removeitem VAR_0x8004, 1",
-        "copyvar VAR_FULL_LAST_REPEL, VAR_0x8004",
+        "checkitem ITEM_REPEL",
+        "checkitem ITEM_SUPER_REPEL",
+        "checkitem ITEM_MAX_REPEL",
+        "msgbox Text_FullUseAnotherRepel, MSGBOX_YESNO",
+        "compare VAR_FULL_LAST_REPEL, ITEM_REPEL",
+        "compare VAR_FULL_LAST_REPEL, ITEM_SUPER_REPEL",
+        "compare VAR_FULL_LAST_REPEL, ITEM_MAX_REPEL",
+        "removeitem ITEM_REPEL",
+        "removeitem ITEM_SUPER_REPEL",
+        "removeitem ITEM_MAX_REPEL",
         "setvar VAR_REPEL_STEP_COUNT, 100",
         "setvar VAR_REPEL_STEP_COUNT, 200",
         "setvar VAR_REPEL_STEP_COUNT, 250",
     ):
         assert token in repel, token
-    # No-stock path must reach the plain expiration message before any prompt.
-    assert repel.index("msgbox Text_RepelWoreOff, MSGBOX_SIGN") < repel.index("EventScript_RepelReuseLastType::")
+    assert "goto_if_eq VAR_RESULT, NO, EventScript_FullRepelEnd" in repel
+    assert "goto EventScript_FullUseFallbackRepel" in repel
 
     # QOL-001 / unique-TM economy: TMs are permanent single-copy unlocks.
     item_c = read("src/item.c")
