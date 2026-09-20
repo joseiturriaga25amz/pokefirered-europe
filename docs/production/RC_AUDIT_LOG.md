@@ -46,8 +46,16 @@ The Pokedex location code still associated Entei/Suicune/Raikou with the player'
 The event is now attached to a real Berry Forest tree. When Celebi requirements are not satisfied the object keeps normal Cut-tree behavior.
 
 ### RC-F003 — MOV-006 trainer-set legality validator missing
-**Status:** IN VALIDATION  
-Added `tools/validate_full_trainer_sets.py` and wired it into CI. It validates frozen Full trainer parties against repository species/move/item IDs and level/TM-HM/tutor/egg/evolution-line learnability data.
+**Status:** FIXED / PASS  
+Added `tools/validate_full_trainer_sets.py` and wired it into CI. The validator passed across 34 Full parties, 163 Pokémon and 632 custom moves, checking repository species/move/item IDs plus level/TM-HM/tutor/egg/evolution-line learnability.
+
+### RC-F004 — QOL-009 EV summary view missing
+**Status:** FIXED / IN VALIDATION  
+The frozen specification requires an EV view in the Pokémon summary. Added a SELECT toggle on the Skills page, exact six-stat EV values, proportional per-stat bars, and total/510 information. The toggle is disabled for battle/enemy/link summaries and works from the normal party/box summary path.
+
+### RC-F005 — ECO-008 Resort Gorgeous circuit payout incomplete
+**Status:** FIXED / IN VALIDATION  
+Celina remained a Painter in the implementation, so the intended Jacki/Gillian/Celina high-payout VS Seeker circuit was not satisfied. Celina now uses the Lady trainer class/presentation while keeping her localized name and frozen party. CI now asserts Lady class for all three circuit trainers.
 
 ## Structural compatibility evidence
 
