@@ -51,6 +51,12 @@ jobs:
           grep -q 'return SPECIES_ENTEI' src/roamer.c
           grep -q 'if (gBattleOutcome == B_OUTCOME_CAUGHT)' src/battle_main.c
           grep -q 'special InitRoamer' data/maps/OneIsland_PokemonCenter_1F/scripts.inc
+          grep -q 'ITEM_MYSTIC_TICKET' data/maps/OneIsland_PokemonCenter_1F/scripts.inc
+          grep -q 'FLAG_ENABLE_SHIP_NAVEL_ROCK' data/maps/OneIsland_PokemonCenter_1F/scripts.inc
+          grep -q 'VAR_FULL_AURORA_QUEST, 1' data/maps/OneIsland_PokemonCenter_1F/scripts.inc
+          grep -q 'VAR_FULL_AURORA_QUEST, 2' data/maps/PewterCity_Museum_1F/scripts.inc
+          grep -q 'ITEM_AURORA_TICKET' data/maps/OneIsland_PokemonCenter_1F/scripts.inc
+          grep -q 'FLAG_ENABLE_SHIP_BIRTH_ISLAND' data/maps/OneIsland_PokemonCenter_1F/scripts.inc
 
       - name: Validate approved wild encounter rates
         run: |
