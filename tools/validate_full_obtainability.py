@@ -12,24 +12,29 @@ def read(path):
     return (ROOT / path).read_text(encoding="utf-8")
 
 
-def wild_species():
+def wild_species(version="FireRed"):
+    """Species present in the selected version's compiled encounter tables only."""
     data = json.loads(read("src/data/wild_encounters.json"))
     found = set()
 
-    def walk(node):
+    def collect_species(node):
         if isinstance(node, dict):
             species = node.get("species")
             if isinstance(species, str) and species.startswith("SPECIES_"):
                 found.add(species)
             for value in node.values():
-                walk(value)
+                collect_species(value)
         elif isinstance(node, list):
             for value in node:
-                walk(value)
+                collect_species(value)
 
-    walk(data)
+    suffix = f"_{version}"
+    for group in data["wild_encounter_groups"]:
+        for encounter in group.get("encounters", []):
+            if encounter.get("base_label", "").endswith(suffix):
+                collect_species(encounter)
+
     return found
-
 
 
 def all_map_script_species_sources():
@@ -48,9 +53,21 @@ def all_map_script_species_sources():
     return found
 
 
-def ingame_trade_species():
+def ingame_trades():
+    """Return (received species, requested species) pairs for in-game trades."""
     text = read("src/data/ingame_trades.h")
-    return set(re.findall(r"\.species\s*=\s*(SPECIES_[A-Z0-9_]+)", text))
+    blocks = re.findall(
+        r"\[INGAME_TRADE_[^\]]+\]\s*=\s*\{(.*?)\n\s*\},",
+        text,
+        re.DOTALL,
+    )
+    trades = []
+    for block_text in blocks:
+        species = re.search(r"\.species\s*=\s*(SPECIES_[A-Z0-9_]+)", block_text)
+        requested = re.search(r"\.requestedSpecies\s*=\s*(SPECIES_[A-Z0-9_]+)", block_text)
+        if species and requested:
+            trades.append((species.group(1), requested.group(1)))
+    return trades
 
 
 def evolution_edges():
@@ -81,7 +98,8 @@ def kanto_species():
     return result
 
 
-def evolution_closure(seed, edges):
+def obtainability_closure(seed, edges, trades):
+    """Close evolutions and trades, requiring each requested trade species first."""
     reachable = set(seed)
     changed = True
     while changed:
@@ -91,6 +109,10 @@ def evolution_closure(seed, edges):
                 before = len(reachable)
                 reachable.update(targets)
                 changed |= len(reachable) != before
+        for received, requested in trades:
+            if requested in reachable and received not in reachable:
+                reachable.add(received)
+                changed = True
     return reachable
 
 def require(text, token, source):
@@ -100,7 +122,7 @@ def require(text, token, source):
 def main():
     wild = wild_species()
     scripted = all_map_script_species_sources()
-    trades_out = ingame_trade_species()
+    trades = ingame_trades()
     edges = evolution_edges()
 
     # Gate 7 must prove the self-contained Kanto Pokédex, not merely sample a
@@ -108,7 +130,7 @@ def main():
     # explicit map-script gifts/battles and in-game trade outputs. Fossil/Porygon
     # paths use variable-driven scripts, so their source species are added only
     # after their dedicated path checks below.
-    kanto_direct = wild | scripted | trades_out | {
+    kanto_direct = wild | scripted | {
         "SPECIES_PORYGON",
         "SPECIES_OMANYTE",
         "SPECIES_KABUTO",
@@ -119,15 +141,16 @@ def main():
         # setwildbattle/seteventmon command; its dedicated script path is locked below.
         "SPECIES_MEW",
     }
-    kanto_reachable = evolution_closure(kanto_direct, edges)
+    kanto_reachable = obtainability_closure(kanto_direct, edges, trades)
     missing_kanto = sorted(kanto_species() - kanto_reachable)
     assert not missing_kanto, (
         "Kanto one-save obtainability gap(s): " + ", ".join(missing_kanto)
     )
 
 
-    # FireRed remains the base table. Every representative family that was
-    # already FireRed-exclusive stays locally catchable after the LG additions.
+    # FireRed remains the active base table. The JSON contains parallel
+    # FireRed/LeafGreen encounter records, so Gate 7 must never satisfy a Full
+    # requirement from a LeafGreen-only table.
     for species in (
         "SPECIES_EKANS", "SPECIES_ODDISH", "SPECIES_PSYDUCK",
         "SPECIES_GROWLITHE", "SPECIES_SHELLDER", "SPECIES_SCYTHER",
