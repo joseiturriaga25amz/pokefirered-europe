@@ -155,3 +155,16 @@ Added `tools/validate_full_obtainability.py`. It proves one-save prerequisite pa
 ### RC-F020 — Full flag/var namespace ownership had no collision scan
 **Status:** FIXED / IN VALIDATION  
 Added `tools/validate_full_save_namespace.py`. It locks the Full flag/var assignments, rejects live uses of vanilla numeric aliases inside the reserved Full ranges, and asserts migration initialization touches only the Full header rather than the vanilla bag/reserved area.
+
+
+### RC-F021 — Frozen bugfix validator crashed on vanilla map objects without `local_id`
+**Status:** FIXED / CI PENDING  
+`tools/validate_frozen_bugfixes.py` indexed `obj["local_id"]` for every Mt. Ember B3F/B5F object event. Vanilla boulders and Rock Smash objects legitimately omit that optional field, so the validator raised `KeyError` even though the Ruby object itself was correctly moved to B5F. The BUG-012 check now filters to objects that actually define `local_id`, preserving the intended invariant without rejecting valid vanilla map objects.
+
+### RC-F022 — Gate 7 obtainability validator overclaimed its coverage
+**Status:** OPEN — COVERAGE HARDENING IN PROGRESS  
+The current `validate_full_obtainability.py` prints a broad Gate 7 PASS after checking the frozen ENC additions, baby prerequisites, fossils, selected event species and renewable evolution items, but it does not construct a complete reachability proof. The 154-requirement ledger confirms that Gen I–III #001–386 is the allowed species universe rather than a standalone requirement to add local sources for every Hoenn species; D-039/EVT-019 explicitly exclude the reserved Hoenn legendaries. Gate 7 therefore must prove every species/resource path actually required by ENC-001..022 and EVT-001..019, without inventing new habitats. The validator/result wording and coverage are being tightened before RC freeze.
+
+### RC-F023 — Persistent event-state validator does not yet cover every Gate 6 machine
+**Status:** OPEN — COVERAGE HARDENING IN PROGRESS  
+`validate_full_event_states.py` currently protects Kanto static legends, Navel Rock/Birth Island terminal outcomes, Mew, Celebi, second Dojo, second fossil and ticket-delivery flags. Gate 6 additionally requires explicit static coverage for the sequential roamer transition machine, Altering Cave selector persistence, repeatable Porygon purchase, tutor free/repeat-paid state paths and Two Island berry-shop progression. These omissions are validator blind spots rather than runtime PASS claims and must be closed or explicitly left to MyBoy where static proof is impossible.
