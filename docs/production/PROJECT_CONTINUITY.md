@@ -140,6 +140,8 @@ Direct comparison with `baseline-spanish-vanilla` established:
 
 After app-side forced closures on 2026-09-20, the repository was re-read from GitHub before further changes. The branch history was intact. The audit documentation had lagged behind the code, so the state was reconciled. RC-F022 and RC-F023 are now statically hardened and awaiting CI confirmation; RC-F024 records and fixes an additional Gate 7 validator blind spot discovered during recovery. Subsequent audit blocks found and fixed RC-F025 (vanilla-save migration invocation), RC-F026 (unique reusable TM transaction consistency), RC-F027 (missing direct-use trade-evolution item effects), and RC-F028 (doubles-AI history aliasing/OOB behavior identified during Gate 2A external-reference review), and RC-F029 (Gary's Oak's Lab starter identity still varying despite fixed Squirtle battle parties).
 
+A recovery audit temporarily edited the generic `data/scripts/repel.inc` after inspecting the wrong language include. That edit has been reverted; `firered_es_modern` uses `data/scripts/spanish/repel.inc`, which already had QOL-007 before recovery. The RC validator now checks that actual compiled script.
+
 The exact current branch HEAD must still be checked by CI before any RC freeze. No MyBoy final acceptance result should be inferred from static validation.
 
 ## 9. What remains before v1.0 final
