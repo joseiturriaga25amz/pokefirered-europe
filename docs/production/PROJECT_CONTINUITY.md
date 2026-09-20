@@ -11,8 +11,9 @@ Before modifying code:
 3. Read `docs/production/RC_AUDIT_LOG.md`.
 4. Read `docs/production/FINAL_AUDIT_PLAN.md`.
 5. Read `docs/production/RC_MYBOY_CHECKLIST.md`.
-6. Inspect the current branch HEAD and latest GitHub Actions result.
-7. Only if a design detail is still needed, consult the frozen sources under `docs/spec/`.
+6. Read `docs/production/SECOND_PASS_AUDIT.md`.
+7. Inspect the current branch HEAD and latest GitHub Actions result.
+8. Only if a design detail is still needed, consult the frozen sources under `docs/spec/`.
 
 Previous chats are **not required** and must not override the repository.
 
@@ -47,54 +48,39 @@ A historical frozen requirement superseded by an approved amendment must **not**
 
 ## 5. Current technical state at continuity freeze
 
-The latest code-affecting RC audit commit currently recorded is:
+The first exhaustive static audit is nearly complete and an explicit **second-pass adversarial audit** is active.
 
-- `48ca26236b1f55c495a57fc4ece54481f9eccc1a` — makes Gary's Oak's Lab starter identity explicitly Squirtle for every player-starter choice. Earlier recovery commits also fix doubles-AI history aliasing/OOB behavior, direct-use trade-item evolutions, unique reusable TM transactions and vanilla-save migration.
+Latest code-affecting second-pass commits include:
 
-Later commits through the current continuity update are documentation-only unless explicitly noted otherwise.
+- `25fb95adfaab7c734d86f9e83241c4ae148d914b` — corrected wireless-status UBFIX applied from a clean pre-change file;
+- `2f21644529ba1146f70adc8b7f26a7e3135a60e9` — applies Full Hall-of-Fame KO recovery to the Spanish script actually compiled;
+- `74bf56b4ac6799682d2ccef60c274b0f80582a36` — restores the non-target generic Hall-of-Fame script to vanilla;
+- `444b1f27e4bfda87f3f326937af238d7e28c0845` — extends exact audited blob locks to trainer payloads and target-language high-risk scripts;
+- `7fe7204c8d125180dee1faa18df5309b599e8732` — adds the second-pass release-integrity validator to consolidated CI.
 
-The consolidated workflow for the code-equivalent RC state completed **SUCCESS**. It covered:
+The exact current HEAD still requires a fresh consolidated CI result before any RC freeze. Older CI success and older ROM hashes are historical evidence only and must **not** be treated as validation of the current code payload.
 
-- Spanish modern ROM build;
-- physical/special split and split-aware AI;
-- modern category/contact data;
-- direct trade-item evolutions;
-- field QoL;
-- Move Reminder and tutor pricing;
-- legendary/mythical event levels;
-- reusable unique TMs;
-- approved encounter rates;
-- frozen Gary/boss rosters;
-- RC freeze validator;
-- full trainer legality validator;
-- ROM checksum.
-
-Last recorded ROM SHA-1 for that code payload:
-
-`a47a1e8cfa4683789ea9383a5c2438316e09d759`
+The workflow still builds `firered_es_modern`, performs two clean builds and requires byte-for-byte reproducibility before recording a checksum.
 
 ## 6. RC audit findings repaired so far
 
-See `RC_AUDIT_LOG.md` for full details. Key repaired findings include:
+See `RC_AUDIT_LOG.md` for the authoritative finding-by-finding record. The recovery/final audit now includes RC-F001..RC-F035, with RC-F031 explicitly corrected as a false positive rather than retained as a fictional bug fix.
 
-- sequential-roamer Pokédex mapping;
-- Celebi trigger placement;
-- missing MOV-006 full trainer-set legality validator;
-- missing QOL-009 EV summary view;
-- Resort Gorgeous payout identity;
-- Move Reminder scroll-indicator bug;
-- L=A held-repeat bug;
-- two-slot party animation buffer leak;
-- direct trade-item evolution UI route;
-- missing ECO-004 berry economy and Emerald-style EV-reducing berry behavior;
-- missing consolidated freeze validator;
-- stale historical QA references to mGBA/142-slot bag;
-- explicit save layout/migration RC gates;
-- explicit vanilla Gen III ID-space gates;
-- explicit frozen economy/postgame-stock gates;
-- hardened Gate 6 persistent event-state coverage;
-- hardened Gate 7 one-save obtainability coverage;
-- exact audited-blob locks for five high-risk gameplay data files.
+Important late findings include:
+
+- vanilla-save migration existed but was not called on Continue;
+- reusable-TM capacity/add/shop paths were inconsistent;
+- direct trade-evolution items reached the UI without a core evolution effect;
+- doubles AI had per-side history aliasing and out-of-bounds move-history reads;
+- Gary routing/identity still depended on vanilla starter branches;
+- recorded AI hold effects were briefly reinterpreted as item IDs and corrected;
+- tested link synchronization fixes were excluded from Full's MODERN revision-0 build;
+- UBFIX mon-data accessors still relied on incompatible function aliases;
+- wireless status group accounting could index outside its counter array;
+- Hall-of-Fame state validation was checking a generic script while the Spanish target lacked the Full KO-recovery hooks;
+- Repel RC-F031 was a recovery-audit false positive: the Spanish target already implemented QOL-007, and the generic accidental edit was reverted.
+
+Exact blob locks now cover the original high-risk gameplay data plus trade, trainer metadata/parties and selected Spanish high-risk scripts.
 
 ## 7. Important automatic validators
 
@@ -104,6 +90,15 @@ Last known PASS:
 - 163 Pokémon;
 - 632 custom moves;
 - validates species, level, IV, held item and move legality including level-up, TM/HM, tutor, egg and pre-evolution learnability.
+
+### `tools/validate_release_integrity.py`
+Second-pass meta-gate that verifies:
+- consolidated CI targets `firered_es_modern`;
+- all production validators are actually invoked;
+- Gate 6/7/QoL checks point at Spanish scripts that feed the target;
+- generic non-target Hall-of-Fame/Repel scripts remain vanilla;
+- second-pass high-risk blob locks are present;
+- audit-log traceability includes the corrected false positive and late recovery findings.
 
 ### `tools/validate_rc_freeze.py`
 Protects, among other things:
@@ -138,11 +133,11 @@ Direct comparison with `baseline-spanish-vanilla` established:
 
 ## Current RC audit recovery note
 
-After app-side forced closures on 2026-09-20, the repository was re-read from GitHub before further changes. The branch history was intact. The audit documentation had lagged behind the code, so the state was reconciled. RC-F022 and RC-F023 are now statically hardened and awaiting CI confirmation; RC-F024 records and fixes an additional Gate 7 validator blind spot discovered during recovery. Subsequent audit blocks found and fixed RC-F025 (vanilla-save migration invocation), RC-F026 (unique reusable TM transaction consistency), RC-F027 (missing direct-use trade-evolution item effects), and RC-F028 (doubles-AI history aliasing/OOB behavior identified during Gate 2A external-reference review), and RC-F029 (Gary's Oak's Lab starter identity still varying despite fixed Squirtle battle parties).
+After the 2026-09-20 app-side forced closures, repository history was confirmed intact and the audit resumed from GitHub. The first audit found multiple real defects and also exposed one false positive caused by inspecting a generic language script instead of the Spanish file actually compiled. That false positive is recorded and corrected.
 
-A recovery audit temporarily edited the generic `data/scripts/repel.inc` after inspecting the wrong language include. That edit has been reverted; `firered_es_modern` uses `data/scripts/spanish/repel.inc`, which already had QOL-007 before recovery. The RC validator now checks that actual compiled script.
+The audit is now using a second independent layer defined in `docs/production/SECOND_PASS_AUDIT.md`: compiled-target verification, semantic baseline diff, validator skepticism, negative-path review, cross-layer contradiction checks and exact blob locks after semantic review.
 
-The exact current branch HEAD must still be checked by CI before any RC freeze. No MyBoy final acceptance result should be inferred from static validation.
+Current static work is close to completion, but **no RC is frozen yet**. Required next milestone: exact current HEAD must pass consolidated CI; only then may one reproducible ROM/checksum be frozen for the final MyBoy checklist.
 
 ## 9. What remains before v1.0 final
 
