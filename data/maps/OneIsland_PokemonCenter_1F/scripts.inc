@@ -235,6 +235,7 @@ OneIsland_PokemonCenter_1F_EventScript_FullGiveMysticTicket::
 	checkitemspace ITEM_MYSTIC_TICKET
 	goto_if_eq VAR_RESULT, FALSE, OneIsland_PokemonCenter_1F_EventScript_FullTicketNoRoom
 	giveitem_msg OneIsland_PokemonCenter_1F_Text_FullReceivedMysticTicket, ITEM_MYSTIC_TICKET, 1, MUS_OBTAIN_KEY_ITEM
+	setflag FLAG_RECEIVED_MYSTIC_TICKET
 	setflag FLAG_ENABLE_SHIP_NAVEL_ROCK
 	setvar VAR_FULL_MYSTIC_QUEST, 1
 	release
@@ -250,6 +251,7 @@ OneIsland_PokemonCenter_1F_EventScript_FullGiveAuroraTicket::
 	checkitemspace ITEM_AURORA_TICKET
 	goto_if_eq VAR_RESULT, FALSE, OneIsland_PokemonCenter_1F_EventScript_FullTicketNoRoom
 	giveitem_msg OneIsland_PokemonCenter_1F_Text_FullReceivedAuroraTicket, ITEM_AURORA_TICKET, 1, MUS_OBTAIN_KEY_ITEM
+	setflag FLAG_RECEIVED_AURORA_TICKET
 	setflag FLAG_ENABLE_SHIP_BIRTH_ISLAND
 	setvar VAR_FULL_AURORA_QUEST, 3
 	release
@@ -319,7 +321,6 @@ OneIsland_PokemonCenter_1F_EventScript_GiveCelioSapphire::
 	waitmovement 0
 	msgbox OneIsland_PokemonCenter_1F_Text_ManagedToLinkWithHoennThankYou
 	special SetPostgameFlags
-	special InitRoamer
 	setflag FLAG_SYS_CAN_LINK_WITH_RS
 	setflag FLAG_HIDE_CERULEAN_CAVE_GUARD
 	setflag FLAG_HIDE_LORELEI_IN_HER_HOUSE
