@@ -292,6 +292,7 @@ struct UsedMoves
     u16 unknown[MAX_BATTLERS_COUNT];
 };
 
+#ifndef BUGFIX
 struct BattleHistory
 {
     /*0x00*/ u16 usedMoves[2][8]; // 0xFFFF means move not used (confuse self hit, etc)
@@ -300,6 +301,16 @@ struct BattleHistory
     /*0x24*/ u16 trainerItems[MAX_BATTLERS_COUNT];
     /*0x2C*/ u8 itemsNo;
 };
+#else
+struct BattleHistory
+{
+    struct UsedMoves usedMoves[MAX_BATTLERS_COUNT];
+    u8 abilities[MAX_BATTLERS_COUNT];
+    u8 itemEffects[MAX_BATTLERS_COUNT];
+    u16 trainerItems[MAX_BATTLERS_COUNT];
+    u8 itemsNo;
+};
+#endif
 
 struct BattleScriptsStack
 {
