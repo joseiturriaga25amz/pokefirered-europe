@@ -161,6 +161,11 @@ EXPECTED={
 }
 
 def main():
+    oak_lab = (ROOT / "data/maps/PalletTown_ProfessorOaksLab/scripts.inc").read_text(encoding="utf-8")
+    assert oak_lab.count("setvar RIVAL_STARTER_SPECIES, SPECIES_SQUIRTLE") == 3
+    assert "setvar RIVAL_STARTER_SPECIES, SPECIES_BULBASAUR" not in oak_lab
+    assert "setvar RIVAL_STARTER_SPECIES, SPECIES_CHARMANDER" not in oak_lab
+
     for name,want in EXPECTED.items():
         got=rows(name)
         assert got==want, f"{name} drift:\nGOT {got}\nWANT {want}"
