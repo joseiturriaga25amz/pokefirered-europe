@@ -49,7 +49,7 @@ A historical frozen requirement superseded by an approved amendment must **not**
 
 The latest code-affecting RC audit commit currently recorded is:
 
-- `cd12bff41f840066a16d4aea249ce8a7becc52c2` — fixes confirmed doubles-AI history aliasing/OOB behavior in the forced BUGFIX path. Earlier recovery commits also complete direct-use trade-item evolutions, unique reusable TM transactions and vanilla-save migration.
+- `48ca26236b1f55c495a57fc4ece54481f9eccc1a` — makes Gary's Oak's Lab starter identity explicitly Squirtle for every player-starter choice. Earlier recovery commits also fix doubles-AI history aliasing/OOB behavior, direct-use trade-item evolutions, unique reusable TM transactions and vanilla-save migration.
 
 Later commits through the current continuity update are documentation-only unless explicitly noted otherwise.
 
@@ -138,7 +138,7 @@ Direct comparison with `baseline-spanish-vanilla` established:
 
 ## Current RC audit recovery note
 
-After app-side forced closures on 2026-09-20, the repository was re-read from GitHub before further changes. The branch history was intact. The audit documentation had lagged behind the code, so the state was reconciled. RC-F022 and RC-F023 are now statically hardened and awaiting CI confirmation; RC-F024 records and fixes an additional Gate 7 validator blind spot discovered during recovery. Subsequent audit blocks found and fixed RC-F025 (vanilla-save migration invocation), RC-F026 (unique reusable TM transaction consistency), RC-F027 (missing direct-use trade-evolution item effects), and RC-F028 (doubles-AI history aliasing/OOB behavior identified during Gate 2A external-reference review).
+After app-side forced closures on 2026-09-20, the repository was re-read from GitHub before further changes. The branch history was intact. The audit documentation had lagged behind the code, so the state was reconciled. RC-F022 and RC-F023 are now statically hardened and awaiting CI confirmation; RC-F024 records and fixes an additional Gate 7 validator blind spot discovered during recovery. Subsequent audit blocks found and fixed RC-F025 (vanilla-save migration invocation), RC-F026 (unique reusable TM transaction consistency), RC-F027 (missing direct-use trade-evolution item effects), and RC-F028 (doubles-AI history aliasing/OOB behavior identified during Gate 2A external-reference review), and RC-F029 (Gary's Oak's Lab starter identity still varying despite fixed Squirtle battle parties).
 
 The exact current branch HEAD must still be checked by CI before any RC freeze. No MyBoy final acceptance result should be inferred from static validation.
 
