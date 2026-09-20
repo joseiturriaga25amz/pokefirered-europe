@@ -307,10 +307,10 @@ jobs:
           assert "seteventmon SPECIES_DEOXYS, 50" in birth
           assert "seteventmon SPECIES_LUGIA, 70" in lugia
           assert "seteventmon SPECIES_HO_OH, 70" in hooh
-          assert "seteventmon SPECIES_MEWTWO, 70" in mewtwo
-          assert "seteventmon SPECIES_ARTICUNO, 50" in articuno
-          assert "seteventmon SPECIES_ZAPDOS, 50" in zapdos
-          assert "seteventmon SPECIES_MOLTRES, 50" in moltres
+          assert "setwildbattle SPECIES_MEWTWO, 70" in mewtwo
+          assert "setwildbattle SPECIES_ARTICUNO, 50" in articuno
+          assert "setwildbattle SPECIES_ZAPDOS, 50" in zapdos
+          assert "setwildbattle SPECIES_MOLTRES, 50" in moltres
           assert "CreateScriptedWildMon(SPECIES_MEW, 50" in mythical
           assert "CreateScriptedWildMon(SPECIES_CELEBI, 50" in mythical
 
