@@ -2116,7 +2116,7 @@ static void CB_HandleTradeCanceled(void)
 
 static void CB_InitExitCanceledTrade(void)
 {
-#if REVISION >= 0xA
+#if defined(BUGFIX) || REVISION >= 0xA
     if (IsLinkTaskFinished() && !gPaletteFade.active)
 #else
     if (!gPaletteFade.active)
