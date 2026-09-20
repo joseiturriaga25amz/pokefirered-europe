@@ -183,6 +183,16 @@ def main() -> None:
     ):
         assert token in dojo, token
 
+    celio = read("data/maps/OneIsland_PokemonCenter_1F/scripts.inc")
+    for token in (
+        "setflag FLAG_RECEIVED_MYSTIC_TICKET",
+        "setflag FLAG_ENABLE_SHIP_NAVEL_ROCK",
+        "setflag FLAG_RECEIVED_AURORA_TICKET",
+        "setflag FLAG_ENABLE_SHIP_BIRTH_ISLAND",
+    ):
+        assert token in celio, token
+    assert celio.count("special InitRoamer") == 1
+
     evo = read("src/data/pokemon/evolution.h")
     for token in (
         "{EVO_ITEM, ITEM_SUN_STONE, SPECIES_ESPEON}",
