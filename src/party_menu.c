@@ -4346,6 +4346,12 @@ static bool8 IsHPRecoveryItem(u16 item)
 
 static void GetMedicineItemEffectMessage(u16 item)
 {
+    if (item >= ITEM_POMEG_BERRY && item <= ITEM_TAMATO_BERRY)
+    {
+        StringExpandPlaceholders(gStringVar4, gText_EvReducingBerryWorked);
+        return;
+    }
+
     switch (GetItemEffectType(item))
     {
     case ITEM_EFFECT_CURE_POISON:
