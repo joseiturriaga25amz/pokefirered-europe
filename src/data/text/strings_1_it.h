@@ -293,6 +293,7 @@ const u8 gText_PkmnBecameHealthy[] = _("{STR_VAR_1} è di nuovo in\nforma.{PAUSE
 const u8 gText_MovesPPIncreased[] = _("I PP di {STR_VAR_1} aumentano.{PAUSE_UNTIL_PRESS}");
 const u8 gText_PkmnElevatedToLvVar2[] = _("{STR_VAR_1} è passato al\nL. {STR_VAR_2}.");
 const u8 gText_PkmnBaseVar2StatIncreased[] = _("{STR_VAR_2} di {STR_VAR_1}\nin aumento.{PAUSE_UNTIL_PRESS}");
+const u8 gText_EvReducingBerryWorked[] = _("La BACCA ha avuto effetto\nsu {STR_VAR_1}.{PAUSE_UNTIL_PRESS}");
 const u8 gText_PkmnSnappedOutOfConfusion[] = _("{STR_VAR_1} non è più\nconfuso.{PAUSE_UNTIL_PRESS}");
 const u8 gText_PkmnGotOverInfatuation[] = _("{STR_VAR_1} non è più \ninfatuato.{PAUSE_UNTIL_PRESS}");
 ALIGNED(4) const u8 gText_OnlyPkmnForBattle[] = _("Questo è l'unico\nPOKéMON utile.");
