@@ -168,3 +168,8 @@ The current `validate_full_obtainability.py` prints a broad Gate 7 PASS after ch
 ### RC-F023 — Persistent event-state validator does not yet cover every Gate 6 machine
 **Status:** OPEN — COVERAGE HARDENING IN PROGRESS  
 `validate_full_event_states.py` currently protects Kanto static legends, Navel Rock/Birth Island terminal outcomes, Mew, Celebi, second Dojo, second fossil and ticket-delivery flags. Gate 6 additionally requires explicit static coverage for the sequential roamer transition machine, Altering Cave selector persistence, repeatable Porygon purchase, tutor free/repeat-paid state paths and Two Island berry-shop progression. These omissions are validator blind spots rather than runtime PASS claims and must be closed or explicitly left to MyBoy where static proof is impossible.
+
+### RC-F024 — Gate 7 obtainability proof mixed FireRed/LeafGreen encounter tables and trusted trade outputs unconditionally
+**Status:** FIXED / CI PENDING  
+`validate_full_obtainability.py` originally walked the entire dual-version `wild_encounters.json`, so a species present only in a LeafGreen table could incorrectly satisfy the FireRed Full one-save proof. It also seeded every in-game trade output without first proving that the requested species was obtainable. The validator now restricts wild-source discovery to `_FireRed` encounter records and closes in-game trades only when each requested species is already reachable. This hardens Gate 7 without changing gameplay data.
+
