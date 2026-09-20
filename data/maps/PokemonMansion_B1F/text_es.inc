@@ -24,3 +24,9 @@ PokemonMansion_B1F_Text_MewtwoIsFarTooPowerful::
     .string "MEWTWO es demasiado poderoso.\p"
     .string "No hemos sabido contener sus malos\n"
     .string "instintos.$"
+
+
+PokemonMansion_B1F_Text_FullMewFinalAppearance::
+    .string "¡Miiiu!\p"
+    .string "MEW aparece frente al diario.\n"
+    .string "Ya no parece querer esconderse.$"
