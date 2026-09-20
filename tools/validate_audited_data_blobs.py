@@ -27,6 +27,12 @@ EXPECTED = {
     "src/wild_encounter.c": "293caa0f44694ce9aefc734cde02256467e2fa9f",
     "include/constants/menu.h": "d289c2c922a25a8195dc3c6df5a80aa9ecd147ee",
     "include/wild_encounter.h": "b730103069f14a7d7147547d5bfad82bf082a6de",
+    "src/battle_message.c": "0dfa1ca983f767357c78520d848febac39c5d8c8",
+    "src/text.c": "d6c29153581a3421e84222eab47d513e1bc8545c",
+    "graphics_file_rules.mk": "64f20a72bc51d80ef5f44606c3126918c4144980",
+    "tools/gbagfx/font.c": "ac4a0dd97ccb4e6a98efd80667a3e694b2d33379",
+    "tools/gbagfx/font.h": "9a3ba2c7f48ac440bcd0b05f7acb33b03afb0687",
+    "tools/gbagfx/main.c": "bfd0d043540b0b603f34b5ff671d29c37e6e6ed1",
 }
 
 
