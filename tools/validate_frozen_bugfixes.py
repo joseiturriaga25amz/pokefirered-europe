@@ -171,16 +171,16 @@ def main():
     fossil_text = read("data/maps/CinnabarIsland_PokemonLab_ExperimentRoom/text_es.inc")
     req(
         fossil_text,
-        '#ifdef BUGFIX\n    .string "{COLOR DARK_GRAY}¡{PLAYER} le dio {STR_VAR_2}\\\\n"',
+        '#ifdef BUGFIX\n    .string "{COLOR DARK_GRAY}¡{PLAYER} le dio {STR_VAR_2}\\n"',
         "RC-F037",
     )
 
     vermilion_text = read("data/maps/VermilionCity/text_es.inc")
     for token in (
-        '#ifdef BUGFIX\n    .string "{COLOR DARK_GRAY}¡{PLAYER} enseñó el TICKET\\\\n"',
-        '#ifdef BUGFIX\n    .string "{COLOR BLUE}¡OK!\\\\n"',
-        '#ifdef BUGFIX\n    .string "{COLOR DARK_GRAY}{PLAYER} no tiene el TICKET del\\\\n"',
-        '#ifdef BUGFIX\n    .string "{COLOR BLUE}¡Lo siento!\\\\p"',
+        '#ifdef BUGFIX\n    .string "{COLOR DARK_GRAY}¡{PLAYER} enseñó el TICKET\\n"',
+        '#ifdef BUGFIX\n    .string "{COLOR BLUE}¡OK!\\n"',
+        '#ifdef BUGFIX\n    .string "{COLOR DARK_GRAY}{PLAYER} no tiene el TICKET del\\n"',
+        '#ifdef BUGFIX\n    .string "{COLOR BLUE}¡Lo siento!\\p"',
     ):
         req(vermilion_text, token, "RC-F037")
 
