@@ -108,8 +108,8 @@ def main():
     togepi = read("data/maps/FiveIsland_WaterLabyrinth/scripts.inc")
     for token in (
         "SPECIES_TOGEPI",
-        "FLAG_PENDING_TOGEPI_GIFT",
-        "givemon SPECIES_TOGEPI",
+        "FLAG_NO_ROOM_FOR_TOGEPI_EGG",
+        "giveegg SPECIES_TOGEPI",
     ):
         require(togepi, token, "FiveIsland_WaterLabyrinth/scripts.inc")
 
