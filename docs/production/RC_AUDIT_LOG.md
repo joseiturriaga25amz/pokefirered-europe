@@ -141,5 +141,17 @@ The approved prices for all 16 type boosters, special held items, renewable evol
 The Full MysticTicket/AuroraTicket quests correctly granted the existing items and enabled the original ferry destinations, but they did not set `FLAG_RECEIVED_MYSTIC_TICKET` / `FLAG_RECEIVED_AURORA_TICKET` as required by SAVE-012. Both vanilla receipt flags are now set at successful delivery, and `tools/validate_rc_freeze.py` locks the paired RECEIVED + ENABLE_SHIP state. The redundant second `InitRoamer` call introduced in the Sapphire handoff was also removed; the original vanilla call remains.
 
 ### RC-F017 — ROM checksum changes across docs-only commits
-**Status:** OPEN / INVESTIGATING — RC FREEZE BLOCKER  
-The consolidated workflow produced different SHA-1 values for `pokefirered_modern_es.gba` across commits whose diff from code-payload SHA `67b1b5220dd21963454649d84461a70fb1244d47` changes documentation only. Examples include `a47a1e8c...` at the payload commit and `6cad6404...` at `032f2c4...`. Because an exact RC requires a meaningful ROM checksum, the audit is testing reproducibility by rerunning the same workflow job on the same SHA. No RC checksum will be frozen until this is explained or the build is made deterministic.
+**Status:** FIXED / IN VALIDATION — RC FREEZE REMAINS BLOCKED UNTIL CI PROVES IT  
+The consolidated workflow produced different SHA-1 values for `pokefirered_modern_es.gba` across docs-only commits, and a rerun of the exact same SHA `032f2c4...` changed from `6cad6404...` to `31eff4b8...`. A dedicated two-clean-build gate reduced the mismatch to three ASCII digit bytes. Root cause: the MODERN branch in `src/main.c` embedded `__DATE__ " " __TIME__` in `BuildDateTime`. Full now uses a deterministic retail timestamp for the Spanish modern target, and CI rebuilds from clean twice and requires byte-for-byte equality before any RC checksum may be accepted.
+
+### RC-F018 — Gate 1 had no explicit 154/154 disposition ledger
+**Status:** FIXED / DOCUMENTED  
+Added `docs/production/RC_REQUIREMENTS_RECONCILIATION.md` and classified all 154 implementation requirements against A-001..A-004 and the current implementation. The ledger currently has 52 implemented + automated-evidence rows, 99 implemented + runtime-evidence-required rows, and 3 superseded rows. Runtime-classified entries remain deliberately unclosed until MyBoy.
+
+### RC-F019 — ENC-022 baby obtainability prerequisites were not statically proven
+**Status:** FIXED / IN VALIDATION  
+Added `tools/validate_full_obtainability.py`. It proves one-save prerequisite paths for Pichu, Cleffa, Igglybuff, Togepi, Tyrogue, Smoochum, Elekid, Magby, Azurill and Wynaut, including Ditto/parents, the Jynx in-game trade, both Hitmon sources, the Togepi egg, and Sea/Lax Incense.
+
+### RC-F020 — Full flag/var namespace ownership had no collision scan
+**Status:** FIXED / IN VALIDATION  
+Added `tools/validate_full_save_namespace.py`. It locks the Full flag/var assignments, rejects live uses of vanilla numeric aliases inside the reserved Full ranges, and asserts migration initialization touches only the Full header rather than the vanilla bag/reserved area.
