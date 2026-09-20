@@ -114,3 +114,8 @@ The frozen matrix required adventure/post-National berry inventories with approv
 ### RC-F011 — Fossil/Dojo/Altering Cave/economy freeze lacked a consolidated static gate
 **Status:** FIXED / IN VALIDATION  
 Added `tools/validate_rc_freeze.py` and wired it into CI. It protects the frozen berry economy/effects, both-fossil recovery path, Cinnabar revival support, second Dojo state/reward invariants, Eevee/level evolution invariants, all nine Altering Cave tables/selector states, and the 5,000-coin Porygon price.
+
+
+### RC-F012 — Historical QA workbook still names superseded emulator/bag tests
+**Status:** RESOLVED BY AMENDMENT TRACEABILITY  
+The frozen QA sheet still contains mGBA wording in QA-002 and the abandoned >42/142-slot bag cases QA-005/QA-006. These rows remain part of the historical workbook but are superseded by A-001/A-002 and are not release criteria. Added `docs/production/RC_MYBOY_CHECKLIST.md` as the authoritative final runtime handoff: MyBoy is required, the Items pocket is vanilla 42 slots, and runtime acceptance is grouped without restoring the abandoned bag implementation.
