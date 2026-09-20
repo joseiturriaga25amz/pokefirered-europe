@@ -53,14 +53,18 @@ ThreeIsland_BerryForest_Movement_LostelleLookAround::
 	walk_in_place_faster_left
 	step_end
 
-ThreeIsland_BerryForest_EventScript_WelcomeSign::
-	goto_if_set FLAG_FULL_CELEBI_CAUGHT, ThreeIsland_BerryForest_EventScript_WelcomeSignVanilla
-	goto_if_set FLAG_FULL_CELEBI_KO_PENDING, ThreeIsland_BerryForest_EventScript_WelcomeSignVanilla
+ThreeIsland_BerryForest_EventScript_FullCelebiTree::
+	goto_if_set FLAG_FULL_CELEBI_CAUGHT, ThreeIsland_BerryForest_EventScript_FullCelebiTreeVanilla
+	goto_if_set FLAG_FULL_CELEBI_KO_PENDING, ThreeIsland_BerryForest_EventScript_FullCelebiTreeVanilla
 	specialvar VAR_RESULT, IsNationalPokedexEnabled
-	goto_if_eq VAR_RESULT, FALSE, ThreeIsland_BerryForest_EventScript_WelcomeSignVanilla
-	goto_if_unset FLAG_SYS_CAN_LINK_WITH_RS, ThreeIsland_BerryForest_EventScript_WelcomeSignVanilla
-	goto_if_ne VAR_FULL_ROAMER_SEQUENCE, 3, ThreeIsland_BerryForest_EventScript_WelcomeSignVanilla
+	goto_if_eq VAR_RESULT, FALSE, ThreeIsland_BerryForest_EventScript_FullCelebiTreeVanilla
+	goto_if_unset FLAG_SYS_CAN_LINK_WITH_RS, ThreeIsland_BerryForest_EventScript_FullCelebiTreeVanilla
+	goto_if_ne VAR_FULL_ROAMER_SEQUENCE, 3, ThreeIsland_BerryForest_EventScript_FullCelebiTreeVanilla
 	goto ThreeIsland_BerryForest_EventScript_FullCelebi
+	end
+
+ThreeIsland_BerryForest_EventScript_FullCelebiTreeVanilla::
+	goto EventScript_CutTree
 	end
 
 ThreeIsland_BerryForest_EventScript_FullCelebi::
@@ -95,7 +99,7 @@ ThreeIsland_BerryForest_EventScript_FullCelebiDefeated::
 	releaseall
 	end
 
-ThreeIsland_BerryForest_EventScript_WelcomeSignVanilla::
+ThreeIsland_BerryForest_EventScript_WelcomeSign::
 	msgbox ThreeIsland_BerryForest_Text_WelcomeToBerryForest, MSGBOX_SIGN
 	end
 
