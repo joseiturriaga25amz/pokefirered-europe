@@ -140,6 +140,9 @@ struct Pokemon
     u16 spDefense;
 };
 
+STATIC_ASSERT(sizeof(struct BoxPokemon) == 0x50, BoxPokemonSizeMustRemainGen3Compatible);
+STATIC_ASSERT(sizeof(struct Pokemon) == 0x64, PokemonSizeMustRemainGen3Compatible);
+
 struct BattleTowerPokemon
 {
     /*0x00*/ u16 species;
