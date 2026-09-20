@@ -29,6 +29,39 @@ jobs:
           if ! cmp -s /tmp/pokefirered_modern_es.first.gba pokefirered_modern_es.gba; then
             echo "ROM build is not byte-for-byte reproducible"
             cmp -l /tmp/pokefirered_modern_es.first.gba pokefirered_modern_es.gba | head -n 64 || true
+            python3 - <<'PY'
+          import subprocess
+          from pathlib import Path
+
+          first = Path("/tmp/pokefirered_modern_es.first.gba").read_bytes()
+          second = Path("pokefirered_modern_es.gba").read_bytes()
+          diffs = [i for i, (a, b) in enumerate(zip(first, second)) if a != b]
+          print("diff offsets:", [hex(i) for i in diffs[:64]])
+          if diffs:
+              lo = max(0, diffs[0] - 32)
+              hi = min(len(first), diffs[-1] + 33)
+              print("first context:", first[lo:hi].hex(" "))
+              print("second context:", second[lo:hi].hex(" "))
+              target = 0x08000000 + diffs[0]
+              nm = subprocess.check_output(
+                  ["arm-none-eabi-nm", "-n", "pokefirered_modern_es.elf"],
+                  text=True,
+              ).splitlines()
+              nearest = []
+              for line in nm:
+                  parts = line.split()
+                  if len(parts) >= 3:
+                      try:
+                          addr = int(parts[0], 16)
+                      except ValueError:
+                          continue
+                      if addr <= target:
+                          nearest.append((addr, " ".join(parts[1:])))
+              print("target address:", hex(target))
+              print("nearest symbols:")
+              for addr, name in nearest[-8:]:
+                  print(hex(addr), name)
+          PY
             exit 1
           fi
 
