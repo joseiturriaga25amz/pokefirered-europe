@@ -14,19 +14,26 @@ def read(path: str) -> str:
 
 
 def c_function(text: str, signature: str) -> str:
-    """Return a complete C function body using balanced braces."""
-    start = text.index(signature)
-    open_brace = text.index("{", start)
-    depth = 0
-    for i in range(open_brace, len(text)):
-        ch = text[i]
-        if ch == "{":
-            depth += 1
-        elif ch == "}":
-            depth -= 1
-            if depth == 0:
-                return text[start:i + 1]
-    raise AssertionError(f"unterminated function: {signature}")
+    """Return the complete function definition, skipping forward declarations."""
+    start = text.find(signature)
+    while start != -1:
+        pos = start + len(signature)
+        while pos < len(text) and text[pos].isspace():
+            pos += 1
+        if pos < len(text) and text[pos] == "{":
+            open_brace = pos
+            depth = 0
+            for i in range(open_brace, len(text)):
+                ch = text[i]
+                if ch == "{":
+                    depth += 1
+                elif ch == "}":
+                    depth -= 1
+                    if depth == 0:
+                        return text[start:i + 1]
+            raise AssertionError(f"unterminated function: {signature}")
+        start = text.find(signature, start + 1)
+    raise AssertionError(f"function definition not found: {signature}")
 
 
 def main() -> None:
