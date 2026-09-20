@@ -191,6 +191,47 @@ jobs:
           print("Direct trade-item evolution UI path validated")
           PY
 
+      - name: Validate legendary and mythical event levels
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          birth = Path("data/maps/BirthIsland_Exterior/scripts.inc").read_text()
+          lugia = Path("data/maps/NavelRock_Base/scripts.inc").read_text()
+          hooh = Path("data/maps/NavelRock_Summit/scripts.inc").read_text()
+          hof = Path("data/scripts/hall_of_fame.inc").read_text()
+          mon = Path("src/pokemon.c").read_text()
+          mythical = Path("src/script_pokemon_util.c").read_text()
+          mewtwo = Path("data/maps/CeruleanCave_B1F/scripts.inc").read_text()
+          articuno = Path("data/maps/SeafoamIslands_B4F/scripts.inc").read_text()
+          zapdos = Path("data/maps/PowerPlant/scripts.inc").read_text()
+          moltres = Path("data/maps/MtEmber_Summit/scripts.inc").read_text()
+
+          assert "seteventmon SPECIES_DEOXYS, 50" in birth
+          assert "seteventmon SPECIES_LUGIA, 70" in lugia
+          assert "seteventmon SPECIES_HO_OH, 70" in hooh
+          assert "seteventmon SPECIES_MEWTWO, 70" in mewtwo
+          assert "seteventmon SPECIES_ARTICUNO, 50" in articuno
+          assert "seteventmon SPECIES_ZAPDOS, 50" in zapdos
+          assert "seteventmon SPECIES_MOLTRES, 50" in moltres
+          assert "CreateScriptedWildMon(SPECIES_MEW, 50" in mythical
+          assert "CreateScriptedWildMon(SPECIES_CELEBI, 50" in mythical
+
+          # Event-mon constructor supplies the Gen III modern fateful bit.
+          assert "CreateEventMon(&gEnemyParty[0]" in mon
+          event_ctor = mon[mon.index("static void CreateEventMon"):mon.index("void ConvertPokemonToBattleTowerPokemon")]
+          assert "MON_DATA_MODERN_FATEFUL_ENCOUNTER" in event_ctor
+
+          # KO/fled-away state clears after a new Hall of Fame, while caught
+          # mons stay hidden through their independent FLAG_FOUGHT_* state.
+          for flag in ("FLAG_LUGIA_FLEW_AWAY","FLAG_HO_OH_FLEW_AWAY","FLAG_DEOXYS_FLEW_AWAY"):
+              assert f"clearflag {flag}" in hof
+          for text, flag in ((lugia,"FLAG_FOUGHT_LUGIA"),(hooh,"FLAG_FOUGHT_HO_OH"),(birth,"FLAG_FOUGHT_DEOXYS")):
+              assert flag in text
+
+          print("Legendary/mythical event level and persistence invariants validated")
+          PY
+
       - name: Validate reusable unique TMs
         run: |
           python3 - <<'PY'
