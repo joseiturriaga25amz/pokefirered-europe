@@ -541,5 +541,8 @@ jobs:
       - name: Validate Full trainer legality
         run: python3 tools/validate_full_trainer_sets.py
 
+      - name: Validate one-save baby obtainability
+        run: python3 tools/validate_full_obtainability.py
+
       - name: Record ROM checksum
         run: sha1sum pokefirered_modern_es.gba
