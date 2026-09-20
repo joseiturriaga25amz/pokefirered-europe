@@ -217,6 +217,9 @@ jobs:
           print("Modern category/contact invariants validated")
           PY
 
+      - name: Validate exhaustive move categories and contact flags
+        run: python3 tools/validate_full_move_metadata.py
+
       - name: Validate direct trade-item evolutions
         run: |
           python3 - <<'PY'
