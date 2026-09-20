@@ -248,7 +248,7 @@ def main():
     ):
         require(daycare, token, "daycare.c")
 
-    item_balls = read("data/scripts/item_ball_scripts.inc")
+    item_balls = read("data/scripts/spanish/item_ball_scripts.inc")
     require(item_balls, "ITEM_LAX_INCENSE", "item_ball_scripts.inc")
     require(item_balls, "ITEM_SEA_INCENSE", "item_ball_scripts.inc")
 
