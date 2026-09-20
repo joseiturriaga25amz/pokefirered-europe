@@ -184,6 +184,41 @@ def main():
     ):
         req(vermilion_text, token, "RC-F037")
 
+    # BASE-006: frozen upstream ports explicitly require the battle-message
+    # return UB repair and the latin_small/gbagfx half-width Latin path.
+    battle_message = read("src/battle_message.c")
+    req(
+        battle_message,
+        "return BattleStringExpandPlaceholders(src, gDisplayedStringBattle);",
+        "BASE-006 return UB",
+    )
+
+    text_c = read("src/text.c")
+    req(
+        text_c,
+        'INCBIN_U16("graphics/fonts/latin_small.hwlatfont")',
+        "BASE-006 latin_small runtime asset",
+    )
+
+    gfx_rules = read("graphics_file_rules.mk")
+    req(
+        gfx_rules,
+        "$(FONTGFXDIR)/latin_small.hwlatfont: $(FONTGFXDIR)/latin_small.png",
+        "BASE-006 latin_small build rule",
+    )
+
+    gbagfx = read("tools/gbagfx/font.c")
+    for token in (
+        "void ReadHalfWidthLatinFont",
+        "void WriteHalfWidthLatinFont",
+        "for (unsigned int column = 0; column < 32; column++)",
+        "int glyphSize = 32;",
+        "if (numGlyphs % 32 != 0)",
+        "int numRows = numGlyphs / 32;",
+        "int imageSize = numRows * 16 * 64;",
+    ):
+        req(gbagfx, token, "BASE-006 gbagfx half-width Latin")
+
     # BUG-012: the Ruby object belongs to B5F. The script may remain physically
     # declared in the B3F script include, but B3F must not own the object.
     b3 = json.loads(read("data/maps/MtEmber_RubyPath_B3F/map.json"))
