@@ -89,8 +89,9 @@ def main():
         "BATTLE_HISTORY->abilities[battlerId] = abilityId;",
         "BATTLE_HISTORY->itemEffects[battlerId] = itemEffect;",
         "(GetBattlerSide(gActiveBattler) ^ BIT_SIDE)",
+        "AI_THINKING_STRUCT->funcResult = BATTLE_HISTORY->itemEffects[battlerId];",
     ):
-        req(ai, token, "RC-F028")
+        req(ai, token, "RC-F028/RC-F030")
     # The BUGFIX branches may preserve vanilla code under #ifndef BUGFIX, but the
     # active path must never index an actual four-move array with the old 0..7 loop.
     assert "gBattleMons[gBattlerAttacker].moves[i] != 0 && gBattleMoves[BATTLE_HISTORY->usedMoves[gBattlerTarget].moves[i]]" not in ai
