@@ -926,7 +926,7 @@ void Task_LinkFullSave(u8 taskId)
         gTasks[taskId].data[0] = 7;
         break;
     case 7:
-#if REVISION >= 0xA
+#if defined(BUGFIX) || REVISION >= 0xA
         if (!IsLinkTaskFinished()) break;
 #endif
         ClearContinueGameWarpStatus2();
@@ -944,7 +944,7 @@ void Task_LinkFullSave(u8 taskId)
         }
         break;
     case 9:
-#if REVISION >= 0xA
+#if defined(BUGFIX) || REVISION >= 0xA
         if (!IsLinkTaskFinished()) break;
 #endif
         SetLinkStandbyCallback();
