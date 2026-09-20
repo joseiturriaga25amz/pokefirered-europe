@@ -47,11 +47,11 @@ A historical frozen requirement superseded by an approved amendment must **not**
 
 ## 5. Current technical state at continuity freeze
 
-The last code-affecting RC audit commit is:
+The latest code-affecting RC audit commit currently recorded is:
 
-- `67b1b5220dd21963454649d84461a70fb1244d47` — locks frozen economy and postgame stock in the RC validator.
+- `bfb526914e3ac247a97d88a2b6c3c4e2692f5bc7` — hardens Gate 7 obtainability so only FireRed encounter tables can satisfy the proof and in-game trade outputs require an obtainable requested species.
 
-The later commits through the current continuity-documentation work are documentation-only descendants unless explicitly noted otherwise.
+Later commits through the current continuity update are documentation-only unless explicitly noted otherwise.
 
 The consolidated workflow for the code-equivalent RC state completed **SUCCESS**. It covered:
 
@@ -91,7 +91,10 @@ See `RC_AUDIT_LOG.md` for full details. Key repaired findings include:
 - stale historical QA references to mGBA/142-slot bag;
 - explicit save layout/migration RC gates;
 - explicit vanilla Gen III ID-space gates;
-- explicit frozen economy/postgame-stock gates.
+- explicit frozen economy/postgame-stock gates;
+- hardened Gate 6 persistent event-state coverage;
+- hardened Gate 7 one-save obtainability coverage;
+- exact audited-blob locks for five high-risk gameplay data files.
 
 ## 7. Important automatic validators
 
@@ -132,6 +135,12 @@ Direct comparison with `baseline-spanish-vanilla` established:
 - pre-National non-Kanto/egg link restrictions remain;
 - Gen III Pokémon trading compatibility is an explicit acceptance goal;
 - round-tripping the same modified save through vanilla is **not** a supported goal.
+
+## Current RC audit recovery note
+
+After app-side forced closures on 2026-09-20, the repository was re-read from GitHub before further changes. The branch history was intact. The audit documentation had lagged behind the code, so the state was reconciled. RC-F022 and RC-F023 are now statically hardened and awaiting CI confirmation; RC-F024 records and fixes an additional Gate 7 validator blind spot discovered during recovery.
+
+The exact current branch HEAD must still be checked by CI before any RC freeze. No MyBoy final acceptance result should be inferred from static validation.
 
 ## 9. What remains before v1.0 final
 
