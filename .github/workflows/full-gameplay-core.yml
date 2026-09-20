@@ -568,6 +568,9 @@ jobs:
           print("Frozen Gary, bosses and Resort Gorgeous payout identities validated")
           PY
 
+      - name: Validate exact 154 requirement reconciliation
+        run: python3 tools/validate_requirement_reconciliation.py
+
       - name: Validate frozen RC invariants
         run: python3 tools/validate_rc_freeze.py
 
