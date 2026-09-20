@@ -105,6 +105,23 @@ def main() -> None:
     ):
         assert item_id not in celadon, item_id
 
+    # ECO-001/QOL-014: history availability must exist, not merely the
+    # correct item price in items.json.
+    for item_id in (
+        "ITEM_SOFT_SAND", "ITEM_HARD_STONE", "ITEM_MIRACLE_SEED",
+        "ITEM_BLACK_GLASSES", "ITEM_BLACK_BELT", "ITEM_MAGNET",
+        "ITEM_MYSTIC_WATER", "ITEM_SHARP_BEAK", "ITEM_POISON_BARB",
+        "ITEM_NEVER_MELT_ICE", "ITEM_SPELL_TAG", "ITEM_TWISTED_SPOON",
+        "ITEM_CHARCOAL", "ITEM_DRAGON_FANG", "ITEM_SILK_SCARF",
+        "ITEM_SILVER_POWDER",
+    ):
+        assert item_id in pre_nat, item_id
+
+    celadon_2f = read("data/maps/CeladonCity_DepartmentStore_2F/scripts.inc")
+    assert "ITEM_TM44" in celadon_2f
+    celadon_5f = read("data/maps/CeladonCity_DepartmentStore_5F/scripts.inc")
+    assert "ITEM_PP_UP" in celadon_5f
+
     ev_berries = (
         "ITEM_POMEG_BERRY",
         "ITEM_KELPSY_BERRY",
@@ -295,6 +312,56 @@ def main() -> None:
     start = game_corner.index("CeladonCity_GameCorner_PrizeRoom_EventScript_Porygon::")
     porygon = game_corner[start:]
     assert "setvar VAR_TEMP_2, 5000" in porygon
+
+    # ECO-008: Resort Gorgeous can form the intended ~30k VS Seeker circuit.
+    trainers = json.loads(read("src/data/trainers.json"))["trainers"]
+    by_trainer = {t["id"]: t for t in trainers}
+    for trainer_id in (
+        "TRAINER_LADY_JACKI",
+        "TRAINER_LADY_GILLIAN",
+        "TRAINER_PAINTER_CELINA",
+    ):
+        assert by_trainer[trainer_id]["trainerClass"] == "TRAINER_CLASS_LADY", trainer_id
+
+    parties = read("src/data/trainer_parties.h")
+    jacki_party = parties[
+        parties.index("sParty_LadyJacki"):parties.index("sParty_PainterCelina")
+    ]
+    assert ".lvl = 50" in jacki_party
+    celina_party = parties[
+        parties.index("sParty_PainterCelina"):parties.index("sParty_PainterRayna")
+    ]
+    assert ".lvl = 50" in celina_party
+    gillian_party = parties[
+        parties.index("sParty_LadyGillian"):parties.index("sParty_YoungsterDestin")
+    ]
+    assert ".lvl = 49" in gillian_party
+
+    battle_main = read("src/battle_main.c")
+    assert "{TRAINER_CLASS_LADY, 50}" in battle_main
+    battle_commands = read("src/battle_script_commands.c")
+    assert "moneyReward = 4 * lastMonLevel" in battle_commands
+
+    resort_map = json.loads(read("data/maps/FiveIsland_ResortGorgeous/map.json"))
+    wanted_scripts = {
+        "FiveIsland_ResortGorgeous_EventScript_Jacki",
+        "FiveIsland_ResortGorgeous_EventScript_Gillian",
+        "FiveIsland_ResortGorgeous_EventScript_Celina",
+    }
+    coords = [
+        (obj["x"], obj["y"])
+        for obj in resort_map["object_events"]
+        if obj.get("script") in wanted_scripts
+    ]
+    assert len(coords) == 3, coords
+    x_lo = max(x - 7 for x, _ in coords)
+    x_hi = min(x + 7 for x, _ in coords)
+    y_lo = max(y - 5 for _, y in coords)
+    y_hi = min(y + 5 for _, y in coords)
+    assert x_lo <= x_hi and y_lo <= y_hi, (coords, (x_lo, x_hi, y_lo, y_hi))
+
+    vs_seeker = read("src/vs_seeker.c")
+    assert "vsSeekerChargeSteps == 100" in vs_seeker
 
     print(
         "RC freeze validator passed: Gen III ID/save compatibility, frozen economy, "
