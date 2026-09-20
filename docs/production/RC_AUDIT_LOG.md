@@ -33,7 +33,8 @@ The Full gameplay workflow builds `firered_es_modern` and protects:
 - Mystic/Aurora ticket quest progression;
 - Mew/Celebi event state and movesets;
 - Gen III Pokemon/BoxPokemon structure sizes;
-- vanilla pre-National trade restrictions.
+- vanilla pre-National trade restrictions;
+- frozen RC economy/event/evolution invariants via `tools/validate_rc_freeze.py`.
 
 ## Findings repaired during RC audit
 
@@ -50,11 +51,11 @@ The event is now attached to a real Berry Forest tree. When Celebi requirements 
 Added `tools/validate_full_trainer_sets.py` and wired it into CI. The validator passed across 34 Full parties, 163 Pokémon and 632 custom moves, checking repository species/move/item IDs plus level/TM-HM/tutor/egg/evolution-line learnability.
 
 ### RC-F004 — QOL-009 EV summary view missing
-**Status:** FIXED / IN VALIDATION  
+**Status:** FIXED / CI PASS  
 The frozen specification requires an EV view in the Pokémon summary. Added a SELECT toggle on the Skills page, exact six-stat EV values, proportional per-stat bars, and total/510 information. The toggle is disabled for battle/enemy/link summaries and works from the normal party/box summary path.
 
 ### RC-F005 — ECO-008 Resort Gorgeous circuit payout incomplete
-**Status:** FIXED / IN VALIDATION  
+**Status:** FIXED / CI PASS  
 Celina remained a Painter in the implementation, so the intended Jacki/Gillian/Celina high-payout VS Seeker circuit was not satisfied. Celina now uses the Lady trainer class/presentation while keeping her localized name and frozen party. CI now asserts Lady class for all three circuit trainers.
 
 ## Structural compatibility evidence
@@ -91,31 +92,31 @@ Do **not** merge to `main` or label v1.0 final until:
 
 
 ### RC-F006 — BUG-007 Move Reminder stored both scroll indicators in one slot
-**Status:** FIXED / IN VALIDATION  
+**Status:** FIXED / CI PASS  
 The second scroll indicator overwrote `spriteIds[0]`, exactly matching the frozen bug description. It now uses `spriteIds[1]`, and visibility updates reference the stored sprite IDs rather than assuming sprite numbers 0/1.
 
 ### RC-F007 — BUG-008 L=A key repeat still used mismatched raw/remapped state
-**Status:** FIXED / IN VALIDATION  
+**Status:** FIXED / CI PASS  
 Key repeat now compares the current raw input with the previous raw held input, then maps repeated L presses to A in `newAndRepeatedKeys`. This preserves the normal L=A synthetic A behavior while allowing held-key repetition.
 
 ### RC-F008 — BUG-009 party two-slot animation leak was language-dependent
-**Status:** FIXED / IN VALIDATION  
+**Status:** FIXED / CI PASS  
 The two temporary tilemap buffers are now unconditionally freed after the two-mon slide animation. The previous source only freed them in non-English builds; Full now carries one safe path for every build.
 
 ### RC-F009 — EVO-005..010 trade-item evolution UI route incomplete
-**Status:** FIXED / IN VALIDATION  
+**Status:** FIXED / CI PASS  
 `GetEvolutionTargetSpecies` already accepted `EVO_TRADE_ITEM` in item-use mode, but Metal Coat, Dragon Scale, Up-Grade and King's Rock still used `ITEM_TYPE_BAG_MENU`. Because `FieldUseFunc_EvoItem` obtains its next callback from the item type, those items lacked the party-selection callback. They now use `ITEM_TYPE_PARTY_MENU`, matching evolution stones while retaining their existing hold effects and evolution table semantics.
 
 
 ### RC-F010 — ECO-004 berry shop and Emerald EV-berry behavior were absent
-**Status:** FIXED / IN VALIDATION  
+**Status:** FIXED / CI PASS  
 The frozen matrix required adventure/post-National berry inventories with approved prices and Emerald-style EV-reducing berries. The implementation still had vanilla Two Island stock, every approved berry retained the placeholder price 20, and Pomeg/Kelpsy/Qualot/Hondew/Grepa/Tamato had no field-use effect. Full now adds the staged Two Island berry inventory, all 28 frozen prices, direct party use for the six EV berries, -10 EV reduction with floor 0, and the Emerald friendship increase path (including friendship-only use when the target EV is already 0).
 
 ### RC-F011 — Fossil/Dojo/Altering Cave/economy freeze lacked a consolidated static gate
-**Status:** FIXED / IN VALIDATION  
+**Status:** FIXED / CI PASS  
 Added `tools/validate_rc_freeze.py` and wired it into CI. It protects the frozen berry economy/effects, both-fossil recovery path, Cinnabar revival support, second Dojo state/reward invariants, Eevee/level evolution invariants, all nine Altering Cave tables/selector states, and the 5,000-coin Porygon price.
 
 
 ### RC-F012 — Historical QA workbook still names superseded emulator/bag tests
 **Status:** RESOLVED BY AMENDMENT TRACEABILITY  
-The frozen QA sheet still contains mGBA wording in QA-002 and the abandoned >42/142-slot bag cases QA-005/QA-006. These rows remain part of the historical workbook but are superseded by A-001/A-002 and are not release criteria. Added `docs/production/RC_MYBOY_CHECKLIST.md` as the authoritative final runtime handoff: MyBoy is required, the Items pocket is vanilla 42 slots, and runtime acceptance is grouped without restoring the abandoned bag implementation.
+The frozen specification still contains mGBA wording in COMP-006/QA-002 and the abandoned bag expansion in QOL-008, SAVE-002 and QA-005/QA-006. These historical rows remain preserved, but A-001/A-002 supersede them and they are not release criteria. Added `docs/production/RC_MYBOY_CHECKLIST.md` as the authoritative final runtime handoff: MyBoy is required, the Items pocket is vanilla 42 slots, and runtime acceptance is grouped without restoring the abandoned bag implementation.
