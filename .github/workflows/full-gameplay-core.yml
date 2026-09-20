@@ -76,6 +76,8 @@ jobs:
           grep -q 'species2\[monIdx\] == SPECIES_EGG' src/trade.c
           grep -q 'species2\[monIdx\] > KANTO_SPECIES_END' src/trade.c
           grep -q 'MON_DATA_MODERN_FATEFUL_ENCOUNTER' src/trade.c
+          grep -q 'gSaveBlock1Ptr->roamer.species != species' src/wild_pokemon_area.c
+          grep -q 'FLAG_GET_SEEN' src/wild_pokemon_area.c
 
       - name: Validate approved wild encounter rates
         run: |
