@@ -49,7 +49,7 @@ A historical frozen requirement superseded by an approved amendment must **not**
 
 The latest code-affecting RC audit commit currently recorded is:
 
-- `bfb526914e3ac247a97d88a2b6c3c4e2692f5bc7` — hardens Gate 7 obtainability so only FireRed encounter tables can satisfy the proof and in-game trade outputs require an obtainable requested species.
+- `70d90c1763848900493cdebda37de8626dcf8e70` — completes direct-use trade-item evolutions by adding evolution effects for King's Rock, Metal Coat, Dragon Scale and Up-Grade. The immediately preceding commits also harden unique reusable TM transactions and vanilla-save migration.
 
 Later commits through the current continuity update are documentation-only unless explicitly noted otherwise.
 
@@ -138,7 +138,7 @@ Direct comparison with `baseline-spanish-vanilla` established:
 
 ## Current RC audit recovery note
 
-After app-side forced closures on 2026-09-20, the repository was re-read from GitHub before further changes. The branch history was intact. The audit documentation had lagged behind the code, so the state was reconciled. RC-F022 and RC-F023 are now statically hardened and awaiting CI confirmation; RC-F024 records and fixes an additional Gate 7 validator blind spot discovered during recovery.
+After app-side forced closures on 2026-09-20, the repository was re-read from GitHub before further changes. The branch history was intact. The audit documentation had lagged behind the code, so the state was reconciled. RC-F022 and RC-F023 are now statically hardened and awaiting CI confirmation; RC-F024 records and fixes an additional Gate 7 validator blind spot discovered during recovery. Subsequent audit blocks found and fixed RC-F025 (vanilla-save migration invocation), RC-F026 (unique reusable TM transaction consistency), and RC-F027 (missing direct-use trade-evolution item effects).
 
 The exact current branch HEAD must still be checked by CI before any RC freeze. No MyBoy final acceptance result should be inferred from static validation.
 
