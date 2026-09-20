@@ -191,6 +191,60 @@ jobs:
           print("Direct trade-item evolution UI path validated")
           PY
 
+      - name: Validate Move Reminder and tutor pricing
+        run: |
+          python3 - <<'PY'
+          import re
+          from pathlib import Path
+
+          reminder = Path("data/maps/TwoIsland_House/scripts.inc").read_text()
+          tutors = Path("data/scripts/spanish/move_tutors.inc").read_text()
+
+          # QOL-003: exact fixed fee, charged only after a successful teaching.
+          assert "checkmoney 2000" in reminder
+          assert "removemoney 2000" in reminder
+          assert reminder.index("waitstate") < reminder.index("removemoney 2000")
+          assert "ITEM_TINY_MUSHROOM" not in reminder
+          assert "ITEM_BIG_MUSHROOM" not in reminder
+
+          # QOL-004: first use follows the vanilla tutor path and sets its flag;
+          # repeat path is selected only once that flag exists.
+          expected = {
+              "DoubleEdge": 5000,
+              "ThunderWave": 6500,
+              "RockSlide": 7500,
+              "Explosion": 6000,
+              "MegaPunch": 1500,
+              "MegaKick": 2500,
+              "DreamEater": 3000,
+              "Softboiled": 5000,
+              "Substitute": 8000,
+              "SwordsDance": 10000,
+              "SeismicToss": 3500,
+              "Counter": 4000,
+              "Metronome": 1000,
+              "Mimic": 2000,
+              "BodySlam": 6000,
+          }
+          for name, price in expected.items():
+              assert f"EventScript_{name}Repeat::" in tutors, name
+              repeat = tutors[tutors.index(f"EventScript_{name}Repeat::"):]
+              repeat = repeat[:repeat.index("\n\tend") + 5]
+              assert f"checkmoney {price}" in repeat, (name, price)
+              assert f"removemoney {price}" in repeat, (name, price)
+
+          # QOL-005: ultimate starter tutor is free first, then exactly 10,000.
+          first = tutors[tutors.index("TwoIsland_CapeBrink_House_EventScript_StarterTutor::"):
+                         tutors.index("CapeBrinkTutor_EventScript_RepeatOffer::")]
+          assert "checkmoney" not in first
+          repeat = tutors[tutors.index("CapeBrinkTutor_EventScript_RepeatOffer::"):
+                          tutors.index("CapeBrinkTutor_EventScript_StartTeaching::")]
+          assert "checkmoney 10000" in repeat
+          assert "removemoney 10000" in tutors[tutors.index("CapeBrinkTutor_EventScript_ChargeRepeat::"):]
+
+          print("Move Reminder and tutor price/repeat invariants validated")
+          PY
+
       - name: Validate legendary and mythical event levels
         run: |
           python3 - <<'PY'
