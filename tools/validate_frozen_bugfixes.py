@@ -96,6 +96,37 @@ def main():
     # active path must never index an actual four-move array with the old 0..7 loop.
     assert "gBattleMons[gBattlerAttacker].moves[i] != 0 && gBattleMoves[BATTLE_HISTORY->usedMoves[gBattlerTarget].moves[i]]" not in ai
 
+    # Gate 12 pre-runtime hardening / RC-F032: Full builds MODERN with REVISION=0,
+    # so tested revision-0xA link fixes must also be enabled by BUGFIX.
+    overworld_h = read("include/overworld.h")
+    req(overworld_h, "#if defined(BUGFIX) || REVISION >= 0xA", "RC-F032")
+    req(overworld_h, "void ClearFieldCallback(void);", "RC-F032")
+
+    overworld_c = read("src/overworld.c")
+    req(overworld_c, "#if defined(BUGFIX) || REVISION >= 0xA\nvoid ClearFieldCallback(void)", "RC-F032")
+
+    link_c = read("src/link.c")
+    req(link_c, "#if defined(BUGFIX) || REVISION >= 0xA\n    ClearFieldCallback();", "RC-F032")
+
+    battle_player = read("src/battle_controller_player.c")
+    req(battle_player, "#if !(defined(BUGFIX) || REVISION >= 0xA)", "RC-F032")
+    req(battle_player, "#if defined(BUGFIX) || REVISION >= 0xA\n            if (!IsLinkTaskFinished() || gPaletteFade.active) return;", "RC-F032")
+
+    battle_main = read("src/battle_main.c")
+    req(battle_main, "#if defined(BUGFIX) || REVISION >= 0xA\n        if (IsLinkTaskFinished() && !gPaletteFade.active)", "RC-F032")
+
+    cable = read("src/cable_club.c")
+    assert cable.count("#if defined(BUGFIX) || REVISION >= 0xA\n        if (!IsLinkTaskFinished()) break;") >= 2
+
+    save_c = read("src/save.c")
+    assert save_c.count("#if defined(BUGFIX) || REVISION >= 0xA\n        if (!IsLinkTaskFinished()) break;") >= 3
+
+    trade_c = read("src/trade.c")
+    req(trade_c, "#if defined(BUGFIX) || REVISION >= 0xA\n    if (IsLinkTaskFinished() && !gPaletteFade.active)", "RC-F032")
+
+    union_battle = read("src/union_room_battle.c")
+    assert union_battle.count("#if defined(BUGFIX) || REVISION >= 0xA") >= 3
+
     # BUG-012: the Ruby object belongs to B5F. The script may remain physically
     # declared in the B3F script include, but B3F must not own the object.
     b3 = json.loads(read("data/maps/MtEmber_RubyPath_B3F/map.json"))
@@ -109,7 +140,7 @@ def main():
     assert "LOCALID_RUBY" not in b3_ids, "BUG-012: Ruby object still lives on B3F"
     assert "LOCALID_RUBY" in b5_ids, "BUG-012: Ruby object missing from B5F"
 
-    print("BUG-001..BUG-012 + Gate 2A RC-F028 static audit PASS: frozen and external-sweep technical repairs remain present.")
+    print("BUG-001..BUG-012 + RC-F028/030/032 static audit PASS: frozen, AI and link-path technical repairs remain present.")
 
 
 if __name__ == "__main__":
