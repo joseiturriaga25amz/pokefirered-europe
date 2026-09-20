@@ -65,7 +65,7 @@ def main():
     for path, prefix, species, fought, pending in checks:
         check_kanto_static(path, prefix, species, fought, pending)
 
-    hof = read("data/scripts/hall_of_fame.inc")
+    hof = read("data/scripts/spanish/hall_of_fame.inc")
     for species in ("ZAPDOS", "ARTICUNO", "MOLTRES", "MEWTWO"):
         require(
             hof,
