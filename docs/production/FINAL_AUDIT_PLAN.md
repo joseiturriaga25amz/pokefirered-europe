@@ -73,6 +73,29 @@ Questions for each diff:
 
 ---
 
+## Gate 2A — External reference / known-defect sweep
+
+Purpose: use external technical knowledge as an independent source of failure hypotheses, not as authority to redesign Full.
+
+Before freezing the final RC, review current/relevant public technical references for:
+
+- `pret/pokefirered` bug fixes, open/closed issues and commits affecting systems Full touched;
+- known FireRed/LeafGreen engine bugs involving save, roamers, Pokédex, link/trade, battle calculations, scripts, party UI, Safari and event flags;
+- relevant Gen III decomp/reference implementations (including Emerald where Full intentionally adopts an Emerald behavior such as Synchronize or EV-reducing berries);
+- MyBoy-specific runtime/link/save quirks that could affect acceptance testing;
+- known ROM-hacking failure modes for changed struct layouts, script state, callbacks, map transitions, save migration and link compatibility.
+
+Rules:
+
+- External material may reveal a test case or a technical defect, but it does **not** override the frozen Full design or approved amendments.
+- Every applicable external issue becomes one of: already covered, not applicable, new regression test, or confirmed defect.
+- Do not import unrelated upstream modernization merely because it exists.
+- Record any newly relevant bug hypothesis and its disposition in `RC_AUDIT_LOG.md`.
+
+**Exit criterion:** no applicable known defect from the reviewed references remains untested or unexplained.
+
+---
+
 ## Gate 3 — Build, compiler and automated invariant audit
 
 Require:
