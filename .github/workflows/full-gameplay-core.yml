@@ -309,10 +309,15 @@ jobs:
           # TMs cannot be sold or moved out of the TM Case as held items.
           sell = tm[tm.index("static void Task_SelectedTMHM_Sell"):tm.index("static void Task_AskConfirmSaleWithAmount")]
           assert "RemoveBagItem" not in sell
-          action_give = tm[tm.index("static void Action_Give"):tm.index("static void PrintError_ThereIsNoPokemon")]
+          action_start = tm.index("static void Action_Give(u8 taskId)\n{")
+          action_end = tm.index("static void PrintError_ThereIsNoPokemon(u8 taskId)\n{", action_start)
+          action_give = tm[action_start:action_end]
           assert "CB2_ChooseMonToGiveItem" not in action_give
           assert "PrintError_ItemCantBeHeld" in action_give
-          give_party = tm[tm.index("static void Task_SelectedTMHM_GiveParty"):tm.index("static void Task_SelectedTMHM_GivePC")]
+
+          party_start = tm.index("static void Task_SelectedTMHM_GiveParty(u8 taskId)\n{")
+          pc_start = tm.index("static void Task_SelectedTMHM_GivePC(u8 taskId)\n{", party_start)
+          give_party = tm[party_start:pc_start]
           assert "PrintError_ItemCantBeHeld" in give_party
           assert "CB2_GiveHoldItem" not in give_party
 
