@@ -125,3 +125,8 @@ The frozen specification still contains mGBA wording in COMP-006/QA-002 and the 
 ### RC-F013 — High-risk save layout/migration invariants were compile-only, not RC-gated
 **Status:** FIXED / IN VALIDATION  
 The implementation already preserved `SaveBlock1 == 0x3D68`, the Full header at `0x3D24`, and `unused_348C[400]`, while `InitFullSaveData` initializes only the Full-owned header. The RC validator now asserts these A-002/SAVE-001/SAVE-004 invariants and rejects any migration path that touches the vanilla bag or reserved `0x348C` area.
+
+
+### RC-F014 — COMP-001 vanilla ID-space compatibility lacked an explicit RC gate
+**Status:** FIXED / IN VALIDATION  
+Direct baseline comparison confirms the ID spaces are unchanged: `SPECIES_EGG = 412` / `NUM_SPECIES = SPECIES_EGG`, `MOVES_COUNT = 355`, and `ITEMS_COUNT = 375`. The RC validator now locks those values so Full cannot silently introduce incompatible Pokémon, move or item IDs.
