@@ -54,6 +54,57 @@ def main() -> None:
             expected,
         )
 
+    frozen_item_prices = {
+        "ITEM_SOFT_SAND": 3000, "ITEM_HARD_STONE": 3000,
+        "ITEM_MIRACLE_SEED": 3000, "ITEM_BLACK_GLASSES": 3000,
+        "ITEM_BLACK_BELT": 3000, "ITEM_MAGNET": 3000,
+        "ITEM_MYSTIC_WATER": 3000, "ITEM_SHARP_BEAK": 3000,
+        "ITEM_POISON_BARB": 3000, "ITEM_NEVER_MELT_ICE": 3000,
+        "ITEM_SPELL_TAG": 3000, "ITEM_TWISTED_SPOON": 3000,
+        "ITEM_CHARCOAL": 3000, "ITEM_DRAGON_FANG": 3000,
+        "ITEM_SILK_SCARF": 3000, "ITEM_SILVER_POWDER": 3000,
+        "ITEM_QUICK_CLAW": 4000, "ITEM_LUCKY_PUNCH": 4000,
+        "ITEM_STICK": 4000, "ITEM_SCOPE_LENS": 5000,
+        "ITEM_FOCUS_BAND": 5000, "ITEM_METAL_POWDER": 6000,
+        "ITEM_SHELL_BELL": 6000, "ITEM_BRIGHT_POWDER": 7500,
+        "ITEM_LIGHT_BALL": 8000, "ITEM_LEFTOVERS": 12000,
+        "ITEM_THICK_CLUB": 12000, "ITEM_CHOICE_BAND": 15000,
+        "ITEM_SUN_STONE": 3000, "ITEM_MOON_STONE": 3000,
+        "ITEM_KINGS_ROCK": 5000, "ITEM_METAL_COAT": 5000,
+        "ITEM_DRAGON_SCALE": 5000, "ITEM_UP_GRADE": 7500,
+        "ITEM_PP_UP": 9800, "ITEM_ETHER": 1200,
+        "ITEM_MAX_ETHER": 2000, "ITEM_ELIXIR": 3000,
+        "ITEM_MAX_ELIXIR": 4500, "ITEM_LUCKY_EGG": 30000,
+        "ITEM_TM44": 3000,
+    }
+    for item_id, expected in frozen_item_prices.items():
+        assert by_id[item_id]["price"] == expected, (
+            item_id,
+            by_id[item_id]["price"],
+            expected,
+        )
+
+    celadon = read("data/maps/CeladonCity_DepartmentStore_4F/scripts.inc")
+    assert "goto_if_set FLAG_SYS_NATIONAL_DEX" in celadon
+    pre_nat = celadon[
+        celadon.index("CeladonCity_DepartmentStore_4F_Items::"):
+        celadon.index("CeladonCity_DepartmentStore_4F_PostNationalItems::")
+    ]
+    post_nat = celadon[celadon.index("CeladonCity_DepartmentStore_4F_PostNationalItems::"):]
+    for item_id in (
+        "ITEM_SUN_STONE", "ITEM_MOON_STONE", "ITEM_KINGS_ROCK",
+        "ITEM_METAL_COAT", "ITEM_DRAGON_SCALE", "ITEM_UP_GRADE",
+        "ITEM_LUCKY_EGG", "ITEM_ETHER", "ITEM_MAX_ETHER",
+        "ITEM_ELIXIR", "ITEM_MAX_ELIXIR",
+    ):
+        assert item_id not in pre_nat, item_id
+        assert item_id in post_nat, item_id
+
+    for item_id in (
+        "ITEM_EXP_SHARE", "ITEM_AMULET_COIN", "ITEM_SOOTHE_BELL", "ITEM_MACHO_BRACE"
+    ):
+        assert item_id not in celadon, item_id
+
     ev_berries = (
         "ITEM_POMEG_BERRY",
         "ITEM_KELPSY_BERRY",
@@ -181,8 +232,8 @@ def main() -> None:
     assert "setvar VAR_TEMP_2, 5000" in porygon
 
     print(
-        "RC freeze validator passed: Gen III ID/save compatibility, berry economy/effects, "
-        "fossils, Dojo, Altering Cave, evolutions and Porygon."
+        "RC freeze validator passed: Gen III ID/save compatibility, frozen economy, "
+        "berry effects, fossils, Dojo, Altering Cave, evolutions and Porygon."
     )
 
 
