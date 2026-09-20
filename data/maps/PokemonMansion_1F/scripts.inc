@@ -13,6 +13,17 @@ PokemonMansion_1F_OnTransition::
 
 PokemonMansion_1F_EventScript_Statue::
 	lockall
+	goto_if_ne VAR_FULL_MEW_QUEST, 0, PokemonMansion_1F_EventScript_StatueVanilla
+	goto_if_unset FLAG_FOUGHT_MEWTWO, PokemonMansion_1F_EventScript_StatueVanilla
+	goto_if_set FLAG_FULL_MEWTWO_KO_PENDING, PokemonMansion_1F_EventScript_StatueVanilla
+	goto_if_set FLAG_FULL_MEW_CAUGHT, PokemonMansion_1F_EventScript_StatueVanilla
+	waitse
+	playmoncry SPECIES_MEW, CRY_MODE_NORMAL
+	msgbox PokemonMansion_1F_Text_FullMewSighting1
+	waitmoncry
+	setvar VAR_FULL_MEW_QUEST, 1
+
+PokemonMansion_1F_EventScript_StatueVanilla::
 	setvar VAR_0x8004, 0
 	call PokemonMansion_EventScript_SecretSwitch
 	playse SE_UNLOCK
