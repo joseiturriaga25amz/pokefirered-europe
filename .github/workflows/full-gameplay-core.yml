@@ -80,6 +80,10 @@ jobs:
           grep -q 'MON_DATA_MODERN_FATEFUL_ENCOUNTER' src/trade.c
           grep -q 'gSaveBlock1Ptr->roamer.species != species' src/wild_pokemon_area.c
           grep -q 'FLAG_GET_SEEN' src/wild_pokemon_area.c
+          grep -q 'showFullEvView' src/pokemon_summary_screen.c
+          grep -q 'MON_DATA_HP_EV' src/pokemon_summary_screen.c
+          grep -q 'MON_DATA_SPEED_EV' src/pokemon_summary_screen.c
+          grep -q 'MAX. STAT 252 / TOTAL 510' src/pokemon_summary_screen.c
 
       - name: Validate approved wild encounter rates
         run: |
@@ -229,7 +233,12 @@ jobs:
                       "TRAINER_CHAMPION_REMATCH_SQUIRTLE","TRAINER_CHAMPION_REMATCH_BULBASAUR","TRAINER_CHAMPION_REMATCH_CHARMANDER"):
               assert by_id[tid]["items"] == "ITEM_FULL_RESTORE, ITEM_FULL_RESTORE", tid
 
-          print("Frozen Gary and story boss rosters validated")
+          # ECO-008: the Resort Gorgeous VS Seeker circuit relies on all three
+          # wealthy trainers paying at the Lady rate. Celina was Painter in vanilla.
+          for tid in ("TRAINER_LADY_JACKI","TRAINER_LADY_GILLIAN","TRAINER_PAINTER_CELINA"):
+              assert by_id[tid]["trainerClass"] == "TRAINER_CLASS_LADY", (tid, by_id[tid]["trainerClass"])
+
+          print("Frozen Gary, bosses and Resort Gorgeous payout identities validated")
           PY
 
       - name: Validate Full trainer legality
