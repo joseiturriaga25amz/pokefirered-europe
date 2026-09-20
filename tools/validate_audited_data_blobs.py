@@ -21,6 +21,12 @@ EXPECTED = {
     "data/scripts/spanish/hall_of_fame.inc": "9e2c9bb7e8b0bb3537aa313bae9ffcf405f1630c",
     "data/scripts/spanish/repel.inc": "d0255413c6a5453d5e1af15201b41d8b4663f22b",
     "data/scripts/spanish/move_tutors.inc": "f6fc0e15f3c7225bef69ae4d6362fced3c0e60f1",
+    "src/script_menu.c": "52174b0d3f5d1f659a52f6674b7e920f8a78a657",
+    "data/maps/SixIsland_AlteringCave/scripts.inc": "da91f6e0f72a0a360b53abdc839dc6f11a0b903a",
+    "data/maps/SixIsland_AlteringCave/map.json": "0e2358007cc22f8d31bc93226e2801b9a8f06d81",
+    "src/wild_encounter.c": "293caa0f44694ce9aefc734cde02256467e2fa9f",
+    "include/constants/menu.h": "d289c2c922a25a8195dc3c6df5a80aa9ecd147ee",
+    "include/wild_encounter.h": "b730103069f14a7d7147547d5bfad82bf082a6de",
 }
 
 
