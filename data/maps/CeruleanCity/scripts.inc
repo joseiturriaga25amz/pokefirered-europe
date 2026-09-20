@@ -70,11 +70,11 @@ CeruleanCity_EventScript_RivalSquirtle::
 	return
 
 CeruleanCity_EventScript_RivalBulbasaur::
-	trainerbattle_no_intro TRAINER_RIVAL_CERULEAN_BULBASAUR, CeruleanCity_Text_RivalDefeat
+	trainerbattle_no_intro TRAINER_RIVAL_CERULEAN_SQUIRTLE, CeruleanCity_Text_RivalDefeat
 	return
 
 CeruleanCity_EventScript_RivalCharmander::
-	trainerbattle_no_intro TRAINER_RIVAL_CERULEAN_CHARMANDER, CeruleanCity_Text_RivalDefeat
+	trainerbattle_no_intro TRAINER_RIVAL_CERULEAN_SQUIRTLE, CeruleanCity_Text_RivalDefeat
 	return
 
 CeruleanCity_EventScript_RivalStartExit::
