@@ -120,3 +120,8 @@ Added `tools/validate_rc_freeze.py` and wired it into CI. It protects the frozen
 ### RC-F012 — Historical QA workbook still names superseded emulator/bag tests
 **Status:** RESOLVED BY AMENDMENT TRACEABILITY  
 The frozen specification still contains mGBA wording in COMP-006/QA-002 and the abandoned bag expansion in QOL-008, SAVE-002 and QA-005/QA-006. These historical rows remain preserved, but A-001/A-002 supersede them and they are not release criteria. Added `docs/production/RC_MYBOY_CHECKLIST.md` as the authoritative final runtime handoff: MyBoy is required, the Items pocket is vanilla 42 slots, and runtime acceptance is grouped without restoring the abandoned bag implementation.
+
+
+### RC-F013 — High-risk save layout/migration invariants were compile-only, not RC-gated
+**Status:** FIXED / IN VALIDATION  
+The implementation already preserved `SaveBlock1 == 0x3D68`, the Full header at `0x3D24`, and `unused_348C[400]`, while `InitFullSaveData` initializes only the Full-owned header. The RC validator now asserts these A-002/SAVE-001/SAVE-004 invariants and rejects any migration path that touches the vanilla bag or reserved `0x348C` area.
