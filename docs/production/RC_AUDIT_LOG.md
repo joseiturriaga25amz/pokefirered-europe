@@ -88,3 +88,20 @@ Do **not** merge to `main` or label v1.0 final until:
 2. static audit has no open critical implementation findings;
 3. required MyBoy runtime checklist has been executed;
 4. regressions discovered by that checklist are corrected and retested.
+
+
+### RC-F006 — BUG-007 Move Reminder stored both scroll indicators in one slot
+**Status:** FIXED / IN VALIDATION  
+The second scroll indicator overwrote `spriteIds[0]`, exactly matching the frozen bug description. It now uses `spriteIds[1]`, and visibility updates reference the stored sprite IDs rather than assuming sprite numbers 0/1.
+
+### RC-F007 — BUG-008 L=A key repeat still used mismatched raw/remapped state
+**Status:** FIXED / IN VALIDATION  
+Key repeat now compares the current raw input with the previous raw held input, then maps repeated L presses to A in `newAndRepeatedKeys`. This preserves the normal L=A synthetic A behavior while allowing held-key repetition.
+
+### RC-F008 — BUG-009 party two-slot animation leak was language-dependent
+**Status:** FIXED / IN VALIDATION  
+The two temporary tilemap buffers are now unconditionally freed after the two-mon slide animation. The previous source only freed them in non-English builds; Full now carries one safe path for every build.
+
+### RC-F009 — EVO-005..010 trade-item evolution UI route incomplete
+**Status:** FIXED / IN VALIDATION  
+`GetEvolutionTargetSpecies` already accepted `EVO_TRADE_ITEM` in item-use mode, but Metal Coat, Dragon Scale, Up-Grade and King's Rock still used `ITEM_TYPE_BAG_MENU`. Because `FieldUseFunc_EvoItem` obtains its next callback from the item type, those items lacked the party-selection callback. They now use `ITEM_TYPE_PARTY_MENU`, matching evolution stones while retaining their existing hold effects and evolution table semantics.
