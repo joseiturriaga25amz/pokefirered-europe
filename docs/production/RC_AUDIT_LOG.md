@@ -177,3 +177,7 @@ The current `validate_full_obtainability.py` prints a broad Gate 7 PASS after ch
 **Status:** FIXED / CI PENDING  
 `InitFullSaveData()` existed and correctly limited migration writes to the 16-byte Full header, but it was only called from new-game initialization. A valid vanilla Spanish save loaded through CONTINUE could therefore enter gameplay without receiving the required `RFFL` magic/schema header, contradicting SAVE-003/SAVE-004 and QA-004. The continue paths in `src/overworld.c` now call `InitFullSaveData()` before normal field restoration, including the Quest Log return path. This changes only the Full-owned header when the magic/version are absent.
 
+### RC-F026 — Unique reusable TM rules were inconsistent across capacity/add/shop paths
+**Status:** FIXED / CI PENDING  
+Full treats TMs as permanent single-copy unlocks, but the transaction paths were not fully aligned. `AddBagItem` rejected an already-owned TM yet still accepted bulk counts when the TM was not owned, `CheckBagHasSpace` could report space for duplicate TMs, and marts could offer quantities greater than one. That created paths where a script/shop could treat a duplicate or bulk TM as receivable even though the permanent-unlock model requires exactly one logical copy. The bag-space check now rejects duplicate/bulk TMs, `AddBagItem` rejects TM counts other than one, and marts cap TM quantity at one. The RC freeze validator now locks these invariants and also verifies the TM Case sell path cannot remove a TM.
+
