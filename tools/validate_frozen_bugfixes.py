@@ -74,6 +74,27 @@ def main():
     req(berry, "game->field = 2;", "BUG-010")
     req(berry, "game->field = 3;", "BUG-010")
 
+    # Gate 2A / RC-F028: current pret/pokefirered upstream analysis identified
+    # doubles-AI history aliasing and out-of-bounds move-history reads. Full forces
+    # BUGFIX, so the safe per-battler path must remain compiled.
+    battle_h = read("include/battle.h")
+    req(battle_h, "struct UsedMoves usedMoves[MAX_BATTLERS_COUNT];", "RC-F028")
+    req(battle_h, "u8 abilities[MAX_BATTLERS_COUNT];", "RC-F028")
+    req(battle_h, "u8 itemEffects[MAX_BATTLERS_COUNT];", "RC-F028")
+
+    ai = read("src/battle_ai_script_commands.c")
+    for token in (
+        "BATTLE_HISTORY->usedMoves[gBattlerTarget].moves[i]",
+        "for (i = 0; i < MAX_MON_MOVES; i++)",
+        "BATTLE_HISTORY->abilities[battlerId] = abilityId;",
+        "BATTLE_HISTORY->itemEffects[battlerId] = itemEffect;",
+        "(GetBattlerSide(gActiveBattler) ^ BIT_SIDE)",
+    ):
+        req(ai, token, "RC-F028")
+    # The BUGFIX branches may preserve vanilla code under #ifndef BUGFIX, but the
+    # active path must never index an actual four-move array with the old 0..7 loop.
+    assert "gBattleMons[gBattlerAttacker].moves[i] != 0 && gBattleMoves[BATTLE_HISTORY->usedMoves[gBattlerTarget].moves[i]]" not in ai
+
     # BUG-012: the Ruby object belongs to B5F. The script may remain physically
     # declared in the B3F script include, but B3F must not own the object.
     b3 = json.loads(read("data/maps/MtEmber_RubyPath_B3F/map.json"))
@@ -87,7 +108,7 @@ def main():
     assert "LOCALID_RUBY" not in b3_ids, "BUG-012: Ruby object still lives on B3F"
     assert "LOCALID_RUBY" in b5_ids, "BUG-012: Ruby object missing from B5F"
 
-    print("BUG-001..BUG-012 static audit PASS: all frozen technical repairs remain present.")
+    print("BUG-001..BUG-012 + Gate 2A RC-F028 static audit PASS: frozen and external-sweep technical repairs remain present.")
 
 
 if __name__ == "__main__":
