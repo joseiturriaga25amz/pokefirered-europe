@@ -39,3 +39,44 @@ The original preproduction freeze selected mGBA without first confirming the use
 ### Rationale
 
 The expanded bag is not important enough to the intended experience to justify additional implementation risk. Preserving vanilla bag behavior reduces save/runtime complexity while keeping the persistent-state infrastructure needed by later Full systems.
+
+
+## A-003 — Production cadence: implement first, runtime QA at the end
+
+**Date:** 2026-09-19  
+**Status:** APPROVED  
+**Supersedes:** the original per-block process that required repeated user-run smoke/functional tests after every implementation block.
+
+### Decision
+
+- During the remaining production phase, implementation and static/automated verification are performed continuously without stopping the user for repeated manual MyBoy tests.
+- The assistant/developer is expected to be internally meticulous: compile, inspect, audit, add automated gates, and repair discovered defects while continuing toward the Release Candidate.
+- User-run MyBoy functional testing is concentrated in the final RC audit and in genuinely necessary milestone/reproduction cases, not after every small change.
+- A compilation or static PASS never substitutes for the final MyBoy runtime acceptance.
+- If a runtime-only uncertainty blocks safe implementation, it is documented rather than silently declared PASS.
+
+### Rationale
+
+The user explicitly prioritized rapid progress and enjoyment over a strict software-engineering cadence with many visible intermediate tests. The project still requires rigorous final validation, but repeated manual checkpoints during implementation were judged unnecessarily slow for this project.
+
+
+## A-004 — Repository is the continuity authority; chats are disposable
+
+**Date:** 2026-09-20  
+**Status:** APPROVED  
+**Supersedes:** any workflow that relies on previous ChatGPT conversations as necessary project state.
+
+### Decision
+
+- The GitHub repository must contain the complete operational state required to resume Pokémon Rojo Fuego Full from a new chat or a different session.
+- Frozen specification sources are archived under `docs/spec/`.
+- Post-freeze decisions live in this amendment log.
+- Current implementation/audit state lives in `docs/production/PROJECT_CONTINUITY.md` and `docs/production/RC_AUDIT_LOG.md`.
+- Final audit method lives in `docs/production/FINAL_AUDIT_PLAN.md`.
+- Runtime acceptance lives in `docs/production/RC_MYBOY_CHECKLIST.md`.
+- Prior chats are context only; they are not a source of truth and may be deleted.
+- When a new chat starts, the assistant must reconstruct state from the repository before modifying code.
+
+### Rationale
+
+The project has spanned multiple long chats and conversation continuity is brittle. Persisting decisions and state in Git makes the project reproducible, auditable, and independent of chat history.
