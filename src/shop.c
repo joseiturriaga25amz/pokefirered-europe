@@ -927,7 +927,9 @@ static void Task_BuyHowManyDialogueInit(u8 taskId)
     BuyMenuPrintItemQuantityAndPrice(taskId);
     ScheduleBgCopyTilemapToVram(0);
     maxQuantity = GetMoney(&gSaveBlock1Ptr->money) / ItemId_GetPrice(tItemId);
-    if (maxQuantity > 99)
+    if (tItemId >= ITEM_TM01 && tItemId < ITEM_HM01)
+        sShopData.maxQuantity = 1;
+    else if (maxQuantity > 99)
         sShopData.maxQuantity = 99;
     else
         sShopData.maxQuantity = (u8)maxQuantity;
