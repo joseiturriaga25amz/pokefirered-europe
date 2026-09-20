@@ -86,6 +86,19 @@ def main():
     assert "gSaveBlock1Ptr->bagPocket_Items" not in init_full
     assert "unused_348C" not in init_full
 
+    # SAVE-003/SAVE-004: schema-0 vanilla imports must actually invoke the
+    # migration initializer on every gameplay continue path, not merely define it.
+    overworld = read("src/overworld.c")
+    continue_start = overworld.index("void CB2_ContinueSavedGame(void)")
+    continue_end = overworld.index("\n}", continue_start) + 2
+    continue_func = overworld[continue_start:continue_end]
+    assert "InitFullSaveData();" in continue_func
+
+    quest_start = overworld.index("void CB2_EnterFieldFromQuestLog(void)")
+    quest_end = overworld.index("\n}", quest_start) + 2
+    quest_func = overworld[quest_start:quest_end]
+    assert "InitFullSaveData();" in quest_func
+
     print(
         "Full save namespace PASS: flags 0x8C3-0x8E2 and vars 0x408C-0x409B "
         "have no live vanilla-alias consumers; migration writes only the Full header."
