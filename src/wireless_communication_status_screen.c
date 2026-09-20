@@ -45,57 +45,26 @@ static struct
 void Task_WirelessCommunicationScreen(u8 taskId);
 static void CB2_InitWirelessCommunicationScreen(void);
 static void WCSS_AddTextPrinterParameterized(u8 windowId, u8 fontId, const u8 * str, u8 x, u8 y, u8 palIdx);
-static bool32 UpdateCommunicationCounts(u32 *groupCounts, u32 *prevGroupCounts, u32 *activities, u8 taskId)
-{
-    bool32 activitiesChanged = FALSE;
-    u32 groupCountBuffer[NUM_GROUPTYPES] = {0, 0, 0, 0};
-    struct WirelessLink_Group *group = (void *)gTasks[taskId].data;
-    s32 i, activity;
+static bool32 UpdateCommunicationCounts(u32 * counts, u32 * lastCounts, u32 * activities, u8 taskId);
 
-    for (i = 0; i < NUM_TASK_DATA; i++)
-    {
-        activity = CountPlayersInGroupAndGetActivity(&group->playerList->players[i], groupCountBuffer);
-        if (activity != activities[i])
-        {
-            activities[i] = activity;
-            activitiesChanged = TRUE;
-        }
-    }
-
-#if defined(UBFIX) || REVISION >= 0xA
-    if (HaveCountsChanged(groupCountBuffer, prevGroupCounts))
-    {
-        memcpy(groupCounts, groupCountBuffer, sizeof(groupCountBuffer));
-        memcpy(prevGroupCounts, groupCountBuffer, sizeof(groupCountBuffer));
-
-        groupCounts[GROUPTYPE_TOTAL] = groupCounts[GROUPTYPE_TRADE]
-                                     + groupCounts[GROUPTYPE_BATTLE]
-                                     + groupCounts[GROUPTYPE_UNION]
-                                     + groupCounts[GROUPTYPE_TOTAL];
-        activitiesChanged = TRUE;
-    }
-
-    return activitiesChanged;
-#else
-    if (!HaveCountsChanged(groupCountBuffer, prevGroupCounts))
-    {
-        if (activitiesChanged == TRUE)
-            return TRUE;
-        else
-            return FALSE;
-    }
-
-    memcpy(groupCounts, groupCountBuffer, sizeof(groupCountBuffer));
-    memcpy(prevGroupCounts, groupCountBuffer, sizeof(groupCountBuffer));
-
-    groupCounts[GROUPTYPE_TOTAL] = groupCounts[GROUPTYPE_TRADE]
-                                 + groupCounts[GROUPTYPE_BATTLE]
-                                 + groupCounts[GROUPTYPE_UNION];
-
-    return TRUE;
-#endif
-}
-;
+static const u16 sPalettes[][16] = {
+    INCBIN_U16("graphics/wireless_status_screen/default.gbapal"),
+    {}, // All black. Never read
+    INCBIN_U16("graphics/wireless_status_screen/anim_00.gbapal"),
+    INCBIN_U16("graphics/wireless_status_screen/anim_01.gbapal"),
+    INCBIN_U16("graphics/wireless_status_screen/anim_02.gbapal"),
+    INCBIN_U16("graphics/wireless_status_screen/anim_03.gbapal"),
+    INCBIN_U16("graphics/wireless_status_screen/anim_04.gbapal"),
+    INCBIN_U16("graphics/wireless_status_screen/anim_05.gbapal"),
+    INCBIN_U16("graphics/wireless_status_screen/anim_06.gbapal"),
+    INCBIN_U16("graphics/wireless_status_screen/anim_07.gbapal"),
+    INCBIN_U16("graphics/wireless_status_screen/anim_08.gbapal"),
+    INCBIN_U16("graphics/wireless_status_screen/anim_09.gbapal"),
+    INCBIN_U16("graphics/wireless_status_screen/anim_10.gbapal"),
+    INCBIN_U16("graphics/wireless_status_screen/anim_11.gbapal"),
+    INCBIN_U16("graphics/wireless_status_screen/anim_12.gbapal"),
+    INCBIN_U16("graphics/wireless_status_screen/anim_13.gbapal")
+};
 static const u32 sBgTiles_Gfx[] = INCBIN_U32("graphics/wireless_status_screen/bg.4bpp.lz");
 static const u16 sBgTiles_Tilemap[] = INCBIN_U16("graphics/wireless_status_screen/bg.bin");
 
@@ -490,54 +459,53 @@ static bool32 HaveCountsChanged(const u32 * curCounts, const u32 * prevCounts)
     return FALSE;
 }
 
-static bool32 UpdateCommunicationCounts(u32 * groupCounts, u32 * prevGroupCounts, u32 * activities, u8 taskId)
+static bool32 UpdateCommunicationCounts(u32 *groupCounts, u32 *prevGroupCounts, u32 *activities, u8 taskId)
 {
-    bool32 activitiesUpdated = FALSE;
+    bool32 activitiesChanged = FALSE;
     u32 groupCountBuffer[NUM_GROUPTYPES] = {0, 0, 0, 0};
-    struct WirelessLink_Group * group = (void *)gTasks[taskId].data;
-    s32 i;
+    struct WirelessLink_Group *group = (void *)gTasks[taskId].data;
+    s32 i, activity;
 
     for (i = 0; i < NUM_TASK_DATA; i++)
     {
-        u32 activity = CountPlayersInGroupAndGetActivity(&group->playerList->players[i], groupCountBuffer);
+        activity = CountPlayersInGroupAndGetActivity(&group->playerList->players[i], groupCountBuffer);
         if (activity != activities[i])
         {
             activities[i] = activity;
-            activitiesUpdated = TRUE;
+            activitiesChanged = TRUE;
         }
     }
 
-#if REVISION >= 0xA
+#if defined(UBFIX) || REVISION >= 0xA
     if (HaveCountsChanged(groupCountBuffer, prevGroupCounts))
-#else
-    if (!HaveCountsChanged(groupCountBuffer, prevGroupCounts))
     {
-        if (activitiesUpdated == TRUE)
-            return TRUE;
-        else
-            return FALSE;
-    }
-#endif
-    {
-        memcpy(groupCounts,     groupCountBuffer, sizeof(groupCountBuffer));
+        memcpy(groupCounts, groupCountBuffer, sizeof(groupCountBuffer));
         memcpy(prevGroupCounts, groupCountBuffer, sizeof(groupCountBuffer));
 
         groupCounts[GROUPTYPE_TOTAL] = groupCounts[GROUPTYPE_TRADE]
                                      + groupCounts[GROUPTYPE_BATTLE]
                                      + groupCounts[GROUPTYPE_UNION]
-                                #if defined(BUGFIX) || REVISION >= 0xA
-                                     + groupCounts[GROUPTYPE_TOTAL] // Missing count for activities not in above groups
-                                #endif
-                                     ;
-
-#if REVISION >= 0xA
-        activitiesUpdated = TRUE;
-#endif
+                                     + groupCounts[GROUPTYPE_TOTAL];
+        activitiesChanged = TRUE;
     }
 
-#if REVISION >= 0xA
-    return activitiesUpdated;
+    return activitiesChanged;
 #else
+    if (!HaveCountsChanged(groupCountBuffer, prevGroupCounts))
+    {
+        if (activitiesChanged == TRUE)
+            return TRUE;
+        else
+            return FALSE;
+    }
+
+    memcpy(groupCounts, groupCountBuffer, sizeof(groupCountBuffer));
+    memcpy(prevGroupCounts, groupCountBuffer, sizeof(groupCountBuffer));
+
+    groupCounts[GROUPTYPE_TOTAL] = groupCounts[GROUPTYPE_TRADE]
+                                 + groupCounts[GROUPTYPE_BATTLE]
+                                 + groupCounts[GROUPTYPE_UNION];
+
     return TRUE;
 #endif
 }
