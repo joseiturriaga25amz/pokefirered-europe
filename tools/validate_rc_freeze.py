@@ -94,6 +94,15 @@ def main() -> None:
     assert "bagPocket_Items" not in init_full
     assert "unused_348C" not in init_full
 
+    # COMP-001: do not extend Gen III species/move/item ID spaces.
+    species_h = read("include/constants/species.h")
+    moves_h = read("include/constants/moves.h")
+    items_h = read("include/constants/items.h")
+    assert "#define SPECIES_EGG 412" in species_h
+    assert "#define NUM_SPECIES SPECIES_EGG" in species_h
+    assert "#define MOVES_COUNT 355" in moves_h
+    assert "#define ITEMS_COUNT 375" in items_h
+
     two_island = read("data/maps/TwoIsland/scripts.inc")
     assert (
         two_island.count(
@@ -172,7 +181,7 @@ def main() -> None:
     assert "setvar VAR_TEMP_2, 5000" in porygon
 
     print(
-        "RC freeze validator passed: save layout/migration, berry economy/effects, "
+        "RC freeze validator passed: Gen III ID/save compatibility, berry economy/effects, "
         "fossils, Dojo, Altering Cave, evolutions and Porygon."
     )
 
