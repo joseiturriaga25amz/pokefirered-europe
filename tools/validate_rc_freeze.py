@@ -77,6 +77,23 @@ def main() -> None:
     assert "bool8 friendshipOnly = FALSE;" in pokemon
     assert "item >= ITEM_POMEG_BERRY && item <= ITEM_TAMATO_BERRY" in pokemon
 
+    # A-002 / SAVE-001 / SAVE-004: vanilla bag layout and Full save migration.
+    global_h = read("include/global.h")
+    assert "/*0x348C*/ u8 unused_348C[400];" in global_h
+    assert "/*0x3D24*/ struct FullSaveHeader fullHeader;" in global_h
+    assert "sizeof(struct SaveBlock1) == 0x3D68" in global_h
+    assert "FullHeaderOffset" in global_h
+
+    load_save = read("src/load_save.c")
+    assert "static const u8 sFullSaveMagic[4] = {'R', 'F', 'F', 'L'};" in load_save
+    assert "FULL_SAVE_SCHEMA_VERSION 1" in load_save
+    init_start = load_save.index("void InitFullSaveData(void)")
+    init_end = load_save.index("void SetSaveBlocksPointers(void)", init_start)
+    init_full = load_save[init_start:init_end]
+    assert "memset(&gSaveBlock1Ptr->fullHeader" in init_full
+    assert "bagPocket_Items" not in init_full
+    assert "unused_348C" not in init_full
+
     two_island = read("data/maps/TwoIsland/scripts.inc")
     assert (
         two_island.count(
@@ -155,8 +172,8 @@ def main() -> None:
     assert "setvar VAR_TEMP_2, 5000" in porygon
 
     print(
-        "RC freeze validator passed: berry economy/effects, fossils, Dojo, "
-        "Altering Cave, evolutions and Porygon."
+        "RC freeze validator passed: save layout/migration, berry economy/effects, "
+        "fossils, Dojo, Altering Cave, evolutions and Porygon."
     )
 
 
