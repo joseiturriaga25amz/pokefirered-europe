@@ -45,26 +45,57 @@ static struct
 void Task_WirelessCommunicationScreen(u8 taskId);
 static void CB2_InitWirelessCommunicationScreen(void);
 static void WCSS_AddTextPrinterParameterized(u8 windowId, u8 fontId, const u8 * str, u8 x, u8 y, u8 palIdx);
-static bool32 UpdateCommunicationCounts(u32 * counts, u32 * lastCounts, u32 * activities, u8 taskId);
+static bool32 UpdateCommunicationCounts(u32 *groupCounts, u32 *prevGroupCounts, u32 *activities, u8 taskId)
+{
+    bool32 activitiesChanged = FALSE;
+    u32 groupCountBuffer[NUM_GROUPTYPES] = {0, 0, 0, 0};
+    struct WirelessLink_Group *group = (void *)gTasks[taskId].data;
+    s32 i, activity;
 
-static const u16 sPalettes[][16] = {
-    INCBIN_U16("graphics/wireless_status_screen/default.gbapal"),
-    {}, // All black. Never read
-    INCBIN_U16("graphics/wireless_status_screen/anim_00.gbapal"),
-    INCBIN_U16("graphics/wireless_status_screen/anim_01.gbapal"),
-    INCBIN_U16("graphics/wireless_status_screen/anim_02.gbapal"),
-    INCBIN_U16("graphics/wireless_status_screen/anim_03.gbapal"),
-    INCBIN_U16("graphics/wireless_status_screen/anim_04.gbapal"),
-    INCBIN_U16("graphics/wireless_status_screen/anim_05.gbapal"),
-    INCBIN_U16("graphics/wireless_status_screen/anim_06.gbapal"),
-    INCBIN_U16("graphics/wireless_status_screen/anim_07.gbapal"),
-    INCBIN_U16("graphics/wireless_status_screen/anim_08.gbapal"),
-    INCBIN_U16("graphics/wireless_status_screen/anim_09.gbapal"),
-    INCBIN_U16("graphics/wireless_status_screen/anim_10.gbapal"),
-    INCBIN_U16("graphics/wireless_status_screen/anim_11.gbapal"),
-    INCBIN_U16("graphics/wireless_status_screen/anim_12.gbapal"),
-    INCBIN_U16("graphics/wireless_status_screen/anim_13.gbapal")
-};
+    for (i = 0; i < NUM_TASK_DATA; i++)
+    {
+        activity = CountPlayersInGroupAndGetActivity(&group->playerList->players[i], groupCountBuffer);
+        if (activity != activities[i])
+        {
+            activities[i] = activity;
+            activitiesChanged = TRUE;
+        }
+    }
+
+#if defined(UBFIX) || REVISION >= 0xA
+    if (HaveCountsChanged(groupCountBuffer, prevGroupCounts))
+    {
+        memcpy(groupCounts, groupCountBuffer, sizeof(groupCountBuffer));
+        memcpy(prevGroupCounts, groupCountBuffer, sizeof(groupCountBuffer));
+
+        groupCounts[GROUPTYPE_TOTAL] = groupCounts[GROUPTYPE_TRADE]
+                                     + groupCounts[GROUPTYPE_BATTLE]
+                                     + groupCounts[GROUPTYPE_UNION]
+                                     + groupCounts[GROUPTYPE_TOTAL];
+        activitiesChanged = TRUE;
+    }
+
+    return activitiesChanged;
+#else
+    if (!HaveCountsChanged(groupCountBuffer, prevGroupCounts))
+    {
+        if (activitiesChanged == TRUE)
+            return TRUE;
+        else
+            return FALSE;
+    }
+
+    memcpy(groupCounts, groupCountBuffer, sizeof(groupCountBuffer));
+    memcpy(prevGroupCounts, groupCountBuffer, sizeof(groupCountBuffer));
+
+    groupCounts[GROUPTYPE_TOTAL] = groupCounts[GROUPTYPE_TRADE]
+                                 + groupCounts[GROUPTYPE_BATTLE]
+                                 + groupCounts[GROUPTYPE_UNION];
+
+    return TRUE;
+#endif
+}
+;
 static const u32 sBgTiles_Gfx[] = INCBIN_U32("graphics/wireless_status_screen/bg.4bpp.lz");
 static const u16 sBgTiles_Tilemap[] = INCBIN_U16("graphics/wireless_status_screen/bg.bin");
 
@@ -144,7 +175,7 @@ static const u8 sActivityGroupInfo[][3] = {
     {ACTIVITY_TRADE,                          GROUPTYPE_TRADE,  2},
     {ACTIVITY_WONDER_CARD,                    GROUPTYPE_TOTAL,  2},
     {ACTIVITY_WONDER_NEWS,                    GROUPTYPE_TOTAL,  2},
-#if REVISION >= 0xA
+#if defined(UBFIX) || REVISION >= 0xA
     {ACTIVITY_POKEMON_JUMP,                   GROUPTYPE_TOTAL,   0},
     {ACTIVITY_BERRY_CRUSH,                    GROUPTYPE_TOTAL,   0},
     {ACTIVITY_BERRY_PICK,                     GROUPTYPE_TOTAL,   0},
@@ -156,7 +187,7 @@ static const u8 sActivityGroupInfo[][3] = {
     {ACTIVITY_SEARCH,                         GROUPTYPE_NONE,   0},
     {ACTIVITY_SPIN_TRADE,                     GROUPTYPE_TRADE,  0},
     {ACTIVITY_ITEM_TRADE,                     GROUPTYPE_NONE,   0},
-#if REVISION >= 0xA
+#if defined(UBFIX) || REVISION >= 0xA
     {ACTIVITY_RECORD_CORNER,                  GROUPTYPE_TOTAL,   0},
 #else
     {ACTIVITY_RECORD_CORNER,                  NUM_GROUPTYPES,   0},
@@ -385,58 +416,49 @@ static void WCSS_AddTextPrinterParameterized(u8 windowId, u8 fontId, const u8 * 
     AddTextPrinterParameterized4(windowId, fontId, x, y, fontId == FONT_SMALL ? 0 : 1, 0, textColor, TEXT_SKIP_DRAW, str);
 }
 
-static u32 CountPlayersInGroupAndGetActivity(struct RfuPlayer * player, u32 * groupCounts)
+static u32 CountPlayersInGroupAndGetActivity(struct RfuPlayer *player, u32 *groupCounts)
 {
-#if REVISION >= 0xA
     u32 activity = player->rfu.data.activity;
+    s32 i, j;
+
+#define group_activity(i) (sActivityGroupInfo[(i)][0])
+#define group_type(i)     (sActivityGroupInfo[(i)][1])
+#define group_players(i)  (sActivityGroupInfo[(i)][2])
+
+#if defined(UBFIX) || REVISION >= 0xA
     if (player->groupScheduledAnim == UNION_ROOM_SPAWN_IN)
     {
-
-        u32 i = 0;
-        const u8 * group_info = &sActivityGroupInfo[0][0];
-        const u8 * group_players = &group_info[2];
-        const u8 * group_activity = group_info;
-        s32 offset = 0;
-        for (; i < ARRAY_COUNT(sActivityGroupInfo); i++)
+        for (i = 0; i < ARRAY_COUNT(sActivityGroupInfo); i++)
         {
-            const u8 * group_type = &group_info[1];
-            u8 type = ((u8*)offset)[(u32)group_type]; // needed to match, but nobody would write this???
-            if (type < MAX_LINK_PLAYERS && activity == *group_activity)
-            {
-                    u8 k = *group_players;
-                    if (k == 0)
-                    {
-                        s32 j;
-                        for (j = 0; j < RFU_CHILD_MAX; j++)
-                            if (player->rfu.data.partnerInfo[j] != 0) k++;
-                        k++;
-                    }
-                    groupCounts[type] += k;
-                    break;
-            }
-            group_players += sizeof(sActivityGroupInfo[0]);
-            group_activity += sizeof(sActivityGroupInfo[0]);
-            offset += (u8)sizeof(sActivityGroupInfo[0]);
-        }
+            u8 type = group_type(i);
 
+            if (type < NUM_GROUPTYPES && activity == group_activity(i))
+            {
+                u8 k = group_players(i);
+                if (k == 0)
+                {
+                    for (j = 0; j < RFU_CHILD_MAX; j++)
+                        if (player->rfu.data.partnerInfo[j] != 0)
+                            k++;
+                    k++;
+                }
+
+                groupCounts[type] += k;
+                break;
+            }
+        }
     }
 #else
-    u32 activity = player->rfu.data.activity;
-    s32 i, j, k;
-
-    #define group_activity(i) (sActivityGroupInfo[(i)][0])
-    #define group_type(i)     (sActivityGroupInfo[(i)][1])
-    #define group_players(i)  (sActivityGroupInfo[(i)][2])
-
     for (i = 0; i < ARRAY_COUNT(sActivityGroupInfo); i++)
     {
         if (activity == group_activity(i) && player->groupScheduledAnim == UNION_ROOM_SPAWN_IN)
         {
             if (group_players(i) == 0)
             {
-                k = 0;
-                for (j = 0; j < RFU_CHILD_MAX; j++)
-                    if (player->rfu.data.partnerInfo[j] != 0) k++;
+                s32 k;
+                for (k = 0, j = 0; j < RFU_CHILD_MAX; j++)
+                    if (player->rfu.data.partnerInfo[j] != 0)
+                        k++;
                 k++;
                 groupCounts[group_type(i)] += k;
             }
@@ -446,14 +468,13 @@ static u32 CountPlayersInGroupAndGetActivity(struct RfuPlayer * player, u32 * gr
             }
         }
     }
-
-    #undef group_activity
-    #undef group_type
-    #undef group_players
 #endif
 
-    return activity;
+#undef group_activity
+#undef group_type
+#undef group_players
 
+    return activity;
 }
 
 static bool32 HaveCountsChanged(const u32 * curCounts, const u32 * prevCounts)
