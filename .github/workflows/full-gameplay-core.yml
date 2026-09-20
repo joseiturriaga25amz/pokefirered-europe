@@ -191,6 +191,49 @@ jobs:
           print("Direct trade-item evolution UI path validated")
           PY
 
+      - name: Validate QoL field mechanics
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          wild = Path("src/wild_encounter.c").read_text()
+          safari = Path("src/safari_zone.c").read_text()
+          avatar = Path("src/field_player_avatar.c").read_text()
+          repel = Path("data/scripts/spanish/repel.inc").read_text()
+          item_use = Path("src/item_use.c").read_text()
+
+          # QOL-010: Emerald-style 50% Synchronize from a living non-Egg lead.
+          sync = wild[wild.index("static u8 PickFullWildMonNature(void)"):
+                      wild.index("static void GenerateWildMon")]
+          assert "ABILITY_SYNCHRONIZE" in sync
+          assert "Random() % 2 == 0" in sync
+          assert "MON_DATA_SANITY_IS_EGG" in sync
+          assert "MON_DATA_PERSONALITY" in sync
+
+          # QOL-011/012: 30 balls/minigame retained, walking no longer expires Safari.
+          assert "gNumSafariBalls = 30;" in safari
+          take_step = safari[safari.index("bool8 SafariZoneTakeStep(void)"):
+                             safari.index("void SafariZoneRetirePrompt")]
+          assert "gSafariZoneStepCounter = 600;" in take_step
+          assert "return FALSE;" in take_step
+
+          # QOL-006: Running Shoes work indoors, while explicit forbidden tiles remain authoritative.
+          run = avatar[avatar.index("static void PlayerNotOnBikeMoving"):avatar.index("bool32 PlayerIsMovingOnRockStairs")]
+          assert "FlagGet(FLAG_SYS_B_DASH)" in run
+          assert "MetatileBehavior_IsRunningDisallowed" in run
+          assert "gMapHeader" not in run
+
+          # QOL-007: immediate prompt and reuse/fallback without reopening Bag.
+          assert "ScriptContext_SetupScript(EventScript_RepelWoreOff)" in wild
+          assert "msgbox Text_FullUseAnotherRepel, MSGBOX_YESNO" in repel
+          for item, steps in (("ITEM_REPEL",100),("ITEM_SUPER_REPEL",200),("ITEM_MAX_REPEL",250)):
+              assert f"removeitem {item}" in repel
+              assert f"setvar VAR_REPEL_STEP_COUNT, {steps}" in repel
+          assert "VarSet(VAR_FULL_LAST_REPEL, gSpecialVar_ItemId);" in item_use
+
+          print("Field QoL invariants validated")
+          PY
+
       - name: Validate Move Reminder and tutor pricing
         run: |
           python3 - <<'PY'
