@@ -11,6 +11,20 @@ def read(path):
     return (ROOT / path).read_text(encoding="utf-8")
 
 
+def c_function(text, signature):
+    start = text.index(signature)
+    open_brace = text.index("{", start)
+    depth = 0
+    for i in range(open_brace, len(text)):
+        if text[i] == "{":
+            depth += 1
+        elif text[i] == "}":
+            depth -= 1
+            if depth == 0:
+                return text[start:i + 1]
+    raise AssertionError(f"unterminated function: {signature}")
+
+
 def source_files():
     roots = ["src", "data", "include"]
     for root in roots:
@@ -79,9 +93,7 @@ def main():
     assert not collisions, "Full namespace aliases are live elsewhere: " + ", ".join(collisions)
 
     load_save = read("src/load_save.c")
-    start = load_save.index("void InitFullSaveData(void)")
-    end = load_save.index("\n}", start) + 2
-    init_full = load_save[start:end]
+    init_full = c_function(load_save, "void InitFullSaveData(void)")
     assert "memset(&gSaveBlock1Ptr->fullHeader, 0, sizeof(gSaveBlock1Ptr->fullHeader));" in init_full
     assert "gSaveBlock1Ptr->bagPocket_Items" not in init_full
     assert "unused_348C" not in init_full
@@ -89,15 +101,17 @@ def main():
     # SAVE-003/SAVE-004: schema-0 vanilla imports must actually invoke the
     # migration initializer on every gameplay continue path, not merely define it.
     overworld = read("src/overworld.c")
-    continue_start = overworld.index("void CB2_ContinueSavedGame(void)")
-    continue_end = overworld.index("\n}", continue_start) + 2
-    continue_func = overworld[continue_start:continue_end]
+    continue_func = c_function(overworld, "void CB2_ContinueSavedGame(void)")
     assert "InitFullSaveData();" in continue_func
+    assert continue_func.index("InitFullSaveData();") < continue_func.index("FieldClearVBlankHBlankCallbacks();")
 
-    quest_start = overworld.index("void CB2_EnterFieldFromQuestLog(void)")
-    quest_end = overworld.index("\n}", quest_start) + 2
-    quest_func = overworld[quest_start:quest_end]
+    quest_func = c_function(overworld, "void CB2_EnterFieldFromQuestLog(void)")
     assert "InitFullSaveData();" in quest_func
+    assert quest_func.index("InitFullSaveData();") < quest_func.index("FieldClearVBlankHBlankCallbacks();")
+
+    new_game = read("src/new_game.c")
+    new_game_func = c_function(new_game, "void NewGameInitData(void)")
+    assert "InitFullSaveData();" in new_game_func
 
     print(
         "Full save namespace PASS: flags 0x8C3-0x8E2 and vars 0x408C-0x409B "
