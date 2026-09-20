@@ -101,6 +101,43 @@ jobs:
           test "$(grep -c 'LOCALID_RUBY' data/maps/MtEmber_RubyPath_B3F/map.json)" -eq 0
           test "$(grep -c 'LOCALID_RUBY' data/maps/MtEmber_RubyPath_B5F/map.json)" -eq 1
 
+      - name: Validate split-aware engine and AI
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          battle_h = Path("include/battle.h").read_text()
+          pokemon = Path("src/pokemon.c").read_text()
+          commands = Path("src/battle_script_commands.c").read_text()
+          ai_commands = Path("src/battle_ai_script_commands.c").read_text()
+          ai_scripts = Path("data/battle_ai_scripts.s").read_text()
+
+          assert "gBattleMoves[move].category == MOVE_CATEGORY_PHYSICAL" in battle_h
+          assert "gBattleMoves[move].category == MOVE_CATEGORY_SPECIAL" in battle_h
+
+          # Core damage, burn and screens must branch by move category, not type.
+          assert "if (IS_MOVE_PHYSICAL(move))" in pokemon
+          assert "if (IS_MOVE_SPECIAL(move))" in pokemon
+          assert "attacker->status1 & STATUS1_BURN" in pokemon
+          assert "sideStatus & SIDE_STATUS_REFLECT" in pokemon
+          assert "sideStatus & SIDE_STATUS_LIGHTSCREEN" in pokemon
+
+          # Hustle accuracy and Counter/Mirror Coat damage memory are category-aware.
+          assert "ABILITY_HUSTLE && IS_MOVE_PHYSICAL(move)" in commands
+          assert "if (IS_MOVE_PHYSICAL(gCurrentMove)" in commands
+          assert "else if (IS_MOVE_SPECIAL(gCurrentMove)" in commands
+
+          # AI keeps the FRLG core but can inspect real per-move category.
+          assert "gBattleMoves[AI_THINKING_STRUCT->funcResult].category" in ai_commands
+          assert "get_move_category_from_result" in ai_scripts
+          assert "if_not_equal MOVE_CATEGORY_PHYSICAL, AI_CV_Counter_ScoreDown1" in ai_scripts
+          assert "if_not_equal MOVE_CATEGORY_SPECIAL, AI_CV_MirrorCoat_ScoreDown1" in ai_scripts
+          assert "if_not_equal MOVE_CATEGORY_PHYSICAL, AI_CV_DefenseUp_ScoreDown2" in ai_scripts
+          assert "if_equal MOVE_CATEGORY_PHYSICAL, AI_CV_SpDefUp_ScoreDown2" in ai_scripts
+
+          print("Split-aware engine and AI invariants validated")
+          PY
+
       - name: Validate modern category and contact data
         run: |
           python3 - <<'PY'
