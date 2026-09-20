@@ -8432,9 +8432,9 @@
     },
     {
       "id": "TRAINER_PAINTER_CELINA",
-      "trainerClass": "TRAINER_CLASS_PAINTER",
+      "trainerClass": "TRAINER_CLASS_LADY",
       "encounterMusic_gender": "TRAINER_ENCOUNTER_MUSIC_FEMALE",
-      "trainerPic": "TRAINER_PIC_PAINTER",
+      "trainerPic": "TRAINER_PIC_LADY",
       "trainerName_english": "CELINA",
       "trainerName_spanish": "ANABEL",
       "trainerName_italian": "CELINA",
