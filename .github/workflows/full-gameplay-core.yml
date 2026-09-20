@@ -87,9 +87,9 @@ jobs:
           grep -q 'FLAG_FULL_MOLTRES_KO_PENDING' data/maps/MtEmber_Summit/scripts.inc
           grep -q 'FLAG_FULL_MEWTWO_KO_PENDING' data/maps/CeruleanCave_B1F/scripts.inc
           grep -q 'seteventmon SPECIES_DEOXYS, 50' data/maps/BirthIsland_Exterior/scripts.inc
-          grep -q 'clearflag FLAG_LUGIA_FLEW_AWAY' data/scripts/hall_of_fame.inc
-          grep -q 'clearflag FLAG_HO_OH_FLEW_AWAY' data/scripts/hall_of_fame.inc
-          grep -q 'clearflag FLAG_DEOXYS_FLEW_AWAY' data/scripts/hall_of_fame.inc
+          grep -q 'clearflag FLAG_LUGIA_FLEW_AWAY' data/scripts/spanish/hall_of_fame.inc
+          grep -q 'clearflag FLAG_HO_OH_FLEW_AWAY' data/scripts/spanish/hall_of_fame.inc
+          grep -q 'clearflag FLAG_DEOXYS_FLEW_AWAY' data/scripts/spanish/hall_of_fame.inc
           grep -q 'VAR_FULL_ROAMER_SEQUENCE' src/roamer.c
           grep -q 'return SPECIES_SUICUNE' src/roamer.c
           grep -q 'return SPECIES_RAIKOU' src/roamer.c
@@ -116,8 +116,8 @@ jobs:
           grep -q 'VAR_FULL_ROAMER_SEQUENCE, 3' data/maps/ThreeIsland_BerryForest/scripts.inc
           grep -q 'ThreeIsland_BerryForest_EventScript_FullCelebiTree' data/maps/ThreeIsland_BerryForest/map.json
           grep -q 'goto EventScript_CutTree' data/maps/ThreeIsland_BerryForest/scripts.inc
-          grep -q 'FLAG_FULL_MEW_KO_PENDING' data/scripts/hall_of_fame.inc
-          grep -q 'FLAG_FULL_CELEBI_KO_PENDING' data/scripts/hall_of_fame.inc
+          grep -q 'FLAG_FULL_MEW_KO_PENDING' data/scripts/spanish/hall_of_fame.inc
+          grep -q 'FLAG_FULL_CELEBI_KO_PENDING' data/scripts/spanish/hall_of_fame.inc
           grep -q 'BoxPokemonSizeMustRemainGen3Compatible' include/pokemon.h
           grep -q 'PokemonSizeMustRemainGen3Compatible' include/pokemon.h
           grep -q 'species2\[monIdx\] == SPECIES_EGG' src/trade.c
@@ -344,7 +344,7 @@ jobs:
           birth = Path("data/maps/BirthIsland_Exterior/scripts.inc").read_text()
           lugia = Path("data/maps/NavelRock_Base/scripts.inc").read_text()
           hooh = Path("data/maps/NavelRock_Summit/scripts.inc").read_text()
-          hof = Path("data/scripts/hall_of_fame.inc").read_text()
+          hof = Path("data/scripts/spanish/hall_of_fame.inc").read_text()
           mon = Path("src/pokemon.c").read_text()
           mythical = Path("src/script_pokemon_util.c").read_text()
           mewtwo = Path("data/maps/CeruleanCave_B1F/scripts.inc").read_text()
