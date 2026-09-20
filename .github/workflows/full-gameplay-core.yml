@@ -191,6 +191,39 @@ jobs:
           print("Direct trade-item evolution UI path validated")
           PY
 
+      - name: Validate reusable unique TMs
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          item = Path("src/item.c").read_text()
+          party = Path("src/party_menu.c").read_text()
+          tm = Path("src/tm_case.c").read_text()
+          shop = Path("src/shop.c").read_text()
+
+          # Teaching does not consume the TM.
+          learned = party[party.index("static void Task_LearnedMove"):party.index("static void Task_DoLearnedMoveFanfareAfterText")]
+          assert "RemoveBagItem" not in learned
+
+          # A second logical copy is rejected at the bag layer and at shops.
+          assert "pocket == POCKET_TM_CASE - 1 && itemId < ITEM_HM01" in item
+          assert "return FALSE;" in item[item.index("pocket == POCKET_TM_CASE - 1 && itemId < ITEM_HM01"):][:250]
+          assert "BagGetQuantityByItemId(itemId) > 0" in shop
+          assert "sText_FullTmAlreadyOwned" in shop
+
+          # TMs cannot be sold or moved out of the TM Case as held items.
+          sell = tm[tm.index("static void Task_SelectedTMHM_Sell"):tm.index("static void Task_AskConfirmSaleWithAmount")]
+          assert "RemoveBagItem" not in sell
+          action_give = tm[tm.index("static void Action_Give"):tm.index("static void PrintError_ThereIsNoPokemon")]
+          assert "CB2_ChooseMonToGiveItem" not in action_give
+          assert "PrintError_ItemCantBeHeld" in action_give
+          give_party = tm[tm.index("static void Task_SelectedTMHM_GiveParty"):tm.index("static void Task_SelectedTMHM_GivePC")]
+          assert "PrintError_ItemCantBeHeld" in give_party
+          assert "CB2_GiveHoldItem" not in give_party
+
+          print("Reusable unique TM invariants validated")
+          PY
+
       - name: Validate approved wild encounter rates
         run: |
           python3 - <<'PY'
