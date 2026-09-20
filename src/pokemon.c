@@ -3963,7 +3963,7 @@ bool8 ExecuteTableBasedItemEffect(struct Pokemon *mon, u16 item, u8 partyIndex, 
 
 #define UPDATE_FRIENDSHIP_FROM_ITEM()                                                                   \
 {                                                                                                       \
-    if (retVal == 0 && friendshipChange == 0)                                                           \
+    if ((retVal == 0 || friendshipOnly) && friendshipChange == 0)                                                           \
     {                                                                                                   \
         friendshipChange = itemEffect[idx];                                                             \
         friendship = GetMonData(mon, MON_DATA_FRIENDSHIP, NULL);                                        \
@@ -3983,6 +3983,7 @@ bool8 ExecuteTableBasedItemEffect(struct Pokemon *mon, u16 item, u8 partyIndex, 
         if (friendship > MAX_FRIENDSHIP)                                                                \
             friendship = MAX_FRIENDSHIP;                                                                \
         SetMonData(mon, MON_DATA_FRIENDSHIP, &friendship);                                              \
+        retVal = FALSE;                                                                                 \
     }                                                                                                   \
 }
 
@@ -4001,6 +4002,8 @@ bool8 PokemonUseItemEffects(struct Pokemon *mon, u16 item, u8 partyIndex, u8 mov
     u16 heldItem;
     u8 val;
     u32 evDelta;
+    s8 evChange;
+    bool8 friendshipOnly = FALSE;
 
     // Get item hold effect
     heldItem = GetMonData(mon, MON_DATA_HELD_ITEM, NULL);
@@ -4218,27 +4221,48 @@ bool8 PokemonUseItemEffects(struct Pokemon *mon, u16 item, u8 partyIndex, u8 mov
                     case 0: // ITEM4_EV_HP
                     case 1: // ITEM4_EV_ATK
                         evCount = GetMonEVCount(mon);
-
-                        // Has EV increase limit already been reached?
-                        if (evCount >= MAX_TOTAL_EVS)
-                            return TRUE;
                         data = GetMonData(mon, sGetMonDataEVConstants[i], NULL);
-                        if (data < EV_ITEM_RAISE_LIMIT)
-                        {
-                            // Limit the increase
-                            if (data + itemEffect[idx] > EV_ITEM_RAISE_LIMIT)
-                                evDelta = EV_ITEM_RAISE_LIMIT - (data + itemEffect[idx]) + itemEffect[idx];
-                            else
-                                evDelta = itemEffect[idx];
-                            if (evCount + evDelta > MAX_TOTAL_EVS)
-                                evDelta += MAX_TOTAL_EVS - (evCount + evDelta);
+                        evChange = (s8)itemEffect[idx];
 
-                            // Update EVs and stats
-                            data += evDelta;
+                        if (evChange < 0)
+                        {
+                            idx++;
+                            if (data == 0)
+                            {
+                                // EV-reducing berries still raise friendship at 0 EV.
+                                friendshipOnly = TRUE;
+                                break;
+                            }
+                            if (data < (u32)(-evChange))
+                                data = 0;
+                            else
+                                data -= (u32)(-evChange);
                             SetMonData(mon, sGetMonDataEVConstants[i], &data);
                             CalculateMonStats(mon);
-                            idx++;
                             retVal = FALSE;
+                        }
+                        else
+                        {
+                            // Has EV increase limit already been reached?
+                            if (evCount >= MAX_TOTAL_EVS)
+                                return TRUE;
+                            if (data < EV_ITEM_RAISE_LIMIT)
+                            {
+                                // Limit the increase
+                                if (data + evChange > EV_ITEM_RAISE_LIMIT)
+                                    evDelta = EV_ITEM_RAISE_LIMIT - (data + evChange) + evChange;
+                                else
+                                    evDelta = evChange;
+                                if (evCount + evDelta > MAX_TOTAL_EVS)
+                                    evDelta += MAX_TOTAL_EVS - (evCount + evDelta);
+
+                                // Update EVs and stats
+                                data += evDelta;
+                                SetMonData(mon, sGetMonDataEVConstants[i], &data);
+                                CalculateMonStats(mon);
+                                idx++;
+                                retVal = FALSE;
+                            }
                         }
                         break;
                     case 2: // ITEM4_HEAL_HP
@@ -4425,27 +4449,48 @@ bool8 PokemonUseItemEffects(struct Pokemon *mon, u16 item, u8 partyIndex, u8 mov
                     case 2: // ITEM5_EV_SPDEF
                     case 3: // ITEM5_EV_SPATK
                         evCount = GetMonEVCount(mon);
-                        
-                        // Has EV increase limit already been reached?
-                        if (evCount >= MAX_TOTAL_EVS)
-                            return TRUE;
                         data = GetMonData(mon, sGetMonDataEVConstants[i + 2], NULL);
-                        if (data < EV_ITEM_RAISE_LIMIT)
+                        evChange = (s8)itemEffect[idx];
+
+                        if (evChange < 0)
                         {
-                            // Limit the increase
-                            if (data + itemEffect[idx] > EV_ITEM_RAISE_LIMIT)
-                                evDelta = EV_ITEM_RAISE_LIMIT - (data + itemEffect[idx]) + itemEffect[idx];
+                            idx++;
+                            if (data == 0)
+                            {
+                                // EV-reducing berries still raise friendship at 0 EV.
+                                friendshipOnly = TRUE;
+                                break;
+                            }
+                            if (data < (u32)(-evChange))
+                                data = 0;
                             else
-                                evDelta = itemEffect[idx];
-                            if (evCount + evDelta > MAX_TOTAL_EVS)
-                                evDelta += MAX_TOTAL_EVS - (evCount + evDelta);
-                            
-                            // Update EVs and stats
-                            data += evDelta;
+                                data -= (u32)(-evChange);
                             SetMonData(mon, sGetMonDataEVConstants[i + 2], &data);
                             CalculateMonStats(mon);
                             retVal = FALSE;
-                            idx++;
+                        }
+                        else
+                        {
+                            // Has EV increase limit already been reached?
+                            if (evCount >= MAX_TOTAL_EVS)
+                                return TRUE;
+                            if (data < EV_ITEM_RAISE_LIMIT)
+                            {
+                                // Limit the increase
+                                if (data + evChange > EV_ITEM_RAISE_LIMIT)
+                                    evDelta = EV_ITEM_RAISE_LIMIT - (data + evChange) + evChange;
+                                else
+                                    evDelta = evChange;
+                                if (evCount + evDelta > MAX_TOTAL_EVS)
+                                    evDelta += MAX_TOTAL_EVS - (evCount + evDelta);
+
+                                // Update EVs and stats
+                                data += evDelta;
+                                SetMonData(mon, sGetMonDataEVConstants[i + 2], &data);
+                                CalculateMonStats(mon);
+                                retVal = FALSE;
+                                idx++;
+                            }
                         }
                         break;
                     case 4: // ITEM5_PP_MAX
@@ -4583,6 +4628,23 @@ bool8 PokemonItemUseNoEffect(struct Pokemon *mon, u16 item, u8 partyIndex, u8 mo
     else
     {
         itemEffect = gItemEffectTable[item - ITEM_POTION];
+    }
+
+    // Emerald-style EV berries are usable if they can lower their EV
+    // or if their friendship boost can still apply.
+    if (item >= ITEM_POMEG_BERRY && item <= ITEM_TAMATO_BERRY)
+    {
+        static const u16 sEVBerryMonData[] =
+        {
+            MON_DATA_HP_EV,
+            MON_DATA_ATK_EV,
+            MON_DATA_DEF_EV,
+            MON_DATA_SPATK_EV,
+            MON_DATA_SPDEF_EV,
+            MON_DATA_SPEED_EV,
+        };
+        data = GetMonData(mon, sEVBerryMonData[item - ITEM_POMEG_BERRY], NULL);
+        return data == 0 && GetMonData(mon, MON_DATA_FRIENDSHIP, NULL) >= MAX_FRIENDSHIP;
     }
 
     for (cmdIndex = 0; cmdIndex < ITEM_EFFECT_ARG_START; cmdIndex++)
