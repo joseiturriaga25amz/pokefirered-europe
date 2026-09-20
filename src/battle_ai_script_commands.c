@@ -318,7 +318,11 @@ void BattleAI_SetupAIData(void)
     // Decide a random target battlerId in doubles.
     if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE)
     {
+#ifdef BUGFIX
+        gBattlerTarget = (Random() & BIT_FLANK) | (GetBattlerSide(gActiveBattler) ^ BIT_SIDE);
+#else
         gBattlerTarget = (Random() & BIT_FLANK);
+#endif
 
         if (gAbsentBattlerFlags & gBitTable[gBattlerTarget])
             gBattlerTarget ^= BIT_FLANK;
@@ -461,6 +465,7 @@ static void RecordLastUsedMoveByTarget(void)
 {
     s32 i;
 
+#ifndef BUGFIX
     for (i = 0; i < 8; i++)
     {
         if (BATTLE_HISTORY->usedMoves[gBattlerTarget >> 1][i] == 0)
@@ -469,6 +474,18 @@ static void RecordLastUsedMoveByTarget(void)
             return;
         }
     }
+#else
+    for (i = 0; i < MAX_MON_MOVES; i++)
+    {
+        if (BATTLE_HISTORY->usedMoves[gBattlerTarget].moves[i] == gLastMoves[gBattlerTarget])
+            break;
+        if (BATTLE_HISTORY->usedMoves[gBattlerTarget].moves[i] == MOVE_NONE)
+        {
+            BATTLE_HISTORY->usedMoves[gBattlerTarget].moves[i] = gLastMoves[gBattlerTarget];
+            break;
+        }
+    }
+#endif
 }
 
 // not used
@@ -476,20 +493,33 @@ static void ClearBattlerMoveHistory(u8 battlerId)
 {
     s32 i;
 
+#ifndef BUGFIX
     for (i = 0; i < 8; i++)
         BATTLE_HISTORY->usedMoves[battlerId / 2][i] = MOVE_NONE;
+#else
+    for (i = 0; i < MAX_MON_MOVES; i++)
+        BATTLE_HISTORY->usedMoves[battlerId].moves[i] = MOVE_NONE;
+#endif
 }
 
 void RecordAbilityBattle(u8 battlerId, u8 abilityId)
 {
+#ifndef BUGFIX
     if (GetBattlerSide(battlerId) == 0)
         BATTLE_HISTORY->abilities[GET_BATTLER_SIDE(battlerId)] = abilityId;
+#else
+    BATTLE_HISTORY->abilities[battlerId] = abilityId;
+#endif
 }
 
 void RecordItemEffectBattle(u8 battlerId, u8 itemEffect)
 {
+#ifndef BUGFIX
     if (GetBattlerSide(battlerId) == 0)
         BATTLE_HISTORY->itemEffects[GET_BATTLER_SIDE(battlerId)] = itemEffect;
+#else
+    BATTLE_HISTORY->itemEffects[battlerId] = itemEffect;
+#endif
 }
 
 static void Cmd_if_random_less_than(void)
@@ -1146,6 +1176,7 @@ static void Cmd_get_ability(void)
     else
         battlerId = gBattlerTarget;
 
+#ifndef BUGFIX
     if (GetBattlerSide(battlerId) == AI_TARGET)
     {
         u16 side = GET_BATTLER_SIDE(battlerId);
@@ -1156,6 +1187,16 @@ static void Cmd_get_ability(void)
             sAIScriptPtr += 2;
             return;
         }
+#else
+    if (gActiveBattler != battlerId)
+    {
+        if (BATTLE_HISTORY->abilities[battlerId] != 0)
+        {
+            AI_THINKING_STRUCT->funcResult = BATTLE_HISTORY->abilities[battlerId];
+            sAIScriptPtr += 2;
+            return;
+        }
+#endif
 
         // abilities that prevent fleeing.
         if (gBattleMons[battlerId].ability == ABILITY_SHADOW_TAG
@@ -1551,6 +1592,7 @@ static void Cmd_if_has_move(void)
         break;
     case AI_TARGET:
     case AI_TARGET_PARTNER:
+#ifndef BUGFIX
         for (i = 0; i < 8; i++)
         {
             if (BATTLE_HISTORY->usedMoves[gBattlerTarget >> 1][i] == *movePtr)
@@ -1558,6 +1600,15 @@ static void Cmd_if_has_move(void)
         }
         if (i == 8)
             sAIScriptPtr += 8;
+#else
+        for (i = 0; i < MAX_MON_MOVES; i++)
+        {
+            if (BATTLE_HISTORY->usedMoves[gBattlerTarget].moves[i] == *movePtr)
+                break;
+        }
+        if (i == MAX_MON_MOVES)
+            sAIScriptPtr += 8;
+#endif
         else
             sAIScriptPtr = T1_READ_PTR(sAIScriptPtr + 4);
         break;
@@ -1585,6 +1636,7 @@ static void Cmd_if_doesnt_have_move(void)
         break;
     case AI_TARGET:
     case AI_TARGET_PARTNER:
+#ifndef BUGFIX
         for (i = 0; i < 8; i++)
         {
             if (BATTLE_HISTORY->usedMoves[gBattlerTarget >> 1][i] == *movePtr)
@@ -1592,6 +1644,15 @@ static void Cmd_if_doesnt_have_move(void)
         }
         if (i != 8)
             sAIScriptPtr += 8;
+#else
+        for (i = 0; i < MAX_MON_MOVES; i++)
+        {
+            if (BATTLE_HISTORY->usedMoves[gBattlerTarget].moves[i] == *movePtr)
+                break;
+        }
+        if (i != MAX_MON_MOVES)
+            sAIScriptPtr += 8;
+#endif
         else
             sAIScriptPtr = T1_READ_PTR(sAIScriptPtr + 4);
         break;
@@ -1618,12 +1679,25 @@ static void Cmd_if_has_move_with_effect(void)
         break;
     case AI_TARGET:
     case AI_TARGET_PARTNER:
+#ifndef BUGFIX
         for (i = 0; i < 8; i++)
         {
             if (gBattleMons[gBattlerAttacker].moves[i] != 0 && gBattleMoves[BATTLE_HISTORY->usedMoves[gBattlerTarget >> 1][i]].effect == sAIScriptPtr[2])
                 break;
         }
         sAIScriptPtr = T1_READ_PTR(sAIScriptPtr + 3);
+#else
+        for (i = 0; i < MAX_MON_MOVES; i++)
+        {
+            if (BATTLE_HISTORY->usedMoves[gBattlerTarget].moves[i] != MOVE_NONE
+             && gBattleMoves[BATTLE_HISTORY->usedMoves[gBattlerTarget].moves[i]].effect == sAIScriptPtr[2])
+                break;
+        }
+        if (i == MAX_MON_MOVES)
+            sAIScriptPtr += 7;
+        else
+            sAIScriptPtr = T1_READ_PTR(sAIScriptPtr + 3);
+#endif
     }
 }
 
@@ -1647,12 +1721,25 @@ static void Cmd_if_doesnt_have_move_with_effect(void)
         break;
     case AI_TARGET:
     case AI_TARGET_PARTNER:
+#ifndef BUGFIX
         for (i = 0; i < 8; i++)
         {
             if (BATTLE_HISTORY->usedMoves[gBattlerTarget >> 1][i] != 0 && gBattleMoves[BATTLE_HISTORY->usedMoves[gBattlerTarget >> 1][i]].effect == sAIScriptPtr[2])
                 break;
         }
         sAIScriptPtr += 7;
+#else
+        for (i = 0; i < MAX_MON_MOVES; i++)
+        {
+            if (BATTLE_HISTORY->usedMoves[gBattlerTarget].moves[i] != MOVE_NONE
+             && gBattleMoves[BATTLE_HISTORY->usedMoves[gBattlerTarget].moves[i]].effect == sAIScriptPtr[2])
+                break;
+        }
+        if (i != MAX_MON_MOVES)
+            sAIScriptPtr += 7;
+        else
+            sAIScriptPtr = T1_READ_PTR(sAIScriptPtr + 3);
+#endif
     }
 }
 
@@ -1745,18 +1832,22 @@ static void Cmd_watch(void)
 static void Cmd_get_hold_effect(void)
 {
     u8 battlerId;
-    u16 side;
 
     if (sAIScriptPtr[1] == AI_USER)
         battlerId = gBattlerAttacker;
     else
         battlerId = gBattlerTarget;
 
+#ifndef BUGFIX
     if (GetBattlerSide(battlerId) == B_SIDE_PLAYER)
     {
-        side = GET_BATTLER_SIDE(battlerId);
+        u16 side = GET_BATTLER_SIDE(battlerId);
         AI_THINKING_STRUCT->funcResult = BATTLE_HISTORY->itemEffects[side];
     }
+#else
+    if (gActiveBattler != battlerId)
+        AI_THINKING_STRUCT->funcResult = ItemId_GetHoldEffect(BATTLE_HISTORY->itemEffects[battlerId]);
+#endif
     else
         AI_THINKING_STRUCT->funcResult = ItemId_GetHoldEffect(gBattleMons[battlerId].item);
 
