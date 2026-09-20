@@ -150,6 +150,19 @@ def main():
         "RC-F033",
     )
 
+    # Gate 12 pre-runtime hardening / RC-F034: wireless status accounting must
+    # not index group-count arrays with NUM_GROUPTYPES or GROUPTYPE_NONE under UBFIX.
+    wireless_status = read("src/wireless_communication_status_screen.c")
+    for token in (
+        "#if defined(UBFIX) || REVISION >= 0xA\n    {ACTIVITY_POKEMON_JUMP",
+        "#if defined(UBFIX) || REVISION >= 0xA\n    {ACTIVITY_RECORD_CORNER",
+        "if (type < NUM_GROUPTYPES && activity == group_activity(i))",
+        "groupCounts[type] += k;",
+        "#if defined(UBFIX) || REVISION >= 0xA\n    if (HaveCountsChanged(groupCountBuffer, prevGroupCounts))",
+        "+ groupCounts[GROUPTYPE_TOTAL];",
+    ):
+        req(wireless_status, token, "RC-F034")
+
     # BUG-012: the Ruby object belongs to B5F. The script may remain physically
     # declared in the B3F script include, but B3F must not own the object.
     b3 = json.loads(read("data/maps/MtEmber_RubyPath_B3F/map.json"))
@@ -163,7 +176,7 @@ def main():
     assert "LOCALID_RUBY" not in b3_ids, "BUG-012: Ruby object still lives on B3F"
     assert "LOCALID_RUBY" in b5_ids, "BUG-012: Ruby object missing from B5F"
 
-    print("BUG-001..BUG-012 + RC-F028/030/032/033 static audit PASS: frozen, AI, link and UBFIX accessor repairs remain present.")
+    print("BUG-001..BUG-012 + RC-F028/030/032/033/034 static audit PASS: frozen, AI, link and UBFIX repairs remain present.")
 
 
 if __name__ == "__main__":
