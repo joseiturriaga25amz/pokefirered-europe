@@ -140,18 +140,16 @@ SaffronCity_Dojo_EventScript_Mike::
 	end
 
 SaffronCity_Dojo_EventScript_MasterKoichi::
-	goto_if_not_defeated TRAINER_BLACK_BELT_KOICHI, SaffronCity_Dojo_EventScript_FirstKoichiBattle
+	@ Trainer objects that can spot the player must start with trainerbattle.
+	@ The approach engine parses this script as trainer-battle data before the
+	@ normal script interpreter runs; putting flag checks first corrupts that parse.
+	trainerbattle_single TRAINER_BLACK_BELT_KOICHI, SaffronCity_Dojo_Text_MasterKoichiIntro, SaffronCity_Dojo_Text_MasterKoichiDefeat, SaffronCity_Dojo_EventScript_DefeatedMasterKoichi
 	goto_if_unset FLAG_GOT_HITMON_FROM_DOJO, SaffronCity_Dojo_EventScript_ChooseFirstHitmon
 	goto_if_unset FLAG_DEFEATED_SABRINA, SaffronCity_Dojo_EventScript_MasterKoichiAlreadyGotHitmon
 	goto_if_set FLAG_FULL_DOJO_SECOND_REWARD, SaffronCity_Dojo_EventScript_SecondTrialComplete
 	goto_if_defeated TRAINER_RS_BLACK_BELT, SaffronCity_Dojo_EventScript_GiveSecondHitmon
 	trainerbattle_single TRAINER_RS_BLACK_BELT, SaffronCity_Dojo_Text_FullSecondTrialIntro, SaffronCity_Dojo_Text_FullSecondTrialDefeat
 	goto SaffronCity_Dojo_EventScript_GiveSecondHitmon
-	end
-
-SaffronCity_Dojo_EventScript_FirstKoichiBattle::
-	trainerbattle_single TRAINER_BLACK_BELT_KOICHI, SaffronCity_Dojo_Text_MasterKoichiIntro, SaffronCity_Dojo_Text_MasterKoichiDefeat, SaffronCity_Dojo_EventScript_DefeatedMasterKoichi
-	goto SaffronCity_Dojo_EventScript_ChooseFirstHitmon
 	end
 
 SaffronCity_Dojo_EventScript_ChooseFirstHitmon::

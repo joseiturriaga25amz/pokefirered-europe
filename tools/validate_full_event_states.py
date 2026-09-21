@@ -140,6 +140,15 @@ def main():
     no_room = block(dojo, "SaffronCity_Dojo_EventScript_SecondRewardNoRoom")
     assert "FLAG_FULL_DOJO_SECOND_REWARD" not in no_room
 
+    # RC-F041: Koichi is a sight-range trainer object. FireRed's approach engine
+    # parses script+1 directly as trainerbattle data, so the first executable
+    # opcode must remain trainerbattle rather than a conditional wrapper.
+    koichi = block(dojo, "SaffronCity_Dojo_EventScript_MasterKoichi")
+    koichi_lines = [line.strip() for line in koichi.splitlines()[1:] if line.strip() and not line.lstrip().startswith("@")]
+    assert koichi_lines[0].startswith(
+        "trainerbattle_single TRAINER_BLACK_BELT_KOICHI,"
+    ), koichi_lines[0]
+
     # Second fossil: first fossil must be revived; no-room branch cannot set GOT/HIDE.
     moon = read("data/maps/MtMoon_B2F/scripts.inc")
     require(

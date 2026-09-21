@@ -137,7 +137,7 @@ After the 2026-09-20 app-side forced closures, repository history was confirmed 
 
 The audit is now using a second independent layer defined in `docs/production/SECOND_PASS_AUDIT.md`: compiled-target verification, semantic baseline diff, validator skepticism, negative-path review, cross-layer contradiction checks and exact blob locks after semantic review.
 
-A reproducible MyBoy RC was frozen at `a1c7fa573ac784ef089bfdf966aa38fc84861212` (ROM SHA-1 `6ebb0ce7cc736d7fd6c9c5bce09a21aaaf7d0443`) and entered runtime QA. Runtime then exposed RC-F040: pre-National Golbat -> Crobat reached the evolution animation but was automatically canceled by a leftover vanilla National-Dex guard inside `Task_EvolutionScene()`. That RC is therefore **invalidated for final acceptance**. The defect is fixed in source; exact replacement-HEAD CI and a replacement reproducible MyBoy artifact/checksum are required before runtime acceptance continues on the new candidate.
+A reproducible MyBoy RC was frozen at `a1c7fa573ac784ef089bfdf966aa38fc84861212` (ROM SHA-1 `6ebb0ce7cc736d7fd6c9c5bce09a21aaaf7d0443`) and entered runtime QA. Runtime invalidated it with two confirmed blockers: RC-F040 (pre-National cross-generation evolutions reached the animation but were canceled by a leftover vanilla National-Dex guard) and RC-F041 (Koichi's Fighting Dojo sight-trigger script no longer began with `trainerbattle`, causing deterministic MyBoy freeze when he approached the player). Both defects are fixed in source and statically gated. A replacement reproducible MyBoy artifact/checksum is required after the accumulated runtime-polish pass before final acceptance continues on the new candidate.
 
 ## 9. What remains before v1.0 final
 
