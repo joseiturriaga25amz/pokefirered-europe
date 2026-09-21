@@ -315,6 +315,16 @@ def main() -> None:
     ):
         assert token in evo, token
 
+    # RC-F040 / EVO-013: Full normal evolution scenes must not re-apply
+    # vanilla's National-Dex animation-time cancellation after a valid target
+    # (e.g. Golbat -> Crobat) has already been selected.
+    evolution_scene = read("src/evolution_scene.c")
+    normal_evolution_scene = c_function(
+        evolution_scene, "static void Task_EvolutionScene(u8 taskId)"
+    )
+    assert "gTasks[taskId].tPostEvoSpecies > SPECIES_MEW" not in normal_evolution_scene
+    assert "Automatically cancel if the Pokemon would evolve" not in normal_evolution_scene
+
     wild = json.loads(read("src/data/wild_encounters.json"))
     encounters = wild["wild_encounter_groups"][0]["encounters"]
     cave = [

@@ -137,7 +137,7 @@ After the 2026-09-20 app-side forced closures, repository history was confirmed 
 
 The audit is now using a second independent layer defined in `docs/production/SECOND_PASS_AUDIT.md`: compiled-target verification, semantic baseline diff, validator skepticism, negative-path review, cross-layer contradiction checks and exact blob locks after semantic review.
 
-Current static work is close to completion, but **no RC is frozen yet**. Required next milestone: exact current HEAD must pass consolidated CI; only then may one reproducible ROM/checksum be frozen for the final MyBoy checklist.
+A reproducible MyBoy RC was frozen at `a1c7fa573ac784ef089bfdf966aa38fc84861212` (ROM SHA-1 `6ebb0ce7cc736d7fd6c9c5bce09a21aaaf7d0443`) and entered runtime QA. Runtime then exposed RC-F040: pre-National Golbat -> Crobat reached the evolution animation but was automatically canceled by a leftover vanilla National-Dex guard inside `Task_EvolutionScene()`. That RC is therefore **invalidated for final acceptance**. The defect is fixed in source; exact replacement-HEAD CI and a replacement reproducible MyBoy artifact/checksum are required before runtime acceptance continues on the new candidate.
 
 ## 9. What remains before v1.0 final
 
