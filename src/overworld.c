@@ -12,6 +12,7 @@
 #include "field_fadetransition.h"
 #include "field_message_box.h"
 #include "field_player_avatar.h"
+#include "full_follower.h"
 #include "field_screen_effect.h"
 #include "field_specials.h"
 #include "field_tasks.h"
@@ -2147,12 +2148,14 @@ static void InitObjectEventsLocal(void)
     ResetInitialPlayerAvatarState();
     TrySpawnObjectEvents(0, 0);
     TryRunOnWarpIntoMapScript();
+    FullFollower_OnLocalMapReady();
 }
 
 static void ReloadObjectsAndRunReturnToFieldMapScript(void)
 {
     SpawnObjectEventsOnReturnToField(0, 0);
     RunOnReturnToFieldMapScript();
+    FullFollower_OnLocalMapReady();
 }
 
 static void SetCameraToTrackPlayer(void)
