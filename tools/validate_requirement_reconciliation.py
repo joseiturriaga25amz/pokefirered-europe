@@ -8,7 +8,7 @@ ROOT = Path(__file__).resolve().parents[1]
 MATRIX = ROOT / "docs/spec/Pokemon_Rojo_Fuego_Full_Matrices_v1.0.md"
 LEDGER = ROOT / "docs/production/RC_REQUIREMENTS_RECONCILIATION.md"
 
-EXPECTED_SUPERSEDED = {"QOL-008", "SAVE-002", "COMP-006"}
+EXPECTED_SUPERSEDED = {"QOL-002", "QOL-008", "ECO-006", "SAVE-002", "COMP-006"}
 VALID_CLASSES = {
     "implemented + automated evidence",
     "implemented + runtime evidence required",
