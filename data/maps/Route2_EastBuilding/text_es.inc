@@ -1,16 +1,22 @@
 Route2_EastBuilding_Text_GiveHM05IfSeen10Mons::
     .string "¡Hola! ¿Te acuerdas de mí?\n"
     .string "¡Soy AYUDANTE del PROF. OAK!\p"
-    .string "¡Si ya tienes 10 tipos de POKéMON,\n"
-    .string "se supone que debería darte MO05!\p"
-    .string "Dime, {PLAYER}. ¿Tienes ya al menos\n"
-    .string "10 tipos de POKéMON?$"
+    .string "El PROFESOR me pidió premiar a\n"
+    .string "Entrenadores que progresen.\p"
+    .string "Me encargó darte la MO05 si ya\n"
+    .string "conseguiste la MEDALLA CASCADA.\p"
+    .string "¿Ya tienes la MEDALLA CASCADA?$"
 
 Route2_EastBuilding_Text_GreatHereYouGo::
-    .string "¡Bien! ¡Has logrado {STR_VAR_3} tipos\n"
-    .string "de POKéMON!\p"
+    .string "¡Perfecto! Esa MEDALLA demuestra\n"
+    .string "cuánto has avanzado.\p"
     .string "¡Enhorabuena!\n"
     .string "¡Aquí tienes!$"
+
+Route2_EastBuilding_Text_NeedCascadeBadge::
+    .string "Vuelve cuando consigas la\n"
+    .string "MEDALLA CASCADA.\p"
+    .string "Guardaré la MO05 para ti.$"
 
 Route2_EastBuilding_Text_ReceivedHM05FromAide::
     .string "¡{PLAYER} obtuvo la MO05\n"
