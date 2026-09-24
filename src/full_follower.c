@@ -101,7 +101,7 @@ static bool8 ShouldHideFollower(void)
 
     // The prototype suppresses presentation during scripted field control.
     // This keeps follower state out of cutscenes/trainer-sight/link-sensitive scripts.
-    if (ScriptContext2_IsEnabled())
+    if (ScriptContext_IsEnabled())
         return TRUE;
 
     return FALSE;
