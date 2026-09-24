@@ -250,6 +250,7 @@ Exit gate:
 - no stale Celio/old legendary requirements represented as acceptance truth.
 
 ### B1 — Low-risk UX/QoL cleanup
+Authority: A-008 plus the referenced runtime findings.
 Scope:
 - UI-001 EV layout;
 - UI-002 visible Physical/Special/Status category;
