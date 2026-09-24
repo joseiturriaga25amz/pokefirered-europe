@@ -13,6 +13,11 @@ VALID_CLASSES = {
     "implemented + automated evidence",
     "implemented + runtime evidence required",
     "superseded by amendment",
+    "A-005 redesign pending",
+    "implemented core + A-005 UX pending",
+    "encounter implemented; A-005 access redesign pending",
+    "functional core runtime-proven; A-005 presentation pending",
+    "destination core implemented; A-005 access split pending",
 }
 
 
@@ -61,9 +66,11 @@ def main():
 
     automated = sum(c == "implemented + automated evidence" for c in classifications.values())
     runtime = sum(c == "implemented + runtime evidence required" for c in classifications.values())
+    pending = sum("pending" in c for c in classifications.values())
     print(
         "Gate 1 reconciliation PASS: exact frozen 154/154 ID set; "
         f"{automated} automated, {runtime} runtime-required, "
+        f"{pending} amendment-pending, "
         f"{len(superseded)} superseded by approved amendments."
     )
 
