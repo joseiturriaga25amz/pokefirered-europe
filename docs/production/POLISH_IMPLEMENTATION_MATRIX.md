@@ -197,3 +197,213 @@ Follower can enter production only after:
 - provenance decision for full asset coverage.
 
 If follower fails the gate, P-01 through P-08 must remain releasable without it.
+
+
+## P-09 Signature Pokémon beside major trainers
+
+Authority: A-007.
+
+Required v1.0 scope:
+- 8 Gym Leaders;
+- Lorelei, Bruno, Agatha, Lance;
+- Gary/Blue rival/Champion scenes.
+
+Initial signature mapping:
+- Brock — Onix;
+- Misty — Starmie;
+- Lt. Surge — Raichu;
+- Erika — Vileplume;
+- Koga — Weezing;
+- Sabrina — Alakazam;
+- Blaine — Magmar;
+- Giovanni — Persian;
+- Lorelei — Lapras;
+- Bruno — Machamp;
+- Agatha — Gengar;
+- Lance — Dragonite;
+- Gary/Blue — Squirtle/Wartortle/Blastoise by stage.
+
+Implementation constraints:
+- fixed map/event presentation objects, not the dynamic player-follower system;
+- normal FireRed 8-bit object-event graphics IDs;
+- no Pokémon/save/link structure changes;
+- non-blocking placement and no trainer-sight/cutscene interference;
+- provenance-cleared/project-created sprite path for missing assets;
+- this block doubles as a small sprite/OAM integration pilot.
+
+## Production work order — small, reversible blocks
+
+The following order is authoritative for the remaining v1.0 production pass. Each block must be independently reviewable and must end with compile/static validation plus documentation before the next begins.
+
+### B0 — Baseline and validator truth
+Scope:
+- reconcile repository docs with all approved runtime findings from the Drive evidence;
+- update stale checklist language that still reflects pre-A-005/A-006 behavior;
+- lock current save/link structural invariants;
+- keep RC-F040 and RC-F041 regression validators.
+
+No gameplay expansion in this block.
+
+Exit gate:
+- exact HEAD CI green;
+- docs/validators describe current approved behavior;
+- no stale Celio/old legendary requirements represented as acceptance truth.
+
+### B1 — Low-risk UX/QoL cleanup
+Scope:
+- UI-001 EV layout;
+- UI-002 visible Physical/Special/Status category;
+- Porygon 5,500-coin presentation/alignment;
+- vending-machine quantity selector;
+- Oak aide medal gates;
+- National Dex no 60-capture quota;
+- final HM rule QOL-HM-002: HM possession + badge enables field action; learned HM moves are forgettable.
+
+Reason for position:
+small/localized changes with high runtime value; establishes a clean base before narrative/map work.
+
+Exit gate:
+- build green;
+- targeted static validators;
+- no SaveBlock/link schema changes.
+
+### B2 — Boss/rival balance reconciliation
+Scope:
+- BOSS-001 premature-move audit, especially early Gary and first gyms;
+- Giovanni Rocket Hideout and Silph battles brought to approved Full boss standard;
+- preserve approved rosters/identity where frozen, changing only approved gaps/incoherent moves;
+- add/extend trainer legality validators.
+
+Exit gate:
+- all boss party validators green;
+- no accidental roster regression;
+- staged progression/move availability audit documented.
+
+### B3 — Postgame progression and rematch identity
+Scope:
+- gym rematches available after first Hall of Fame;
+- strengthened League remains after Network Machine;
+- eight leader-specific rematch dialogue sets;
+- postgame training bridge through leaders/VS Seeker/high-value trainers.
+
+Exit gate:
+- repeatability retained;
+- no National-Dex/capture dependency for Gym rematches;
+- dialogue uniqueness validator;
+- postgame progression validator.
+
+### B4 — Specialty Balls and economy distribution
+Scope:
+- Net/Nest/Repeat/Timer/Luxury/Dive/Premier availability;
+- staged Kanto/Sevii shop distribution;
+- complete legitimate late/postgame shop;
+- preserve original Dive Ball mechanics;
+- Master/Safari excluded.
+
+Exit gate:
+- all seven specialty Balls reachable;
+- shop/price validators green;
+- caught-ball metadata untouched.
+
+### B5 — Altering Cave and encounter polish
+Scope:
+- automatic 9-table Altering Cave rotation;
+- researcher becomes informational;
+- approved special-encounter rates (Safari rares, Dratini, starters, Magmar/Electabuzz);
+- preserve FireRed/LeafGreen integration intent.
+
+Exit gate:
+- all nine tables reachable;
+- no manual species selector;
+- encounter blob validators updated.
+
+### B6 — Legendary narrative V2 core
+Scope:
+- remove legendary ticket ownership from Celio;
+- maritime birds → Mystic Ticket → Lugia;
+- Pewter Museum anomaly → Aurora Ticket → Deoxys;
+- separate Berry Forest/Celebi investigation;
+- roaming-beast first-contact cinematic and sequential activation;
+- Ho-Oh as beast-arc capstone;
+- advanced-save semantic migration.
+
+Reason for later position:
+highest state-machine/migration risk among non-follower features.
+
+Exit gate:
+- old saves cannot duplicate/softlock tickets or legendary captures;
+- Celio canonical network role restored;
+- all quest-state validators green.
+
+### B7 — Legendary presentation / environmental signals
+Scope:
+- Mew visible appearances and final interactable Mew;
+- cries/scenery/NPC clues for legendary arcs;
+- important quest-NPC identity polish.
+
+Exit gate:
+- presentation does not alter battle identity/state;
+- no hidden legendary spoilers before discovery flags;
+- script/map compile validation.
+
+### B8 — Signature Pokémon staging
+Scope:
+- A-007 major-trainer companion objects;
+- implement only missing signature assets needed for the 13 trainer identities;
+- validate object counts, placement, trainer sight and scripted movement.
+
+Reason before universal follower:
+small controlled map-object pilot exercises the same sprite/OAM constraints with far less runtime risk.
+
+Exit gate:
+- all required major trainers have correct signature presentation;
+- MyBoy milestone spot-check on early Gym / late Gym / Elite Four / Gary;
+- no collision, trainer-sight or transition regression.
+
+### B9 — Pokédex usefulness
+Scope:
+- encounter method and level context for seen species;
+- preserve mystery for undiscovered legendary/event encounters;
+- reuse existing area-marker system where possible.
+
+Exit gate:
+- read-only encounter derivation;
+- no Pokédex save-layout change;
+- protected-event species do not leak locations.
+
+### B10 — Player follower prototype QA and integration decision
+Scope:
+- continue only from `prototype/follower-runtime`;
+- expand mechanics testing first, not asset coverage;
+- MyBoy warps/doors/ledges/bike/Surf/Fly/scripts/battle/save/link tests;
+- verify party reorder/egg/fainted lead behavior;
+- resolve asset provenance before any broad sprite import.
+
+Decision gate:
+- PASS → integrate conservatively and then expand coverage;
+- FAIL or unresolved provenance → exclude follower from v1.0 without blocking B0–B9.
+
+### B11 — Consolidated validators and replacement RC
+Scope:
+- update FINAL_AUDIT_PLAN / RC_MYBOY_CHECKLIST to final V2 truth;
+- run exhaustive static/spec audit;
+- exact-HEAD CI;
+- freeze Git SHA + ROM SHA-1;
+- produce replacement RC only here.
+
+### B12 — Final MyBoy acceptance
+Scope:
+- execute only the affected/required runtime matrix on the new exact RC;
+- use Drive runtime evidence document for manual observations and PASS/FAIL;
+- repair any blocker, regenerate exact RC if code changes;
+- final audit log and release decision.
+
+## Documentation cadence
+
+After every B-block:
+1. update `PROJECT_CONTINUITY.md` with completed scope, commit SHA, CI result and next block;
+2. update `RC_AUDIT_LOG.md` when the block changes acceptance evidence or discovers/fixes a defect;
+3. update the relevant validator/checklist immediately when behavior changes;
+4. use the Google Drive runtime document for manual MyBoy evidence, observations and final runtime acceptance—not as the source of implementation truth.
+
+This keeps disposable chats out of the critical path: a new chat resumes from the last completed B-block in GitHub, then consults Drive only for runtime evidence.
