@@ -41,6 +41,7 @@ enum
     MART_TYPE_TMHM,
     MART_TYPE_DECOR,
     MART_TYPE_DECOR2,
+    MART_TYPE_VENDING,
 };
 
 // shop view window NPC info enum
@@ -146,6 +147,20 @@ static const struct MenuAction sShopMenuActions_BuySellQuit[] =
     {gText_ShopQuit, {.void_u8 = Task_HandleShopMenuQuit}}
 };
 
+static const struct MenuAction sVendingMenuActions[] =
+{
+    {gText_ShopBuy, {.void_u8 = Task_HandleShopMenuBuy}},
+    {gText_ShopQuit, {.void_u8 = Task_HandleShopMenuQuit}}
+};
+
+static const u16 sVendingMachineItems[] =
+{
+    ITEM_FRESH_WATER,
+    ITEM_SODA_POP,
+    ITEM_LEMONADE,
+    ITEM_NONE,
+};
+
 static const struct YesNoFuncTable sShopMenuActions_BuyQuit[] =
 {
     BuyMenuTryMakePurchase,
@@ -206,6 +221,9 @@ static const struct BgTemplate sShopBuyMenuBgTemplates[4] =
 // Functions
 static u8 CreateShopMenu(u8 martType)
 {
+    const struct MenuAction *actions = sShopMenuActions_BuySellQuit;
+    u8 actionCount = ARRAY_COUNT(sShopMenuActions_BuySellQuit);
+
     sShopData.martType = GetMartTypeFromItemList(martType);
     sShopData.selectedRow = 0;
     if (ContextNpcGetTextColor() == NPC_TEXT_COLOR_MALE)
@@ -213,10 +231,16 @@ static u8 CreateShopMenu(u8 martType)
     else
         sShopData.fontId = FONT_FEMALE;
 
+    if (sShopData.martType == MART_TYPE_VENDING)
+    {
+        actions = sVendingMenuActions;
+        actionCount = ARRAY_COUNT(sVendingMenuActions);
+    }
+
     sShopMenuWindowId = AddWindow(&sShopMenuWindowTemplate);
     SetStdWindowBorderStyle(sShopMenuWindowId, 0);
-    PrintTextArray(sShopMenuWindowId, FONT_NORMAL, GetMenuCursorDimensionByFont(FONT_NORMAL, 0), 2, 16, 3, sShopMenuActions_BuySellQuit);
-    Menu_InitCursor(sShopMenuWindowId, FONT_NORMAL, 0, 2, 16, 3, 0);
+    PrintTextArray(sShopMenuWindowId, FONT_NORMAL, GetMenuCursorDimensionByFont(FONT_NORMAL, 0), 2, 16, actionCount, actions);
+    Menu_InitCursor(sShopMenuWindowId, FONT_NORMAL, 0, 2, 16, actionCount, 0);
     PutWindowTilemap(sShopMenuWindowId);
     CopyWindowToVram(sShopMenuWindowId, COPYWIN_MAP);
     return CreateTask(Task_ShopMenu, 8);
@@ -268,7 +292,10 @@ static void Task_ShopMenu(u8 taskId)
         Task_HandleShopMenuQuit(taskId);
         break;
     default:
-        sShopMenuActions_BuySellQuit[Menu_GetCursorPos()].func.void_u8(taskId);
+        if (sShopData.martType == MART_TYPE_VENDING)
+            sVendingMenuActions[Menu_GetCursorPos()].func.void_u8(taskId);
+        else
+            sShopMenuActions_BuySellQuit[Menu_GetCursorPos()].func.void_u8(taskId);
         break;
     }
 }
@@ -329,7 +356,10 @@ static void Task_ReturnToShopMenu(u8 taskId)
     if (IsWeatherNotFadingIn() != TRUE)
         return;
 
-    DisplayItemMessageOnField(taskId, GetMartFontId(), gText_AnythingElseICanHelp, ShowShopMenuAfterExitingBuyOrSellMenu);
+    if (sShopData.martType == MART_TYPE_VENDING)
+        ShowShopMenuAfterExitingBuyOrSellMenu(taskId);
+    else
+        DisplayItemMessageOnField(taskId, GetMartFontId(), gText_AnythingElseICanHelp, ShowShopMenuAfterExitingBuyOrSellMenu);
 }
 
 static void ShowShopMenuAfterExitingBuyOrSellMenu(u8 taskId)
@@ -378,7 +408,7 @@ static void CB2_InitBuyMenu(void)
         FillBgTilemapBufferRect_Palette0(1, 0, 0, 0, 0x20, 0x20);
         FillBgTilemapBufferRect_Palette0(2, 0, 0, 0, 0x20, 0x20);
         FillBgTilemapBufferRect_Palette0(3, 0, 0, 0, 0x20, 0x20);
-        BuyMenuInitWindows(sShopData.martType);
+        BuyMenuInitWindows(sShopData.martType == MART_TYPE_TMHM);
         BuyMenuDecompressBgGraphics();
         gMain.state++;
         break;
@@ -1130,6 +1160,17 @@ void CreatePokemartMenu(const u16 *itemsForSale)
 {
     SetShopItemsForSale(itemsForSale);
     CreateShopMenu(MART_TYPE_REGULAR);
+    SetShopMenuCallback(ScriptContext_Enable);
+    DebugFunc_PrintShopMenuHistoryBeforeClearMaybe();
+    memset(&sHistory, 0, sizeof(sHistory));
+    sHistory[0].mapSec = gMapHeader.regionMapSectionId;
+    sHistory[1].mapSec = gMapHeader.regionMapSectionId;
+}
+
+void CreateVendingMachineMenu(void)
+{
+    SetShopItemsForSale(sVendingMachineItems);
+    CreateShopMenu(MART_TYPE_VENDING);
     SetShopMenuCallback(ScriptContext_Enable);
     DebugFunc_PrintShopMenuHistoryBeforeClearMaybe();
     memset(&sHistory, 0, sizeof(sHistory));
