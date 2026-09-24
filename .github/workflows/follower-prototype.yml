@@ -1,0 +1,30 @@
+name: Follower Prototype
+
+on:
+  push:
+    branches:
+      - prototype/follower-runtime
+
+jobs:
+  build:
+    name: Build follower prototype
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gcc-arm-none-eabi binutils-arm-none-eabi libpng-dev
+
+      - name: Build firered_es_modern
+        run: make -j2 firered_es_modern
+
+      - name: Verify compatibility invariants
+        run: |
+          grep -q '#define OBJ_EVENT_ID_FULL_FOLLOWER 254' include/full_follower.h
+          grep -q 'u8 graphicsId;' include/global.fieldmap.h
+          grep -q 'struct Pokemon' include/pokemon.h
+          grep -q 'MOVEMENT_TYPE_COPY_PLAYER' src/full_follower.c
+          ! grep -q 'u16 graphicsId;' include/global.fieldmap.h
+          ! grep -q 'graphics/object_events/pics/pokemon/bulbasaur.png' src/full_follower.c
