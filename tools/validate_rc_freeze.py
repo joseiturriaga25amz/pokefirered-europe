@@ -382,7 +382,7 @@ def main() -> None:
         assert f"goto_if_unset {badge}" in aide_script, path
         assert f"goto_if_set {reward_flag}" in aide_script, path
         assert f"checkitemspace {item}" in aide_script, path
-        aide_text = read(path.replace("scripts.inc", "text.inc"))
+        aide_text = read(path.replace("scripts.inc", "text_es.inc"))
         assert badge_text in aide_text, path
         assert "caught or owned" not in aide_text, path
 
