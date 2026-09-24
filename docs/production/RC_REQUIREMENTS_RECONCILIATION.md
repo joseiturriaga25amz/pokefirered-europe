@@ -43,7 +43,7 @@ This table is the Gate 1 disposition ledger. “Runtime evidence required” is 
 | EVO-013 | Evoluciones | Evoluciones Gen II/III antes de Nacional | **implemented + automated evidence** | validate_rc_freeze.py + evolution table assertions. |
 | EVO-014 | Evoluciones | Ceremonia de Oak intacta | **implemented + automated evidence** | validate_rc_freeze.py + evolution table assertions. |
 | QOL-001 | QoL | MT reutilizables | **implemented + runtime evidence required** | Static implementation evidence exists; interaction/behavior remains final MyBoy evidence. |
-| QOL-002 | QoL | MO sistema original | **implemented + runtime evidence required** | Static implementation evidence exists; interaction/behavior remains final MyBoy evidence. |
+| QOL-002 | QoL | MO sistema original | **superseded by amendment** | A-008/QOL-HM-002 replaces the vanilla learned-HM requirement with HM-item + badge/story field licenses and makes learned HM moves normally forgettable. |
 | QOL-003 | QoL | Recordador de movimientos | **implemented + runtime evidence required** | Static implementation evidence exists; interaction/behavior remains final MyBoy evidence. |
 | QOL-004 | QoL | Tutores repetibles | **implemented + runtime evidence required** | Static implementation evidence exists; interaction/behavior remains final MyBoy evidence. |
 | QOL-005 | QoL | Tutores definitivos de iniciales | **implemented + runtime evidence required** | Static implementation evidence exists; interaction/behavior remains final MyBoy evidence. |
@@ -102,7 +102,7 @@ This table is the Gate 1 disposition ledger. “Runtime evidence required” is 
 | ECO-003 | Economía | Objetos evolución renovables post-Nacional | **implemented + automated evidence** | validate_rc_freeze.py locks prices/stock/renewable data. |
 | ECO-004 | Economía | Tienda de bayas | **implemented + automated evidence** | validate_rc_freeze.py locks prices/stock/renewable data. |
 | ECO-005 | Economía | Consumibles PP postgame | **implemented + automated evidence** | validate_rc_freeze.py locks prices/stock/renewable data. |
-| ECO-006 | Economía | Porygon | **implemented + automated evidence** | validate_rc_freeze.py locks prices/stock/renewable data. |
+| ECO-006 | Economía | Porygon | **superseded by amendment** | A-008/ECO-CASINO-001 changes the repeatable prize from 5,000 to 5,500 coins and requires localized aligned presentation. |
 | ECO-007 | Economía | Huevo Suerte | **implemented + automated evidence** | validate_rc_freeze.py locks prices/stock/renewable data. |
 | ECO-008 | Economía | Circuito Resort Gorgeous | **implemented + runtime evidence required** | Trainer classes/payout identity locked; VS Seeker repeatability remains runtime. |
 | ECO-009 | Economía | Sin boost global de dinero | **implemented + automated evidence** | validate_rc_freeze.py locks prices/stock/renewable data. |
