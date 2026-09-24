@@ -370,6 +370,15 @@ def main() -> None:
     active_reminder = reminder_text[reminder_text.index("TwoIsland_House_Text_WantMeToTeachMove::"):reminder_text.index("TwoIsland_House_Text_TutorWhichMon::")]
     assert "MUSHROOM" not in active_reminder
 
+    summary_ui = read("src/pokemon_summary_screen.c")
+    assert "ShowOrHideHpBarObjs(sMonSummaryScreen->showFullEvView);" in summary_ui
+    assert "ShowOrHideExpBarObjs(sMonSummaryScreen->showFullEvView);" in summary_ui
+    assert 'sText_FullMoveCategoryPhysical[] = _("FISICO")' in summary_ui
+    assert 'sText_FullMoveCategorySpecial[] = _("ESPECIAL")' in summary_ui
+    assert 'sText_FullMoveCategoryStatus[] = _("ESTADO")' in summary_ui
+    assert "category = gBattleMoves[move].category;" in summary_ui
+    assert "sText_FullMoveCategories[category]" in summary_ui
+
     aide_rules = (
         ("data/maps/Route2_EastBuilding/scripts.inc", "FLAG_BADGE02_GET", "FLAG_GOT_HM05", "ITEM_HM05", "MEDALLA CASCADA"),
         ("data/maps/Route10_PokemonCenter_1F/scripts.inc", "FLAG_BADGE03_GET", "FLAG_GOT_EVERSTONE_FROM_OAKS_AIDE", "ITEM_EVERSTONE", "MEDALLA TRUENO"),

@@ -649,6 +649,16 @@ static const u8 sText_FullEvControls[] = _("SELECT: EV");
 static const u8 sText_FullStatsControls[] = _("SELECT: STATS");
 static const u8 sText_FullEvTotal[] = _("EV TOTAL");
 static const u8 sText_FullEvScale[] = _("MAX. STAT 252 / TOTAL 510");
+static const u8 sText_FullMoveCategoryLabel[] = _("CAT.");
+static const u8 sText_FullMoveCategoryPhysical[] = _("FISICO");
+static const u8 sText_FullMoveCategorySpecial[] = _("ESPECIAL");
+static const u8 sText_FullMoveCategoryStatus[] = _("ESTADO");
+static const u8 *const sText_FullMoveCategories[] =
+{
+    sText_FullMoveCategoryPhysical,
+    sText_FullMoveCategorySpecial,
+    sText_FullMoveCategoryStatus,
+};
 
 static const u8 sPrintMoveTextColors[][3] = {
     {0, 7, 8},
@@ -1139,6 +1149,8 @@ static void Task_InputHandler_Info(u8 taskId)
             && JOY_NEW(SELECT_BUTTON))
         {
             sMonSummaryScreen->showFullEvView ^= TRUE;
+            ShowOrHideHpBarObjs(sMonSummaryScreen->showFullEvView);
+            ShowOrHideExpBarObjs(sMonSummaryScreen->showFullEvView);
             PlaySE(SE_SELECT);
             PokeSum_PrintRightPaneText();
             PokeSum_PrintBottomPaneText();
@@ -1697,8 +1709,8 @@ static void PokeSum_ShowSpritesBeforePageFlip(void)
     case PSS_PAGE_MOVES:
         if (sMonSummaryScreen->pageFlipDirection == 0)
         {
-            ShowOrHideHpBarObjs(FALSE);
-            ShowOrHideExpBarObjs(FALSE);
+            ShowOrHideHpBarObjs(sMonSummaryScreen->showFullEvView);
+            ShowOrHideExpBarObjs(sMonSummaryScreen->showFullEvView);
         }
         else
         {
@@ -2935,9 +2947,16 @@ static void PokeSum_PrintExpPoints_NextLv(void)
 
 static void PokeSum_PrintSelectedMoveStats(void)
 {
+    u16 move;
+    u8 category;
+
     if (sMoveSelectionCursorPos < 5)
     {
         if (sMonSummaryScreen->mode != PSS_MODE_SELECT_MOVE && sMoveSelectionCursorPos == 4)
+            return;
+
+        move = sMonSummaryScreen->moveIds[sMoveSelectionCursorPos];
+        if (move == MOVE_NONE)
             return;
 
         AddTextPrinterParameterized3(sMonSummaryScreen->windowIds[POKESUM_WIN_TRAINER_MEMO], FONT_NORMAL,
@@ -2950,11 +2969,24 @@ static void PokeSum_PrintSelectedMoveStats(void)
                                      sLevelNickTextColors[0], TEXT_SKIP_DRAW,
                                      sMonSummaryScreen->summary.moveAccuracyStrBufs[sMoveSelectionCursorPos]);
 
+        category = gBattleMoves[move].category;
+        if (category <= MOVE_CATEGORY_STATUS)
+        {
+            AddTextPrinterParameterized3(sMonSummaryScreen->windowIds[POKESUM_WIN_TRAINER_MEMO], FONT_SMALL,
+                                         7, 29,
+                                         sLevelNickTextColors[0], TEXT_SKIP_DRAW,
+                                         sText_FullMoveCategoryLabel);
+            AddTextPrinterParameterized3(sMonSummaryScreen->windowIds[POKESUM_WIN_TRAINER_MEMO], FONT_NORMAL,
+                                         39, 28,
+                                         sLevelNickTextColors[0], TEXT_SKIP_DRAW,
+                                         sText_FullMoveCategories[category]);
+        }
+
         AddTextPrinterParameterized4(sMonSummaryScreen->windowIds[POKESUM_WIN_TRAINER_MEMO], FONT_NORMAL,
                                      7, 42,
                                      0, 0,
                                      sLevelNickTextColors[0], TEXT_SKIP_DRAW,
-                                     gMoveDescriptionPointers[sMonSummaryScreen->moveIds[sMoveSelectionCursorPos] - 1]);
+                                     gMoveDescriptionPointers[move - 1]);
     }
 }
 
