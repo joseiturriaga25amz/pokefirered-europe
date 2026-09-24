@@ -107,7 +107,6 @@ jobs:
           grep -q 'MOVE_ANCIENT_POWER, 1' src/script_pokemon_util.c
           grep -q 'MOVE_RECOVER, 2' src/script_pokemon_util.c
           grep -q 'MOVE_HEAL_BELL, 3' src/script_pokemon_util.c
-          grep -q 'VAR_FULL_ROAMER_SEQUENCE, 3' data/maps/ThreeIsland_BerryForest/scripts.inc
           grep -q 'ThreeIsland_BerryForest_EventScript_FullCelebiTree' data/maps/ThreeIsland_BerryForest/map.json
           grep -q 'goto EventScript_CutTree' data/maps/ThreeIsland_BerryForest/scripts.inc
           grep -q 'FLAG_FULL_MEW_KO_PENDING' data/scripts/spanish/hall_of_fame.inc
