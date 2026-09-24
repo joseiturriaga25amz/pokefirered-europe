@@ -234,3 +234,48 @@ Compatibility design for follower:
 5. Update validators/checklist to the approved V2 behavior.
 6. Build and freeze a new exact MyBoy RC/checksum only after current HEAD CI/static audit is green.
 7. Final runtime acceptance belongs to the new RC, not the old test ROM.
+
+
+## 2026-09-24 — follower/provenance and polish checkpoint
+
+Repository-only continuation was performed from the production documents, not from chat memory.
+
+### New production documentation
+
+- `docs/production/FOLLOWER_TECHNICAL_RESEARCH.md`
+  - upstream inspected: `monhacks/arrantemerald` branch `followers-expanded-id`;
+  - bulk HGSS follower asset provenance traced to veekun/HGSS extraction;
+  - no repository-wide license grant found for upstream follower code/assets;
+  - external 386/440-sprite set is not treated as redistribution-cleared;
+  - conservative FireRed architecture defined without 16-bit graphics IDs or save/link structure growth.
+- `docs/production/POLISH_IMPLEMENTATION_MATRIX.md`
+  - maps A-005/A-006 into production work packages P-01 through P-08;
+  - explicitly records that current Celio Mystic/Aurora distribution is pre-A-005 behavior and must be replaced.
+
+### Isolated follower prototype
+
+Branch: `prototype/follower-runtime`
+
+Green compile checkpoint:
+`6b7fd84ecdc02eb188721dd4526c2e853a43859f`
+
+Actions run:
+`36013304188` — PASS.
+
+The prototype:
+- uses only existing Full-native Pokémon overworld assets;
+- keeps generic object graphics IDs 8-bit;
+- does not modify Pokémon/BoxPokemon/SaveBlock/link serialization;
+- is excluded from link-map initialization;
+- remains blocked from production pending MyBoy runtime + Save/Link QA.
+
+### RC policy
+
+The ROM SHA-1 `a1c7fa573ac784ef089bfdf966aa38fc84861212` remains historical runtime evidence only. It is not a final candidate.
+
+Do not generate or label a replacement final RC until:
+1. approved A-005/A-006 production polish is implemented;
+2. validators and MyBoy checklist reflect the new truth;
+3. follower is either MyBoy-approved for integration or explicitly excluded from v1.0;
+4. exact-HEAD CI is green;
+5. the replacement RC is frozen by Git SHA + ROM SHA-1 and receives the required runtime suite.
