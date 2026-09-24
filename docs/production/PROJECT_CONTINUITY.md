@@ -279,3 +279,24 @@ Do not generate or label a replacement final RC until:
 3. follower is either MyBoy-approved for integration or explicitly excluded from v1.0;
 4. exact-HEAD CI is green;
 5. the replacement RC is frozen by Git SHA + ROM SHA-1 and receives the required runtime suite.
+
+
+## 2026-09-24 — production order locked after Drive/runtime reconciliation
+
+Drive evidence document reviewed:
+`Pokemon Rojo Fuego Full v1.0 — Evidencia Runtime RC`.
+
+The remaining work is now intentionally split into small production blocks B0–B12 in `POLISH_IMPLEMENTATION_MATRIX.md`. This supersedes any vague “implement all polish at once” interpretation.
+
+New approved decision:
+- A-007 adds fixed signature Pokémon beside the 8 Gym Leaders, Elite Four and Gary/Blue.
+- This is not the player follower system; it is controlled map/event presentation.
+- Required signature mapping and QA constraints are recorded in `DECISION_AMENDMENTS.md`.
+- Missing trainer-signature sprites are a bounded asset problem (~13 identities) and should be used as a safe sprite/OAM pilot before universal follower coverage.
+
+Operational rule:
+- complete one B-block at a time;
+- end each block with build/static validation and documentation;
+- do not generate replacement RC until B11;
+- Drive remains the manual MyBoy/runtime evidence record;
+- GitHub remains the implementation/continuity authority.
