@@ -372,3 +372,14 @@ Use this structure and fill it with the current exact state:
 The external Drive runtime evidence was re-read specifically for post-freeze approvals that had not yet been promoted into repository authority. A-008 now makes the following B1 rules repository-authoritative: UI-001 EV layout repair, UI-002 visible move category, Porygon 5,500/aligned presentation, vending quantity selector, badge-gated Oak aides, National Dex without the 60-capture quota, HM item+badge field licenses with forgettable learned HMs, and vanilla held-item Exp. Share behavior.
 
 These are no longer Drive-only decisions. B1 must implement against A-008 and update validators/runtime checks accordingly.
+
+
+## 15. B0 closed / B1 opened
+
+B0 is CLOSED at exact validated HEAD `f93996b28eb5d5f1824a24c89bf6ee1e4be0944d`.
+
+GitHub Actions run `36023307145` completed SUCCESS on that exact HEAD. The repository now contains the current A-005/A-006/A-007/A-008/A-009 acceptance truth, bounded-work/chat-handoff protocol, updated reconciliation classifications, and no stale Celio/old-Celebi acceptance assertions in the principal validators.
+
+B1 branch: `feature/b1-low-risk-qol`.
+
+B1.1 starts with the lowest-risk local corrections: Porygon 5,500/localized presentation, National Dex removal of the 60-capture gate while retaining the One Island story gate, and Move Reminder money-based localization cleanup. Later B1 subblocks handle Oak aide badge gates, UI-001/UI-002, vending quantity, and final HM field-license behavior.
