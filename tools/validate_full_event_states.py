@@ -109,15 +109,13 @@ def main():
     assert mew.count("setvar VAR_FULL_MEW_QUEST, 5") == 2
     require(hof, "clearflag FLAG_FULL_MEW_KO_PENDING", "setvar VAR_FULL_MEW_QUEST, 4")
 
-    # Celebi: requirements gate the tree; flee leaves event available, KO waits for HOF.
+    # Celebi terminal-state safety remains valid across A-005. A-005 supersedes
+    # the old National-Dex/RS/all-three-beasts prerequisite chain.
     celebi = read("data/maps/ThreeIsland_BerryForest/scripts.inc")
     require(
         celebi,
         "goto_if_set FLAG_FULL_CELEBI_CAUGHT",
         "goto_if_set FLAG_FULL_CELEBI_KO_PENDING",
-        "IsNationalPokedexEnabled",
-        "FLAG_SYS_CAN_LINK_WITH_RS",
-        "VAR_FULL_ROAMER_SEQUENCE, 3",
         "B_OUTCOME_CAUGHT, ThreeIsland_BerryForest_EventScript_FullCelebiCaught",
         "B_OUTCOME_WON, ThreeIsland_BerryForest_EventScript_FullCelebiDefeated",
         "setflag FLAG_FULL_CELEBI_CAUGHT",
@@ -163,23 +161,9 @@ def main():
     assert "FLAG_GOT_DOME_FOSSIL" not in fossil_no_room
     assert "FLAG_GOT_HELIX_FOSSIL" not in fossil_no_room
 
-    # Ticket quests: successful delivery must keep original item + receipt + ferry state.
-    celio = read("data/maps/OneIsland_PokemonCenter_1F/scripts.inc")
-    for token in (
-        "ITEM_MYSTIC_TICKET",
-        "setflag FLAG_RECEIVED_MYSTIC_TICKET",
-        "setflag FLAG_ENABLE_SHIP_NAVEL_ROCK",
-        "ITEM_AURORA_TICKET",
-        "setflag FLAG_RECEIVED_AURORA_TICKET",
-        "setflag FLAG_ENABLE_SHIP_BIRTH_ISLAND",
-    ):
-        require(celio, token)
-    museum = read("data/maps/PewterCity_Museum_1F/scripts.inc")
-    require(museum, "VAR_FULL_AURORA_QUEST, 1", "setvar VAR_FULL_AURORA_QUEST, 2")
-
-    # Sequential roamers: capture advances Suicune -> Raikou -> Entei -> done,
-    # while KO heals/repositions the same identity and InitRoamer cannot restart a
-    # completed sequence.
+    # A-005 supersedes the pre-V2 ticket ownership and legendary-introduction
+    # scripts. B0 intentionally removes Celio/ticket narrative assertions from
+    # acceptance. Replacement V2 state machines will be validated when implemented.
     roamer = read("src/roamer.c")
     require(
         roamer,
@@ -198,41 +182,6 @@ def main():
     assert "VAR_FULL_ROAMER_SEQUENCE" not in update
     inactive = c_function(roamer, "void SetRoamerInactive(void)")
     assert inactive.index("VarSet(VAR_FULL_ROAMER_SEQUENCE, sequence + 1);") < inactive.index("CreateInitialRoamerMon();")
-
-    # Aurora quest is a 0 -> 1 (Celio signal) -> 2 (Pewter analysis) -> 3
-    # (ticket delivered) machine. A full bag must not advance the final state.
-    museum = read("data/maps/PewterCity_Museum_1F/scripts.inc")
-    require(
-        celio,
-        "goto_if_eq VAR_FULL_AURORA_QUEST, 0, OneIsland_PokemonCenter_1F_EventScript_FullDetectAuroraSignal",
-        "goto_if_eq VAR_FULL_AURORA_QUEST, 2, OneIsland_PokemonCenter_1F_EventScript_FullGiveAuroraTicket",
-        "setvar VAR_FULL_AURORA_QUEST, 1",
-        "setvar VAR_FULL_AURORA_QUEST, 3",
-    )
-    require(
-        museum,
-        "goto_if_eq VAR_FULL_AURORA_QUEST, 1, PewterCity_Museum_1F_EventScript_FullAnalyzeAuroraSignal",
-        "setvar VAR_FULL_AURORA_QUEST, 2",
-    )
-    ticket_no_room = block(celio, "OneIsland_PokemonCenter_1F_EventScript_FullTicketNoRoom")
-    assert "setvar VAR_FULL_MYSTIC_QUEST" not in ticket_no_room
-    assert "setvar VAR_FULL_AURORA_QUEST" not in ticket_no_room
-
-    # MysticTicket is gated by all three captured birds, not merely prior fights
-    # that are still waiting for Hall-of-Fame KO recovery.
-    mystic = block(celio, "OneIsland_PokemonCenter_1F_EventScript_FullPostgameQuests")
-    for species in ("ARTICUNO", "ZAPDOS", "MOLTRES"):
-        require(
-            mystic,
-            f"goto_if_unset FLAG_FOUGHT_{species}",
-            f"goto_if_set FLAG_FULL_{species}_KO_PENDING",
-        )
-    require(
-        celio,
-        "setflag FLAG_RECEIVED_MYSTIC_TICKET",
-        "setflag FLAG_ENABLE_SHIP_NAVEL_ROCK",
-        "setvar VAR_FULL_MYSTIC_QUEST, 1",
-    )
 
     # Altering Cave selector persists one of the nine original table indices.
     cave = read("data/maps/SixIsland_AlteringCave/scripts.inc")
