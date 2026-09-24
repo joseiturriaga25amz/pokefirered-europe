@@ -252,3 +252,30 @@ Any save corruption, link regression, softlock, black screen, persistent ghost o
 - **Full-native overworld assets:** sufficient for first mechanics prototype.
 - **16-bit expanded graphics IDs:** reject for the first FireRed prototype.
 - **Production integration:** blocked pending isolated implementation + MyBoy QA.
+
+
+## 8. Prototype checkpoint — 2026-09-24
+
+Isolated branch: `prototype/follower-runtime`.
+
+Prototype implementation intentionally keeps the production branch untouched and currently:
+
+- derives the candidate follower from the first conscious, non-Egg party member supported by the prototype asset allow-list;
+- uses only existing Full-native overworld graphics (Pikachu, Snorlax, Mew, Suicune, Pidgey, Spearow);
+- uses a runtime-only special object local ID;
+- keeps `ObjectEvent.graphicsId` and `ObjectEventTemplate.graphicsId` at 8 bits;
+- does not modify `Pokemon`, `BoxPokemon`, SaveBlocks or link packet structures;
+- suppresses the follower in link-map initialization by using local-only lifecycle hooks;
+- hides it during bike, Surf and scripted field control;
+- excludes the presentation-only follower object from collision semantics;
+- re-evaluates party eligibility at runtime.
+
+First CI attempt failed only because the prototype referenced the Emerald-style/nonexistent `ScriptContext2_IsEnabled` symbol. It was corrected to FireRed's `ScriptContext_IsEnabled`.
+
+**Compile gate result:** PASS at prototype commit `6b7fd84ecdc02eb188721dd4526c2e853a43859f`.
+
+GitHub Actions run `36013304188` completed successfully:
+- build: PASS;
+- compatibility invariants: PASS.
+
+This is **not** a production approval. The branch remains blocked from integration until the MyBoy runtime matrix in section 6 is exercised and Save/Link behavior is verified.
