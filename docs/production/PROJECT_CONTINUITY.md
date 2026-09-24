@@ -300,3 +300,68 @@ Operational rule:
 - do not generate replacement RC until B11;
 - Drive remains the manual MyBoy/runtime evidence record;
 - GitHub remains the implementation/continuity authority.
+
+
+## 13. Chat/resource management and handoff protocol
+
+This is a **project rule**, not a chat-memory preference.
+
+### Workload sizing
+
+To reduce forced chat/tool interruptions:
+
+- do not run repository research, compilation review, audit, mutation and long-form reporting as one monolithic operation;
+- split technical work into bounded units: **locate → inspect → change → validate → record**;
+- prefer targeted file/range inspection over oversized repository dumps;
+- keep modifications small enough to be reviewable and reversible;
+- finish each coherent unit with a Git checkpoint and concise state note before starting the next;
+- split large textual audits/specifications into prudent sections instead of producing or ingesting them in one oversized pass;
+- avoid repeating already-recorded repository context in chat when GitHub documents are authoritative.
+
+### Chat rotation
+
+The assistant must actively watch for signs that the current conversation is becoming unsafe to continue efficiently, including:
+
+- repeated long tool traces or large repository outputs;
+- several major implementation/audit blocks accumulated in one chat;
+- signs of context pressure, truncated tool output or prior forced-stop risk;
+- a natural project checkpoint where continuing in a fresh chat would reduce risk without losing momentum.
+
+When that point is reached, **tell the user proactively before a forced closure occurs**.
+
+Before recommending a new chat:
+
+1. finish or safely checkpoint the current atomic subtask;
+2. commit/document the exact repository state;
+3. update this continuity file or the relevant production handoff document if project truth changed;
+4. provide the user with a ready-to-paste continuation prompt containing:
+   - repository name;
+   - active branch;
+   - exact HEAD;
+   - current B-block/subblock;
+   - completed work;
+   - open gate/failure, if any;
+   - exact next action;
+   - instruction to read PROJECT_CONTINUITY.md and authoritative production docs first;
+   - reminder not to reconstruct state from old chat text when repository truth exists.
+
+Do not rotate chats merely because a response is long. Rotate when continuity risk becomes materially higher than the cost of starting fresh.
+
+### Continuation-prompt template
+
+Use this structure and fill it with the current exact state:
+
+> Continuamos el proyecto Pokémon Rojo Fuego Full v1.0.
+> 
+> Repositorio: `joseiturriaga25amz/pokefirered-europe`
+> Rama activa: `<branch>`
+> HEAD exacto: `<sha>`
+> Bloque actual: `<B-block/subblock>`
+> 
+> Antes de modificar nada, lee `docs/production/PROJECT_CONTINUITY.md` y los documentos de producción que allí se indican. GitHub es la autoridad de continuidad; no reconstruyas el estado desde el chat anterior.
+> 
+> Estado cerrado: <summary>
+> Gate/fallo abierto: <summary or none>
+> Siguiente acción exacta: <next action>
+> 
+> Mantén el protocolo de trabajo en bloques acotados: localizar → inspeccionar → cambiar → validar → registrar. Evita operaciones monolíticas y textos/auditorías excesivamente grandes en una sola pasada.
