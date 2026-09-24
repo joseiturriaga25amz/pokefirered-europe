@@ -15,22 +15,23 @@ Route10_PokemonCenter_1F_Text_HeardGhostsHauntLavender::
 Route10_PokemonCenter_1F_Text_GiveEverstoneIfCaught20Mons::
 	.string "Oh… {PLAYER}!\n"
 	.string "I've been looking for you!\p"
-	.string "It's me, one of the ever-present\n"
-	.string "AIDES to PROF. OAK.\p"
-	.string "If your POKéDEX has complete data\n"
-	.string "on twenty species, I'm supposed to\l"
-	.string "give you a reward from PROF. OAK.\p"
-	.string "He entrusted me with this\n"
-	.string "EVERSTONE.\p"
-	.string "So, {PLAYER}, let me ask you.\p"
-	.string "Have you gathered data on at least\n"
-	.string "twenty kinds of POKéMON?$"
+	.string "It's me, one of PROF. OAK's AIDES.\p"
+	.string "He entrusted me with this EVERSTONE\n"
+	.string "for Trainers making good progress.\p"
+	.string "If you've earned the THUNDER BADGE,\n"
+	.string "this reward is yours.\p"
+	.string "Have you earned the THUNDER BADGE?$"
 
 Route10_PokemonCenter_1F_Text_GreatHereYouGo::
-	.string "Great! You have caught or owned\n"
-	.string "{STR_VAR_3} kinds of POKéMON!\p"
+	.string "Great! That BADGE shows how far\n"
+	.string "you've come as a Trainer.\p"
 	.string "Congratulations!\n"
 	.string "Here you go!$"
+
+Route10_PokemonCenter_1F_Text_NeedThunderBadge::
+	.string "Come back after you've earned the\n"
+	.string "THUNDER BADGE.\p"
+	.string "I'll keep the EVERSTONE safe for you.$"
 
 Route10_PokemonCenter_1F_Text_ReceivedEverstoneFromAide::
 	.string "{PLAYER} received the EVERSTONE\n"
