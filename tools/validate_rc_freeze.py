@@ -371,8 +371,8 @@ def main() -> None:
     assert "MUSHROOM" not in active_reminder
 
     aide_rules = (
-        ("data/maps/Route2_EastBuilding/scripts.inc", "FLAG_BADGE02_GET", "FLAG_GOT_HM05", "ITEM_HM05", "CASCADE BADGE"),
-        ("data/maps/Route10_PokemonCenter_1F/scripts.inc", "FLAG_BADGE03_GET", "FLAG_GOT_EVERSTONE_FROM_OAKS_AIDE", "ITEM_EVERSTONE", "THUNDER BADGE"),
+        ("data/maps/Route2_EastBuilding/scripts.inc", "FLAG_BADGE02_GET", "FLAG_GOT_HM05", "ITEM_HM05", "MEDALLA CASCADA"),
+        ("data/maps/Route10_PokemonCenter_1F/scripts.inc", "FLAG_BADGE03_GET", "FLAG_GOT_EVERSTONE_FROM_OAKS_AIDE", "ITEM_EVERSTONE", "MEDALLA TRUENO"),
     )
     for path, badge, reward_flag, item, badge_text in aide_rules:
         aide_script = read(path)
