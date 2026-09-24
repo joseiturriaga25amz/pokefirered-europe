@@ -42,7 +42,7 @@ Use controlled Pokémon with deliberately different Atk/SpA and Def/SpD. Exercis
 
 1. Teach the same TM to two compatible Pokémon; confirm the TM remains.
 2. Attempt to obtain/buy a duplicate unique TM and attempt to sell/discard one.
-3. Verify an HM field move still requires the Pokémon to know the HM.
+3. Verify an HM field move works with the corresponding HM item + badge/story gate even when no party Pokémon knows the move; teach that HM voluntarily, replace/forget it normally, and confirm field use still depends on HM possession + gate rather than the learned move.
 4. Use Move Reminder and confirm exactly $2,000 is charged.
 5. Use a tutor once for free, then repeat and confirm the approved price.
 6. Run inside a normal interior after Running Shoes; verify explicitly forbidden tiles still block running.
@@ -50,7 +50,7 @@ Use controlled Pokémon with deliberately different Atk/SpA and Def/SpD. Exercis
 8. Toggle the EV summary view and compare all six values/total with a known EV test Pokémon.
 9. With a living non-Egg Synchronize lead, perform a controlled encounter sample.
 
-**PASS:** reusable/unique TM rules hold, HMs remain vanilla, pricing is exact, no Repel loop/softlock occurs, EV values are exact, and Synchronize behaves near the intended 50% over a sufficiently large sample.
+**PASS:** reusable/unique TM rules hold; A-008 HM field-license behavior and HM forgetting work; no Repel loop/softlock occurs; EV values/layout are correct; move category visibility is clear; and Synchronize behaves near the intended 50% over a sufficiently large sample.
 
 ## RC-05 — Safari
 **Covers:** QA-050, QA-051.
@@ -103,12 +103,15 @@ For Articuno, Zapdos, Moltres, Mewtwo, Lugia, Ho-Oh, Deoxys, Mew and Celebi test
 ## RC-10 — Economy and renewable resources
 **Covers:** QA-119..QA-124.
 
-1. Buy Porygon twice at exactly 5,000 coins each.
+1. Buy Porygon twice at exactly 5,500 coins each; confirm the Spanish prize presentation is aligned and displays 5.500 FICHAS.
 2. Before/after National Dex compare renewable evolution items.
+3. Confirm Oak's National Dex scene requires game clear + the One Island narrative gate but no longer requires 60 captured species.
+4. Confirm Oak aide rewards use the approved badge gates (Cascade/Thunder/Rainbow) rather than Pokédex species counts, while preserving one-time flags and bag-full safety.
+5. Confirm Celadon vending machines support multi-quantity Fresh Water/Soda Pop/Lemonade purchases with atomic money/space handling and no regression to the thirsty-girl TM exchanges.
 3. Verify postgame Lucky Egg purchase at $30,000 while Chansey's original method still exists.
 4. Trigger the Resort Gorgeous Jacki/Gillian/Celina VS Seeker circuit and inspect payouts.
 5. Re-test one paid tutor against the approved table.
-6. On Two Island, compare berry inventory before National Dex and after National Dex; verify exact prices.
+8. On Two Island, compare berry inventory before National Dex and after National Dex; verify exact prices.
 7. Use each EV-reducing berry on a Pokémon with the corresponding EV >0 and friendship below max, then again with that EV at 0 but friendship below max.
 
 **PASS:** prices/inventory match the freeze; EV berry lowers its target EV by 10 to a floor of 0 and can still raise friendship at 0 EV; it has no effect only when target EV is 0 and friendship is already max.
