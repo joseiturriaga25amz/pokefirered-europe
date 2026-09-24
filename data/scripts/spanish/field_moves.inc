@@ -2,10 +2,10 @@ EventScript_CutTree::
 	goto_if_questlog EventScript_ReleaseEnd
 	lockall
 	goto_if_unset FLAG_BADGE02_GET, EventScript_CantCutTree
-	checkpartymove MOVE_CUT
-	goto_if_eq VAR_RESULT, PARTY_SIZE, EventScript_CantCutTree
-	setfieldeffectargument 0, VAR_RESULT
-	bufferpartymonnick STR_VAR_1, VAR_RESULT
+	checkitem ITEM_HM01_CUT
+	goto_if_eq VAR_RESULT, FALSE, EventScript_CantCutTree
+	setfieldeffectargument 0, 0
+	bufferpartymonnick STR_VAR_1, 0
 	buffermovename STR_VAR_2, MOVE_CUT
 	msgbox Text_CutTreeDown, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, EventScript_DontCutTree
