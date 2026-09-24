@@ -354,7 +354,21 @@ def main() -> None:
     game_corner = read("data/maps/CeladonCity_GameCorner_PrizeRoom/scripts.inc")
     start = game_corner.index("CeladonCity_GameCorner_PrizeRoom_EventScript_Porygon::")
     porygon = game_corner[start:]
-    assert "setvar VAR_TEMP_2, 5000" in porygon
+    assert "setvar VAR_TEMP_2, 5500" in porygon
+
+    script_menu = read("src/script_menu.c")
+    assert 'sText_FullPorygon5500Coins' in script_menu
+    assert 'PORYGON  5.500 FICHAS' in script_menu
+
+    oak_lab = read("data/maps/PalletTown_ProfessorOaksLab/scripts.inc")
+    natdex = c_function(oak_lab, "PalletTown_ProfessorOaksLab_EventScript_TryStartNationalDexScene::") if False else oak_lab[oak_lab.index("PalletTown_ProfessorOaksLab_EventScript_TryStartNationalDexScene::"):oak_lab.index("PalletTown_ProfessorOaksLab_EventScript_DontStartNationalDexScene::")]
+    assert "goto_if_lt VAR_0x8009, 60" not in natdex
+    assert "goto_if_unset FLAG_WORLD_MAP_ONE_ISLAND" in natdex
+
+    reminder_text = read("data/maps/TwoIsland_House/text.inc")
+    assert "2.000" in reminder_text
+    active_reminder = reminder_text[reminder_text.index("TwoIsland_House_Text_WantMeToTeachMove::"):reminder_text.index("TwoIsland_House_Text_TutorWhichMon::")]
+    assert "MUSHROOM" not in active_reminder
 
     # ECO-008: Resort Gorgeous can form the intended ~30k VS Seeker circuit.
     trainers = json.loads(read("src/data/trainers.json"))["trainers"]
