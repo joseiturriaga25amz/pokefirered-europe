@@ -217,6 +217,31 @@ def main() -> None:
     assert "if (tItemId >= ITEM_TM01 && tItemId < ITEM_HM01)" in shop_c
     assert "sShopData.maxQuantity = 1;" in shop_c
 
+    # QOL-VEND-001: Celadon vending reuses the shop quantity selector.
+    for item_id, expected in (
+        ("ITEM_FRESH_WATER", 200),
+        ("ITEM_SODA_POP", 300),
+        ("ITEM_LEMONADE", 350),
+    ):
+        assert by_id[item_id]["price"] == expected, (item_id, by_id[item_id]["price"], expected)
+    assert "MART_TYPE_VENDING" in shop_c
+    assert "static const struct MenuAction sVendingMenuActions[]" in shop_c
+    vending_actions = shop_c[shop_c.index("static const struct MenuAction sVendingMenuActions[]"):shop_c.index("static const u16 sVendingMachineItems[]")]
+    assert "{gText_ShopSell" not in vending_actions
+    assert "AdjustQuantityAccordingToDPadInput(&tItemCount, sShopData.maxQuantity)" in shop_c
+    assert "AddBagItem(tItemId, tItemCount) == TRUE" in shop_c
+    assert "RemoveMoney(&gSaveBlock1Ptr->money, sShopData.itemPrice)" in shop_c
+
+    vending = read("data/maps/CeladonCity_DepartmentStore_Roof/scripts.inc")
+    vending_start = vending.index("CeladonCity_DepartmentStore_Roof_EventScript_VendingMachine::")
+    vending_runtime = vending[vending_start:]
+    assert "callnative CreateVendingMachineMenu" in vending_runtime
+    assert "waitstate" in vending_runtime
+    assert "checkmoney 200" not in vending_runtime
+    assert "additem VAR_TEMP_0" not in vending_runtime
+    assert "CeladonCity_DepartmentStore_Roof_EventScript_AskGiveFreshWater::" in vending
+    assert "CeladonCity_DepartmentStore_Roof_EventScript_GiveLemonade::" in vending
+
     tm_case = read("src/tm_case.c")
     assert "static void Task_SelectedTMHM_Sell" in tm_case
     party_menu = read("src/party_menu.c")
