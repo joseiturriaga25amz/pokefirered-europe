@@ -113,7 +113,7 @@ Protects, among other things:
 - second Fighting Dojo state/reward;
 - approved evolution invariants;
 - all nine Altering Cave tables/selector values;
-- Porygon 5,000-coin price.
+- Porygon prize remains repeatable; A-008 changes final price/presentation to 5,500 coins / localized 5.500 FICHAS.
 
 ## 8. Save / compatibility facts
 
@@ -365,3 +365,10 @@ Use this structure and fill it with the current exact state:
 > Siguiente acción exacta: <next action>
 > 
 > Mantén el protocolo de trabajo en bloques acotados: localizar → inspeccionar → cambiar → validar → registrar. Evita operaciones monolíticas y textos/auditorías excesivamente grandes en una sola pasada.
+
+
+## 14. 2026-09-24 B0 runtime-evidence reconciliation
+
+The external Drive runtime evidence was re-read specifically for post-freeze approvals that had not yet been promoted into repository authority. A-008 now makes the following B1 rules repository-authoritative: UI-001 EV layout repair, UI-002 visible move category, Porygon 5,500/aligned presentation, vending quantity selector, badge-gated Oak aides, National Dex without the 60-capture quota, HM item+badge field licenses with forgettable learned HMs, and vanilla held-item Exp. Share behavior.
+
+These are no longer Drive-only decisions. B1 must implement against A-008 and update validators/runtime checks accordingly.
