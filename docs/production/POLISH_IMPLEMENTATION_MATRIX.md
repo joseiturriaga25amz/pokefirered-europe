@@ -258,7 +258,9 @@ Scope:
 - vending-machine quantity selector;
 - Oak aide medal gates;
 - National Dex no 60-capture quota;
-- final HM rule QOL-HM-002: HM possession + badge enables field action; learned HM moves are forgettable.
+- final HM rule QOL-HM-002: HM possession + badge enables field action; learned HM moves are forgettable;
+- L10N-001 localized thousands separators for Full-added money/coin text;
+- L10N-002 Move Reminder active dialogue aligned with the money-based system.
 
 Reason for position:
 small/localized changes with high runtime value; establishes a clean base before narrative/map work.
@@ -269,6 +271,7 @@ Exit gate:
 - no SaveBlock/link schema changes.
 
 ### B2 — Boss/rival balance reconciliation
+Authority: A-009 for Giovanni/progression-aware boss polish.
 Scope:
 - BOSS-001 premature-move audit, especially early Gary and first gyms;
 - Giovanni Rocket Hideout and Silph battles brought to approved Full boss standard;
@@ -281,6 +284,7 @@ Exit gate:
 - staged progression/move availability audit documented.
 
 ### B3 — Postgame progression and rematch identity
+Authority: A-009/BOSS-REMATCH-001 plus A-005 leader-identity polish.
 Scope:
 - gym rematches available after first Hall of Fame;
 - strengthened League remains after Network Machine;
@@ -307,6 +311,7 @@ Exit gate:
 - caught-ball metadata untouched.
 
 ### B5 — Altering Cave and encounter polish
+Authority: A-009/ENC-ALTERING-001 and approved special-encounter rarity targets.
 Scope:
 - automatic 9-table Altering Cave rotation;
 - researcher becomes informational;
@@ -319,6 +324,7 @@ Exit gate:
 - encounter blob validators updated.
 
 ### B6 — Legendary narrative V2 core
+Authority: A-005 plus A-009 legendary-capture UX principle.
 Scope:
 - remove legendary ticket ownership from Celio;
 - maritime birds → Mystic Ticket → Lugia;
