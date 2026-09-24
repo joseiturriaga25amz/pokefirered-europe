@@ -4,6 +4,12 @@ RockTunnel_1F_MapScripts::
 
 RockTunnel_1F_OnTransition::
 	setworldmapflag FLAG_WORLD_MAP_ROCK_TUNNEL_1F
+	goto_if_unset FLAG_BADGE01_GET, RockTunnel_1F_OnTransitionEnd
+	checkitem ITEM_HM05_FLASH
+	goto_if_eq VAR_RESULT, FALSE, RockTunnel_1F_OnTransitionEnd
+	setflag FLAG_SYS_FLASH_ACTIVE
+	setflashlevel 0
+RockTunnel_1F_OnTransitionEnd:
 	end
 
 RockTunnel_1F_EventScript_RouteSign::
