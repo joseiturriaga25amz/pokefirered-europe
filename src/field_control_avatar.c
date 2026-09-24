@@ -12,6 +12,7 @@
 #include "field_player_avatar.h"
 #include "field_poison.h"
 #include "field_specials.h"
+#include "item.h"
 #include "item_menu.h"
 #include "link.h"
 #include "wonder_news.h"
@@ -28,6 +29,7 @@
 #include "constants/songs.h"
 #include "constants/event_bg.h"
 #include "constants/event_objects.h"
+#include "constants/items.h"
 #include "constants/maps.h"
 #include "constants/metatile_behaviors.h"
 
@@ -600,9 +602,9 @@ static const u8 *GetInteractedMetatileScript(struct MapPosition *position, u8 me
 
 static const u8 *GetInteractedWaterScript(struct MapPosition *unused1, u8 metatileBehavior, u8 direction)
 {
-    if (MetatileBehavior_IsFastWater(metatileBehavior) == TRUE && PartyHasMonWithSurf() == TRUE)
+    if (MetatileBehavior_IsFastWater(metatileBehavior) == TRUE && CheckBagHasItem(ITEM_HM03_SURF, 1) == TRUE)
         return EventScript_CurrentTooFast;
-    if (FlagGet(FLAG_BADGE05_GET) == TRUE && PartyHasMonWithSurf() == TRUE && IsPlayerFacingSurfableFishableWater() == TRUE)
+    if (FlagGet(FLAG_BADGE05_GET) == TRUE && CheckBagHasItem(ITEM_HM03_SURF, 1) == TRUE && IsPlayerFacingSurfableFishableWater() == TRUE)
         return EventScript_UseSurf;
 
     if (MetatileBehavior_IsWaterfall(metatileBehavior) == TRUE)
