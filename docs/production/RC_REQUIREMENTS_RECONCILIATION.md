@@ -84,17 +84,17 @@ This table is the Gate 1 disposition ledger. “Runtime evidence required” is 
 | EVT-004 | Eventos | Premio segundo Dojo | **implemented + runtime evidence required** | Scripts/state inspected; Gate 6 + final MyBoy checklist must execute terminal branches. |
 | EVT-005 | Eventos | Articuno/Zapdos/Moltres/Mewtwo respawn | **implemented + runtime evidence required** | Scripts/state inspected; Gate 6 + final MyBoy checklist must execute terminal branches. |
 | EVT-006 | Eventos | Lugia/Ho-Oh/Deoxys respawn | **implemented + runtime evidence required** | Scripts/state inspected; Gate 6 + final MyBoy checklist must execute terminal branches. |
-| EVT-007 | Eventos | Bestias errantes secuenciales | **implemented + runtime evidence required** | Scripts/state inspected; Gate 6 + final MyBoy checklist must execute terminal branches. |
-| EVT-008 | Eventos | Roamer persistente | **implemented + runtime evidence required** | Scripts/state inspected; Gate 6 + final MyBoy checklist must execute terminal branches. |
-| EVT-009 | Eventos | Pokédex del roamer | **implemented + runtime evidence required** | Scripts/state inspected; Gate 6 + final MyBoy checklist must execute terminal branches. |
-| EVT-010 | Eventos | MysticTicket quest | **implemented + runtime evidence required** | Scripts/state inspected; Gate 6 + final MyBoy checklist must execute terminal branches. |
-| EVT-011 | Eventos | AuroraTicket quest | **implemented + runtime evidence required** | Scripts/state inspected; Gate 6 + final MyBoy checklist must execute terminal branches. |
-| EVT-012 | Eventos | Deoxys | **implemented + runtime evidence required** | Scripts/state inspected; Gate 6 + final MyBoy checklist must execute terminal branches. |
-| EVT-013 | Eventos | Mew | **implemented + runtime evidence required** | Scripts/state inspected; Gate 6 + final MyBoy checklist must execute terminal branches. |
+| EVT-007 | Eventos | Bestias errantes secuenciales | **A-005 redesign pending** | Old sequential implementation exists, but A-005 supersedes its introduction/UX; validate only after V2 cinematic + Suicune→Raikou→Entei flow is implemented. |
+| EVT-008 | Eventos | Roamer persistente | **implemented core + A-005 UX pending** | Vanilla single-roamer persistence remains the compatibility core; V2 route reliability/combat-window polish still requires implementation and runtime evidence. |
+| EVT-009 | Eventos | Pokédex del roamer | **A-005 redesign pending** | Final acceptance must cover the initial all-three-seen cinematic plus tracking of only the currently active roamer. |
+| EVT-010 | Eventos | MysticTicket quest | **A-005 redesign pending** | Celio distribution is obsolete; final truth is the maritime/birds-seen investigation leading to Lugia while Ho-Oh remains separately gated. |
+| EVT-011 | Eventos | AuroraTicket quest | **A-005 redesign pending** | Celio handoff is obsolete; final truth is the Pewter Museum / space-anomaly investigation and scientist handoff. |
+| EVT-012 | Eventos | Deoxys | **encounter implemented; A-005 access redesign pending** | Birth Island encounter/respawn core exists; final acceptance waits for the new AuroraTicket ownership path. |
+| EVT-013 | Eventos | Mew | **functional core runtime-proven; A-005 presentation pending** | Old RC proved capture flow; final acceptance requires preserved diary history plus visible overworld/interactable final Mew staging. |
 | EVT-014 | Eventos | Mew moveset | **implemented + runtime evidence required** | Scripts/state inspected; Gate 6 + final MyBoy checklist must execute terminal branches. |
-| EVT-015 | Eventos | Celebi | **implemented + runtime evidence required** | Scripts/state inspected; Gate 6 + final MyBoy checklist must execute terminal branches. |
+| EVT-015 | Eventos | Celebi | **A-005 redesign pending** | Berry Forest identity remains, but all-three-beasts causal gating is obsolete; final acceptance waits for the independent nature investigation. |
 | EVT-016 | Eventos | Celebi moveset | **implemented + runtime evidence required** | Scripts/state inspected; Gate 6 + final MyBoy checklist must execute terminal branches. |
-| EVT-017 | Eventos | Navel Rock | **implemented + runtime evidence required** | Scripts/state inspected; Gate 6 + final MyBoy checklist must execute terminal branches. |
+| EVT-017 | Eventos | Navel Rock | **destination core implemented; A-005 access split pending** | MysticTicket destination/IDs remain compatible; final acceptance must distinguish Lugia access from Ho-Oh beast-capstone gating. |
 | EVT-018 | Eventos | Leyenda niveles | **implemented + runtime evidence required** | Scripts/state inspected; Gate 6 + final MyBoy checklist must execute terminal branches. |
 | EVT-019 | Eventos | Hoenn legendarios excluidos | **implemented + runtime evidence required** | Scripts/state inspected; Gate 6 + final MyBoy checklist must execute terminal branches. |
 | ECO-001 | Economía | Potenciadores de tipo en Azulona | **implemented + automated evidence** | validate_rc_freeze.py locks prices/stock/renewable data. |
