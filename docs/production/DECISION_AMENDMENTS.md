@@ -193,3 +193,35 @@ The project has spanned multiple long chats and conversation continuity is britt
 - Confirm player pathing, interaction with the trainer, battle start, post-battle state and rematch interaction remain functional.
 - Explicit MyBoy spot-checks: at least one early Gym, one late Gym, one Elite Four room and one Gary/Champion scene.
 - No change to SaveBlock, Pokémon/BoxPokemon structures or Link serialization.
+
+
+## A-008 — Runtime-approved B1 QoL and presentation rules
+
+**Date:** 2026-09-24  
+**Status:** APPROVED  
+**Supersedes/extends:** frozen QOL-002 HM behavior, frozen ECO-006 Porygon price, and post-freeze runtime polish decisions that were previously recorded only in the external runtime evidence log.
+
+### Decision
+
+The following runtime-approved rules are authoritative for B1 and v1.0 closure:
+
+- **UI-001 — EV layout:** keep the existing EV view/toggle and exact EV data, but repair the cramped/overlapping lower-page layout before final RC.
+- **UI-002 — move category visibility:** Physical / Special / Status must be clearly visible when inspecting moves. This is a v1.0 closure requirement even though the original freeze specified the split primarily as engine behavior.
+- **ECO-CASINO-001 — Porygon:** change the repeatable Celadon Game Corner Porygon prize from **5,000 to 5,500 coins**, keep it last in the list, and format/alignment must match the localized prize list (5.500 FICHAS in Spanish presentation).
+- **QOL-VEND-001 — vending machines:** Fresh Water / Soda Pop / Lemonade vending purchases must support a quantity selector with atomic money/space validation and delivery. Prices and the thirsty-girl drink-for-TM interaction remain unchanged.
+- **QOL-AIDE-001 — Oak aides:** replace species-count gates with story-appropriate badge gates while retaining NPC location, one-time reward flags and bag-space checks:
+  - Route 2 / HM05 Flash — Cascade Badge;
+  - Route 11 / Itemfinder — Thunder Badge;
+  - Route 10 / Everstone — Thunder Badge;
+  - Route 16 / Amulet Coin — Rainbow Badge;
+  - Route 15 / Exp. Share — Rainbow Badge.
+- **QOL-NATDEX-001 — National Dex:** remove the vanilla 60-captured-species quota. Keep first Hall of Fame / game clear and the One Island narrative visit gate; preserve Oak's National Dex scene itself.
+- **QOL-HM-002 — HMs as field licenses:** field actions require possession of the corresponding HM plus the original badge/narrative gate; no party Pokémon needs to know the move. HMs remain reusable teachable moves for battle, and an HM move learned by a Pokémon may be replaced/forgotten normally without the Move Deleter.
+- **QOL-EXP-001 — Exp. Share:** keep vanilla FireRed held-item behavior. Do not implement automatic modern party-wide EXP distribution.
+
+### Compatibility constraints
+
+- No SaveBlock, Pokémon/BoxPokemon, species/item ID or Link serialization changes.
+- HM field-action changes must reuse existing item/badge/progression state rather than create a new persistent HM-license structure.
+- Aide/vending/Porygon changes must preserve one-time reward flags, inventory safety and existing item IDs.
+- Final validators and MyBoy checks must test the amended behavior, not the superseded frozen QOL-002/ECO-006 wording.
