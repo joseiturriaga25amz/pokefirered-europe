@@ -206,7 +206,7 @@ def main():
     # one-time ownership flag; successful party/PC awards both remove coins.
     game_corner = read("data/maps/CeladonCity_GameCorner_PrizeRoom/scripts.inc")
     porygon = block(game_corner, "CeladonCity_GameCorner_PrizeRoom_EventScript_Porygon")
-    require(porygon, "SPECIES_PORYGON", "setvar VAR_TEMP_2, 5000")
+    require(porygon, "SPECIES_PORYGON", "setvar VAR_TEMP_2, 5500")
     assert "setflag " not in porygon
     require(
         game_corner,
