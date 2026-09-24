@@ -5,6 +5,7 @@ on:
     branches:
       - feature/full-gameplay-core
       - feature/b0-baseline-validator-truth
+      - feature/b1-low-risk-qol
 
 jobs:
   build:
