@@ -361,7 +361,7 @@ def main() -> None:
     assert 'PORYGON  5.500 FICHAS' in script_menu
 
     oak_lab = read("data/maps/PalletTown_ProfessorOaksLab/scripts.inc")
-    natdex = c_function(oak_lab, "PalletTown_ProfessorOaksLab_EventScript_TryStartNationalDexScene::") if False else oak_lab[oak_lab.index("PalletTown_ProfessorOaksLab_EventScript_TryStartNationalDexScene::"):oak_lab.index("PalletTown_ProfessorOaksLab_EventScript_DontStartNationalDexScene::")]
+    natdex = oak_lab[oak_lab.index("PalletTown_ProfessorOaksLab_EventScript_TryStartNationalDexScene::"):oak_lab.index("PalletTown_ProfessorOaksLab_EventScript_DontStartNationalDexScene::")]
     assert "goto_if_lt VAR_0x8009, 60" not in natdex
     assert "goto_if_unset FLAG_WORLD_MAP_ONE_ISLAND" in natdex
 
