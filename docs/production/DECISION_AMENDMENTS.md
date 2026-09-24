@@ -145,3 +145,51 @@ The project has spanned multiple long chats and conversation continuity is britt
 - The follower is a visual projection of an existing party Pokémon, never new persistent Pokémon data.
 - Preserve struct Pokemon, BoxPokemon, SaveBlock layouts and Link serialization.
 - Preserve original specialty-Ball IDs and caught-ball metadata so Pokémon traded to future Emerald Full remain normal Gen III Pokémon.
+
+
+## A-007 — Signature Pokémon staging for major trainers
+
+**Date:** 2026-09-24  
+**Status:** APPROVED
+
+### Decision
+
+- Major trainer characters should visibly have one signature/ace Pokémon beside them in the overworld to strengthen the anime-like presentation before battle.
+- v1.0 required scope is deliberately bounded to:
+  - the eight Kanto Gym Leaders;
+  - Lorelei, Bruno, Agatha and Lance;
+  - Gary/Blue as rival and Champion, with the Squirtle line evolving visually with his progression where practical.
+- This is **not** implemented through the player's dynamic follower system. Boss companions are ordinary controlled map/event presentation objects with fixed species/graphics for each scene.
+- The displayed Pokémon should prioritize character identity and the approved battle roster, not merely the numerically highest level. Initial target identities for implementation/audit are:
+  - Brock — Onix;
+  - Misty — Starmie;
+  - Lt. Surge — Raichu;
+  - Erika — Vileplume;
+  - Koga — Weezing;
+  - Sabrina — Alakazam;
+  - Blaine — Magmar;
+  - Giovanni — Persian;
+  - Lorelei — Lapras;
+  - Bruno — Machamp;
+  - Agatha — Gengar;
+  - Lance — Dragonite;
+  - Gary/Blue — Squirtle → Wartortle → Blastoise according to story stage.
+- Exact positioning must preserve NPC movement, trainer sight, scripted cutscenes, warps and player collision. The companion should be non-blocking or placed outside required walking paths.
+- The companion remains visual presentation only. It does not represent a second stored Pokémon, does not alter the trainer party, and requires no new save state.
+- Other NPC companions are **not part of the mandatory v1.0 scope**. They may be added only when an NPC has strong narrative value, a suitable asset is already available/provenance-cleared, and the addition does not expand QA materially.
+
+### Asset / compatibility constraints
+
+- Reuse existing FireRed Full overworld assets where suitable.
+- Missing signature sprites must use a project-created or otherwise provenance-cleared asset path; do not import the unresolved HGSS/veekun follower pack merely to satisfy this feature.
+- Prefer normal static 8-bit object-event graphics IDs. Do not introduce the Emerald follower branch's 16-bit graphics-ID ABI for boss staging.
+- Audit available object-event graphics-ID space and per-map object counts before adding assets.
+- This block should serve as a small-scale sprite/OAM/map-integration pilot before any attempt at 386-species follower coverage.
+
+### QA
+
+- Compile/static map validation for every touched room.
+- Confirm each signature Pokémon is visible beside the intended trainer at the correct story stage.
+- Confirm player pathing, interaction with the trainer, battle start, post-battle state and rematch interaction remain functional.
+- Explicit MyBoy spot-checks: at least one early Gym, one late Gym, one Elite Four room and one Gary/Champion scene.
+- No change to SaveBlock, Pokémon/BoxPokemon structures or Link serialization.
