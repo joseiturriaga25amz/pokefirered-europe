@@ -268,15 +268,10 @@ def main() -> None:
     ):
         assert token in dojo, token
 
-    celio = read("data/maps/OneIsland_PokemonCenter_1F/scripts.inc")
-    for token in (
-        "setflag FLAG_RECEIVED_MYSTIC_TICKET",
-        "setflag FLAG_ENABLE_SHIP_NAVEL_ROCK",
-        "setflag FLAG_RECEIVED_AURORA_TICKET",
-        "setflag FLAG_ENABLE_SHIP_BIRTH_ISLAND",
-    ):
-        assert token in celio, token
-    assert celio.count("special InitRoamer") == 1
+    # A-005 supersedes the old Celio-owned ticket/roamer handoff. B0 must not
+    # preserve that pre-A-005 implementation as acceptance truth. The V2
+    # narrative is validated by its dedicated implementation block; this
+    # freeze validator continues to protect structural/save compatibility only.
 
     # EVO-005..010: direct-use trade-evolution items must be recognized as
     # Pokemon-usable items and carry the evolution-stone effect bit.
