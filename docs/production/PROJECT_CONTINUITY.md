@@ -169,3 +169,68 @@ Do not reintroduce a slow block-by-block approval workflow.
 ## 11. If a new chat starts
 
 The correct first action is to inspect this repository and continue from the RC audit. Do not ask the user to reconstruct old chat history and do not assume a stale commit from a previous conversation is still HEAD.
+
+
+## 12. 2026-09-24 handoff — runtime QA closeout and approved polish scope
+
+The old MyBoy RC is a1c7fa573ac784ef089bfdf966aa38fc84861212 (ROM SHA-1 6ebb0ce7cc736d7fd6c9c5bce09a21aaaf7d0443) and is NOT the final acceptance candidate. It remains useful only as runtime evidence.
+
+### Old-RC evidence now closed
+
+- Mew quest in Pokémon Mansion was completed and Mew captured. Functional chain passes, but narrative/visual presentation needs polish: preserve canonical diary history, add current-day NPC atmosphere, visible overworld Mew appearances and an interactable final Mew instead of immediate battle from the last diary.
+- Gym rematches: Brock was battled repeatedly, proving repeatability in runtime. Misty, Lt. Surge and Erika were also reached/battled and felt appropriately challenging; the user's party was intentionally underleveled from speedrun-style progression, so do not treat difficulty as a balance defect.
+- All eight gym-rematch scripts currently reuse the same generic offer/opening/defeat/post-battle strings. Replace with leader-specific dialogue while preserving teams/mechanics.
+- Strengthened League was entered; Lorelei battle started and Dewgong/Lapras were observed before the underleveled team lost. This is a smoke PASS for rematch-League activation only, not full League acceptance.
+- Do not force the user to grind this old RC to complete the strengthened League or Ho-Oh respawn. Validate Ho-Oh KO/HOF recovery on a disposable/new RC save.
+- Roaming beasts and Celebi are intentionally withdrawn from old-RC manual QA because both will be redesigned.
+
+### Approved legendary narrative V2
+
+See DECISION_AMENDMENTS.md A-005. Key points:
+- Celio returns to network/Ruby/Sapphire connectivity role and no longer distributes legendary tickets.
+- Maritime/birds -> MysticTicket -> Lugia; Deoxys -> Pewter Museum investigation -> AuroraTicket; Mewtwo -> Mansion/Mew; beasts -> Ho-Oh capstone; Celebi -> separate Berry Forest nature quest.
+- First beast contact is a no-battle cinematic with Suicune focus plus Raikou/Entei, all marked seen; only one roamer active sequentially.
+- Roamer search/catch UX must be much less tedious.
+- Preserve Gen III IDs, structures, ticket destinations, Pokédex flags, vanilla roamer storage and advanced-save migration.
+
+### Approved immersion/QoL scope
+
+See DECISION_AMENDMENTS.md A-006.
+
+- Sell all existing Gen III specialty Balls progressively and naturally: Malla/Net, Nido/Nest, Acopio/Repeat, Turno/Timer, Lujo/Luxury, Buceo/Dive, Honor/Premier. Master/Safari stay non-commercial.
+- Dive Ball keeps original Gen III behavior unchanged; in FireRed it may be mostly aesthetic because there is no normal underwater map use. Do not invent Surf/fishing behavior.
+- Approved experience targets: party-leader follower Pokémon, contextual follower dialogue, more useful Pokédex for seen species, natural postgame training bridge, legendary environmental signals, and stronger identity for important NPC dialogue.
+- Follower remains a technical-gate module, not permission to destabilize v1.0.
+
+### Follower research result to resume from
+
+A strong public technical/reference candidate is monhacks/arrantemerald branch followers-expanded-id:
+- README explicitly claims HGSS-style followers for all 386 Pokémon, forms and shinies;
+- follower interactions/messages, dynamic overworld palettes, large OW support and a backwards-compatible 16-bit overworld graphics-ID scheme;
+- repository contains 440 Pokémon overworld PNG files under graphics/object_events/pics/pokemon, including forms/legacy variants;
+- README says it does not increase save-data structures or the object-event structure.
+
+This is Emerald code, not drop-in FireRed code. Port only the minimal concepts/assets after source audit. The repository did NOT expose a clear top-level license during inspection, so asset/code provenance and redistribution permission must be resolved before importing. Do not assume public GitHub equals licensed for redistribution.
+
+Compatibility design for follower:
+- follower is derived from the existing party leader and is not separately persisted;
+- do not alter struct Pokemon, BoxPokemon, SaveBlock sizes, species/item IDs or Link serialization;
+- on/off control may use an audited existing Full flag/setting;
+- auto-hide/reappear around bike/Surf/Fly/link/cutscenes/unsafe scripts as needed;
+- isolated prototype plus rollback; MyBoy QA for warps/ledges/doors/trainer sight/palettes/OAM/party reorder/egg/fainted lead/shiny/save-load/link.
+
+### Next session order
+
+1. Re-read PROJECT_CONTINUITY.md, DECISION_AMENDMENTS.md, RC_AUDIT_LOG.md, FINAL_AUDIT_PLAN.md, RC_MYBOY_CHECKLIST.md.
+2. Continue follower-source/license/provenance research before importing anything.
+3. Convert approved old-RC runtime findings into the grouped polish implementation:
+   - RC-F040/RC-F041 already fixed in source;
+   - legendary V2 narrative and roamer UX;
+   - Mew visual/narrative polish;
+   - unique leader-rematch dialogue;
+   - specialty Ball shops;
+   - Pokédex/postgame-training/NPC/ambient polish.
+4. Prototype follower separately and merge only if it passes structural/runtime gates.
+5. Update validators/checklist to the approved V2 behavior.
+6. Build and freeze a new exact MyBoy RC/checksum only after current HEAD CI/static audit is green.
+7. Final runtime acceptance belongs to the new RC, not the old test ROM.
