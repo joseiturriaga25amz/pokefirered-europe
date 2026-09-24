@@ -36,6 +36,13 @@ The Full gameplay workflow builds `firered_es_modern` and protects:
 - vanilla pre-National trade restrictions;
 - frozen RC economy/event/evolution invariants via `tools/validate_rc_freeze.py`.
 
+
+## 2026-09-24 B0 acceptance-truth supersession note
+
+A-005 changed the final legendary narrative after several RC findings below had already been repaired against the previous design. Those findings remain historical evidence, but they are not current narrative acceptance requirements where they conflict with A-005.
+
+B0 therefore removes validator requirements that Celio distribute MysticTicket/AuroraTicket or own the roamer introduction, removes the old three-beasts causal prerequisite for Celebi, and removes the old captured-birds/Celio MysticTicket gate from final acceptance truth. Structural compatibility and terminal-state safety findings remain valid. The A-005 maritime/Museum/roamer-cinematic/Celebi-nature replacements will receive dedicated validators in their implementation blocks.
+
 ## Findings repaired during RC audit
 
 ### RC-F001 — Sequential-roamer Pokedex still used vanilla starter mapping
