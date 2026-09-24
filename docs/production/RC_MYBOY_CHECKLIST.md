@@ -86,17 +86,19 @@ For Articuno, Zapdos, Moltres, Mewtwo, Lugia, Ho-Oh, Deoxys, Mew and Celebi test
 
 **PASS:** flee does not permanently consume the encounter; KO follows the frozen pending/respawn rule; capture permanently closes only that encounter; species, level, moveset and fateful state match the frozen specification.
 
-## RC-09 — Ticket quests, Mew/Celebi gating and roaming beasts
-**Covers:** QA-106..QA-118.
+## RC-09 — Legendary narrative V2, Mew/Celebi gating and roaming beasts
+**Covers:** QA-106..QA-118, as superseded by A-005.
 
-1. Confirm Hall of Fame alone does not auto-grant tickets.
-2. Exercise incomplete and complete MysticTicket prerequisites.
-3. Execute Aurora quest in the frozen order and verify Birth Island access/Deoxys.
-4. Attempt Mew before its prerequisites, then complete the mansion sequence.
-5. Attempt Celebi before its prerequisites, then after National Dex + Network Machine + all three beasts.
-6. Run the sequential beasts through flee, Roar, KO, route change, capture and Pokédex area display.
+1. Confirm Hall of Fame alone does not auto-grant either legendary ticket and that Celio never distributes MysticTicket/AuroraTicket or introduces the roaming beasts.
+2. Complete the maritime/birds investigation: Articuno, Zapdos and Moltres must only need to be **seen**; its completion grants MysticTicket and enables Lugia access at Navel Rock.
+3. Confirm Ho-Oh is not opened merely by obtaining MysticTicket; its Navel Rock access is unlocked only by completing the Suicune → Raikou → Entei capstone.
+4. Complete the Pewter Museum / space-anomaly investigation and verify its scientist grants AuroraTicket and enables Birth Island/Deoxys without a Celio handoff.
+5. Complete the Mewtwo → Pokémon Mansion/Mew epilogue: preserve the historical diary material, observe the approved present-day/overworld Mew staging, and interact with the final visible Mew before battle.
+6. Complete the independent Berry Forest Celebi nature investigation; capturing all three beasts must not be a causal prerequisite.
+7. Trigger the first roaming-beast cinematic: Suicune focus with Raikou and Entei present, no battle, all three marked seen, then verify only Suicune is active first and the sequence advances Suicune → Raikou → Entei.
+8. Exercise route tracking, encounter, flee, Roar, KO and capture branches for each active beast, including persistence across save/load.
 
-**PASS:** quest order cannot be bypassed, no ticket appears early, each beast identity/state persists correctly, KO/Roar cannot erase the sequence, and Pokédex area tracks only the active seen beast.
+**PASS:** A-005 quest ownership and order cannot be bypassed; Celio remains network-only; no ticket appears early; Ho-Oh stays gated behind the beast capstone; Mew/Celebi use their approved independent narratives; each beast identity/state persists correctly; and Pokédex tracking follows only the active roamer after the initial all-seen cinematic.
 
 ## RC-10 — Economy and renewable resources
 **Covers:** QA-119..QA-124.
