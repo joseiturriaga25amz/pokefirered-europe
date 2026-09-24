@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - feature/full-gameplay-core
+      - feature/b0-baseline-validator-truth
 
 jobs:
   build:
