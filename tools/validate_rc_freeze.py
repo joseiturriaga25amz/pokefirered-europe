@@ -370,6 +370,22 @@ def main() -> None:
     active_reminder = reminder_text[reminder_text.index("TwoIsland_House_Text_WantMeToTeachMove::"):reminder_text.index("TwoIsland_House_Text_TutorWhichMon::")]
     assert "MUSHROOM" not in active_reminder
 
+    aide_rules = (
+        ("data/maps/Route2_EastBuilding/scripts.inc", "FLAG_BADGE02_GET", "FLAG_GOT_HM05", "ITEM_HM05", "CASCADE BADGE"),
+        ("data/maps/Route10_PokemonCenter_1F/scripts.inc", "FLAG_BADGE03_GET", "FLAG_GOT_EVERSTONE_FROM_OAKS_AIDE", "ITEM_EVERSTONE", "THUNDER BADGE"),
+    )
+    for path, badge, reward_flag, item, badge_text in aide_rules:
+        aide_script = read(path)
+        assert "GetPokedexCount" not in aide_script, path
+        assert "REQUIRED_SEEN_MONS" not in aide_script, path
+        assert "REQUIRED_OWNED_MONS" not in aide_script, path
+        assert f"goto_if_unset {badge}" in aide_script, path
+        assert f"goto_if_set {reward_flag}" in aide_script, path
+        assert f"checkitemspace {item}" in aide_script, path
+        aide_text = read(path.replace("scripts.inc", "text.inc"))
+        assert badge_text in aide_text, path
+        assert "caught or owned" not in aide_text, path
+
     # ECO-008: Resort Gorgeous can form the intended ~30k VS Seeker circuit.
     trainers = json.loads(read("src/data/trainers.json"))["trainers"]
     by_trainer = {t["id"]: t for t in trainers}
