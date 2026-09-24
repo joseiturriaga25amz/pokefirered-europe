@@ -225,3 +225,26 @@ The following runtime-approved rules are authoritative for B1 and v1.0 closure:
 - HM field-action changes must reuse existing item/badge/progression state rather than create a new persistent HM-license structure.
 - Aide/vending/Porygon changes must preserve one-time reward flags, inventory safety and existing item IDs.
 - Final validators and MyBoy checks must test the amended behavior, not the superseded frozen QOL-002/ECO-006 wording.
+
+
+## A-009 — Runtime-approved later-block balance, progression and localization rules
+
+**Date:** 2026-09-24  
+**Status:** APPROVED  
+**Purpose:** promote approved runtime findings that were already reflected in the production work order but were not yet repository-authoritative decisions.
+
+### Decision
+
+- **BOSS-GIO-001:** all Giovanni battles, including Rocket Hideout and Silph Co., must receive the same Full boss-design standard used for Gym Leaders, League and Gary: real challenge, character identity, anime/canon + game grounding, and moves coherent with the point of the story. Exact rosters/moves/levels are B2 implementation details subject to legality/progression validation.
+- **BOSS-REMATCH-001:** Gym Leader rematches unlock directly after the first Hall of Fame / game clear and do not depend on National Dex or capture counts. The strengthened League/Gary rematch remains a later postgame tier gated by the completed Ruby/Sapphire Network Machine progression.
+- **ENC-ALTERING-001:** Altering Cave must keep the nine existing tables/IDs 0–8 but rotate the active table automatically through player activity/progress rather than a manual species selector. One table is active at a time and remains stable during a visit. The researcher becomes informational. Avoid RTC dependence.
+- **Special encounter rarity:** final polish targets are Safari headline rares 10% in their best zone, Dratini 10% in its best Safari zone, wild starters 10% / 4% / 1% for base / middle / final stages, and Magmar/Electabuzz 4%. Do not make them feel rare by lowering catch rates; Dragonair direct availability, if retained, must remain clearly rarer than Dratini.
+- **Legendary capture UX:** legendary capture must be materially less tedious than the old RC while remaining clearly harder than ordinary Pokémon. Apply the principle across Full legendaries; exact numerical catch-rate values remain a B6 polish/QA decision and are not frozen by this amendment. Mew/Celebi do not need to be made harder.
+- **L10N-001:** all Full-added Spanish monetary/coin text must use localized thousands separators consistently (for example 1.000, 1.500, 2.000, 5.500, 10.000) without silently changing underlying values unless another approved balance decision does so.
+- **L10N-002:** the active Move Reminder dialogue must match the Full money-based repeat system and must not tell the player to bring mushrooms when the actual path charges money.
+
+### Compatibility constraints
+
+- Preserve Altering Cave variable semantics/IDs and encounter table format.
+- Do not alter species/item IDs, Pokémon/BoxPokemon structures, SaveBlock sizes or Link serialization for these rules.
+- Boss/encounter/capture tuning must be validated against story-stage progression and existing respawn/state-machine guarantees.
