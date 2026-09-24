@@ -18,17 +18,22 @@ Route16_NorthEntrance_2F_Text_LongPathOverWater::
 Route16_NorthEntrance_2F_Text_GiveAmuletCoinIfCaught40::
     .string "¡Hola! ¿Te acuerdas de mí?\n"
     .string "¡Soy AYUDANTE del PROF. OAK!\p"
-    .string "¡Si atrapaste 40 tipos de POKéMON,\n"
-    .string "se supone que debería darte\l"
-    .string "MON. AMULETO!\p"
-    .string "Dime, {PLAYER}. ¿Tienes ya al menos\n"
-    .string "40 tipos de POKéMON?$"
+    .string "El PROFESOR me pidió premiar a\n"
+    .string "Entrenadores que progresen.\p"
+    .string "Me encargó darte MON. AMULETO\n"
+    .string "si ya tienes la MEDALLA ARCOIRIS.\p"
+    .string "¿Ya tienes la MEDALLA ARCOIRIS?$"
 
 Route16_NorthEntrance_2F_Text_GreatHereYouGo::
-    .string "¡Bien! ¡Has logrado {STR_VAR_3} tipos\n"
-    .string "de POKéMON!\p"
+    .string "¡Perfecto! Esa MEDALLA demuestra\n"
+    .string "cuánto has avanzado.\p"
     .string "¡Enhorabuena!\n"
     .string "¡Aquí tienes!$"
+
+Route16_NorthEntrance_2F_Text_NeedRainbowBadge::
+    .string "Vuelve cuando consigas la\n"
+    .string "MEDALLA ARCOIRIS.\p"
+    .string "Guardaré MON. AMULETO para ti.$"
 
 Route16_NorthEntrance_2F_Text_ReceivedAmuletCoinFromAide::
     .string "¡{PLAYER} obtuvo MON. AMULETO\n"

@@ -1,5 +1,3 @@
-.equ REQUIRED_CAUGHT_MONS, 30
-
 Route11_EastEntrance_2F_MapScripts::
 	.byte 0
 
@@ -56,15 +54,11 @@ Route11_EastEntrance_2F_EventScript_AlreadyTraded::
 Route11_EastEntrance_2F_EventScript_Aide::
 	lock
 	faceplayer
-	call Route11_EastEntrance_2F_EventScript_GetAideRequestInfo
+	bufferitemname STR_VAR_2, ITEM_ITEMFINDER
 	goto_if_set FLAG_GOT_ITEMFINDER, Route11_EastEntrance_2F_EventScript_AlreadyGotItemfinder
 	msgbox Route11_EastEntrance_2F_Text_GiveItemfinderIfCaught30, MSGBOX_YESNO
-	goto_if_eq VAR_RESULT, NO, Aide_EventScript_DeclineCheckMons
-	setvar VAR_0x8004, 0
-	specialvar VAR_RESULT, GetPokedexCount
-	buffernumberstring STR_VAR_3, VAR_0x8006
-	call Route11_EastEntrance_2F_EventScript_GetAideRequestInfo
-	goto_if_lt VAR_0x8006, REQUIRED_CAUGHT_MONS, Aide_EventScript_HaventCaughtEnough
+	goto_if_eq VAR_RESULT, NO, Route11_EastEntrance_2F_EventScript_NeedThunderBadge
+	goto_if_unset FLAG_BADGE03_GET, Route11_EastEntrance_2F_EventScript_NeedThunderBadge
 	msgbox Route11_EastEntrance_2F_Text_GreatHereYouGo
 	checkitemspace ITEM_ITEMFINDER
 	goto_if_eq VAR_RESULT, FALSE, Aide_EventScript_NoRoomForItem
@@ -74,12 +68,13 @@ Route11_EastEntrance_2F_EventScript_Aide::
 	release
 	end
 
+Route11_EastEntrance_2F_EventScript_NeedThunderBadge::
+	msgbox Route11_EastEntrance_2F_Text_NeedThunderBadge
+	release
+	end
+
 Route11_EastEntrance_2F_EventScript_AlreadyGotItemfinder::
 	msgbox Route11_EastEntrance_2F_Text_ExplainItemfinder
 	release
 	end
 
-Route11_EastEntrance_2F_EventScript_GetAideRequestInfo::
-	buffernumberstring STR_VAR_1, REQUIRED_CAUGHT_MONS
-	bufferitemname STR_VAR_2, ITEM_ITEMFINDER
-	return

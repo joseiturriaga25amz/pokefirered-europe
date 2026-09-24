@@ -373,12 +373,16 @@ def main() -> None:
     aide_rules = (
         ("data/maps/Route2_EastBuilding/scripts.inc", "FLAG_BADGE02_GET", "FLAG_GOT_HM05", "ITEM_HM05", "MEDALLA CASCADA"),
         ("data/maps/Route10_PokemonCenter_1F/scripts.inc", "FLAG_BADGE03_GET", "FLAG_GOT_EVERSTONE_FROM_OAKS_AIDE", "ITEM_EVERSTONE", "MEDALLA TRUENO"),
+        ("data/maps/Route11_EastEntrance_2F/scripts.inc", "FLAG_BADGE03_GET", "FLAG_GOT_ITEMFINDER", "ITEM_ITEMFINDER", "MEDALLA TRUENO"),
+        ("data/maps/Route16_NorthEntrance_2F/scripts.inc", "FLAG_BADGE04_GET", "FLAG_GOT_AMULET_COIN_FROM_OAKS_AIDE", "ITEM_AMULET_COIN", "MEDALLA ARCOIRIS"),
+        ("data/maps/Route15_WestEntrance_2F/scripts.inc", "FLAG_BADGE04_GET", "FLAG_GOT_EXP_SHARE_FROM_OAKS_AIDE", "ITEM_EXP_SHARE", "MEDALLA ARCOIRIS"),
     )
     for path, badge, reward_flag, item, badge_text in aide_rules:
         aide_script = read(path)
         assert "GetPokedexCount" not in aide_script, path
         assert "REQUIRED_SEEN_MONS" not in aide_script, path
         assert "REQUIRED_OWNED_MONS" not in aide_script, path
+        assert "REQUIRED_CAUGHT_MONS" not in aide_script, path
         assert f"goto_if_unset {badge}" in aide_script, path
         assert f"goto_if_set {reward_flag}" in aide_script, path
         assert f"checkitemspace {item}" in aide_script, path
