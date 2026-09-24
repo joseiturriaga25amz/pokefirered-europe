@@ -7,6 +7,7 @@
 #include "field_effect.h"
 #include "field_effect_helpers.h"
 #include "field_player_avatar.h"
+#include "full_follower.h"
 #include "fieldmap.h"
 #include "metatile_behavior.h"
 #include "overworld.h"
@@ -4906,6 +4907,12 @@ static bool8 DoesObjectCollideWithObjectAt(struct ObjectEvent *objectEvent, s16 
         curObject = &gObjectEvents[i];
         if (curObject->active && curObject != objectEvent)
         {
+            // Runtime follower is presentation-only: it must never block the player,
+            // NPCs, or itself while shadowing the player's previous tile.
+            if (objectEvent->localId == OBJ_EVENT_ID_FULL_FOLLOWER
+             || curObject->localId == OBJ_EVENT_ID_FULL_FOLLOWER)
+                continue;
+
             if ((curObject->currentCoords.x == x && curObject->currentCoords.y == y) || (curObject->previousCoords.x == x && curObject->previousCoords.y == y))
             {
                 if (AreElevationsCompatible(objectEvent->currentElevation, curObject->currentElevation))
