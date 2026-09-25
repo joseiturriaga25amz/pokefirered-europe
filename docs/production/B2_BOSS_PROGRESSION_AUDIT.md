@@ -55,9 +55,9 @@ Current notable moves:
 - Pikachu 26 — Thunderbolt / Thunder Wave / Quick Attack / Double Team
 - Raichu 30 — Thunderbolt / Body Slam / Mega Kick / Quick Attack
 
-**Finding B2-F003 — progression mismatch.**
+**B2-F003 — RETRACTED / FALSE POSITIVE.**
 
-Shock Wave is appropriate as Surge's signature TM. Thunderbolt appears before the player's normal Celadon access to that move. B2 should remove the premature Thunderbolt dependency while preserving Surge as a meaningful difficulty spike.
+Initial inspection treated Thunderbolt as a later-TM leak. Repository learnset verification shows Pikachu learns Thunderbolt naturally at level 26, exactly the level used by Surge, and Raichu may legitimately retain it after evolution. Surge therefore needs no BOSS-001 correction for Thunderbolt. This correction is kept in the audit trail rather than silently deleting the false positive.
 
 ### Giovanni — Rocket Hideout / Silph
 
@@ -84,3 +84,15 @@ A-009 explicitly requires these Giovanni encounters to receive the Full boss-des
 3. **B2.3:** convert Rocket Hideout Giovanni to a deliberate custom-move boss set and validate.
 4. **B2.4:** convert Silph Giovanni similarly.
 5. Re-audit adjacent Gary/boss encounters for accidental regression, then close B2 with staged-progression documentation.
+
+
+## B2.2 implementation decision
+
+Applied the minimum correction needed to remove the two clear direct-damage progression spikes while preserving frozen rosters, levels and boss identity:
+
+- Gary / Cerulean Abra 18: **Psychic → Thief**. Reflect, Light Screen and Teleport remain as utility. Thief is species-legal and its TM is obtainable in Mt. Moon before Cerulean.
+- Misty / Starmie 26: **Psychic → Rapid Spin**. Water Pulse remains the signature STAB; Recover and Swift remain. This removes the later Psychic spike without weakening Misty's roster or ace level.
+- Lt. Surge: **no change** after B2-F003 was retracted through level-up-learnset verification.
+- Brock: no change.
+
+B2.2 intentionally does not rewrite support moves solely because their TM source occurs later. The BOSS-001 correction is aimed at unexplained early power leakage; signature-leader moves and bounded utility are allowed when they preserve encounter identity without introducing a late-game direct-damage spike.
