@@ -96,3 +96,28 @@ Applied the minimum correction needed to remove the two clear direct-damage prog
 - Brock: no change.
 
 B2.2 intentionally does not rewrite support moves solely because their TM source occurs later. The BOSS-001 correction is aimed at unexplained early power leakage; signature-leader moves and bounded utility are allowed when they preserve encounter identity without introducing a late-game direct-damage spike.
+
+
+## User-approved leader decisions
+
+### Brock — APPROVED AS CURRENT
+
+No roster, level, move or item changes.
+
+### Misty — APPROVED 2026-09-25
+
+Keep current roster/levels:
+- Goldeen 21
+- Staryu 23
+- Starmie 26 + Sitrus Berry
+
+Approved moves:
+- Goldeen — Water Pulse / Horn Attack / Supersonic / Peck
+- Staryu — Water Pulse / Swift / Rapid Spin / Light Screen
+- Starmie — Water Pulse / Swift / Rapid Spin / Recover
+
+Design intent:
+- Goldeen opens with a weaker overall stat profile but already introduces Misty's Water Pulse identity.
+- Staryu adds utility and Swift even though Swift is normally learned at level 24; exact level-up timing is not being used as a hard restriction for boss custom sets.
+- Starmie remains the ace through stats, level, Sitrus Berry and recovery rather than premature Psychic coverage.
+- All selected moves are legal for the species in FRLG/Full; custom boss sets may use a species-legal move slightly before its natural level-up point when explicitly approved.

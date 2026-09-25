@@ -5995,21 +5995,21 @@ static const struct TrainerMonItemCustomMoves sParty_LeaderMisty[] = {
         .lvl = 21,
         .species = SPECIES_GOLDEEN,
         .heldItem = ITEM_NONE,
-        .moves = {MOVE_WATER_PULSE, MOVE_HORN_ATTACK, MOVE_PECK, MOVE_SUPERSONIC},
+        .moves = {MOVE_WATER_PULSE, MOVE_HORN_ATTACK, MOVE_SUPERSONIC, MOVE_PECK},
     },
     {
         .iv = 83,
         .lvl = 23,
         .species = SPECIES_STARYU,
         .heldItem = ITEM_NONE,
-        .moves = {MOVE_WATER_PULSE, MOVE_LIGHT_SCREEN, MOVE_RECOVER, MOVE_RAPID_SPIN},
+        .moves = {MOVE_WATER_PULSE, MOVE_SWIFT, MOVE_RAPID_SPIN, MOVE_LIGHT_SCREEN},
     },
     {
         .iv = 83,
         .lvl = 26,
         .species = SPECIES_STARMIE,
         .heldItem = ITEM_SITRUS_BERRY,
-        .moves = {MOVE_WATER_PULSE, MOVE_PSYCHIC, MOVE_RECOVER, MOVE_SWIFT},
+        .moves = {MOVE_WATER_PULSE, MOVE_SWIFT, MOVE_RAPID_SPIN, MOVE_RECOVER},
     },
 };
 
