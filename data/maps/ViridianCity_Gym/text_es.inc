@@ -11,11 +11,9 @@ ViridianCity_Gym_Text_GiovanniIntro::
     .string "ENTRENADORES!{PLAY_BGM}{MUS_ENCOUNTER_ROCKET}$"
 
 ViridianCity_Gym_Text_GiovanniDefeat::
-    .string "¡Ja!\n"
-    .string "¡Ha sido un duro combate!\l"
-    .string "¡Y has ganado!\p"
-    .string "¡Como premio, toma esta MEDALLA\n"
-    .string "TIERRA!{PAUSE_MUSIC}{PLAY_BGM}{MUS_OBTAIN_BADGE}{PAUSE 0xFE}{PAUSE 0x56}{RESUME_MUSIC}$"
+    .string "¡Imposible...!\n"
+    .string "¡Has vencido incluso a mi arma\l"
+    .string "más poderosa!$"
 
 ViridianCity_Gym_Text_GiovanniPostBattle::
     .string "¡He perdido, ya no soy digno\n"

@@ -279,3 +279,25 @@ Refinement:
 - Bite is restored because the modern physical/special split lets Blastoise use its solid physical Attack and preserves useful Dark coverage/flinch pressure.
 - Protect is removed because this set is not built around passive stalling; Rain Dance is the preferred utility slot and directly advances Blastoise's ace identity.
 - Progression remains: juvenile Bite -> first-stage Blastoise keeps Bite while learning weather control -> late-game Blastoise replaces Bite with Earthquake -> Champion upgrades Surf to Hydro Pump.
+
+
+### Giovanni / Mewtwo gym climax — approved 2026-09-25
+
+Final first-battle Viridian Gym roster:
+- Kingler 51
+- Nidoqueen 52
+- Nidoking 53
+- Golem 54
+- Rhydon 56 + Soft Sand
+- Mewtwo 56, fixed IV byte 255 (31 fixed IVs), no held item
+  - Psychic / Recover / Swift / Disable
+
+Persian is provisionally removed from the gym battle to respect the six-Pokémon engine limit; its identity is intended to remain in Giovanni's earlier encounters.
+
+Narrative/cutscene:
+- After the trainer battle and before the Earth Badge presentation, a temporary Viridian Gym overworld Mewtwo appears.
+- Dialogue is adapted from the Latin-American anime confrontation: creation, servitude, equality and Mewtwo's refusal to be enslaved.
+- Mewtwo cries, triggers a psychic sound cue, then uses the native fly_up movement to leave the screen.
+- Giovanni simultaneously performs an in-place panic/agitation sequence.
+- Mewtwo is removed only from the gym event; Cerulean Cave's FLAG_HIDE_MEWTWO / level-70 encounter remain untouched.
+- The Earth Badge/TM26 flow resumes after the escape scene.

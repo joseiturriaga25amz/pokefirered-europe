@@ -3,6 +3,7 @@ ViridianCity_Gym_MapScripts::
 	.byte 0
 
 ViridianCity_Gym_OnTransitionFull::
+	setflag FLAG_TEMP_1
 	goto_if_unset FLAG_DEFEATED_LEADER_GIOVANNI, EventScript_Return
 	goto_if_set FLAG_SYS_NATIONAL_DEX, ViridianCity_Gym_EventScript_ShowGiovanniFull
 	setflag FLAG_HIDE_VIRIDIAN_GIOVANNI
@@ -31,13 +32,58 @@ ViridianCity_Gym_EventScript_GiovanniStory::
 
 ViridianCity_Gym_EventScript_DefeatedGiovanni::
 	famechecker FAMECHECKER_GIOVANNI, 3
+	call ViridianCity_Gym_EventScript_MewtwoBreaksFree
 	setflag FLAG_HIDE_MISC_KANTO_ROCKETS
 	setflag FLAG_DEFEATED_LEADER_GIOVANNI
 	setflag FLAG_BADGE08_GET
 	setvar VAR_MAP_SCENE_ROUTE22, 3
 	set_gym_trainers 8
+	msgbox ViridianCity_Gym_Text_EarthBadgeAfterMewtwo
 	goto ViridianCity_Gym_EventScript_GiveTM26
 	end
+
+ViridianCity_Gym_EventScript_MewtwoBreaksFree::
+	lockall
+	clearflag FLAG_TEMP_1
+	addobject LOCALID_VIRIDIAN_MEWTWO
+	delay 16
+	waitse
+	playmoncry SPECIES_MEWTWO, CRY_MODE_ENCOUNTER
+	waitmoncry
+	msgbox ViridianCity_Gym_Text_MewtwoPower
+	msgbox ViridianCity_Gym_Text_GiovanniMaster
+	msgbox ViridianCity_Gym_Text_MewtwoPartners
+	msgbox ViridianCity_Gym_Text_GiovanniHumans
+	msgbox ViridianCity_Gym_Text_MewtwoFreedom
+	waitse
+	playse SE_M_PSYBEAM2
+	delay 24
+	applymovement LOCALID_VIRIDIAN_MEWTWO, ViridianCity_Gym_Movement_MewtwoEscape
+	applymovement LOCALID_VIRIDIAN_GIOVANNI, ViridianCity_Gym_Movement_GiovanniPanic
+	msgbox ViridianCity_Gym_Text_GiovanniStopMewtwo
+	waitmovement 0
+	playse SE_M_TELEPORT
+	delay 12
+	removeobject LOCALID_VIRIDIAN_MEWTWO
+	setflag FLAG_TEMP_1
+	msgbox ViridianCity_Gym_Text_MewtwoEscaped
+	delay 20
+	msgbox ViridianCity_Gym_Text_GiovanniAfterMewtwo
+	return
+
+ViridianCity_Gym_Movement_MewtwoEscape:
+	walk_in_place_faster_up
+	delay_16
+	fly_up
+	step_end
+
+ViridianCity_Gym_Movement_GiovanniPanic:
+	walk_in_place_faster_right
+	walk_in_place_faster_left
+	shake_head_or_walk_in_place
+	jump_in_place_up_down
+	walk_in_place_faster_up
+	step_end
 
 ViridianCity_Gym_EventScript_GiveTM26::
 	msgbox ViridianCity_Gym_Text_ExplainEarthBadgeTakeThis
@@ -152,3 +198,45 @@ ViridianCity_Gym_Text_FullRematchDefeat::
 ViridianCity_Gym_Text_FullRematchAfter::
 	.string "Puedes volver cuando quieras.\p"
 	.string "Siempre aceptaré otra revancha.$"
+
+
+ViridianCity_Gym_Text_MewtwoPower::
+	.string "MEWTWO: Ahora comprendo todo mi\\n"
+	.string "poder... ¿Pero cuál es mi destino?$"
+
+ViridianCity_Gym_Text_GiovanniMaster::
+	.string "GIOVANNI: Tu destino es servirme.\\n"
+	.string "Fuiste creado para luchar por mí.$"
+
+ViridianCity_Gym_Text_MewtwoPartners::
+	.string "MEWTWO: Dijiste que éramos socios...\\n"
+	.string "Que éramos iguales.$"
+
+ViridianCity_Gym_Text_GiovanniHumans::
+	.string "GIOVANNI: Fuiste creado por humanos.\\n"
+	.string "¡Jamás podrás ser nuestro igual!$"
+
+ViridianCity_Gym_Text_MewtwoFreedom::
+	.string "MEWTWO: Los humanos pudieron\\n"
+	.string "crearme...\\p"
+	.string "¡Pero jamás me esclavizarán!$"
+
+ViridianCity_Gym_Text_GiovanniStopMewtwo::
+	.string "GIOVANNI: ¡Detén esto ahora mismo!\\n"
+	.string "¡MEWTWO! ¡Te ordeno que vuelvas!$"
+
+ViridianCity_Gym_Text_MewtwoEscaped::
+	.string "¡MEWTWO ha roto el control de\\n"
+	.string "GIOVANNI y ha escapado del GIMNASIO!$"
+
+ViridianCity_Gym_Text_GiovanniAfterMewtwo::
+	.string "GIOVANNI: ...\\p"
+	.string "Así que finalmente elegiste\\n"
+	.string "desobedecerme...\\p"
+	.string "No importa. Has derrotado incluso\\n"
+	.string "al poder que yo creía controlar.$"
+
+ViridianCity_Gym_Text_EarthBadgeAfterMewtwo::
+	.string "¡Ha sido un duro combate!\\n"
+	.string "Tu victoria es indiscutible.\\p"
+	.string "¡Toma la MEDALLA TIERRA!{PAUSE_MUSIC}{PLAY_BGM}{MUS_OBTAIN_BADGE}{PAUSE 0xFE}{PAUSE 0x56}{RESUME_MUSIC}$"

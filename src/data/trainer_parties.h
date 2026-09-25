@@ -4502,13 +4502,6 @@ static const struct TrainerMonNoItemDefaultMoves sParty_BossGiovanni2[] = {
 static const struct TrainerMonItemCustomMoves sParty_LeaderGiovanni[] = {
     {
         .iv = 165,
-        .lvl = 50,
-        .species = SPECIES_PERSIAN,
-        .heldItem = ITEM_NONE,
-        .moves = {MOVE_FAKE_OUT, MOVE_SLASH, MOVE_FAINT_ATTACK, MOVE_SCREECH},
-    },
-    {
-        .iv = 165,
         .lvl = 51,
         .species = SPECIES_KINGLER,
         .heldItem = ITEM_NONE,
@@ -4541,6 +4534,13 @@ static const struct TrainerMonItemCustomMoves sParty_LeaderGiovanni[] = {
         .species = SPECIES_RHYDON,
         .heldItem = ITEM_SOFT_SAND,
         .moves = {MOVE_EARTHQUAKE, MOVE_ROCK_SLIDE, MOVE_BRICK_BREAK, MOVE_DOUBLE_EDGE},
+    },
+    {
+        .iv = 255,
+        .lvl = 56,
+        .species = SPECIES_MEWTWO,
+        .heldItem = ITEM_NONE,
+        .moves = {MOVE_PSYCHIC, MOVE_RECOVER, MOVE_SWIFT, MOVE_DISABLE},
     },
 };
 
