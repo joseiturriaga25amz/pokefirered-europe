@@ -5985,7 +5985,7 @@ static const struct TrainerMonItemCustomMoves sParty_LeaderBrock[] = {
         .lvl = 17,
         .species = SPECIES_ONIX,
         .heldItem = ITEM_ORAN_BERRY,
-        .moves = {MOVE_ROCK_TOMB, MOVE_ROCK_THROW, MOVE_BIND, MOVE_SCREECH},
+        .moves = {MOVE_ROCK_TOMB, MOVE_ROCK_SMASH, MOVE_BIND, MOVE_SCREECH},
     },
 };
 

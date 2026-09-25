@@ -121,3 +121,17 @@ Design intent:
 - Staryu adds utility and Swift even though Swift is normally learned at level 24; exact level-up timing is not being used as a hard restriction for boss custom sets.
 - Starmie remains the ace through stats, level, Sitrus Berry and recovery rather than premature Psychic coverage.
 - All selected moves are legal for the species in FRLG/Full; custom boss sets may use a species-legal move slightly before its natural level-up point when explicitly approved.
+
+
+### Brock — revision approved 2026-09-25
+
+Onix 17 changes **Rock Throw → Rock Smash**.
+
+Final approved Brock first-battle set:
+- Geodude 14 — Rock Throw / Tackle / Defense Curl / Mud Sport
+- Onix 17 — Rock Tomb / Rock Smash / Bind / Screech + Oran Berry
+
+Rationale:
+- Rock Smash is legal for Onix through HM06.
+- The change gives Brock's ace a more anime-like physical identity and differentiates Onix from Geodude's basic Rock offense.
+- No roster, level, item, IV or other move changes.
