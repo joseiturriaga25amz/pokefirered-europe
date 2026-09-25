@@ -201,3 +201,20 @@ Progression rules:
 - Rhydon is deliberately kept below Flamethrower's STAB reference so it does not steal the battle's power progression.
 - ExtremeSpeed on Arcanine is reserved for the rematch.
 - Cross Chop on Magmar is reserved for the rematch; Brick Break is the approved Fighting coverage in the first battle.
+
+
+### Giovanni Gym — final first-battle approval 2026-09-25
+
+Final approved sets:
+- Persian 50 — Fake Out / Slash / Faint Attack / Screech
+- Kingler 51 — Crabhammer / Stomp / Protect / Mud Shot
+- Nidoqueen 52 — Earthquake / Brick Break / Body Slam / Ice Beam
+- Nidoking 53 — Earthquake / Body Slam / Brick Break / Flamethrower
+- Golem 54 — Earthquake / Rock Slide / Double-Edge / Defense Curl
+- Rhydon 56 — Earthquake / Rock Slide / Brick Break / Double-Edge + Soft Sand
+
+Design intent:
+- Earthquake is the normal offensive ceiling for Giovanni's Ground core and is appropriate for the eighth Gym as his signature TM.
+- Nidoqueen and Nidoking retain strong but bounded coverage rather than near-competitive all-purpose coverage.
+- Golem explicitly removes Explosion; Defense Curl makes it a physical-wall step rather than a one-shot spike.
+- Rhydon remains the ace through level, Ground/Rock STAB profile and Soft Sand, without needing a stronger raw move than Earthquake.
