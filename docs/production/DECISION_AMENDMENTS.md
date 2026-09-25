@@ -216,7 +216,7 @@ The following runtime-approved rules are authoritative for B1 and v1.0 closure:
   - Route 16 / Amulet Coin — Rainbow Badge;
   - Route 15 / Exp. Share — Rainbow Badge.
 - **QOL-NATDEX-001 — National Dex:** remove the vanilla 60-captured-species quota. Keep first Hall of Fame / game clear and the One Island narrative visit gate; preserve Oak's National Dex scene itself.
-- **QOL-HM-002 — HMs as field licenses:** field actions require possession of the corresponding HM plus the original badge/narrative gate; no party Pokémon needs to know the move. HMs remain reusable teachable moves for battle, and an HM move learned by a Pokémon may be replaced/forgotten normally without the Move Deleter.
+- **QOL-HM-002 — HMs as field licenses:** field actions require possession of the corresponding HM plus the original badge/narrative gate; no party Pokémon needs to know the move for Cut trees/Dotted Hole, Surf, Strength, Flash, Rock Smash or Waterfall. **Approved exceptions:** Fly remains vanilla and requires a compatible party Pokémon that knows Fly; optional grass-cutting remains on the vanilla learned-Cut route rather than expanding the party-menu action system. HMs remain reusable teachable moves for battle, and an HM move learned by a Pokémon may be replaced/forgotten normally without the Move Deleter.
 - **QOL-EXP-001 — Exp. Share:** keep vanilla FireRed held-item behavior. Do not implement automatic modern party-wide EXP distribution.
 
 ### Compatibility constraints
