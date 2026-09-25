@@ -233,3 +233,20 @@ Repaired to the already-approved state:
 - Sabrina final approved four sets restored exactly.
 
 No new balance decision is introduced by this repair.
+
+
+### Eight-Gym difficulty-curve micro-adjustments — approved 2026-09-25
+
+Applied after full-curve audit:
+- Erika order/levels: Weepinbell 31 -> Tangela 32 -> Vileplume 33 -> Gloom 35.
+- Erika ace Gloom: Giga Drain -> Petal Dance; keeps Sleep Powder / Moonlight / Acid, Sitrus Berry and perfect fixed IVs.
+- Sabrina Mr. Mime: Psybeam -> Confusion; keeps Baton Pass / Barrier / Calm Mind.
+- Blaine order/levels: Rapidash 48 is now second, Rhydon 49 third; movesets unchanged.
+- Giovanni Kingler: Crabhammer -> Surf; keeps Stomp / Protect / Mud Shot.
+
+Curve intent:
+- Gloom becomes a distinct ace offensively without exceeding Koga's next-stage pressure.
+- Erika's internal damage progression is smoother.
+- Mr. Mime is restored as Sabrina's weakest/support opener while remaining dangerous through setup and Baton Pass.
+- Blaine's second/third slots climb more cleanly toward Arcanine and Magmar.
+- Kingler no longer creates an anomalous early physical spike under the modern physical/special split; Crabhammer is reserved for rematch progression.

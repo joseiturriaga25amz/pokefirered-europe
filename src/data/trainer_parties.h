@@ -4512,7 +4512,7 @@ static const struct TrainerMonItemCustomMoves sParty_LeaderGiovanni[] = {
         .lvl = 51,
         .species = SPECIES_KINGLER,
         .heldItem = ITEM_NONE,
-        .moves = {MOVE_CRABHAMMER, MOVE_STOMP, MOVE_PROTECT, MOVE_MUD_SHOT},
+        .moves = {MOVE_SURF, MOVE_STOMP, MOVE_PROTECT, MOVE_MUD_SHOT},
     },
     {
         .iv = 165,
@@ -6041,16 +6041,16 @@ static const struct TrainerMonItemCustomMoves sParty_LeaderErika[] = {
     {
         .iv = 116,
         .lvl = 31,
-        .species = SPECIES_TANGELA,
+        .species = SPECIES_WEEPINBELL,
         .heldItem = ITEM_NONE,
-        .moves = {MOVE_GIGA_DRAIN, MOVE_SLEEP_POWDER, MOVE_GROWTH, MOVE_POISON_POWDER},
+        .moves = {MOVE_GIGA_DRAIN, MOVE_ACID, MOVE_SLEEP_POWDER, MOVE_GROWTH},
     },
     {
         .iv = 116,
         .lvl = 32,
-        .species = SPECIES_WEEPINBELL,
+        .species = SPECIES_TANGELA,
         .heldItem = ITEM_NONE,
-        .moves = {MOVE_GIGA_DRAIN, MOVE_ACID, MOVE_SLEEP_POWDER, MOVE_GROWTH},
+        .moves = {MOVE_GIGA_DRAIN, MOVE_SLEEP_POWDER, MOVE_GROWTH, MOVE_POISON_POWDER},
     },
     {
         .iv = 116,
@@ -6064,7 +6064,7 @@ static const struct TrainerMonItemCustomMoves sParty_LeaderErika[] = {
         .lvl = 35,
         .species = SPECIES_GLOOM,
         .heldItem = ITEM_SITRUS_BERRY,
-        .moves = {MOVE_GIGA_DRAIN, MOVE_SLEEP_POWDER, MOVE_MOONLIGHT, MOVE_ACID},
+        .moves = {MOVE_PETAL_DANCE, MOVE_SLEEP_POWDER, MOVE_MOONLIGHT, MOVE_ACID},
     },
 };
 
@@ -6110,16 +6110,16 @@ static const struct TrainerMonItemCustomMoves sParty_LeaderBlaine[] = {
     {
         .iv = 149,
         .lvl = 48,
-        .species = SPECIES_RHYDON,
+        .species = SPECIES_RAPIDASH,
         .heldItem = ITEM_NONE,
-        .moves = {MOVE_DIG, MOVE_ROCK_SLIDE, MOVE_BRICK_BREAK, MOVE_TAKE_DOWN},
+        .moves = {MOVE_STOMP, MOVE_BOUNCE, MOVE_AGILITY, MOVE_FLAMETHROWER},
     },
     {
         .iv = 149,
         .lvl = 49,
-        .species = SPECIES_RAPIDASH,
+        .species = SPECIES_RHYDON,
         .heldItem = ITEM_NONE,
-        .moves = {MOVE_STOMP, MOVE_BOUNCE, MOVE_AGILITY, MOVE_FLAMETHROWER},
+        .moves = {MOVE_DIG, MOVE_ROCK_SLIDE, MOVE_BRICK_BREAK, MOVE_TAKE_DOWN},
     },
     {
         .iv = 149,
@@ -6143,7 +6143,7 @@ static const struct TrainerMonItemCustomMoves sParty_LeaderSabrina[] = {
         .lvl = 42,
         .species = SPECIES_MR_MIME,
         .heldItem = ITEM_NONE,
-        .moves = {MOVE_PSYBEAM, MOVE_BATON_PASS, MOVE_BARRIER, MOVE_CALM_MIND},
+        .moves = {MOVE_CONFUSION, MOVE_BATON_PASS, MOVE_BARRIER, MOVE_CALM_MIND},
     },
     {
         .iv = 140,
