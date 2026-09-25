@@ -147,3 +147,14 @@ Design rule:
 - first-battle Electric ceiling is Shock Wave, matching the signature-TM progression used with Brock/Rock Tomb and Misty/Water Pulse;
 - Voltorb is intentionally the simple first escalation step;
 - Raichu remains pending user approval and must feel like the ace without using Thunderbolt in the first battle.
+
+
+### Koga — partial approval 2026-09-25
+
+Approved:
+- Muk 43 changes Sludge Bomb -> Sludge (Spanish ROM name: Residuos).
+- Muk final pending no other changes: Sludge / Minimize / Acid Armor / Toxic.
+
+Design rule:
+- Koga first-battle Poison STAB ceiling uses Sludge (65 BP; 97.5 STAB reference), not Sludge Bomb (90 BP; 135 STAB reference).
+- Weezing ace set remains under review; Explosion and Self-Destruct are explicitly rejected for the first battle.
