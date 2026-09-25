@@ -207,7 +207,7 @@ static const struct TrainerMonItemCustomMoves sParty_RSCooltrainerM[] = {
         .lvl = 65,
         .species = SPECIES_VENOMOTH,
         .heldItem = ITEM_NONE,
-        .moves = {MOVE_PSYCHIC, MOVE_SILVER_WIND, MOVE_SLEEP_POWDER, MOVE_GIGA_DRAIN},
+        .moves = {MOVE_PSYBEAM, MOVE_SILVER_WIND, MOVE_GUST, MOVE_SLEEP_POWDER},
     },
     {
         .iv = 231,
@@ -244,7 +244,7 @@ static const struct TrainerMonItemCustomMoves sParty_RSCooltrainerF[] = {
         .lvl = 65,
         .species = SPECIES_MR_MIME,
         .heldItem = ITEM_LEFTOVERS,
-        .moves = {MOVE_PSYCHIC, MOVE_MAGICAL_LEAF, MOVE_REFLECT, MOVE_LIGHT_SCREEN},
+        .moves = {MOVE_PSYBEAM, MOVE_BATON_PASS, MOVE_BARRIER, MOVE_CALM_MIND},
     },
     {
         .iv = 231,
@@ -272,7 +272,7 @@ static const struct TrainerMonItemCustomMoves sParty_RSCooltrainerF[] = {
         .lvl = 72,
         .species = SPECIES_ALAKAZAM,
         .heldItem = ITEM_TWISTED_SPOON,
-        .moves = {MOVE_PSYCHIC, MOVE_CALM_MIND, MOVE_RECOVER, MOVE_SHOCK_WAVE},
+        .moves = {MOVE_PSYCHIC, MOVE_CALM_MIND, MOVE_RECOVER, MOVE_PROTECT},
     },
 };
 static const struct TrainerMonNoItemDefaultMoves sParty_HexManiac[] = {DUMMY_TRAINER_MON};
@@ -6157,7 +6157,7 @@ static const struct TrainerMonItemCustomMoves sParty_LeaderSabrina[] = {
         .lvl = 45,
         .species = SPECIES_KADABRA,
         .heldItem = ITEM_NONE,
-        .moves = {MOVE_PSYCHIC, MOVE_RECOVER, MOVE_REFLECT, MOVE_CALM_MIND},
+        .moves = {MOVE_PSYBEAM, MOVE_FUTURE_SIGHT, MOVE_CALM_MIND, MOVE_REFLECT},
     },
     {
         .iv = 140,

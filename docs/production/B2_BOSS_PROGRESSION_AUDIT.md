@@ -169,3 +169,18 @@ Final design notes:
 - Explosion and Self-Destruct are excluded from the first-battle Weezing.
 - Sludge is the first-battle Poison STAB ceiling.
 - Haze gives the ace anti-setup utility without escalating raw damage.
+
+
+### Sabrina — final first-battle approval 2026-09-25
+
+Final approved sets:
+- Mr. Mime 42 — Psybeam / Baton Pass / Barrier / Calm Mind
+- Venomoth 43 — Psybeam / Silver Wind / Gust / Sleep Powder
+- Kadabra 45 — Psybeam / Future Sight / Calm Mind / Reflect
+- Alakazam 47 — Psychic / Calm Mind / Recover / Protect + Twisted Spoon
+
+Design intent:
+- Psybeam is the normal Psychic-family ceiling for the first three team members.
+- Psychic is reserved for Alakazam so the ace creates a clear final power step.
+- Mr. Mime is the setup/support opener; Venomoth is the more offensive second step; Kadabra adds delayed pressure through Future Sight; Alakazam is the dedicated ace.
+- Alakazam intentionally has only Psychic as direct damage. Potential Dark-type counterplay is accepted rather than adding premature coverage.
