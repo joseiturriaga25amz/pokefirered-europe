@@ -250,3 +250,21 @@ Curve intent:
 - Mr. Mime is restored as Sabrina's weakest/support opener while remaining dangerous through setup and Baton Pass.
 - Blaine's second/third slots climb more cleanly toward Arcanine and Magmar.
 - Kingler no longer creates an anomalous early physical spike under the modern physical/special split; Crabhammer is reserved for rematch progression.
+
+
+### Gary / Rival progression adjustments — approved 2026-09-25
+
+Applied:
+- Cerulean Abra 18: Psychic / Reflect / Light Screen / Teleport -> Confusion / Teleport / empty / empty.
+  - Deliberate minimal exception: Abra normally has only Teleport by level in this build. Confusion is allowed here as a one-move lineage/progression exception, avoiding both a useless vanilla Abra and an overpowered early Psychic.
+- S.S. Anne Kadabra 25: Psybeam -> Confusion. Recover / Reflect / Disable unchanged.
+- Pokémon Tower Pidgeotto 31: Return -> Quick Attack.
+- Silph Pidgeot 44: Return -> Facade.
+- Silph Blastoise 49: Bite -> Rain Dance.
+- Route 22 II Pidgeot 56: Return -> Facade.
+- First Champion Pidgeot 64: Return -> Double-Edge.
+
+Design intent:
+- Psychic-line attack progression becomes: Abra Confusion -> Kadabra Confusion -> Kadabra Psybeam -> Alakazam Psychic.
+- Pidgeot-line Normal STAB progression avoids low-power trainer Return caused by default friendship and grows from Quick Attack -> Facade -> Double-Edge.
+- Blastoise begins weather-based ace identity at Silph, later adding Mystic Water and finally Hydro Pump at Champion.
