@@ -184,3 +184,20 @@ Design intent:
 - Psychic is reserved for Alakazam so the ace creates a clear final power step.
 - Mr. Mime is the setup/support opener; Venomoth is the more offensive second step; Kadabra adds delayed pressure through Future Sight; Alakazam is the dedicated ace.
 - Alakazam intentionally has only Psychic as direct damage. Potential Dark-type counterplay is accepted rather than adding premature coverage.
+
+
+### Blaine — final first-battle approval 2026-09-25
+
+Final approved sets:
+- Ninetales 47 — Flamethrower / Will-O-Wisp / Confuse Ray / Fire Spin
+- Rhydon 48 — Dig / Rock Slide / Brick Break / Take Down
+- Rapidash 49 — Stomp / Bounce / Agility / Flamethrower
+- Arcanine 50 — Bite / Roar / Take Down / Flamethrower
+- Magmar 52 — Fire Blast / Flamethrower / Fire Punch / Brick Break + Charcoal
+
+Progression rules:
+- Flamethrower is Blaine's second offensive ceiling and may appear before the ace.
+- Fire Blast is the maximum first-battle ceiling and is reserved for ace Magmar.
+- Rhydon is deliberately kept below Flamethrower's STAB reference so it does not steal the battle's power progression.
+- ExtremeSpeed on Arcanine is reserved for the rematch.
+- Cross Chop on Magmar is reserved for the rematch; Brick Break is the approved Fighting coverage in the first battle.
