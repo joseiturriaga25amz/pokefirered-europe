@@ -135,3 +135,15 @@ Rationale:
 - Rock Smash is legal for Onix through HM06.
 - The change gives Brock's ace a more anime-like physical identity and differentiates Onix from Geodude's basic Rock offense.
 - No roster, level, item, IV or other move changes.
+
+
+### Lt. Surge — partial approval 2026-09-25
+
+Approved:
+- Voltorb 25 — Shock Wave / Tackle / SonicBoom / Screech
+- Pikachu 26 — Shock Wave / Thunder Wave / Quick Attack / Double Team
+
+Design rule:
+- first-battle Electric ceiling is Shock Wave, matching the signature-TM progression used with Brock/Rock Tomb and Misty/Water Pulse;
+- Voltorb is intentionally the simple first escalation step;
+- Raichu remains pending user approval and must feel like the ace without using Thunderbolt in the first battle.

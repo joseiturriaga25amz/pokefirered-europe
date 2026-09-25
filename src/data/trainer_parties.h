@@ -6019,14 +6019,14 @@ static const struct TrainerMonItemCustomMoves sParty_LeaderLtSurge[] = {
         .lvl = 25,
         .species = SPECIES_VOLTORB,
         .heldItem = ITEM_NONE,
-        .moves = {MOVE_SHOCK_WAVE, MOVE_SPARK, MOVE_SONIC_BOOM, MOVE_SCREECH},
+        .moves = {MOVE_SHOCK_WAVE, MOVE_TACKLE, MOVE_SONIC_BOOM, MOVE_SCREECH},
     },
     {
         .iv = 99,
         .lvl = 26,
         .species = SPECIES_PIKACHU,
         .heldItem = ITEM_NONE,
-        .moves = {MOVE_THUNDERBOLT, MOVE_THUNDER_WAVE, MOVE_QUICK_ATTACK, MOVE_DOUBLE_TEAM},
+        .moves = {MOVE_SHOCK_WAVE, MOVE_THUNDER_WAVE, MOVE_QUICK_ATTACK, MOVE_DOUBLE_TEAM},
     },
     {
         .iv = 99,
