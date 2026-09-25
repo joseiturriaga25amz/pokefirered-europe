@@ -158,3 +158,14 @@ Approved:
 Design rule:
 - Koga first-battle Poison STAB ceiling uses Sludge (65 BP; 97.5 STAB reference), not Sludge Bomb (90 BP; 135 STAB reference).
 - Weezing ace set remains under review; Explosion and Self-Destruct are explicitly rejected for the first battle.
+
+
+### Koga — final first-battle approval 2026-09-25
+
+Final approved ace:
+- Weezing 46 — Sludge / Toxic / Smokescreen / Haze + Sitrus Berry.
+
+Final design notes:
+- Explosion and Self-Destruct are excluded from the first-battle Weezing.
+- Sludge is the first-battle Poison STAB ceiling.
+- Haze gives the ace anti-setup utility without escalating raw damage.

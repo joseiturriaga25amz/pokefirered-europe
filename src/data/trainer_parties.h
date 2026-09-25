@@ -6095,7 +6095,7 @@ static const struct TrainerMonItemCustomMoves sParty_LeaderKoga[] = {
         .lvl = 46,
         .species = SPECIES_WEEZING,
         .heldItem = ITEM_SITRUS_BERRY,
-        .moves = {MOVE_SLUDGE_BOMB, MOVE_TOXIC, MOVE_SMOKESCREEN, MOVE_EXPLOSION},
+        .moves = {MOVE_SLUDGE, MOVE_TOXIC, MOVE_SMOKESCREEN, MOVE_HAZE},
     },
 };
 
