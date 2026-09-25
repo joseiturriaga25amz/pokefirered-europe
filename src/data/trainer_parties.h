@@ -4150,7 +4150,7 @@ static const struct TrainerMonNoItemCustomMoves sParty_RivalCeruleanSquirtle[] =
         .iv = 83,
         .lvl = 18,
         .species = SPECIES_ABRA,
-        .moves = {MOVE_THIEF, MOVE_REFLECT, MOVE_LIGHT_SCREEN, MOVE_TELEPORT},
+        .moves = {MOVE_PSYCHIC, MOVE_REFLECT, MOVE_LIGHT_SCREEN, MOVE_TELEPORT},
     },
     {
         .iv = 83,
@@ -4177,7 +4177,7 @@ static const struct TrainerMonNoItemCustomMoves sParty_RivalCeruleanBulbasaur[] 
         .iv = 83,
         .lvl = 18,
         .species = SPECIES_ABRA,
-        .moves = {MOVE_THIEF, MOVE_REFLECT, MOVE_LIGHT_SCREEN, MOVE_TELEPORT},
+        .moves = {MOVE_PSYCHIC, MOVE_REFLECT, MOVE_LIGHT_SCREEN, MOVE_TELEPORT},
     },
     {
         .iv = 83,
@@ -4204,7 +4204,7 @@ static const struct TrainerMonNoItemCustomMoves sParty_RivalCeruleanCharmander[]
         .iv = 83,
         .lvl = 18,
         .species = SPECIES_ABRA,
-        .moves = {MOVE_THIEF, MOVE_REFLECT, MOVE_LIGHT_SCREEN, MOVE_TELEPORT},
+        .moves = {MOVE_PSYCHIC, MOVE_REFLECT, MOVE_LIGHT_SCREEN, MOVE_TELEPORT},
     },
     {
         .iv = 83,
@@ -6009,7 +6009,7 @@ static const struct TrainerMonItemCustomMoves sParty_LeaderMisty[] = {
         .lvl = 26,
         .species = SPECIES_STARMIE,
         .heldItem = ITEM_SITRUS_BERRY,
-        .moves = {MOVE_WATER_PULSE, MOVE_RAPID_SPIN, MOVE_RECOVER, MOVE_SWIFT},
+        .moves = {MOVE_WATER_PULSE, MOVE_PSYCHIC, MOVE_RECOVER, MOVE_SWIFT},
     },
 };
 
