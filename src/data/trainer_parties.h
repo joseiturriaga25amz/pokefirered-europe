@@ -6033,7 +6033,7 @@ static const struct TrainerMonItemCustomMoves sParty_LeaderLtSurge[] = {
         .lvl = 30,
         .species = SPECIES_RAICHU,
         .heldItem = ITEM_SITRUS_BERRY,
-        .moves = {MOVE_THUNDERBOLT, MOVE_BODY_SLAM, MOVE_MEGA_KICK, MOVE_QUICK_ATTACK},
+        .moves = {MOVE_SHOCK_WAVE, MOVE_MEGA_PUNCH, MOVE_THUNDER_WAVE, MOVE_QUICK_ATTACK},
     },
 };
 
@@ -6060,7 +6060,7 @@ static const struct TrainerMonItemCustomMoves sParty_LeaderErika[] = {
         .moves = {MOVE_GIGA_DRAIN, MOVE_ACID, MOVE_STUN_SPORE, MOVE_AROMATHERAPY},
     },
     {
-        .iv = 116,
+        .iv = 255,
         .lvl = 35,
         .species = SPECIES_GLOOM,
         .heldItem = ITEM_SITRUS_BERRY,
@@ -6143,14 +6143,14 @@ static const struct TrainerMonItemCustomMoves sParty_LeaderSabrina[] = {
         .lvl = 42,
         .species = SPECIES_MR_MIME,
         .heldItem = ITEM_NONE,
-        .moves = {MOVE_PSYCHIC, MOVE_MAGICAL_LEAF, MOVE_REFLECT, MOVE_LIGHT_SCREEN},
+        .moves = {MOVE_PSYBEAM, MOVE_BATON_PASS, MOVE_BARRIER, MOVE_CALM_MIND},
     },
     {
         .iv = 140,
         .lvl = 43,
         .species = SPECIES_VENOMOTH,
         .heldItem = ITEM_NONE,
-        .moves = {MOVE_PSYCHIC, MOVE_SILVER_WIND, MOVE_SLEEP_POWDER, MOVE_GIGA_DRAIN},
+        .moves = {MOVE_PSYBEAM, MOVE_SILVER_WIND, MOVE_GUST, MOVE_SLEEP_POWDER},
     },
     {
         .iv = 140,
@@ -6164,7 +6164,7 @@ static const struct TrainerMonItemCustomMoves sParty_LeaderSabrina[] = {
         .lvl = 47,
         .species = SPECIES_ALAKAZAM,
         .heldItem = ITEM_TWISTED_SPOON,
-        .moves = {MOVE_PSYCHIC, MOVE_CALM_MIND, MOVE_RECOVER, MOVE_SHOCK_WAVE},
+        .moves = {MOVE_PSYCHIC, MOVE_CALM_MIND, MOVE_RECOVER, MOVE_PROTECT},
     },
 };
 

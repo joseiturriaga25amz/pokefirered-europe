@@ -218,3 +218,18 @@ Design intent:
 - Nidoqueen and Nidoking retain strong but bounded coverage rather than near-competitive all-purpose coverage.
 - Golem explicitly removes Explosion; Defense Curl makes it a physical-wall step rather than a one-shot spike.
 - Rhydon remains the ace through level, Ground/Rock STAB profile and Soft Sand, without needing a stronger raw move than Earthquake.
+
+
+### 2026-09-25 — approved-state regression repair before 8-Gym curve audit
+
+Repository audit found three previously approved decisions had not survived into the current trainer-party block:
+- Lt. Surge Raichu had reverted to Thunderbolt / Body Slam / Mega Kick / Quick Attack.
+- Erika ace Gloom had reverted from trainer IV byte 255 to 116.
+- Sabrina Mr. Mime, Venomoth and Alakazam had reverted to earlier pre-approval movesets.
+
+Repaired to the already-approved state:
+- Raichu 30 — Shock Wave / Mega Punch / Thunder Wave / Quick Attack + Sitrus.
+- Gloom 35 — trainer IV byte 255 (31 fixed IVs), approved moves unchanged.
+- Sabrina final approved four sets restored exactly.
+
+No new balance decision is introduced by this repair.
