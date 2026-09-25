@@ -268,3 +268,14 @@ Design intent:
 - Psychic-line attack progression becomes: Abra Confusion -> Kadabra Confusion -> Kadabra Psybeam -> Alakazam Psychic.
 - Pidgeot-line Normal STAB progression avoids low-power trainer Return caused by default friendship and grows from Quick Attack -> Facade -> Double-Edge.
 - Blastoise begins weather-based ace identity at Silph, later adding Mystic Water and finally Hydro Pump at Champion.
+
+
+### Gary Silph Blastoise refinement — approved 2026-09-25
+
+Silph Blastoise 49 final set:
+- Surf / Ice Beam / Bite / Rain Dance + Sitrus Berry
+
+Refinement:
+- Bite is restored because the modern physical/special split lets Blastoise use its solid physical Attack and preserves useful Dark coverage/flinch pressure.
+- Protect is removed because this set is not built around passive stalling; Rain Dance is the preferred utility slot and directly advances Blastoise's ace identity.
+- Progression remains: juvenile Bite -> first-stage Blastoise keeps Bite while learning weather control -> late-game Blastoise replaces Bite with Earthquake -> Champion upgrades Surf to Hydro Pump.

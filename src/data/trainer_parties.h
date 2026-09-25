@@ -6437,7 +6437,7 @@ static const struct TrainerMonItemCustomMoves sParty_RivalSilphSquirtle[] = {
         .lvl = 49,
         .species = SPECIES_BLASTOISE,
         .heldItem = ITEM_SITRUS_BERRY,
-        .moves = {MOVE_SURF, MOVE_ICE_BEAM, MOVE_RAIN_DANCE, MOVE_PROTECT},
+        .moves = {MOVE_SURF, MOVE_ICE_BEAM, MOVE_BITE, MOVE_RAIN_DANCE},
     },
 };
 
