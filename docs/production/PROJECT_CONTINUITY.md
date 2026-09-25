@@ -383,3 +383,24 @@ GitHub Actions run `36023307145` completed SUCCESS on that exact HEAD. The repos
 B1 branch: `feature/b1-low-risk-qol`.
 
 B1.1 starts with the lowest-risk local corrections: Porygon 5,500/localized presentation, National Dex removal of the 60-capture gate while retaining the One Island story gate, and Move Reminder money-based localization cleanup. Later B1 subblocks handle Oak aide badge gates, UI-001/UI-002, vending quantity, and final HM field-license behavior.
+
+
+## 16. 2026-09-25 — B1 closed / B2 next
+
+B1 — Low-risk UX/QoL cleanup is CLOSED at exact validated HEAD `ede84f8837346ffe22d697c9ed6a6677ad7fb3f4`.
+
+GitHub Actions:
+- run `36135969057` — **Full Gameplay Core**
+- result: **SUCCESS**
+
+The final B1 correction was L10N-002: the active Spanish Move Reminder dialogue now matches the real repeatable 2.000-money system and no longer instructs the player to bring mushrooms.
+
+New approved deferred polish:
+- A-010 records the GAME FREAK Pokédex completion improvement;
+- Kanto completion keeps the diploma and adds one one-time Master Ball with retry-safe full-bag handling;
+- implementation belongs to B9, not B1;
+- the National completion bonus remains intentionally undecided until B9.
+
+Next production block: **B2 — Boss/rival balance reconciliation**.
+
+B2 must begin from a fresh branch/checkpoint derived from the validated B1 HEAD and follow the bounded protocol: locate → inspect → change → validate → record.

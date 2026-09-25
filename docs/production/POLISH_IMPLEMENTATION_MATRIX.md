@@ -371,12 +371,16 @@ Exit gate:
 Scope:
 - encounter method and level context for seen species;
 - preserve mystery for undiscovered legendary/event encounters;
-- reuse existing area-marker system where possible.
+- reuse existing area-marker system where possible;
+- A-010 Kanto completion reward in GAME FREAK: preserve diploma + one-time Master Ball with retry-safe full-bag behavior;
+- retain the National diploma and design its separate 100%-completion reward before B9 closure.
 
 Exit gate:
-- read-only encounter derivation;
-- no Pokédex save-layout change;
-- protected-event species do not leak locations.
+- encounter guidance remains read-only derivation;
+- no Pokédex save-layout change or SaveBlock growth;
+- protected-event species do not leak locations;
+- Kanto Master Ball cannot duplicate and cannot be lost when the bag is full;
+- original Kanto/National diploma distinction remains intact.
 
 ### B10 — Player follower prototype QA and integration decision
 Scope:

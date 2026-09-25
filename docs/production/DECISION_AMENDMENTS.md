@@ -248,3 +248,29 @@ The following runtime-approved rules are authoritative for B1 and v1.0 closure:
 - Preserve Altering Cave variable semantics/IDs and encounter table format.
 - Do not alter species/item IDs, Pokémon/BoxPokemon structures, SaveBlock sizes or Link serialization for these rules.
 - Boss/encounter/capture tuning must be validated against story-stage progression and existing respawn/state-machine guarantees.
+
+
+## A-010 — GAME FREAK Pokédex completion rewards
+
+**Date:** 2026-09-25  
+**Status:** APPROVED  
+**Implementation block:** B9 — Pokédex usefulness
+
+### Decision
+
+- Preserve the original GAME FREAK diploma presentation in `CeladonCity_Condominiums_3F`.
+- Completing the Kanto Pokédex under the existing `HasAllKantoMons()` rule (150 Kanto species, Mew excluded) awards:
+  - the original Kanto diploma; and
+  - **one additional Master Ball** as a tangible completion reward.
+- The Master Ball reward is strictly one-time. Use an audited persistent flag; do not add item IDs or grow save structures.
+- Full-bag handling must be safe: if the player cannot receive the Master Ball, do **not** mark the reward as claimed. The player may return later and receive it once space is available.
+- The dialogue should acknowledge the diploma and then explicitly recognize that the achievement merits an additional prize.
+- `HasAllMons()` / National Pokédex completion retains the National diploma, but its additional 100%-completion reward is intentionally **not frozen yet**. It will be designed separately before B9 closes rather than defaulting to a second Master Ball.
+
+### Compatibility constraints
+
+- Reuse `ITEM_MASTER_BALL`.
+- No species/item ID changes.
+- No Pokémon/BoxPokemon or link-serialization changes.
+- No SaveBlock growth; allocate only an audited existing Full flag namespace.
+- Preserve the original diploma behavior and National/Kanto distinction.
