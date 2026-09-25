@@ -4,9 +4,8 @@ FuchsiaCity_House3_MapScripts::
 FuchsiaCity_House3_EventScript_MoveDeleter::
 	lock
 	faceplayer
-	msgbox FuchsiaCity_House3_Text_WouldYouLikeToForgetMove, MSGBOX_YESNO
-	goto_if_eq VAR_RESULT, YES, FuchsiaCity_House3_EventScript_ChooseMonForMoveDeleter
-	goto FuchsiaCity_House3_EventScript_CancelForgetMove
+	msgbox FuchsiaCity_House3_Text_WouldYouLikeToForgetMove, MSGBOX_DEFAULT
+	release
 	end
 
 FuchsiaCity_House3_EventScript_ChooseMonForMoveDeleter::

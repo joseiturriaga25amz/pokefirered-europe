@@ -1,10 +1,16 @@
 FuchsiaCity_House3_Text_WouldYouLikeToForgetMove::
     .string "Eh... Ah, hola.\n"
-    .string "Soy el QUITA-MOVIMIENTOS.\p"
-    .string "Puedo hacer que los POKéMON\n"
-    .string "olviden sus movimientos.\p"
-    .string "¿Quieres que me ocupe de los\n"
-    .string "tuyos?$"
+    .string "Durante años fui investigador\n"
+    .string "de la ZONA SAFARI.\p"
+    .string "Aprendí que algunas especies\n"
+    .string "no permanecen en una sola región.\p"
+    .string "Una vez hallé tres rastros\n"
+    .string "distintos, llegados desde JOHTO:\l"
+    .string "agua, relámpago y fuego.\p"
+    .string "Intenté seguirlos, pero se\n"
+    .string "esfumaban en un instante.\p"
+    .string "Desde entonces sé que algunos\n"
+    .string "POKéMON recorren el mundo entero.$"
 
 FuchsiaCity_House3_Text_WhichMonShouldForgetMove::
     .string "¿Qué POKéMON debería olvidar\n"
