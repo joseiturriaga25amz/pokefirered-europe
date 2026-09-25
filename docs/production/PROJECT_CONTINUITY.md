@@ -7,13 +7,14 @@
 Before modifying code:
 
 1. Read this file.
-2. Read `docs/production/DECISION_AMENDMENTS.md`.
-3. Read `docs/production/RC_AUDIT_LOG.md`.
-4. Read `docs/production/FINAL_AUDIT_PLAN.md`.
-5. Read `docs/production/RC_MYBOY_CHECKLIST.md`.
-6. Read `docs/production/SECOND_PASS_AUDIT.md`.
-7. Inspect the current branch HEAD and latest GitHub Actions result.
-8. Only if a design detail is still needed, consult the frozen sources under `docs/spec/`.
+2. Read `docs/production/REPOSITORY_GUARDRAILS.md` and verify the canonical repository is `joseiturriaga25amz/pokefirered-europe` with `push: true` before any write.
+3. Read `docs/production/DECISION_AMENDMENTS.md`.
+4. Read `docs/production/RC_AUDIT_LOG.md`.
+5. Read `docs/production/FINAL_AUDIT_PLAN.md`.
+6. Read `docs/production/RC_MYBOY_CHECKLIST.md`.
+7. Read `docs/production/SECOND_PASS_AUDIT.md`.
+8. Inspect the current branch HEAD and latest GitHub Actions result.
+9. Only if a design detail is still needed, consult the frozen sources under `docs/spec/`.
 
 Previous chats are **not required** and must not override the repository.
 
@@ -40,7 +41,9 @@ A historical frozen requirement superseded by an approved amendment must **not**
 ## 4. Repository / branch / baseline
 
 - Repository: `joseiturriaga25amz/pokefirered-europe`.
-- Active production branch: `feature/full-gameplay-core`.
+- Upstream reference only: `CompuMaxx/pokefirered-europe` (never a production write target).
+- Active production branch: `feature/b2-boss-rival-balance`.
+- Repository write preflight is mandatory: exact full name + `push: true` before any mutation.
 - Frozen vanilla tag: `baseline-spanish-vanilla`.
 - Baseline commit: `e184c5cf898cd29efebd33bc1bfe5994277e21ab`.
 - Production target: `firered_es_modern`.
@@ -404,3 +407,10 @@ New approved deferred polish:
 Next production block: **B2 — Boss/rival balance reconciliation**.
 
 B2 must begin from a fresh branch/checkpoint derived from the validated B1 HEAD and follow the bounded protocol: locate → inspect → change → validate → record.
+
+
+## 17. 2026-09-25 — repository-target incident / guardrail
+
+A B2 write attempt was accidentally directed at the upstream repository `CompuMaxx/pokefirered-europe`, which correctly exposed read-only permissions to the connector (`pull: true, push: false`). No project data was lost. The canonical fork `joseiturriaga25amz/pokefirered-europe` retained branch `feature/b2-boss-rival-balance` at hardened Mewtwo checkpoint `eed2d780be04f1b6dcc396ef9d01b5808dd8aea4`, with parent implementation commit `b48fab525fd10a11e5552d5b6ef22ada5fb712d8`.
+
+Permanent rule: read `docs/production/REPOSITORY_GUARDRAILS.md` at session start and verify the exact canonical repo plus `push: true` before every first write of a session. Upstream is comparison/reference only.
