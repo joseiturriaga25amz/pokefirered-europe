@@ -6,6 +6,7 @@ on:
       - feature/full-gameplay-core
       - feature/b0-baseline-validator-truth
       - feature/b1-low-risk-qol
+      - feature/b2-boss-rival-balance
 
 jobs:
   build:
