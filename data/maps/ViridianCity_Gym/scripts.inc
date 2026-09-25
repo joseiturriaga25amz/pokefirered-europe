@@ -69,6 +69,7 @@ ViridianCity_Gym_EventScript_MewtwoBreaksFree::
 	msgbox ViridianCity_Gym_Text_MewtwoEscaped
 	delay 20
 	msgbox ViridianCity_Gym_Text_GiovanniAfterMewtwo
+	releaseall
 	return
 
 ViridianCity_Gym_Movement_MewtwoEscape:
@@ -201,42 +202,42 @@ ViridianCity_Gym_Text_FullRematchAfter::
 
 
 ViridianCity_Gym_Text_MewtwoPower::
-	.string "MEWTWO: Ahora comprendo todo mi\\n"
+	.string "MEWTWO: Ahora comprendo todo mi\n"
 	.string "poder... ¿Pero cuál es mi destino?$"
 
 ViridianCity_Gym_Text_GiovanniMaster::
-	.string "GIOVANNI: Tu destino es servirme.\\n"
+	.string "GIOVANNI: Tu destino es servirme.\n"
 	.string "Fuiste creado para luchar por mí.$"
 
 ViridianCity_Gym_Text_MewtwoPartners::
-	.string "MEWTWO: Dijiste que éramos socios...\\n"
+	.string "MEWTWO: Dijiste que éramos socios...\n"
 	.string "Que éramos iguales.$"
 
 ViridianCity_Gym_Text_GiovanniHumans::
-	.string "GIOVANNI: Fuiste creado por humanos.\\n"
+	.string "GIOVANNI: Fuiste creado por humanos.\n"
 	.string "¡Jamás podrás ser nuestro igual!$"
 
 ViridianCity_Gym_Text_MewtwoFreedom::
-	.string "MEWTWO: Los humanos pudieron\\n"
-	.string "crearme...\\p"
+	.string "MEWTWO: Los humanos pudieron\n"
+	.string "crearme...\p"
 	.string "¡Pero jamás me esclavizarán!$"
 
 ViridianCity_Gym_Text_GiovanniStopMewtwo::
-	.string "GIOVANNI: ¡Detén esto ahora mismo!\\n"
+	.string "GIOVANNI: ¡Detén esto ahora mismo!\n"
 	.string "¡MEWTWO! ¡Te ordeno que vuelvas!$"
 
 ViridianCity_Gym_Text_MewtwoEscaped::
-	.string "¡MEWTWO ha roto el control de\\n"
+	.string "¡MEWTWO ha roto el control de\n"
 	.string "GIOVANNI y ha escapado del GIMNASIO!$"
 
 ViridianCity_Gym_Text_GiovanniAfterMewtwo::
-	.string "GIOVANNI: ...\\p"
-	.string "Así que finalmente elegiste\\n"
-	.string "desobedecerme...\\p"
-	.string "No importa. Has derrotado incluso\\n"
+	.string "GIOVANNI: ...\p"
+	.string "Así que finalmente elegiste\n"
+	.string "desobedecerme...\p"
+	.string "No importa. Has derrotado incluso\n"
 	.string "al poder que yo creía controlar.$"
 
 ViridianCity_Gym_Text_EarthBadgeAfterMewtwo::
-	.string "¡Ha sido un duro combate!\\n"
-	.string "Tu victoria es indiscutible.\\p"
+	.string "¡Ha sido un duro combate!\n"
+	.string "Tu victoria es indiscutible.\p"
 	.string "¡Toma la MEDALLA TIERRA!{PAUSE_MUSIC}{PLAY_BGM}{MUS_OBTAIN_BADGE}{PAUSE 0xFE}{PAUSE 0x56}{RESUME_MUSIC}$"

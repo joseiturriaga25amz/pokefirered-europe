@@ -301,3 +301,8 @@ Narrative/cutscene:
 - Giovanni simultaneously performs an in-place panic/agitation sequence.
 - Mewtwo is removed only from the gym event; Cerulean Cave's FLAG_HIDE_MEWTWO / level-70 encounter remain untouched.
 - The Earth Badge/TM26 flow resumes after the escape scene.
+
+
+#### Mewtwo cutscene script hardening
+- Corrected dialogue control sequences from literal double-escaped text to native \n / \p script controls.
+- Matched the cutscene's lockall with releaseall before returning to the Earth Badge flow.
