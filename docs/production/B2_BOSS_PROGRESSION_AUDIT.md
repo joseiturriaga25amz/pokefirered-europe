@@ -306,3 +306,18 @@ Narrative/cutscene:
 #### Mewtwo cutscene script hardening
 - Corrected dialogue control sequences from literal double-escaped text to native \n / \p script controls.
 - Matched the cutscene's lockall with releaseall before returning to the Earth Badge flow.
+
+
+### Lorelei — first League approved 2026-09-25
+
+First-League Lorelei is approved exactly as currently implemented:
+- Dewgong 57 — Ice Beam / Surf / Hail / Safeguard
+- Slowbro 58 — Surf / Psychic / Ice Beam / Amnesia
+- Jynx 59 — Ice Beam / Psychic / Lovely Kiss / Attract
+- Cloyster 60 + NeverMeltIce — Ice Beam / Surf / Spikes / Protect
+- Lapras 61 + Sitrus Berry — Ice Beam / Surf / Thunderbolt / Body Slam
+- trainer IV byte 198 (~IV24), full boss AI, two Full Restores.
+
+Rationale: by the first Elite Four there is no longer an early-game offensive-ceiling concern for standard late-Kanto moves such as Psychic, Ice Beam, Thunderbolt, Surf, Earthquake, Shadow Ball, Flamethrower and comparable legal tools. Progression review still applies to genuinely postgame-only or otherwise anomalous move access.
+
+Deferred B3 rematch amendment: Lorelei's rematch Lapras should use Ice Beam / Surf / Thunderbolt / Confuse Ray, replacing Body Slam so the rematch combines the original Lapras control identity with the Full coverage upgrade.
