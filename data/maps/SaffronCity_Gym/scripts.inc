@@ -2,7 +2,7 @@ SaffronCity_Gym_MapScripts::
 	.byte 0
 
 SaffronCity_Gym_EventScript_Sabrina::
-	goto_if_unset FLAG_SYS_NATIONAL_DEX, SaffronCity_Gym_EventScript_SabrinaStory
+	goto_if_unset FLAG_SYS_GAME_CLEAR, SaffronCity_Gym_EventScript_SabrinaStory
 	goto_if_unset FLAG_GOT_TM04_FROM_SABRINA, SaffronCity_Gym_EventScript_SabrinaStory
 	goto SaffronCity_Gym_EventScript_FullRematchOffer
 
@@ -119,16 +119,13 @@ SaffronCity_Gym_EventScript_FullRematchDecline::
 	end
 
 SaffronCity_Gym_Text_FullRematchOffer::
-	.string "Has recorrido un largo camino desde\n"
-	.string "nuestro primer combate.\p"
-	.string "¿Quieres una revancha de verdad?$"
+	.string "Ya percibí que volverías.\p¿Deseas comprobar otra vez tu poder?$"
 
 SaffronCity_Gym_Text_FullRematchIntro::
-	.string "¡Entonces veamos cuánto has crecido!$"
+	.string "El resultado aún no está escrito.$"
 
 SaffronCity_Gym_Text_FullRematchDefeat::
-	.string "Excelente. Tu fuerza sigue creciendo.$"
+	.string "Tu voluntad volvió a cambiar el futuro.$"
 
 SaffronCity_Gym_Text_FullRematchAfter::
-	.string "Puedes volver cuando quieras.\p"
-	.string "Siempre aceptaré otra revancha.$"
+	.string "Cuando tu mente busque otro desafío,\nsabrás dónde encontrarme.$"
