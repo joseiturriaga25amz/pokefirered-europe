@@ -321,3 +321,16 @@ First-League Lorelei is approved exactly as currently implemented:
 Rationale: by the first Elite Four there is no longer an early-game offensive-ceiling concern for standard late-Kanto moves such as Psychic, Ice Beam, Thunderbolt, Surf, Earthquake, Shadow Ball, Flamethrower and comparable legal tools. Progression review still applies to genuinely postgame-only or otherwise anomalous move access.
 
 Deferred B3 rematch amendment: Lorelei's rematch Lapras should use Ice Beam / Surf / Thunderbolt / Confuse Ray, replacing Body Slam so the rematch combines the original Lapras control identity with the Full coverage upgrade.
+
+
+### Bruno — first League approved 2026-09-25
+
+First-League Bruno is approved exactly as currently implemented:
+- Onix 58 — Earthquake / Rock Tomb / Iron Tail / Sandstorm
+- Hitmonchan 59 + Focus Band — Sky Uppercut / Mach Punch / Ice Punch / Thunder Punch
+- Hitmonlee 60 — Brick Break / Mega Kick / Rock Slide / Earthquake
+- Onix 60 — Earthquake / Rock Slide / Double-Edge / Iron Tail
+- Machamp 62 + Black Belt — Cross Chop / Bulk Up / Rock Slide / Earthquake
+- trainer IV byte 206 (~IV25), full boss AI, two Full Restores.
+
+Rationale: roster identity remains vanilla while dead/low-value utility is replaced by coherent physical coverage under the modern physical/special split. The two Onix have distinct progression roles, and Machamp remains the unequivocal ace through STAB Cross Chop + Black Belt without adding recovery or excessive sustain.
