@@ -618,6 +618,9 @@ jobs:
       - name: Validate Full trainer legality
         run: python3 tools/validate_full_trainer_sets.py
 
+      - name: Validate B3 Gym rematch identity
+        run: python3 tools/validate_b3_rematch_identity.py
+
       - name: Validate one-save baby obtainability
         run: python3 tools/validate_full_obtainability.py
 
