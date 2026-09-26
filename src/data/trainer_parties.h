@@ -4177,7 +4177,7 @@ static const struct TrainerMonNoItemCustomMoves sParty_RivalCeruleanBulbasaur[] 
         .iv = 83,
         .lvl = 18,
         .species = SPECIES_ABRA,
-        .moves = {MOVE_PSYCHIC, MOVE_REFLECT, MOVE_LIGHT_SCREEN, MOVE_TELEPORT},
+        .moves = {MOVE_CONFUSION, MOVE_TELEPORT, MOVE_NONE, MOVE_NONE},
     },
     {
         .iv = 83,
@@ -4204,7 +4204,7 @@ static const struct TrainerMonNoItemCustomMoves sParty_RivalCeruleanCharmander[]
         .iv = 83,
         .lvl = 18,
         .species = SPECIES_ABRA,
-        .moves = {MOVE_PSYCHIC, MOVE_REFLECT, MOVE_LIGHT_SCREEN, MOVE_TELEPORT},
+        .moves = {MOVE_CONFUSION, MOVE_TELEPORT, MOVE_NONE, MOVE_NONE},
     },
     {
         .iv = 83,
@@ -6280,7 +6280,7 @@ static const struct TrainerMonNoItemCustomMoves sParty_RivalSsAnneBulbasaur[] = 
         .iv = 99,
         .lvl = 25,
         .species = SPECIES_KADABRA,
-        .moves = {MOVE_PSYBEAM, MOVE_RECOVER, MOVE_REFLECT, MOVE_DISABLE},
+        .moves = {MOVE_CONFUSION, MOVE_RECOVER, MOVE_REFLECT, MOVE_DISABLE},
     },
     {
         .iv = 99,
@@ -6307,7 +6307,7 @@ static const struct TrainerMonNoItemCustomMoves sParty_RivalSsAnneCharmander[] =
         .iv = 99,
         .lvl = 25,
         .species = SPECIES_KADABRA,
-        .moves = {MOVE_PSYBEAM, MOVE_RECOVER, MOVE_REFLECT, MOVE_DISABLE},
+        .moves = {MOVE_CONFUSION, MOVE_RECOVER, MOVE_REFLECT, MOVE_DISABLE},
     },
     {
         .iv = 99,
@@ -6361,7 +6361,7 @@ static const struct TrainerMonNoItemCustomMoves sParty_RivalPokemonTowerBulbasau
         .iv = 116,
         .lvl = 31,
         .species = SPECIES_PIDGEOTTO,
-        .moves = {MOVE_AERIAL_ACE, MOVE_RETURN, MOVE_SAND_ATTACK, MOVE_WHIRLWIND},
+        .moves = {MOVE_AERIAL_ACE, MOVE_QUICK_ATTACK, MOVE_SAND_ATTACK, MOVE_WHIRLWIND},
     },
     {
         .iv = 116,
@@ -6394,7 +6394,7 @@ static const struct TrainerMonNoItemCustomMoves sParty_RivalPokemonTowerCharmand
         .iv = 116,
         .lvl = 31,
         .species = SPECIES_PIDGEOTTO,
-        .moves = {MOVE_AERIAL_ACE, MOVE_RETURN, MOVE_SAND_ATTACK, MOVE_WHIRLWIND},
+        .moves = {MOVE_AERIAL_ACE, MOVE_QUICK_ATTACK, MOVE_SAND_ATTACK, MOVE_WHIRLWIND},
     },
     {
         .iv = 116,
@@ -6467,7 +6467,7 @@ static const struct TrainerMonItemCustomMoves sParty_RivalSilphBulbasaur[] = {
         .lvl = 44,
         .species = SPECIES_PIDGEOT,
         .heldItem = ITEM_NONE,
-        .moves = {MOVE_AERIAL_ACE, MOVE_RETURN, MOVE_FEATHER_DANCE, MOVE_SAND_ATTACK},
+        .moves = {MOVE_AERIAL_ACE, MOVE_FACADE, MOVE_FEATHER_DANCE, MOVE_SAND_ATTACK},
     },
     {
         .iv = 149,
@@ -6488,7 +6488,7 @@ static const struct TrainerMonItemCustomMoves sParty_RivalSilphBulbasaur[] = {
         .lvl = 49,
         .species = SPECIES_BLASTOISE,
         .heldItem = ITEM_SITRUS_BERRY,
-        .moves = {MOVE_SURF, MOVE_ICE_BEAM, MOVE_BITE, MOVE_PROTECT},
+        .moves = {MOVE_SURF, MOVE_ICE_BEAM, MOVE_BITE, MOVE_RAIN_DANCE},
     },
 };
 
@@ -6505,7 +6505,7 @@ static const struct TrainerMonItemCustomMoves sParty_RivalSilphCharmander[] = {
         .lvl = 44,
         .species = SPECIES_PIDGEOT,
         .heldItem = ITEM_NONE,
-        .moves = {MOVE_AERIAL_ACE, MOVE_RETURN, MOVE_FEATHER_DANCE, MOVE_SAND_ATTACK},
+        .moves = {MOVE_AERIAL_ACE, MOVE_FACADE, MOVE_FEATHER_DANCE, MOVE_SAND_ATTACK},
     },
     {
         .iv = 149,
@@ -6526,7 +6526,7 @@ static const struct TrainerMonItemCustomMoves sParty_RivalSilphCharmander[] = {
         .lvl = 49,
         .species = SPECIES_BLASTOISE,
         .heldItem = ITEM_SITRUS_BERRY,
-        .moves = {MOVE_SURF, MOVE_ICE_BEAM, MOVE_BITE, MOVE_PROTECT},
+        .moves = {MOVE_SURF, MOVE_ICE_BEAM, MOVE_BITE, MOVE_RAIN_DANCE},
     },
 };
 
@@ -6588,7 +6588,7 @@ static const struct TrainerMonItemCustomMoves sParty_RivalRoute22LateBulbasaur[]
         .lvl = 56,
         .species = SPECIES_PIDGEOT,
         .heldItem = ITEM_NONE,
-        .moves = {MOVE_AERIAL_ACE, MOVE_RETURN, MOVE_STEEL_WING, MOVE_FEATHER_DANCE},
+        .moves = {MOVE_AERIAL_ACE, MOVE_FACADE, MOVE_STEEL_WING, MOVE_FEATHER_DANCE},
     },
     {
         .iv = 198,
@@ -6633,7 +6633,7 @@ static const struct TrainerMonItemCustomMoves sParty_RivalRoute22LateCharmander[
         .lvl = 56,
         .species = SPECIES_PIDGEOT,
         .heldItem = ITEM_NONE,
-        .moves = {MOVE_AERIAL_ACE, MOVE_RETURN, MOVE_STEEL_WING, MOVE_FEATHER_DANCE},
+        .moves = {MOVE_AERIAL_ACE, MOVE_FACADE, MOVE_STEEL_WING, MOVE_FEATHER_DANCE},
     },
     {
         .iv = 198,
@@ -6716,7 +6716,7 @@ static const struct TrainerMonItemCustomMoves sParty_ChampionFirstBulbasaur[] = 
         .lvl = 64,
         .species = SPECIES_PIDGEOT,
         .heldItem = ITEM_NONE,
-        .moves = {MOVE_AERIAL_ACE, MOVE_RETURN, MOVE_STEEL_WING, MOVE_FEATHER_DANCE},
+        .moves = {MOVE_AERIAL_ACE, MOVE_DOUBLE_EDGE, MOVE_STEEL_WING, MOVE_FEATHER_DANCE},
     },
     {
         .iv = 231,
@@ -6761,7 +6761,7 @@ static const struct TrainerMonItemCustomMoves sParty_ChampionFirstCharmander[] =
         .lvl = 64,
         .species = SPECIES_PIDGEOT,
         .heldItem = ITEM_NONE,
-        .moves = {MOVE_AERIAL_ACE, MOVE_RETURN, MOVE_STEEL_WING, MOVE_FEATHER_DANCE},
+        .moves = {MOVE_AERIAL_ACE, MOVE_DOUBLE_EDGE, MOVE_STEEL_WING, MOVE_FEATHER_DANCE},
     },
     {
         .iv = 231,
