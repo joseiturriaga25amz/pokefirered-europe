@@ -360,3 +360,32 @@ First-League Lance is approved with one final refinement to the ace:
 - trainer IV byte 223 (~IV27), full boss AI, two Full Restores.
 
 Rationale: the two Dragonair retain Outrage as the more volatile aggressive Dragon STAB, while the ace Dragonite uses Dragon Claw for a reliable Dragon STAB without lock-in/confusion. This preserves internal team differentiation while keeping Dragonite the clear ace through stats, level, coverage and Dragon Fang.
+
+
+### First-League transversal closure + Giovanni materialization — 2026-09-25
+
+Cross-team first-League progression is coherent after the individual approvals:
+- Lorelei: average 59.0, ace 61, IV24.
+- Bruno: average 59.8, ace 62, IV25.
+- Agatha: average 60.6, ace 63, IV26.
+- Lance: average 62.4, ace 65, IV27.
+- Gary Champion: average 66.0, ace Blastoise 69, IV28 baseline / IV30 Blastoise.
+All five use full boss AI and two Full Restores. The progression rises in team average, IV quality and ace ceiling without universal perfect IVs.
+
+Final implementation audit found Rocket Hideout and Silph Giovanni were still using vanilla default-move payloads despite the already-approved B2 design. The approved sets are now materialized:
+
+**Rocket Hideout Giovanni**
+- Persian 29 (IV14): Pay Day / Faint Attack / Aerial Ace / Taunt
+- Rhyhorn 30 (IV14): Rock Blast / Dig / Stomp / Scary Face
+- Kangaskhan 33 (IV14): Fake Out / Mega Punch / Brick Break / Bite
+- Full boss AI; custom moves; no held items.
+
+**Silph Giovanni**
+- Persian 44 (IV18): Faint Attack / Screech / Shadow Ball / Aerial Ace
+- Kingler 45 (IV18): Surf / Stomp / Protect / Mud Shot
+- Kangaskhan 46 (IV18): Fake Out / Dizzy Punch / Brick Break / Dig
+- Rhyhorn 47 (IV18): Rock Blast / Dig / Take Down / Scary Face
+- Nidoqueen 49 (IV18): Dig / Superpower / Body Slam / Ice Beam
+- Full boss AI; custom moves; no held items.
+
+Both Giovanni Rocket boss parties are now included in `validate_full_trainer_sets.py`.
