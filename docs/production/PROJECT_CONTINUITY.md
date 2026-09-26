@@ -42,7 +42,7 @@ A historical frozen requirement superseded by an approved amendment must **not**
 
 - Repository: `joseiturriaga25amz/pokefirered-europe`.
 - Upstream reference only: `CompuMaxx/pokefirered-europe` (never a production write target).
-- Active production branch: `feature/b2-boss-rival-balance`.
+- Active production branch: `feature/b3-postgame-rematch-identity`.
 - Repository write preflight is mandatory: exact full name + `push: true` before any mutation.
 - Frozen vanilla tag: `baseline-spanish-vanilla`.
 - Baseline commit: `e184c5cf898cd29efebd33bc1bfe5994277e21ab`.
@@ -414,3 +414,19 @@ B2 must begin from a fresh branch/checkpoint derived from the validated B1 HEAD 
 A B2 write attempt was accidentally directed at the upstream repository `CompuMaxx/pokefirered-europe`, which correctly exposed read-only permissions to the connector (`pull: true, push: false`). No project data was lost. The canonical fork `joseiturriaga25amz/pokefirered-europe` retained branch `feature/b2-boss-rival-balance` at hardened Mewtwo checkpoint `eed2d780be04f1b6dcc396ef9d01b5808dd8aea4`, with parent implementation commit `b48fab525fd10a11e5552d5b6ef22ada5fb712d8`.
 
 Permanent rule: read `docs/production/REPOSITORY_GUARDRAILS.md` at session start and verify the exact canonical repo plus `push: true` before every first write of a session. Upstream is comparison/reference only.
+
+
+## 18. 2026-09-26 — B2 closed / B3 started
+
+B2 — Boss/rival balance reconciliation was merged to `master` through PR #3 after exact-head Full Gameplay Core run `36253119207` completed SUCCESS on `479b1c04924e7ccbd3c0c079dc42a21bdee9ae48`.
+
+Merged master checkpoint: `0a081948847de63022d65237868a5d46dc368c6c`.
+
+B3 active branch: `feature/b3-postgame-rematch-identity`, created from that exact merged master checkpoint.
+
+B3.1 changes:
+- Gym Leader rematches now unlock from `FLAG_SYS_GAME_CLEAR`, not National Dex;
+- Giovanni's postgame reappearance follows the same game-clear rule;
+- all eight Gym Leaders have unique rematch offer / intro / defeat / post-battle dialogue;
+- repeatability remains intact via `cleartrainerflag`;
+- `tools/validate_b3_rematch_identity.py` is wired into Full Gameplay Core.
