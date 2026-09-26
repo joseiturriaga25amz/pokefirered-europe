@@ -11104,7 +11104,7 @@ static const struct TrainerMonItemCustomMoves sParty_EliteFourLorelei2[] = {
         .lvl = 79,
         .species = SPECIES_LAPRAS,
         .heldItem = ITEM_LEFTOVERS,
-        .moves = {MOVE_ICE_BEAM, MOVE_SURF, MOVE_THUNDERBOLT, MOVE_BODY_SLAM},
+        .moves = {MOVE_ICE_BEAM, MOVE_SURF, MOVE_THUNDERBOLT, MOVE_CONFUSE_RAY},
     },
 };
 
