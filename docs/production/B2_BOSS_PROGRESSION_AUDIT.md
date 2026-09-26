@@ -389,3 +389,26 @@ Final implementation audit found Rocket Hideout and Silph Giovanni were still us
 - Full boss AI; custom moves; no held items.
 
 Both Giovanni Rocket boss parties are now included in `validate_full_trainer_sets.py`.
+
+
+### B2 closure audit — static pass 2026-09-26
+
+A final first-cycle closure audit was performed before any B3 work or merge to master.
+
+Verified:
+- all eight first-battle Gym Leader parties match the latest approved state;
+- Giovanni Hideout, Silph and Gym/Mewtwo are materialized and use the intended boss AI;
+- Gary's actual battle scripts route every starter branch to the canonical Squirtle trainer IDs from Oak's Lab through Champion;
+- first Elite Four and Gary Champion match the approved level/IV/item/move curve;
+- first-cycle boss healing limits and full boss AI are present;
+- first-cycle parties are covered by the trainer legality validator.
+
+Audit repairs made before closure:
+- normalized inert Gary Bulbasaur/Charmander party arrays to byte-equivalent copies of the canonical Squirtle arrays so stale alternate data cannot drift;
+- updated `validate_full_league_rosters.py` to the latest approved Gary/Lance move progression;
+- updated the Full Gameplay Core inline boss-roster assertions for the approved Erika order, Blaine order and Giovanni/Mewtwo roster;
+- refreshed exact audited blob locks for `src/data/trainers.json` and `src/data/trainer_parties.h`.
+
+The previous B2 CI failure at HEAD `529322d0457e27cd2abfc93fa422c49b84c62680` was confirmed to be the stale exact blob lock for `src/data/trainers.json`, not a compilation or gameplay-data failure.
+
+B2 must remain unmerged until the Full Gameplay Core workflow for the latest B2 HEAD completes successfully.
