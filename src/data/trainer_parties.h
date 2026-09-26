@@ -4458,44 +4458,57 @@ static const struct TrainerMonNoItemDefaultMoves sParty_ScientistIvan[] = {
     },
 };
 
-static const struct TrainerMonNoItemDefaultMoves sParty_BossGiovanni[] = {
+static const struct TrainerMonNoItemCustomMoves sParty_BossGiovanni[] = {
     {
-        .iv = 250,
-        .lvl = 25,
-        .species = SPECIES_ONIX,
-    },
-    {
-        .iv = 250,
-        .lvl = 24,
-        .species = SPECIES_RHYHORN,
-    },
-    {
-        .iv = 250,
+        .iv = 116,
         .lvl = 29,
+        .species = SPECIES_PERSIAN,
+        .moves = {MOVE_PAY_DAY, MOVE_FAINT_ATTACK, MOVE_AERIAL_ACE, MOVE_TAUNT},
+    },
+    {
+        .iv = 116,
+        .lvl = 30,
+        .species = SPECIES_RHYHORN,
+        .moves = {MOVE_ROCK_BLAST, MOVE_DIG, MOVE_STOMP, MOVE_SCARY_FACE},
+    },
+    {
+        .iv = 116,
+        .lvl = 33,
         .species = SPECIES_KANGASKHAN,
+        .moves = {MOVE_FAKE_OUT, MOVE_MEGA_PUNCH, MOVE_BRICK_BREAK, MOVE_BITE},
     },
 };
 
-static const struct TrainerMonNoItemDefaultMoves sParty_BossGiovanni2[] = {
+static const struct TrainerMonNoItemCustomMoves sParty_BossGiovanni2[] = {
     {
-        .iv = 250,
-        .lvl = 37,
-        .species = SPECIES_NIDORINO,
+        .iv = 149,
+        .lvl = 44,
+        .species = SPECIES_PERSIAN,
+        .moves = {MOVE_FAINT_ATTACK, MOVE_SCREECH, MOVE_SHADOW_BALL, MOVE_AERIAL_ACE},
     },
     {
-        .iv = 250,
-        .lvl = 35,
+        .iv = 149,
+        .lvl = 45,
+        .species = SPECIES_KINGLER,
+        .moves = {MOVE_SURF, MOVE_STOMP, MOVE_PROTECT, MOVE_MUD_SHOT},
+    },
+    {
+        .iv = 149,
+        .lvl = 46,
         .species = SPECIES_KANGASKHAN,
+        .moves = {MOVE_FAKE_OUT, MOVE_DIZZY_PUNCH, MOVE_BRICK_BREAK, MOVE_DIG},
     },
     {
-        .iv = 250,
-        .lvl = 37,
+        .iv = 149,
+        .lvl = 47,
         .species = SPECIES_RHYHORN,
+        .moves = {MOVE_ROCK_BLAST, MOVE_DIG, MOVE_TAKE_DOWN, MOVE_SCARY_FACE},
     },
     {
-        .iv = 250,
-        .lvl = 41,
+        .iv = 149,
+        .lvl = 49,
         .species = SPECIES_NIDOQUEEN,
+        .moves = {MOVE_DIG, MOVE_SUPERPOWER, MOVE_BODY_SLAM, MOVE_ICE_BEAM},
     },
 };
 
