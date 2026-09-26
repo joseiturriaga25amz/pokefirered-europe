@@ -7,6 +7,7 @@ on:
       - feature/b0-baseline-validator-truth
       - feature/b1-low-risk-qol
       - feature/b2-boss-rival-balance
+      - feature/b3-postgame-rematch-identity
 
 jobs:
   build:
