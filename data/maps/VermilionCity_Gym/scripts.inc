@@ -204,7 +204,7 @@ VermilionCity_Gym_EventScript_SetBeamsOn::
 	return
 
 VermilionCity_Gym_EventScript_LtSurge::
-	goto_if_unset FLAG_SYS_NATIONAL_DEX, VermilionCity_Gym_EventScript_LtSurgeStory
+	goto_if_unset FLAG_SYS_GAME_CLEAR, VermilionCity_Gym_EventScript_LtSurgeStory
 	goto_if_unset FLAG_GOT_TM34_FROM_SURGE, VermilionCity_Gym_EventScript_LtSurgeStory
 	goto VermilionCity_Gym_EventScript_FullRematchOffer
 
@@ -311,16 +311,13 @@ VermilionCity_Gym_EventScript_FullRematchDecline::
 	end
 
 VermilionCity_Gym_Text_FullRematchOffer::
-	.string "Has recorrido un largo camino desde\n"
-	.string "nuestro primer combate.\p"
-	.string "¿Quieres una revancha de verdad?$"
+	.string "¡Soldado! Aún tengo voltaje de sobra.\p¿Listo para otra descarga?$"
 
 VermilionCity_Gym_Text_FullRematchIntro::
-	.string "¡Entonces veamos cuánto has crecido!$"
+	.string "¡Prepárate para un combate eléctrico!$"
 
 VermilionCity_Gym_Text_FullRematchDefeat::
-	.string "Excelente. Tu fuerza sigue creciendo.$"
+	.string "¡Ja! Aguantaste toda la descarga.$"
 
 VermilionCity_Gym_Text_FullRematchAfter::
-	.string "Puedes volver cuando quieras.\p"
-	.string "Siempre aceptaré otra revancha.$"
+	.string "Cuando quieras otra prueba de fuego,\n¡vuelve al frente!$"
