@@ -334,3 +334,16 @@ First-League Bruno is approved exactly as currently implemented:
 - trainer IV byte 206 (~IV25), full boss AI, two Full Restores.
 
 Rationale: roster identity remains vanilla while dead/low-value utility is replaced by coherent physical coverage under the modern physical/special split. The two Onix have distinct progression roles, and Machamp remains the unequivocal ace through STAB Cross Chop + Black Belt without adding recovery or excessive sustain.
+
+
+### Agatha — first League approved 2026-09-25
+
+First-League Agatha is approved exactly as currently implemented:
+- Haunter 59 — Shadow Ball / Hypnosis / Dream Eater / Mean Look
+- Gengar 60 — Shadow Ball / Psychic / Confuse Ray / Toxic
+- Golbat 60 — Aerial Ace / Poison Fang / Bite / Confuse Ray
+- Arbok 61 — Poison Fang / Earthquake / Rock Slide / Glare
+- Gengar 63 + Spell Tag — Shadow Ball / Sludge Bomb / Thunderbolt / Hypnosis
+- trainer IV byte 214 (~IV26), full boss AI, two Full Restores.
+
+Rationale: the roster remains faithful to the original while redundant or low-value utility is replaced with reliable offensive pressure under the modern physical/special split. The two Gengar have distinct roles, Arbok remains physically differentiated, and the final Gengar is the clear offensive ace without recovery or excessive sustain.
