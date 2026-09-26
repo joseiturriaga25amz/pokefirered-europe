@@ -5968,7 +5968,7 @@ static const struct TrainerMonItemCustomMoves sParty_EliteFourLance[] = {
         .lvl = 65,
         .species = SPECIES_DRAGONITE,
         .heldItem = ITEM_DRAGON_FANG,
-        .moves = {MOVE_OUTRAGE, MOVE_AERIAL_ACE, MOVE_ICE_BEAM, MOVE_FLAMETHROWER},
+        .moves = {MOVE_DRAGON_CLAW, MOVE_AERIAL_ACE, MOVE_ICE_BEAM, MOVE_FLAMETHROWER},
     },
 };
 
