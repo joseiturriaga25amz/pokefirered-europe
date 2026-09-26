@@ -46,7 +46,7 @@ CinnabarIsland_Gym_OnLoadOpenDoor6::
 	return
 
 CinnabarIsland_Gym_EventScript_Blaine::
-	goto_if_unset FLAG_SYS_NATIONAL_DEX, CinnabarIsland_Gym_EventScript_BlaineStory
+	goto_if_unset FLAG_SYS_GAME_CLEAR, CinnabarIsland_Gym_EventScript_BlaineStory
 	goto_if_unset FLAG_GOT_TM38_FROM_BLAINE, CinnabarIsland_Gym_EventScript_BlaineStory
 	goto CinnabarIsland_Gym_EventScript_FullRematchOffer
 
@@ -733,16 +733,13 @@ CinnabarIsland_Gym_EventScript_FullRematchDecline::
 	end
 
 CinnabarIsland_Gym_Text_FullRematchOffer::
-	.string "Has recorrido un largo camino desde\n"
-	.string "nuestro primer combate.\p"
-	.string "¿Quieres una revancha de verdad?$"
+	.string "¡Mi espíritu sigue ardiendo!\p¿Quieres avivar las llamas otra vez?$"
 
 CinnabarIsland_Gym_Text_FullRematchIntro::
-	.string "¡Entonces veamos cuánto has crecido!$"
+	.string "¡Este combate estará al rojo vivo!$"
 
 CinnabarIsland_Gym_Text_FullRematchDefeat::
-	.string "Excelente. Tu fuerza sigue creciendo.$"
+	.string "¡Magnífico! Ni mis llamas pudieron frenarte.$"
 
 CinnabarIsland_Gym_Text_FullRematchAfter::
-	.string "Puedes volver cuando quieras.\p"
-	.string "Siempre aceptaré otra revancha.$"
+	.string "¡Vuelve cuando quieras! Mantendré\nencendido el fuego del desafío.$"
