@@ -2,7 +2,7 @@ PewterCity_Gym_MapScripts::
 	.byte 0
 
 PewterCity_Gym_EventScript_Brock::
-	goto_if_unset FLAG_SYS_NATIONAL_DEX, PewterCity_Gym_EventScript_BrockStory
+	goto_if_unset FLAG_SYS_GAME_CLEAR, PewterCity_Gym_EventScript_BrockStory
 	goto_if_unset FLAG_GOT_TM39_FROM_BROCK, PewterCity_Gym_EventScript_BrockStory
 	goto PewterCity_Gym_EventScript_FullRematchOffer
 
@@ -105,16 +105,13 @@ PewterCity_Gym_EventScript_FullRematchDecline::
 	end
 
 PewterCity_Gym_Text_FullRematchOffer::
-	.string "Has recorrido un largo camino desde\n"
-	.string "nuestro primer combate.\p"
-	.string "¿Quieres una revancha de verdad?$"
+	.string "Las rocas se pulen con cada golpe.\p¿Quieres poner a prueba tu fuerza otra vez?$"
 
 PewterCity_Gym_Text_FullRematchIntro::
-	.string "¡Entonces veamos cuánto has crecido!$"
+	.string "¡Muéstrame una base más sólida!$"
 
 PewterCity_Gym_Text_FullRematchDefeat::
-	.string "Excelente. Tu fuerza sigue creciendo.$"
+	.string "Tu determinación es más dura que la roca.$"
 
 PewterCity_Gym_Text_FullRematchAfter::
-	.string "Puedes volver cuando quieras.\p"
-	.string "Siempre aceptaré otra revancha.$"
+	.string "Cuando quieras medir tu resistencia,\nvuelve. Estaré listo.$"
