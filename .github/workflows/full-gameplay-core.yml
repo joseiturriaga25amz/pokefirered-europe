@@ -561,6 +561,13 @@ jobs:
           for name,want in bosses.items():
               assert normalized(name)==want, (name, normalized(name), want)
 
+          # B2 first-cycle healing progression: Gary Silph remains itemless,
+          # Giovanni Silph gets exactly one Hyper Potion before later bosses
+          # escalate to two trainer healing items.
+          assert by_id["TRAINER_RIVAL_SILPH_SQUIRTLE"]["items"] == ""
+          assert by_id["TRAINER_BOSS_GIOVANNI"]["items"] == ""
+          assert by_id["TRAINER_BOSS_GIOVANNI_2"]["items"] == "ITEM_HYPER_POTION"
+
           rematches = {
               "sParty_RSAromaLady":[("VULPIX",60),("CROBAT",61),("FORRETRESS",62),("LUDICOLO",63),("MARSHTOMP",64),("STEELIX",66)],
               "sParty_RSRuinManiac":[("CORSOLA",61),("LUVDISC",62),("POLITOED",63),("TOGETIC",63),("STARMIE",65),("GYARADOS",67)],

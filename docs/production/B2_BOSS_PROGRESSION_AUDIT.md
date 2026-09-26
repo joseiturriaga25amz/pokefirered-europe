@@ -412,3 +412,26 @@ Audit repairs made before closure:
 The previous B2 CI failure at HEAD `529322d0457e27cd2abfc93fa422c49b84c62680` was confirmed to be the stale exact blob lock for `src/data/trainers.json`, not a compilation or gameplay-data failure.
 
 B2 must remain unmerged until the Full Gameplay Core workflow for the latest B2 HEAD completes successfully.
+
+
+### First-cycle progression audit follow-up — approved 2026-09-26
+
+The transversal first-cycle progression audit found no level/roster rewrite necessary.
+
+One targeted healing adjustment was approved:
+- Gary Silph remains at zero trainer healing items.
+- Giovanni Silph now has exactly **one Hyper Potion**.
+- Sabrina/Blaine/Giovanni Gym retain their later two-item healing ceilings, and the first League retains two Full Restores.
+
+Rationale:
+- Gary Silph and Giovanni Silph both peak at level 49, but Giovanni is the narrative boss closing the Silph arc.
+- One Hyper Potion distinguishes the boss encounter without inflating levels, changing species, altering movesets, or adding held items.
+- The change creates a cleaner resource progression: rival with no healing -> Giovanni Silph with one Hyper Potion -> later major bosses with two healing items.
+
+The Full trainer legality validator was also hardened with a strict four-entry design-exception allowlist for previously approved sets:
+- Abra 18 / Confusion (Gary Cerulean);
+- Staryu 23 / Swift (Misty);
+- Gloom 35 / Petal Dance (Erika);
+- Mr. Mime 42 / Baton Pass (Sabrina).
+
+No other illegal trainer move is permitted by the exception mechanism.

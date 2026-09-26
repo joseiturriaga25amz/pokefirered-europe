@@ -66,6 +66,15 @@ PARTIES = [
     "sParty_RSBlackBelt",
 ]
 
+# Strict design exceptions approved during the B2 first-cycle audit.
+# These are deliberately narrow: party + species + level + move must all match.
+APPROVED_MOVE_EXCEPTIONS = {
+    ("sParty_RivalCeruleanSquirtle", "SPECIES_ABRA", 18, "MOVE_CONFUSION"),
+    ("sParty_LeaderMisty", "SPECIES_STARYU", 23, "MOVE_SWIFT"),
+    ("sParty_LeaderErika", "SPECIES_GLOOM", 35, "MOVE_PETAL_DANCE"),
+    ("sParty_LeaderSabrina", "SPECIES_MR_MIME", 42, "MOVE_BATON_PASS"),
+}
+
 CONST_RE = re.compile(r"^\s*#define\s+([A-Z][A-Z0-9_]+)\b", re.M)
 MON_RE = re.compile(r"\{(.*?)\n\s*\}", re.S)
 
@@ -220,6 +229,7 @@ def main() -> None:
 
     trainer_text = read("src/data/trainer_parties.h")
     errors: list[str] = []
+    used_exceptions: set[tuple[str, str, int, str]] = set()
     checked_mons = 0
     checked_moves = 0
 
@@ -268,10 +278,19 @@ def main() -> None:
                 if move not in move_ids:
                     errors.append(f"{party_name}[{index}] {species} Lv{level}: unknown move {move}")
                 elif move != "MOVE_NONE" and move not in legal:
-                    errors.append(
-                        f"{party_name}[{index}] {species} Lv{level}: {move} not learnable "
-                        "by level/TM-HM/tutor/egg ancestry"
-                    )
+                    exception = (party_name, species, level, move)
+                    if exception in APPROVED_MOVE_EXCEPTIONS:
+                        used_exceptions.add(exception)
+                    else:
+                        errors.append(
+                            f"{party_name}[{index}] {species} Lv{level}: {move} not learnable "
+                            "by level/TM-HM/tutor/egg ancestry"
+                        )
+
+    missing_exceptions = APPROVED_MOVE_EXCEPTIONS - used_exceptions
+    if missing_exceptions:
+        for exception in sorted(missing_exceptions):
+            errors.append(f"approved move exception not exercised exactly: {exception}")
 
     if errors:
         print(f"Full trainer legality audit FAILED with {len(errors)} issue(s):")
