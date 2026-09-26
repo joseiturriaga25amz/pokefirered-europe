@@ -277,9 +277,11 @@ def main():
     ):
         require(two_island, berry)
 
-    # BOSS-002: all eight Gym Leader rematches remain indefinitely repeatable.
-    # Each post-National leader route must clear its repurposed trainer flag
-    # immediately before battle and must not persist a one-shot rematch flag.
+    # BOSS-002 / BOSS-REMATCH-001: all eight Gym Leader rematches unlock
+    # immediately after the first Hall of Fame / game clear and remain
+    # indefinitely repeatable. They must not depend on National Dex/captures.
+    # Each route clears its repurposed trainer flag immediately before battle
+    # and must not persist a one-shot rematch flag.
     gym_rematches = (
         ("PewterCity_Gym", "Brock", "FLAG_GOT_TM39_FROM_BROCK", "TRAINER_RS_AROMA_LADY"),
         ("CeruleanCity_Gym", "Misty", "FLAG_GOT_TM03_FROM_MISTY", "TRAINER_RS_RUIN_MANIAC"),
@@ -294,10 +296,14 @@ def main():
         script = read(f"data/maps/{map_name}/scripts.inc")
         require(
             script,
-            "goto_if_unset FLAG_SYS_NATIONAL_DEX",
+            "goto_if_unset FLAG_SYS_GAME_CLEAR",
             f"goto_if_unset {tm_flag}",
             f"cleartrainerflag {trainer}",
             f"trainerbattle_single {trainer}",
+        )
+        assert "goto_if_unset FLAG_SYS_NATIONAL_DEX" not in script, (
+            map_name,
+            "National Dex must not gate Gym rematches",
         )
         offer = block(script, f"{map_name}_EventScript_FullRematchOffer")
         assert offer.index(f"cleartrainerflag {trainer}") < offer.index(f"trainerbattle_single {trainer}")
