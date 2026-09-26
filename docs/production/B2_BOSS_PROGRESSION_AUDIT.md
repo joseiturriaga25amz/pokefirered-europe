@@ -347,3 +347,16 @@ First-League Agatha is approved exactly as currently implemented:
 - trainer IV byte 214 (~IV26), full boss AI, two Full Restores.
 
 Rationale: the roster remains faithful to the original while redundant or low-value utility is replaced with reliable offensive pressure under the modern physical/special split. The two Gengar have distinct roles, Arbok remains physically differentiated, and the final Gengar is the clear offensive ace without recovery or excessive sustain.
+
+
+### Lance — first League approved 2026-09-25
+
+First-League Lance is approved with one final refinement to the ace:
+- Gyarados 61 — Waterfall / Dragon Dance / Earthquake / Hyper Beam
+- Dragonair 61 — Outrage / Thunder Wave / Ice Beam / Safeguard
+- Dragonair 62 — Outrage / Flamethrower / Thunderbolt / Thunder Wave
+- Aerodactyl 63 + Hard Stone — Rock Slide / Aerial Ace / Earthquake / Double-Edge
+- Dragonite 65 + Dragon Fang — Dragon Claw / Aerial Ace / Ice Beam / Flamethrower
+- trainer IV byte 223 (~IV27), full boss AI, two Full Restores.
+
+Rationale: the two Dragonair retain Outrage as the more volatile aggressive Dragon STAB, while the ace Dragonite uses Dragon Claw for a reliable Dragon STAB without lock-in/confusion. This preserves internal team differentiation while keeping Dragonite the clear ace through stats, level, coverage and Dragon Fang.
