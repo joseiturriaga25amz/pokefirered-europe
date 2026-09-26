@@ -35,7 +35,8 @@ static EWRAM_DATA struct WildEncounterData sWildEncounterData = {};
 static EWRAM_DATA bool8 sWildEncountersDisabled = FALSE;
 
 static bool8 UnlockedTanobyOrAreNotInTanoby(void);
-static u32 GenerateUnownPersonalityByLetter(u8 letter);
+static u8 PickFullWildMonNature(void);
+static u32 GenerateUnownPersonalityByLetter(u8 letter, u8 nature);
 static bool8 IsWildLevelAllowedByRepel(u8 level);
 static void ApplyFluteEncounterRateMod(u32 *rate);
 static u8 GetFluteEncounterRateModType(void);
@@ -223,30 +224,45 @@ static bool8 UnlockedTanobyOrAreNotInTanoby(void)
     return FALSE;
 }
 
+static u8 PickFullWildMonNature(void)
+{
+    // Emerald-style Synchronize field effect: a non-Egg lead with Synchronize
+    // has a 50% chance to pass its nature to each generated wild Pokémon.
+    if (!GetMonData(&gPlayerParty[0], MON_DATA_SANITY_IS_EGG)
+     && GetMonAbility(&gPlayerParty[0]) == ABILITY_SYNCHRONIZE
+     && Random() % 2 == 0)
+        return GetMonData(&gPlayerParty[0], MON_DATA_PERSONALITY) % NUM_NATURES;
+
+    return Random() % NUM_NATURES;
+}
+
 static void GenerateWildMon(u16 species, u8 level, u8 slot)
 {
     u32 personality;
+    u8 nature = PickFullWildMonNature();
     s8 chamber;
+
     ZeroEnemyPartyMons();
     if (species != SPECIES_UNOWN)
     {
-        CreateMonWithNature(&gEnemyParty[0], species, level, USE_RANDOM_IVS, Random() % NUM_NATURES);
+        CreateMonWithNature(&gEnemyParty[0], species, level, USE_RANDOM_IVS, nature);
     }
     else
     {
         chamber = gSaveBlock1Ptr->location.mapNum - MAP_NUM(MAP_SEVEN_ISLAND_TANOBY_RUINS_MONEAN_CHAMBER);
-        personality = GenerateUnownPersonalityByLetter(sUnownLetterSlots[chamber][slot]);
+        personality = GenerateUnownPersonalityByLetter(sUnownLetterSlots[chamber][slot], nature);
         CreateMon(&gEnemyParty[0], species, level, USE_RANDOM_IVS, TRUE, personality, FALSE, 0);
     }
 }
 
-static u32 GenerateUnownPersonalityByLetter(u8 letter)
+static u32 GenerateUnownPersonalityByLetter(u8 letter, u8 nature)
 {
     u32 personality;
     do
     {
         personality = (Random() << 16) | Random();
-    } while (GetUnownLetterByPersonalityLoByte(personality) != letter);
+    } while (GetUnownLetterByPersonalityLoByte(personality) != letter
+          || personality % NUM_NATURES != nature);
     return personality;
 }
 

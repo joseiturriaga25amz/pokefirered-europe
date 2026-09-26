@@ -192,6 +192,16 @@
 
 
 #define VAR_0x408C                 0x408C
+
+// Pokémon Rojo Fuego Full persistent namespace: 0x408C-0x409B (16 vars)
+#define VAR_FULL_START             0x408C
+#define VAR_FULL_MYSTIC_QUEST      0x408C
+#define VAR_FULL_AURORA_QUEST      0x408D
+#define VAR_FULL_MEW_QUEST         0x408E
+#define VAR_FULL_CELEBI_QUEST      0x408F
+#define VAR_FULL_ROAMER_SEQUENCE   0x4090
+#define VAR_FULL_LAST_REPEL        0x4091
+#define VAR_FULL_END               0x409B
 #define VAR_0x408D                 0x408D
 #define VAR_0x408E                 0x408E
 #define VAR_0x408F                 0x408F

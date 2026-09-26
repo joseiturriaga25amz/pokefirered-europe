@@ -43,12 +43,10 @@ bool8 SafariZoneTakeStep(void)
 {
     if (GetSafariZoneFlag() == FALSE)
         return FALSE;
-    gSafariZoneStepCounter--;
-    if (gSafariZoneStepCounter == 0)
-    {
-        ScriptContext_SetupScript(SafariZone_EventScript_TimesUp);
-        return TRUE;
-    }
+
+    // Full: Safari no longer expires by walking. The original minigame,
+    // 30 Safari Balls, catching/fleeing rules and voluntary exit remain intact.
+    gSafariZoneStepCounter = 600;
     return FALSE;
 }
 

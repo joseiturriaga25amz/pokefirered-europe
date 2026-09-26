@@ -1425,7 +1425,7 @@ void CB2_LinkError(void)
 {
     u8 *tilemapBuffer;
 
-#if REVISION >= 0xA
+#if defined(BUGFIX) || REVISION >= 0xA
     ClearFieldCallback();
 #endif
     SetGpuReg(REG_OFFSET_DISPCNT, 0);

@@ -525,7 +525,7 @@ static void Task_TryBecomeLinkLeader(u8 taskId)
         }
         break;
     case LL_STATE_MEMBER_LEFT:
-#if REVISION >= 0xA
+#if defined(BUGFIX) || REVISION >= 0xA
         id = (GROUP_MAX(sPlayerActivityGroupSize) != 2) ? 1 : 0;
 #else
         id = (GROUP_MAX(sPlayerCurrActivity) == 2) ? 1 : 0;
@@ -619,7 +619,7 @@ static void Task_TryBecomeLinkLeader(u8 taskId)
             {
                 RequestDisconnectSlotByTrainerNameAndId(data->playerList->players[data->playerCount].rfu.name, ReadAsU16(data->playerList->players[data->playerCount].rfu.data.compatibility.playerTrainerId));
                 data->playerList->players[data->playerCount].groupScheduledAnim = UNION_ROOM_SPAWN_NONE;
-#if REVISION >= 0xA
+#if defined(BUGFIX) || REVISION >= 0xA
                 data->playerCount = LeaderPrunePlayerList(data->playerList);
 #else
                 LeaderPrunePlayerList(data->playerList);
@@ -966,11 +966,11 @@ static bool8 Leader_SetStateIfMemberListChanged(struct WirelessLink_Leader * dat
 #endif
         break;
     case UNION_ROOM_SPAWN_OUT:
-#if REVISION >= 0xA
+#if defined(BUGFIX) || REVISION >= 0xA
     case UNION_ROOM_SPAWN_OUT_SOON:
 #endif
         RfuSetStatus(RFU_STATUS_OK, 0);
-#if REVISION >= 0xA
+#if defined(BUGFIX) || REVISION >= 0xA
         data->playerCount = LeaderPrunePlayerList(data->playerList);
 #endif
         RedrawListMenu(data->listTaskId);
@@ -1006,7 +1006,7 @@ static void ItemPrintFunc_PossibleGroupMembers(u8 windowId, u32 id, u8 y)
 static u8 LeaderUpdateGroupMembership(struct RfuPlayerList * list)
 {
     struct WirelessLink_Leader * data = sWirelessLinkMain.leader;
-#if REVISION >= 0xA
+#if defined(BUGFIX) || REVISION >= 0xA
     s32 id;
 #else
     u8 ret = UNION_ROOM_SPAWN_NONE;
@@ -1030,7 +1030,7 @@ static u8 LeaderUpdateGroupMembership(struct RfuPlayerList * list)
             {
                 // No new incoming player
                 data->playerList->players[i].groupScheduledAnim = UNION_ROOM_SPAWN_OUT;
-#if REVISION >= 0xA
+#if defined(BUGFIX) || REVISION >= 0xA
 #else
                 ret = UNION_ROOM_SPAWN_OUT;
 #endif
@@ -1041,7 +1041,7 @@ static u8 LeaderUpdateGroupMembership(struct RfuPlayerList * list)
     for (id = 0; id < RFU_CHILD_MAX; id++)
         TryAddIncomingPlayerToList(data->playerList->players, &data->incomingPlayerList->players[id], MAX_RFU_PLAYERS);
 
-#if REVISION >= 0xA
+#if defined(BUGFIX) || REVISION >= 0xA
     id = 1;
     {
         struct RfuPlayerList* playerList = data->playerList;
@@ -2002,7 +2002,7 @@ static void Task_RunScriptAndFadeToActivity(u8 taskId)
         }
         break;
     case 2:
-#if REVISION >= 0xA
+#if defined(BUGFIX) || REVISION >= 0xA
         if (IsLinkTaskFinished() && !gPaletteFade.active)
 #else
         if (!gPaletteFade.active)

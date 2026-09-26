@@ -1,3 +1,16 @@
+TwoIsland_House_Text_MoveReminderIntro::
+	.string "Ich bin der ATTACKEN-MANIAC!\p"
+	.string "Ich kann einem POKéMON eine\n"
+	.string "vergessene Attacke beibringen.\p"
+	.string "Jede Lektion kostet 2000.$"
+
+TwoIsland_House_Text_NotEnoughMoney::
+	.string "Du hast nicht genug Geld.\p"
+	.string "Eine Lektion kostet 2000.$"
+
+TwoIsland_House_Text_PaidForMove::
+	.string "{PLAYER} zahlt 2000 für die Lektion.$"
+
 TwoIsland_House_Text_TeachMonMoveForMushroom::
 	.string "Ich bin der POKéMON-ATTACKEN-\n"
 	.string "MANIAC!\p"

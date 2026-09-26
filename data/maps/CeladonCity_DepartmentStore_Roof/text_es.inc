@@ -1,7 +1,11 @@
 CeladonCity_DepartmentStore_Roof_Text_ImThirstyGiveHerDrink::
     .string "¡Tengo sed!\n"
     .string "¡Me gustaría beber algo!\p"
+#ifdef BUGFIX
+    .string "{COLOR DARK_GRAY}¿Le das algo de beber?$"
+#else
     .string "{FONT_NORMAL}¿Le das algo de beber?$"
+#endif
 
 CeladonCity_DepartmentStore_Roof_Text_GiveWhichDrink::
     .string "¿Qué bebida quieres darle?$"

@@ -2452,10 +2452,9 @@ s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *de
         if (attackerHoldEffect == sHoldEffectToType[i][0]
             && type == sHoldEffectToType[i][1])
         {
-            if (IS_TYPE_PHYSICAL(type))
-                attack = (attack * (attackerHoldEffectParam + 100)) / 100;
-            else
-                spAttack = (spAttack * (attackerHoldEffectParam + 100)) / 100;
+            // Type-boosting held items must apply to either category.
+            attack = (attack * (attackerHoldEffectParam + 100)) / 100;
+            spAttack = (spAttack * (attackerHoldEffectParam + 100)) / 100;
             break;
         }
     }
@@ -2478,7 +2477,7 @@ s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *de
     if (attackerHoldEffect == HOLD_EFFECT_THICK_CLUB && (attacker->species == SPECIES_CUBONE || attacker->species == SPECIES_MAROWAK))
         attack *= 2;
     if (defender->ability == ABILITY_THICK_FAT && (type == TYPE_FIRE || type == TYPE_ICE))
-        spAttack /= 2;
+        gBattleMovePower /= 2;
     if (attacker->ability == ABILITY_HUSTLE)
         attack = (150 * attack) / 100;
     if (attacker->ability == ABILITY_PLUS && ABILITY_ON_FIELD2(ABILITY_MINUS))
@@ -2506,7 +2505,7 @@ s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *de
     if (gBattleMoves[gCurrentMove].effect == EFFECT_EXPLOSION)
         defense /= 2;
 
-    if (IS_TYPE_PHYSICAL(type))
+    if (IS_MOVE_PHYSICAL(move))
     {
         if (gCritMultiplier == 2)
         {
@@ -2561,7 +2560,7 @@ s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *de
     if (type == TYPE_MYSTERY)
         damage = 0; // is ??? type. does 0 damage.
 
-    if (IS_TYPE_SPECIAL(type))
+    if (IS_MOVE_SPECIAL(move))
     {
         if (gCritMultiplier == 2)
         {
@@ -2604,46 +2603,35 @@ s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *de
         if ((gBattleTypeFlags & BATTLE_TYPE_DOUBLE) && gBattleMoves[move].target == MOVE_TARGET_BOTH && CountAliveMonsInBattle(BATTLE_ALIVE_DEF_SIDE) == 2)
             damage /= 2;
 
-        // Are effects of weather negated with cloud nine or air lock
-        if (WEATHER_HAS_EFFECT2)
+
+    }
+
+    // Weather and Flash Fire modify move types, independent of category.
+    if (WEATHER_HAS_EFFECT2)
+    {
+        if (gBattleWeather & B_WEATHER_RAIN_TEMPORARY)
         {
-            // Rain weakens Fire, boosts Water
-            if (gBattleWeather & B_WEATHER_RAIN_TEMPORARY)
-            {
-                switch (type)
-                {
-                case TYPE_FIRE:
-                    damage /= 2;
-                    break;
-                case TYPE_WATER:
-                    damage = (15 * damage) / 10;
-                    break;
-                }
-            }
-
-            // Any weather except sun weakens solar beam
-            if ((gBattleWeather & (B_WEATHER_RAIN | B_WEATHER_SANDSTORM | B_WEATHER_HAIL_TEMPORARY)) && gCurrentMove == MOVE_SOLAR_BEAM)
+            if (type == TYPE_FIRE)
                 damage /= 2;
-
-            // Sun boosts Fire, weakens Water
-            if (gBattleWeather & B_WEATHER_SUN)
-            {
-                switch (type)
-                {
-                case TYPE_FIRE:
-                    damage = (15 * damage) / 10;
-                    break;
-                case TYPE_WATER:
-                    damage /= 2;
-                    break;
-                }
-            }
+            else if (type == TYPE_WATER)
+                damage = (15 * damage) / 10;
         }
 
-        // Flash fire triggered
-        if ((gBattleResources->flags->flags[battlerIdAtk] & RESOURCE_FLAG_FLASH_FIRE) && type == TYPE_FIRE)
-            damage = (15 * damage) / 10;
+        if ((gBattleWeather & (B_WEATHER_RAIN | B_WEATHER_SANDSTORM | B_WEATHER_HAIL_TEMPORARY))
+         && move == MOVE_SOLAR_BEAM)
+            damage /= 2;
+
+        if (gBattleWeather & B_WEATHER_SUN)
+        {
+            if (type == TYPE_FIRE)
+                damage = (15 * damage) / 10;
+            else if (type == TYPE_WATER)
+                damage /= 2;
+        }
     }
+
+    if ((gBattleResources->flags->flags[battlerIdAtk] & RESOURCE_FLAG_FLASH_FIRE) && type == TYPE_FIRE)
+        damage = (15 * damage) / 10;
 
     return damage + 2;
 }
@@ -2967,7 +2955,9 @@ u32 GetMonData3(struct Pokemon *mon, s32 field, u8 *data)
     return ret;
 }
 
+#ifndef UBFIX
 u32 GetMonData2(struct Pokemon *mon, s32 field) __attribute__((alias("GetMonData3")));
+#endif
 
 /* GameFreak called GetBoxMonData with either 2 or 3 arguments, for type
  * safety we have a GetBoxMonData macro (in include/pokemon.h) which
@@ -3329,7 +3319,9 @@ u32 GetBoxMonData3(struct BoxPokemon *boxMon, s32 field, u8 *data)
     return retVal;
 }
 
+#ifndef UBFIX
 u32 GetBoxMonData2(struct BoxPokemon *boxMon, s32 field) __attribute__((alias("GetBoxMonData3")));
+#endif
 
 #define SET8(lhs) (lhs) = *data
 #define SET16(lhs) (lhs) = data[0] + (data[1] << 8)
@@ -3975,7 +3967,7 @@ bool8 ExecuteTableBasedItemEffect(struct Pokemon *mon, u16 item, u8 partyIndex, 
 
 #define UPDATE_FRIENDSHIP_FROM_ITEM()                                                                   \
 {                                                                                                       \
-    if (retVal == 0 && friendshipChange == 0)                                                           \
+    if ((retVal == 0 || friendshipOnly) && friendshipChange == 0)                                                           \
     {                                                                                                   \
         friendshipChange = itemEffect[idx];                                                             \
         friendship = GetMonData(mon, MON_DATA_FRIENDSHIP, NULL);                                        \
@@ -3995,6 +3987,7 @@ bool8 ExecuteTableBasedItemEffect(struct Pokemon *mon, u16 item, u8 partyIndex, 
         if (friendship > MAX_FRIENDSHIP)                                                                \
             friendship = MAX_FRIENDSHIP;                                                                \
         SetMonData(mon, MON_DATA_FRIENDSHIP, &friendship);                                              \
+        retVal = FALSE;                                                                                 \
     }                                                                                                   \
 }
 
@@ -4013,6 +4006,8 @@ bool8 PokemonUseItemEffects(struct Pokemon *mon, u16 item, u8 partyIndex, u8 mov
     u16 heldItem;
     u8 val;
     u32 evDelta;
+    s8 evChange;
+    bool8 friendshipOnly = FALSE;
 
     // Get item hold effect
     heldItem = GetMonData(mon, MON_DATA_HELD_ITEM, NULL);
@@ -4230,27 +4225,48 @@ bool8 PokemonUseItemEffects(struct Pokemon *mon, u16 item, u8 partyIndex, u8 mov
                     case 0: // ITEM4_EV_HP
                     case 1: // ITEM4_EV_ATK
                         evCount = GetMonEVCount(mon);
-
-                        // Has EV increase limit already been reached?
-                        if (evCount >= MAX_TOTAL_EVS)
-                            return TRUE;
                         data = GetMonData(mon, sGetMonDataEVConstants[i], NULL);
-                        if (data < EV_ITEM_RAISE_LIMIT)
-                        {
-                            // Limit the increase
-                            if (data + itemEffect[idx] > EV_ITEM_RAISE_LIMIT)
-                                evDelta = EV_ITEM_RAISE_LIMIT - (data + itemEffect[idx]) + itemEffect[idx];
-                            else
-                                evDelta = itemEffect[idx];
-                            if (evCount + evDelta > MAX_TOTAL_EVS)
-                                evDelta += MAX_TOTAL_EVS - (evCount + evDelta);
+                        evChange = (s8)itemEffect[idx];
 
-                            // Update EVs and stats
-                            data += evDelta;
+                        if (evChange < 0)
+                        {
+                            idx++;
+                            if (data == 0)
+                            {
+                                // EV-reducing berries still raise friendship at 0 EV.
+                                friendshipOnly = TRUE;
+                                break;
+                            }
+                            if (data < (u32)(-evChange))
+                                data = 0;
+                            else
+                                data -= (u32)(-evChange);
                             SetMonData(mon, sGetMonDataEVConstants[i], &data);
                             CalculateMonStats(mon);
-                            idx++;
                             retVal = FALSE;
+                        }
+                        else
+                        {
+                            // Has EV increase limit already been reached?
+                            if (evCount >= MAX_TOTAL_EVS)
+                                return TRUE;
+                            if (data < EV_ITEM_RAISE_LIMIT)
+                            {
+                                // Limit the increase
+                                if (data + evChange > EV_ITEM_RAISE_LIMIT)
+                                    evDelta = EV_ITEM_RAISE_LIMIT - (data + evChange) + evChange;
+                                else
+                                    evDelta = evChange;
+                                if (evCount + evDelta > MAX_TOTAL_EVS)
+                                    evDelta += MAX_TOTAL_EVS - (evCount + evDelta);
+
+                                // Update EVs and stats
+                                data += evDelta;
+                                SetMonData(mon, sGetMonDataEVConstants[i], &data);
+                                CalculateMonStats(mon);
+                                idx++;
+                                retVal = FALSE;
+                            }
                         }
                         break;
                     case 2: // ITEM4_HEAL_HP
@@ -4437,27 +4453,48 @@ bool8 PokemonUseItemEffects(struct Pokemon *mon, u16 item, u8 partyIndex, u8 mov
                     case 2: // ITEM5_EV_SPDEF
                     case 3: // ITEM5_EV_SPATK
                         evCount = GetMonEVCount(mon);
-                        
-                        // Has EV increase limit already been reached?
-                        if (evCount >= MAX_TOTAL_EVS)
-                            return TRUE;
                         data = GetMonData(mon, sGetMonDataEVConstants[i + 2], NULL);
-                        if (data < EV_ITEM_RAISE_LIMIT)
+                        evChange = (s8)itemEffect[idx];
+
+                        if (evChange < 0)
                         {
-                            // Limit the increase
-                            if (data + itemEffect[idx] > EV_ITEM_RAISE_LIMIT)
-                                evDelta = EV_ITEM_RAISE_LIMIT - (data + itemEffect[idx]) + itemEffect[idx];
+                            idx++;
+                            if (data == 0)
+                            {
+                                // EV-reducing berries still raise friendship at 0 EV.
+                                friendshipOnly = TRUE;
+                                break;
+                            }
+                            if (data < (u32)(-evChange))
+                                data = 0;
                             else
-                                evDelta = itemEffect[idx];
-                            if (evCount + evDelta > MAX_TOTAL_EVS)
-                                evDelta += MAX_TOTAL_EVS - (evCount + evDelta);
-                            
-                            // Update EVs and stats
-                            data += evDelta;
+                                data -= (u32)(-evChange);
                             SetMonData(mon, sGetMonDataEVConstants[i + 2], &data);
                             CalculateMonStats(mon);
                             retVal = FALSE;
-                            idx++;
+                        }
+                        else
+                        {
+                            // Has EV increase limit already been reached?
+                            if (evCount >= MAX_TOTAL_EVS)
+                                return TRUE;
+                            if (data < EV_ITEM_RAISE_LIMIT)
+                            {
+                                // Limit the increase
+                                if (data + evChange > EV_ITEM_RAISE_LIMIT)
+                                    evDelta = EV_ITEM_RAISE_LIMIT - (data + evChange) + evChange;
+                                else
+                                    evDelta = evChange;
+                                if (evCount + evDelta > MAX_TOTAL_EVS)
+                                    evDelta += MAX_TOTAL_EVS - (evCount + evDelta);
+
+                                // Update EVs and stats
+                                data += evDelta;
+                                SetMonData(mon, sGetMonDataEVConstants[i + 2], &data);
+                                CalculateMonStats(mon);
+                                retVal = FALSE;
+                                idx++;
+                            }
                         }
                         break;
                     case 4: // ITEM5_PP_MAX
@@ -4595,6 +4632,23 @@ bool8 PokemonItemUseNoEffect(struct Pokemon *mon, u16 item, u8 partyIndex, u8 mo
     else
     {
         itemEffect = gItemEffectTable[item - ITEM_POTION];
+    }
+
+    // Emerald-style EV berries are usable if they can lower their EV
+    // or if their friendship boost can still apply.
+    if (item >= ITEM_POMEG_BERRY && item <= ITEM_TAMATO_BERRY)
+    {
+        static const u16 sEVBerryMonData[] =
+        {
+            MON_DATA_HP_EV,
+            MON_DATA_ATK_EV,
+            MON_DATA_DEF_EV,
+            MON_DATA_SPATK_EV,
+            MON_DATA_SPDEF_EV,
+            MON_DATA_SPEED_EV,
+        };
+        data = GetMonData(mon, sEVBerryMonData[item - ITEM_POMEG_BERRY], NULL);
+        return data == 0 && GetMonData(mon, MON_DATA_FRIENDSHIP, NULL) >= MAX_FRIENDSHIP;
     }
 
     for (cmdIndex = 0; cmdIndex < ITEM_EFFECT_ARG_START; cmdIndex++)
@@ -5140,7 +5194,8 @@ u16 GetEvolutionTargetSpecies(struct Pokemon *mon, u8 type, u16 evolutionItem)
     case EVO_MODE_ITEM_CHECK:
         for (i = 0; i < EVOS_PER_MON; i++)
         {
-            if (gEvolutionTable[species][i].method == EVO_ITEM
+            if ((gEvolutionTable[species][i].method == EVO_ITEM
+              || gEvolutionTable[species][i].method == EVO_TRADE_ITEM)
              && gEvolutionTable[species][i].param == evolutionItem)
             {
                 targetSpecies = gEvolutionTable[species][i].targetSpecies;

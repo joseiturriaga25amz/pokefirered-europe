@@ -79,3 +79,11 @@ PewterCity_Museum_1F_Text_AerodactylFossil::
 PewterCity_Museum_1F_Text_KabutopsFossil::
     .string "Fósil KABUTOPS.\n"
     .string "Un primitivo y raro POKéMON.$"
+
+
+PewterCity_Museum_1F_Text_FullAuroraSignal::
+    .string "¿Una señal con este patrón?\p"
+    .string "La hemos visto en antiguos registros\n"
+    .string "sobre un meteorito singular.\p"
+    .string "La trayectoria apunta a una isla\n"
+    .string "remota. Díselo a CELIO.$"

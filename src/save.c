@@ -816,6 +816,8 @@ u8 LoadGameSave(u8 saveType)
     case SAVE_NORMAL:
     default:
         result = TryLoadSaveSlot(FULL_SAVE_SLOT, gRamSaveSectorLocations);
+        if (result == SAVE_STATUS_OK)
+            InitFullSaveData();
         LoadSerializedGame();
         gSaveFileStatus = result;
         gGameContinueCallback = NULL;
@@ -888,7 +890,7 @@ void Task_LinkFullSave(u8 taskId)
         gTasks[taskId].data[0] = 1;
         break;
     case 1:
-#if REVISION >= 0xA
+#if defined(BUGFIX) || REVISION >= 0xA
         if (!IsLinkTaskFinished()) break;
 #endif
         SetLinkStandbyCallback();
@@ -924,7 +926,7 @@ void Task_LinkFullSave(u8 taskId)
         gTasks[taskId].data[0] = 7;
         break;
     case 7:
-#if REVISION >= 0xA
+#if defined(BUGFIX) || REVISION >= 0xA
         if (!IsLinkTaskFinished()) break;
 #endif
         ClearContinueGameWarpStatus2();
@@ -942,7 +944,7 @@ void Task_LinkFullSave(u8 taskId)
         }
         break;
     case 9:
-#if REVISION >= 0xA
+#if defined(BUGFIX) || REVISION >= 0xA
         if (!IsLinkTaskFinished()) break;
 #endif
         SetLinkStandbyCallback();

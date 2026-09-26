@@ -292,6 +292,7 @@ struct UsedMoves
     u16 unknown[MAX_BATTLERS_COUNT];
 };
 
+#ifndef BUGFIX
 struct BattleHistory
 {
     /*0x00*/ u16 usedMoves[2][8]; // 0xFFFF means move not used (confuse self hit, etc)
@@ -300,6 +301,16 @@ struct BattleHistory
     /*0x24*/ u16 trainerItems[MAX_BATTLERS_COUNT];
     /*0x2C*/ u8 itemsNo;
 };
+#else
+struct BattleHistory
+{
+    struct UsedMoves usedMoves[MAX_BATTLERS_COUNT];
+    u8 abilities[MAX_BATTLERS_COUNT];
+    u8 itemEffects[MAX_BATTLERS_COUNT];
+    u16 trainerItems[MAX_BATTLERS_COUNT];
+    u8 itemsNo;
+};
+#endif
 
 struct BattleScriptsStack
 {
@@ -474,6 +485,10 @@ extern struct BattleStruct *gBattleStruct;
 
 #define IS_TYPE_PHYSICAL(moveType)(moveType < TYPE_MYSTERY)
 #define IS_TYPE_SPECIAL(moveType)(moveType > TYPE_MYSTERY)
+
+#define IS_MOVE_PHYSICAL(move)(gBattleMoves[move].category == MOVE_CATEGORY_PHYSICAL)
+#define IS_MOVE_SPECIAL(move)(gBattleMoves[move].category == MOVE_CATEGORY_SPECIAL)
+#define IS_MOVE_STATUS(move)(gBattleMoves[move].category == MOVE_CATEGORY_STATUS)
 
 #define TARGET_TURN_DAMAGED ((gSpecialStatuses[gBattlerTarget].physicalDmg != 0 || gSpecialStatuses[gBattlerTarget].specialDmg != 0))
 

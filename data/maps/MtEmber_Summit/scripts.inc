@@ -40,6 +40,7 @@ MtEmber_Summit_EventScript_Moltres::
 	waitstate
 	clearflag FLAG_SYS_SPECIAL_WILD_BATTLE
 	specialvar VAR_RESULT, GetBattleOutcome
+	goto_if_eq VAR_RESULT, B_OUTCOME_CAUGHT, MtEmber_Summit_EventScript_CapturedMoltres
 	goto_if_eq VAR_RESULT, B_OUTCOME_WON, MtEmber_Summit_EventScript_DefeatedMoltres
 	goto_if_eq VAR_RESULT, B_OUTCOME_RAN, MtEmber_Summit_EventScript_RanFromMoltres
 	goto_if_eq VAR_RESULT, B_OUTCOME_PLAYER_TELEPORTED, MtEmber_Summit_EventScript_RanFromMoltres
@@ -47,7 +48,14 @@ MtEmber_Summit_EventScript_Moltres::
 	release
 	end
 
+MtEmber_Summit_EventScript_CapturedMoltres::
+	clearflag FLAG_FULL_MOLTRES_KO_PENDING
+	setflag FLAG_FOUGHT_MOLTRES
+	release
+	end
+
 MtEmber_Summit_EventScript_DefeatedMoltres::
+	setflag FLAG_FULL_MOLTRES_KO_PENDING
 	setflag FLAG_FOUGHT_MOLTRES
 	goto EventScript_RemoveStaticMon
 	end

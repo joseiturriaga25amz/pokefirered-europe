@@ -1075,8 +1075,9 @@ static void Action_Use(u8 taskId)
 
 static void Action_Give(u8 taskId)
 {
-    s16 * data = gTasks[taskId].data;
-    u16 itemId = BagGetItemIdByPocketPosition(POCKET_TM_CASE, tSelection);
+    // Full: TMs are unique permanent progression unlocks. Allowing a TM to
+    // become a held item would remove the only logical copy from the TM Case
+    // and would also bypass duplicate protection in AddBagItem.
     RemoveContextMenu(&sTMCaseDynamicResources->contextMenuWindowId);
     ClearStdWindowAndFrameToTransparent(WIN_SELECTED_MSG, FALSE);
     ClearWindowTilemap(WIN_SELECTED_MSG);
@@ -1085,22 +1086,7 @@ static void Action_Give(u8 taskId)
     PutWindowTilemap(WIN_MOVE_INFO);
     ScheduleBgCopyTilemapToVram(0);
     ScheduleBgCopyTilemapToVram(1);
-    if (!IS_HM(itemId))
-    {
-        if (CalculatePlayerPartyCount() == 0)
-        {
-            PrintError_ThereIsNoPokemon(taskId);
-        }
-        else
-        {
-            sTMCaseDynamicResources->nextScreenCallback = CB2_ChooseMonToGiveItem;
-            Task_BeginFadeOutFromTMCase(taskId);
-        }
-    }
-    else
-    {
-        PrintError_ItemCantBeHeld(taskId);
-    }
+    PrintError_ItemCantBeHeld(taskId);
 }
 
 static void PrintError_ThereIsNoPokemon(u8 taskId)
@@ -1160,64 +1146,22 @@ static void Action_Exit(u8 taskId)
 
 static void Task_SelectedTMHM_GiveParty(u8 taskId)
 {
-    s16 * data = gTasks[taskId].data;
-
-    if (!IS_HM(BagGetItemIdByPocketPosition(POCKET_TM_CASE, tSelection)))
-    {
-        sTMCaseDynamicResources->nextScreenCallback = CB2_GiveHoldItem;
-        Task_BeginFadeOutFromTMCase(taskId);
-    }
-    else
-    {
-        // Can't hold "important" items (e.g. key items)
-        PrintError_ItemCantBeHeld(taskId);
-    }
+    // Full: neither TMs nor HMs may leave the TM Case as held items.
+    PrintError_ItemCantBeHeld(taskId);
 }
 
 static void Task_SelectedTMHM_GivePC(u8 taskId)
 {
-    s16 * data = gTasks[taskId].data;
-
-    if (!IS_HM(BagGetItemIdByPocketPosition(POCKET_TM_CASE, tSelection)))
-    {
-        sTMCaseDynamicResources->nextScreenCallback = CB2_ReturnToPokeStorage;
-        Task_BeginFadeOutFromTMCase(taskId);
-    }
-    else
-    {
-        // Can't hold "important" items (e.g. key items)
-        PrintError_ItemCantBeHeld(taskId);
-    }
+    // Full: neither TMs nor HMs may leave the TM Case as held items.
+    PrintError_ItemCantBeHeld(taskId);
 }
 
 static void Task_SelectedTMHM_Sell(u8 taskId)
 {
-    s16 * data = gTasks[taskId].data;
-
-    if (ItemId_GetPrice(gSpecialVar_ItemId) == 0)
-    {
-        // Can't sell TM/HMs with no price (by default this is just the HMs)
-        CopyItemName(gSpecialVar_ItemId, gStringVar1);
-        StringExpandPlaceholders(gStringVar4, gText_OhNoICantBuyThat);
-        PrintMessageWithFollowupTask(taskId, GetDialogBoxFontId(), gStringVar4, CloseMessageAndReturnToList);
-    }
-    else
-    {
-        tQuantitySelected = 1;
-        if (tQuantityOwned == 1)
-        {
-            PrintPlayersMoney();
-            Task_AskConfirmSaleWithAmount(taskId);
-        }
-        else
-        {
-            if (tQuantityOwned > 99)
-                tQuantityOwned = 99;
-            CopyItemName(gSpecialVar_ItemId, gStringVar1);
-            StringExpandPlaceholders(gStringVar4, gText_HowManyWouldYouLikeToSell);
-            PrintMessageWithFollowupTask(taskId, GetDialogBoxFontId(), gStringVar4, Task_InitQuantitySelectUI);
-        }
-    }
+    // Full: TMs are permanent progression items. HMs remain unsellable too.
+    CopyItemName(gSpecialVar_ItemId, gStringVar1);
+    StringExpandPlaceholders(gStringVar4, gText_OhNoICantBuyThat);
+    PrintMessageWithFollowupTask(taskId, GetDialogBoxFontId(), gStringVar4, CloseMessageAndReturnToList);
 }
 
 static void Task_AskConfirmSaleWithAmount(u8 taskId)

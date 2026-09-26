@@ -365,3 +365,31 @@ OneIsland_PokemonCenter_1F_Text_MachineLinkedWithKantoAndHoenn::
 
 OneIsland_PokemonCenter_1F_Text_ObtainedTriPass::
     .string "¡Obtuviste el TRI-TICKET!$"
+
+
+OneIsland_PokemonCenter_1F_Text_FullReceivedMysticTicket::
+    .string "CELIO: Has capturado a las tres aves\n"
+    .string "legendarias de KANTO.\p"
+    .string "Esta señal apareció al completar\n"
+    .string "la MÁQUINA de REDES.\p"
+    .string "Creo que este TICKET te llevará\n"
+    .string "hasta su origen.\p"
+    .string "¡{PLAYER} obtuvo el MISTI-TICKET!$"
+
+OneIsland_PokemonCenter_1F_Text_FullDetectedAuroraSignal::
+    .string "CELIO: Espera... La MÁQUINA de REDES\n"
+    .string "está captando una señal extraña.\p"
+    .string "No pertenece a KANTO ni a HOENN.\p"
+    .string "En el MUSEO de CIUDAD PLATEADA\n"
+    .string "podrían reconocer este patrón.$"
+
+OneIsland_PokemonCenter_1F_Text_FullReceivedAuroraTicket::
+    .string "CELIO: ¡Eso era! Los datos del museo\n"
+    .string "encajan con la señal.\p"
+    .string "He conseguido fijar las coordenadas.\n"
+    .string "Lleva este TICKET al ferry.\p"
+    .string "¡{PLAYER} obtuvo el AURORA-TICKET!$"
+
+OneIsland_PokemonCenter_1F_Text_FullTicketNoRoom::
+    .string "CELIO: Necesitas dejar sitio en la\n"
+    .string "BOLSA antes de que pueda dártelo.$"

@@ -72,11 +72,11 @@ SSAnne_2F_Corridor_EventScript_RivalSquirtle::
 	return
 
 SSAnne_2F_Corridor_EventScript_RivalBulbasaur::
-	trainerbattle_no_intro TRAINER_RIVAL_SS_ANNE_BULBASAUR, SSAnne_2F_Corridor_Text_RivalDefeat
+	trainerbattle_no_intro TRAINER_RIVAL_SS_ANNE_SQUIRTLE, SSAnne_2F_Corridor_Text_RivalDefeat
 	return
 
 SSAnne_2F_Corridor_EventScript_RivalCharmander::
-	trainerbattle_no_intro TRAINER_RIVAL_SS_ANNE_CHARMANDER, SSAnne_2F_Corridor_Text_RivalDefeat
+	trainerbattle_no_intro TRAINER_RIVAL_SS_ANNE_SQUIRTLE, SSAnne_2F_Corridor_Text_RivalDefeat
 	return
 
 SSAnne_2F_Corridor_EventScript_RivalExitLeft::

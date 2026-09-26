@@ -14,6 +14,10 @@
 
 #define SAVEBLOCK_MOVE_RANGE    128
 
+#define FULL_SAVE_SCHEMA_VERSION 1
+
+static const u8 sFullSaveMagic[4] = {'R', 'F', 'F', 'L'};
+
 struct LoadedSaveData
 {
  /*0x0000*/ struct ItemSlot items[BAG_ITEMS_COUNT];
@@ -64,6 +68,30 @@ void ClearSav2(void)
 void ClearSav1(void)
 {
     CpuFill16(0, &gSaveBlock1, sizeof(struct SaveBlock1) + sizeof(gSaveBlock1_DMA));
+}
+
+bool32 IsFullSaveDataInitialized(void)
+{
+    return gSaveBlock1Ptr->fullHeader.magic[0] == sFullSaveMagic[0]
+        && gSaveBlock1Ptr->fullHeader.magic[1] == sFullSaveMagic[1]
+        && gSaveBlock1Ptr->fullHeader.magic[2] == sFullSaveMagic[2]
+        && gSaveBlock1Ptr->fullHeader.magic[3] == sFullSaveMagic[3]
+        && gSaveBlock1Ptr->fullHeader.schemaVersion == FULL_SAVE_SCHEMA_VERSION;
+}
+
+void InitFullSaveData(void)
+{
+    if (IsFullSaveDataInitialized())
+        return;
+
+    // Schema 0 import: initialize only the Full-owned 16-byte header.
+    // Vanilla bag data and all standard save fields remain untouched.
+    memset(&gSaveBlock1Ptr->fullHeader, 0, sizeof(gSaveBlock1Ptr->fullHeader));
+    gSaveBlock1Ptr->fullHeader.magic[0] = sFullSaveMagic[0];
+    gSaveBlock1Ptr->fullHeader.magic[1] = sFullSaveMagic[1];
+    gSaveBlock1Ptr->fullHeader.magic[2] = sFullSaveMagic[2];
+    gSaveBlock1Ptr->fullHeader.magic[3] = sFullSaveMagic[3];
+    gSaveBlock1Ptr->fullHeader.schemaVersion = FULL_SAVE_SCHEMA_VERSION;
 }
 
 void SetSaveBlocksPointers(void)

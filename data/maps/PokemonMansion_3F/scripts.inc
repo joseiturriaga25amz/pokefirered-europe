@@ -17,6 +17,18 @@ PokemonMansion_3F_EventScript_Statue::
 	end
 
 PokemonMansion_3F_EventScript_DiaryFeb6th::
+	goto_if_ne VAR_FULL_MEW_QUEST, 2, PokemonMansion_3F_EventScript_DiaryFeb6thVanilla
+	lockall
+	waitse
+	playmoncry SPECIES_MEW, CRY_MODE_NORMAL
+	msgbox PokemonMansion_3F_Text_FullMewSighting3
+	waitmoncry
+	setvar VAR_FULL_MEW_QUEST, 3
+	msgbox PokemonMansion_1F_Text_MewGaveBirthToMewtwo, MSGBOX_SIGN
+	releaseall
+	end
+
+PokemonMansion_3F_EventScript_DiaryFeb6thVanilla::
 	msgbox PokemonMansion_1F_Text_MewGaveBirthToMewtwo, MSGBOX_SIGN
 	end
 

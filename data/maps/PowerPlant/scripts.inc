@@ -51,6 +51,7 @@ PowerPlant_EventScript_Zapdos::
 	waitstate
 	clearflag FLAG_SYS_SPECIAL_WILD_BATTLE
 	specialvar VAR_RESULT, GetBattleOutcome
+	goto_if_eq VAR_RESULT, B_OUTCOME_CAUGHT, PowerPlant_EventScript_CapturedZapdos
 	goto_if_eq VAR_RESULT, B_OUTCOME_WON, PowerPlant_EventScript_DefeatedZapdos
 	goto_if_eq VAR_RESULT, B_OUTCOME_RAN, PowerPlant_EventScript_RanFromZapdos
 	goto_if_eq VAR_RESULT, B_OUTCOME_PLAYER_TELEPORTED, PowerPlant_EventScript_RanFromZapdos
@@ -58,7 +59,14 @@ PowerPlant_EventScript_Zapdos::
 	release
 	end
 
+PowerPlant_EventScript_CapturedZapdos::
+	clearflag FLAG_FULL_ZAPDOS_KO_PENDING
+	setflag FLAG_FOUGHT_ZAPDOS
+	release
+	end
+
 PowerPlant_EventScript_DefeatedZapdos::
+	setflag FLAG_FULL_ZAPDOS_KO_PENDING
 	setflag FLAG_FOUGHT_ZAPDOS
 	goto EventScript_RemoveStaticMon
 	end

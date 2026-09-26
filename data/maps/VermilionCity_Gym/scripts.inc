@@ -204,6 +204,11 @@ VermilionCity_Gym_EventScript_SetBeamsOn::
 	return
 
 VermilionCity_Gym_EventScript_LtSurge::
+	goto_if_unset FLAG_SYS_NATIONAL_DEX, VermilionCity_Gym_EventScript_LtSurgeStory
+	goto_if_unset FLAG_GOT_TM34_FROM_SURGE, VermilionCity_Gym_EventScript_LtSurgeStory
+	goto VermilionCity_Gym_EventScript_FullRematchOffer
+
+VermilionCity_Gym_EventScript_LtSurgeStory::
 	famechecker FAMECHECKER_LTSURGE, FCPICKSTATE_COLORED, UpdatePickStateFromSpecialVar8005
 	trainerbattle_single TRAINER_LEADER_LT_SURGE, VermilionCity_Gym_Text_LtSurgeIntro, VermilionCity_Gym_Text_LtSurgeDefeat, VermilionCity_Gym_EventScript_DefeatedLtSurge, NO_MUSIC
 	goto_if_unset FLAG_GOT_TM34_FROM_SURGE, VermilionCity_Gym_EventScript_GiveTM34
@@ -286,3 +291,36 @@ VermilionCity_Gym_EventScript_GymStatuePostVictory::
 	msgbox VermilionCity_Gym_Text_GymStatuePlayerWon
 	releaseall
 	end
+
+VermilionCity_Gym_EventScript_FullRematchOffer::
+	lock
+	faceplayer
+	msgbox VermilionCity_Gym_Text_FullRematchOffer, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, VermilionCity_Gym_EventScript_FullRematchDecline
+	cleartrainerflag TRAINER_RS_TUBER_F
+	trainerbattle_single TRAINER_RS_TUBER_F, VermilionCity_Gym_Text_FullRematchIntro, VermilionCity_Gym_Text_FullRematchDefeat, VermilionCity_Gym_EventScript_FullRematchWon
+	end
+
+VermilionCity_Gym_EventScript_FullRematchWon::
+	msgbox VermilionCity_Gym_Text_FullRematchAfter
+	release
+	end
+
+VermilionCity_Gym_EventScript_FullRematchDecline::
+	release
+	end
+
+VermilionCity_Gym_Text_FullRematchOffer::
+	.string "Has recorrido un largo camino desde\n"
+	.string "nuestro primer combate.\p"
+	.string "¿Quieres una revancha de verdad?$"
+
+VermilionCity_Gym_Text_FullRematchIntro::
+	.string "¡Entonces veamos cuánto has crecido!$"
+
+VermilionCity_Gym_Text_FullRematchDefeat::
+	.string "Excelente. Tu fuerza sigue creciendo.$"
+
+VermilionCity_Gym_Text_FullRematchAfter::
+	.string "Puedes volver cuando quieras.\p"
+	.string "Siempre aceptaré otra revancha.$"

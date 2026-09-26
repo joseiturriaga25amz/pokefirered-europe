@@ -1,0 +1,437 @@
+# B2 Boss / Rival Progression Audit
+
+**Date:** 2026-09-25  
+**Branch:** `feature/b2-boss-rival-balance`  
+**Starting code checkpoint:** `ede84f8837346ffe22d697c9ed6a6677ad7fb3f4` (B1 gameplay, Full Gameplay Core run 36135969057 SUCCESS)  
+**B2 documentation base:** `dc807ad7d8a7b93c5a91ba5ea5dec71583196284`
+
+## Scope
+
+B2.1 is a read-only reconciliation pass for BOSS-001 / A-009. It checks whether early boss moves are merely species-legal or also coherent with the player's story-stage move power/access. Frozen rosters and levels remain authoritative unless a later approved amendment explicitly changes them.
+
+## Findings
+
+### Gary — Cerulean
+
+Frozen roster remains:
+- Abra 18
+- Rattata 19
+- Pidgeotto 20
+- Squirtle 22
+
+Current Abra set:
+- Psychic
+- Reflect
+- Light Screen
+- Teleport
+
+**Finding B2-F001 — progression mismatch.**
+
+The frozen matrix describes this encounter as “legal and progressive” and says Abra should use legal TMs so it is not a dead turn. Species legality is satisfied, but the current set front-loads late-game-strength/support TMs into the Cerulean encounter. Psychic is the principal power spike. The roster/level must remain unchanged; B2 should replace only the incoherent move payload while keeping Abra an active threat.
+
+### Brock
+
+Current key set:
+- Geodude 14 — Rock Throw / Tackle / Defense Curl / Mud Sport
+- Onix 17 — Rock Tomb / Rock Throw / Bind / Screech
+
+**Result:** no BOSS-001 correction identified. Rock Tomb is Brock's own signature TM/reward and is appropriate boss presentation for this stage.
+
+### Misty
+
+Current notable moves:
+- Goldeen 21 — Water Pulse / Horn Attack / Peck / Supersonic
+- Staryu 23 — Water Pulse / Light Screen / Recover / Rapid Spin
+- Starmie 26 — Water Pulse / Psychic / Recover / Swift
+
+**Finding B2-F002 — progression mismatch.**
+
+Water Pulse is appropriate as Misty's signature TM. Psychic on Starmie is a much later player-access move and creates an avoidable early power spike. Light Screen is species-legal but also arrives later in normal player progression. B2 should retain Misty's identity/difficulty while replacing premature move sources rather than weakening roster/levels.
+
+### Lt. Surge
+
+Current notable moves:
+- Voltorb 25 — Shock Wave / Spark / SonicBoom / Screech
+- Pikachu 26 — Thunderbolt / Thunder Wave / Quick Attack / Double Team
+- Raichu 30 — Thunderbolt / Body Slam / Mega Kick / Quick Attack
+
+**B2-F003 — RETRACTED / FALSE POSITIVE.**
+
+Initial inspection treated Thunderbolt as a later-TM leak. Repository learnset verification shows Pikachu learns Thunderbolt naturally at level 26, exactly the level used by Surge, and Raichu may legitimately retain it after evolution. Surge therefore needs no BOSS-001 correction for Thunderbolt. This correction is kept in the audit trail rather than silently deleting the false positive.
+
+### Giovanni — Rocket Hideout / Silph
+
+Current parties are still `TrainerMonNoItemDefaultMoves`:
+- Rocket Hideout: Onix 25 / Rhyhorn 24 / Kangaskhan 29
+- Silph: Nidorino 37 / Kangaskhan 35 / Rhyhorn 37 / Nidoqueen 41
+
+**Finding B2-F004 — approved boss-standard gap.**
+
+A-009 explicitly requires these Giovanni encounters to receive the Full boss-design standard. They currently rely on default level-up moves rather than deliberate custom boss sets. This is not a frozen-roster conflict: B2 should keep the approved species/levels unless a concrete incoherence is found, but convert these encounters to intentional legal/progression-aware movesets and validate them.
+
+## Non-findings / constraints
+
+- Gary's fixed Squirtle line and exact frozen encounter rosters/levels remain unchanged.
+- Do not alter first-gym rosters merely to solve move progression.
+- Do not use “the species can learn the TM” as sufficient proof of stage appropriateness.
+- Do not require every boss move to be obtainable by the player at that exact moment; signature-boss moves are valid when narratively justified. The audit targets unexplained power leakage from substantially later progression.
+- Trainer legality validation remains mandatory after every set change.
+
+## Next microblocks
+
+1. **B2.2:** reconcile Gary Cerulean + Misty + Surge move payloads only; no roster/level changes.
+2. Run trainer-set legality validator / consolidated targeted CI.
+3. **B2.3:** convert Rocket Hideout Giovanni to a deliberate custom-move boss set and validate.
+4. **B2.4:** convert Silph Giovanni similarly.
+5. Re-audit adjacent Gary/boss encounters for accidental regression, then close B2 with staged-progression documentation.
+
+
+## B2.2 implementation decision
+
+Applied the minimum correction needed to remove the two clear direct-damage progression spikes while preserving frozen rosters, levels and boss identity:
+
+- Gary / Cerulean Abra 18: **Psychic → Thief**. Reflect, Light Screen and Teleport remain as utility. Thief is species-legal and its TM is obtainable in Mt. Moon before Cerulean.
+- Misty / Starmie 26: **Psychic → Rapid Spin**. Water Pulse remains the signature STAB; Recover and Swift remain. This removes the later Psychic spike without weakening Misty's roster or ace level.
+- Lt. Surge: **no change** after B2-F003 was retracted through level-up-learnset verification.
+- Brock: no change.
+
+B2.2 intentionally does not rewrite support moves solely because their TM source occurs later. The BOSS-001 correction is aimed at unexplained early power leakage; signature-leader moves and bounded utility are allowed when they preserve encounter identity without introducing a late-game direct-damage spike.
+
+
+## User-approved leader decisions
+
+### Brock — APPROVED AS CURRENT
+
+No roster, level, move or item changes.
+
+### Misty — APPROVED 2026-09-25
+
+Keep current roster/levels:
+- Goldeen 21
+- Staryu 23
+- Starmie 26 + Sitrus Berry
+
+Approved moves:
+- Goldeen — Water Pulse / Horn Attack / Supersonic / Peck
+- Staryu — Water Pulse / Swift / Rapid Spin / Light Screen
+- Starmie — Water Pulse / Swift / Rapid Spin / Recover
+
+Design intent:
+- Goldeen opens with a weaker overall stat profile but already introduces Misty's Water Pulse identity.
+- Staryu adds utility and Swift even though Swift is normally learned at level 24; exact level-up timing is not being used as a hard restriction for boss custom sets.
+- Starmie remains the ace through stats, level, Sitrus Berry and recovery rather than premature Psychic coverage.
+- All selected moves are legal for the species in FRLG/Full; custom boss sets may use a species-legal move slightly before its natural level-up point when explicitly approved.
+
+
+### Brock — revision approved 2026-09-25
+
+Onix 17 changes **Rock Throw → Rock Smash**.
+
+Final approved Brock first-battle set:
+- Geodude 14 — Rock Throw / Tackle / Defense Curl / Mud Sport
+- Onix 17 — Rock Tomb / Rock Smash / Bind / Screech + Oran Berry
+
+Rationale:
+- Rock Smash is legal for Onix through HM06.
+- The change gives Brock's ace a more anime-like physical identity and differentiates Onix from Geodude's basic Rock offense.
+- No roster, level, item, IV or other move changes.
+
+
+### Lt. Surge — partial approval 2026-09-25
+
+Approved:
+- Voltorb 25 — Shock Wave / Tackle / SonicBoom / Screech
+- Pikachu 26 — Shock Wave / Thunder Wave / Quick Attack / Double Team
+
+Design rule:
+- first-battle Electric ceiling is Shock Wave, matching the signature-TM progression used with Brock/Rock Tomb and Misty/Water Pulse;
+- Voltorb is intentionally the simple first escalation step;
+- Raichu remains pending user approval and must feel like the ace without using Thunderbolt in the first battle.
+
+
+### Koga — partial approval 2026-09-25
+
+Approved:
+- Muk 43 changes Sludge Bomb -> Sludge (Spanish ROM name: Residuos).
+- Muk final pending no other changes: Sludge / Minimize / Acid Armor / Toxic.
+
+Design rule:
+- Koga first-battle Poison STAB ceiling uses Sludge (65 BP; 97.5 STAB reference), not Sludge Bomb (90 BP; 135 STAB reference).
+- Weezing ace set remains under review; Explosion and Self-Destruct are explicitly rejected for the first battle.
+
+
+### Koga — final first-battle approval 2026-09-25
+
+Final approved ace:
+- Weezing 46 — Sludge / Toxic / Smokescreen / Haze + Sitrus Berry.
+
+Final design notes:
+- Explosion and Self-Destruct are excluded from the first-battle Weezing.
+- Sludge is the first-battle Poison STAB ceiling.
+- Haze gives the ace anti-setup utility without escalating raw damage.
+
+
+### Sabrina — final first-battle approval 2026-09-25
+
+Final approved sets:
+- Mr. Mime 42 — Psybeam / Baton Pass / Barrier / Calm Mind
+- Venomoth 43 — Psybeam / Silver Wind / Gust / Sleep Powder
+- Kadabra 45 — Psybeam / Future Sight / Calm Mind / Reflect
+- Alakazam 47 — Psychic / Calm Mind / Recover / Protect + Twisted Spoon
+
+Design intent:
+- Psybeam is the normal Psychic-family ceiling for the first three team members.
+- Psychic is reserved for Alakazam so the ace creates a clear final power step.
+- Mr. Mime is the setup/support opener; Venomoth is the more offensive second step; Kadabra adds delayed pressure through Future Sight; Alakazam is the dedicated ace.
+- Alakazam intentionally has only Psychic as direct damage. Potential Dark-type counterplay is accepted rather than adding premature coverage.
+
+
+### Blaine — final first-battle approval 2026-09-25
+
+Final approved sets:
+- Ninetales 47 — Flamethrower / Will-O-Wisp / Confuse Ray / Fire Spin
+- Rhydon 48 — Dig / Rock Slide / Brick Break / Take Down
+- Rapidash 49 — Stomp / Bounce / Agility / Flamethrower
+- Arcanine 50 — Bite / Roar / Take Down / Flamethrower
+- Magmar 52 — Fire Blast / Flamethrower / Fire Punch / Brick Break + Charcoal
+
+Progression rules:
+- Flamethrower is Blaine's second offensive ceiling and may appear before the ace.
+- Fire Blast is the maximum first-battle ceiling and is reserved for ace Magmar.
+- Rhydon is deliberately kept below Flamethrower's STAB reference so it does not steal the battle's power progression.
+- ExtremeSpeed on Arcanine is reserved for the rematch.
+- Cross Chop on Magmar is reserved for the rematch; Brick Break is the approved Fighting coverage in the first battle.
+
+
+### Giovanni Gym — final first-battle approval 2026-09-25
+
+Final approved sets:
+- Persian 50 — Fake Out / Slash / Faint Attack / Screech
+- Kingler 51 — Crabhammer / Stomp / Protect / Mud Shot
+- Nidoqueen 52 — Earthquake / Brick Break / Body Slam / Ice Beam
+- Nidoking 53 — Earthquake / Body Slam / Brick Break / Flamethrower
+- Golem 54 — Earthquake / Rock Slide / Double-Edge / Defense Curl
+- Rhydon 56 — Earthquake / Rock Slide / Brick Break / Double-Edge + Soft Sand
+
+Design intent:
+- Earthquake is the normal offensive ceiling for Giovanni's Ground core and is appropriate for the eighth Gym as his signature TM.
+- Nidoqueen and Nidoking retain strong but bounded coverage rather than near-competitive all-purpose coverage.
+- Golem explicitly removes Explosion; Defense Curl makes it a physical-wall step rather than a one-shot spike.
+- Rhydon remains the ace through level, Ground/Rock STAB profile and Soft Sand, without needing a stronger raw move than Earthquake.
+
+
+### 2026-09-25 — approved-state regression repair before 8-Gym curve audit
+
+Repository audit found three previously approved decisions had not survived into the current trainer-party block:
+- Lt. Surge Raichu had reverted to Thunderbolt / Body Slam / Mega Kick / Quick Attack.
+- Erika ace Gloom had reverted from trainer IV byte 255 to 116.
+- Sabrina Mr. Mime, Venomoth and Alakazam had reverted to earlier pre-approval movesets.
+
+Repaired to the already-approved state:
+- Raichu 30 — Shock Wave / Mega Punch / Thunder Wave / Quick Attack + Sitrus.
+- Gloom 35 — trainer IV byte 255 (31 fixed IVs), approved moves unchanged.
+- Sabrina final approved four sets restored exactly.
+
+No new balance decision is introduced by this repair.
+
+
+### Eight-Gym difficulty-curve micro-adjustments — approved 2026-09-25
+
+Applied after full-curve audit:
+- Erika order/levels: Weepinbell 31 -> Tangela 32 -> Vileplume 33 -> Gloom 35.
+- Erika ace Gloom: Giga Drain -> Petal Dance; keeps Sleep Powder / Moonlight / Acid, Sitrus Berry and perfect fixed IVs.
+- Sabrina Mr. Mime: Psybeam -> Confusion; keeps Baton Pass / Barrier / Calm Mind.
+- Blaine order/levels: Rapidash 48 is now second, Rhydon 49 third; movesets unchanged.
+- Giovanni Kingler: Crabhammer -> Surf; keeps Stomp / Protect / Mud Shot.
+
+Curve intent:
+- Gloom becomes a distinct ace offensively without exceeding Koga's next-stage pressure.
+- Erika's internal damage progression is smoother.
+- Mr. Mime is restored as Sabrina's weakest/support opener while remaining dangerous through setup and Baton Pass.
+- Blaine's second/third slots climb more cleanly toward Arcanine and Magmar.
+- Kingler no longer creates an anomalous early physical spike under the modern physical/special split; Crabhammer is reserved for rematch progression.
+
+
+### Gary / Rival progression adjustments — approved 2026-09-25
+
+Applied:
+- Cerulean Abra 18: Psychic / Reflect / Light Screen / Teleport -> Confusion / Teleport / empty / empty.
+  - Deliberate minimal exception: Abra normally has only Teleport by level in this build. Confusion is allowed here as a one-move lineage/progression exception, avoiding both a useless vanilla Abra and an overpowered early Psychic.
+- S.S. Anne Kadabra 25: Psybeam -> Confusion. Recover / Reflect / Disable unchanged.
+- Pokémon Tower Pidgeotto 31: Return -> Quick Attack.
+- Silph Pidgeot 44: Return -> Facade.
+- Silph Blastoise 49: Bite -> Rain Dance.
+- Route 22 II Pidgeot 56: Return -> Facade.
+- First Champion Pidgeot 64: Return -> Double-Edge.
+
+Design intent:
+- Psychic-line attack progression becomes: Abra Confusion -> Kadabra Confusion -> Kadabra Psybeam -> Alakazam Psychic.
+- Pidgeot-line Normal STAB progression avoids low-power trainer Return caused by default friendship and grows from Quick Attack -> Facade -> Double-Edge.
+- Blastoise begins weather-based ace identity at Silph, later adding Mystic Water and finally Hydro Pump at Champion.
+
+
+### Gary Silph Blastoise refinement — approved 2026-09-25
+
+Silph Blastoise 49 final set:
+- Surf / Ice Beam / Bite / Rain Dance + Sitrus Berry
+
+Refinement:
+- Bite is restored because the modern physical/special split lets Blastoise use its solid physical Attack and preserves useful Dark coverage/flinch pressure.
+- Protect is removed because this set is not built around passive stalling; Rain Dance is the preferred utility slot and directly advances Blastoise's ace identity.
+- Progression remains: juvenile Bite -> first-stage Blastoise keeps Bite while learning weather control -> late-game Blastoise replaces Bite with Earthquake -> Champion upgrades Surf to Hydro Pump.
+
+
+### Giovanni / Mewtwo gym climax — approved 2026-09-25
+
+Final first-battle Viridian Gym roster:
+- Kingler 51
+- Nidoqueen 52
+- Nidoking 53
+- Golem 54
+- Rhydon 56 + Soft Sand
+- Mewtwo 56, fixed IV byte 255 (31 fixed IVs), no held item
+  - Psychic / Recover / Swift / Disable
+
+Persian is provisionally removed from the gym battle to respect the six-Pokémon engine limit; its identity is intended to remain in Giovanni's earlier encounters.
+
+Narrative/cutscene:
+- After the trainer battle and before the Earth Badge presentation, a temporary Viridian Gym overworld Mewtwo appears.
+- Dialogue is adapted from the Latin-American anime confrontation: creation, servitude, equality and Mewtwo's refusal to be enslaved.
+- Mewtwo cries, triggers a psychic sound cue, then uses the native fly_up movement to leave the screen.
+- Giovanni simultaneously performs an in-place panic/agitation sequence.
+- Mewtwo is removed only from the gym event; Cerulean Cave's FLAG_HIDE_MEWTWO / level-70 encounter remain untouched.
+- The Earth Badge/TM26 flow resumes after the escape scene.
+
+
+#### Mewtwo cutscene script hardening
+- Corrected dialogue control sequences from literal double-escaped text to native \n / \p script controls.
+- Matched the cutscene's lockall with releaseall before returning to the Earth Badge flow.
+
+
+### Lorelei — first League approved 2026-09-25
+
+First-League Lorelei is approved exactly as currently implemented:
+- Dewgong 57 — Ice Beam / Surf / Hail / Safeguard
+- Slowbro 58 — Surf / Psychic / Ice Beam / Amnesia
+- Jynx 59 — Ice Beam / Psychic / Lovely Kiss / Attract
+- Cloyster 60 + NeverMeltIce — Ice Beam / Surf / Spikes / Protect
+- Lapras 61 + Sitrus Berry — Ice Beam / Surf / Thunderbolt / Body Slam
+- trainer IV byte 198 (~IV24), full boss AI, two Full Restores.
+
+Rationale: by the first Elite Four there is no longer an early-game offensive-ceiling concern for standard late-Kanto moves such as Psychic, Ice Beam, Thunderbolt, Surf, Earthquake, Shadow Ball, Flamethrower and comparable legal tools. Progression review still applies to genuinely postgame-only or otherwise anomalous move access.
+
+Deferred B3 rematch amendment: Lorelei's rematch Lapras should use Ice Beam / Surf / Thunderbolt / Confuse Ray, replacing Body Slam so the rematch combines the original Lapras control identity with the Full coverage upgrade.
+
+
+### Bruno — first League approved 2026-09-25
+
+First-League Bruno is approved exactly as currently implemented:
+- Onix 58 — Earthquake / Rock Tomb / Iron Tail / Sandstorm
+- Hitmonchan 59 + Focus Band — Sky Uppercut / Mach Punch / Ice Punch / Thunder Punch
+- Hitmonlee 60 — Brick Break / Mega Kick / Rock Slide / Earthquake
+- Onix 60 — Earthquake / Rock Slide / Double-Edge / Iron Tail
+- Machamp 62 + Black Belt — Cross Chop / Bulk Up / Rock Slide / Earthquake
+- trainer IV byte 206 (~IV25), full boss AI, two Full Restores.
+
+Rationale: roster identity remains vanilla while dead/low-value utility is replaced by coherent physical coverage under the modern physical/special split. The two Onix have distinct progression roles, and Machamp remains the unequivocal ace through STAB Cross Chop + Black Belt without adding recovery or excessive sustain.
+
+
+### Agatha — first League approved 2026-09-25
+
+First-League Agatha is approved exactly as currently implemented:
+- Haunter 59 — Shadow Ball / Hypnosis / Dream Eater / Mean Look
+- Gengar 60 — Shadow Ball / Psychic / Confuse Ray / Toxic
+- Golbat 60 — Aerial Ace / Poison Fang / Bite / Confuse Ray
+- Arbok 61 — Poison Fang / Earthquake / Rock Slide / Glare
+- Gengar 63 + Spell Tag — Shadow Ball / Sludge Bomb / Thunderbolt / Hypnosis
+- trainer IV byte 214 (~IV26), full boss AI, two Full Restores.
+
+Rationale: the roster remains faithful to the original while redundant or low-value utility is replaced with reliable offensive pressure under the modern physical/special split. The two Gengar have distinct roles, Arbok remains physically differentiated, and the final Gengar is the clear offensive ace without recovery or excessive sustain.
+
+
+### Lance — first League approved 2026-09-25
+
+First-League Lance is approved with one final refinement to the ace:
+- Gyarados 61 — Waterfall / Dragon Dance / Earthquake / Hyper Beam
+- Dragonair 61 — Outrage / Thunder Wave / Ice Beam / Safeguard
+- Dragonair 62 — Outrage / Flamethrower / Thunderbolt / Thunder Wave
+- Aerodactyl 63 + Hard Stone — Rock Slide / Aerial Ace / Earthquake / Double-Edge
+- Dragonite 65 + Dragon Fang — Dragon Claw / Aerial Ace / Ice Beam / Flamethrower
+- trainer IV byte 223 (~IV27), full boss AI, two Full Restores.
+
+Rationale: the two Dragonair retain Outrage as the more volatile aggressive Dragon STAB, while the ace Dragonite uses Dragon Claw for a reliable Dragon STAB without lock-in/confusion. This preserves internal team differentiation while keeping Dragonite the clear ace through stats, level, coverage and Dragon Fang.
+
+
+### First-League transversal closure + Giovanni materialization — 2026-09-25
+
+Cross-team first-League progression is coherent after the individual approvals:
+- Lorelei: average 59.0, ace 61, IV24.
+- Bruno: average 59.8, ace 62, IV25.
+- Agatha: average 60.6, ace 63, IV26.
+- Lance: average 62.4, ace 65, IV27.
+- Gary Champion: average 66.0, ace Blastoise 69, IV28 baseline / IV30 Blastoise.
+All five use full boss AI and two Full Restores. The progression rises in team average, IV quality and ace ceiling without universal perfect IVs.
+
+Final implementation audit found Rocket Hideout and Silph Giovanni were still using vanilla default-move payloads despite the already-approved B2 design. The approved sets are now materialized:
+
+**Rocket Hideout Giovanni**
+- Persian 29 (IV14): Pay Day / Faint Attack / Aerial Ace / Taunt
+- Rhyhorn 30 (IV14): Rock Blast / Dig / Stomp / Scary Face
+- Kangaskhan 33 (IV14): Fake Out / Mega Punch / Brick Break / Bite
+- Full boss AI; custom moves; no held items.
+
+**Silph Giovanni**
+- Persian 44 (IV18): Faint Attack / Screech / Shadow Ball / Aerial Ace
+- Kingler 45 (IV18): Surf / Stomp / Protect / Mud Shot
+- Kangaskhan 46 (IV18): Fake Out / Dizzy Punch / Brick Break / Dig
+- Rhyhorn 47 (IV18): Rock Blast / Dig / Take Down / Scary Face
+- Nidoqueen 49 (IV18): Dig / Superpower / Body Slam / Ice Beam
+- Full boss AI; custom moves; no held items.
+
+Both Giovanni Rocket boss parties are now included in `validate_full_trainer_sets.py`.
+
+
+### B2 closure audit — static pass 2026-09-26
+
+A final first-cycle closure audit was performed before any B3 work or merge to master.
+
+Verified:
+- all eight first-battle Gym Leader parties match the latest approved state;
+- Giovanni Hideout, Silph and Gym/Mewtwo are materialized and use the intended boss AI;
+- Gary's actual battle scripts route every starter branch to the canonical Squirtle trainer IDs from Oak's Lab through Champion;
+- first Elite Four and Gary Champion match the approved level/IV/item/move curve;
+- first-cycle boss healing limits and full boss AI are present;
+- first-cycle parties are covered by the trainer legality validator.
+
+Audit repairs made before closure:
+- normalized inert Gary Bulbasaur/Charmander party arrays to byte-equivalent copies of the canonical Squirtle arrays so stale alternate data cannot drift;
+- updated `validate_full_league_rosters.py` to the latest approved Gary/Lance move progression;
+- updated the Full Gameplay Core inline boss-roster assertions for the approved Erika order, Blaine order and Giovanni/Mewtwo roster;
+- refreshed exact audited blob locks for `src/data/trainers.json` and `src/data/trainer_parties.h`.
+
+The previous B2 CI failure at HEAD `529322d0457e27cd2abfc93fa422c49b84c62680` was confirmed to be the stale exact blob lock for `src/data/trainers.json`, not a compilation or gameplay-data failure.
+
+B2 must remain unmerged until the Full Gameplay Core workflow for the latest B2 HEAD completes successfully.
+
+
+### First-cycle progression audit follow-up — approved 2026-09-26
+
+The transversal first-cycle progression audit found no level/roster rewrite necessary.
+
+One targeted healing adjustment was approved:
+- Gary Silph remains at zero trainer healing items.
+- Giovanni Silph now has exactly **one Hyper Potion**.
+- Sabrina/Blaine/Giovanni Gym retain their later two-item healing ceilings, and the first League retains two Full Restores.
+
+Rationale:
+- Gary Silph and Giovanni Silph both peak at level 49, but Giovanni is the narrative boss closing the Silph arc.
+- One Hyper Potion distinguishes the boss encounter without inflating levels, changing species, altering movesets, or adding held items.
+- The change creates a cleaner resource progression: rival with no healing -> Giovanni Silph with one Hyper Potion -> later major bosses with two healing items.
+
+The Full trainer legality validator was also hardened with a strict four-entry design-exception allowlist for previously approved sets:
+- Abra 18 / Confusion (Gary Cerulean);
+- Staryu 23 / Swift (Misty);
+- Gloom 35 / Petal Dance (Erika);
+- Mr. Mime 42 / Baton Pass (Sabrina).
+
+No other illegal trainer move is permitted by the exception mechanism.

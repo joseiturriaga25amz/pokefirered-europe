@@ -2,6 +2,11 @@ FuchsiaCity_Gym_MapScripts::
 	.byte 0
 
 FuchsiaCity_Gym_EventScript_Koga::
+	goto_if_unset FLAG_SYS_NATIONAL_DEX, FuchsiaCity_Gym_EventScript_KogaStory
+	goto_if_unset FLAG_GOT_TM06_FROM_KOGA, FuchsiaCity_Gym_EventScript_KogaStory
+	goto FuchsiaCity_Gym_EventScript_FullRematchOffer
+
+FuchsiaCity_Gym_EventScript_KogaStory::
 	famechecker FAMECHECKER_KOGA, FCPICKSTATE_COLORED, UpdatePickStateFromSpecialVar8005
 	trainerbattle_single TRAINER_LEADER_KOGA, FuchsiaCity_Gym_Text_KogaIntro, FuchsiaCity_Gym_Text_KogaDefeat, FuchsiaCity_Gym_EventScript_DefeatedKoga, NO_MUSIC
 	goto_if_unset FLAG_GOT_TM06_FROM_KOGA, FuchsiaCity_Gym_EventScript_GiveTM06
@@ -88,3 +93,36 @@ FuchsiaCity_Gym_EventScript_GymStatuePostVictory::
 	msgbox FuchsiaCity_Gym_Text_GymStatuePlayerWon
 	releaseall
 	end
+
+FuchsiaCity_Gym_EventScript_FullRematchOffer::
+	lock
+	faceplayer
+	msgbox FuchsiaCity_Gym_Text_FullRematchOffer, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, FuchsiaCity_Gym_EventScript_FullRematchDecline
+	cleartrainerflag TRAINER_RS_COOLTRAINER_M
+	trainerbattle_single TRAINER_RS_COOLTRAINER_M, FuchsiaCity_Gym_Text_FullRematchIntro, FuchsiaCity_Gym_Text_FullRematchDefeat, FuchsiaCity_Gym_EventScript_FullRematchWon
+	end
+
+FuchsiaCity_Gym_EventScript_FullRematchWon::
+	msgbox FuchsiaCity_Gym_Text_FullRematchAfter
+	release
+	end
+
+FuchsiaCity_Gym_EventScript_FullRematchDecline::
+	release
+	end
+
+FuchsiaCity_Gym_Text_FullRematchOffer::
+	.string "Has recorrido un largo camino desde\n"
+	.string "nuestro primer combate.\p"
+	.string "¿Quieres una revancha de verdad?$"
+
+FuchsiaCity_Gym_Text_FullRematchIntro::
+	.string "¡Entonces veamos cuánto has crecido!$"
+
+FuchsiaCity_Gym_Text_FullRematchDefeat::
+	.string "Excelente. Tu fuerza sigue creciendo.$"
+
+FuchsiaCity_Gym_Text_FullRematchAfter::
+	.string "Puedes volver cuando quieras.\p"
+	.string "Siempre aceptaré otra revancha.$"

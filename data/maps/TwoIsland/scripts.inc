@@ -109,6 +109,7 @@ TwoIsland_EventScript_ClerkShopSkipIntro::
 	end
 
 TwoIsland_EventScript_ShopInitial::
+	goto_if_set FLAG_SYS_NATIONAL_DEX, TwoIsland_EventScript_ShopPostNational
 	pokemart TwoIsland_Items_ShopInitial
 	msgbox Text_PleaseComeAgain
 	release
@@ -118,11 +119,27 @@ TwoIsland_EventScript_ShopInitial::
 TwoIsland_Items_ShopInitial::
 	.2byte ITEM_GREAT_BALL
 	.2byte ITEM_FRESH_WATER
+	.2byte ITEM_CHERI_BERRY
+	.2byte ITEM_CHESTO_BERRY
+	.2byte ITEM_PECHA_BERRY
+	.2byte ITEM_RAWST_BERRY
+	.2byte ITEM_ASPEAR_BERRY
+	.2byte ITEM_PERSIM_BERRY
+	.2byte ITEM_ORAN_BERRY
+	.2byte ITEM_LEPPA_BERRY
+	.2byte ITEM_SITRUS_BERRY
+	.2byte ITEM_LUM_BERRY
+	.2byte ITEM_FIGY_BERRY
+	.2byte ITEM_WIKI_BERRY
+	.2byte ITEM_MAGO_BERRY
+	.2byte ITEM_AGUAV_BERRY
+	.2byte ITEM_IAPAPA_BERRY
 	.2byte ITEM_NONE
 	release
 	end
 
 TwoIsland_EventScript_ShopExpanded1::
+	goto_if_set FLAG_SYS_NATIONAL_DEX, TwoIsland_EventScript_ShopPostNational
 	pokemart TwoIsland_Items_ShopExpanded1
 	msgbox Text_PleaseComeAgain
 	release
@@ -134,11 +151,27 @@ TwoIsland_Items_ShopExpanded1::
 	.2byte ITEM_GREAT_BALL
 	.2byte ITEM_SODA_POP
 	.2byte ITEM_FRESH_WATER
+	.2byte ITEM_CHERI_BERRY
+	.2byte ITEM_CHESTO_BERRY
+	.2byte ITEM_PECHA_BERRY
+	.2byte ITEM_RAWST_BERRY
+	.2byte ITEM_ASPEAR_BERRY
+	.2byte ITEM_PERSIM_BERRY
+	.2byte ITEM_ORAN_BERRY
+	.2byte ITEM_LEPPA_BERRY
+	.2byte ITEM_SITRUS_BERRY
+	.2byte ITEM_LUM_BERRY
+	.2byte ITEM_FIGY_BERRY
+	.2byte ITEM_WIKI_BERRY
+	.2byte ITEM_MAGO_BERRY
+	.2byte ITEM_AGUAV_BERRY
+	.2byte ITEM_IAPAPA_BERRY
 	.2byte ITEM_NONE
 	release
 	end
 
 TwoIsland_EventScript_ShopExpanded2::
+	goto_if_set FLAG_SYS_NATIONAL_DEX, TwoIsland_EventScript_ShopPostNational
 	pokemart TwoIsland_Items_ShopExpanded2
 	msgbox Text_PleaseComeAgain
 	release
@@ -152,11 +185,27 @@ TwoIsland_Items_ShopExpanded2::
 	.2byte ITEM_SODA_POP
 	.2byte ITEM_FRESH_WATER
 	.2byte ITEM_MOOMOO_MILK
+	.2byte ITEM_CHERI_BERRY
+	.2byte ITEM_CHESTO_BERRY
+	.2byte ITEM_PECHA_BERRY
+	.2byte ITEM_RAWST_BERRY
+	.2byte ITEM_ASPEAR_BERRY
+	.2byte ITEM_PERSIM_BERRY
+	.2byte ITEM_ORAN_BERRY
+	.2byte ITEM_LEPPA_BERRY
+	.2byte ITEM_SITRUS_BERRY
+	.2byte ITEM_LUM_BERRY
+	.2byte ITEM_FIGY_BERRY
+	.2byte ITEM_WIKI_BERRY
+	.2byte ITEM_MAGO_BERRY
+	.2byte ITEM_AGUAV_BERRY
+	.2byte ITEM_IAPAPA_BERRY
 	.2byte ITEM_NONE
 	release
 	end
 
 TwoIsland_EventScript_ShopExpanded3::
+	goto_if_set FLAG_SYS_NATIONAL_DEX, TwoIsland_EventScript_ShopPostNational
 	pokemart TwoIsland_Items_ShopExpanded3
 	msgbox Text_PleaseComeAgain
 	release
@@ -172,6 +221,69 @@ TwoIsland_Items_ShopExpanded3::
 	.2byte ITEM_FRESH_WATER
 	.2byte ITEM_MOOMOO_MILK
 	.2byte ITEM_LAVA_COOKIE
+	.2byte ITEM_CHERI_BERRY
+	.2byte ITEM_CHESTO_BERRY
+	.2byte ITEM_PECHA_BERRY
+	.2byte ITEM_RAWST_BERRY
+	.2byte ITEM_ASPEAR_BERRY
+	.2byte ITEM_PERSIM_BERRY
+	.2byte ITEM_ORAN_BERRY
+	.2byte ITEM_LEPPA_BERRY
+	.2byte ITEM_SITRUS_BERRY
+	.2byte ITEM_LUM_BERRY
+	.2byte ITEM_FIGY_BERRY
+	.2byte ITEM_WIKI_BERRY
+	.2byte ITEM_MAGO_BERRY
+	.2byte ITEM_AGUAV_BERRY
+	.2byte ITEM_IAPAPA_BERRY
+	.2byte ITEM_NONE
+	release
+	end
+
+TwoIsland_EventScript_ShopPostNational::
+	pokemart TwoIsland_Items_ShopPostNational
+	msgbox Text_PleaseComeAgain
+	release
+	end
+
+	.align 2
+TwoIsland_Items_ShopPostNational::
+	.2byte ITEM_ULTRA_BALL
+	.2byte ITEM_REPEAT_BALL
+	.2byte ITEM_TIMER_BALL
+	.2byte ITEM_LEMONADE
+	.2byte ITEM_SODA_POP
+	.2byte ITEM_FRESH_WATER
+	.2byte ITEM_MOOMOO_MILK
+	.2byte ITEM_LAVA_COOKIE
+	.2byte ITEM_CHERI_BERRY
+	.2byte ITEM_CHESTO_BERRY
+	.2byte ITEM_PECHA_BERRY
+	.2byte ITEM_RAWST_BERRY
+	.2byte ITEM_ASPEAR_BERRY
+	.2byte ITEM_PERSIM_BERRY
+	.2byte ITEM_ORAN_BERRY
+	.2byte ITEM_LEPPA_BERRY
+	.2byte ITEM_SITRUS_BERRY
+	.2byte ITEM_LUM_BERRY
+	.2byte ITEM_FIGY_BERRY
+	.2byte ITEM_WIKI_BERRY
+	.2byte ITEM_MAGO_BERRY
+	.2byte ITEM_AGUAV_BERRY
+	.2byte ITEM_IAPAPA_BERRY
+	.2byte ITEM_POMEG_BERRY
+	.2byte ITEM_KELPSY_BERRY
+	.2byte ITEM_QUALOT_BERRY
+	.2byte ITEM_HONDEW_BERRY
+	.2byte ITEM_GREPA_BERRY
+	.2byte ITEM_TAMATO_BERRY
+	.2byte ITEM_LIECHI_BERRY
+	.2byte ITEM_GANLON_BERRY
+	.2byte ITEM_SALAC_BERRY
+	.2byte ITEM_PETAYA_BERRY
+	.2byte ITEM_APICOT_BERRY
+	.2byte ITEM_LANSAT_BERRY
+	.2byte ITEM_STARF_BERRY
 	.2byte ITEM_NONE
 	release
 	end

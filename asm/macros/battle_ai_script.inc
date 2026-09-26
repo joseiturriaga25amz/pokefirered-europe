@@ -553,6 +553,11 @@
 	.4byte \ptr
 	.endm
 
+	@ Full: convert move id in funcResult to its physical/special/status category.
+	.macro get_move_category_from_result
+	.byte 0x5e
+	.endm
+
 @ useful script macros
 	.macro get_curr_move_type
 	get_type AI_TYPE_MOVE

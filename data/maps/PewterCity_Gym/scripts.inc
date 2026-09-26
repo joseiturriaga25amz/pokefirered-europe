@@ -2,6 +2,11 @@ PewterCity_Gym_MapScripts::
 	.byte 0
 
 PewterCity_Gym_EventScript_Brock::
+	goto_if_unset FLAG_SYS_NATIONAL_DEX, PewterCity_Gym_EventScript_BrockStory
+	goto_if_unset FLAG_GOT_TM39_FROM_BROCK, PewterCity_Gym_EventScript_BrockStory
+	goto PewterCity_Gym_EventScript_FullRematchOffer
+
+PewterCity_Gym_EventScript_BrockStory::
 	famechecker FAMECHECKER_BROCK, FCPICKSTATE_COLORED, UpdatePickStateFromSpecialVar8005
 	trainerbattle_single TRAINER_LEADER_BROCK, PewterCity_Gym_Text_BrockIntro, PewterCity_Gym_Text_BrockDefeat, PewterCity_Gym_EventScript_DefeatedBrock, NO_MUSIC
 	goto_if_unset FLAG_GOT_TM39_FROM_BROCK, PewterCity_Gym_EventScript_GiveTM39
@@ -80,3 +85,36 @@ PewterCity_Gym_EventScript_GymStatuePostVictory::
 	msgbox PewterCity_Gym_Text_GymStatuePlayerWon
 	releaseall
 	end
+
+PewterCity_Gym_EventScript_FullRematchOffer::
+	lock
+	faceplayer
+	msgbox PewterCity_Gym_Text_FullRematchOffer, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, PewterCity_Gym_EventScript_FullRematchDecline
+	cleartrainerflag TRAINER_RS_AROMA_LADY
+	trainerbattle_single TRAINER_RS_AROMA_LADY, PewterCity_Gym_Text_FullRematchIntro, PewterCity_Gym_Text_FullRematchDefeat, PewterCity_Gym_EventScript_FullRematchWon
+	end
+
+PewterCity_Gym_EventScript_FullRematchWon::
+	msgbox PewterCity_Gym_Text_FullRematchAfter
+	release
+	end
+
+PewterCity_Gym_EventScript_FullRematchDecline::
+	release
+	end
+
+PewterCity_Gym_Text_FullRematchOffer::
+	.string "Has recorrido un largo camino desde\n"
+	.string "nuestro primer combate.\p"
+	.string "¿Quieres una revancha de verdad?$"
+
+PewterCity_Gym_Text_FullRematchIntro::
+	.string "¡Entonces veamos cuánto has crecido!$"
+
+PewterCity_Gym_Text_FullRematchDefeat::
+	.string "Excelente. Tu fuerza sigue creciendo.$"
+
+PewterCity_Gym_Text_FullRematchAfter::
+	.string "Puedes volver cuando quieras.\p"
+	.string "Siempre aceptaré otra revancha.$"

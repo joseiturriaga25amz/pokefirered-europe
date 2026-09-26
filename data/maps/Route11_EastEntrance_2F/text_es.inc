@@ -1,17 +1,22 @@
 Route11_EastEntrance_2F_Text_GiveItemfinderIfCaught30::
     .string "¡Hola! ¿Te acuerdas de mí?\n"
     .string "¡Soy AYUDANTE del PROF. OAK!\p"
-    .string "¡Si ya tienes {STR_VAR_1} tipos de POKéMON,\n"
-    .string "se supone que debería darte\l"
-    .string "{STR_VAR_2}!\p"
-    .string "Dime, {PLAYER}. ¿Tienes ya al menos\n"
-    .string "{STR_VAR_1} tipos de POKéMON?$"
+    .string "El PROFESOR me pidió premiar a\n"
+    .string "Entrenadores que progresen.\p"
+    .string "Me encargó darte el BUSCAOBJETOS\n"
+    .string "si ya tienes la MEDALLA TRUENO.\p"
+    .string "¿Ya tienes la MEDALLA TRUENO?$"
 
 Route11_EastEntrance_2F_Text_GreatHereYouGo::
-    .string "¡Bien! ¡Has logrado {STR_VAR_3} tipos\n"
-    .string "de POKéMON!\p"
+    .string "¡Perfecto! Esa MEDALLA demuestra\n"
+    .string "cuánto has avanzado.\p"
     .string "¡Enhorabuena!\n"
     .string "¡Aquí tienes!$"
+
+Route11_EastEntrance_2F_Text_NeedThunderBadge::
+    .string "Vuelve cuando consigas la\n"
+    .string "MEDALLA TRUENO.\p"
+    .string "Guardaré el BUSCAOBJETOS para ti.$"
 
 Route11_EastEntrance_2F_Text_ReceivedItemfinderFromAide::
     .string "¡{PLAYER} obtuvo {STR_VAR_2}\n"

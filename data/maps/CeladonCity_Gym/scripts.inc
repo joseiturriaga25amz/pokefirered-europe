@@ -2,6 +2,11 @@ CeladonCity_Gym_MapScripts::
 	.byte 0
 
 CeladonCity_Gym_EventScript_Erika::
+	goto_if_unset FLAG_SYS_NATIONAL_DEX, CeladonCity_Gym_EventScript_ErikaStory
+	goto_if_unset FLAG_GOT_TM19_FROM_ERIKA, CeladonCity_Gym_EventScript_ErikaStory
+	goto CeladonCity_Gym_EventScript_FullRematchOffer
+
+CeladonCity_Gym_EventScript_ErikaStory::
 	famechecker FAMECHECKER_ERIKA, FCPICKSTATE_COLORED, UpdatePickStateFromSpecialVar8005
 	trainerbattle_single TRAINER_LEADER_ERIKA, CeladonCity_Gym_Text_ErikaIntro, CeladonCity_Gym_Text_ErikaDefeat, CeladonCity_Gym_EventScript_DefeatedErika, NO_MUSIC
 	goto_if_unset FLAG_GOT_TM19_FROM_ERIKA, CeladonCity_Gym_EventScript_GiveTM19
@@ -82,3 +87,36 @@ CeladonCity_Gym_EventScript_GymStatuePostVictory::
 	msgbox CeladonCity_Gym_Text_GymStatuePlayerWon
 	releaseall
 	end
+
+CeladonCity_Gym_EventScript_FullRematchOffer::
+	lock
+	faceplayer
+	msgbox CeladonCity_Gym_Text_FullRematchOffer, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, CeladonCity_Gym_EventScript_FullRematchDecline
+	cleartrainerflag TRAINER_RS_TUBER_M
+	trainerbattle_single TRAINER_RS_TUBER_M, CeladonCity_Gym_Text_FullRematchIntro, CeladonCity_Gym_Text_FullRematchDefeat, CeladonCity_Gym_EventScript_FullRematchWon
+	end
+
+CeladonCity_Gym_EventScript_FullRematchWon::
+	msgbox CeladonCity_Gym_Text_FullRematchAfter
+	release
+	end
+
+CeladonCity_Gym_EventScript_FullRematchDecline::
+	release
+	end
+
+CeladonCity_Gym_Text_FullRematchOffer::
+	.string "Has recorrido un largo camino desde\n"
+	.string "nuestro primer combate.\p"
+	.string "¿Quieres una revancha de verdad?$"
+
+CeladonCity_Gym_Text_FullRematchIntro::
+	.string "¡Entonces veamos cuánto has crecido!$"
+
+CeladonCity_Gym_Text_FullRematchDefeat::
+	.string "Excelente. Tu fuerza sigue creciendo.$"
+
+CeladonCity_Gym_Text_FullRematchAfter::
+	.string "Puedes volver cuando quieras.\p"
+	.string "Siempre aceptaré otra revancha.$"

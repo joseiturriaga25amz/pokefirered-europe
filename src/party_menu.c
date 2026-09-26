@@ -3302,13 +3302,10 @@ static void Task_SlideSelectedSlotsOnscreen(u8 taskId)
         PutWindowTilemap(sPartyMenuBoxes[gPartyMenu.slotId].windowId);
         PutWindowTilemap(sPartyMenuBoxes[gPartyMenu.slotId2].windowId);
         ScheduleBgCopyTilemapToVram(0);
-        // BUG: memory leak
-        // Free(sSlot1TilemapBuffer);
-        // Free(sSlot2TilemapBuffer);
-#if GAME_LANGUAGE != LANGUAGE_ENGLISH
+        // Full: both temporary slot buffers are owned by this two-mon
+        // animation and must be released in every language/build.
         Free(sSlot1TilemapBuffer);
         Free(sSlot2TilemapBuffer);
-#endif
         FinishTwoMonAction(taskId);
     }
     // Continue sliding
@@ -4297,8 +4294,7 @@ static void CB2_UseItem(void)
     {
         GiveMoveToMon(&gPlayerParty[gPartyMenu.slotId], ItemIdToBattleMoveId(gSpecialVar_ItemId));
         AdjustFriendship(&gPlayerParty[gPartyMenu.slotId], FRIENDSHIP_EVENT_LEARN_TMHM);
-        if (gSpecialVar_ItemId < ITEM_HM01)
-            RemoveBagItem(gSpecialVar_ItemId, 1);
+        // Full: TMs are reusable and remain in the TM Case.
         SetMainCallback2(gPartyMenu.exitCallback);
     }
     else
@@ -4317,8 +4313,7 @@ static void CB2_UseTMHMAfterForgettingMove(void)
         SetMonMoveSlot(mon, ItemIdToBattleMoveId(gSpecialVar_ItemId), moveIdx);
         AdjustFriendship(mon, FRIENDSHIP_EVENT_LEARN_TMHM);
         ItemUse_SetQuestLogEvent(QL_EVENT_USED_ITEM, mon, gSpecialVar_ItemId, move);
-        if (gSpecialVar_ItemId < ITEM_HM01)
-            RemoveBagItem(gSpecialVar_ItemId, 1);
+        // Full: TMs are reusable and remain in the TM Case.
         SetMainCallback2(gPartyMenu.exitCallback);
     }
     else
@@ -4351,6 +4346,12 @@ static bool8 IsHPRecoveryItem(u16 item)
 
 static void GetMedicineItemEffectMessage(u16 item)
 {
+    if (item >= ITEM_POMEG_BERRY && item <= ITEM_TAMATO_BERRY)
+    {
+        StringExpandPlaceholders(gStringVar4, gText_EvReducingBerryWorked);
+        return;
+    }
+
     switch (GetItemEffectType(item))
     {
     case ITEM_EFFECT_CURE_POISON:
@@ -4821,8 +4822,7 @@ static void Task_LearnedMove(u8 taskId)
     if (learnMoveMethod == LEARN_VIA_TMHM)
     {
         AdjustFriendship(mon, FRIENDSHIP_EVENT_LEARN_TMHM);
-        if (item < ITEM_HM01)
-            RemoveBagItem(item, 1);
+        // Full: TMs are reusable and remain in the TM Case.
     }
     GetMonNickname(mon, gStringVar1);
     StringCopy(gStringVar2, gMoveNames[learnMoveId]);
@@ -5329,11 +5329,9 @@ static void CB2_UseEvolutionStone(void)
 
 static bool8 MonCanEvolve(void)
 {
-    if (!IsNationalPokedexEnabled()
-     && GetEvolutionTargetSpecies(&gPlayerParty[gPartyMenu.slotId], EVO_MODE_ITEM_USE, gSpecialVar_ItemId) > KANTO_DEX_COUNT)
-        return FALSE;
-    else
-        return TRUE;
+    // Full: cross-generation evolutions are mechanically available before
+    // Oak reveals the National Dex. The Pokédex UI progression remains unchanged.
+    return GetEvolutionTargetSpecies(&gPlayerParty[gPartyMenu.slotId], EVO_MODE_ITEM_USE, gSpecialVar_ItemId) != SPECIES_NONE;
 }
 
 u8 GetItemEffectType(u16 item)

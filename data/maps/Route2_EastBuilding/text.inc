@@ -1,20 +1,23 @@
 Route2_EastBuilding_Text_GiveHM05IfSeen10Mons::
 	.string "Hi! Remember me?\n"
 	.string "I'm one of PROF. OAK's AIDES.\p"
-	.string "If your POKéDEX has complete data\n"
-	.string "on ten species, I'm supposed to\l"
-	.string "give you a reward.\p"
-	.string "PROF. OAK entrusted me with\n"
-	.string "HM05 for you.\p"
-	.string "So, {PLAYER}, let me ask you.\p"
-	.string "Have you gathered data on at least\n"
-	.string "ten kinds of POKéMON?$"
+	.string "PROF. OAK asked me to reward\n"
+	.string "Trainers who keep progressing.\p"
+	.string "He entrusted me with HM05 for you.\p"
+	.string "If you've earned the CASCADE BADGE,\n"
+	.string "this reward is yours.\p"
+	.string "Have you earned the CASCADE BADGE?$"
 
 Route2_EastBuilding_Text_GreatHereYouGo::
-	.string "Great! You have caught or owned\n"
-	.string "{STR_VAR_3} kinds of POKéMON!\p"
+	.string "Great! That BADGE shows how far\n"
+	.string "you've come as a Trainer.\p"
 	.string "Congratulations!\n"
 	.string "Here you go!$"
+
+Route2_EastBuilding_Text_NeedCascadeBadge::
+	.string "Come back after you've earned the\n"
+	.string "CASCADE BADGE.\p"
+	.string "I'll keep HM05 safe for you.$"
 
 Route2_EastBuilding_Text_ReceivedHM05FromAide::
 	.string "{PLAYER} received HM05\n"

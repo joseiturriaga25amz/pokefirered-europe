@@ -72,11 +72,11 @@ SilphCo_7F_EventScript_RivalSquirtle::
 	return
 
 SilphCo_7F_EventScript_RivalBulbasaur::
-	trainerbattle_no_intro TRAINER_RIVAL_SILPH_BULBASAUR, SilphCo_7F_Text_RivalDefeat
+	trainerbattle_no_intro TRAINER_RIVAL_SILPH_SQUIRTLE, SilphCo_7F_Text_RivalDefeat
 	return
 
 SilphCo_7F_EventScript_RivalCharmander::
-	trainerbattle_no_intro TRAINER_RIVAL_SILPH_CHARMANDER, SilphCo_7F_Text_RivalDefeat
+	trainerbattle_no_intro TRAINER_RIVAL_SILPH_SQUIRTLE, SilphCo_7F_Text_RivalDefeat
 	return
 
 SilphCo_7F_EventScript_RivalExitTop::

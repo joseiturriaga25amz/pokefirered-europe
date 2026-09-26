@@ -1,0 +1,739 @@
+name: Full Gameplay Core
+
+on:
+  push:
+    branches:
+      - feature/full-gameplay-core
+      - feature/b0-baseline-validator-truth
+      - feature/b1-low-risk-qol
+      - feature/b2-boss-rival-balance
+
+jobs:
+  build:
+    name: Build Spanish modern gameplay core
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gcc-arm-none-eabi binutils-arm-none-eabi libpng-dev
+
+      - name: Build firered_es_modern
+        run: make -j2 firered_es_modern
+
+      - name: Verify reproducible ROM build
+        run: |
+          cp pokefirered_modern_es.gba /tmp/pokefirered_modern_es.first.gba
+          make clean
+          make -j2 firered_es_modern
+          sha1sum /tmp/pokefirered_modern_es.first.gba pokefirered_modern_es.gba
+          if ! cmp -s /tmp/pokefirered_modern_es.first.gba pokefirered_modern_es.gba; then
+            echo "ROM build is not byte-for-byte reproducible"
+            cmp -l /tmp/pokefirered_modern_es.first.gba pokefirered_modern_es.gba | head -n 64 || true
+            python3 - <<'PY'
+          import subprocess
+          from pathlib import Path
+
+          first = Path("/tmp/pokefirered_modern_es.first.gba").read_bytes()
+          second = Path("pokefirered_modern_es.gba").read_bytes()
+          diffs = [i for i, (a, b) in enumerate(zip(first, second)) if a != b]
+          print("diff offsets:", [hex(i) for i in diffs[:64]])
+          if diffs:
+              lo = max(0, diffs[0] - 32)
+              hi = min(len(first), diffs[-1] + 33)
+              print("first context:", first[lo:hi].hex(" "))
+              print("second context:", second[lo:hi].hex(" "))
+              target = 0x08000000 + diffs[0]
+              nm = subprocess.check_output(
+                  ["arm-none-eabi-nm", "-n", "pokefirered_modern_es.elf"],
+                  text=True,
+              ).splitlines()
+              nearest = []
+              for line in nm:
+                  parts = line.split()
+                  if len(parts) >= 3:
+                      try:
+                          addr = int(parts[0], 16)
+                      except ValueError:
+                          continue
+                      if addr <= target:
+                          nearest.append((addr, " ".join(parts[1:])))
+              print("target address:", hex(target))
+              print("nearest symbols:")
+              for addr, name in nearest[-8:]:
+                  print(hex(addr), name)
+          PY
+            exit 1
+          fi
+
+      - name: Verify Full gameplay invariants
+        run: |
+          grep -q 'u8 category;' include/pokemon.h
+          grep -q 'IS_MOVE_PHYSICAL' include/battle.h
+          grep -q '\.category = MOVE_CATEGORY_PHYSICAL' src/data/battle_moves.h
+          grep -q '\.category = MOVE_CATEGORY_SPECIAL' src/data/battle_moves.h
+          grep -q '\.category = MOVE_CATEGORY_STATUS' src/data/battle_moves.h
+          grep -q 'EVO_LEVEL, 36, SPECIES_ALAKAZAM' src/data/pokemon/evolution.h
+          grep -q 'EVO_LEVEL, 36, SPECIES_MACHAMP' src/data/pokemon/evolution.h
+          grep -q 'EVO_LEVEL, 36, SPECIES_GOLEM' src/data/pokemon/evolution.h
+          grep -q 'EVO_LEVEL, 36, SPECIES_GENGAR' src/data/pokemon/evolution.h
+          grep -q 'MOVE_POISON_FANG' src/data/pokemon/level_up_learnsets.h
+          grep -q 'MOVE_SHADOW_PUNCH' src/data/pokemon/level_up_learnsets.h
+          grep -q 'ABILITY_SYNCHRONIZE' src/wild_encounter.c
+          grep -q 'VAR_FULL_LAST_REPEL' include/constants/vars.h
+          grep -q 'ITEM_TM44' data/maps/CeladonCity_DepartmentStore_2F/scripts.inc
+          grep -q 'ITEM_PP_UP' data/maps/CeladonCity_DepartmentStore_5F/scripts.inc
+          grep -q 'FLAG_FULL_ZAPDOS_KO_PENDING' data/maps/PowerPlant/scripts.inc
+          grep -q 'FLAG_FULL_ARTICUNO_KO_PENDING' data/maps/SeafoamIslands_B4F/scripts.inc
+          grep -q 'FLAG_FULL_MOLTRES_KO_PENDING' data/maps/MtEmber_Summit/scripts.inc
+          grep -q 'FLAG_FULL_MEWTWO_KO_PENDING' data/maps/CeruleanCave_B1F/scripts.inc
+          grep -q 'seteventmon SPECIES_DEOXYS, 50' data/maps/BirthIsland_Exterior/scripts.inc
+          grep -q 'clearflag FLAG_LUGIA_FLEW_AWAY' data/scripts/spanish/hall_of_fame.inc
+          grep -q 'clearflag FLAG_HO_OH_FLEW_AWAY' data/scripts/spanish/hall_of_fame.inc
+          grep -q 'clearflag FLAG_DEOXYS_FLEW_AWAY' data/scripts/spanish/hall_of_fame.inc
+          grep -q 'VAR_FULL_ROAMER_SEQUENCE' src/roamer.c
+          grep -q 'return SPECIES_SUICUNE' src/roamer.c
+          grep -q 'return SPECIES_RAIKOU' src/roamer.c
+          grep -q 'return SPECIES_ENTEI' src/roamer.c
+          grep -q 'if (gBattleOutcome == B_OUTCOME_CAUGHT)' src/battle_main.c
+          grep -q 'Full_CreateMewEventMon' src/script_pokemon_util.c
+          grep -q 'MOVE_POUND, 0' src/script_pokemon_util.c
+          grep -q 'MOVE_TRANSFORM, 1' src/script_pokemon_util.c
+          grep -q 'MOVE_MEGA_PUNCH, 2' src/script_pokemon_util.c
+          grep -q 'MOVE_METRONOME, 3' src/script_pokemon_util.c
+          grep -q 'MON_DATA_MODERN_FATEFUL_ENCOUNTER' src/script_pokemon_util.c
+          grep -q 'Full_CreateCelebiEventMon' src/script_pokemon_util.c
+          grep -q 'MOVE_PSYCHIC, 0' src/script_pokemon_util.c
+          grep -q 'MOVE_ANCIENT_POWER, 1' src/script_pokemon_util.c
+          grep -q 'MOVE_RECOVER, 2' src/script_pokemon_util.c
+          grep -q 'MOVE_HEAL_BELL, 3' src/script_pokemon_util.c
+          grep -q 'ThreeIsland_BerryForest_EventScript_FullCelebiTree' data/maps/ThreeIsland_BerryForest/map.json
+          grep -q 'goto EventScript_CutTree' data/maps/ThreeIsland_BerryForest/scripts.inc
+          grep -q 'FLAG_FULL_MEW_KO_PENDING' data/scripts/spanish/hall_of_fame.inc
+          grep -q 'FLAG_FULL_CELEBI_KO_PENDING' data/scripts/spanish/hall_of_fame.inc
+          grep -q 'BoxPokemonSizeMustRemainGen3Compatible' include/pokemon.h
+          grep -q 'PokemonSizeMustRemainGen3Compatible' include/pokemon.h
+          grep -q 'species2\[monIdx\] == SPECIES_EGG' src/trade.c
+          grep -q 'species2\[monIdx\] > KANTO_SPECIES_END' src/trade.c
+          grep -q 'MON_DATA_MODERN_FATEFUL_ENCOUNTER' src/trade.c
+          grep -q 'gSaveBlock1Ptr->roamer.species != species' src/wild_pokemon_area.c
+          grep -q 'FLAG_GET_SEEN' src/wild_pokemon_area.c
+          grep -q 'showFullEvView' src/pokemon_summary_screen.c
+          grep -q 'MON_DATA_HP_EV' src/pokemon_summary_screen.c
+          grep -q 'MON_DATA_SPEED_EV' src/pokemon_summary_screen.c
+          grep -q 'MAX. STAT 252 / TOTAL 510' src/pokemon_summary_screen.c
+          # Frozen bugfix audit (BUG-001..012 relevant source invariants)
+          grep -q 'u32 ivs = data\[0\].*data\[1\].*data\[2\].*data\[3\]' src/pokemon.c
+          grep -q 'if (gBattleOutcome == B_OUTCOME_CAUGHT)' src/battle_main.c
+          grep -q 'status = ROAMER->status' src/roamer.c
+          grep -q 'FISH_WILD_COUNT' src/wild_pokemon_area.c
+          grep -q 'species2\[monIdx\] == SPECIES_EGG' src/trade.c
+          grep -q 'if (currentHP <= 0)' src/pokemon.c
+          grep -q 'spriteIds\[1\] = CreateSprite' src/learn_move.c
+          grep -q 'gMain.heldKeysRaw == keyInput' src/main.c
+          grep -q 'gMain.newAndRepeatedKeys |= A_BUTTON' src/main.c
+          grep -q 'Free(sSlot1TilemapBuffer)' src/party_menu.c
+          grep -q 'Free(sSlot2TilemapBuffer)' src/party_menu.c
+          grep -q '#define field sparkleAmount' src/berry_crush.c
+          grep -q '#define UBFIX' include/config.h
+          test "$(grep -c 'LOCALID_RUBY' data/maps/MtEmber_RubyPath_B3F/map.json)" -eq 0
+          test "$(grep -c 'LOCALID_RUBY' data/maps/MtEmber_RubyPath_B5F/map.json)" -eq 1
+
+      - name: Validate split-aware engine and AI
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          battle_h = Path("include/battle.h").read_text()
+          pokemon = Path("src/pokemon.c").read_text()
+          commands = Path("src/battle_script_commands.c").read_text()
+          ai_commands = Path("src/battle_ai_script_commands.c").read_text()
+          ai_scripts = Path("data/battle_ai_scripts.s").read_text()
+
+          assert "gBattleMoves[move].category == MOVE_CATEGORY_PHYSICAL" in battle_h
+          assert "gBattleMoves[move].category == MOVE_CATEGORY_SPECIAL" in battle_h
+
+          # Core damage, burn and screens must branch by move category, not type.
+          assert "if (IS_MOVE_PHYSICAL(move))" in pokemon
+          assert "if (IS_MOVE_SPECIAL(move))" in pokemon
+          assert "attacker->status1 & STATUS1_BURN" in pokemon
+          assert "sideStatus & SIDE_STATUS_REFLECT" in pokemon
+          assert "sideStatus & SIDE_STATUS_LIGHTSCREEN" in pokemon
+
+          # Hustle accuracy and Counter/Mirror Coat damage memory are category-aware.
+          assert "ABILITY_HUSTLE && IS_MOVE_PHYSICAL(move)" in commands
+          assert "if (IS_MOVE_PHYSICAL(gCurrentMove)" in commands
+          assert "else if (IS_MOVE_SPECIAL(gCurrentMove)" in commands
+
+          # AI keeps the FRLG core but can inspect real per-move category.
+          assert "gBattleMoves[AI_THINKING_STRUCT->funcResult].category" in ai_commands
+          assert "get_move_category_from_result" in ai_scripts
+          assert "if_not_equal MOVE_CATEGORY_PHYSICAL, AI_CV_Counter_ScoreDown1" in ai_scripts
+          assert "if_not_equal MOVE_CATEGORY_SPECIAL, AI_CV_MirrorCoat_ScoreDown1" in ai_scripts
+          assert "if_not_equal MOVE_CATEGORY_PHYSICAL, AI_CV_DefenseUp_ScoreDown2" in ai_scripts
+          assert "if_equal MOVE_CATEGORY_PHYSICAL, AI_CV_SpDefUp_ScoreDown2" in ai_scripts
+
+          print("Split-aware engine and AI invariants validated")
+          PY
+
+      - name: Validate modern category and contact data
+        run: |
+          python3 - <<'PY'
+          import re
+          from pathlib import Path
+
+          text = Path("src/data/battle_moves.h").read_text()
+          def block(move):
+              m = re.search(r"\[" + move + r"\]\s*=\s*\{(.*?)(?=\n\s*\[MOVE_|\n\};)", text, re.S)
+              assert m, move
+              return m.group(1)
+
+          # Alias-sensitive category corrections found by comparison against
+          # modern Gen I-III move data.
+          for move in ("MOVE_HI_JUMP_KICK","MOVE_FAINT_ATTACK","MOVE_SMELLING_SALT"):
+              assert ".category = MOVE_CATEGORY_PHYSICAL" in block(move), move
+
+          # No move with nonzero base power may remain accidentally marked STATUS.
+          for m in re.finditer(r"\[(MOVE_[A-Z0-9_]+)\]\s*=\s*\{(.*?)(?=\n\s*\[MOVE_|\n\};)", text, re.S):
+              body=m.group(2)
+              p=re.search(r"\.power\s*=\s*(\d+)",body)
+              cat=re.search(r"\.category\s*=\s*MOVE_CATEGORY_(PHYSICAL|SPECIAL|STATUS)",body)
+              if p and cat and int(p.group(1)) > 0:
+                  assert cat.group(1) != "STATUS", m.group(1)
+
+          # The complete Gen III -> modern contact delta for Gen I-III moves.
+          for move in ("MOVE_ANCIENT_POWER","MOVE_OVERHEAT"):
+              assert "FLAG_MAKES_CONTACT" not in block(move), move
+          for move in ("MOVE_COVET","MOVE_FAINT_ATTACK","MOVE_FAKE_OUT"):
+              assert "FLAG_MAKES_CONTACT" in block(move), move
+
+          print("Modern category/contact invariants validated")
+          PY
+
+      - name: Validate exhaustive move categories and contact flags
+        run: python3 tools/validate_full_move_metadata.py
+
+      - name: Validate direct trade-item evolutions
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(Path("src/data/items.json").read_text())["items"]
+          by_id = {x["itemId"]: x for x in data}
+          for item_id in ("ITEM_METAL_COAT","ITEM_DRAGON_SCALE","ITEM_UP_GRADE","ITEM_KINGS_ROCK"):
+              item = by_id[item_id]
+              assert item["fieldUseFunc"] == "FieldUseFunc_EvoItem", item_id
+              assert item["type"] == "ITEM_TYPE_PARTY_MENU", (item_id, item["type"])
+
+          evo = Path("src/pokemon.c").read_text()
+          assert "gEvolutionTable[species][i].method == EVO_TRADE_ITEM" in evo
+          assert "gEvolutionTable[species][i].param == evolutionItem" in evo
+          print("Direct trade-item evolution UI path validated")
+          PY
+
+      - name: Validate QoL field mechanics
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          wild = Path("src/wild_encounter.c").read_text()
+          safari = Path("src/safari_zone.c").read_text()
+          avatar = Path("src/field_player_avatar.c").read_text()
+          repel = Path("data/scripts/spanish/repel.inc").read_text()
+          item_use = Path("src/item_use.c").read_text()
+
+          # QOL-010: Emerald-style 50% Synchronize from a living non-Egg lead.
+          sync = wild[wild.index("static u8 PickFullWildMonNature(void)"):
+                      wild.index("static void GenerateWildMon")]
+          assert "ABILITY_SYNCHRONIZE" in sync
+          assert "Random() % 2 == 0" in sync
+          assert "MON_DATA_SANITY_IS_EGG" in sync
+          assert "MON_DATA_PERSONALITY" in sync
+
+          # QOL-011/012: 30 balls/minigame retained, walking no longer expires Safari.
+          assert "gNumSafariBalls = 30;" in safari
+          take_step = safari[safari.index("bool8 SafariZoneTakeStep(void)"):
+                             safari.index("void SafariZoneRetirePrompt")]
+          assert "gSafariZoneStepCounter = 600;" in take_step
+          assert "return FALSE;" in take_step
+
+          # QOL-006: Running Shoes work indoors, while explicit forbidden tiles remain authoritative.
+          run = avatar[avatar.index("static void PlayerNotOnBikeMoving"):avatar.index("bool32 PlayerIsMovingOnRockStairs")]
+          assert "FlagGet(FLAG_SYS_B_DASH)" in run
+          assert "MetatileBehavior_IsRunningDisallowed" in run
+          assert "gMapHeader" not in run
+
+          # QOL-007: immediate prompt and reuse/fallback without reopening Bag.
+          assert "ScriptContext_SetupScript(EventScript_RepelWoreOff)" in wild
+          assert "msgbox Text_FullUseAnotherRepel, MSGBOX_YESNO" in repel
+          for item, steps in (("ITEM_REPEL",100),("ITEM_SUPER_REPEL",200),("ITEM_MAX_REPEL",250)):
+              assert f"removeitem {item}" in repel
+              assert f"setvar VAR_REPEL_STEP_COUNT, {steps}" in repel
+          assert "VarSet(VAR_FULL_LAST_REPEL, gSpecialVar_ItemId);" in item_use
+
+          print("Field QoL invariants validated")
+          PY
+
+      - name: Validate Move Reminder and tutor pricing
+        run: |
+          python3 - <<'PY'
+          import re
+          from pathlib import Path
+
+          reminder = Path("data/maps/TwoIsland_House/scripts.inc").read_text()
+          tutors = Path("data/scripts/spanish/move_tutors.inc").read_text()
+
+          # QOL-003: exact fixed fee, charged only after a successful teaching.
+          assert "checkmoney 2000" in reminder
+          assert "removemoney 2000" in reminder
+          assert reminder.index("waitstate") < reminder.index("removemoney 2000")
+          assert "ITEM_TINY_MUSHROOM" not in reminder
+          assert "ITEM_BIG_MUSHROOM" not in reminder
+
+          # QOL-004: first use follows the vanilla tutor path and sets its flag;
+          # repeat path is selected only once that flag exists.
+          expected = {
+              "DoubleEdge": 5000,
+              "ThunderWave": 6500,
+              "RockSlide": 7500,
+              "Explosion": 6000,
+              "MegaPunch": 1500,
+              "MegaKick": 2500,
+              "DreamEater": 3000,
+              "Softboiled": 5000,
+              "Substitute": 8000,
+              "SwordsDance": 10000,
+              "SeismicToss": 3500,
+              "Counter": 4000,
+              "Metronome": 1000,
+              "Mimic": 2000,
+              "BodySlam": 6000,
+          }
+          for name, price in expected.items():
+              assert f"EventScript_{name}Repeat::" in tutors, name
+              repeat = tutors[tutors.index(f"EventScript_{name}Repeat::"):]
+              repeat = repeat[:repeat.index("\n\tend") + 5]
+              assert f"checkmoney {price}" in repeat, (name, price)
+              assert f"removemoney {price}" in repeat, (name, price)
+
+          # QOL-005: ultimate starter tutor is free first, then exactly 10,000.
+          first = tutors[tutors.index("TwoIsland_CapeBrink_House_EventScript_StarterTutor::"):
+                         tutors.index("CapeBrinkTutor_EventScript_RepeatOffer::")]
+          assert "checkmoney" not in first
+          repeat = tutors[tutors.index("CapeBrinkTutor_EventScript_RepeatOffer::"):
+                          tutors.index("CapeBrinkTutor_EventScript_StartTeaching::")]
+          assert "checkmoney 10000" in repeat
+          assert "removemoney 10000" in tutors[tutors.index("CapeBrinkTutor_EventScript_ChargeRepeat::"):]
+
+          print("Move Reminder and tutor price/repeat invariants validated")
+          PY
+
+      - name: Validate legendary and mythical event levels
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          birth = Path("data/maps/BirthIsland_Exterior/scripts.inc").read_text()
+          lugia = Path("data/maps/NavelRock_Base/scripts.inc").read_text()
+          hooh = Path("data/maps/NavelRock_Summit/scripts.inc").read_text()
+          hof = Path("data/scripts/spanish/hall_of_fame.inc").read_text()
+          mon = Path("src/pokemon.c").read_text()
+          mythical = Path("src/script_pokemon_util.c").read_text()
+          mewtwo = Path("data/maps/CeruleanCave_B1F/scripts.inc").read_text()
+          articuno = Path("data/maps/SeafoamIslands_B4F/scripts.inc").read_text()
+          zapdos = Path("data/maps/PowerPlant/scripts.inc").read_text()
+          moltres = Path("data/maps/MtEmber_Summit/scripts.inc").read_text()
+
+          assert "seteventmon SPECIES_DEOXYS, 50" in birth
+          assert "seteventmon SPECIES_LUGIA, 70" in lugia
+          assert "seteventmon SPECIES_HO_OH, 70" in hooh
+          assert "setwildbattle SPECIES_MEWTWO, 70" in mewtwo
+          assert "setwildbattle SPECIES_ARTICUNO, 50" in articuno
+          assert "setwildbattle SPECIES_ZAPDOS, 50" in zapdos
+          assert "setwildbattle SPECIES_MOLTRES, 50" in moltres
+          assert "CreateScriptedWildMon(SPECIES_MEW, 50" in mythical
+          assert "CreateScriptedWildMon(SPECIES_CELEBI, 50" in mythical
+
+          # Event-mon constructor supplies the Gen III modern fateful bit.
+          assert "CreateEventMon(&gEnemyParty[0]" in mon
+          event_ctor = mon[mon.index("static void CreateEventMon"):mon.index("void ConvertPokemonToBattleTowerPokemon")]
+          assert "MON_DATA_MODERN_FATEFUL_ENCOUNTER" in event_ctor
+
+          # KO/fled-away state clears after a new Hall of Fame, while caught
+          # mons stay hidden through their independent FLAG_FOUGHT_* state.
+          for flag in ("FLAG_LUGIA_FLEW_AWAY","FLAG_HO_OH_FLEW_AWAY","FLAG_DEOXYS_FLEW_AWAY"):
+              assert f"clearflag {flag}" in hof
+          for text, flag in ((lugia,"FLAG_FOUGHT_LUGIA"),(hooh,"FLAG_FOUGHT_HO_OH"),(birth,"FLAG_FOUGHT_DEOXYS")):
+              assert flag in text
+
+          print("Legendary/mythical event level and persistence invariants validated")
+          PY
+
+      - name: Validate reusable unique TMs
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          item = Path("src/item.c").read_text()
+          party = Path("src/party_menu.c").read_text()
+          tm = Path("src/tm_case.c").read_text()
+          shop = Path("src/shop.c").read_text()
+
+          # Teaching does not consume the TM.
+          learned = party[party.index("static void Task_LearnedMove"):party.index("static void Task_DoLearnedMoveFanfareAfterText")]
+          assert "RemoveBagItem" not in learned
+
+          # A second logical copy is rejected at the bag layer and at shops.
+          assert "pocket == POCKET_TM_CASE - 1 && itemId < ITEM_HM01" in item
+          assert "return FALSE;" in item[item.index("pocket == POCKET_TM_CASE - 1 && itemId < ITEM_HM01"):][:250]
+          assert "BagGetQuantityByItemId(itemId) > 0" in shop
+          assert "sText_FullTmAlreadyOwned" in shop
+
+          # TMs cannot be sold or moved out of the TM Case as held items.
+          sell = tm[tm.index("static void Task_SelectedTMHM_Sell"):tm.index("static void Task_AskConfirmSaleWithAmount")]
+          assert "RemoveBagItem" not in sell
+          action_start = tm.index("static void Action_Give(u8 taskId)\n{")
+          action_end = tm.index("static void PrintError_ThereIsNoPokemon(u8 taskId)\n{", action_start)
+          action_give = tm[action_start:action_end]
+          assert "CB2_ChooseMonToGiveItem" not in action_give
+          assert "PrintError_ItemCantBeHeld" in action_give
+
+          party_start = tm.index("static void Task_SelectedTMHM_GiveParty(u8 taskId)\n{")
+          pc_start = tm.index("static void Task_SelectedTMHM_GivePC(u8 taskId)\n{", party_start)
+          give_party = tm[party_start:pc_start]
+          assert "PrintError_ItemCantBeHeld" in give_party
+          assert "CB2_GiveHoldItem" not in give_party
+
+          print("Reusable unique TM invariants validated")
+          PY
+
+      - name: Validate approved wild encounter rates
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(Path("src/data/wild_encounters.json").read_text())
+          group = next(g for g in data["wild_encounter_groups"] if g["label"] == "gWildMonHeaders")
+          encounters = {e["base_label"]: e for e in group["encounters"]}
+          rates = {
+              "land_mons": [20,20,10,10,10,10,5,5,4,4,1,1],
+              "water_mons": [60,30,5,4,1],
+              "fishing_mons": [70,30,60,20,20,40,40,15,4,1],
+          }
+          expected = [
+              ("sRoute8_FireRed","land_mons","SPECIES_SANDSHREW",20),
+              ("sRoute8_FireRed","land_mons","SPECIES_VULPIX",20),
+              ("sRoute5_FireRed","land_mons","SPECIES_BELLSPROUT",25),
+              ("sRoute6_FireRed","water_mons","SPECIES_SLOWPOKE",100),
+              ("sVermilionCity_FireRed","fishing_mons","SPECIES_STARYU",40),
+              ("sMtEmberExterior_FireRed","land_mons","SPECIES_MAGMAR",5),
+              ("sSixIslandRuinValley_FireRed","land_mons","SPECIES_MARILL",10),
+              ("sFourIslandIcefallCave1F_FireRed","land_mons","SPECIES_SNEASEL",5),
+              ("sFiveIslandWaterLabyrinth_FireRed","fishing_mons","SPECIES_REMORAID",40),
+              ("sSevenIslandTanobyRuins_FireRed","water_mons","SPECIES_MANTINE",5),
+              ("sThreeIslandBerryForest_FireRed","land_mons","SPECIES_BULBASAUR",15),
+              ("sThreeIslandBerryForest_FireRed","land_mons","SPECIES_IVYSAUR",5),
+              ("sThreeIslandBerryForest_FireRed","land_mons","SPECIES_VENUSAUR",4),
+              ("sMtEmberExterior_FireRed","land_mons","SPECIES_CHARMANDER",15),
+              ("sMtEmberExterior_FireRed","land_mons","SPECIES_CHARMELEON",5),
+              ("sMtEmberExterior_FireRed","land_mons","SPECIES_CHARIZARD",4),
+              ("sSeafoamIslandsB1F_FireRed","land_mons","SPECIES_SQUIRTLE",15),
+              ("sSeafoamIslandsB1F_FireRed","land_mons","SPECIES_WARTORTLE",5),
+              ("sSeafoamIslandsB1F_FireRed","land_mons","SPECIES_BLASTOISE",4),
+              ("sRoute7_FireRed","land_mons","SPECIES_EEVEE",15),
+              ("sSeafoamIslandsB1F_FireRed","land_mons","SPECIES_VAPOREON",4),
+              ("sPowerPlant_FireRed","land_mons","SPECIES_JOLTEON",4),
+              ("sPokemonMansion1F_FireRed","land_mons","SPECIES_FLAREON",4),
+              ("sFiveIslandLostCaveRoom1_FireRed","land_mons","SPECIES_MISDREAVUS",5),
+              ("sFiveIslandLostCaveRoom4_FireRed","land_mons","SPECIES_MISDREAVUS",5),
+              ("sFiveIslandLostCaveRoom10_FireRed","land_mons","SPECIES_MISDREAVUS",5),
+              ("sSafariZoneCenter_FireRed","land_mons","SPECIES_SCYTHER",15),
+              ("sSafariZoneCenter_FireRed","land_mons","SPECIES_PINSIR",15),
+              ("sSafariZoneEast_FireRed","land_mons","SPECIES_KANGASKHAN",15),
+              ("sSafariZoneNorth_FireRed","land_mons","SPECIES_CHANSEY",15),
+              ("sSafariZoneWest_FireRed","land_mons","SPECIES_TAUROS",15),
+          ]
+          for label, kind, species, want in expected:
+              mons = encounters[label][kind]["mons"]
+              got = sum(r for m, r in zip(mons, rates[kind]) if m["species"] == species)
+              assert got == want, (label, species, got, want)
+          # Gate 2 collateral-diff manifest: baseline audit found exactly these
+          # 21 FireRed encounter tables changed by the frozen ENC requirements.
+          approved_changed_tables = {
+              "sPokemonMansion1F_FireRed",
+              "sSafariZoneCenter_FireRed",
+              "sSafariZoneEast_FireRed",
+              "sSafariZoneNorth_FireRed",
+              "sSafariZoneWest_FireRed",
+              "sSeafoamIslandsB1F_FireRed",
+              "sPowerPlant_FireRed",
+              "sMtEmberExterior_FireRed",
+              "sThreeIslandBerryForest_FireRed",
+              "sFourIslandIcefallCave1F_FireRed",
+              "sFiveIslandLostCaveRoom1_FireRed",
+              "sFiveIslandLostCaveRoom4_FireRed",
+              "sFiveIslandLostCaveRoom10_FireRed",
+              "sFiveIslandWaterLabyrinth_FireRed",
+              "sSixIslandRuinValley_FireRed",
+              "sSevenIslandTanobyRuins_FireRed",
+              "sRoute5_FireRed",
+              "sRoute6_FireRed",
+              "sRoute7_FireRed",
+              "sRoute8_FireRed",
+              "sVermilionCity_FireRed",
+          }
+          touched_by_expected = {label for label, _, _, _ in expected}
+          assert touched_by_expected == approved_changed_tables, (
+              touched_by_expected ^ approved_changed_tables
+          )
+
+          print(f"Validated {len(expected)} approved encounter rates")
+          PY
+
+      - name: Lock semantically audited gameplay data blobs
+        run: python3 tools/validate_audited_data_blobs.py
+
+      - name: Validate frozen Gary and boss rosters
+        run: |
+          python3 - <<'PY'
+          import json, re
+          from pathlib import Path
+
+          text = Path("src/data/trainer_parties.h").read_text()
+          trainers_json = json.loads(Path("src/data/trainers.json").read_text())
+          trainers = trainers_json.get("trainers", trainers_json)
+          by_id = {t["id"]: t for t in trainers}
+
+          def block(name):
+              m = re.search(r"static const struct [^ ]+ " + re.escape(name) + r"\[\] = \{(.*?)\n\};", text, re.S)
+              assert m, name
+              return m.group(1)
+
+          def roster(name):
+              body = block(name)
+              return [(m.group(1), int(m.group(2))) for m in re.finditer(
+                  r"\.lvl = (\d+),\s*\.species = SPECIES_([A-Z0-9_]+),", body
+              )]
+
+          # regex returns level/species groups in reverse construction below
+          def normalized(name):
+              body = block(name)
+              out=[]
+              for m in re.finditer(r"\.lvl = (\d+),\s*\.species = SPECIES_([A-Z0-9_]+),", body):
+                  out.append((m.group(2), int(m.group(1))))
+              return out
+
+          gary = {
+              "sParty_RivalOaksLabSquirtle":[("SQUIRTLE",5)],
+              "sParty_RivalRoute22EarlySquirtle":[("PIDGEY",10),("SQUIRTLE",12)],
+              "sParty_RivalCeruleanSquirtle":[("ABRA",18),("RATTATA",19),("PIDGEOTTO",20),("SQUIRTLE",22)],
+              "sParty_RivalSsAnneSquirtle":[("KRABBY",24),("PIDGEOTTO",25),("KADABRA",25),("WARTORTLE",28)],
+              "sParty_RivalPokemonTowerSquirtle":[("EXEGGCUTE",30),("PIDGEOTTO",31),("GROWLITHE",31),("KADABRA",32),("WARTORTLE",34)],
+              "sParty_RivalSilphSquirtle":[("EXEGGUTOR",43),("PIDGEOT",44),("GROWLITHE",44),("ALAKAZAM",46),("BLASTOISE",49)],
+              "sParty_RivalRoute22LateSquirtle":[("RHYHORN",56),("PIDGEOT",56),("NIDOKING",57),("ALAKAZAM",58),("ARCANINE",59),("BLASTOISE",61)],
+              "sParty_ChampionFirstSquirtle":[("PIDGEOT",64),("ALAKAZAM",65),("NIDOKING",65),("RHYDON",66),("ARCANINE",67),("BLASTOISE",69)],
+              "sParty_ChampionRematchSquirtle":[("NIDOQUEEN",80),("MAGMAR",80),("GOLEM",81),("SCIZOR",82),("ARCANINE",83),("BLASTOISE",85)],
+          }
+          for name, want in gary.items():
+              assert normalized(name) == want, (name, normalized(name), want)
+              for suffix in ("Bulbasaur","Charmander"):
+                  other = name.replace("Squirtle", suffix)
+                  assert re.sub(r"\s+"," ",block(other)).strip() == re.sub(r"\s+"," ",block(name)).strip(), other
+
+          bosses = {
+              "sParty_LeaderBrock":[("GEODUDE",14),("ONIX",17)],
+              "sParty_LeaderMisty":[("GOLDEEN",21),("STARYU",23),("STARMIE",26)],
+              "sParty_LeaderLtSurge":[("VOLTORB",25),("PIKACHU",26),("RAICHU",30)],
+              "sParty_LeaderErika":[("WEEPINBELL",31),("TANGELA",32),("VILEPLUME",33),("GLOOM",35)],
+              "sParty_LeaderKoga":[("VENOMOTH",40),("GOLBAT",41),("MUK",43),("WEEZING",46)],
+              "sParty_LeaderSabrina":[("MR_MIME",42),("VENOMOTH",43),("KADABRA",45),("ALAKAZAM",47)],
+              "sParty_LeaderBlaine":[("NINETALES",47),("RAPIDASH",48),("RHYDON",49),("ARCANINE",50),("MAGMAR",52)],
+              "sParty_LeaderGiovanni":[("KINGLER",51),("NIDOQUEEN",52),("NIDOKING",53),("GOLEM",54),("RHYDON",56),("MEWTWO",56)],
+              "sParty_EliteFourLorelei":[("DEWGONG",57),("SLOWBRO",58),("JYNX",59),("CLOYSTER",60),("LAPRAS",61)],
+              "sParty_EliteFourBruno":[("ONIX",58),("HITMONCHAN",59),("HITMONLEE",60),("ONIX",60),("MACHAMP",62)],
+              "sParty_EliteFourAgatha":[("HAUNTER",59),("GENGAR",60),("GOLBAT",60),("ARBOK",61),("GENGAR",63)],
+              "sParty_EliteFourLance":[("GYARADOS",61),("DRAGONAIR",61),("DRAGONAIR",62),("AERODACTYL",63),("DRAGONITE",65)],
+          }
+          for name,want in bosses.items():
+              assert normalized(name)==want, (name, normalized(name), want)
+
+          # B2 first-cycle healing progression: Gary Silph remains itemless,
+          # Giovanni Silph gets exactly one Hyper Potion before later bosses
+          # escalate to two trainer healing items.
+          assert by_id["TRAINER_RIVAL_SILPH_SQUIRTLE"]["items"] == ""
+          assert by_id["TRAINER_BOSS_GIOVANNI"]["items"] == ""
+          assert by_id["TRAINER_BOSS_GIOVANNI_2"]["items"] == "ITEM_HYPER_POTION"
+
+          rematches = {
+              "sParty_RSAromaLady":[("VULPIX",60),("CROBAT",61),("FORRETRESS",62),("LUDICOLO",63),("MARSHTOMP",64),("STEELIX",66)],
+              "sParty_RSRuinManiac":[("CORSOLA",61),("LUVDISC",62),("POLITOED",63),("TOGETIC",63),("STARMIE",65),("GYARADOS",67)],
+              "sParty_RSTuberF":[("ELECTRODE",64),("MAGNETON",65),("ELECTABUZZ",66),("RAICHU",69)],
+              "sParty_RSTuberM":[("TANGELA",62),("JUMPLUFF",63),("BELLOSSOM",64),("VICTREEBEL",65),("VILEPLUME",66),("VILEPLUME",69)],
+              "sParty_RSCooltrainerM":[("ARIADOS",64),("FORRETRESS",65),("VENOMOTH",65),("MUK",67),("WEEZING",68),("CROBAT",71)],
+              "sParty_RSCooltrainerF":[("VENOMOTH",65),("MR_MIME",65),("KADABRA",66),("ESPEON",68),("GENGAR",69),("ALAKAZAM",72)],
+              "sParty_RSLady":[("NINETALES",66),("RAPIDASH",67),("ARCANINE",68),("MAGCARGO",68),("RHYDON",70),("MAGMAR",73)],
+              "sParty_RSBeauty":[("PERSIAN",67),("CLOYSTER",68),("MACHAMP",69),("NIDOQUEEN",70),("NIDOKING",71),("RHYDON",74)],
+          }
+          for name,want in rematches.items():
+              assert normalized(name)==want, (name, normalized(name), want)
+
+          rematch_healing = {
+              "TRAINER_RS_AROMA_LADY":"ITEM_HYPER_POTION, ITEM_HYPER_POTION",
+              "TRAINER_RS_RUIN_MANIAC":"ITEM_HYPER_POTION, ITEM_HYPER_POTION",
+              "TRAINER_RS_TUBER_F":"ITEM_HYPER_POTION, ITEM_HYPER_POTION",
+              "TRAINER_RS_TUBER_M":"ITEM_HYPER_POTION, ITEM_HYPER_POTION",
+              "TRAINER_RS_COOLTRAINER_M":"ITEM_FULL_RESTORE, ITEM_FULL_RESTORE",
+              "TRAINER_RS_COOLTRAINER_F":"ITEM_FULL_RESTORE, ITEM_FULL_RESTORE",
+              "TRAINER_RS_LADY":"ITEM_FULL_RESTORE, ITEM_FULL_RESTORE",
+              "TRAINER_RS_BEAUTY":"ITEM_FULL_RESTORE, ITEM_FULL_RESTORE",
+          }
+          for tid,items in rematch_healing.items():
+              assert by_id[tid]["items"] == items, (tid, by_id[tid]["items"], items)
+
+          for tid in ("TRAINER_CHAMPION_FIRST_SQUIRTLE","TRAINER_CHAMPION_FIRST_BULBASAUR","TRAINER_CHAMPION_FIRST_CHARMANDER",
+                      "TRAINER_CHAMPION_REMATCH_SQUIRTLE","TRAINER_CHAMPION_REMATCH_BULBASAUR","TRAINER_CHAMPION_REMATCH_CHARMANDER"):
+              assert by_id[tid]["items"] == "ITEM_FULL_RESTORE, ITEM_FULL_RESTORE", tid
+
+          # ECO-008: the Resort Gorgeous VS Seeker circuit relies on all three
+          # wealthy trainers paying at the Lady rate. Celina was Painter in vanilla.
+          for tid in ("TRAINER_LADY_JACKI","TRAINER_LADY_GILLIAN","TRAINER_PAINTER_CELINA"):
+              assert by_id[tid]["trainerClass"] == "TRAINER_CLASS_LADY", (tid, by_id[tid]["trainerClass"])
+
+          print("Frozen Gary, bosses and Resort Gorgeous payout identities validated")
+          PY
+
+      - name: Validate exact League rematch rosters
+        run: python3 tools/validate_full_league_rosters.py
+
+      - name: Validate exact 154 requirement reconciliation
+        run: python3 tools/validate_requirement_reconciliation.py
+
+      - name: Validate frozen RC invariants
+        run: python3 tools/validate_rc_freeze.py
+
+      - name: Validate Full trainer legality
+        run: python3 tools/validate_full_trainer_sets.py
+
+      - name: Validate one-save baby obtainability
+        run: python3 tools/validate_full_obtainability.py
+
+      - name: Validate Full save namespace ownership
+        run: python3 tools/validate_full_save_namespace.py
+
+      - name: Validate persistent event state machines
+        run: python3 tools/validate_full_event_states.py
+
+      - name: Validate frozen technical bugfixes
+        run: python3 tools/validate_frozen_bugfixes.py
+
+      - name: Validate second-pass release integrity
+        run: python3 tools/validate_release_integrity.py
+
+      - name: Record ROM checksum
+        run: sha1sum pokefirered_modern_es.gba
+
+      - name: Checkout frozen Spanish baseline for RC patch
+        uses: actions/checkout@v4
+        with:
+          ref: e184c5cf898cd29efebd33bc1bfe5994277e21ab
+          path: vanilla
+
+      - name: Checkout agbcc for frozen baseline
+        uses: actions/checkout@v4
+        with:
+          repository: pret/agbcc
+          path: vanilla/agbcc
+
+      - name: Build agbcc for frozen baseline
+        working-directory: vanilla/agbcc
+        run: |
+          ./build.sh
+          ./install.sh ../
+
+      - name: Build and verify frozen Spanish baseline
+        working-directory: vanilla
+        run: |
+          make -j2 compare_firered_es
+          echo "ab8f6bfe0ccdaf41188cd015c8c74c314d02296a  pokefirered_es.gba" | sha1sum -c -
+
+      - name: Create exact RC IPS patch for MyBoy
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          base_path = Path("vanilla/pokefirered_es.gba")
+          mod_path = Path("pokefirered_modern_es.gba")
+          out_path = Path("Pokemon_Rojo_Fuego_Full_RC_MyBoy.ips")
+
+          base = base_path.read_bytes()
+          mod = mod_path.read_bytes()
+
+          if len(base) > 0x1000000 or len(mod) > 0x1000000:
+              raise SystemExit("IPS packaging only supports addresses below 16 MiB for this project.")
+
+          patch = bytearray(b"PATCH")
+          i = 0
+          limit = max(len(base), len(mod))
+
+          while i < limit:
+              b = base[i] if i < len(base) else 0
+              m = mod[i] if i < len(mod) else 0
+              if b == m:
+                  i += 1
+                  continue
+
+              start = i
+              while i < limit:
+                  b = base[i] if i < len(base) else 0
+                  m = mod[i] if i < len(mod) else 0
+                  if b == m or i - start >= 0xFFFF:
+                      break
+                  i += 1
+
+              if start == 0x454F46:
+                  start -= 1
+
+              data = mod[start:i]
+              if not data:
+                  i += 1
+                  continue
+
+              patch.extend(start.to_bytes(3, "big"))
+              patch.extend(len(data).to_bytes(2, "big"))
+              patch.extend(data)
+
+          patch.extend(b"EOF")
+          if len(mod) != len(base):
+              patch.extend(len(mod).to_bytes(3, "big"))
+
+          out_path.write_bytes(patch)
+          print(f"base={len(base)} bytes modified={len(mod)} bytes patch={len(patch)} bytes")
+          PY
+
+      - name: Record exact RC handoff manifest
+        run: |
+          {
+            echo "Pokemon Rojo Fuego Full v1.0 - MyBoy RC"
+            echo "git_sha=${GITHUB_SHA}"
+            echo -n "rom_sha1="
+            sha1sum pokefirered_modern_es.gba | awk '{print $1}'
+            echo -n "base_sha1="
+            sha1sum vanilla/pokefirered_es.gba | awk '{print $1}'
+            echo -n "ips_sha256="
+            sha256sum Pokemon_Rojo_Fuego_Full_RC_MyBoy.ips | awk '{print $1}'
+          } | tee Pokemon_Rojo_Fuego_Full_RC_MANIFEST.txt
+          sha256sum Pokemon_Rojo_Fuego_Full_RC_MyBoy.ips > Pokemon_Rojo_Fuego_Full_RC_MyBoy.sha256
+
+      - name: Upload exact MyBoy RC patch
+        uses: actions/upload-artifact@v4
+        with:
+          name: Pokemon_Rojo_Fuego_Full_RC_MyBoy
+          path: |
+            Pokemon_Rojo_Fuego_Full_RC_MyBoy.ips
+            Pokemon_Rojo_Fuego_Full_RC_MyBoy.sha256
+            Pokemon_Rojo_Fuego_Full_RC_MANIFEST.txt
+          if-no-files-found: error

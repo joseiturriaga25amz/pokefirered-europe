@@ -38,7 +38,13 @@ const u8 gGameVersion = GAME_VERSION;
 const u8 gGameLanguage = GAME_LANGUAGE;
 
 #if MODERN
-const char BuildDateTime[] = __DATE__ " " __TIME__;
+// Keep modern RC builds byte-reproducible. Use the retail timestamp for the
+// target Spanish build instead of compiler wall-clock macros.
+#if GAME_LANGUAGE == LANGUAGE_SPANISH
+const char BuildDateTime[] = "2004 07 20 15:50";
+#else
+const char BuildDateTime[] = "2004 04 26 11:20";
+#endif
 #elif GAME_LANGUAGE == LANGUAGE_SPANISH
 const char BuildDateTime[] = "2004 07 20 15:50";
 #elif GAME_LANGUAGE == LANGUAGE_ITALIAN
@@ -310,11 +316,9 @@ static void ReadKeys(void)
     gMain.newKeys = gMain.newKeysRaw;
     gMain.newAndRepeatedKeys = gMain.newKeysRaw;
 
-    // BUG: Key repeat won't work when pressing L using L=A button mode
-    // because it compares the raw key input with the remapped held keys.
-    // Note that newAndRepeatedKeys is never remapped either.
-
-    if (keyInput != 0 && gMain.heldKeys == keyInput)
+    // Compare raw input against the previous raw held state. gMain.heldKeys
+    // may contain the synthetic A bit when L=A is enabled.
+    if (keyInput != 0 && gMain.heldKeysRaw == keyInput)
     {
         gMain.keyRepeatCounter--;
 
@@ -338,6 +342,9 @@ static void ReadKeys(void)
     {
         if (JOY_NEW(L_BUTTON))
             gMain.newKeys |= A_BUTTON;
+
+        if (gMain.newAndRepeatedKeys & L_BUTTON)
+            gMain.newAndRepeatedKeys |= A_BUTTON;
 
         if (JOY_HELD(L_BUTTON))
             gMain.heldKeys |= A_BUTTON;

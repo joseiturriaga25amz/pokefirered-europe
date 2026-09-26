@@ -62,33 +62,33 @@
         },
         {
             "id": "TRAINER_RS_AROMA_LADY",
-            "trainerClass": "TRAINER_CLASS_RS_AROMA_LADY",
-            "encounterMusic_gender": "TRAINER_ENCOUNTER_MUSIC_FEMALE",
-            "trainerPic": "TRAINER_PIC_RS_AROMA_LADY",
-            "trainerName_english": "",
-            "trainerName_spanish": "",
-            "trainerName_italian": "",
-            "trainerName_french": "",
-            "trainerName_german": "",
-            "items": "",
+            "trainerClass": "TRAINER_CLASS_LEADER",
+            "encounterMusic_gender": "TRAINER_ENCOUNTER_MUSIC_MALE",
+            "trainerPic": "TRAINER_PIC_LEADER_BROCK",
+            "trainerName_english": "BROCK",
+            "trainerName_spanish": "BROCK",
+            "trainerName_italian": "BROCK",
+            "trainerName_french": "PIERRE",
+            "trainerName_german": "ROCKO",
+            "items": "ITEM_HYPER_POTION, ITEM_HYPER_POTION",
             "doubleBattle": "FALSE",
-            "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE",
-            "party": "NO_ITEM_DEFAULT_MOVES(sParty_RSAromaLady)"
+            "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
+            "party": "ITEM_CUSTOM_MOVES(sParty_RSAromaLady)"
         },
         {
             "id": "TRAINER_RS_RUIN_MANIAC",
-            "trainerClass": "TRAINER_CLASS_RS_RUIN_MANIAC",
-            "encounterMusic_gender": "TRAINER_ENCOUNTER_MUSIC_HIKER",
-            "trainerPic": "TRAINER_PIC_RS_RUIN_MANIAC",
-            "trainerName_english": "",
-            "trainerName_spanish": "",
-            "trainerName_italian": "",
-            "trainerName_french": "",
-            "trainerName_german": "",
-            "items": "",
+            "trainerClass": "TRAINER_CLASS_LEADER",
+            "encounterMusic_gender": "TRAINER_ENCOUNTER_MUSIC_FEMALE | F_TRAINER_FEMALE",
+            "trainerPic": "TRAINER_PIC_LEADER_MISTY",
+            "trainerName_english": "MISTY",
+            "trainerName_spanish": "MISTY",
+            "trainerName_italian": "MISTY",
+            "trainerName_french": "ONDINE",
+            "trainerName_german": "MISTY",
+            "items": "ITEM_HYPER_POTION, ITEM_HYPER_POTION",
             "doubleBattle": "FALSE",
-            "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE",
-            "party": "NO_ITEM_DEFAULT_MOVES(sParty_RSRuinManiac)"
+            "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
+            "party": "ITEM_CUSTOM_MOVES(sParty_RSRuinManiac)"
         },
         {
             "id": "TRAINER_INTERVIEWER",
@@ -107,63 +107,63 @@
         },
         {
             "id": "TRAINER_RS_TUBER_F",
-            "trainerClass": "TRAINER_CLASS_RS_TUBER_F",
-            "encounterMusic_gender": "TRAINER_ENCOUNTER_MUSIC_GIRL",
-            "trainerPic": "TRAINER_PIC_RS_TUBER_F",
-            "trainerName_english": "",
-            "trainerName_spanish": "",
-            "trainerName_italian": "",
-            "trainerName_french": "",
-            "trainerName_german": "",
-            "items": "",
+            "trainerClass": "TRAINER_CLASS_LEADER",
+            "encounterMusic_gender": "TRAINER_ENCOUNTER_MUSIC_MALE",
+            "trainerPic": "TRAINER_PIC_LEADER_LT_SURGE",
+            "trainerName_english": "LT. SURGE",
+            "trainerName_spanish": "LT. SURGE",
+            "trainerName_italian": "LT. SURGE",
+            "trainerName_french": "MAJOR BOB",
+            "trainerName_german": "MAJOR BOB",
+            "items": "ITEM_HYPER_POTION, ITEM_HYPER_POTION",
             "doubleBattle": "FALSE",
-            "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE",
-            "party": "NO_ITEM_DEFAULT_MOVES(sParty_RSTuberF)"
+            "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
+            "party": "ITEM_CUSTOM_MOVES(sParty_RSTuberF)"
         },
         {
             "id": "TRAINER_RS_TUBER_M",
-            "trainerClass": "TRAINER_CLASS_RS_TUBER_M",
-            "encounterMusic_gender": "TRAINER_ENCOUNTER_MUSIC_MALE",
-            "trainerPic": "TRAINER_PIC_RS_TUBER_M",
-            "trainerName_english": "",
-            "trainerName_spanish": "",
-            "trainerName_italian": "",
-            "trainerName_french": "",
-            "trainerName_german": "",
-            "items": "",
+            "trainerClass": "TRAINER_CLASS_LEADER",
+            "encounterMusic_gender": "TRAINER_ENCOUNTER_MUSIC_FEMALE | F_TRAINER_FEMALE",
+            "trainerPic": "TRAINER_PIC_LEADER_ERIKA",
+            "trainerName_english": "ERIKA",
+            "trainerName_spanish": "ERIKA",
+            "trainerName_italian": "ERIKA",
+            "trainerName_french": "ERIKA",
+            "trainerName_german": "ERIKA",
+            "items": "ITEM_HYPER_POTION, ITEM_HYPER_POTION",
             "doubleBattle": "FALSE",
-            "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE",
-            "party": "NO_ITEM_DEFAULT_MOVES(sParty_RSTuberM)"
+            "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
+            "party": "ITEM_CUSTOM_MOVES(sParty_RSTuberM)"
         },
         {
             "id": "TRAINER_RS_COOLTRAINER_M",
-            "trainerClass": "TRAINER_CLASS_RS_COOLTRAINER",
-            "encounterMusic_gender": "TRAINER_ENCOUNTER_MUSIC_COOL",
-            "trainerPic": "TRAINER_PIC_RS_COOLTRAINER_M",
-            "trainerName_english": "",
-            "trainerName_spanish": "",
-            "trainerName_italian": "",
-            "trainerName_french": "",
-            "trainerName_german": "",
-            "items": "",
+            "trainerClass": "TRAINER_CLASS_LEADER",
+            "encounterMusic_gender": "TRAINER_ENCOUNTER_MUSIC_MALE",
+            "trainerPic": "TRAINER_PIC_LEADER_KOGA",
+            "trainerName_english": "KOGA",
+            "trainerName_spanish": "KOGA",
+            "trainerName_italian": "KOGA",
+            "trainerName_french": "KOGA",
+            "trainerName_german": "KOGA",
+            "items": "ITEM_FULL_RESTORE, ITEM_FULL_RESTORE",
             "doubleBattle": "FALSE",
             "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
-            "party": "NO_ITEM_DEFAULT_MOVES(sParty_RSCooltrainerM)"
+            "party": "ITEM_CUSTOM_MOVES(sParty_RSCooltrainerM)"
         },
         {
             "id": "TRAINER_RS_COOLTRAINER_F",
-            "trainerClass": "TRAINER_CLASS_RS_COOLTRAINER",
-            "encounterMusic_gender": "TRAINER_ENCOUNTER_MUSIC_COOL",
-            "trainerPic": "TRAINER_PIC_RS_COOLTRAINER_F",
-            "trainerName_english": "",
-            "trainerName_spanish": "",
-            "trainerName_italian": "",
-            "trainerName_french": "",
-            "trainerName_german": "",
-            "items": "",
+            "trainerClass": "TRAINER_CLASS_LEADER",
+            "encounterMusic_gender": "TRAINER_ENCOUNTER_MUSIC_FEMALE | F_TRAINER_FEMALE",
+            "trainerPic": "TRAINER_PIC_LEADER_SABRINA",
+            "trainerName_english": "SABRINA",
+            "trainerName_spanish": "SABRINA",
+            "trainerName_italian": "SABRINA",
+            "trainerName_french": "MORGANE",
+            "trainerName_german": "SABRINA",
+            "items": "ITEM_FULL_RESTORE, ITEM_FULL_RESTORE",
             "doubleBattle": "FALSE",
             "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
-            "party": "NO_ITEM_DEFAULT_MOVES(sParty_RSCooltrainerF)"
+            "party": "ITEM_CUSTOM_MOVES(sParty_RSCooltrainerF)"
         },
         {
             "id": "TRAINER_HEX_MANIAC",
@@ -182,33 +182,33 @@
         },
         {
             "id": "TRAINER_RS_LADY",
-            "trainerClass": "TRAINER_CLASS_RS_LADY",
-            "encounterMusic_gender": "TRAINER_ENCOUNTER_MUSIC_FEMALE",
-            "trainerPic": "TRAINER_PIC_RS_LADY",
-            "trainerName_english": "",
-            "trainerName_spanish": "",
-            "trainerName_italian": "",
-            "trainerName_french": "",
-            "trainerName_german": "",
-            "items": "",
+            "trainerClass": "TRAINER_CLASS_LEADER",
+            "encounterMusic_gender": "TRAINER_ENCOUNTER_MUSIC_MALE",
+            "trainerPic": "TRAINER_PIC_LEADER_BLAINE",
+            "trainerName_english": "BLAINE",
+            "trainerName_spanish": "BLAINE",
+            "trainerName_italian": "BLAINE",
+            "trainerName_french": "AUGUSTE",
+            "trainerName_german": "PYRO",
+            "items": "ITEM_FULL_RESTORE, ITEM_FULL_RESTORE",
             "doubleBattle": "FALSE",
-            "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE",
-            "party": "NO_ITEM_DEFAULT_MOVES(sParty_RSLady)"
+            "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
+            "party": "ITEM_CUSTOM_MOVES(sParty_RSLady)"
         },
         {
             "id": "TRAINER_RS_BEAUTY",
-            "trainerClass": "TRAINER_CLASS_RS_BEAUTY",
-            "encounterMusic_gender": "TRAINER_ENCOUNTER_MUSIC_FEMALE",
-            "trainerPic": "TRAINER_PIC_RS_BEAUTY",
-            "trainerName_english": "",
-            "trainerName_spanish": "",
-            "trainerName_italian": "",
-            "trainerName_french": "",
-            "trainerName_german": "",
-            "items": "",
+            "trainerClass": "TRAINER_CLASS_LEADER",
+            "encounterMusic_gender": "TRAINER_ENCOUNTER_MUSIC_AQUA",
+            "trainerPic": "TRAINER_PIC_LEADER_GIOVANNI",
+            "trainerName_english": "GIOVANNI",
+            "trainerName_spanish": "GIOVANNI",
+            "trainerName_italian": "GIOVANNI",
+            "trainerName_french": "GIOVANNI",
+            "trainerName_german": "GIOVANNI",
+            "items": "ITEM_FULL_RESTORE, ITEM_FULL_RESTORE",
             "doubleBattle": "FALSE",
-            "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE",
-            "party": "NO_ITEM_DEFAULT_MOVES(sParty_RSBeauty)"
+            "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
+            "party": "ITEM_CUSTOM_MOVES(sParty_RSBeauty)"
         },
         {
             "id": "TRAINER_RICH_BOY",
@@ -257,14 +257,14 @@
         },
         {
             "id": "TRAINER_RS_BLACK_BELT",
-            "trainerClass": "TRAINER_CLASS_RS_BLACK_BELT",
+            "trainerClass": "TRAINER_CLASS_BLACK_BELT",
             "encounterMusic_gender": "TRAINER_ENCOUNTER_MUSIC_INTENSE",
-            "trainerPic": "TRAINER_PIC_RS_BLACK_BELT",
-            "trainerName_english": "",
-            "trainerName_spanish": "",
-            "trainerName_italian": "",
-            "trainerName_french": "",
-            "trainerName_german": "",
+            "trainerPic": "TRAINER_PIC_BLACK_BELT",
+            "trainerName_english": "KOICHI",
+            "trainerName_spanish": "KOICHI",
+            "trainerName_italian": "KOICHI",
+            "trainerName_french": "KOICHI",
+            "trainerName_german": "JUNICHI",
             "items": "",
             "doubleBattle": "FALSE",
             "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE",
@@ -4903,7 +4903,7 @@
             "items": "",
             "doubleBattle": "FALSE",
             "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
-            "party": "NO_ITEM_DEFAULT_MOVES(sParty_RivalOaksLabSquirtle)"
+            "party": "NO_ITEM_CUSTOM_MOVES(sParty_RivalOaksLabSquirtle)"
         },
         {
             "id": "TRAINER_RIVAL_OAKS_LAB_BULBASAUR",
@@ -4918,7 +4918,7 @@
             "items": "",
             "doubleBattle": "FALSE",
             "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
-            "party": "NO_ITEM_DEFAULT_MOVES(sParty_RivalOaksLabBulbasaur)"
+            "party": "NO_ITEM_CUSTOM_MOVES(sParty_RivalOaksLabBulbasaur)"
         },
         {
             "id": "TRAINER_RIVAL_OAKS_LAB_CHARMANDER",
@@ -4933,7 +4933,7 @@
             "items": "",
             "doubleBattle": "FALSE",
             "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
-            "party": "NO_ITEM_DEFAULT_MOVES(sParty_RivalOaksLabCharmander)"
+            "party": "NO_ITEM_CUSTOM_MOVES(sParty_RivalOaksLabCharmander)"
         },
         {
             "id": "TRAINER_RIVAL_ROUTE22_EARLY_SQUIRTLE",
@@ -5232,8 +5232,8 @@
             "trainerName_german": "GIOVANNI",
             "items": "",
             "doubleBattle": "FALSE",
-            "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE",
-            "party": "NO_ITEM_DEFAULT_MOVES(sParty_BossGiovanni)"
+            "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
+            "party": "NO_ITEM_CUSTOM_MOVES(sParty_BossGiovanni)"
         },
         {
             "id": "TRAINER_BOSS_GIOVANNI_2",
@@ -5245,10 +5245,10 @@
             "trainerName_italian": "GIOVANNI",
             "trainerName_french": "GIOVANNI",
             "trainerName_german": "GIOVANNI",
-            "items": "",
+            "items": "ITEM_HYPER_POTION",
             "doubleBattle": "FALSE",
-            "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE",
-            "party": "NO_ITEM_DEFAULT_MOVES(sParty_BossGiovanni2)"
+            "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
+            "party": "NO_ITEM_CUSTOM_MOVES(sParty_BossGiovanni2)"
         },
         {
             "id": "TRAINER_LEADER_GIOVANNI",
@@ -5260,10 +5260,10 @@
             "trainerName_italian": "GIOVANNI",
             "trainerName_french": "GIOVANNI",
             "trainerName_german": "GIOVANNI",
-            "items": "ITEM_HYPER_POTION, ITEM_HYPER_POTION, ITEM_FULL_HEAL",
+            "items": "ITEM_HYPER_POTION, ITEM_HYPER_POTION",
             "doubleBattle": "FALSE",
             "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
-            "party": "NO_ITEM_CUSTOM_MOVES(sParty_LeaderGiovanni)"
+            "party": "ITEM_CUSTOM_MOVES(sParty_LeaderGiovanni)"
         },
         {
             "id": "TRAINER_TEAM_ROCKET_GRUNT",
@@ -6220,10 +6220,10 @@
             "trainerName_italian": "BROCK",
             "trainerName_french": "PIERRE",
             "trainerName_german": "ROCKO",
-            "items": "",
+            "items": "ITEM_POTION",
             "doubleBattle": "FALSE",
             "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
-            "party": "NO_ITEM_CUSTOM_MOVES(sParty_LeaderBrock)"
+            "party": "ITEM_CUSTOM_MOVES(sParty_LeaderBrock)"
         },
         {
             "id": "TRAINER_LEADER_MISTY",
@@ -6238,7 +6238,7 @@
             "items": "ITEM_SUPER_POTION",
             "doubleBattle": "FALSE",
             "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
-            "party": "NO_ITEM_CUSTOM_MOVES(sParty_LeaderMisty)"
+            "party": "ITEM_CUSTOM_MOVES(sParty_LeaderMisty)"
         },
         {
             "id": "TRAINER_LEADER_LT_SURGE",
@@ -6250,10 +6250,10 @@
             "trainerName_italian": "LT. SURGE",
             "trainerName_french": "MAJOR BOB",
             "trainerName_german": "MAJOR BOB",
-            "items": "ITEM_SUPER_POTION, ITEM_FULL_HEAL",
+            "items": "ITEM_SUPER_POTION",
             "doubleBattle": "FALSE",
             "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
-            "party": "NO_ITEM_CUSTOM_MOVES(sParty_LeaderLtSurge)"
+            "party": "ITEM_CUSTOM_MOVES(sParty_LeaderLtSurge)"
         },
         {
             "id": "TRAINER_LEADER_ERIKA",
@@ -6265,10 +6265,10 @@
             "trainerName_italian": "ERIKA",
             "trainerName_french": "ERIKA",
             "trainerName_german": "ERIKA",
-            "items": "ITEM_HYPER_POTION, ITEM_FULL_HEAL",
+            "items": "ITEM_SUPER_POTION, ITEM_SUPER_POTION",
             "doubleBattle": "FALSE",
             "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
-            "party": "NO_ITEM_CUSTOM_MOVES(sParty_LeaderErika)"
+            "party": "ITEM_CUSTOM_MOVES(sParty_LeaderErika)"
         },
         {
             "id": "TRAINER_LEADER_KOGA",
@@ -6280,10 +6280,10 @@
             "trainerName_italian": "KOGA",
             "trainerName_french": "KOGA",
             "trainerName_german": "KOGA",
-            "items": "ITEM_HYPER_POTION, ITEM_HYPER_POTION, ITEM_FULL_HEAL",
+            "items": "ITEM_HYPER_POTION, ITEM_HYPER_POTION",
             "doubleBattle": "FALSE",
             "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
-            "party": "NO_ITEM_CUSTOM_MOVES(sParty_LeaderKoga)"
+            "party": "ITEM_CUSTOM_MOVES(sParty_LeaderKoga)"
         },
         {
             "id": "TRAINER_LEADER_BLAINE",
@@ -6295,10 +6295,10 @@
             "trainerName_italian": "BLAINE",
             "trainerName_french": "AUGUSTE",
             "trainerName_german": "PYRO",
-            "items": "ITEM_HYPER_POTION, ITEM_HYPER_POTION, ITEM_FULL_HEAL",
+            "items": "ITEM_HYPER_POTION, ITEM_HYPER_POTION",
             "doubleBattle": "FALSE",
             "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
-            "party": "NO_ITEM_CUSTOM_MOVES(sParty_LeaderBlaine)"
+            "party": "ITEM_CUSTOM_MOVES(sParty_LeaderBlaine)"
         },
         {
             "id": "TRAINER_LEADER_SABRINA",
@@ -6310,10 +6310,10 @@
             "trainerName_italian": "SABRINA",
             "trainerName_french": "MORGANE",
             "trainerName_german": "SABRINA",
-            "items": "ITEM_HYPER_POTION, ITEM_HYPER_POTION, ITEM_FULL_HEAL",
+            "items": "ITEM_HYPER_POTION, ITEM_HYPER_POTION",
             "doubleBattle": "FALSE",
             "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
-            "party": "NO_ITEM_CUSTOM_MOVES(sParty_LeaderSabrina)"
+            "party": "ITEM_CUSTOM_MOVES(sParty_LeaderSabrina)"
         },
         {
             "id": "TRAINER_GENTLEMAN_THOMAS",
@@ -6403,7 +6403,7 @@
             "items": "",
             "doubleBattle": "FALSE",
             "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
-            "party": "NO_ITEM_DEFAULT_MOVES(sParty_RivalSsAnneSquirtle)"
+            "party": "NO_ITEM_CUSTOM_MOVES(sParty_RivalSsAnneSquirtle)"
         },
         {
             "id": "TRAINER_RIVAL_SS_ANNE_BULBASAUR",
@@ -6418,7 +6418,7 @@
             "items": "",
             "doubleBattle": "FALSE",
             "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
-            "party": "NO_ITEM_DEFAULT_MOVES(sParty_RivalSsAnneBulbasaur)"
+            "party": "NO_ITEM_CUSTOM_MOVES(sParty_RivalSsAnneBulbasaur)"
         },
         {
             "id": "TRAINER_RIVAL_SS_ANNE_CHARMANDER",
@@ -6433,7 +6433,7 @@
             "items": "",
             "doubleBattle": "FALSE",
             "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
-            "party": "NO_ITEM_DEFAULT_MOVES(sParty_RivalSsAnneCharmander)"
+            "party": "NO_ITEM_CUSTOM_MOVES(sParty_RivalSsAnneCharmander)"
         },
         {
             "id": "TRAINER_RIVAL_POKEMON_TOWER_SQUIRTLE",
@@ -6448,7 +6448,7 @@
             "items": "",
             "doubleBattle": "FALSE",
             "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
-            "party": "NO_ITEM_DEFAULT_MOVES(sParty_RivalPokemonTowerSquirtle)"
+            "party": "NO_ITEM_CUSTOM_MOVES(sParty_RivalPokemonTowerSquirtle)"
         },
         {
             "id": "TRAINER_RIVAL_POKEMON_TOWER_BULBASAUR",
@@ -6463,7 +6463,7 @@
             "items": "",
             "doubleBattle": "FALSE",
             "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
-            "party": "NO_ITEM_DEFAULT_MOVES(sParty_RivalPokemonTowerBulbasaur)"
+            "party": "NO_ITEM_CUSTOM_MOVES(sParty_RivalPokemonTowerBulbasaur)"
         },
         {
             "id": "TRAINER_RIVAL_POKEMON_TOWER_CHARMANDER",
@@ -6478,7 +6478,7 @@
             "items": "",
             "doubleBattle": "FALSE",
             "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
-            "party": "NO_ITEM_DEFAULT_MOVES(sParty_RivalPokemonTowerCharmander)"
+            "party": "NO_ITEM_CUSTOM_MOVES(sParty_RivalPokemonTowerCharmander)"
         },
         {
             "id": "TRAINER_RIVAL_SILPH_SQUIRTLE",
@@ -6493,7 +6493,7 @@
             "items": "",
             "doubleBattle": "FALSE",
             "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
-            "party": "NO_ITEM_DEFAULT_MOVES(sParty_RivalSilphSquirtle)"
+            "party": "ITEM_CUSTOM_MOVES(sParty_RivalSilphSquirtle)"
         },
         {
             "id": "TRAINER_RIVAL_SILPH_BULBASAUR",
@@ -6508,7 +6508,7 @@
             "items": "",
             "doubleBattle": "FALSE",
             "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
-            "party": "NO_ITEM_DEFAULT_MOVES(sParty_RivalSilphBulbasaur)"
+            "party": "ITEM_CUSTOM_MOVES(sParty_RivalSilphBulbasaur)"
         },
         {
             "id": "TRAINER_RIVAL_SILPH_CHARMANDER",
@@ -6523,7 +6523,7 @@
             "items": "",
             "doubleBattle": "FALSE",
             "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
-            "party": "NO_ITEM_DEFAULT_MOVES(sParty_RivalSilphCharmander)"
+            "party": "ITEM_CUSTOM_MOVES(sParty_RivalSilphCharmander)"
         },
         {
             "id": "TRAINER_RIVAL_ROUTE22_LATE_SQUIRTLE",
@@ -6538,7 +6538,7 @@
             "items": "",
             "doubleBattle": "FALSE",
             "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
-            "party": "NO_ITEM_CUSTOM_MOVES(sParty_RivalRoute22LateSquirtle)"
+            "party": "ITEM_CUSTOM_MOVES(sParty_RivalRoute22LateSquirtle)"
         },
         {
             "id": "TRAINER_RIVAL_ROUTE22_LATE_BULBASAUR",
@@ -6553,7 +6553,7 @@
             "items": "",
             "doubleBattle": "FALSE",
             "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
-            "party": "NO_ITEM_CUSTOM_MOVES(sParty_RivalRoute22LateBulbasaur)"
+            "party": "ITEM_CUSTOM_MOVES(sParty_RivalRoute22LateBulbasaur)"
         },
         {
             "id": "TRAINER_RIVAL_ROUTE22_LATE_CHARMANDER",
@@ -6568,7 +6568,7 @@
             "items": "",
             "doubleBattle": "FALSE",
             "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
-            "party": "NO_ITEM_CUSTOM_MOVES(sParty_RivalRoute22LateCharmander)"
+            "party": "ITEM_CUSTOM_MOVES(sParty_RivalRoute22LateCharmander)"
         },
         {
             "id": "TRAINER_CHAMPION_FIRST_SQUIRTLE",
@@ -6580,7 +6580,7 @@
             "trainerName_italian": "TERRY",
             "trainerName_french": "NOAH",
             "trainerName_german": "BJÖRN",
-            "items": "ITEM_FULL_RESTORE, ITEM_FULL_RESTORE, ITEM_FULL_RESTORE, ITEM_FULL_RESTORE",
+            "items": "ITEM_FULL_RESTORE, ITEM_FULL_RESTORE",
             "doubleBattle": "FALSE",
             "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
             "party": "ITEM_CUSTOM_MOVES(sParty_ChampionFirstSquirtle)"
@@ -6595,7 +6595,7 @@
             "trainerName_italian": "TERRY",
             "trainerName_french": "NOAH",
             "trainerName_german": "BJÖRN",
-            "items": "ITEM_FULL_RESTORE, ITEM_FULL_RESTORE, ITEM_FULL_RESTORE, ITEM_FULL_RESTORE",
+            "items": "ITEM_FULL_RESTORE, ITEM_FULL_RESTORE",
             "doubleBattle": "FALSE",
             "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
             "party": "ITEM_CUSTOM_MOVES(sParty_ChampionFirstBulbasaur)"
@@ -6610,7 +6610,7 @@
             "trainerName_italian": "TERRY",
             "trainerName_french": "NOAH",
             "trainerName_german": "BJÖRN",
-            "items": "ITEM_FULL_RESTORE, ITEM_FULL_RESTORE, ITEM_FULL_RESTORE, ITEM_FULL_RESTORE",
+            "items": "ITEM_FULL_RESTORE, ITEM_FULL_RESTORE",
             "doubleBattle": "FALSE",
             "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
             "party": "ITEM_CUSTOM_MOVES(sParty_ChampionFirstCharmander)"
@@ -8432,9 +8432,9 @@
         },
         {
             "id": "TRAINER_PAINTER_CELINA",
-            "trainerClass": "TRAINER_CLASS_PAINTER",
+            "trainerClass": "TRAINER_CLASS_LADY",
             "encounterMusic_gender": "TRAINER_ENCOUNTER_MUSIC_FEMALE",
-            "trainerPic": "TRAINER_PIC_PAINTER",
+            "trainerPic": "TRAINER_PIC_LADY",
             "trainerName_english": "CELINA",
             "trainerName_spanish": "ANABEL",
             "trainerName_italian": "CELINA",
@@ -11095,7 +11095,7 @@
             "trainerName_italian": "TERRY",
             "trainerName_french": "NOAH",
             "trainerName_german": "BJÖRN",
-            "items": "ITEM_FULL_RESTORE, ITEM_FULL_RESTORE, ITEM_FULL_RESTORE, ITEM_FULL_RESTORE",
+            "items": "ITEM_FULL_RESTORE, ITEM_FULL_RESTORE",
             "doubleBattle": "FALSE",
             "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
             "party": "ITEM_CUSTOM_MOVES(sParty_ChampionRematchSquirtle)"
@@ -11110,7 +11110,7 @@
             "trainerName_italian": "TERRY",
             "trainerName_french": "NOAH",
             "trainerName_german": "BJÖRN",
-            "items": "ITEM_FULL_RESTORE, ITEM_FULL_RESTORE, ITEM_FULL_RESTORE, ITEM_FULL_RESTORE",
+            "items": "ITEM_FULL_RESTORE, ITEM_FULL_RESTORE",
             "doubleBattle": "FALSE",
             "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
             "party": "ITEM_CUSTOM_MOVES(sParty_ChampionRematchBulbasaur)"
@@ -11125,7 +11125,7 @@
             "trainerName_italian": "TERRY",
             "trainerName_french": "NOAH",
             "trainerName_german": "BJÖRN",
-            "items": "ITEM_FULL_RESTORE, ITEM_FULL_RESTORE, ITEM_FULL_RESTORE, ITEM_FULL_RESTORE",
+            "items": "ITEM_FULL_RESTORE, ITEM_FULL_RESTORE",
             "doubleBattle": "FALSE",
             "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
             "party": "ITEM_CUSTOM_MOVES(sParty_ChampionRematchCharmander)"

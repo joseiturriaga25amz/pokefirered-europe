@@ -1462,6 +1462,20 @@
 #define FLAG_WORLD_MAP_BIRTH_ISLAND_EXTERIOR                        (SYS_FLAGS + 0xC2)
 
 #define FLAG_0x8C3                                                  (SYS_FLAGS + 0xC3)
+
+// Pokémon Rojo Fuego Full persistent namespace: 0x8C3-0x8E2 (32 flags)
+#define FLAG_FULL_START                                             FLAG_0x8C3
+#define FLAG_FULL_DOJO_CHOSE_HITMONLEE                              0x8C3
+#define FLAG_FULL_DOJO_SECOND_REWARD                                0x8C4
+#define FLAG_FULL_ZAPDOS_KO_PENDING                                 0x8C5
+#define FLAG_FULL_ARTICUNO_KO_PENDING                               0x8C6
+#define FLAG_FULL_MOLTRES_KO_PENDING                                0x8C7
+#define FLAG_FULL_MEWTWO_KO_PENDING                                 0x8C8
+#define FLAG_FULL_MEW_CAUGHT                                        0x8C9
+#define FLAG_FULL_MEW_KO_PENDING                                    0x8CA
+#define FLAG_FULL_CELEBI_CAUGHT                                     0x8CB
+#define FLAG_FULL_CELEBI_KO_PENDING                                 0x8CC
+#define FLAG_FULL_END                                               0x8E2
 #define FLAG_0x8C4                                                  (SYS_FLAGS + 0xC4)
 #define FLAG_0x8C5                                                  (SYS_FLAGS + 0xC5)
 #define FLAG_0x8C6                                                  (SYS_FLAGS + 0xC6)

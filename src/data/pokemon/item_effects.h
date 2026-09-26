@@ -292,6 +292,22 @@ static const u8 sItemEffect_LeafStone[6] = {
     [4] = ITEM4_EVO_STONE,
 };
 
+static const u8 sItemEffect_KingsRock[6] = {
+    [4] = ITEM4_EVO_STONE,
+};
+
+static const u8 sItemEffect_MetalCoat[6] = {
+    [4] = ITEM4_EVO_STONE,
+};
+
+static const u8 sItemEffect_DragonScale[6] = {
+    [4] = ITEM4_EVO_STONE,
+};
+
+static const u8 sItemEffect_UpGrade[6] = {
+    [4] = ITEM4_EVO_STONE,
+};
+
 static const u8 sItemEffect_CheriBerry[6] = {
     [3] = ITEM3_PARALYSIS,
 };
@@ -333,6 +349,49 @@ static const u8 sItemEffect_LumBerry[6] = {
 static const u8 sItemEffect_SitrusBerry[7] = {
     [4] = ITEM4_HEAL_HP,
     [6] = 30, // Amount of HP to recover
+};
+
+#define EV_BERRY_FRIENDSHIP_CHANGE \
+    [7] = 10, \
+    [8] = 5,  \
+    [9] = 2
+
+static const u8 sItemEffect_PomegBerry[10] = {
+    [4] = ITEM4_EV_HP,
+    [5] = ITEM5_FRIENDSHIP_ALL,
+    [6] = ITEM6_SUBTRACT_EV,
+    EV_BERRY_FRIENDSHIP_CHANGE,
+};
+
+static const u8 sItemEffect_KelpsyBerry[10] = {
+    [4] = ITEM4_EV_ATK,
+    [5] = ITEM5_FRIENDSHIP_ALL,
+    [6] = ITEM6_SUBTRACT_EV,
+    EV_BERRY_FRIENDSHIP_CHANGE,
+};
+
+static const u8 sItemEffect_QualotBerry[10] = {
+    [5] = ITEM5_EV_DEF | ITEM5_FRIENDSHIP_ALL,
+    [6] = ITEM6_SUBTRACT_EV,
+    EV_BERRY_FRIENDSHIP_CHANGE,
+};
+
+static const u8 sItemEffect_HondewBerry[10] = {
+    [5] = ITEM5_EV_SPATK | ITEM5_FRIENDSHIP_ALL,
+    [6] = ITEM6_SUBTRACT_EV,
+    EV_BERRY_FRIENDSHIP_CHANGE,
+};
+
+static const u8 sItemEffect_GrepaBerry[10] = {
+    [5] = ITEM5_EV_SPDEF | ITEM5_FRIENDSHIP_ALL,
+    [6] = ITEM6_SUBTRACT_EV,
+    EV_BERRY_FRIENDSHIP_CHANGE,
+};
+
+static const u8 sItemEffect_TamatoBerry[10] = {
+    [5] = ITEM5_EV_SPEED | ITEM5_FRIENDSHIP_ALL,
+    [6] = ITEM6_SUBTRACT_EV,
+    EV_BERRY_FRIENDSHIP_CHANGE,
 };
 
 const u8 *const gItemEffectTable[] =
@@ -390,6 +449,10 @@ const u8 *const gItemEffectTable[] =
     [ITEM_THUNDER_STONE - ITEM_POTION] = sItemEffect_ThunderStone,
     [ITEM_WATER_STONE - ITEM_POTION]   = sItemEffect_WaterStone,
     [ITEM_LEAF_STONE - ITEM_POTION]    = sItemEffect_LeafStone,
+    [ITEM_KINGS_ROCK - ITEM_POTION]    = sItemEffect_KingsRock,
+    [ITEM_METAL_COAT - ITEM_POTION]    = sItemEffect_MetalCoat,
+    [ITEM_DRAGON_SCALE - ITEM_POTION]  = sItemEffect_DragonScale,
+    [ITEM_UP_GRADE - ITEM_POTION]      = sItemEffect_UpGrade,
     [ITEM_CHERI_BERRY - ITEM_POTION]   = sItemEffect_CheriBerry,
     [ITEM_CHESTO_BERRY - ITEM_POTION]  = sItemEffect_ChestoBerry,
     [ITEM_PECHA_BERRY - ITEM_POTION]   = sItemEffect_PechaBerry,
@@ -400,5 +463,11 @@ const u8 *const gItemEffectTable[] =
     [ITEM_PERSIM_BERRY - ITEM_POTION]  = sItemEffect_PersimBerry,
     [ITEM_LUM_BERRY - ITEM_POTION]     = sItemEffect_LumBerry,
     [ITEM_SITRUS_BERRY - ITEM_POTION]  = sItemEffect_SitrusBerry,
+    [ITEM_POMEG_BERRY - ITEM_POTION]   = sItemEffect_PomegBerry,
+    [ITEM_KELPSY_BERRY - ITEM_POTION]  = sItemEffect_KelpsyBerry,
+    [ITEM_QUALOT_BERRY - ITEM_POTION]  = sItemEffect_QualotBerry,
+    [ITEM_HONDEW_BERRY - ITEM_POTION]  = sItemEffect_HondewBerry,
+    [ITEM_GREPA_BERRY - ITEM_POTION]   = sItemEffect_GrepaBerry,
+    [ITEM_TAMATO_BERRY - ITEM_POTION]  = sItemEffect_TamatoBerry,
     [LAST_BERRY_INDEX - ITEM_POTION]   = NULL,
 };

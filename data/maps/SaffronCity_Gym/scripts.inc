@@ -2,6 +2,11 @@ SaffronCity_Gym_MapScripts::
 	.byte 0
 
 SaffronCity_Gym_EventScript_Sabrina::
+	goto_if_unset FLAG_SYS_NATIONAL_DEX, SaffronCity_Gym_EventScript_SabrinaStory
+	goto_if_unset FLAG_GOT_TM04_FROM_SABRINA, SaffronCity_Gym_EventScript_SabrinaStory
+	goto SaffronCity_Gym_EventScript_FullRematchOffer
+
+SaffronCity_Gym_EventScript_SabrinaStory::
 	famechecker FAMECHECKER_SABRINA, FCPICKSTATE_COLORED, UpdatePickStateFromSpecialVar8005
 	trainerbattle_single TRAINER_LEADER_SABRINA, SaffronCity_Gym_Text_SabrinaIntro, SaffronCity_Gym_Text_SabrinaDefeat, SaffronCity_Gym_EventScript_DefeatedSabrina, NO_MUSIC
 	goto_if_unset FLAG_GOT_TM04_FROM_SABRINA, SaffronCity_Gym_EventScript_GiveTM04
@@ -94,3 +99,36 @@ SaffronCity_Gym_EventScript_GymStatuePostVictory::
 	msgbox SaffronCity_Gym_Text_GymStatuePlayerWon
 	releaseall
 	end
+
+SaffronCity_Gym_EventScript_FullRematchOffer::
+	lock
+	faceplayer
+	msgbox SaffronCity_Gym_Text_FullRematchOffer, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, SaffronCity_Gym_EventScript_FullRematchDecline
+	cleartrainerflag TRAINER_RS_COOLTRAINER_F
+	trainerbattle_single TRAINER_RS_COOLTRAINER_F, SaffronCity_Gym_Text_FullRematchIntro, SaffronCity_Gym_Text_FullRematchDefeat, SaffronCity_Gym_EventScript_FullRematchWon
+	end
+
+SaffronCity_Gym_EventScript_FullRematchWon::
+	msgbox SaffronCity_Gym_Text_FullRematchAfter
+	release
+	end
+
+SaffronCity_Gym_EventScript_FullRematchDecline::
+	release
+	end
+
+SaffronCity_Gym_Text_FullRematchOffer::
+	.string "Has recorrido un largo camino desde\n"
+	.string "nuestro primer combate.\p"
+	.string "¿Quieres una revancha de verdad?$"
+
+SaffronCity_Gym_Text_FullRematchIntro::
+	.string "¡Entonces veamos cuánto has crecido!$"
+
+SaffronCity_Gym_Text_FullRematchDefeat::
+	.string "Excelente. Tu fuerza sigue creciendo.$"
+
+SaffronCity_Gym_Text_FullRematchAfter::
+	.string "Puedes volver cuando quieras.\p"
+	.string "Siempre aceptaré otra revancha.$"

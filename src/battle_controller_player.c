@@ -839,14 +839,13 @@ static void SetLinkBattleEndCallbacks(void)
 
 void SetBattleEndCallbacks(void)
 {
-#if REVISION >= 0xA
-#else
+#if !(defined(BUGFIX) || REVISION >= 0xA)
     if (!gPaletteFade.active)
 #endif
     {
         if (gBattleTypeFlags & BATTLE_TYPE_LINK)
         {
-#if REVISION >= 0xA
+#if defined(BUGFIX) || REVISION >= 0xA
             if (!IsLinkTaskFinished() || gPaletteFade.active) return;
 #endif
             if (gWirelessCommType == 0)

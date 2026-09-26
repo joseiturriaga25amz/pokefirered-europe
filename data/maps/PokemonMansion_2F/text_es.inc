@@ -32,3 +32,10 @@ PokemonMansion_1F_Text_ChristenedDiscoveredMonMew::
     .string "Diario: 10 de julio.\n"
     .string "Hemos llamado a este nuevo\l"
     .string "POKéMON, MEW.$"
+
+
+PokemonMansion_2F_Text_FullMewSighting2::
+    .string "¡Miiiu!\p"
+    .string "Algo se asoma junto al viejo diario\n"
+    .string "y desaparece antes de que puedas\l"
+    .string "acercarte.$"

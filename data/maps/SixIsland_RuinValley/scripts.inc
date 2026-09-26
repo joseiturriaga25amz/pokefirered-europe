@@ -29,6 +29,13 @@ SixIsland_RuinValley_EventScript_DottedHoleDoor::
 	msgbox SixIsland_RuinValley_Text_SeveralDotsOnTheDoor
 	braillemessage Braille_Text_Cut
 	waitbuttonpress
+	goto_if_unset FLAG_BADGE02_GET, SixIsland_RuinValley_EventScript_DottedHoleDoorRelease
+	checkitem ITEM_HM01_CUT
+	goto_if_eq VAR_RESULT, FALSE, SixIsland_RuinValley_EventScript_DottedHoleDoorRelease
+	setmetatile 24, 24, METATILE_SeviiIslands67_DottedHoleDoor_Open, 0
+	special DrawWholeMapView
+	setflag FLAG_USED_CUT_ON_RUIN_VALLEY_BRAILLE
+SixIsland_RuinValley_EventScript_DottedHoleDoorRelease:
 	releaseall
 	end
 

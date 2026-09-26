@@ -13,17 +13,22 @@ Route10_PokemonCenter_1F_Text_HeardGhostsHauntLavender::
 Route10_PokemonCenter_1F_Text_GiveEverstoneIfCaught20Mons::
     .string "¡Hola! ¿Te acuerdas de mí?\n"
     .string "¡Soy AYUDANTE del PROF. OAK!\p"
-    .string "¡Si ya tienes 20 tipos de POKéMON,\n"
-    .string "se supone que debería darte\l"
-    .string "PIEDRAETERNA!\p"
-    .string "Dime, {PLAYER}. ¿Tienes ya al menos\n"
-    .string "20 tipos de POKéMON?$"
+    .string "El PROFESOR me pidió premiar a\n"
+    .string "Entrenadores que progresen.\p"
+    .string "Me encargó darte la PIEDRAETERNA\n"
+    .string "si ya tienes la MEDALLA TRUENO.\p"
+    .string "¿Ya tienes la MEDALLA TRUENO?$"
 
 Route10_PokemonCenter_1F_Text_GreatHereYouGo::
-    .string "¡Bien! ¡Has logrado {STR_VAR_3} tipos\n"
-    .string "de POKéMON!\p"
+    .string "¡Perfecto! Esa MEDALLA demuestra\n"
+    .string "cuánto has avanzado.\p"
     .string "¡Enhorabuena!\n"
     .string "¡Aquí tienes!$"
+
+Route10_PokemonCenter_1F_Text_NeedThunderBadge::
+    .string "Vuelve cuando consigas la\n"
+    .string "MEDALLA TRUENO.\p"
+    .string "Guardaré la PIEDRAETERNA para ti.$"
 
 Route10_PokemonCenter_1F_Text_ReceivedEverstoneFromAide::
     .string "¡{PLAYER} obtuvo la\n"

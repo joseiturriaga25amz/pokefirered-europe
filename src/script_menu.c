@@ -314,13 +314,15 @@ static const struct MenuAction sMultichoiceList_BikeShop[] = {
     { gText_NoThanks }
 };
 
+static const u8 sText_FullPorygon5500Coins[] = _("PORYGON  5.500 FICHAS");
+
 static const struct MenuAction sMultichoiceList_GameCornerPokemonPrizes[] = {
 #if defined(FIRERED)
     { gText_Abra_180Coins },
     { gText_Clefairy_500Coins },
     { gText_Dratini_2800Coins },
     { gText_Scyther_5500Coins },
-    { gText_Porygon_9999Coins },
+    { sText_FullPorygon5500Coins },
 #elif defined(LEAFGREEN)
     { gText_Abra_120Coins },
     { gText_Clefairy_750Coins },
@@ -498,6 +500,39 @@ static const struct MenuAction sMultichoiceList_TrainerTowerMode[] = {
     { gOtherText_Exit }
 };
 
+static const u8 sText_FullZubat[] = _("ZUBAT");
+static const u8 sText_FullMareep[] = _("MAREEP");
+static const u8 sText_FullPineco[] = _("PINECO");
+static const u8 sText_FullHoundour[] = _("HOUNDOUR");
+static const u8 sText_FullTeddiursa[] = _("TEDDIURSA");
+static const u8 sText_FullAipom[] = _("AIPOM");
+static const u8 sText_FullShuckle[] = _("SHUCKLE");
+static const u8 sText_FullStantler[] = _("STANTLER");
+static const u8 sText_FullSmeargle[] = _("SMEARGLE");
+static const u8 sText_FullMore[] = _("MÁS...");
+static const u8 sText_FullBack[] = _("VOLVER");
+static const u8 sText_FullExit[] = _("SALIR");
+
+static const struct MenuAction sMultichoiceList_FullAlteringCavePage1[] = {
+    { sText_FullZubat },
+    { sText_FullMareep },
+    { sText_FullPineco },
+    { sText_FullHoundour },
+    { sText_FullTeddiursa },
+    { sText_FullMore },
+    { sText_FullExit }
+};
+
+static const struct MenuAction sMultichoiceList_FullAlteringCavePage2[] = {
+    { sText_FullAipom },
+    { sText_FullShuckle },
+    { sText_FullStantler },
+    { sText_FullSmeargle },
+    { sText_FullBack },
+    { sText_FullExit }
+};
+
+
 static const struct MenuAction sMultichoiceList_Exit[] = {
     { gOtherText_Exit }
 };
@@ -568,6 +603,8 @@ static const struct MultichoiceListStruct sMultichoiceLists[] = {
     [MULTICHOICE_62]                                         = MULTICHOICE(sMultichoiceList_62),
     [MULTICHOICE_JOIN_OR_LEAD]                               = MULTICHOICE(sMultichoiceList_JoinOrLead),
     [MULTICHOICE_TRAINER_TOWER_MODE]                         = MULTICHOICE(sMultichoiceList_TrainerTowerMode),
+    [MULTICHOICE_FULL_ALTERING_CAVE_PAGE1]                    = MULTICHOICE(sMultichoiceList_FullAlteringCavePage1),
+    [MULTICHOICE_FULL_ALTERING_CAVE_PAGE2]                    = MULTICHOICE(sMultichoiceList_FullAlteringCavePage2),
 };
 
 // From Cool to Berries goes unused

@@ -21,3 +21,9 @@ PokemonMansion_1F_Text_JohnsonPostBattle::
     .string "curioseando un poco, pero creo\l"
     .string "que voy a irme.\p"
     .string "Tengo un poco de miedo.$"
+
+
+PokemonMansion_1F_Text_FullMewSighting1::
+    .string "Un sonido suave recorre la mansión...\p"
+    .string "Por un instante, una pequeña silueta\n"
+    .string "rosada cruza el pasillo y desaparece.$"

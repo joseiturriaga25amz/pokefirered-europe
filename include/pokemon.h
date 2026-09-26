@@ -140,6 +140,9 @@ struct Pokemon
     u16 spDefense;
 };
 
+STATIC_ASSERT(sizeof(struct BoxPokemon) == 0x50, BoxPokemonSizeMustRemainGen3Compatible);
+STATIC_ASSERT(sizeof(struct Pokemon) == 0x64, PokemonSizeMustRemainGen3Compatible);
+
 struct BattleTowerPokemon
 {
     /*0x00*/ u16 species;
@@ -246,6 +249,7 @@ struct BattleMove
     u8 target;
     s8 priority;
     u8 flags;
+    u8 category;
 };
 
 #define SPINDA_SPOT_WIDTH 16
@@ -343,9 +347,22 @@ void SetMultiuseSpriteTemplateToTrainerBack(u16 trainerSpriteId, u8 battlerPosit
 #define GetMonData(...) CAT(GetMonData, NARG_8(__VA_ARGS__))(__VA_ARGS__)
 #define GetBoxMonData(...) CAT(GetBoxMonData, NARG_8(__VA_ARGS__))(__VA_ARGS__)
 u32 GetMonData3(struct Pokemon *mon, s32 field, u8 *data);
-u32 GetMonData2(struct Pokemon *mon, s32 field);
 u32 GetBoxMonData3(struct BoxPokemon *boxMon, s32 field, u8 *data);
+
+#ifndef UBFIX
+u32 GetMonData2(struct Pokemon *mon, s32 field);
 u32 GetBoxMonData2(struct BoxPokemon *boxMon, s32 field);
+#else
+static inline u32 GetMonData2(struct Pokemon *mon, s32 field)
+{
+    return GetMonData3(mon, field, NULL);
+}
+
+static inline u32 GetBoxMonData2(struct BoxPokemon *boxMon, s32 field)
+{
+    return GetBoxMonData3(boxMon, field, NULL);
+}
+#endif
 
 void SetMonData(struct Pokemon *mon, s32 field, const void *dataArg);
 void SetBoxMonData(struct BoxPokemon *boxMon, s32 field, const void *dataArg);

@@ -135,6 +135,16 @@ bool8 CheckBagHasItem(u16 itemId, u16 count)
         return FALSE;
 
     pocket = ItemId_GetPocket(itemId) - 1;
+
+    // Full: TMs are unique permanent unlocks. Capacity checks must match
+    // AddBagItem so scripts cannot treat an already-owned (or bulk) TM as
+    // receivable and charge currency before the add ultimately fails.
+    if (pocket == POCKET_TM_CASE - 1 && itemId < ITEM_HM01)
+    {
+        if (count != 1 || CheckBagHasItem(itemId, 1))
+            return FALSE;
+    }
+
     // Check for item slots that contain the item
     for (i = 0; i < gBagPockets[pocket].capacity; i++)
     {
@@ -225,11 +235,21 @@ bool8 AddBagItem(u16 itemId, u16 count)
         return FALSE;
 
     pocket = ItemId_GetPocket(itemId) - 1;
+
+    // Full: a TM transaction represents exactly one permanent unlock.
+    if (pocket == POCKET_TM_CASE - 1 && itemId < ITEM_HM01 && count != 1)
+        return FALSE;
+
     for (i = 0; i < gBagPockets[pocket].capacity; i++)
     {
         if (gBagPockets[pocket].itemSlots[i].itemId == itemId)
         {
             u16 quantity;
+            // Full: technical machines are unique permanent unlocks.
+            // Reject a duplicate so shops/prize scripts cannot charge for a no-op.
+            if (pocket == POCKET_TM_CASE - 1 && itemId < ITEM_HM01)
+                return FALSE;
+
             // Does this stack have room for more??
             quantity = GetBagItemQuantity(&gBagPockets[pocket].itemSlots[i].quantity);
             if (quantity + count <= 999)
@@ -274,6 +294,8 @@ bool8 AddBagItem(u16 itemId, u16 count)
         return FALSE;
 
     gBagPockets[pocket].itemSlots[idx].itemId = itemId;
+    if (pocket == POCKET_TM_CASE - 1 && itemId < ITEM_HM01)
+        count = 1;
     SetBagItemQuantity(&gBagPockets[pocket].itemSlots[idx].quantity, count);
     return TRUE;
 }
