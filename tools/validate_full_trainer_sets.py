@@ -29,6 +29,9 @@ PARTIES = [
     "sParty_LeaderSabrina",
     "sParty_LeaderBlaine",
     "sParty_LeaderGiovanni",
+    # Giovanni Rocket boss progression
+    "sParty_BossGiovanni",
+    "sParty_BossGiovanni2",
     # First League
     "sParty_EliteFourLorelei",
     "sParty_EliteFourBruno",
