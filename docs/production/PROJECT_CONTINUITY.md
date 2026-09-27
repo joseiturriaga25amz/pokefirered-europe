@@ -459,3 +459,15 @@ Implemented B3 scope:
 - B3-specific identity/progression validators added.
 
 This documentation-only closure commit must also pass Full Gameplay Core before merge. After that, merge B3 to `master` and start B4 from the exact merged master checkpoint.
+
+
+### B3 closure candidate is ON HOLD
+
+User clarified the intended review methodology: postgame rematches must receive the same one-by-one manual design review used for the first-cycle Gym Leaders, Gary, Giovanni and League.
+
+Therefore B3 is **not closed** and must not merge yet.
+
+Pending manual sequence:
+Brock → Misty → Lt. Surge → Erika → Koga → Sabrina → Blaine → Giovanni → Lorelei → Bruno → Agatha → Lance → Gary/Blue Champion rematch.
+
+After the 13 individual reviews, run one final transversal progression audit, then exact-head CI, then close/merge B3.
