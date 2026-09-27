@@ -437,3 +437,25 @@ B3.3 postgame training bridge:
 - no global EXP formula or mandatory-grind rule changed;
 - strengthened League remains gated by `FLAG_SYS_CAN_LINK_WITH_RS`;
 - `tools/validate_b3_postgame_progression.py` is wired into Full Gameplay Core.
+
+
+## 19. 2026-09-26 — B3 closure candidate
+
+B3 — Postgame progression and rematch identity has reached closure scope.
+
+Validated gameplay checkpoint:
+- branch: `feature/b3-postgame-rematch-identity`
+- HEAD: `8a73aedb0f36d8b26a8956fd04e280139275cfa9`
+- Full Gameplay Core run `36282030839`: **SUCCESS**
+
+Implemented B3 scope:
+- first-Hall-of-Fame Gym rematch unlocks;
+- no National Dex/capture dependency for Gym rematches;
+- eight unique leader rematch dialogue sets;
+- repeatability preserved;
+- Lorelei rematch Lapras refinement applied;
+- optional level 64-70 Network-era VS Seeker training bridge;
+- strengthened League remains Network-Machine gated;
+- B3-specific identity/progression validators added.
+
+This documentation-only closure commit must also pass Full Gameplay Core before merge. After that, merge B3 to `master` and start B4 from the exact merged master checkpoint.
