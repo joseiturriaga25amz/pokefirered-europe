@@ -56,3 +56,23 @@ The strengthened League remains gated by `FLAG_SYS_CAN_LINK_WITH_RS`, i.e. compl
 - exact selected final-tier placement and levels;
 - strengthened League Network-Machine gating;
 - bridge ceiling below the strengthened League.
+
+
+## B3 closure gate
+
+All B3 scope items are implemented and statically validated:
+
+- Gym rematches unlock after first Hall of Fame / game clear.
+- No National Dex or capture quota gates Gym rematches.
+- All eight Gym Leader rematches remain repeatable.
+- All eight leaders have unique rematch dialogue sets.
+- Approved rematch roster identity changes are preserved.
+- Lorelei rematch Lapras uses Confuse Ray as approved.
+- Six optional high-value VS Seeker final tiers provide a level 64-70 training bridge.
+- Strengthened League remains gated by completed Network Machine progression.
+- No global EXP formula change was introduced.
+
+Validation checkpoint before documentation-only closure:
+- exact gameplay HEAD: `8a73aedb0f36d8b26a8956fd04e280139275cfa9`
+- Full Gameplay Core run: `36282030839`
+- result: **SUCCESS**
