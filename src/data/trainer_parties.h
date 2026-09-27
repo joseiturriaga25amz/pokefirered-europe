@@ -11180,7 +11180,7 @@ static const struct TrainerMonItemCustomMoves sParty_EliteFourAgatha2[] = {
         .lvl = 79,
         .species = SPECIES_ARBOK,
         .heldItem = ITEM_POISON_BARB,
-        .moves = {MOVE_POISON_FANG, MOVE_EARTHQUAKE, MOVE_ROCK_SLIDE, MOVE_GLARE},
+        .moves = {MOVE_SLUDGE_BOMB, MOVE_EARTHQUAKE, MOVE_ROCK_SLIDE, MOVE_GLARE},
     },
     {
         .iv = 247,
