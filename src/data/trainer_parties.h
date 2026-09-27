@@ -163,7 +163,7 @@ static const struct TrainerMonItemCustomMoves sParty_RSTuberM[] = {
         .lvl = 64,
         .species = SPECIES_BELLOSSOM,
         .heldItem = ITEM_NONE,
-        .moves = {MOVE_GIGA_DRAIN, MOVE_PETAL_DANCE, MOVE_SUNNY_DAY, MOVE_SOLAR_BEAM},
+        .moves = {MOVE_SYNTHESIS, MOVE_PETAL_DANCE, MOVE_SUNNY_DAY, MOVE_SOLAR_BEAM},
     },
     {
         .iv = 214,
