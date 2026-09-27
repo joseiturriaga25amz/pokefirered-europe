@@ -208,3 +208,14 @@ Reviewed roster, levels, effective IV tier, held items, trainer healing, AI and 
 No changes required. Magmar 73 remains the symbolic ace.
 
 **Status: APPROVED AS-IS.**
+
+
+### Manual review 8/13 — Giovanni
+
+Approved final adjustment:
+- Nidoking 71: Earthquake / Megahorn / **Flamethrower** / Ice Beam.
+- Flamethrower replaces Thunderbolt by user approval.
+- Rhydon 74 remains the combat ace; Persian remains Giovanni's visual/narrative signature.
+- All other roster, levels, IV tier, held items, trainer healing and movesets approved.
+
+**Status: APPROVED.**
