@@ -180,3 +180,11 @@ Koga follow-up approved:
 - Weezing 71: Sludge Bomb / Flamethrower / **Toxic** / Explosion.
 - Toxic replaces Thunderbolt.
 - Toxic distribution to other Koga party members remains under targeted design review; no additional change applied yet.
+
+
+Koga final follow-up approved:
+- Ariados 64: Sludge Bomb / Psychic / Spider Web / **Toxic**.
+- Toxic replaces Agility, giving Ariados a trap + poison role.
+- No additional Toxic users added; Venomoth, Muk, Forretress and Crobat keep distinct roles.
+
+**Status: APPROVED.**
