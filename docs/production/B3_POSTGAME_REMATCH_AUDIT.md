@@ -149,3 +149,15 @@ Approved adjustment:
 - Raichu 69 remains the symbolic ace.
 
 **Status: APPROVED.**
+
+
+### Manual review 4/13 — Erika
+
+Approved adjustment:
+- Bellossom 64: **Synthesis** / Petal Dance / Sunny Day / Solar Beam.
+- Synthesis replaces Giga Drain to reduce Grass-attack redundancy and strengthen Bellossom's sun-sustain identity.
+- Both Vileplume remain; Vileplume 69 remains the symbolic ace.
+
+All other Erika rematch roster, levels, IV tier, held items, trainer healing and movesets approved.
+
+**Status: APPROVED.**
