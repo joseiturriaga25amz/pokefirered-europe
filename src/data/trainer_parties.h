@@ -207,7 +207,7 @@ static const struct TrainerMonItemCustomMoves sParty_RSCooltrainerM[] = {
         .lvl = 65,
         .species = SPECIES_VENOMOTH,
         .heldItem = ITEM_NONE,
-        .moves = {MOVE_PSYBEAM, MOVE_SILVER_WIND, MOVE_GUST, MOVE_SLEEP_POWDER},
+        .moves = {MOVE_PSYCHIC, MOVE_SILVER_WIND, MOVE_GIGA_DRAIN, MOVE_SLEEP_POWDER},
     },
     {
         .iv = 231,
@@ -218,14 +218,14 @@ static const struct TrainerMonItemCustomMoves sParty_RSCooltrainerM[] = {
     },
     {
         .iv = 231,
-        .lvl = 68,
+        .lvl = 71,
         .species = SPECIES_WEEZING,
         .heldItem = ITEM_NONE,
         .moves = {MOVE_SLUDGE_BOMB, MOVE_FLAMETHROWER, MOVE_THUNDERBOLT, MOVE_EXPLOSION},
     },
     {
         .iv = 231,
-        .lvl = 71,
+        .lvl = 68,
         .species = SPECIES_CROBAT,
         .heldItem = ITEM_SHARP_BEAK,
         .moves = {MOVE_AERIAL_ACE, MOVE_POISON_FANG, MOVE_BITE, MOVE_CONFUSE_RAY},
