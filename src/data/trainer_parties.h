@@ -95,7 +95,7 @@ static const struct TrainerMonItemCustomMoves sParty_RSRuinManiac[] = {
         .lvl = 63,
         .species = SPECIES_TOGETIC,
         .heldItem = ITEM_LEFTOVERS,
-        .moves = {MOVE_MAGICAL_LEAF, MOVE_ANCIENT_POWER, MOVE_WISH, MOVE_YAWN},
+        .moves = {MOVE_PSYCHIC, MOVE_MAGICAL_LEAF, MOVE_WISH, MOVE_YAWN},
     },
     {
         .iv = 214,
