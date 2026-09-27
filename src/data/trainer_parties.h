@@ -193,7 +193,7 @@ static const struct TrainerMonItemCustomMoves sParty_RSCooltrainerM[] = {
         .lvl = 64,
         .species = SPECIES_ARIADOS,
         .heldItem = ITEM_NONE,
-        .moves = {MOVE_SLUDGE_BOMB, MOVE_PSYCHIC, MOVE_SPIDER_WEB, MOVE_AGILITY},
+        .moves = {MOVE_SLUDGE_BOMB, MOVE_PSYCHIC, MOVE_SPIDER_WEB, MOVE_TOXIC},
     },
     {
         .iv = 231,
