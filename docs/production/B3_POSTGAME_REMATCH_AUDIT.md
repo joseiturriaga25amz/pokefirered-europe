@@ -138,3 +138,14 @@ Misty manual review closure:
 - Roster, IV tier, held items, trainer healing and all other movesets approved.
 
 **Status: APPROVED.**
+
+
+### Manual review 3/13 — Lt. Surge
+
+Approved adjustment:
+- Electrode: Thunderbolt / **Taunt** / Mirror Coat / Explosion.
+- Taunt replaces Light Screen to remove anti-synergy with Mirror Coat and reduce overlap with Electabuzz's Light Screen.
+- Magneton, Electabuzz and Raichu remain unchanged.
+- Raichu 69 remains the symbolic ace.
+
+**Status: APPROVED.**
