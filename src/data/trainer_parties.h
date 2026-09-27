@@ -11090,7 +11090,7 @@ static const struct TrainerMonItemCustomMoves sParty_EliteFourLorelei2[] = {
         .lvl = 76,
         .species = SPECIES_PILOSWINE,
         .heldItem = ITEM_NONE,
-        .moves = {MOVE_EARTHQUAKE, MOVE_ROCK_SLIDE, MOVE_BLIZZARD, MOVE_HAIL},
+        .moves = {MOVE_EARTHQUAKE, MOVE_ROCK_SLIDE, MOVE_BLIZZARD, MOVE_DOUBLE_EDGE},
     },
     {
         .iv = 239,
