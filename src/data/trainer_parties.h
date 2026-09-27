@@ -244,7 +244,7 @@ static const struct TrainerMonItemCustomMoves sParty_RSCooltrainerF[] = {
         .lvl = 65,
         .species = SPECIES_MR_MIME,
         .heldItem = ITEM_LEFTOVERS,
-        .moves = {MOVE_PSYBEAM, MOVE_BATON_PASS, MOVE_BARRIER, MOVE_CALM_MIND},
+        .moves = {MOVE_PSYCHIC, MOVE_BATON_PASS, MOVE_BARRIER, MOVE_CALM_MIND},
     },
     {
         .iv = 231,
