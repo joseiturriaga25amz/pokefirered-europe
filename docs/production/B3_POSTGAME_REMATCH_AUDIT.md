@@ -219,3 +219,14 @@ Approved final adjustment:
 - All other roster, levels, IV tier, held items, trainer healing and movesets approved.
 
 **Status: APPROVED.**
+
+
+### Manual review 9/13 — Lorelei
+
+Approved adjustment:
+- Piloswine 76: Earthquake / Rock Slide / Blizzard / **Double-Edge**.
+- Double-Edge replaces Hail, removing weather redundancy with Dewgong and restoring the canonical FRLG rematch offensive identity.
+- Lapras 79 remains the symbolic ace with Ice Beam / Surf / Thunderbolt / Confuse Ray.
+- All other Lorelei rematch roster, levels, IV tier, held items, trainer healing and movesets approved.
+
+**Status: APPROVED.**
