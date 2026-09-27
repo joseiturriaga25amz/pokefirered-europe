@@ -188,3 +188,14 @@ Koga final follow-up approved:
 - No additional Toxic users added; Venomoth, Muk, Forretress and Crobat keep distinct roles.
 
 **Status: APPROVED.**
+
+
+### Manual review 6/13 — Sabrina
+
+Approved adjustment:
+- Mr. Mime 65: **Psychic** / Baton Pass / Barrier / Calm Mind.
+- Psychic replaces Psybeam to bring its lone attack up to postgame strength.
+- Alakazam 72 remains the symbolic ace.
+- All other Sabrina rematch roster, levels, IV tier, held items, trainer healing and movesets approved.
+
+**Status: APPROVED.**
