@@ -76,3 +76,34 @@ Validation checkpoint before documentation-only closure:
 - exact gameplay HEAD: `8a73aedb0f36d8b26a8956fd04e280139275cfa9`
 - Full Gameplay Core run: `36282030839`
 - result: **SUCCESS**
+
+
+## B3.4 — Manual rematch review pending
+
+The prior closure candidate was premature. Static/progression validation does not replace the manual design pass used for the first-cycle boss battles.
+
+Before B3 can close, review the postgame boss rematches one by one with the user, covering:
+- roster identity;
+- levels and progression;
+- IV tier;
+- held items and trainer healing;
+- moveset coherence and legality;
+- challenge level versus adjacent bosses;
+- anime/canon/game identity.
+
+Required sequence:
+1. Brock rematch
+2. Misty rematch
+3. Lt. Surge rematch
+4. Erika rematch
+5. Koga rematch
+6. Sabrina rematch
+7. Blaine rematch
+8. Giovanni rematch
+9. Lorelei rematch
+10. Bruno rematch
+11. Agatha rematch
+12. Lance rematch
+13. Gary/Blue Champion rematch
+
+B3 must not merge until this manual pass and a final transversal rematch-progression audit are complete.
