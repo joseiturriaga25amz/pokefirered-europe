@@ -119,7 +119,7 @@ static const struct TrainerMonItemCustomMoves sParty_RSTuberF[] = {
         .lvl = 64,
         .species = SPECIES_ELECTRODE,
         .heldItem = ITEM_MAGNET,
-        .moves = {MOVE_THUNDERBOLT, MOVE_LIGHT_SCREEN, MOVE_MIRROR_COAT, MOVE_EXPLOSION},
+        .moves = {MOVE_THUNDERBOLT, MOVE_TAUNT, MOVE_MIRROR_COAT, MOVE_EXPLOSION},
     },
     {
         .iv = 214,
