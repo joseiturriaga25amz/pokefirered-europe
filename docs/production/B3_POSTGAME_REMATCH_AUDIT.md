@@ -107,3 +107,15 @@ Required sequence:
 13. Gary/Blue Champion rematch
 
 B3 must not merge until this manual pass and a final transversal rematch-progression audit are complete.
+
+
+### Manual review 1/13 — Brock
+
+**Status: APPROVED AS-IS.**
+
+Reviewed roster, levels, effective IV tier, held items, trainer healing, AI and all six movesets.
+
+User explicitly chose to retain **Rapid Spin on Forretress** for Pokémon identity rather than replace it with Earthquake. No gameplay data changes are required.
+
+Approved Brock rematch remains:
+Vulpix 60 / Crobat 61 / Forretress 62 / Ludicolo 63 / Marshtomp 64 / Steelix 66.
