@@ -119,3 +119,13 @@ User explicitly chose to retain **Rapid Spin on Forretress** for Pokémon identi
 
 Approved Brock rematch remains:
 Vulpix 60 / Crobat 61 / Forretress 62 / Ludicolo 63 / Marshtomp 64 / Steelix 66.
+
+
+### Manual review 2/13 — Misty (in progress)
+
+Approved identity correction:
+- **Starmie is Misty's rematch ace at level 67.**
+- Gyarados moves from level 67 to level 65.
+- Overall level curve is unchanged; only the symbolic ace ordering changes.
+
+Togetic moveset remains under manual review before Misty is closed.
