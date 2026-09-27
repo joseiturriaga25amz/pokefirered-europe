@@ -230,3 +230,14 @@ Approved adjustment:
 - All other Lorelei rematch roster, levels, IV tier, held items, trainer healing and movesets approved.
 
 **Status: APPROVED.**
+
+
+### Manual review 10/13 — Bruno
+
+Approved adjustment:
+- Onix 75: Earthquake / Rock Slide / Iron Tail / **Screech**.
+- Screech replaces Sandstorm to avoid damaging Bruno's Fighting core and better support his physical-pressure identity.
+- Machamp 80 remains the symbolic ace.
+- All other Bruno rematch roster, levels, IV tier, held items, trainer healing and movesets approved.
+
+**Status: APPROVED.**
