@@ -34,3 +34,25 @@ Applied the previously approved Lorelei rematch amendment:
 - Body Slam is removed from the rematch set.
 
 This restores Lapras's control identity while retaining the stronger rematch coverage package.
+
+
+## B3.3 — Postgame training bridge
+
+To avoid global EXP inflation or mandatory grinding, six existing high-value final VS Seeker tiers gated by the completed Network Machine were strengthened into a curated training bridge:
+
+- Crush Kin Mik & Kia: 64 / 64
+- Cooltrainer Leroy: 64 / 65 / 64 / 65 / 67
+- Pokémon Ranger Jackson: 65 / 66 / 67
+- Cooltrainer Michelle: 65 / 65 / 66 / 67 / 69
+- Pokémon Ranger Katelyn: 68
+- Cool Couple Lex & Nya: 70 / 70
+
+These remain optional rematches and preserve normal VS Seeker progression logic. Their final tiers sit below the strengthened League opener (Lorelei 74–79) and complement the Gym rematch ace progression (66–74).
+
+The strengthened League remains gated by `FLAG_SYS_CAN_LINK_WITH_RS`, i.e. completed Ruby/Sapphire Network Machine progression.
+
+`tools/validate_b3_postgame_progression.py` now checks:
+- Hall-of-Fame vs Network VS Seeker tier gating;
+- exact selected final-tier placement and levels;
+- strengthened League Network-Machine gating;
+- bridge ceiling below the strengthened League.
