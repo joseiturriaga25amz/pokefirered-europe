@@ -99,14 +99,14 @@ static const struct TrainerMonItemCustomMoves sParty_RSRuinManiac[] = {
     },
     {
         .iv = 214,
-        .lvl = 65,
+        .lvl = 67,
         .species = SPECIES_STARMIE,
         .heldItem = ITEM_TWISTED_SPOON,
         .moves = {MOVE_SURF, MOVE_PSYCHIC, MOVE_THUNDERBOLT, MOVE_RECOVER},
     },
     {
         .iv = 214,
-        .lvl = 67,
+        .lvl = 65,
         .species = SPECIES_GYARADOS,
         .heldItem = ITEM_MYSTIC_WATER,
         .moves = {MOVE_WATERFALL, MOVE_EARTHQUAKE, MOVE_DRAGON_DANCE, MOVE_HYPER_BEAM},
