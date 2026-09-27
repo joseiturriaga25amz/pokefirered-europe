@@ -221,7 +221,7 @@ static const struct TrainerMonItemCustomMoves sParty_RSCooltrainerM[] = {
         .lvl = 71,
         .species = SPECIES_WEEZING,
         .heldItem = ITEM_NONE,
-        .moves = {MOVE_SLUDGE_BOMB, MOVE_FLAMETHROWER, MOVE_THUNDERBOLT, MOVE_EXPLOSION},
+        .moves = {MOVE_SLUDGE_BOMB, MOVE_FLAMETHROWER, MOVE_TOXIC, MOVE_EXPLOSION},
     },
     {
         .iv = 231,
