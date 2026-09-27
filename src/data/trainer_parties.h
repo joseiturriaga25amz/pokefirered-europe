@@ -354,7 +354,7 @@ static const struct TrainerMonItemCustomMoves sParty_RSBeauty[] = {
         .lvl = 71,
         .species = SPECIES_NIDOKING,
         .heldItem = ITEM_SOFT_SAND,
-        .moves = {MOVE_EARTHQUAKE, MOVE_MEGAHORN, MOVE_THUNDERBOLT, MOVE_ICE_BEAM},
+        .moves = {MOVE_EARTHQUAKE, MOVE_MEGAHORN, MOVE_FLAMETHROWER, MOVE_ICE_BEAM},
     },
     {
         .iv = 231,
