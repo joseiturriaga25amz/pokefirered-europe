@@ -129,3 +129,12 @@ Approved identity correction:
 - Overall level curve is unchanged; only the symbolic ace ordering changes.
 
 Togetic moveset remains under manual review before Misty is closed.
+
+
+Misty manual review closure:
+- Starmie 67 is the symbolic ace; Gyarados is 65.
+- Togetic: Psychic / Magical Leaf / Wish / Yawn.
+- Psychic replaces Ancient Power by user approval.
+- Roster, IV tier, held items, trainer healing and all other movesets approved.
+
+**Status: APPROVED.**
