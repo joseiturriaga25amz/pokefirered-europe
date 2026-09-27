@@ -241,3 +241,14 @@ Approved adjustment:
 - All other Bruno rematch roster, levels, IV tier, held items, trainer healing and movesets approved.
 
 **Status: APPROVED.**
+
+
+### Manual review 11/13 — Agatha
+
+Approved adjustment:
+- Arbok 79: **Sludge Bomb** / Earthquake / Rock Slide / Glare.
+- Sludge Bomb replaces Poison Fang to restore postgame STAB power while retaining Glare-based control.
+- Gengar 81 remains the symbolic ace.
+- All other Agatha rematch roster, levels, IV tier, held items, trainer healing and movesets approved.
+
+**Status: APPROVED.**
