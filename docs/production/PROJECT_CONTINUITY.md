@@ -430,3 +430,10 @@ B3.1 changes:
 - all eight Gym Leaders have unique rematch offer / intro / defeat / post-battle dialogue;
 - repeatability remains intact via `cleartrainerflag`;
 - `tools/validate_b3_rematch_identity.py` is wired into Full Gameplay Core.
+
+
+B3.3 postgame training bridge:
+- six existing Network-Machine-gated VS Seeker final tiers were raised into an optional level 64–70 bridge;
+- no global EXP formula or mandatory-grind rule changed;
+- strengthened League remains gated by `FLAG_SYS_CAN_LINK_WITH_RS`;
+- `tools/validate_b3_postgame_progression.py` is wired into Full Gameplay Core.
