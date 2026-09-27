@@ -199,3 +199,12 @@ Approved adjustment:
 - All other Sabrina rematch roster, levels, IV tier, held items, trainer healing and movesets approved.
 
 **Status: APPROVED.**
+
+
+### Manual review 7/13 — Blaine
+
+Reviewed roster, levels, effective IV tier, held items, trainer healing, AI and all six movesets.
+
+No changes required. Magmar 73 remains the symbolic ace.
+
+**Status: APPROVED AS-IS.**
