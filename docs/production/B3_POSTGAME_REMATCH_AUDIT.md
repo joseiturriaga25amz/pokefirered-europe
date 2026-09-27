@@ -174,3 +174,9 @@ Approved:
 - Overall level curve remains unchanged.
 
 Weezing's fourth-move decision remains pending explicit confirmation because the user phrase "Lanzallamas por Rayo" can be read two ways relative to the prior proposal (Thunderbolt -> Toxic while retaining Flamethrower).
+
+
+Koga follow-up approved:
+- Weezing 71: Sludge Bomb / Flamethrower / **Toxic** / Explosion.
+- Toxic replaces Thunderbolt.
+- Toxic distribution to other Koga party members remains under targeted design review; no additional change applied yet.
