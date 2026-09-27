@@ -161,3 +161,16 @@ Approved adjustment:
 All other Erika rematch roster, levels, IV tier, held items, trainer healing and movesets approved.
 
 **Status: APPROVED.**
+
+
+### Manual review 5/13 — Koga (in progress)
+
+Approved:
+- Venomoth 65: **Psychic / Silver Wind / Giga Drain / Sleep Powder**.
+- Psychic replaces Psybeam.
+- Giga Drain replaces Gust.
+- Weezing becomes the symbolic ace at **level 71**.
+- Crobat moves from level 71 to **level 68**.
+- Overall level curve remains unchanged.
+
+Weezing's fourth-move decision remains pending explicit confirmation because the user phrase "Lanzallamas por Rayo" can be read two ways relative to the prior proposal (Thunderbolt -> Toxic while retaining Flamethrower).
