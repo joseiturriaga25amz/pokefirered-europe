@@ -132,3 +132,8 @@ VermilionCity_Text_Route2AideHasPackageForYou::
 	.string "Wenn du bei ROUTE 2 bist, \n"
 	.string "halte nach ihm Ausschau.$"
 
+VermilionCity_Text_FullMaritimeBirdClue::
+    .string "MATROSE: Drei seltene Vogel-PKMON\n"
+    .string "wurden in KANTO gesichtet.\p"
+    .string "Danach kam derselbe tiefe Ruf vom\n"
+    .string "Meer. Frag im Hafen von EILAND EINS.$"
