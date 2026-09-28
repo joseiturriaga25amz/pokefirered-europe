@@ -605,3 +605,25 @@ Special intermediate-stage ace compensation is now closed:
 Ace status does not globally imply max IV; these are targeted fidelity/balance exceptions.
 
 **Status: CLOSED.**
+
+
+### Global ace transversal review — Brock
+
+User approved Brock's ace progression unchanged.
+
+First battle — Onix 17 ★:
+- Rock Tomb / Rock Smash / Bind / Screech.
+- Oran Berry.
+- .iv = 50.
+
+Rematch — Steelix 66 ★:
+- Earthquake / Rock Slide / Iron Tail / Crunch.
+- Leftovers.
+- .iv = 214.
+
+Rationale:
+- Bind preserves direct anime identity for Brock's Onix;
+- Steelix is the evolved continuation of Brock's signature Onix;
+- Iron Tail preserves evolved anime identity while the remaining postgame moves provide appropriate physical pressure and coverage.
+
+**Status: APPROVED AS-IS.**
