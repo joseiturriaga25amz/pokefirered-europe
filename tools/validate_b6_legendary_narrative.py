@@ -1,3 +1,4 @@
+# CI checkpoint after canonical Ho-Oh hide-flag correction.
 #!/usr/bin/env python3
 from pathlib import Path
 
