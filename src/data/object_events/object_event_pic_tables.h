@@ -1465,6 +1465,10 @@ static const struct SpriteFrameImage sPicTable_Lapras[] = {
     overworld_frame(gObjectEventPic_Lapras, 2, 2, 2),
 };
 
+static const struct SpriteFrameImage sPicTable_Onix[] = {
+    overworld_frame(gObjectEventPic_Onix, 4, 4, 0),
+};
+
 static const struct SpriteFrameImage sPicTable_Zapdos[] = {
     overworld_frame(gObjectEventPic_Zapdos, 4, 4, 0),
     overworld_frame(gObjectEventPic_Zapdos, 4, 4, 0),
