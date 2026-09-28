@@ -481,3 +481,22 @@ User-approved adjustment:
 - Psychic improves Champion-rematch offensive coverage and makes better use of Magmar's special attacking role than the removed passive confusion slot.
 
 **Status: APPROVED AND APPLIED.**
+
+
+### Gary/Blue rematch stepwise move review — 3/6 Golem
+
+User approved Golem 81 unchanged:
+- Earthquake / Rock Slide / Double-Edge / Explosion.
+- Hard Stone remains.
+- Anime Magnitude / Rollout were reviewed but rejected because they would materially reduce Champion-rematch consistency and power versus the current Ground/Rock realization.
+
+**Status: APPROVED AS-IS.**
+
+### Gary/Blue rematch stepwise move review — 4/6 Scizor
+
+User approved Scizor 82 unchanged:
+- Swords Dance / Steel Wing / Aerial Ace / Quick Attack.
+- Metal Coat remains.
+- Steel Wing + Quick Attack preserve direct Gary anime identity; Swords Dance + Aerial Ace provide stronger Gen III postgame function without redundant Metal Claw/Swift.
+
+**Status: APPROVED AS-IS.**
