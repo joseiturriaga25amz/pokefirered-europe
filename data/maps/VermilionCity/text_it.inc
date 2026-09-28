@@ -136,3 +136,8 @@ VermilionCity_Text_Route2AideHasPackageForYou::
     .string "Se capiti da quelle parti, ti\n"
     .string "consiglio di cercarlo.$"
 
+VermilionCity_Text_FullMaritimeBirdClue::
+    .string "MARINAIO: Tre uccelli rari sono stati\n"
+    .string "avvistati a KANTO.\p"
+    .string "Dal mare è seguito lo stesso richiamo.\n"
+    .string "Chiedi al porto di ISOLA 1.$"
