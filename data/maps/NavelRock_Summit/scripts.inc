@@ -11,7 +11,7 @@ NavelRock_Summit_OnTransition::
 
 NavelRock_Summit_EventScript_HideLockedHoOh::
 	setvar VAR_TEMP_1, 1
-	setflag FLAG_HIDE_NAVEL_ROCK_HO_OH
+	setflag FLAG_HIDE_HO_OH
 	end
 
 NavelRock_Summit_EventScript_HideHoOh::
