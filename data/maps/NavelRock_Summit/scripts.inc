@@ -4,6 +4,7 @@ NavelRock_Summit_MapScripts::
 	.byte 0
 
 NavelRock_Summit_OnTransition::
+	goto_if_unset FLAG_FULL_HO_OH_UNLOCKED, NavelRock_Summit_EventScript_HideHoOh
 	call_if_set FLAG_FOUGHT_HO_OH, NavelRock_Summit_EventScript_HideHoOh
 	call_if_unset FLAG_FOUGHT_HO_OH, NavelRock_Summit_EventScript_TryShowHoOh
 	end
