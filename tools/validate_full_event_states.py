@@ -183,23 +183,39 @@ def main():
     inactive = c_function(roamer, "void SetRoamerInactive(void)")
     assert inactive.index("VarSet(VAR_FULL_ROAMER_SEQUENCE, sequence + 1);") < inactive.index("CreateInitialRoamerMon();")
 
-    # Altering Cave selector persists one of the nine original table indices.
+    # B5: Altering Cave now rotates the nine original table indices automatically
+    # once per map entry. The researcher only reports the active table and must
+    # never mutate VAR_ALTERING_CAVE_WILD_SET.
     cave = read("data/maps/SixIsland_AlteringCave/scripts.inc")
+    require(
+        cave,
+        "map_script MAP_SCRIPT_ON_TRANSITION, SixIsland_AlteringCave_OnTransition",
+        "switch VAR_ALTERING_CAVE_WILD_SET",
+    )
+    for current in range(9):
+        nxt = (current + 1) % 9
+        require(
+            cave,
+            f"case {current}, SixIsland_AlteringCave_EventScript_RotateTo{nxt}",
+            f"SixIsland_AlteringCave_EventScript_RotateTo{nxt}::",
+            f"setvar VAR_ALTERING_CAVE_WILD_SET, {nxt}",
+        )
+
+    assert "multichoice" not in cave
+    assert "SixIsland_AlteringCave_EventScript_SelectPage" not in cave
+    assert "SixIsland_AlteringCave_EventScript_ResearcherChanged::" not in cave
+
+    researcher = block(cave, "SixIsland_AlteringCave_EventScript_Researcher")
+    assert "setvar VAR_ALTERING_CAVE_WILD_SET" not in researcher
     altering_species = (
         "Zubat", "Mareep", "Pineco", "Houndour", "Teddiursa",
         "Aipom", "Shuckle", "Stantler", "Smeargle",
     )
     for value, species in enumerate(altering_species):
         require(
-            cave,
-            f"SixIsland_AlteringCave_EventScript_Set{species}::",
-            f"setvar VAR_ALTERING_CAVE_WILD_SET, {value}",
+            researcher,
+            f"case {value}, SixIsland_AlteringCave_EventScript_Report{species}",
         )
-    require(
-        cave,
-        "case 127, SixIsland_AlteringCave_EventScript_ResearcherEnd",
-        "SixIsland_AlteringCave_EventScript_ResearcherChanged::",
-    )
 
     # Porygon remains a repeatable coin purchase: the species-specific branch
     # sets the frozen price and returns to the generic prize path without a
