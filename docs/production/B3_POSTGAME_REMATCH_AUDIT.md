@@ -330,3 +330,26 @@ User clarification:
 - No other trainer IVs were changed by this correction.
 
 **Status: APPLIED.**
+
+
+### Global ace audit — Sabrina and Koga correction
+
+User-approved ace rule:
+- The ace is the trainer's strongest symbolic/character Pokémon, not merely the statistically strongest species.
+- If the canonical/symbolic ace is intentionally kept at an intermediate evolutionary stage, it may receive targeted compensation through level, held item and maximum trainer IVs.
+- This compensation is exceptional and must not be generalized to every ace.
+
+Applied:
+- **Sabrina first battle:** Alakazam moves to Lv45; **Kadabra becomes Lv47 ace**, .iv=255, Twisted Spoon.
+- **Sabrina rematch:** Alakazam moves to Lv66; **Kadabra becomes Lv72 ace**, .iv=255, Twisted Spoon. Haunter remains Lv69 with Spell Tag.
+- **Koga first battle:** Weezing moves to Lv41; **Golbat becomes Lv46 ace**, .iv=255, Sharp Beak.
+- **Koga rematch:** Weezing moves to Lv68; **Crobat becomes Lv71 ace**, preserving normal rematch IV tier and Sharp Beak.
+- Giovanni's Persian remains a visual/narrative signature rather than combat ace; no ace reassignment is made on that basis.
+
+A dedicated validator now locks the approved symbolic-ace progression across:
+- all eight Gym Leaders, first battle + rematch;
+- Giovanni's story battles, Gym battle and rematch;
+- Elite Four first League + strengthened League;
+- Gary/Blue's Squirtle -> Wartortle -> Blastoise progression through Champion rematch.
+
+**Status: APPLIED; global ace audit validator added.**
