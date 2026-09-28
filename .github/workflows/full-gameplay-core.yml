@@ -622,6 +622,9 @@ jobs:
       - name: Validate B3 Gym rematch identity
         run: python3 tools/validate_b3_rematch_identity.py
 
+      - name: Validate B3 global ace identity
+        run: python3 tools/validate_b3_global_ace_identity.py
+
       - name: Validate B3 postgame progression bridge
         run: python3 tools/validate_b3_postgame_progression.py
 
