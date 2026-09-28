@@ -124,6 +124,12 @@ def main():
     assert "Random()" not in shiny_scope
     assert "Random32()" not in shiny_scope
 
+    # Koga first-battle ace identity: preserve anime Wing Attack + Screech core.
+    koga_text = block("sParty_LeaderKoga")
+    assert "MOVE_WING_ATTACK" in koga_text
+    assert "MOVE_SCREECH" in koga_text
+    assert "MOVE_TOXIC" not in koga_text[koga_text.index("SPECIES_GOLBAT"):]
+
     print("B3 global ace identity PASS: leaders, Giovanni, Elite Four, Gary progression and Lance Red Gyarados identity match approved rules.")
 
 if __name__ == "__main__":
