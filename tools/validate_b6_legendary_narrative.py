@@ -28,6 +28,7 @@ def main():
     ferry = vermilion
     load = read("src/load_save.c")
     util = read("src/script_pokemon_util.c")
+    species_info = read("src/data/pokemon/species_info.h")
 
     # A-005: Celio is network-only. Legendary ticket ownership and roamer
     # activation must not leak back into his postgame dialogue.
@@ -138,6 +139,20 @@ def main():
         "FLAG_FOUGHT_HO_OH",
         "FLAG_HO_OH_FLEW_AWAY",
     )
+
+    # A-009: core legendaries use the B6 catch-rate polish value; Mew/Celebi
+    # retain their existing friendlier 45 rate.
+    for species in ("ARTICUNO", "ZAPDOS", "MOLTRES", "MEWTWO", "RAIKOU", "ENTEI", "SUICUNE", "LUGIA", "HO_OH", "DEOXYS"):
+        start = species_info.index(f"[SPECIES_{species}]")
+        end = species_info.find("\\n    [SPECIES_", start + 1)
+        block = species_info[start:] if end == -1 else species_info[start:end]
+        assert ".catchRate = 15," in block, species
+    for species in ("MEW", "CELEBI"):
+        start = species_info.index(f"[SPECIES_{species}]")
+        end = species_info.find("\\n    [SPECIES_", start + 1)
+        block = species_info[start:] if end == -1 else species_info[start:end]
+        assert ".catchRate = 45," in block, species
+    require(roamer, "(Random() % 2) == 0")
 
     # Save schema v2 migration preserves tickets, partial investigations, old
     # roamer activation, and Ho-Oh KO/capture evidence.
