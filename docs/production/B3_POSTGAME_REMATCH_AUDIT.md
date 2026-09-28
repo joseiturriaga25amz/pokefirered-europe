@@ -571,3 +571,37 @@ User-approved adjustment:
 - Rationale: Wing Attack + Screech are directly demonstrated by Koga's Golbat in the animated series; Confuse Ray preserves established Koga/Golbat control identity; removing Toxic avoids four-way Toxic redundancy in the first Koga battle while keeping poison pressure elsewhere on the team.
 
 **Status: APPROVED AND APPLIED.**
+
+
+### Global ace transversal review — Sabrina Kadabra
+
+User approved both Kadabra ace sets unchanged.
+
+First battle — Kadabra 47 ★:
+- Psychic / Calm Mind / Recover / Reflect.
+- Twisted Spoon.
+- .iv = 255.
+
+Rematch — Kadabra 72 ★:
+- Psychic / Calm Mind / Recover / Reflect.
+- Twisted Spoon.
+- .iv = 255.
+
+Rationale:
+- Psychic + Recover preserve direct Sabrina/Kadabra animated-series identity;
+- Calm Mind preserves FRLG Sabrina identity and her signature TM;
+- Reflect is retained over Future Sight because it materially improves Kadabra's physical survivability and produces a stronger ace without sacrificing the core canon identity;
+- repeating the set is intentional: the rematch represents the same symbolic partner at a much higher level rather than a different tactical identity.
+
+**Status: APPROVED AS-IS.**
+
+### Intermediate-stage ace audit — closure
+
+Special intermediate-stage ace compensation is now closed:
+- Erika: Gloom 35 / 69 — .iv=255.
+- Koga: Golbat 46 — .iv=255 + Sharp Beak; evolves to Crobat 71 with normal rematch IV tier.
+- Sabrina: Kadabra 47 / 72 — .iv=255 + Twisted Spoon.
+
+Ace status does not globally imply max IV; these are targeted fidelity/balance exceptions.
+
+**Status: CLOSED.**
