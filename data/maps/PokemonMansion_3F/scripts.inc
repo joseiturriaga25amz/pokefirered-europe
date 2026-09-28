@@ -4,7 +4,17 @@ PokemonMansion_3F_MapScripts::
 
 PokemonMansion_3F_OnLoad::
 	call_if_set FLAG_POKEMON_MANSION_SWITCH_STATE, PokemonMansion_EventScript_PressSwitch_3F
+	call PokemonMansion_3F_EventScript_UpdateFullMewSighting
 	end
+
+PokemonMansion_3F_EventScript_UpdateFullMewSighting::
+	goto_if_ne VAR_FULL_MEW_QUEST, 3, PokemonMansion_3F_EventScript_HideFullMewSighting
+	showobjectat LOCALID_FULL_MEW_SIGHTING_3F, MAP_POKEMON_MANSION_3F
+	return
+
+PokemonMansion_3F_EventScript_HideFullMewSighting::
+	hideobjectat LOCALID_FULL_MEW_SIGHTING_3F, MAP_POKEMON_MANSION_3F
+	return
 
 PokemonMansion_3F_EventScript_Statue::
 	lockall
@@ -24,6 +34,7 @@ PokemonMansion_3F_EventScript_DiaryFeb6th::
 	msgbox PokemonMansion_3F_Text_FullMewSighting3
 	waitmoncry
 	setvar VAR_FULL_MEW_QUEST, 3
+	showobjectat LOCALID_FULL_MEW_SIGHTING_3F, MAP_POKEMON_MANSION_3F
 	msgbox PokemonMansion_1F_Text_MewGaveBirthToMewtwo, MSGBOX_SIGN
 	releaseall
 	end

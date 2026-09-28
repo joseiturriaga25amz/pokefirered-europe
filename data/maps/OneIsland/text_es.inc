@@ -75,3 +75,29 @@ OneIsland_Text_FullBeastTrioFlees::
     .string "SUICUNE parece haberse quedado más\n"
     .string "cerca. Su ruta ya figura en la POKéDEX.$"
 
+
+OneIsland_Text_FullBeastTrackSuicune::
+    .string "Desde que aquellos tres aparecieron,\n"
+    .string "el mar está extrañamente tranquilo.\p"
+    .string "Dicen que SUICUNE sigue recorriendo\n"
+    .string "KANTO. Tu POKéDEX debería poder\l"
+    .string "seguirle la pista.$"
+
+OneIsland_Text_FullBeastTrackRaikou::
+    .string "Anoche oímos un trueno sin una sola\n"
+    .string "nube sobre la isla.\p"
+    .string "Parece que ahora RAIKOU es quien\n"
+    .string "anda recorriendo KANTO.$"
+
+OneIsland_Text_FullBeastTrackEntei::
+    .string "Esta mañana el aire olía a ceniza,\n"
+    .string "aunque aquí no ha ardido nada.\p"
+    .string "Los marineros dicen que ENTEI se\n"
+    .string "mueve por KANTO.$"
+
+OneIsland_Text_FullBeastArcComplete::
+    .string "Ya no hemos vuelto a encontrar huellas\n"
+    .string "de aquellos tres POKéMON.\p"
+    .string "Pero unos pescadores vieron un brillo\n"
+    .string "dorado sobre una roca solitaria,\l"
+    .string "muy lejos mar adentro.$"

@@ -84,6 +84,21 @@
       "trainer_sight_or_berry_tree_id": "1",
       "script": "PokemonMansion_1F_EventScript_Johnson",
       "flag": "0"
+    },
+    {
+      "local_id": "LOCALID_FULL_MEW_SIGHTING_1F",
+      "type": "object",
+      "graphics_id": "OBJ_EVENT_GFX_MEW",
+      "x": 7,
+      "y": 6,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
+      "movement_range_x": 1,
+      "movement_range_y": 1,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "0x0",
+      "flag": "0"
     }
   ],
   "warp_events": [

@@ -70,6 +70,21 @@
       "trainer_sight_or_berry_tree_id": "0",
       "script": "PokemonMansion_3F_EventScript_ItemIron",
       "flag": "FLAG_HIDE_POKEMON_MANSION_3F_IRON"
+    },
+    {
+      "local_id": "LOCALID_FULL_MEW_SIGHTING_3F",
+      "type": "object",
+      "graphics_id": "OBJ_EVENT_GFX_MEW",
+      "x": 10,
+      "y": 16,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
+      "movement_range_x": 1,
+      "movement_range_y": 1,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "0x0",
+      "flag": "0"
     }
   ],
   "warp_events": [

@@ -94,17 +94,26 @@ def main():
         )
         require(hof, f"clearflag FLAG_{species}_FLEW_AWAY")
 
-    # Mew: flee leaves battle-ready state 4, KO parks at 5+pending, HOF restores 4.
+    # Mew: B7 separates final presentation from battle. State 4 now means a
+    # visible/interactable overworld Mew; fleeing leaves it battle-ready, KO
+    # parks at 5+pending, and Hall of Fame restores state 4.
     mew = read("data/maps/PokemonMansion_B1F/scripts.inc")
     require(
         mew,
-        "goto_if_eq VAR_FULL_MEW_QUEST, 4, PokemonMansion_B1F_EventScript_FullMewBattle",
+        "goto_if_ne VAR_FULL_MEW_QUEST, 4, PokemonMansion_B1F_EventScript_DiarySep1stVanilla",
+        "goto PokemonMansion_B1F_EventScript_FullMewBattle",
         "B_OUTCOME_CAUGHT, PokemonMansion_B1F_EventScript_FullMewCaught",
         "B_OUTCOME_WON, PokemonMansion_B1F_EventScript_FullMewDefeated",
         "setflag FLAG_FULL_MEW_CAUGHT",
         "clearflag FLAG_FULL_MEW_KO_PENDING",
         "setflag FLAG_FULL_MEW_KO_PENDING",
         "setvar VAR_FULL_MEW_QUEST, 5",
+    )
+    interaction = block(mew, "PokemonMansion_B1F_EventScript_FullMewObject")
+    require(
+        interaction,
+        "goto_if_ne VAR_FULL_MEW_QUEST, 4",
+        "PokemonMansion_B1F_EventScript_FullMewBattle",
     )
     assert mew.count("setvar VAR_FULL_MEW_QUEST, 5") == 2
     require(hof, "clearflag FLAG_FULL_MEW_KO_PENDING", "setvar VAR_FULL_MEW_QUEST, 4")

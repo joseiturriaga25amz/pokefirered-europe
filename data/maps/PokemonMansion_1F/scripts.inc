@@ -5,7 +5,17 @@ PokemonMansion_1F_MapScripts::
 
 PokemonMansion_1F_OnLoad::
 	call_if_set FLAG_POKEMON_MANSION_SWITCH_STATE, PokemonMansion_EventScript_PressSwitch_1F
+	call PokemonMansion_1F_EventScript_UpdateFullMewSighting
 	end
+
+PokemonMansion_1F_EventScript_UpdateFullMewSighting::
+	goto_if_ne VAR_FULL_MEW_QUEST, 1, PokemonMansion_1F_EventScript_HideFullMewSighting
+	showobjectat LOCALID_FULL_MEW_SIGHTING_1F, MAP_POKEMON_MANSION_1F
+	return
+
+PokemonMansion_1F_EventScript_HideFullMewSighting::
+	hideobjectat LOCALID_FULL_MEW_SIGHTING_1F, MAP_POKEMON_MANSION_1F
+	return
 
 PokemonMansion_1F_OnTransition::
 	setworldmapflag FLAG_WORLD_MAP_POKEMON_MANSION_1F
@@ -22,6 +32,7 @@ PokemonMansion_1F_EventScript_Statue::
 	msgbox PokemonMansion_1F_Text_FullMewSighting1
 	waitmoncry
 	setvar VAR_FULL_MEW_QUEST, 1
+	showobjectat LOCALID_FULL_MEW_SIGHTING_1F, MAP_POKEMON_MANSION_1F
 
 PokemonMansion_1F_EventScript_StatueVanilla::
 	setvar VAR_0x8004, 0
