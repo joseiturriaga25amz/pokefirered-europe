@@ -61,3 +61,16 @@ OneIsland_Text_IsntWarmClimateHereGreat::
     .string "Stai facendo un giro? Il clima è\n"
     .string "fantastico da queste parti, vero?$"
 
+OneIsland_Text_FullBeastFirstContact::
+    .string "An unnatural silence falls over the island...\p"
+    .string "Three POKéMON appear together.\n"
+    .string "SUICUNE steps forward while RAIKOU and\n"
+    .string "ENTEI watch from behind.$"
+
+OneIsland_Text_FullBeastTrioFlees::
+    .string "All three fix their gaze on {PLAYER}.\p"
+    .string "Suddenly they split up and vanish at\n"
+    .string "incredible speed.\p"
+    .string "SUICUNE seems to have stayed nearby.\n"
+    .string "Its route can now be tracked in the POKéDEX.$"
+
