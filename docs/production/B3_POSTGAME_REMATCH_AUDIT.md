@@ -762,3 +762,26 @@ Rationale:
 - rematch progression comes from level, IV tier and Leftovers rather than forced move churn.
 
 **Status: APPROVED AS-IS.**
+
+
+### Global ace transversal review — Agatha
+
+User approved Agatha's Gengar ace progression unchanged.
+
+First League — Gengar 63 ★:
+- Shadow Ball / Sludge Bomb / Thunderbolt / Hypnosis.
+- Spell Tag.
+- .iv = 214.
+
+Rematch — Gengar 81 ★:
+- Shadow Ball / Sludge Bomb / Thunderbolt / Hypnosis.
+- Leftovers.
+- .iv = 247.
+
+Rationale:
+- Shadow Ball + Sludge Bomb define the dual-STAB ghost/poison identity;
+- Thunderbolt provides reliable coverage;
+- Hypnosis preserves Agatha's control/status identity;
+- the repeated set is intentional, while progression comes from level, IV tier and the switch from Spell Tag to Leftovers.
+
+**Status: APPROVED AS-IS.**
