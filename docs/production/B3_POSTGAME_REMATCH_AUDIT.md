@@ -420,7 +420,7 @@ No additional ace reassignment is currently justified by the global evidence hie
 **Status: ACE AUDIT CLOSED pending CI/runtime validation, not design changes.**
 
 
-### Manual review 13/13 — Gary/Blue Champion rematch
+### Manual review 13/13 — Gary/Blue Champion rematch (REOPENED FOR STEPWISE MOVE REVIEW)
 
 Reviewed exact roster, level curve, IV tier, held items, movesets, ace identity, anime ownership and FRLG continuity.
 
@@ -443,4 +443,17 @@ Canon-depth rationale:
 - Arcanine keeps Flamethrower from animation plus strong Blue/FRLG-style coverage and priority identity.
 - Fully evolved ace rule applies: Blastoise does not receive the intermediate-stage .iv=255 exception. Its .iv=247 tier remains intentional.
 
-**Status: APPROVED AS-IS — no gameplay changes required.**
+**Status: REOPENED.**
+
+The roster/ace identity remains approved, but the moveset/item pass must be repeated
+Pokémon-by-Pokémon with the user, explicitly comparing:
+1. original FRLG Champion rematch design;
+2. Gary's animated-series demonstrated moves where applicable;
+3. the current Full moveset;
+4. Gen III legality + modern physical/special split;
+5. whether a concrete adjustment improves identity or challenge.
+
+Do not treat Gary as moveset-closed until all six slots are reviewed in that format.
+
+Note on numbering: 13/13 is only the historical manual rematch sequence. It is followed
+by the transversal progression/canon audit and therefore is not the end of B3 review work.
