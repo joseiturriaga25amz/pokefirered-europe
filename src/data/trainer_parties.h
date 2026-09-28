@@ -11140,9 +11140,9 @@ static const struct TrainerMonItemCustomMoves sParty_EliteFourBruno2[] = {
     {
         .iv = 239,
         .lvl = 78,
-        .species = SPECIES_HITMONTOP,
-        .heldItem = ITEM_FOCUS_BAND,
-        .moves = {MOVE_TRIPLE_KICK, MOVE_ROCK_SLIDE, MOVE_COUNTER, MOVE_BULK_UP},
+        .species = SPECIES_HARIYAMA,
+        .heldItem = ITEM_SITRUS_BERRY,
+        .moves = {MOVE_BRICK_BREAK, MOVE_BULK_UP, MOVE_EARTHQUAKE, MOVE_ROCK_SLIDE},
     },
     {
         .iv = 247,
@@ -11174,6 +11174,13 @@ static const struct TrainerMonItemCustomMoves sParty_EliteFourAgatha2[] = {
         .species = SPECIES_MISDREAVUS,
         .heldItem = ITEM_SPELL_TAG,
         .moves = {MOVE_SHADOW_BALL, MOVE_PSYCHIC, MOVE_THUNDERBOLT, MOVE_PERISH_SONG},
+    },
+    {
+        .iv = 239,
+        .lvl = 78,
+        .species = SPECIES_SABLEYE,
+        .heldItem = ITEM_FOCUS_BAND,
+        .moves = {MOVE_SHADOW_BALL, MOVE_FAINT_ATTACK, MOVE_FAKE_OUT, MOVE_CONFUSE_RAY},
     },
     {
         .iv = 239,
@@ -11212,6 +11219,13 @@ static const struct TrainerMonItemCustomMoves sParty_EliteFourLance2[] = {
         .species = SPECIES_DRAGONITE,
         .heldItem = ITEM_DRAGON_FANG,
         .moves = {MOVE_EARTHQUAKE, MOVE_DRAGON_CLAW, MOVE_FLAMETHROWER, MOVE_ICE_BEAM},
+    },
+    {
+        .iv = 239,
+        .lvl = 80,
+        .species = SPECIES_SALAMENCE,
+        .heldItem = ITEM_LUM_BERRY,
+        .moves = {MOVE_DRAGON_CLAW, MOVE_FLAMETHROWER, MOVE_ROCK_SLIDE, MOVE_REST},
     },
     {
         .iv = 239,
