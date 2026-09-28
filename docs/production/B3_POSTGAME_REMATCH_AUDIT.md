@@ -559,3 +559,15 @@ Rationale:
 - no further move changes are required.
 
 **Status: APPROVED AS-IS.**
+
+
+### Global ace transversal review — Golbat 46 ★
+
+User-approved adjustment:
+- **Golbat 46:** Wing Attack / Bite / Confuse Ray / **Screech**.
+- Screech replaces Toxic.
+- Sharp Beak remains.
+- .iv = 255 remains.
+- Rationale: Wing Attack + Screech are directly demonstrated by Koga's Golbat in the animated series; Confuse Ray preserves established Koga/Golbat control identity; removing Toxic avoids four-way Toxic redundancy in the first Koga battle while keeping poison pressure elsewhere on the team.
+
+**Status: APPROVED AND APPLIED.**
