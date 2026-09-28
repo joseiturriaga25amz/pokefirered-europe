@@ -78,7 +78,10 @@ Validation checkpoint before documentation-only closure:
 - result: **SUCCESS**
 
 
-## B3.4 — Manual rematch review pending
+## B3.4 — Manual rematch review history
+
+> Historical review log. Any provisional statements below are superseded by the later
+> global canon-depth corrections and the final transversal ace-audit result in this file.
 
 The prior closure candidate was premature. Static/progression validation does not replace the manual design pass used for the first-cycle boss battles.
 
@@ -106,7 +109,7 @@ Required sequence:
 12. Lance rematch
 13. Gary/Blue Champion rematch
 
-B3 must not merge until this manual pass and a final transversal rematch-progression audit are complete.
+Historical gate satisfied for checkpoint integration; final B3 release closure still requires current exact-head CI and runtime acceptance.
 
 
 ### Manual review 1/13 — Brock
@@ -128,7 +131,7 @@ Approved identity correction:
 - Gyarados moves from level 67 to level 65.
 - Overall level curve is unchanged; only the symbolic ace ordering changes.
 
-Togetic moveset remains under manual review before Misty is closed.
+Togetic's review was subsequently closed; the approved rematch set is Psychic / Magical Leaf / Wish / Yawn.
 
 
 Misty manual review closure:
@@ -176,13 +179,13 @@ Approved:
 - Crobat moves from level 71 to **level 68**.
 - Overall level curve remains unchanged.
 
-Weezing's fourth-move decision remains pending explicit confirmation because the user phrase "Lanzallamas por Rayo" can be read two ways relative to the prior proposal (Thunderbolt -> Toxic while retaining Flamethrower).
+Weezing's fourth-move ambiguity was subsequently resolved: Sludge Bomb / Flamethrower / Toxic / Explosion.
 
 
 Koga follow-up approved:
 - Weezing 71: Sludge Bomb / Flamethrower / **Toxic** / Explosion.
 - Toxic replaces Thunderbolt.
-- Toxic distribution to other Koga party members remains under targeted design review; no additional change applied yet.
+- Koga's Toxic distribution was subsequently resolved: Ariados also receives Toxic; no broader team-wide Toxic duplication was added.
 
 
 Koga final follow-up approved:
@@ -198,7 +201,7 @@ Koga final follow-up approved:
 Approved adjustment:
 - Mr. Mime 65: **Psychic** / Baton Pass / Barrier / Calm Mind.
 - Psychic replaces Psybeam to bring its lone attack up to postgame strength.
-- Alakazam 72 remains the symbolic ace.
+- Historical note superseded: Kadabra 72 is now Sabrina's symbolic ace; Alakazam is retained at Lv66.
 - All other Sabrina rematch roster, levels, IV tier, held items, trainer healing and movesets approved.
 
 **Status: APPROVED.**
@@ -296,17 +299,17 @@ Evidence hierarchy:
 4. other official continuities only when clearly labeled and when they improve identity without displacing stronger core/anime evidence;
 5. Full-original additions only when explicitly identified as thematic rather than falsely described as canon.
 
-Newly approved / pending design directions:
-- **Bruno rematch:** retain Onix and Steelix; add Hariyama. One of Hitmonchan / Hitmonlee / Hitmontop must leave after comparative canon audit. Machamp remains ace.
-- **Agatha rematch:** add Sableye as a sixth Pokémon. This is a Full thematic Hoenn addition unless stronger direct ownership evidence is found; do not mislabel it as canonical ownership.
-- **Lance first League + rematch:** his Gyarados identity must be audited as the canonical red/Shiny Gyarados from Pokémon the Series, avoiding normal-first / shiny-rematch discontinuity.
-- **Lance rematch:** add Salamence as the Hoenn/later-game progression member; Dragonite remains ace.
-- Trainer shiny implementation is allowed only if narrowly scoped and proven not to alter save structures, link serialization, global shiny odds, wild encounters or unrelated trainer parties.
+Resolved design directions:
+- **Bruno rematch:** Onix + Steelix retained; Hariyama replaces Hitmontop; Hitmonchan and Hitmonlee remain; Machamp remains ace.
+- **Agatha rematch:** Sableye added as a sixth Pokémon and explicitly documented as a Full thematic Hoenn addition rather than canonical ownership.
+- **Lance first League + rematch:** Gyarados is implemented as the same canonical Red/Shiny Gyarados in both encounters.
+- **Lance rematch:** Salamence added as the later-game/Hoenn progression member; Dragonite remains ace.
+- Trainer shiny implementation is narrowly scoped to Lance's Gyarados and does not modify save structures, link serialization, global shiny odds, wild encounters or unrelated trainer parties.
 
 Important correction discovered by the global pass:
 - Sabrina's animated-series Ghost partner is **Haunter**, and it is documented as not having evolved. The current rematch Gengar therefore requires re-review rather than being treated as a straightforward anime reference.
 
-B3 remains open. No final merge until the global canon-depth pass, resulting approved edits, consolidated validators, exact-head CI and final MyBoy acceptance are complete.
+B3 design work has been checkpoint-merged incrementally. Final B3 release closure still requires consolidated exact-head CI and final MyBoy acceptance.
 
 
 ### Global canon-depth correction — Sabrina
