@@ -500,3 +500,15 @@ User approved Scizor 82 unchanged:
 - Steel Wing + Quick Attack preserve direct Gary anime identity; Swords Dance + Aerial Ace provide stronger Gen III postgame function without redundant Metal Claw/Swift.
 
 **Status: APPROVED AS-IS.**
+
+
+### Gary/Blue rematch stepwise move review — 5/6 Arcanine
+
+User explicitly preferred the current set over the proposed Aerial Ace substitution.
+
+Approved unchanged:
+- **Arcanine 83:** Flamethrower / ExtremeSpeed / Iron Tail / Bite.
+- No held item.
+- Bite is retained for Dark coverage and team role differentiation, despite Aerial Ace matching the original FRLG rematch more closely.
+
+**Status: APPROVED AS-IS.**
