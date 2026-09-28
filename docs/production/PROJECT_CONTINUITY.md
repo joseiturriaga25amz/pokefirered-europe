@@ -471,3 +471,18 @@ Pending manual sequence:
 Brock → Misty → Lt. Surge → Erika → Koga → Sabrina → Blaine → Giovanni → Lorelei → Bruno → Agatha → Lance → Gary/Blue Champion rematch.
 
 After the 13 individual reviews, run one final transversal progression audit, then exact-head CI, then close/merge B3.
+
+
+## 2026-09-28 — Erika ace / IV clarification
+
+User clarified two independent rules for the global canon-depth audit:
+- symbolic ace selection must follow the trainer's strongest character identity, especially anime signature where applicable;
+- IV compensation is a separate balance tool and is not automatically attached to every ace.
+
+Applied to Erika rematch:
+- Vileplume remains Lv66 at the existing rematch IV tier;
+- Gloom is now Lv69 and is Erika's symbolic ace;
+- only Gloom receives .iv = 255 because it deliberately remains an intermediate evolutionary stage;
+- no global ace-IV rewrite is authorized.
+
+The ace audit must continue across all reviewed bosses using identity/fidelity criteria without altering IVs unless separately approved.
