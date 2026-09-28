@@ -605,3 +605,51 @@ Functional B4 checkpoint:
 - reproducible ROM build, release integrity and MyBoy RC packaging: **PASS**.
 
 A final documentation-only exact-HEAD CI is required after this continuity update. If green, merge B4 and begin B5 — Altering Cave and encounter polish from the exact merged master checkpoint.
+
+
+## 2026-09-28 — B4 closed / B5 Altering Cave candidate
+
+B4 — Specialty Balls and economy distribution is CLOSED:
+- PR #8;
+- merge commit `189447c2fbb238d328e3c6f86146025fa52a8851`;
+- exact documentation HEAD `17271c0c175b26c8faf0b006cb4da385c9855acf`;
+- Full Gameplay Core run `36434865537`: **SUCCESS**.
+
+B5 branch:
+- `feature/b5-altering-cave-encounter-polish`.
+
+Implemented B5 scope:
+- Altering Cave no longer uses the manual species selector;
+- `VAR_ALTERING_CAVE_WILD_SET` rotates automatically on each cave entry through all nine original tables:
+  Zubat → Mareep → Pineco → Houndour → Teddiursa → Aipom → Shuckle → Stantler → Smeargle → Zubat;
+- the scientist/researcher is informational only and reports the active table without mutating it;
+- FireRed/LeafGreen table ordering and the existing runtime table-index mechanism are preserved;
+- original version-specific Altering Cave encounter rates are preserved (FireRed 5, LeafGreen 7).
+
+A-009 rarity reconciliation applied:
+- Safari Scyther / Pinsir / Kangaskhan / Chansey / Tauros: 10%;
+- Dratini: 10% Surf in Safari Center, 4% fishing in each Safari area;
+- Dragonair: 1% fishing in each Safari area;
+- Kanto starters: base 10%, middle 4%, final 1% in approved thematic locations;
+- Magmar: 4% Mt. Ember;
+- Electabuzz: 4% Power Plant.
+
+Validation:
+- new `tools/validate_b5_encounter_polish.py`;
+- `validate_full_obtainability.py`, `validate_full_event_states.py` and `validate_release_integrity.py` updated to the automatic-rotation truth;
+- audited encounter/blob locks refreshed.
+
+Functional B5 checkpoint:
+- HEAD `3d748663bf40e59aabba21b0a85790b7e478e6b0`;
+- Full Gameplay Core run `36457796839`: **SUCCESS**;
+- reproducible ROM build: **PASS**;
+- B5 encounter polish validator: **PASS**;
+- one-save obtainability: **PASS**;
+- persistent event-state audit: **PASS**;
+- second-pass release integrity: **PASS**;
+- MyBoy RC patch packaging: **PASS**.
+
+Next gate:
+- run exact-head CI after this documentation update;
+- if green, merge B5 to `master`;
+- then begin B6 — Legendary narrative V2 core from the exact merged master checkpoint.

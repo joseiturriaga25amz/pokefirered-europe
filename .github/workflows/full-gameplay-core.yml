@@ -11,6 +11,7 @@ on:
       - feature/b3-global-canon-audit-v3
       - feature/b3-final-consistency-audit-v4
       - feature/b4-specialty-ball-economy
+      - feature/b5-altering-cave-encounter-polish
 
 jobs:
   build:
@@ -434,20 +435,21 @@ jobs:
               ("sRoute5_FireRed","land_mons","SPECIES_BELLSPROUT",25),
               ("sRoute6_FireRed","water_mons","SPECIES_SLOWPOKE",100),
               ("sVermilionCity_FireRed","fishing_mons","SPECIES_STARYU",40),
-              ("sMtEmberExterior_FireRed","land_mons","SPECIES_MAGMAR",5),
+              ("sMtEmberExterior_FireRed","land_mons","SPECIES_MAGMAR",4),
+              ("sPowerPlant_FireRed","land_mons","SPECIES_ELECTABUZZ",4),
               ("sSixIslandRuinValley_FireRed","land_mons","SPECIES_MARILL",10),
               ("sFourIslandIcefallCave1F_FireRed","land_mons","SPECIES_SNEASEL",5),
               ("sFiveIslandWaterLabyrinth_FireRed","fishing_mons","SPECIES_REMORAID",40),
               ("sSevenIslandTanobyRuins_FireRed","water_mons","SPECIES_MANTINE",5),
-              ("sThreeIslandBerryForest_FireRed","land_mons","SPECIES_BULBASAUR",15),
-              ("sThreeIslandBerryForest_FireRed","land_mons","SPECIES_IVYSAUR",5),
-              ("sThreeIslandBerryForest_FireRed","land_mons","SPECIES_VENUSAUR",4),
-              ("sMtEmberExterior_FireRed","land_mons","SPECIES_CHARMANDER",15),
-              ("sMtEmberExterior_FireRed","land_mons","SPECIES_CHARMELEON",5),
-              ("sMtEmberExterior_FireRed","land_mons","SPECIES_CHARIZARD",4),
-              ("sSeafoamIslandsB1F_FireRed","land_mons","SPECIES_SQUIRTLE",15),
-              ("sSeafoamIslandsB1F_FireRed","land_mons","SPECIES_WARTORTLE",5),
-              ("sSeafoamIslandsB1F_FireRed","land_mons","SPECIES_BLASTOISE",4),
+              ("sThreeIslandBerryForest_FireRed","land_mons","SPECIES_BULBASAUR",10),
+              ("sThreeIslandBerryForest_FireRed","land_mons","SPECIES_IVYSAUR",4),
+              ("sThreeIslandBerryForest_FireRed","land_mons","SPECIES_VENUSAUR",1),
+              ("sMtEmberExterior_FireRed","land_mons","SPECIES_CHARMANDER",10),
+              ("sMtEmberExterior_FireRed","land_mons","SPECIES_CHARMELEON",4),
+              ("sMtEmberExterior_FireRed","land_mons","SPECIES_CHARIZARD",1),
+              ("sSeafoamIslandsB1F_FireRed","land_mons","SPECIES_SQUIRTLE",10),
+              ("sSeafoamIslandsB1F_FireRed","land_mons","SPECIES_WARTORTLE",4),
+              ("sSeafoamIslandsB1F_FireRed","land_mons","SPECIES_BLASTOISE",1),
               ("sRoute7_FireRed","land_mons","SPECIES_EEVEE",15),
               ("sSeafoamIslandsB1F_FireRed","land_mons","SPECIES_VAPOREON",4),
               ("sPowerPlant_FireRed","land_mons","SPECIES_JOLTEON",4),
@@ -455,11 +457,14 @@ jobs:
               ("sFiveIslandLostCaveRoom1_FireRed","land_mons","SPECIES_MISDREAVUS",5),
               ("sFiveIslandLostCaveRoom4_FireRed","land_mons","SPECIES_MISDREAVUS",5),
               ("sFiveIslandLostCaveRoom10_FireRed","land_mons","SPECIES_MISDREAVUS",5),
-              ("sSafariZoneCenter_FireRed","land_mons","SPECIES_SCYTHER",15),
-              ("sSafariZoneCenter_FireRed","land_mons","SPECIES_PINSIR",15),
-              ("sSafariZoneEast_FireRed","land_mons","SPECIES_KANGASKHAN",15),
-              ("sSafariZoneNorth_FireRed","land_mons","SPECIES_CHANSEY",15),
-              ("sSafariZoneWest_FireRed","land_mons","SPECIES_TAUROS",15),
+              ("sSafariZoneCenter_FireRed","land_mons","SPECIES_SCYTHER",10),
+              ("sSafariZoneCenter_FireRed","land_mons","SPECIES_PINSIR",10),
+              ("sSafariZoneEast_FireRed","land_mons","SPECIES_KANGASKHAN",10),
+              ("sSafariZoneNorth_FireRed","land_mons","SPECIES_CHANSEY",10),
+              ("sSafariZoneWest_FireRed","land_mons","SPECIES_TAUROS",10),
+              ("sSafariZoneCenter_FireRed","water_mons","SPECIES_DRATINI",10),
+              ("sSafariZoneCenter_FireRed","fishing_mons","SPECIES_DRATINI",4),
+              ("sSafariZoneCenter_FireRed","fishing_mons","SPECIES_DRAGONAIR",1),
           ]
           for label, kind, species, want in expected:
               mons = encounters[label][kind]["mons"]
@@ -633,6 +638,9 @@ jobs:
 
       - name: Validate B4 specialty Ball distribution
         run: python3 tools/validate_b4_specialty_balls.py
+
+      - name: Validate B5 Altering Cave and encounter polish
+        run: python3 tools/validate_b5_encounter_polish.py
 
       - name: Validate one-save baby obtainability
         run: python3 tools/validate_full_obtainability.py

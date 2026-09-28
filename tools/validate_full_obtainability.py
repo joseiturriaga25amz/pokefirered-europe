@@ -180,7 +180,7 @@ def main():
     ):
         assert species in wild, f"approved Full encounter missing for {species}"
 
-    # Every Altering Cave selector species must have a compiled encounter source.
+    # Every species in the nine automatically rotating Altering Cave tables must have a compiled encounter source.
     for species in (
         "SPECIES_ZUBAT", "SPECIES_MAREEP", "SPECIES_PINECO",
         "SPECIES_HOUNDOUR", "SPECIES_TEDDIURSA", "SPECIES_AIPOM",

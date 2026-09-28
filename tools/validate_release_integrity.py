@@ -92,29 +92,25 @@ def main():
     ):
         require(audited, f'"{path}"', "second-pass blob lock")
 
-    # Cross-layer Altering Cave audit: map object -> menu -> selector value ->
-    # runtime table index -> actual FireRed table species must all agree.
+    # B5 cross-layer Altering Cave audit: map researcher -> automatic
+    # transition rotation -> runtime table index -> actual FireRed species.
     cave_map = __import__("json").loads(read("data/maps/SixIsland_AlteringCave/map.json"))
-    researcher = [
+    researcher_objects = [
         obj for obj in cave_map["object_events"]
         if obj.get("script") == "SixIsland_AlteringCave_EventScript_Researcher"
     ]
-    assert len(researcher) == 1, researcher
-
-    menu_h = read("include/constants/menu.h")
-    require(menu_h, "#define MULTICHOICE_FULL_ALTERING_CAVE_PAGE1", "Altering Cave menu id")
-    require(menu_h, "#define MULTICHOICE_FULL_ALTERING_CAVE_PAGE2", "Altering Cave menu id")
-
-    menu_c = read("src/script_menu.c")
-    for token in (
-        "sMultichoiceList_FullAlteringCavePage1",
-        "sMultichoiceList_FullAlteringCavePage2",
-        "[MULTICHOICE_FULL_ALTERING_CAVE_PAGE1]",
-        "[MULTICHOICE_FULL_ALTERING_CAVE_PAGE2]",
-    ):
-        require(menu_c, token, "Altering Cave menu registry")
+    assert len(researcher_objects) == 1, researcher_objects
 
     cave = read("data/maps/SixIsland_AlteringCave/scripts.inc")
+    require(
+        cave,
+        "map_script MAP_SCRIPT_ON_TRANSITION, SixIsland_AlteringCave_OnTransition",
+        "Altering Cave automatic rotation",
+    )
+    require(cave, "switch VAR_ALTERING_CAVE_WILD_SET", "Altering Cave automatic rotation")
+    assert "multichoice" not in cave
+    assert "SixIsland_AlteringCave_EventScript_SelectPage" not in cave
+
     species = (
         ("Zubat", "SPECIES_ZUBAT"),
         ("Mareep", "SPECIES_MAREEP"),
@@ -126,10 +122,29 @@ def main():
         ("Stantler", "SPECIES_STANTLER"),
         ("Smeargle", "SPECIES_SMEARGLE"),
     )
+    for current in range(9):
+        nxt = (current + 1) % 9
+        require(
+            cave,
+            f"case {current}, SixIsland_AlteringCave_EventScript_RotateTo{nxt}",
+            "Altering Cave automatic rotation",
+        )
+        require(
+            cave,
+            f"SixIsland_AlteringCave_EventScript_RotateTo{nxt}::",
+            "Altering Cave automatic rotation",
+        )
+
+    researcher_start = cave.index("SixIsland_AlteringCave_EventScript_Researcher::")
+    researcher_end = cave.index("SixIsland_AlteringCave_EventScript_ReportZubat::")
+    researcher = cave[researcher_start:researcher_end]
+    assert "setvar VAR_ALTERING_CAVE_WILD_SET" not in researcher
     for value, (label, _) in enumerate(species):
-        require(cave, f"SixIsland_AlteringCave_EventScript_Set{label}::", "Altering Cave selector")
-        require(cave, f"setvar VAR_ALTERING_CAVE_WILD_SET, {value}", "Altering Cave selector")
-    require(cave, "case 127, SixIsland_AlteringCave_EventScript_ResearcherEnd", "Altering Cave cancel")
+        require(
+            researcher,
+            f"case {value}, SixIsland_AlteringCave_EventScript_Report{label}",
+            "Altering Cave researcher report",
+        )
 
     wild_c = read("src/wild_encounter.c")
     require(wild_c, "if (alteringCaveId >= NUM_ALTERING_CAVE_TABLES)", "Altering Cave bounds")

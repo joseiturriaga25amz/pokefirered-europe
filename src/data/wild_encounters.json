@@ -1515,12 +1515,12 @@
               {
                 "min_level": 31,
                 "max_level": 31,
-                "species": "SPECIES_SCYTHER"
+                "species": "SPECIES_VENONAT"
               },
               {
                 "min_level": 30,
                 "max_level": 30,
-                "species": "SPECIES_PINSIR"
+                "species": "SPECIES_VENONAT"
               },
               {
                 "min_level": 22,
@@ -1560,17 +1560,17 @@
               {
                 "min_level": 25,
                 "max_level": 30,
-                "species": "SPECIES_PSYDUCK"
+                "species": "SPECIES_DRATINI"
               },
               {
                 "min_level": 30,
                 "max_level": 35,
-                "species": "SPECIES_PSYDUCK"
+                "species": "SPECIES_DRATINI"
               },
               {
                 "min_level": 35,
                 "max_level": 40,
-                "species": "SPECIES_PSYDUCK"
+                "species": "SPECIES_DRATINI"
               }
             ]
           },
@@ -1615,12 +1615,12 @@
               {
                 "min_level": 15,
                 "max_level": 25,
-                "species": "SPECIES_DRATINI"
+                "species": "SPECIES_SEAKING"
               },
               {
                 "min_level": 15,
                 "max_level": 35,
-                "species": "SPECIES_PSYDUCK"
+                "species": "SPECIES_DRATINI"
               },
               {
                 "min_level": 25,
@@ -1669,7 +1669,7 @@
               {
                 "min_level": 28,
                 "max_level": 28,
-                "species": "SPECIES_KANGASKHAN"
+                "species": "SPECIES_PARASECT"
               },
               {
                 "min_level": 25,
@@ -1769,12 +1769,12 @@
               {
                 "min_level": 15,
                 "max_level": 25,
-                "species": "SPECIES_DRATINI"
+                "species": "SPECIES_SEAKING"
               },
               {
                 "min_level": 15,
                 "max_level": 35,
-                "species": "SPECIES_PSYDUCK"
+                "species": "SPECIES_DRATINI"
               },
               {
                 "min_level": 25,
@@ -1823,7 +1823,7 @@
               {
                 "min_level": 30,
                 "max_level": 30,
-                "species": "SPECIES_CHANSEY"
+                "species": "SPECIES_VENOMOTH"
               },
               {
                 "min_level": 32,
@@ -1923,12 +1923,12 @@
               {
                 "min_level": 15,
                 "max_level": 25,
-                "species": "SPECIES_DRATINI"
+                "species": "SPECIES_SEAKING"
               },
               {
                 "min_level": 15,
                 "max_level": 35,
-                "species": "SPECIES_PSYDUCK"
+                "species": "SPECIES_DRATINI"
               },
               {
                 "min_level": 25,
@@ -1977,7 +1977,7 @@
               {
                 "min_level": 30,
                 "max_level": 30,
-                "species": "SPECIES_TAUROS"
+                "species": "SPECIES_VENOMOTH"
               },
               {
                 "min_level": 32,
@@ -2077,12 +2077,12 @@
               {
                 "min_level": 15,
                 "max_level": 25,
-                "species": "SPECIES_DRATINI"
+                "species": "SPECIES_SEAKING"
               },
               {
                 "min_level": 15,
                 "max_level": 35,
-                "species": "SPECIES_PSYDUCK"
+                "species": "SPECIES_DRATINI"
               },
               {
                 "min_level": 25,
@@ -2835,17 +2835,17 @@
               {
                 "min_level": 26,
                 "max_level": 26,
-                "species": "SPECIES_SQUIRTLE"
+                "species": "SPECIES_ZUBAT"
               },
               {
                 "min_level": 28,
                 "max_level": 28,
-                "species": "SPECIES_WARTORTLE"
+                "species": "SPECIES_GOLDUCK"
               },
               {
                 "min_level": 36,
                 "max_level": 36,
-                "species": "SPECIES_BLASTOISE"
+                "species": "SPECIES_WARTORTLE"
               },
               {
                 "min_level": 35,
@@ -2855,7 +2855,7 @@
               {
                 "min_level": 35,
                 "max_level": 35,
-                "species": "SPECIES_GOLDUCK"
+                "species": "SPECIES_BLASTOISE"
               },
               {
                 "min_level": 30,
@@ -3651,7 +3651,7 @@
               {
                 "min_level": 35,
                 "max_level": 35,
-                "species": "SPECIES_ELECTABUZZ"
+                "species": "SPECIES_PIKACHU"
               }
             ]
           }
@@ -3695,17 +3695,17 @@
               {
                 "min_level": 32,
                 "max_level": 32,
-                "species": "SPECIES_CHARMANDER"
+                "species": "SPECIES_GEODUDE"
               },
               {
                 "min_level": 36,
                 "max_level": 36,
-                "species": "SPECIES_CHARMELEON"
+                "species": "SPECIES_RAPIDASH"
               },
               {
                 "min_level": 40,
                 "max_level": 40,
-                "species": "SPECIES_CHARIZARD"
+                "species": "SPECIES_CHARMELEON"
               },
               {
                 "min_level": 39,
@@ -3715,7 +3715,7 @@
               {
                 "min_level": 40,
                 "max_level": 40,
-                "species": "SPECIES_MAGMAR"
+                "species": "SPECIES_CHARIZARD"
               },
               {
                 "min_level": 42,
@@ -4625,17 +4625,12 @@
               {
                 "min_level": 35,
                 "max_level": 35,
-                "species": "SPECIES_BULBASAUR"
+                "species": "SPECIES_GLOOM"
               },
               {
                 "min_level": 31,
                 "max_level": 31,
-                "species": "SPECIES_IVYSAUR"
-              },
-              {
-                "min_level": 37,
-                "max_level": 37,
-                "species": "SPECIES_VENUSAUR"
+                "species": "SPECIES_VENOMOTH"
               },
               {
                 "min_level": 37,
@@ -4643,9 +4638,14 @@
                 "species": "SPECIES_HYPNO"
               },
               {
+                "min_level": 37,
+                "max_level": 37,
+                "species": "SPECIES_IVYSAUR"
+              },
+              {
                 "min_level": 40,
                 "max_level": 40,
-                "species": "SPECIES_VENOMOTH"
+                "species": "SPECIES_VENUSAUR"
               },
               {
                 "min_level": 40,
