@@ -469,3 +469,15 @@ User-approved adjustment:
 - This intentionally sacrifices some raw competitive efficiency from Superpower in exchange for stronger character identity without materially weakening the overall set.
 
 **Status: APPROVED AND APPLIED.**
+
+
+### Gary/Blue rematch stepwise move review — 2/6 Magmar
+
+User-approved adjustment:
+- **Magmar 80:** Flamethrower / Fire Blast / Brick Break / **Psychic**.
+- Psychic replaces Confuse Ray.
+- Charcoal remains.
+- Flamethrower + Fire Blast preserve Gary's directly demonstrated anime identity.
+- Psychic improves Champion-rematch offensive coverage and makes better use of Magmar's special attacking role than the removed passive confusion slot.
+
+**Status: APPROVED AND APPLIED.**
