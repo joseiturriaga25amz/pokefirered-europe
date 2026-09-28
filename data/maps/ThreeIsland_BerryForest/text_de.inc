@@ -42,3 +42,16 @@ ThreeIsland_BerryForest_Text_BewareWildBerryLovingMons::
 	.string "Nimm dich vor wilden POKéMON,\n"
 	.string "die BEEREN lieben, in Acht!$"
 
+ThreeIsland_BerryForest_Text_FullCelebiClue1::
+    .string "A recent note has been added:\p"
+    .string "BERRIES ripen out of season, and some\n"
+    .string "POKéMON return as if time repeated.\p"
+    .string "There may be another clue near the\n"
+    .string "BERRY FOREST entrance.$"
+
+ThreeIsland_BerryForest_Text_FullCelebiClue2::
+    .string "Another observation was added:\p"
+    .string "The green light always gathers around\n"
+    .string "one unusual tree.\p"
+    .string "It may be worth checking the forest trees.$"
+
