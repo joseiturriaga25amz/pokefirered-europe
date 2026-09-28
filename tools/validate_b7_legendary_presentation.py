@@ -128,7 +128,41 @@ def main():
     assert "POKéDEX" in one_island_text
     assert "brillo" in one_island_text.lower()
 
-    print("B7 legendary presentation PASS: Mew staging, quest-NPC context, and beast environmental guidance are coherent.")
+
+    # Existing legendary presentation already satisfies B7 for the remaining
+    # arcs; lock those cues instead of adding redundant presentation layers.
+    celebi_scripts = read("data/maps/ThreeIsland_BerryForest/scripts.inc")
+    celebi_text = read("data/maps/ThreeIsland_BerryForest/text_es.inc")
+    celebi_event = block(celebi_scripts, "ThreeIsland_BerryForest_EventScript_FullCelebi")
+    assert "playmoncry SPECIES_CELEBI, CRY_MODE_ENCOUNTER" in celebi_event
+    assert "ThreeIsland_BerryForest_Text_FullCelebiAppears" in celebi_event
+    assert "Las hojas comienzan a agitarse" in celebi_text
+    assert "Una luz verde rodea el árbol." in celebi_text
+    assert "VAR_FULL_CELEBI_QUEST" in celebi_scripts
+
+    lugia = read("data/maps/NavelRock_Base/scripts.inc")
+    lugia_event = block(lugia, "NavelRock_Base_EventScript_Lugia")
+    assert lugia_event.count("special ShakeScreen") >= 2
+    assert "playmoncry SPECIES_LUGIA, CRY_MODE_ENCOUNTER" in lugia_event
+    assert "seteventmon SPECIES_LUGIA, 70" in lugia_event
+
+    hooh = read("data/maps/NavelRock_Summit/scripts.inc")
+    hooh_event = block(hooh, "NavelRock_Summit_EventScript_HoOh")
+    assert "special SpawnCameraObject" in hooh_event
+    assert "special LoopWingFlapSound" in hooh_event
+    assert "Movement_CameraPanUp" in hooh_event
+    assert "playmoncry SPECIES_HO_OH, CRY_MODE_ENCOUNTER" in hooh_event
+    assert "seteventmon SPECIES_HO_OH, 70" in hooh_event
+
+    deoxys = read("data/maps/BirthIsland_Exterior/scripts.inc")
+    deoxys_event = block(deoxys, "BirthIsland_Exterior_EventScript_Deoxys")
+    assert "FLDEFF_DESTROY_DEOXYS_ROCK" in deoxys_event
+    assert "playbgm MUS_ENCOUNTER_DEOXYS" in deoxys_event
+    assert "Movement_DeoxysApproach" in deoxys_event
+    assert "playmoncry SPECIES_DEOXYS, CRY_MODE_ENCOUNTER" in deoxys_event
+    assert "seteventmon SPECIES_DEOXYS, 50" in deoxys_event
+
+    print("B7 legendary presentation PASS: Mew, Mystic/Aurora NPC context, beasts, Celebi, Lugia, Ho-Oh and Deoxys presentation gates are coherent.")
 
 
 if __name__ == "__main__":
