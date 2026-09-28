@@ -384,3 +384,34 @@ Validators updated:
 - audited trainer-party blob lock.
 
 **Status: APPLIED.**
+
+
+### Global symbolic-ace audit — transversal result
+
+The ace audit is now applied consistently across story progression and rematches.
+
+Approved interpretation:
+- ace means the trainer's principal combat identity, not automatically the highest-BST species or most visually famous companion;
+- anime identity is prioritized when it gives a clearer character-specific signature;
+- core-series progression is used to evolve that identity where appropriate;
+- an intermediate-stage ace may receive targeted IV/item compensation;
+- Giovanni is a special case: Persian is a narrative/visual signature but not automatically the combat ace.
+
+Current accepted ace continuity:
+- Brock: Onix -> Steelix.
+- Misty: Starmie -> Starmie.
+- Lt. Surge: Raichu -> Raichu.
+- Erika: Gloom -> Gloom (max-IV intermediate-stage exception).
+- Koga: Golbat -> Crobat (Golbat receives the intermediate-stage exception).
+- Sabrina: Kadabra -> Kadabra (max-IV + Twisted Spoon intermediate-stage exception).
+- Blaine: Magmar -> Magmar.
+- Giovanni: Rocket Hideout Kangaskhan; Silph Nidoqueen; Viridian Gym Rhydon as trainer ace alongside narrative Mewtwo; postgame Rhydon. Persian remains signature/motif, not forced into ace status.
+- Lorelei: Lapras -> Lapras.
+- Bruno: Machamp -> Machamp.
+- Agatha: Gengar -> Gengar.
+- Lance: Dragonite -> Dragonite; Gyarados is the same canonical Red/Shiny Gyarados in both League encounters.
+- Gary/Blue: Squirtle -> Wartortle -> Blastoise throughout the rival progression, first Champion and Champion rematch.
+
+No additional ace reassignment is currently justified by the global evidence hierarchy.
+
+**Status: ACE AUDIT CLOSED pending CI/runtime validation, not design changes.**
