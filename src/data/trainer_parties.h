@@ -11256,7 +11256,7 @@ static const struct TrainerMonItemCustomMoves sParty_ChampionRematchSquirtle[] =
         .lvl = 80,
         .species = SPECIES_MAGMAR,
         .heldItem = ITEM_CHARCOAL,
-        .moves = {MOVE_FLAMETHROWER, MOVE_FIRE_BLAST, MOVE_BRICK_BREAK, MOVE_CONFUSE_RAY},
+        .moves = {MOVE_FLAMETHROWER, MOVE_FIRE_BLAST, MOVE_BRICK_BREAK, MOVE_PSYCHIC},
     },
     {
         .iv = 239,
@@ -11301,7 +11301,7 @@ static const struct TrainerMonItemCustomMoves sParty_ChampionRematchBulbasaur[] 
         .lvl = 80,
         .species = SPECIES_MAGMAR,
         .heldItem = ITEM_CHARCOAL,
-        .moves = {MOVE_FLAMETHROWER, MOVE_FIRE_BLAST, MOVE_BRICK_BREAK, MOVE_CONFUSE_RAY},
+        .moves = {MOVE_FLAMETHROWER, MOVE_FIRE_BLAST, MOVE_BRICK_BREAK, MOVE_PSYCHIC},
     },
     {
         .iv = 239,
@@ -11346,7 +11346,7 @@ static const struct TrainerMonItemCustomMoves sParty_ChampionRematchCharmander[]
         .lvl = 80,
         .species = SPECIES_MAGMAR,
         .heldItem = ITEM_CHARCOAL,
-        .moves = {MOVE_FLAMETHROWER, MOVE_FIRE_BLAST, MOVE_BRICK_BREAK, MOVE_CONFUSE_RAY},
+        .moves = {MOVE_FLAMETHROWER, MOVE_FIRE_BLAST, MOVE_BRICK_BREAK, MOVE_PSYCHIC},
     },
     {
         .iv = 239,
