@@ -45,3 +45,18 @@ ThreeIsland_BerryForest_Text_FullCelebiAppears::
     .string "que sople viento alguno...\p"
     .string "Una luz verde rodea el árbol.\p"
     .string "¡CELEBI ha aparecido!$"
+
+ThreeIsland_BerryForest_Text_FullCelebiClue1::
+    .string "El aviso tiene una nota reciente:\p"
+    .string "«Las BAYAS maduran fuera de estación y\n"
+    .string "algunos POKéMON vuelven al mismo lugar\n"
+    .string "como si el tiempo se repitiera».\p"
+    .string "Tal vez haya otra pista en la entrada\n"
+    .string "del BOSQUE BAYA.$"
+
+ThreeIsland_BerryForest_Text_FullCelebiClue2::
+    .string "Alguien añadió otra observación:\p"
+    .string "«La luz verde siempre converge en un\n"
+    .string "árbol distinto a los demás».\p"
+    .string "Conviene revisar los árboles del bosque.$"
+
