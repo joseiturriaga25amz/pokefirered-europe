@@ -25,6 +25,10 @@ def rows(name):
             "lvl": int(req(r"\.lvl\s*=\s*(\d+)","lvl")),
             "species": req(r"\.species\s*=\s*SPECIES_([A-Z0-9_]+)","species"),
             "item": req(r"\.heldItem\s*=\s*ITEM_([A-Z0-9_]+)","item") if ".heldItem" in body else "NONE",
+            "moves": tuple(
+                x.strip().removeprefix("MOVE_")
+                for x in req(r"\.moves\s*=\s*\{([^}]*)\}","moves").split(",")
+            ),
         })
     return out
 
