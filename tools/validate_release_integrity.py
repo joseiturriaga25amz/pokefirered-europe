@@ -50,6 +50,7 @@ def main():
         "tools/validate_full_obtainability.py",
         "tools/validate_full_save_namespace.py",
         "tools/validate_full_event_states.py",
+        "tools/validate_b6_legendary_narrative.py",
         "tools/validate_frozen_bugfixes.py",
         "tools/validate_release_integrity.py",
     )
