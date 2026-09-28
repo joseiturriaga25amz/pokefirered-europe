@@ -273,3 +273,34 @@ Current canon-depth findings:
 - Lance: add Salamence from the later HGSS rematch as a sixth Pokémon. Lance's Gyarados should be treated as the canonical red/Shiny Gyarados from the Lake of Rage anime storyline if a narrowly scoped trainer-Shiny implementation is validated.
 
 Do not close or merge B3 until this canon-depth re-audit is resolved and the final exact-head CI passes.
+
+
+## B3.6 — Global canon-depth scope
+
+User correction: the canon-depth audit is **global**, not limited to Elite Four rematches.
+
+Required coverage before B3 closure:
+- all eight Kanto Gym Leaders: first battle + rematch;
+- Giovanni: Rocket Hideout + Silph + Viridian Gym + postgame rematch;
+- Gary/Blue: all major story battles relevant to the approved progression, first Champion and Champion rematch;
+- Elite Four: first League + strengthened rematch;
+- cross-battle continuity (same owned Pokémon, evolutions, shiny identity, signature identity, regional progression, moves and visual staging).
+
+Evidence hierarchy:
+1. FireRed/LeafGreen canon for the base encounter;
+2. later core-series teams when they demonstrate documented progression;
+3. Pokémon the Series ownership/captures/evolutions/signature details;
+4. other official continuities only when clearly labeled and when they improve identity without displacing stronger core/anime evidence;
+5. Full-original additions only when explicitly identified as thematic rather than falsely described as canon.
+
+Newly approved / pending design directions:
+- **Bruno rematch:** retain Onix and Steelix; add Hariyama. One of Hitmonchan / Hitmonlee / Hitmontop must leave after comparative canon audit. Machamp remains ace.
+- **Agatha rematch:** add Sableye as a sixth Pokémon. This is a Full thematic Hoenn addition unless stronger direct ownership evidence is found; do not mislabel it as canonical ownership.
+- **Lance first League + rematch:** his Gyarados identity must be audited as the canonical red/Shiny Gyarados from Pokémon the Series, avoiding normal-first / shiny-rematch discontinuity.
+- **Lance rematch:** add Salamence as the Hoenn/later-game progression member; Dragonite remains ace.
+- Trainer shiny implementation is allowed only if narrowly scoped and proven not to alter save structures, link serialization, global shiny odds, wild encounters or unrelated trainer parties.
+
+Important correction discovered by the global pass:
+- Sabrina's animated-series Ghost partner is **Haunter**, and it is documented as not having evolved. The current rematch Gengar therefore requires re-review rather than being treated as a straightforward anime reference.
+
+B3 remains open. No final merge until the global canon-depth pass, resulting approved edits, consolidated validators, exact-head CI and final MyBoy acceptance are complete.
