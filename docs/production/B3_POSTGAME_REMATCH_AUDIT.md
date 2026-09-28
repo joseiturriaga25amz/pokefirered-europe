@@ -694,3 +694,26 @@ Rationale:
 - Fire Punch is retained only in the first encounter, creating a cleaner tactical evolution rather than duplicating the exact same set.
 
 **Status: APPROVED AND APPLIED.**
+
+
+### Global ace transversal review — Giovanni
+
+User approved Giovanni's Rhydon ace progression unchanged.
+
+Viridian Gym — Rhydon 56 ★:
+- Earthquake / Rock Slide / Brick Break / Double-Edge.
+- Soft Sand.
+- .iv = 165.
+
+Postgame rematch — Rhydon 74 ★:
+- Earthquake / Rock Slide / Megahorn / Double-Edge.
+- Leftovers.
+- .iv = 231.
+
+Rationale:
+- Rhydon remains Giovanni's combat ace even with Mewtwo present as a separate narrative superweapon;
+- Earthquake / Rock Slide / Double-Edge provide continuity;
+- Brick Break -> Megahorn is the postgame coverage upgrade;
+- OHKO moves are intentionally excluded to avoid RNG-driven boss design.
+
+**Status: APPROVED AS-IS.**
