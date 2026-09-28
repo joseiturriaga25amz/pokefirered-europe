@@ -140,8 +140,18 @@ PewterCity_Museum_1F_EventScript_Scientist2::
 	end
 
 PewterCity_Museum_1F_EventScript_FullAnalyzeAuroraSignal::
+	checkitemspace ITEM_AURORA_TICKET
+	goto_if_eq VAR_RESULT, FALSE, PewterCity_Museum_1F_EventScript_FullAuroraNoRoom
 	msgbox PewterCity_Museum_1F_Text_FullAuroraSignal
+	giveitem_msg PewterCity_Museum_1F_Text_FullReceivedAuroraTicket, ITEM_AURORA_TICKET, 1, MUS_OBTAIN_KEY_ITEM
+	setflag FLAG_RECEIVED_AURORA_TICKET
+	setflag FLAG_ENABLE_SHIP_BIRTH_ISLAND
 	setvar VAR_FULL_AURORA_QUEST, 2
+	release
+	end
+
+PewterCity_Museum_1F_EventScript_FullAuroraNoRoom::
+	msgbox PewterCity_Museum_1F_Text_FullAuroraNoRoom
 	release
 	end
 
