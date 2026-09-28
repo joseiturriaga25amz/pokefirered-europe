@@ -785,3 +785,26 @@ Rationale:
 - the repeated set is intentional, while progression comes from level, IV tier and the switch from Spell Tag to Leftovers.
 
 **Status: APPROVED AS-IS.**
+
+
+### Global ace transversal review — Lance
+
+User approved Lance's Dragonite ace progression unchanged.
+
+First League — Dragonite 65 ★:
+- Dragon Claw / Aerial Ace / Ice Beam / Flamethrower.
+- Dragon Fang.
+- .iv = 223.
+
+Rematch — Dragonite 82 ★:
+- Outrage / Thunderbolt / Ice Beam / Flamethrower.
+- Leftovers.
+- .iv = 247.
+
+Supporting hierarchy:
+- Dragonite remains Lance's true ace.
+- The Red Gyarados is retained as a separate canonical signature piece and carries Hyper Beam.
+- Salamence strengthens the rematch roster without displacing Dragonite's ace identity.
+- Dragon Claw -> Outrage provides the principal ace escalation, while Ice Beam + Flamethrower preserve continuity and Thunderbolt expands the rematch coverage.
+
+**Status: APPROVED AS-IS.**
