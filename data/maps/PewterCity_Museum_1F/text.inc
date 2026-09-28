@@ -86,19 +86,19 @@ PewterCity_Museum_1F_Text_KabutopsFossil::
 	.string "A primitive and rare POKéMON.$"
 
 PewterCity_Museum_1F_Text_FullSpaceAnomaly::
-    .string "The space exhibit mentions an anomaly\\n"
-    .string "detected far above the ocean.\\p"
-    .string "Its pattern matches no known astronomical\\n"
+    .string "The space exhibit mentions an anomaly\n"
+    .string "detected far above the ocean.\p"
+    .string "Its pattern matches no known astronomical\n"
     .string "event. A MUSEUM scientist may know more.$"
 
 PewterCity_Museum_1F_Text_FullReceivedAuroraTicket::
-    .string "SCIENTIST: The signal points to a remote\\n"
-    .string "island tied to that meteorite.\\p"
-    .string "We kept an old expedition pass.\\n"
-    .string "Use it to investigate the site.\\p"
+    .string "SCIENTIST: The signal points to a remote\n"
+    .string "island tied to that meteorite.\p"
+    .string "We kept an old expedition pass.\n"
+    .string "Use it to investigate the site.\p"
     .string "{PLAYER} obtained the AURORA TICKET!$"
 
 PewterCity_Museum_1F_Text_FullAuroraNoRoom::
-    .string "SCIENTIST: Make room in your BAG.\\n"
+    .string "SCIENTIST: Make room in your BAG.\n"
     .string "I have something vital for the expedition.$"
 
