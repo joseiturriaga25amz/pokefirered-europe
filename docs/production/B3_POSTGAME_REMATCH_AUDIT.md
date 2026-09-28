@@ -512,3 +512,28 @@ Approved unchanged:
 - Bite is retained for Dark coverage and team role differentiation, despite Aerial Ace matching the original FRLG rematch more closely.
 
 **Status: APPROVED AS-IS.**
+
+
+### Gary/Blue rematch stepwise move review — 6/6 Blastoise
+
+User approved Blastoise 85 ace unchanged:
+- Hydro Pump / Ice Beam / Earthquake / Rain Dance.
+- Leftovers remains.
+- The set is retained because it exactly matches Blue's strengthened FRLG rematch moveset while Hydro Pump also preserves direct Gary-anime identity.
+- As a fully evolved ace, Blastoise keeps the normal high Champion IV tier rather than receiving the intermediate-stage .iv=255 exception.
+
+**Status: APPROVED AS-IS.**
+
+### Gary/Blue rematch stepwise move review — FINAL
+
+Approved final rematch:
+- Nidoqueen 80: Earthquake / Hyper Beam / Ice Beam / Thunderbolt.
+- Magmar 80: Flamethrower / Fire Blast / Brick Break / Psychic.
+- Golem 81: Earthquake / Rock Slide / Double-Edge / Explosion.
+- Scizor 82: Swords Dance / Steel Wing / Aerial Ace / Quick Attack.
+- Arcanine 83: Flamethrower / ExtremeSpeed / Iron Tail / Bite.
+- Blastoise 85 ★: Hydro Pump / Ice Beam / Earthquake / Rain Dance.
+
+Gary/Blue rematch move review is now complete.
+
+**Status: 6/6 CLOSED.**
