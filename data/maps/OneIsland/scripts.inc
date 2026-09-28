@@ -112,9 +112,37 @@ OneIsland_Movement_BillEnterPokeCenter::
 OneIsland_EventScript_OldMan::
 	lock
 	faceplayer
+	goto_if_eq VAR_FULL_BEAST_INTRO, 2, OneIsland_EventScript_OldManBeastArc
 	goto_if_set FLAG_SYS_CAN_LINK_WITH_RS, OneIsland_EventScript_OldManLinkHoenn
 	goto_if_set FLAG_SEVII_DETOUR_FINISHED, OneIsland_EventScript_OldManLinkKanto
 	msgbox OneIsland_Text_LuckyToHaveCelioHere
+	release
+	end
+
+OneIsland_EventScript_OldManBeastArc::
+	goto_if_eq VAR_FULL_ROAMER_SEQUENCE, 0, OneIsland_EventScript_OldManTrackSuicune
+	goto_if_eq VAR_FULL_ROAMER_SEQUENCE, 1, OneIsland_EventScript_OldManTrackRaikou
+	goto_if_eq VAR_FULL_ROAMER_SEQUENCE, 2, OneIsland_EventScript_OldManTrackEntei
+	goto OneIsland_EventScript_OldManBeastsComplete
+	end
+
+OneIsland_EventScript_OldManTrackSuicune::
+	msgbox OneIsland_Text_FullBeastTrackSuicune
+	release
+	end
+
+OneIsland_EventScript_OldManTrackRaikou::
+	msgbox OneIsland_Text_FullBeastTrackRaikou
+	release
+	end
+
+OneIsland_EventScript_OldManTrackEntei::
+	msgbox OneIsland_Text_FullBeastTrackEntei
+	release
+	end
+
+OneIsland_EventScript_OldManBeastsComplete::
+	msgbox OneIsland_Text_FullBeastArcComplete
 	release
 	end
 
