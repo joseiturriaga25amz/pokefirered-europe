@@ -57,3 +57,14 @@ OneIsland_Harbor_EventScript_FullMysticNoRoom::
 	msgbox OneIsland_Harbor_Text_FullMysticNoRoom
 	release
 	end
+
+OneIsland_Harbor_Text_FullReceivedMysticTicket::
+	.string "MARINERO: La corriente termina en una\\n"
+	.string "isla que no figura en las rutas normales.\\p"
+	.string "Este TICKET pertenecía a una antigua\\n"
+	.string "expedición marítima. Ahora es tuyo.\\p"
+	.string "¡{PLAYER} obtuvo el MISTI-TICKET!$"
+
+OneIsland_Harbor_Text_FullMysticNoRoom::
+	.string "MARINERO: Haz sitio en la BOLSA y\\n"
+	.string "vuelve. Este TICKET debe llegar a ti.$"
