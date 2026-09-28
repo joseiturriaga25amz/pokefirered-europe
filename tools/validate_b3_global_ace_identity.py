@@ -130,6 +130,23 @@ def main():
     assert "MOVE_SCREECH" in koga_text
     assert "MOVE_TOXIC" not in koga_text[koga_text.index("SPECIES_GOLBAT"):]
 
+    # Freeze the exact user-approved ace movesets from the 2026-09-28 transversal pass.
+    approved_moves = {
+        ("sParty_LeaderErika", "GLOOM", 35): ("PETAL_DANCE", "SLEEP_POWDER", "MOONLIGHT", "ACID"),
+        ("sParty_RSTuberM", "GLOOM", 69): ("SOLAR_BEAM", "SLUDGE_BOMB", "SLEEP_POWDER", "SUNNY_DAY"),
+        ("sParty_LeaderKoga", "GOLBAT", 46): ("WING_ATTACK", "BITE", "CONFUSE_RAY", "SCREECH"),
+        ("sParty_RSCooltrainerM", "CROBAT", 71): ("AERIAL_ACE", "POISON_FANG", "BITE", "CONFUSE_RAY"),
+        ("sParty_LeaderSabrina", "KADABRA", 47): ("PSYCHIC", "CALM_MIND", "RECOVER", "REFLECT"),
+        ("sParty_RSCooltrainerF", "KADABRA", 72): ("PSYCHIC", "CALM_MIND", "RECOVER", "REFLECT"),
+        ("sParty_LeaderBlaine", "MAGMAR", 52): ("FIRE_BLAST", "FLAMETHROWER", "FIRE_PUNCH", "BRICK_BREAK"),
+        ("sParty_RSLady", "MAGMAR", 73): ("FLAMETHROWER", "FIRE_BLAST", "BRICK_BREAK", "CONFUSE_RAY"),
+        ("sParty_EliteFourLance", "DRAGONITE", 65): ("DRAGON_CLAW", "AERIAL_ACE", "ICE_BEAM", "FLAMETHROWER"),
+        ("sParty_EliteFourLance2", "DRAGONITE", 82): ("OUTRAGE", "THUNDERBOLT", "ICE_BEAM", "FLAMETHROWER"),
+    }
+    for (party, species, level), moves in approved_moves.items():
+        mon = exact_mon(party, species, level)
+        assert mon["moves"] == moves, (party, species, level, mon["moves"], moves)
+
     print("B3 global ace identity PASS: leaders, Giovanni, Elite Four, Gary progression and Lance Red Gyarados identity match approved rules.")
 
 if __name__ == "__main__":
