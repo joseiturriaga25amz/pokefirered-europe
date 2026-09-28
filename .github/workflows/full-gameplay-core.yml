@@ -9,6 +9,7 @@ on:
       - feature/b2-boss-rival-balance
       - feature/b3-postgame-rematch-identity
       - feature/b3-global-canon-audit-v3
+      - feature/b3-final-consistency-audit-v4
 
 jobs:
   build:

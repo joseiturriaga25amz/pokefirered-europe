@@ -420,11 +420,11 @@ No additional ace reassignment is currently justified by the global evidence hie
 **Status: ACE AUDIT CLOSED pending CI/runtime validation, not design changes.**
 
 
-### Manual review 13/13 — Gary/Blue Champion rematch (REOPENED FOR STEPWISE MOVE REVIEW)
+### Historical snapshot — Gary/Blue Champion rematch before completed 6/6 move review
 
-Reviewed exact roster, level curve, IV tier, held items, movesets, ace identity, anime ownership and FRLG continuity.
+This subsection records the pre-review state that triggered the later Pokémon-by-Pokémon 6/6 move audit. It is preserved only as history; the completed decisions later in this file supersede its movesets.
 
-Approved roster:
+Pre-review roster:
 - Nidoqueen 80 — Soft Sand — Earthquake / Superpower / Ice Beam / Thunderbolt.
 - Magmar 80 — Charcoal — Flamethrower / Fire Blast / Brick Break / Confuse Ray.
 - Golem 81 — Hard Stone — Earthquake / Rock Slide / Double-Edge / Explosion.
@@ -443,9 +443,9 @@ Canon-depth rationale:
 - Arcanine keeps Flamethrower from animation plus strong Blue/FRLG-style coverage and priority identity.
 - Fully evolved ace rule applies: Blastoise does not receive the intermediate-stage .iv=255 exception. Its .iv=247 tier remains intentional.
 
-**Status: REOPENED.**
+**Historical status: REOPENED AT THAT TIME — SUPERSEDED BY THE COMPLETED 6/6 REVIEW BELOW.**
 
-The roster/ace identity remains approved, but the moveset/item pass must be repeated
+At that point, the roster/ace identity remained approved, but the moveset/item pass still had to be repeated
 Pokémon-by-Pokémon with the user, explicitly comparing:
 1. original FRLG Champion rematch design;
 2. Gary's animated-series demonstrated moves where applicable;
@@ -453,7 +453,7 @@ Pokémon-by-Pokémon with the user, explicitly comparing:
 4. Gen III legality + modern physical/special split;
 5. whether a concrete adjustment improves identity or challenge.
 
-Do not treat Gary as moveset-closed until all six slots are reviewed in that format.
+This instruction applied only at that historical point. Gary is now moveset-closed after the completed 6/6 review recorded later in this file.
 
 Note on numbering: 13/13 is only the historical manual rematch sequence. It is followed
 by the transversal progression/canon audit and therefore is not the end of B3 review work.
