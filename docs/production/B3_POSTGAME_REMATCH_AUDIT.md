@@ -457,3 +457,15 @@ Do not treat Gary as moveset-closed until all six slots are reviewed in that for
 
 Note on numbering: 13/13 is only the historical manual rematch sequence. It is followed
 by the transversal progression/canon audit and therefore is not the end of B3 review work.
+
+
+### Gary/Blue rematch stepwise move review — 1/6 Nidoqueen
+
+User-approved adjustment:
+- **Nidoqueen 80:** Earthquake / **Hyper Beam** / Ice Beam / Thunderbolt.
+- Hyper Beam replaces Superpower.
+- Soft Sand remains.
+- Rationale: Hyper Beam is directly demonstrated by Gary's Nidoqueen in the animated series, while Earthquake preserves the primary physical Ground role and Ice Beam + Thunderbolt preserve the high-end mixed coverage expected of the Champion rematch.
+- This intentionally sacrifices some raw competitive efficiency from Superpower in exchange for stronger character identity without materially weakening the overall set.
+
+**Status: APPROVED AND APPLIED.**
