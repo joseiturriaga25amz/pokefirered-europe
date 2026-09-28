@@ -252,3 +252,24 @@ Approved adjustment:
 - All other Agatha rematch roster, levels, IV tier, held items, trainer healing and movesets approved.
 
 **Status: APPROVED.**
+
+
+## B3.5 — Canon-depth re-audit
+
+The user requested a finer canon pass before B3 closure, explicitly combining:
+- original FRLG rematch identity;
+- later core-game teams where they reveal trainer progression;
+- Pokémon the Series ownership/signature details;
+- regional progression across Kanto / Johto / Hoenn;
+- Gen III legality and this hack's modern physical/special split;
+- visual identity details such as canonical Shiny Pokémon.
+
+This reopens the Elite Four review even where a previous manual pass had already approved the battle.
+
+Current canon-depth findings:
+- Lorelei: current team already fuses FRLG with her animated-series roster well; no Hoenn addition has a sufficiently direct canon basis.
+- Bruno: Hariyama is canonically used in the HGSS rematch, but the previously proposed Onix -> Hariyama replacement is under reconsideration because Bruno's giant Onix is a specific animated-series capture and strong character identity. A better six-mon fusion may retain Onix and replace Steelix with Hariyama.
+- Agatha: current Gengar / Crobat / Misdreavus / Arbok core already combines FRLG rematch, anime and later official identity well; no Hoenn addition currently has a strong direct basis.
+- Lance: add Salamence from the later HGSS rematch as a sixth Pokémon. Lance's Gyarados should be treated as the canonical red/Shiny Gyarados from the Lake of Rage anime storyline if a narrowly scoped trainer-Shiny implementation is validated.
+
+Do not close or merge B3 until this canon-depth re-audit is resolved and the final exact-head CI passes.
