@@ -82,11 +82,10 @@ PewterCity_Museum_1F_Text_KabutopsFossil::
 
 
 PewterCity_Museum_1F_Text_FullAuroraSignal::
-    .string "¿Una señal con este patrón?\p"
-    .string "La hemos visto en antiguos registros\n"
-    .string "sobre un meteorito singular.\p"
-    .string "La trayectoria apunta a una isla\n"
-    .string "remota. Díselo a CELIO.$"
+    .string "CIENTÍFICO: Ese patrón coincide con\n"
+    .string "registros de un meteorito singular.\p"
+    .string "La trayectoria termina en una isla\n"
+    .string "remota. Ya podemos localizarla.$"
 
 PewterCity_Museum_1F_Text_FullSpaceAnomaly::
     .string "La exposición espacial menciona una\n"
