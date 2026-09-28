@@ -81,7 +81,14 @@ def main() -> None:
         ]
         assert len(tables) == 9, (version, len(tables))
         for idx, (table, species) in enumerate(zip(tables, ALTERING_SPECIES), start=1):
-            assert table["base_label"] == f"sSixIslandAlteringCave_{idx}_{version}"
+            expected_label = (
+                f"sSixIslandAlteringCave_{version}"
+                if idx == 1
+                else f"sSixIslandAlteringCave_{idx}_{version}"
+            )
+            assert table["base_label"] == expected_label, (
+                version, idx, table["base_label"], expected_label
+            )
             assert table["land_mons"]["encounter_rate"] == 7
             found = {m["species"] for m in table["land_mons"]["mons"]}
             assert found == {species}, (version, idx, found, species)
