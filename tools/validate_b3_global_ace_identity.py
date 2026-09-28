@@ -111,7 +111,20 @@ def main():
         assert mon["iv"] == 255, (name,species,"expected max IV",mon["iv"])
         assert mon["item"] == item, (name,species,"expected item",item,mon["item"])
 
-    print("B3 global ace identity PASS: leaders, Giovanni, Elite Four and Gary progression match approved symbolic-ace rules.")
+    # Lance's Gyarados is the same canonical Red Gyarados in both League encounters.
+    battle_main = (ROOT / "src/battle_main.c").read_text(encoding="utf-8")
+    shiny_scope = battle_main[battle_main.index("// Full canon identity: Lance owns the Red Gyarados"):
+                              battle_main.index("gBattleTypeFlags |= gTrainers[trainerNum].doubleBattle;")]
+    assert "TRAINER_ELITE_FOUR_LANCE" in shiny_scope
+    assert "TRAINER_ELITE_FOUR_LANCE_2" in shiny_scope
+    assert "SPECIES_GYARADOS" in shiny_scope
+    assert "MON_DATA_OT_ID" in shiny_scope
+    assert "MON_DATA_PERSONALITY" in shiny_scope
+    assert "SHINY_ODDS" not in shiny_scope
+    assert "Random()" not in shiny_scope
+    assert "Random32()" not in shiny_scope
+
+    print("B3 global ace identity PASS: leaders, Giovanni, Elite Four, Gary progression and Lance Red Gyarados identity match approved rules.")
 
 if __name__ == "__main__":
     main()
