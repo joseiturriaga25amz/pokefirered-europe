@@ -48,6 +48,8 @@ def main():
         "FLAG_FULL_MEW_KO_PENDING": 0x8CA,
         "FLAG_FULL_CELEBI_CAUGHT": 0x8CB,
         "FLAG_FULL_CELEBI_KO_PENDING": 0x8CC,
+        "FLAG_FULL_HO_OH_UNLOCKED": 0x8CD,
+        "FLAG_FULL_HIDE_BEAST_FIRST_CONTACT": 0x8CE,
     }
     for name, value in expected_flags.items():
         pattern = rf"^#define\s+{name}\s+0x{value:X}\s*$"
@@ -63,6 +65,7 @@ def main():
         "VAR_FULL_CELEBI_QUEST": 0x408F,
         "VAR_FULL_ROAMER_SEQUENCE": 0x4090,
         "VAR_FULL_LAST_REPEL": 0x4091,
+        "VAR_FULL_BEAST_INTRO": 0x4092,
     }
     for name, value in expected_vars.items():
         pattern = rf"^#define\s+{name}\s+0x{value:X}\s*$"
