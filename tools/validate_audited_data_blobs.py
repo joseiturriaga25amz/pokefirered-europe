@@ -10,7 +10,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 EXPECTED = {
-    "src/data/wild_encounters.json": "af87662ffce34ba48bc3d84e585a1f645bb1846f",
+    "src/data/wild_encounters.json": "52b014f77e351ddf59700925f64b5d1e5871fea6",
     "src/data/items.json": "0da4e1b54b0e33e439215635621ccef3dd9a5c5a",
     "src/data/pokemon/level_up_learnsets.h": "111723e9856d26f2a8ce96d901bec89ccdb39e51",
     "src/data/pokemon/evolution.h": "503be88f5381f51718a9f269aa2ed854ca67fbb4",
@@ -22,7 +22,7 @@ EXPECTED = {
     "data/scripts/spanish/repel.inc": "d0255413c6a5453d5e1af15201b41d8b4663f22b",
     "data/scripts/spanish/move_tutors.inc": "f6fc0e15f3c7225bef69ae4d6362fced3c0e60f1",
     "src/script_menu.c": "d0939bf7f3c0c8b6409bad5f6b1508cdb3814836",
-    "data/maps/SixIsland_AlteringCave/scripts.inc": "da91f6e0f72a0a360b53abdc839dc6f11a0b903a",
+    "data/maps/SixIsland_AlteringCave/scripts.inc": "496200f0c737bc9f16f13407489cc5566b9a3b28",
     "data/maps/SixIsland_AlteringCave/map.json": "0e2358007cc22f8d31bc93226e2801b9a8f06d81",
     "src/wild_encounter.c": "293caa0f44694ce9aefc734cde02256467e2fa9f",
     "include/constants/menu.h": "d289c2c922a25a8195dc3c6df5a80aa9ecd147ee",
