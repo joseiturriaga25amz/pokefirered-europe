@@ -418,3 +418,29 @@ Current accepted ace continuity:
 No additional ace reassignment is currently justified by the global evidence hierarchy.
 
 **Status: ACE AUDIT CLOSED pending CI/runtime validation, not design changes.**
+
+
+### Manual review 13/13 — Gary/Blue Champion rematch
+
+Reviewed exact roster, level curve, IV tier, held items, movesets, ace identity, anime ownership and FRLG continuity.
+
+Approved roster:
+- Nidoqueen 80 — Soft Sand — Earthquake / Superpower / Ice Beam / Thunderbolt.
+- Magmar 80 — Charcoal — Flamethrower / Fire Blast / Brick Break / Confuse Ray.
+- Golem 81 — Hard Stone — Earthquake / Rock Slide / Double-Edge / Explosion.
+- Scizor 82 — Metal Coat — Swords Dance / Steel Wing / Aerial Ace / Quick Attack.
+- Arcanine 83 — no held item — Flamethrower / ExtremeSpeed / Iron Tail / Bite.
+- **Blastoise 85 ★** — Leftovers — Hydro Pump / Ice Beam / Earthquake / Rain Dance.
+
+Canon-depth rationale:
+- The six-species roster is an exceptionally close reconstruction of Gary's Silver Conference full-battle selection: Nidoqueen / Magmar / Golem / Scizor / Arcanine / Blastoise.
+- Blastoise remains the unquestioned ace: it is Gary's first partner and is explicitly treated as his strongest/main battle Pokémon in the animated series.
+- Blastoise's Full moveset exactly matches Blue's FRLG strengthened Champion-rematch moveset, while Hydro Pump is also a repeatedly documented move of Gary's Blastoise in animation. This is therefore the strongest game/anime hybrid point in the entire rival design.
+- Magmar preserves both of its documented animated-series attacks (Flamethrower and Fire Blast) while retaining two gameplay-support moves.
+- Scizor preserves Steel Wing and Quick Attack from its animated-series set while Swords Dance and Aerial Ace preserve rematch pressure and coverage.
+- Golem's documented anime attacks (Magnitude / Rollout) were not forced over Earthquake / Rock Slide because the existing set is the stronger postgame realization of the same Ground/Rock combat identity and avoids lowering trainer AI quality.
+- Nidoqueen's anime moves are deliberately not copied wholesale because doing so would materially reduce postgame coverage; ownership/roster identity is prioritized while its Full set remains a high-end mixed attacker.
+- Arcanine keeps Flamethrower from animation plus strong Blue/FRLG-style coverage and priority identity.
+- Fully evolved ace rule applies: Blastoise does not receive the intermediate-stage .iv=255 exception. Its .iv=247 tier remains intentional.
+
+**Status: APPROVED AS-IS — no gameplay changes required.**
