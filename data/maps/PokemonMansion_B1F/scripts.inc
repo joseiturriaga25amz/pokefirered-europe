@@ -4,7 +4,19 @@ PokemonMansion_B1F_MapScripts::
 
 PokemonMansion_B1F_OnLoad::
 	call_if_set FLAG_POKEMON_MANSION_SWITCH_STATE, PokemonMansion_EventScript_PressSwitch_B1F
+	call PokemonMansion_B1F_EventScript_UpdateFullMewVisibility
 	end
+
+PokemonMansion_B1F_EventScript_UpdateFullMewVisibility::
+	goto_if_ne VAR_FULL_MEW_QUEST, 4, PokemonMansion_B1F_EventScript_HideFullMew
+	goto_if_set FLAG_FULL_MEW_CAUGHT, PokemonMansion_B1F_EventScript_HideFullMew
+	goto_if_set FLAG_FULL_MEW_KO_PENDING, PokemonMansion_B1F_EventScript_HideFullMew
+	showobjectat LOCALID_FULL_MEW_FINAL, MAP_POKEMON_MANSION_B1F
+	return
+
+PokemonMansion_B1F_EventScript_HideFullMew::
+	hideobjectat LOCALID_FULL_MEW_FINAL, MAP_POKEMON_MANSION_B1F
+	return
 
 PokemonMansion_B1F_EventScript_Statue::
 	lockall
@@ -18,12 +30,25 @@ PokemonMansion_B1F_EventScript_Statue::
 
 PokemonMansion_B1F_EventScript_DiarySep1st::
 	goto_if_eq VAR_FULL_MEW_QUEST, 3, PokemonMansion_B1F_EventScript_FullMewFinalAppearance
-	goto_if_eq VAR_FULL_MEW_QUEST, 4, PokemonMansion_B1F_EventScript_FullMewBattle
 	msgbox PokemonMansion_B1F_Text_MewtwoIsFarTooPowerful, MSGBOX_SIGN
 	end
 
 PokemonMansion_B1F_EventScript_FullMewFinalAppearance::
+	lockall
 	setvar VAR_FULL_MEW_QUEST, 4
+	showobjectat LOCALID_FULL_MEW_FINAL, MAP_POKEMON_MANSION_B1F
+	waitse
+	playmoncry SPECIES_MEW, CRY_MODE_NORMAL
+	msgbox PokemonMansion_B1F_Text_FullMewFinalAppearance
+	waitmoncry
+	releaseall
+	end
+
+PokemonMansion_B1F_EventScript_FullMewObject::
+	goto_if_set FLAG_FULL_MEW_CAUGHT, PokemonMansion_B1F_EventScript_DiarySep1stVanilla
+	goto_if_set FLAG_FULL_MEW_KO_PENDING, PokemonMansion_B1F_EventScript_DiarySep1stVanilla
+	goto_if_ne VAR_FULL_MEW_QUEST, 4, PokemonMansion_B1F_EventScript_DiarySep1stVanilla
+	faceplayer
 	goto PokemonMansion_B1F_EventScript_FullMewBattle
 	end
 
@@ -51,12 +76,14 @@ PokemonMansion_B1F_EventScript_FullMewCaught::
 	setflag FLAG_FULL_MEW_CAUGHT
 	clearflag FLAG_FULL_MEW_KO_PENDING
 	setvar VAR_FULL_MEW_QUEST, 5
+	hideobjectat LOCALID_FULL_MEW_FINAL, MAP_POKEMON_MANSION_B1F
 	releaseall
 	end
 
 PokemonMansion_B1F_EventScript_FullMewDefeated::
 	setflag FLAG_FULL_MEW_KO_PENDING
 	setvar VAR_FULL_MEW_QUEST, 5
+	hideobjectat LOCALID_FULL_MEW_FINAL, MAP_POKEMON_MANSION_B1F
 	releaseall
 	end
 
