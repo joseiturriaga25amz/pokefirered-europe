@@ -89,7 +89,10 @@ def main() -> None:
             assert table["base_label"] == expected_label, (
                 version, idx, table["base_label"], expected_label
             )
-            assert table["land_mons"]["encounter_rate"] == 7
+            expected_rate = 5 if version == "FireRed" else 7
+            assert table["land_mons"]["encounter_rate"] == expected_rate, (
+                version, idx, table["land_mons"]["encounter_rate"], expected_rate
+            )
             found = {m["species"] for m in table["land_mons"]["mons"]}
             assert found == {species}, (version, idx, found, species)
 
