@@ -139,7 +139,7 @@ static void MigrateFullSaveV1ToV2(void)
     if (FlagGet(FLAG_FULL_CELEBI_CAUGHT) || FlagGet(FLAG_FULL_CELEBI_KO_PENDING))
         VarSet(VAR_FULL_CELEBI_QUEST, 3);
     else if (celebiState != 0)
-        VarSet(VAR_FULL_CELEBI_QUEST, 1);
+        VarSet(VAR_FULL_CELEBI_QUEST, 2);
 
     // Old Full saves activated the first roamer immediately when Celio restored
     // the Network Machine. Treat that legacy activation as the V2 first contact
