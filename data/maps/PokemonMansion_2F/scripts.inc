@@ -4,7 +4,17 @@ PokemonMansion_2F_MapScripts::
 
 PokemonMansion_2F_OnLoad::
 	call_if_set FLAG_POKEMON_MANSION_SWITCH_STATE, PokemonMansion_EventScript_PressSwitch_2F
+	call PokemonMansion_2F_EventScript_UpdateFullMewSighting
 	end
+
+PokemonMansion_2F_EventScript_UpdateFullMewSighting::
+	goto_if_ne VAR_FULL_MEW_QUEST, 2, PokemonMansion_2F_EventScript_HideFullMewSighting
+	showobjectat LOCALID_FULL_MEW_SIGHTING_2F, MAP_POKEMON_MANSION_2F
+	return
+
+PokemonMansion_2F_EventScript_HideFullMewSighting::
+	hideobjectat LOCALID_FULL_MEW_SIGHTING_2F, MAP_POKEMON_MANSION_2F
+	return
 
 PokemonMansion_2F_EventScript_Statue::
 	lockall
@@ -28,6 +38,7 @@ PokemonMansion_2F_EventScript_DiaryJuly10th::
 	msgbox PokemonMansion_2F_Text_FullMewSighting2
 	waitmoncry
 	setvar VAR_FULL_MEW_QUEST, 2
+	showobjectat LOCALID_FULL_MEW_SIGHTING_2F, MAP_POKEMON_MANSION_2F
 	msgbox PokemonMansion_1F_Text_ChristenedDiscoveredMonMew, MSGBOX_SIGN
 	releaseall
 	end
