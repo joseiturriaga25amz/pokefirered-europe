@@ -13,7 +13,6 @@
 #include "sloopsvc.h"
 #include "event_data.h"
 #include "pokedex.h"
-#include "roamer.h"
 #include "constants/flags.h"
 #include "constants/items.h"
 #include "constants/pokedex.h"
@@ -151,11 +150,20 @@ static void MigrateFullSaveV1ToV2(void)
     // having already occurred, so migration never duplicates or replaces a roamer.
     if (FlagGet(FLAG_SYS_CAN_LINK_WITH_RS))
     {
-        VarSet(VAR_FULL_BEAST_INTRO, 2);
-        FlagSet(FLAG_FULL_HIDE_BEAST_FIRST_CONTACT);
         FullMarkRoamingBeastsSeen();
         if (roamerSequence < 3 && !gSaveBlock1Ptr->roamer.active)
-            InitRoamer();
+        {
+            // A valid V1 save normally has an active roamer here. If it does
+            // not, recover through the visible V2 first-contact scene instead
+            // of creating a new roamer silently during save loading.
+            VarSet(VAR_FULL_BEAST_INTRO, 1);
+            FlagClear(FLAG_FULL_HIDE_BEAST_FIRST_CONTACT);
+        }
+        else
+        {
+            VarSet(VAR_FULL_BEAST_INTRO, 2);
+            FlagSet(FLAG_FULL_HIDE_BEAST_FIRST_CONTACT);
+        }
     }
 
     // Ho-Oh must remain accessible for advanced saves that already captured it
