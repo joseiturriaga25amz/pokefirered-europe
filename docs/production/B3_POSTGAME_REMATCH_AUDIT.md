@@ -739,3 +739,26 @@ Rationale:
 - Body Slam in the first League and Confuse Ray in the rematch together preserve major elements of Lorelei's original FRLG Lapras identity while giving each encounter a distinct tactical profile.
 
 **Status: APPROVED AS-IS.**
+
+
+### Global ace transversal review — Bruno
+
+User approved Bruno's Machamp ace progression unchanged.
+
+First League — Machamp 62 ★:
+- Cross Chop / Bulk Up / Rock Slide / Earthquake.
+- Black Belt.
+- .iv = 206.
+
+Rematch — Machamp 80 ★:
+- Cross Chop / Bulk Up / Rock Slide / Earthquake.
+- Leftovers.
+- .iv = 247.
+
+Rationale:
+- the repeated set is intentional and functions as Bruno's stable ace identity;
+- Bulk Up + Cross Chop is the core Fighting pattern;
+- Rock Slide + Earthquake provide complementary physical coverage;
+- rematch progression comes from level, IV tier and Leftovers rather than forced move churn.
+
+**Status: APPROVED AS-IS.**
