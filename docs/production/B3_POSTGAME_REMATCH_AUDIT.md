@@ -648,3 +648,25 @@ Rationale:
 - rematch upgrades Water Pulse -> Surf, adds Psychic as second STAB and Thunderbolt as advanced coverage, while Recover remains the continuity anchor.
 
 **Status: APPROVED AS-IS.**
+
+
+### Global ace transversal review — Lt. Surge
+
+User approved Lt. Surge's ace progression unchanged.
+
+First battle — Raichu 30 ★:
+- Shock Wave / Mega Punch / Thunder Wave / Quick Attack.
+- Sitrus Berry.
+- .iv = 99.
+
+Rematch — Raichu 69 ★:
+- Thunderbolt / Brick Break / Iron Tail / Thunder Wave.
+- Leftovers.
+- .iv = 214.
+
+Rationale:
+- Shock Wave -> Thunderbolt is the natural STAB progression;
+- Thunder Wave remains the continuity/control anchor;
+- early physical pressure from Mega Punch/Quick Attack evolves into stronger Brick Break/Iron Tail coverage for postgame.
+
+**Status: APPROVED AS-IS.**
