@@ -93,12 +93,13 @@ static void FullMarkRoamingBeastsSeen(void)
     GetSetPokedexFlag(NATIONAL_DEX_ENTEI, FLAG_SET_SEEN);
 }
 
-static void FullRestoreEarnedTicket(u16 item, u16 receivedFlag, u16 shipFlag)
+static bool32 FullRestoreEarnedTicket(u16 item, u16 receivedFlag, u16 shipFlag)
 {
     FlagSet(receivedFlag);
     FlagSet(shipFlag);
-    if (!CheckBagHasItem(item, 1))
-        AddBagItem(item, 1);
+    if (CheckBagHasItem(item, 1))
+        return TRUE;
+    return AddBagItem(item, 1);
 }
 
 static void MigrateFullSaveV1ToV2(void)
@@ -114,8 +115,10 @@ static void MigrateFullSaveV1ToV2(void)
      || FlagGet(FLAG_ENABLE_SHIP_NAVEL_ROCK)
      || CheckBagHasItem(ITEM_MYSTIC_TICKET, 1))
     {
-        FullRestoreEarnedTicket(ITEM_MYSTIC_TICKET, FLAG_RECEIVED_MYSTIC_TICKET, FLAG_ENABLE_SHIP_NAVEL_ROCK);
-        VarSet(VAR_FULL_MYSTIC_QUEST, 2);
+        if (FullRestoreEarnedTicket(ITEM_MYSTIC_TICKET, FLAG_RECEIVED_MYSTIC_TICKET, FLAG_ENABLE_SHIP_NAVEL_ROCK))
+            VarSet(VAR_FULL_MYSTIC_QUEST, 2);
+        else
+            VarSet(VAR_FULL_MYSTIC_QUEST, 1);
     }
 
     // V1 Aurora states 1/2 were the Celio -> Museum -> Celio investigation.
@@ -126,8 +129,10 @@ static void MigrateFullSaveV1ToV2(void)
      || FlagGet(FLAG_ENABLE_SHIP_BIRTH_ISLAND)
      || CheckBagHasItem(ITEM_AURORA_TICKET, 1))
     {
-        FullRestoreEarnedTicket(ITEM_AURORA_TICKET, FLAG_RECEIVED_AURORA_TICKET, FLAG_ENABLE_SHIP_BIRTH_ISLAND);
-        VarSet(VAR_FULL_AURORA_QUEST, 2);
+        if (FullRestoreEarnedTicket(ITEM_AURORA_TICKET, FLAG_RECEIVED_AURORA_TICKET, FLAG_ENABLE_SHIP_BIRTH_ISLAND))
+            VarSet(VAR_FULL_AURORA_QUEST, 2);
+        else
+            VarSet(VAR_FULL_AURORA_QUEST, 1);
     }
     else if (auroraState != 0)
     {
