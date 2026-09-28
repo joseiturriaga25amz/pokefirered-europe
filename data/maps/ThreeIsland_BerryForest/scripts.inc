@@ -59,7 +59,7 @@ ThreeIsland_BerryForest_EventScript_FullCelebiTree::
 	specialvar VAR_RESULT, IsNationalPokedexEnabled
 	goto_if_eq VAR_RESULT, FALSE, ThreeIsland_BerryForest_EventScript_FullCelebiTreeVanilla
 	goto_if_unset FLAG_SYS_CAN_LINK_WITH_RS, ThreeIsland_BerryForest_EventScript_FullCelebiTreeVanilla
-	goto_if_ne VAR_FULL_ROAMER_SEQUENCE, 3, ThreeIsland_BerryForest_EventScript_FullCelebiTreeVanilla
+	goto_if_ne VAR_FULL_CELEBI_QUEST, 2, ThreeIsland_BerryForest_EventScript_FullCelebiTreeVanilla
 	goto ThreeIsland_BerryForest_EventScript_FullCelebi
 	end
 
@@ -70,7 +70,6 @@ ThreeIsland_BerryForest_EventScript_FullCelebiTreeVanilla::
 ThreeIsland_BerryForest_EventScript_FullCelebi::
 	goto_if_questlog EventScript_ReleaseEnd
 	lockall
-	setvar VAR_FULL_CELEBI_QUEST, 1
 	waitse
 	playmoncry SPECIES_CELEBI, CRY_MODE_ENCOUNTER
 	msgbox ThreeIsland_BerryForest_Text_FullCelebiAppears
@@ -89,20 +88,33 @@ ThreeIsland_BerryForest_EventScript_FullCelebi::
 ThreeIsland_BerryForest_EventScript_FullCelebiCaught::
 	setflag FLAG_FULL_CELEBI_CAUGHT
 	clearflag FLAG_FULL_CELEBI_KO_PENDING
-	setvar VAR_FULL_CELEBI_QUEST, 2
+	setvar VAR_FULL_CELEBI_QUEST, 3
 	releaseall
 	end
 
 ThreeIsland_BerryForest_EventScript_FullCelebiDefeated::
 	setflag FLAG_FULL_CELEBI_KO_PENDING
-	setvar VAR_FULL_CELEBI_QUEST, 2
+	setvar VAR_FULL_CELEBI_QUEST, 3
 	releaseall
 	end
 
 ThreeIsland_BerryForest_EventScript_WelcomeSign::
+	goto_if_ne VAR_FULL_CELEBI_QUEST, 1, ThreeIsland_BerryForest_EventScript_WelcomeSignVanilla
+	msgbox ThreeIsland_BerryForest_Text_FullCelebiClue2, MSGBOX_SIGN
+	setvar VAR_FULL_CELEBI_QUEST, 2
+	end
+ThreeIsland_BerryForest_EventScript_WelcomeSignVanilla::
 	msgbox ThreeIsland_BerryForest_Text_WelcomeToBerryForest, MSGBOX_SIGN
 	end
 
 ThreeIsland_BerryForest_EventScript_BewareSign::
+	goto_if_ne VAR_FULL_CELEBI_QUEST, 0, ThreeIsland_BerryForest_EventScript_BewareSignVanilla
+	specialvar VAR_RESULT, IsNationalPokedexEnabled
+	goto_if_eq VAR_RESULT, FALSE, ThreeIsland_BerryForest_EventScript_BewareSignVanilla
+	goto_if_unset FLAG_SYS_CAN_LINK_WITH_RS, ThreeIsland_BerryForest_EventScript_BewareSignVanilla
+	msgbox ThreeIsland_BerryForest_Text_FullCelebiClue1, MSGBOX_SIGN
+	setvar VAR_FULL_CELEBI_QUEST, 1
+	end
+ThreeIsland_BerryForest_EventScript_BewareSignVanilla::
 	msgbox ThreeIsland_BerryForest_Text_BewareWildBerryLovingMons, MSGBOX_SIGN
 	end
