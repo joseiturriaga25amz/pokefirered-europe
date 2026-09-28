@@ -78,7 +78,10 @@ Validation checkpoint before documentation-only closure:
 - result: **SUCCESS**
 
 
-## B3.4 — Manual rematch review pending
+## B3.4 — Manual rematch review history
+
+> Historical review log. Any provisional statements below are superseded by the later
+> global canon-depth corrections and the final transversal ace-audit result in this file.
 
 The prior closure candidate was premature. Static/progression validation does not replace the manual design pass used for the first-cycle boss battles.
 
@@ -106,7 +109,7 @@ Required sequence:
 12. Lance rematch
 13. Gary/Blue Champion rematch
 
-B3 must not merge until this manual pass and a final transversal rematch-progression audit are complete.
+Historical gate satisfied for checkpoint integration; final B3 release closure still requires current exact-head CI and runtime acceptance.
 
 
 ### Manual review 1/13 — Brock
@@ -128,7 +131,7 @@ Approved identity correction:
 - Gyarados moves from level 67 to level 65.
 - Overall level curve is unchanged; only the symbolic ace ordering changes.
 
-Togetic moveset remains under manual review before Misty is closed.
+Togetic's review was subsequently closed; the approved rematch set is Psychic / Magical Leaf / Wish / Yawn.
 
 
 Misty manual review closure:
@@ -176,13 +179,13 @@ Approved:
 - Crobat moves from level 71 to **level 68**.
 - Overall level curve remains unchanged.
 
-Weezing's fourth-move decision remains pending explicit confirmation because the user phrase "Lanzallamas por Rayo" can be read two ways relative to the prior proposal (Thunderbolt -> Toxic while retaining Flamethrower).
+Weezing's fourth-move ambiguity was subsequently resolved: Sludge Bomb / Flamethrower / Toxic / Explosion.
 
 
 Koga follow-up approved:
 - Weezing 71: Sludge Bomb / Flamethrower / **Toxic** / Explosion.
 - Toxic replaces Thunderbolt.
-- Toxic distribution to other Koga party members remains under targeted design review; no additional change applied yet.
+- Koga's Toxic distribution was subsequently resolved: Ariados also receives Toxic; no broader team-wide Toxic duplication was added.
 
 
 Koga final follow-up approved:
@@ -198,7 +201,7 @@ Koga final follow-up approved:
 Approved adjustment:
 - Mr. Mime 65: **Psychic** / Baton Pass / Barrier / Calm Mind.
 - Psychic replaces Psybeam to bring its lone attack up to postgame strength.
-- Alakazam 72 remains the symbolic ace.
+- Historical note superseded: Kadabra 72 is now Sabrina's symbolic ace; Alakazam is retained at Lv66.
 - All other Sabrina rematch roster, levels, IV tier, held items, trainer healing and movesets approved.
 
 **Status: APPROVED.**
@@ -296,17 +299,17 @@ Evidence hierarchy:
 4. other official continuities only when clearly labeled and when they improve identity without displacing stronger core/anime evidence;
 5. Full-original additions only when explicitly identified as thematic rather than falsely described as canon.
 
-Newly approved / pending design directions:
-- **Bruno rematch:** retain Onix and Steelix; add Hariyama. One of Hitmonchan / Hitmonlee / Hitmontop must leave after comparative canon audit. Machamp remains ace.
-- **Agatha rematch:** add Sableye as a sixth Pokémon. This is a Full thematic Hoenn addition unless stronger direct ownership evidence is found; do not mislabel it as canonical ownership.
-- **Lance first League + rematch:** his Gyarados identity must be audited as the canonical red/Shiny Gyarados from Pokémon the Series, avoiding normal-first / shiny-rematch discontinuity.
-- **Lance rematch:** add Salamence as the Hoenn/later-game progression member; Dragonite remains ace.
-- Trainer shiny implementation is allowed only if narrowly scoped and proven not to alter save structures, link serialization, global shiny odds, wild encounters or unrelated trainer parties.
+Resolved design directions:
+- **Bruno rematch:** Onix + Steelix retained; Hariyama replaces Hitmontop; Hitmonchan and Hitmonlee remain; Machamp remains ace.
+- **Agatha rematch:** Sableye added as a sixth Pokémon and explicitly documented as a Full thematic Hoenn addition rather than canonical ownership.
+- **Lance first League + rematch:** Gyarados is implemented as the same canonical Red/Shiny Gyarados in both encounters.
+- **Lance rematch:** Salamence added as the later-game/Hoenn progression member; Dragonite remains ace.
+- Trainer shiny implementation is narrowly scoped to Lance's Gyarados and does not modify save structures, link serialization, global shiny odds, wild encounters or unrelated trainer parties.
 
 Important correction discovered by the global pass:
-- Sabrina's animated-series Ghost partner is **Haunter**, and it is documented as not having evolved. The current rematch Gengar therefore requires re-review rather than being treated as a straightforward anime reference.
+- Sabrina's animated-series Ghost partner is **Haunter** and is documented as not having evolved; the rematch has therefore been corrected from Gengar to Haunter.
 
-B3 remains open. No final merge until the global canon-depth pass, resulting approved edits, consolidated validators, exact-head CI and final MyBoy acceptance are complete.
+B3 design work has been checkpoint-merged incrementally. Final B3 release closure still requires consolidated exact-head CI and final MyBoy acceptance.
 
 
 ### Global canon-depth correction — Sabrina
@@ -315,7 +318,7 @@ User-approved correction:
 - Sabrina rematch changes **Gengar 69 -> Haunter 69**.
 - Moves remain Shadow Ball / Thunderbolt / Hypnosis / Dream Eater with Spell Tag.
 - Rationale: Pokémon the Series associates Sabrina specifically with Haunter, and the character does not need a forced final-stage evolution merely because this is a rematch. This mirrors other fidelity-first choices such as Brock retaining Marshtomp.
-- Alakazam 72 remains Sabrina's combat ace.
+- Historical note superseded: Kadabra 72 is Sabrina's combat/symbolic ace; Alakazam is retained at Lv66.
 
 **Status: APPLIED.**
 
@@ -384,3 +387,424 @@ Validators updated:
 - audited trainer-party blob lock.
 
 **Status: APPLIED.**
+
+
+### Global symbolic-ace audit — transversal result
+
+The ace audit is now applied consistently across story progression and rematches.
+
+Approved interpretation:
+- ace means the trainer's principal combat identity, not automatically the highest-BST species or most visually famous companion;
+- anime identity is prioritized when it gives a clearer character-specific signature;
+- core-series progression is used to evolve that identity where appropriate;
+- an intermediate-stage ace may receive targeted IV/item compensation;
+- Giovanni is a special case: Persian is a narrative/visual signature but not automatically the combat ace.
+
+Current accepted ace continuity:
+- Brock: Onix -> Steelix.
+- Misty: Starmie -> Starmie.
+- Lt. Surge: Raichu -> Raichu.
+- Erika: Gloom -> Gloom (max-IV intermediate-stage exception).
+- Koga: Golbat -> Crobat (Golbat receives the intermediate-stage exception).
+- Sabrina: Kadabra -> Kadabra (max-IV + Twisted Spoon intermediate-stage exception).
+- Blaine: Magmar -> Magmar.
+- Giovanni: Rocket Hideout Kangaskhan; Silph Nidoqueen; Viridian Gym Rhydon as trainer ace alongside narrative Mewtwo; postgame Rhydon. Persian remains signature/motif, not forced into ace status.
+- Lorelei: Lapras -> Lapras.
+- Bruno: Machamp -> Machamp.
+- Agatha: Gengar -> Gengar.
+- Lance: Dragonite -> Dragonite; Gyarados is the same canonical Red/Shiny Gyarados in both League encounters.
+- Gary/Blue: Squirtle -> Wartortle -> Blastoise throughout the rival progression, first Champion and Champion rematch.
+
+No additional ace reassignment is currently justified by the global evidence hierarchy.
+
+**Status: ACE AUDIT CLOSED pending CI/runtime validation, not design changes.**
+
+
+### Manual review 13/13 — Gary/Blue Champion rematch (REOPENED FOR STEPWISE MOVE REVIEW)
+
+Reviewed exact roster, level curve, IV tier, held items, movesets, ace identity, anime ownership and FRLG continuity.
+
+Approved roster:
+- Nidoqueen 80 — Soft Sand — Earthquake / Superpower / Ice Beam / Thunderbolt.
+- Magmar 80 — Charcoal — Flamethrower / Fire Blast / Brick Break / Confuse Ray.
+- Golem 81 — Hard Stone — Earthquake / Rock Slide / Double-Edge / Explosion.
+- Scizor 82 — Metal Coat — Swords Dance / Steel Wing / Aerial Ace / Quick Attack.
+- Arcanine 83 — no held item — Flamethrower / ExtremeSpeed / Iron Tail / Bite.
+- **Blastoise 85 ★** — Leftovers — Hydro Pump / Ice Beam / Earthquake / Rain Dance.
+
+Canon-depth rationale:
+- The six-species roster is an exceptionally close reconstruction of Gary's Silver Conference full-battle selection: Nidoqueen / Magmar / Golem / Scizor / Arcanine / Blastoise.
+- Blastoise remains the unquestioned ace: it is Gary's first partner and is explicitly treated as his strongest/main battle Pokémon in the animated series.
+- Blastoise's Full moveset exactly matches Blue's FRLG strengthened Champion-rematch moveset, while Hydro Pump is also a repeatedly documented move of Gary's Blastoise in animation. This is therefore the strongest game/anime hybrid point in the entire rival design.
+- Magmar preserves both of its documented animated-series attacks (Flamethrower and Fire Blast) while retaining two gameplay-support moves.
+- Scizor preserves Steel Wing and Quick Attack from its animated-series set while Swords Dance and Aerial Ace preserve rematch pressure and coverage.
+- Golem's documented anime attacks (Magnitude / Rollout) were not forced over Earthquake / Rock Slide because the existing set is the stronger postgame realization of the same Ground/Rock combat identity and avoids lowering trainer AI quality.
+- Nidoqueen's anime moves are deliberately not copied wholesale because doing so would materially reduce postgame coverage; ownership/roster identity is prioritized while its Full set remains a high-end mixed attacker.
+- Arcanine keeps Flamethrower from animation plus strong Blue/FRLG-style coverage and priority identity.
+- Fully evolved ace rule applies: Blastoise does not receive the intermediate-stage .iv=255 exception. Its .iv=247 tier remains intentional.
+
+**Status: REOPENED.**
+
+The roster/ace identity remains approved, but the moveset/item pass must be repeated
+Pokémon-by-Pokémon with the user, explicitly comparing:
+1. original FRLG Champion rematch design;
+2. Gary's animated-series demonstrated moves where applicable;
+3. the current Full moveset;
+4. Gen III legality + modern physical/special split;
+5. whether a concrete adjustment improves identity or challenge.
+
+Do not treat Gary as moveset-closed until all six slots are reviewed in that format.
+
+Note on numbering: 13/13 is only the historical manual rematch sequence. It is followed
+by the transversal progression/canon audit and therefore is not the end of B3 review work.
+
+
+### Gary/Blue rematch stepwise move review — 1/6 Nidoqueen
+
+User-approved adjustment:
+- **Nidoqueen 80:** Earthquake / **Hyper Beam** / Ice Beam / Thunderbolt.
+- Hyper Beam replaces Superpower.
+- Soft Sand remains.
+- Rationale: Hyper Beam is directly demonstrated by Gary's Nidoqueen in the animated series, while Earthquake preserves the primary physical Ground role and Ice Beam + Thunderbolt preserve the high-end mixed coverage expected of the Champion rematch.
+- This intentionally sacrifices some raw competitive efficiency from Superpower in exchange for stronger character identity without materially weakening the overall set.
+
+**Status: APPROVED AND APPLIED.**
+
+
+### Gary/Blue rematch stepwise move review — 2/6 Magmar
+
+User-approved adjustment:
+- **Magmar 80:** Flamethrower / Fire Blast / Brick Break / **Psychic**.
+- Psychic replaces Confuse Ray.
+- Charcoal remains.
+- Flamethrower + Fire Blast preserve Gary's directly demonstrated anime identity.
+- Psychic improves Champion-rematch offensive coverage and makes better use of Magmar's special attacking role than the removed passive confusion slot.
+
+**Status: APPROVED AND APPLIED.**
+
+
+### Gary/Blue rematch stepwise move review — 3/6 Golem
+
+User approved Golem 81 unchanged:
+- Earthquake / Rock Slide / Double-Edge / Explosion.
+- Hard Stone remains.
+- Anime Magnitude / Rollout were reviewed but rejected because they would materially reduce Champion-rematch consistency and power versus the current Ground/Rock realization.
+
+**Status: APPROVED AS-IS.**
+
+### Gary/Blue rematch stepwise move review — 4/6 Scizor
+
+User approved Scizor 82 unchanged:
+- Swords Dance / Steel Wing / Aerial Ace / Quick Attack.
+- Metal Coat remains.
+- Steel Wing + Quick Attack preserve direct Gary anime identity; Swords Dance + Aerial Ace provide stronger Gen III postgame function without redundant Metal Claw/Swift.
+
+**Status: APPROVED AS-IS.**
+
+
+### Gary/Blue rematch stepwise move review — 5/6 Arcanine
+
+User explicitly preferred the current set over the proposed Aerial Ace substitution.
+
+Approved unchanged:
+- **Arcanine 83:** Flamethrower / ExtremeSpeed / Iron Tail / Bite.
+- No held item.
+- Bite is retained for Dark coverage and team role differentiation, despite Aerial Ace matching the original FRLG rematch more closely.
+
+**Status: APPROVED AS-IS.**
+
+
+### Gary/Blue rematch stepwise move review — 6/6 Blastoise
+
+User approved Blastoise 85 ace unchanged:
+- Hydro Pump / Ice Beam / Earthquake / Rain Dance.
+- Leftovers remains.
+- The set is retained because it exactly matches Blue's strengthened FRLG rematch moveset while Hydro Pump also preserves direct Gary-anime identity.
+- As a fully evolved ace, Blastoise keeps the normal high Champion IV tier rather than receiving the intermediate-stage .iv=255 exception.
+
+**Status: APPROVED AS-IS.**
+
+### Gary/Blue rematch stepwise move review — FINAL
+
+Approved final rematch:
+- Nidoqueen 80: Earthquake / Hyper Beam / Ice Beam / Thunderbolt.
+- Magmar 80: Flamethrower / Fire Blast / Brick Break / Psychic.
+- Golem 81: Earthquake / Rock Slide / Double-Edge / Explosion.
+- Scizor 82: Swords Dance / Steel Wing / Aerial Ace / Quick Attack.
+- Arcanine 83: Flamethrower / ExtremeSpeed / Iron Tail / Bite.
+- Blastoise 85 ★: Hydro Pump / Ice Beam / Earthquake / Rain Dance.
+
+Gary/Blue rematch move review is now complete.
+
+**Status: 6/6 CLOSED.**
+
+
+### Global ace transversal review — Gloom
+
+User approved Erika's ace progression unchanged after dedicated moveset review.
+
+First battle — Gloom 35 ★:
+- Petal Dance / Sleep Powder / Moonlight / Acid.
+- Sitrus Berry.
+- .iv = 255.
+
+Rematch — Gloom 69 ★:
+- Solar Beam / Sludge Bomb / Sleep Powder / Sunny Day.
+- Miracle Seed.
+- .iv = 255.
+
+Rationale:
+- first battle preserves Yellow-era Gloom identity while replacing redundant secondary status with Moonlight sustain;
+- rematch uses a distinct sun-enabled ace pattern with dual STAB and Sleep Powder control;
+- no further move changes are required.
+
+**Status: APPROVED AS-IS.**
+
+
+### Global ace transversal review — Golbat 46 ★
+
+User-approved adjustment:
+- **Golbat 46:** Wing Attack / Bite / Confuse Ray / **Screech**.
+- Screech replaces Toxic.
+- Sharp Beak remains.
+- .iv = 255 remains.
+- Rationale: Wing Attack + Screech are directly demonstrated by Koga's Golbat in the animated series; Confuse Ray preserves established Koga/Golbat control identity; removing Toxic avoids four-way Toxic redundancy in the first Koga battle while keeping poison pressure elsewhere on the team.
+
+**Status: APPROVED AND APPLIED.**
+
+
+### Global ace transversal review — Sabrina Kadabra
+
+User approved both Kadabra ace sets unchanged.
+
+First battle — Kadabra 47 ★:
+- Psychic / Calm Mind / Recover / Reflect.
+- Twisted Spoon.
+- .iv = 255.
+
+Rematch — Kadabra 72 ★:
+- Psychic / Calm Mind / Recover / Reflect.
+- Twisted Spoon.
+- .iv = 255.
+
+Rationale:
+- Psychic + Recover preserve direct Sabrina/Kadabra animated-series identity;
+- Calm Mind preserves FRLG Sabrina identity and her signature TM;
+- Reflect is retained over Future Sight because it materially improves Kadabra's physical survivability and produces a stronger ace without sacrificing the core canon identity;
+- repeating the set is intentional: the rematch represents the same symbolic partner at a much higher level rather than a different tactical identity.
+
+**Status: APPROVED AS-IS.**
+
+### Intermediate-stage ace audit — closure
+
+Special intermediate-stage ace compensation is now closed:
+- Erika: Gloom 35 / 69 — .iv=255.
+- Koga: Golbat 46 — .iv=255 + Sharp Beak; evolves to Crobat 71 with normal rematch IV tier.
+- Sabrina: Kadabra 47 / 72 — .iv=255 + Twisted Spoon.
+
+Ace status does not globally imply max IV; these are targeted fidelity/balance exceptions.
+
+**Status: CLOSED.**
+
+
+### Global ace transversal review — Brock
+
+User approved Brock's ace progression unchanged.
+
+First battle — Onix 17 ★:
+- Rock Tomb / Rock Smash / Bind / Screech.
+- Oran Berry.
+- .iv = 50.
+
+Rematch — Steelix 66 ★:
+- Earthquake / Rock Slide / Iron Tail / Crunch.
+- Leftovers.
+- .iv = 214.
+
+Rationale:
+- Bind preserves direct anime identity for Brock's Onix;
+- Steelix is the evolved continuation of Brock's signature Onix;
+- Iron Tail preserves evolved anime identity while the remaining postgame moves provide appropriate physical pressure and coverage.
+
+**Status: APPROVED AS-IS.**
+
+
+### Global ace transversal review — Misty
+
+User approved Misty's ace progression unchanged.
+
+First battle — Starmie 26 ★:
+- Water Pulse / Swift / Rapid Spin / Recover.
+- Sitrus Berry.
+- .iv = 83.
+
+Rematch — Starmie 67 ★:
+- Surf / Psychic / Thunderbolt / Recover.
+- Twisted Spoon.
+- .iv = 214.
+
+Rationale:
+- first battle preserves the original FRLG Starmie set;
+- rematch upgrades Water Pulse -> Surf, adds Psychic as second STAB and Thunderbolt as advanced coverage, while Recover remains the continuity anchor.
+
+**Status: APPROVED AS-IS.**
+
+
+### Global ace transversal review — Lt. Surge
+
+User approved Lt. Surge's ace progression unchanged.
+
+First battle — Raichu 30 ★:
+- Shock Wave / Mega Punch / Thunder Wave / Quick Attack.
+- Sitrus Berry.
+- .iv = 99.
+
+Rematch — Raichu 69 ★:
+- Thunderbolt / Brick Break / Iron Tail / Thunder Wave.
+- Leftovers.
+- .iv = 214.
+
+Rationale:
+- Shock Wave -> Thunderbolt is the natural STAB progression;
+- Thunder Wave remains the continuity/control anchor;
+- early physical pressure from Mega Punch/Quick Attack evolves into stronger Brick Break/Iron Tail coverage for postgame.
+
+**Status: APPROVED AS-IS.**
+
+
+### Global ace transversal review — Blaine
+
+User-approved rematch refinement:
+
+First battle — Magmar 52 ★ remains:
+- Fire Blast / Flamethrower / Fire Punch / Brick Break.
+- Charcoal.
+- .iv = 149.
+
+Rematch — Magmar 73 ★ becomes:
+- **Flamethrower / Fire Blast / Brick Break / Confuse Ray.**
+- Flamethrower replaces Fire Punch.
+- Charcoal remains.
+- .iv = 231.
+
+Rationale:
+- the rematch deliberately keeps both of Blaine's most iconic special Fire attacks, Flamethrower + Fire Blast;
+- Brick Break preserves non-Fire coverage;
+- Confuse Ray provides control and prevents the set from becoming four attacks with no tactical variation;
+- Fire Punch is retained only in the first encounter, creating a cleaner tactical evolution rather than duplicating the exact same set.
+
+**Status: APPROVED AND APPLIED.**
+
+
+### Global ace transversal review — Giovanni
+
+User approved Giovanni's Rhydon ace progression unchanged.
+
+Viridian Gym — Rhydon 56 ★:
+- Earthquake / Rock Slide / Brick Break / Double-Edge.
+- Soft Sand.
+- .iv = 165.
+
+Postgame rematch — Rhydon 74 ★:
+- Earthquake / Rock Slide / Megahorn / Double-Edge.
+- Leftovers.
+- .iv = 231.
+
+Rationale:
+- Rhydon remains Giovanni's combat ace even with Mewtwo present as a separate narrative superweapon;
+- Earthquake / Rock Slide / Double-Edge provide continuity;
+- Brick Break -> Megahorn is the postgame coverage upgrade;
+- OHKO moves are intentionally excluded to avoid RNG-driven boss design.
+
+**Status: APPROVED AS-IS.**
+
+
+### Global ace transversal review — Lorelei
+
+User approved Lorelei's Lapras ace progression unchanged.
+
+First League — Lapras 61 ★:
+- Ice Beam / Surf / Thunderbolt / Body Slam.
+- Sitrus Berry.
+- .iv = 198.
+
+Rematch — Lapras 79 ★:
+- Ice Beam / Surf / Thunderbolt / Confuse Ray.
+- Leftovers.
+- .iv = 247.
+
+Rationale:
+- Ice Beam + Surf preserve the classic Lorelei/Lapras core;
+- Thunderbolt adds reliable postgame coverage;
+- Body Slam in the first League and Confuse Ray in the rematch together preserve major elements of Lorelei's original FRLG Lapras identity while giving each encounter a distinct tactical profile.
+
+**Status: APPROVED AS-IS.**
+
+
+### Global ace transversal review — Bruno
+
+User approved Bruno's Machamp ace progression unchanged.
+
+First League — Machamp 62 ★:
+- Cross Chop / Bulk Up / Rock Slide / Earthquake.
+- Black Belt.
+- .iv = 206.
+
+Rematch — Machamp 80 ★:
+- Cross Chop / Bulk Up / Rock Slide / Earthquake.
+- Leftovers.
+- .iv = 247.
+
+Rationale:
+- the repeated set is intentional and functions as Bruno's stable ace identity;
+- Bulk Up + Cross Chop is the core Fighting pattern;
+- Rock Slide + Earthquake provide complementary physical coverage;
+- rematch progression comes from level, IV tier and Leftovers rather than forced move churn.
+
+**Status: APPROVED AS-IS.**
+
+
+### Global ace transversal review — Agatha
+
+User approved Agatha's Gengar ace progression unchanged.
+
+First League — Gengar 63 ★:
+- Shadow Ball / Sludge Bomb / Thunderbolt / Hypnosis.
+- Spell Tag.
+- .iv = 214.
+
+Rematch — Gengar 81 ★:
+- Shadow Ball / Sludge Bomb / Thunderbolt / Hypnosis.
+- Leftovers.
+- .iv = 247.
+
+Rationale:
+- Shadow Ball + Sludge Bomb define the dual-STAB ghost/poison identity;
+- Thunderbolt provides reliable coverage;
+- Hypnosis preserves Agatha's control/status identity;
+- the repeated set is intentional, while progression comes from level, IV tier and the switch from Spell Tag to Leftovers.
+
+**Status: APPROVED AS-IS.**
+
+
+### Global ace transversal review — Lance
+
+User approved Lance's Dragonite ace progression unchanged.
+
+First League — Dragonite 65 ★:
+- Dragon Claw / Aerial Ace / Ice Beam / Flamethrower.
+- Dragon Fang.
+- .iv = 223.
+
+Rematch — Dragonite 82 ★:
+- Outrage / Thunderbolt / Ice Beam / Flamethrower.
+- Leftovers.
+- .iv = 247.
+
+Supporting hierarchy:
+- Dragonite remains Lance's true ace.
+- The Red Gyarados is retained as a separate canonical signature piece and carries Hyper Beam.
+- Salamence strengthens the rematch roster without displacing Dragonite's ace identity.
+- Dragon Claw -> Outrage provides the principal ace escalation, while Ice Beam + Flamethrower preserve continuity and Thunderbolt expands the rematch coverage.
+
+**Status: APPROVED AS-IS.**
