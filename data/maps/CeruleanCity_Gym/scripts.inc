@@ -2,7 +2,7 @@ CeruleanCity_Gym_MapScripts::
 	.byte 0
 
 CeruleanCity_Gym_EventScript_Misty::
-	goto_if_unset FLAG_SYS_NATIONAL_DEX, CeruleanCity_Gym_EventScript_MistyStory
+	goto_if_unset FLAG_SYS_GAME_CLEAR, CeruleanCity_Gym_EventScript_MistyStory
 	goto_if_unset FLAG_GOT_TM03_FROM_MISTY, CeruleanCity_Gym_EventScript_MistyStory
 	goto CeruleanCity_Gym_EventScript_FullRematchOffer
 
@@ -93,16 +93,13 @@ CeruleanCity_Gym_EventScript_FullRematchDecline::
 	end
 
 CeruleanCity_Gym_Text_FullRematchOffer::
-	.string "Has recorrido un largo camino desde\n"
-	.string "nuestro primer combate.\p"
-	.string "¿Quieres una revancha de verdad?$"
+	.string "El agua nunca deja de moverse.\p¿Quieres otra revancha conmigo?$"
 
 CeruleanCity_Gym_Text_FullRematchIntro::
-	.string "¡Entonces veamos cuánto has crecido!$"
+	.string "¡Veamos si puedes seguir mi ritmo!$"
 
 CeruleanCity_Gym_Text_FullRematchDefeat::
-	.string "Excelente. Tu fuerza sigue creciendo.$"
+	.string "Vaya... Has vuelto a superarme.$"
 
 CeruleanCity_Gym_Text_FullRematchAfter::
-	.string "Puedes volver cuando quieras.\p"
-	.string "Siempre aceptaré otra revancha.$"
+	.string "Sigue entrenando. La próxima vez\nquiero ver cuánto más has mejorado.$"

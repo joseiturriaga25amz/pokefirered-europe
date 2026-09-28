@@ -5,7 +5,7 @@ ViridianCity_Gym_MapScripts::
 ViridianCity_Gym_OnTransitionFull::
 	setflag FLAG_TEMP_1
 	goto_if_unset FLAG_DEFEATED_LEADER_GIOVANNI, EventScript_Return
-	goto_if_set FLAG_SYS_NATIONAL_DEX, ViridianCity_Gym_EventScript_ShowGiovanniFull
+	goto_if_set FLAG_SYS_GAME_CLEAR, ViridianCity_Gym_EventScript_ShowGiovanniFull
 	setflag FLAG_HIDE_VIRIDIAN_GIOVANNI
 	return
 
@@ -14,7 +14,7 @@ ViridianCity_Gym_EventScript_ShowGiovanniFull::
 	return
 
 ViridianCity_Gym_EventScript_Giovanni::
-	goto_if_unset FLAG_SYS_NATIONAL_DEX, ViridianCity_Gym_EventScript_GiovanniStory
+	goto_if_unset FLAG_SYS_GAME_CLEAR, ViridianCity_Gym_EventScript_GiovanniStory
 	goto_if_unset FLAG_GOT_TM26_FROM_GIOVANNI, ViridianCity_Gym_EventScript_GiovanniStory
 	goto ViridianCity_Gym_EventScript_FullRematchOffer
 
@@ -186,19 +186,16 @@ ViridianCity_Gym_EventScript_FullRematchDecline::
 	end
 
 ViridianCity_Gym_Text_FullRematchOffer::
-	.string "Has recorrido un largo camino desde\n"
-	.string "nuestro primer combate.\p"
-	.string "¿Quieres una revancha de verdad?$"
+	.string "No confundas una derrota con debilidad.\p¿Te atreves a enfrentarme otra vez?$"
 
 ViridianCity_Gym_Text_FullRematchIntro::
-	.string "¡Entonces veamos cuánto has crecido!$"
+	.string "Te mostraré cuánto poder aún conservo.$"
 
 ViridianCity_Gym_Text_FullRematchDefeat::
-	.string "Excelente. Tu fuerza sigue creciendo.$"
+	.string "Así que tu fuerza no fue casualidad.$"
 
 ViridianCity_Gym_Text_FullRematchAfter::
-	.string "Puedes volver cuando quieras.\p"
-	.string "Siempre aceptaré otra revancha.$"
+	.string "Puedes regresar. Un verdadero líder\nsiempre está dispuesto a medir su poder.$"
 
 
 ViridianCity_Gym_Text_MewtwoPower::

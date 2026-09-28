@@ -42,7 +42,7 @@ A historical frozen requirement superseded by an approved amendment must **not**
 
 - Repository: `joseiturriaga25amz/pokefirered-europe`.
 - Upstream reference only: `CompuMaxx/pokefirered-europe` (never a production write target).
-- Active production branch: `feature/b2-boss-rival-balance`.
+- Active production branch: `feature/b3-postgame-rematch-identity`.
 - Repository write preflight is mandatory: exact full name + `push: true` before any mutation.
 - Frozen vanilla tag: `baseline-spanish-vanilla`.
 - Baseline commit: `e184c5cf898cd29efebd33bc1bfe5994277e21ab`.
@@ -414,3 +414,93 @@ B2 must begin from a fresh branch/checkpoint derived from the validated B1 HEAD 
 A B2 write attempt was accidentally directed at the upstream repository `CompuMaxx/pokefirered-europe`, which correctly exposed read-only permissions to the connector (`pull: true, push: false`). No project data was lost. The canonical fork `joseiturriaga25amz/pokefirered-europe` retained branch `feature/b2-boss-rival-balance` at hardened Mewtwo checkpoint `eed2d780be04f1b6dcc396ef9d01b5808dd8aea4`, with parent implementation commit `b48fab525fd10a11e5552d5b6ef22ada5fb712d8`.
 
 Permanent rule: read `docs/production/REPOSITORY_GUARDRAILS.md` at session start and verify the exact canonical repo plus `push: true` before every first write of a session. Upstream is comparison/reference only.
+
+
+## 18. 2026-09-26 — B2 closed / B3 started
+
+B2 — Boss/rival balance reconciliation was merged to `master` through PR #3 after exact-head Full Gameplay Core run `36253119207` completed SUCCESS on `479b1c04924e7ccbd3c0c079dc42a21bdee9ae48`.
+
+Merged master checkpoint: `0a081948847de63022d65237868a5d46dc368c6c`.
+
+B3 active branch: `feature/b3-postgame-rematch-identity`, created from that exact merged master checkpoint.
+
+B3.1 changes:
+- Gym Leader rematches now unlock from `FLAG_SYS_GAME_CLEAR`, not National Dex;
+- Giovanni's postgame reappearance follows the same game-clear rule;
+- all eight Gym Leaders have unique rematch offer / intro / defeat / post-battle dialogue;
+- repeatability remains intact via `cleartrainerflag`;
+- `tools/validate_b3_rematch_identity.py` is wired into Full Gameplay Core.
+
+
+B3.3 postgame training bridge:
+- six existing Network-Machine-gated VS Seeker final tiers were raised into an optional level 64–70 bridge;
+- no global EXP formula or mandatory-grind rule changed;
+- strengthened League remains gated by `FLAG_SYS_CAN_LINK_WITH_RS`;
+- `tools/validate_b3_postgame_progression.py` is wired into Full Gameplay Core.
+
+
+## 19. 2026-09-26 — B3 closure candidate
+
+B3 — Postgame progression and rematch identity has reached closure scope.
+
+Validated gameplay checkpoint:
+- branch: `feature/b3-postgame-rematch-identity`
+- HEAD: `8a73aedb0f36d8b26a8956fd04e280139275cfa9`
+- Full Gameplay Core run `36282030839`: **SUCCESS**
+
+Implemented B3 scope:
+- first-Hall-of-Fame Gym rematch unlocks;
+- no National Dex/capture dependency for Gym rematches;
+- eight unique leader rematch dialogue sets;
+- repeatability preserved;
+- Lorelei rematch Lapras refinement applied;
+- optional level 64-70 Network-era VS Seeker training bridge;
+- strengthened League remains Network-Machine gated;
+- B3-specific identity/progression validators added.
+
+This documentation-only closure commit must also pass Full Gameplay Core before merge. After that, merge B3 to `master` and start B4 from the exact merged master checkpoint.
+
+
+### B3 closure candidate is ON HOLD
+
+User clarified the intended review methodology: postgame rematches must receive the same one-by-one manual design review used for the first-cycle Gym Leaders, Gary, Giovanni and League.
+
+Therefore B3 is **not closed** and must not merge yet.
+
+Pending manual sequence:
+Brock → Misty → Lt. Surge → Erika → Koga → Sabrina → Blaine → Giovanni → Lorelei → Bruno → Agatha → Lance → Gary/Blue Champion rematch.
+
+After the 13 individual reviews, run one final transversal progression audit, then exact-head CI, then close/merge B3.
+
+
+## 2026-09-28 — Erika ace / IV clarification
+
+User clarified two independent rules for the global canon-depth audit:
+- symbolic ace selection must follow the trainer's strongest character identity, especially anime signature where applicable;
+- IV compensation is a separate balance tool and is not automatically attached to every ace.
+
+Applied to Erika rematch:
+- Vileplume remains Lv66 at the existing rematch IV tier;
+- Gloom is now Lv69 and is Erika's symbolic ace;
+- only Gloom receives .iv = 255 because it deliberately remains an intermediate evolutionary stage;
+- no global ace-IV rewrite is authorized.
+
+The ace audit must continue across all reviewed bosses using identity/fidelity criteria without altering IVs unless separately approved.
+
+
+## 2026-09-28 — Global ace audit rule
+
+Ace identity is now audited globally for Gym Leaders, Giovanni, Gary/Blue and the Elite Four across first encounters and rematches.
+
+Approved exception rule:
+- symbolic/canonical identity determines the ace;
+- intermediate-stage aces may receive max trainer IVs and an appropriate held item to justify remaining unevolved;
+- IV enhancement is not implied by ace status.
+
+Corrections applied:
+- Sabrina: Kadabra ace in first battle and rematch; max IV + Twisted Spoon. Alakazam remains on both teams at a lower level.
+- Koga: Golbat ace in first battle with max IV + Sharp Beak; Crobat ace in rematch. Weezing moves below the ace slot.
+- Erika's already-applied Gloom rule remains the model for intermediate-stage ace compensation.
+- Giovanni's Persian remains signature/motif rather than battle ace.
+
+Validator: tools/validate_b3_global_ace_identity.py.

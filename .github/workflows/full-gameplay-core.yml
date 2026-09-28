@@ -7,6 +7,7 @@ on:
       - feature/b0-baseline-validator-truth
       - feature/b1-low-risk-qol
       - feature/b2-boss-rival-balance
+      - feature/b3-postgame-rematch-identity
 
 jobs:
   build:
@@ -549,8 +550,8 @@ jobs:
               "sParty_LeaderMisty":[("GOLDEEN",21),("STARYU",23),("STARMIE",26)],
               "sParty_LeaderLtSurge":[("VOLTORB",25),("PIKACHU",26),("RAICHU",30)],
               "sParty_LeaderErika":[("WEEPINBELL",31),("TANGELA",32),("VILEPLUME",33),("GLOOM",35)],
-              "sParty_LeaderKoga":[("VENOMOTH",40),("GOLBAT",41),("MUK",43),("WEEZING",46)],
-              "sParty_LeaderSabrina":[("MR_MIME",42),("VENOMOTH",43),("KADABRA",45),("ALAKAZAM",47)],
+              "sParty_LeaderKoga":[("VENOMOTH",40),("WEEZING",41),("MUK",43),("GOLBAT",46)],
+              "sParty_LeaderSabrina":[("MR_MIME",42),("VENOMOTH",43),("ALAKAZAM",45),("KADABRA",47)],
               "sParty_LeaderBlaine":[("NINETALES",47),("RAPIDASH",48),("RHYDON",49),("ARCANINE",50),("MAGMAR",52)],
               "sParty_LeaderGiovanni":[("KINGLER",51),("NIDOQUEEN",52),("NIDOKING",53),("GOLEM",54),("RHYDON",56),("MEWTWO",56)],
               "sParty_EliteFourLorelei":[("DEWGONG",57),("SLOWBRO",58),("JYNX",59),("CLOYSTER",60),("LAPRAS",61)],
@@ -570,11 +571,11 @@ jobs:
 
           rematches = {
               "sParty_RSAromaLady":[("VULPIX",60),("CROBAT",61),("FORRETRESS",62),("LUDICOLO",63),("MARSHTOMP",64),("STEELIX",66)],
-              "sParty_RSRuinManiac":[("CORSOLA",61),("LUVDISC",62),("POLITOED",63),("TOGETIC",63),("STARMIE",65),("GYARADOS",67)],
+              "sParty_RSRuinManiac":[("CORSOLA",61),("LUVDISC",62),("POLITOED",63),("TOGETIC",63),("STARMIE",67),("GYARADOS",65)],
               "sParty_RSTuberF":[("ELECTRODE",64),("MAGNETON",65),("ELECTABUZZ",66),("RAICHU",69)],
-              "sParty_RSTuberM":[("TANGELA",62),("JUMPLUFF",63),("BELLOSSOM",64),("VICTREEBEL",65),("VILEPLUME",66),("VILEPLUME",69)],
+              "sParty_RSTuberM":[("TANGELA",62),("JUMPLUFF",63),("BELLOSSOM",64),("VICTREEBEL",65),("VILEPLUME",66),("GLOOM",69)],
               "sParty_RSCooltrainerM":[("ARIADOS",64),("FORRETRESS",65),("VENOMOTH",65),("MUK",67),("WEEZING",68),("CROBAT",71)],
-              "sParty_RSCooltrainerF":[("VENOMOTH",65),("MR_MIME",65),("KADABRA",66),("ESPEON",68),("GENGAR",69),("ALAKAZAM",72)],
+              "sParty_RSCooltrainerF":[("VENOMOTH",65),("MR_MIME",65),("ALAKAZAM",66),("ESPEON",68),("HAUNTER",69),("KADABRA",72)],
               "sParty_RSLady":[("NINETALES",66),("RAPIDASH",67),("ARCANINE",68),("MAGCARGO",68),("RHYDON",70),("MAGMAR",73)],
               "sParty_RSBeauty":[("PERSIAN",67),("CLOYSTER",68),("MACHAMP",69),("NIDOQUEEN",70),("NIDOKING",71),("RHYDON",74)],
           }
@@ -617,6 +618,15 @@ jobs:
 
       - name: Validate Full trainer legality
         run: python3 tools/validate_full_trainer_sets.py
+
+      - name: Validate B3 Gym rematch identity
+        run: python3 tools/validate_b3_rematch_identity.py
+
+      - name: Validate B3 global ace identity
+        run: python3 tools/validate_b3_global_ace_identity.py
+
+      - name: Validate B3 postgame progression bridge
+        run: python3 tools/validate_b3_postgame_progression.py
 
       - name: Validate one-save baby obtainability
         run: python3 tools/validate_full_obtainability.py

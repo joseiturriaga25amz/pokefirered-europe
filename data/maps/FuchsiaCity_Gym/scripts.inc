@@ -2,7 +2,7 @@ FuchsiaCity_Gym_MapScripts::
 	.byte 0
 
 FuchsiaCity_Gym_EventScript_Koga::
-	goto_if_unset FLAG_SYS_NATIONAL_DEX, FuchsiaCity_Gym_EventScript_KogaStory
+	goto_if_unset FLAG_SYS_GAME_CLEAR, FuchsiaCity_Gym_EventScript_KogaStory
 	goto_if_unset FLAG_GOT_TM06_FROM_KOGA, FuchsiaCity_Gym_EventScript_KogaStory
 	goto FuchsiaCity_Gym_EventScript_FullRematchOffer
 
@@ -113,16 +113,13 @@ FuchsiaCity_Gym_EventScript_FullRematchDecline::
 	end
 
 FuchsiaCity_Gym_Text_FullRematchOffer::
-	.string "Has recorrido un largo camino desde\n"
-	.string "nuestro primer combate.\p"
-	.string "¿Quieres una revancha de verdad?$"
+	.string "Un ninja nunca revela todos sus trucos.\p¿Quieres desafiarme de nuevo?$"
 
 FuchsiaCity_Gym_Text_FullRematchIntro::
-	.string "¡Entonces veamos cuánto has crecido!$"
+	.string "Intenta seguir el rastro de mis Pokémon.$"
 
 FuchsiaCity_Gym_Text_FullRematchDefeat::
-	.string "Excelente. Tu fuerza sigue creciendo.$"
+	.string "Has atravesado incluso mis nuevas técnicas.$"
 
 FuchsiaCity_Gym_Text_FullRematchAfter::
-	.string "Puedes volver cuando quieras.\p"
-	.string "Siempre aceptaré otra revancha.$"
+	.string "No te confíes. La próxima vez\nel veneno será aún más sutil.$"
