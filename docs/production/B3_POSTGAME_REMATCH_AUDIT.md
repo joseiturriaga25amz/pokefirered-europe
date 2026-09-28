@@ -627,3 +627,24 @@ Rationale:
 - Iron Tail preserves evolved anime identity while the remaining postgame moves provide appropriate physical pressure and coverage.
 
 **Status: APPROVED AS-IS.**
+
+
+### Global ace transversal review — Misty
+
+User approved Misty's ace progression unchanged.
+
+First battle — Starmie 26 ★:
+- Water Pulse / Swift / Rapid Spin / Recover.
+- Sitrus Berry.
+- .iv = 83.
+
+Rematch — Starmie 67 ★:
+- Surf / Psychic / Thunderbolt / Recover.
+- Twisted Spoon.
+- .iv = 214.
+
+Rationale:
+- first battle preserves the original FRLG Starmie set;
+- rematch upgrades Water Pulse -> Surf, adds Psychic as second STAB and Thunderbolt as advanced coverage, while Recover remains the continuity anchor.
+
+**Status: APPROVED AS-IS.**
