@@ -25,7 +25,7 @@ Gym rematch ace progression:
 
 This forms an optional bridge from the first Champion (ace 69) into the Network-Machine-gated strengthened League (Lorelei ace 79 through Champion ace 85), without forcing global EXP inflation.
 
-Previously approved rematch roster identity adjustments are already present: Brock/Vulpix, Misty/Luvdisc+Togetic, single Electrode for Surge, second Vileplume for Erika, Sabrina/Gengar, and Giovanni's approved roster.
+Previously approved rematch roster identity adjustments are already present: Brock/Vulpix, Misty/Luvdisc+Togetic, single Electrode for Surge, Erika's Gloom as anime-signature ace, Sabrina/Haunter, and Giovanni's approved roster.
 
 ## B3.2 — League rematch refinement
 
@@ -156,11 +156,14 @@ Approved adjustment:
 Approved adjustment:
 - Bellossom 64: **Synthesis** / Petal Dance / Sunny Day / Solar Beam.
 - Synthesis replaces Giga Drain to reduce Grass-attack redundancy and strengthen Bellossom's sun-sustain identity.
-- Both Vileplume remain; Vileplume 69 remains the symbolic ace.
+- Vileplume remains at level 66.
+- **Gloom becomes Erika's symbolic ace at level 69**, prioritizing anime identity over final-stage evolution.
+- Only Gloom receives the exceptional IV boost (**.iv = 255**) to compensate for remaining unevolved; the rest of Erika's rematch keeps the existing IV tier.
+- Gloom keeps the existing ace package: Solar Beam / Sludge Bomb / Sleep Powder / Sunny Day with Miracle Seed.
 
-All other Erika rematch roster, levels, IV tier, held items, trainer healing and movesets approved.
+All other Erika rematch roster, levels, held items, trainer healing and movesets remain unchanged.
 
-**Status: APPROVED.**
+**Status: APPROVED — ace/IV criterion corrected.**
 
 
 ### Manual review 5/13 — Koga (in progress)
@@ -313,5 +316,17 @@ User-approved correction:
 - Moves remain Shadow Ball / Thunderbolt / Hypnosis / Dream Eater with Spell Tag.
 - Rationale: Pokémon the Series associates Sabrina specifically with Haunter, and the character does not need a forced final-stage evolution merely because this is a rematch. This mirrors other fidelity-first choices such as Brock retaining Marshtomp.
 - Alakazam 72 remains Sabrina's combat ace.
+
+**Status: APPLIED.**
+
+
+### Global canon-depth correction — Erika ace criterion
+
+User clarification:
+- Ace selection and IV compensation are separate rules.
+- Erika's ace must be **Gloom 69** because Gloom is her anime-symbolic Pokémon.
+- Gloom alone is strengthened to **.iv = 255** because it remains an intermediate evolutionary stage.
+- This IV exception must **not** be generalized to other aces.
+- No other trainer IVs were changed by this correction.
 
 **Status: APPLIED.**
