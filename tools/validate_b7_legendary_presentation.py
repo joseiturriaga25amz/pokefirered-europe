@@ -106,7 +106,29 @@ def main():
     aurora_followup = block(pewter, "PewterCity_Museum_1F_EventScript_FullAuroraFollowup")
     assert "PewterCity_Museum_1F_Text_FullAuroraSignal" in aurora_followup
 
-    print("B7 Mew presentation PASS: three overworld sightings lead to a final interactable Mew; battle starts only by interaction.")
+
+    # After the beast first-contact scene, One Island provides state-aware
+    # environmental guidance for the currently active roamer and a non-spoiler
+    # golden-light hint once the trio is complete.
+    one_island = read("data/maps/OneIsland/scripts.inc")
+    one_island_text = read("data/maps/OneIsland/text_es.inc")
+    old_man = block(one_island, "OneIsland_EventScript_OldMan")
+    assert "goto_if_eq VAR_FULL_BEAST_INTRO, 2, OneIsland_EventScript_OldManBeastArc" in old_man
+    beast_arc = block(one_island, "OneIsland_EventScript_OldManBeastArc")
+    assert "goto_if_eq VAR_FULL_ROAMER_SEQUENCE, 0, OneIsland_EventScript_OldManTrackSuicune" in beast_arc
+    assert "goto_if_eq VAR_FULL_ROAMER_SEQUENCE, 1, OneIsland_EventScript_OldManTrackRaikou" in beast_arc
+    assert "goto_if_eq VAR_FULL_ROAMER_SEQUENCE, 2, OneIsland_EventScript_OldManTrackEntei" in beast_arc
+    for label in (
+        "OneIsland_Text_FullBeastTrackSuicune::",
+        "OneIsland_Text_FullBeastTrackRaikou::",
+        "OneIsland_Text_FullBeastTrackEntei::",
+        "OneIsland_Text_FullBeastArcComplete::",
+    ):
+        assert label in one_island_text
+    assert "POKéDEX" in one_island_text
+    assert "brillo" in one_island_text.lower()
+
+    print("B7 legendary presentation PASS: Mew staging, quest-NPC context, and beast environmental guidance are coherent.")
 
 
 if __name__ == "__main__":
