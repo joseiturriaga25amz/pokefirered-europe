@@ -670,3 +670,27 @@ Rationale:
 - early physical pressure from Mega Punch/Quick Attack evolves into stronger Brick Break/Iron Tail coverage for postgame.
 
 **Status: APPROVED AS-IS.**
+
+
+### Global ace transversal review — Blaine
+
+User-approved rematch refinement:
+
+First battle — Magmar 52 ★ remains:
+- Fire Blast / Flamethrower / Fire Punch / Brick Break.
+- Charcoal.
+- .iv = 149.
+
+Rematch — Magmar 73 ★ becomes:
+- **Flamethrower / Fire Blast / Brick Break / Confuse Ray.**
+- Flamethrower replaces Fire Punch.
+- Charcoal remains.
+- .iv = 231.
+
+Rationale:
+- the rematch deliberately keeps both of Blaine's most iconic special Fire attacks, Flamethrower + Fire Blast;
+- Brick Break preserves non-Fire coverage;
+- Confuse Ray provides control and prevents the set from becoming four attacks with no tactical variation;
+- Fire Punch is retained only in the first encounter, creating a cleaner tactical evolution rather than duplicating the exact same set.
+
+**Status: APPROVED AND APPLIED.**
