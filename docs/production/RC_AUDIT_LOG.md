@@ -279,3 +279,33 @@ Validation:
 - `tools/validate_b4_specialty_balls.py` checks staged reachability, Seven Island consolidation, Master/Safari exclusion, item metadata/prices, and Dive Ball semantics.
 - Functional B4 HEAD `354cc1ede9ebe7ea5c3675176a3c3a5b51b3ead3`.
 - Full Gameplay Core run `36433908751`: **SUCCESS**.
+
+
+## 2026-09-28 — B5 Altering Cave / encounter polish acceptance evidence
+
+**Status:** STATIC/CI PASS — RUNTIME ENCOUNTER SPOT-CHECK DEFERRED TO FINAL MYBOY SUITE
+
+B5 removes the manual Altering Cave species selector and restores the feature as an automatic nine-table rotation. The active table advances once on each cave entry; the researcher only reports the current dominant species and cannot change `VAR_ALTERING_CAVE_WILD_SET`.
+
+Rotation:
+- Zubat → Mareep → Pineco → Houndour → Teddiursa → Aipom → Shuckle → Stantler → Smeargle → repeat.
+
+Compatibility:
+- existing `VAR_ALTERING_CAVE_WILD_SET` storage is reused;
+- `NUM_ALTERING_CAVE_TABLES` remains 9;
+- existing engine table-index selection is retained;
+- FireRed's original cave encounter rate 5 and LeafGreen's rate 7 remain unchanged;
+- no save-layout, species-ID or encounter ABI expansion.
+
+Approved A-009 rarity targets are statically locked, including:
+- 10% principal Safari rares;
+- Dratini 10% Surf / 4% fishing and Dragonair 1% fishing;
+- starter lines at 10% / 4% / 1%;
+- Magmar and Electabuzz at 4%.
+
+Validation:
+- `tools/validate_b5_encounter_polish.py`;
+- legacy selector assertions removed from persistent-event and release-integrity validators;
+- functional HEAD `3d748663bf40e59aabba21b0a85790b7e478e6b0`;
+- Full Gameplay Core run `36457796839`: **SUCCESS**;
+- build reproducibility, B5 validator, obtainability, event-state audit, release integrity and RC packaging all **PASS**.
