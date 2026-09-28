@@ -307,7 +307,7 @@ Resolved design directions:
 - Trainer shiny implementation is narrowly scoped to Lance's Gyarados and does not modify save structures, link serialization, global shiny odds, wild encounters or unrelated trainer parties.
 
 Important correction discovered by the global pass:
-- Sabrina's animated-series Ghost partner is **Haunter**, and it is documented as not having evolved. The current rematch Gengar therefore requires re-review rather than being treated as a straightforward anime reference.
+- Sabrina's animated-series Ghost partner is **Haunter** and is documented as not having evolved; the rematch has therefore been corrected from Gengar to Haunter.
 
 B3 design work has been checkpoint-merged incrementally. Final B3 release closure still requires consolidated exact-head CI and final MyBoy acceptance.
 
@@ -318,7 +318,7 @@ User-approved correction:
 - Sabrina rematch changes **Gengar 69 -> Haunter 69**.
 - Moves remain Shadow Ball / Thunderbolt / Hypnosis / Dream Eater with Spell Tag.
 - Rationale: Pokémon the Series associates Sabrina specifically with Haunter, and the character does not need a forced final-stage evolution merely because this is a rematch. This mirrors other fidelity-first choices such as Brock retaining Marshtomp.
-- Alakazam 72 remains Sabrina's combat ace.
+- Historical note superseded: Kadabra 72 is Sabrina's combat/symbolic ace; Alakazam is retained at Lv66.
 
 **Status: APPLIED.**
 
