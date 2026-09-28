@@ -317,7 +317,7 @@ static const struct TrainerMonItemCustomMoves sParty_RSLady[] = {
         .lvl = 73,
         .species = SPECIES_MAGMAR,
         .heldItem = ITEM_CHARCOAL,
-        .moves = {MOVE_FIRE_BLAST, MOVE_FIRE_PUNCH, MOVE_BRICK_BREAK, MOVE_CONFUSE_RAY},
+        .moves = {MOVE_FLAMETHROWER, MOVE_FIRE_BLAST, MOVE_BRICK_BREAK, MOVE_CONFUSE_RAY},
     },
 };
 static const struct TrainerMonItemCustomMoves sParty_RSBeauty[] = {
