@@ -11249,7 +11249,7 @@ static const struct TrainerMonItemCustomMoves sParty_ChampionRematchSquirtle[] =
         .lvl = 80,
         .species = SPECIES_NIDOQUEEN,
         .heldItem = ITEM_SOFT_SAND,
-        .moves = {MOVE_EARTHQUAKE, MOVE_SUPERPOWER, MOVE_ICE_BEAM, MOVE_THUNDERBOLT},
+        .moves = {MOVE_EARTHQUAKE, MOVE_HYPER_BEAM, MOVE_ICE_BEAM, MOVE_THUNDERBOLT},
     },
     {
         .iv = 239,
@@ -11294,7 +11294,7 @@ static const struct TrainerMonItemCustomMoves sParty_ChampionRematchBulbasaur[] 
         .lvl = 80,
         .species = SPECIES_NIDOQUEEN,
         .heldItem = ITEM_SOFT_SAND,
-        .moves = {MOVE_EARTHQUAKE, MOVE_SUPERPOWER, MOVE_ICE_BEAM, MOVE_THUNDERBOLT},
+        .moves = {MOVE_EARTHQUAKE, MOVE_HYPER_BEAM, MOVE_ICE_BEAM, MOVE_THUNDERBOLT},
     },
     {
         .iv = 239,
@@ -11339,7 +11339,7 @@ static const struct TrainerMonItemCustomMoves sParty_ChampionRematchCharmander[]
         .lvl = 80,
         .species = SPECIES_NIDOQUEEN,
         .heldItem = ITEM_SOFT_SAND,
-        .moves = {MOVE_EARTHQUAKE, MOVE_SUPERPOWER, MOVE_ICE_BEAM, MOVE_THUNDERBOLT},
+        .moves = {MOVE_EARTHQUAKE, MOVE_HYPER_BEAM, MOVE_ICE_BEAM, MOVE_THUNDERBOLT},
     },
     {
         .iv = 239,
