@@ -1707,6 +1707,18 @@ static u8 CreateNPCTrainerParty(struct Pokemon *party, u16 trainerNum)
                 break;
             }
             }
+
+            // Full canon identity: Lance owns the Red Gyarados from the Lake of Rage.
+            // Trainer mons are normally created with OT_ID_RANDOM_NO_SHINY. For only
+            // Lance's Gyarados, make the generated OT ID equal its fixed personality;
+            // GET_SHINY_VALUE therefore becomes 0 without changing global shiny odds,
+            // party data structures, saves, wild encounters, or unrelated trainers.
+            if ((trainerNum == TRAINER_ELITE_FOUR_LANCE || trainerNum == TRAINER_ELITE_FOUR_LANCE_2)
+             && GetMonData(&party[i], MON_DATA_SPECIES, NULL) == SPECIES_GYARADOS)
+            {
+                u32 fullShinyOtId = GetMonData(&party[i], MON_DATA_PERSONALITY, NULL);
+                SetMonData(&party[i], MON_DATA_OT_ID, &fullShinyOtId);
+            }
         }
 
         gBattleTypeFlags |= gTrainers[trainerNum].doubleBattle;

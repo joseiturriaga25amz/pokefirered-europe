@@ -353,3 +353,34 @@ A dedicated validator now locks the approved symbolic-ace progression across:
 - Gary/Blue's Squirtle -> Wartortle -> Blastoise progression through Champion rematch.
 
 **Status: APPLIED; global ace audit validator added.**
+
+
+### Canon-depth implementation checkpoint — Lance / Bruno / Agatha
+
+Applied after global canon re-audit:
+
+**Lance**
+- The Gyarados in both first League and strengthened League is now forced shiny at runtime.
+- Scope is deliberately narrow: only TRAINER_ELITE_FOUR_LANCE and TRAINER_ELITE_FOUR_LANCE_2 when the generated species is Gyarados.
+- The implementation changes only the generated enemy mon's OT ID to match its fixed personality, yielding shiny value 0. It does not change global shiny odds, saves, link serialization, wild encounters or unrelated trainers.
+- Salamence Lv80 is added to the strengthened rematch with Lum Berry and Dragon Claw / Flamethrower / Rock Slide / Rest.
+- Dragonite remains the ace.
+
+**Bruno**
+- Hitmontop leaves the strengthened rematch.
+- Hariyama Lv78 enters with Sitrus Berry and Brick Break / Bulk Up / Earthquake / Rock Slide.
+- Onix and Steelix are both retained.
+- Hitmonchan and Hitmonlee are retained because they are stronger long-term character identifiers than Hitmontop.
+- Machamp remains the ace.
+
+**Agatha**
+- Sableye Lv78 is added as the sixth member with Focus Band and Shadow Ball / Faint Attack / Fake Out / Confuse Ray.
+- Sableye is explicitly a Full thematic Hoenn addition, not claimed as canonical ownership.
+- Gengar remains the ace.
+
+Validators updated:
+- exact League roster validator;
+- global ace/canon identity validator;
+- audited trainer-party blob lock.
+
+**Status: APPLIED.**

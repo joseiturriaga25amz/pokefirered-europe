@@ -504,3 +504,15 @@ Corrections applied:
 - Giovanni's Persian remains signature/motif rather than battle ace.
 
 Validator: tools/validate_b3_global_ace_identity.py.
+
+
+## 2026-09-28 — Canon-depth checkpoint: Lance / Bruno / Agatha
+
+Implemented on feature/b3-global-canon-audit-v2:
+- Lance's Gyarados is forced shiny in both first League and rematch, narrowly scoped at trainer-party generation time.
+- Lance rematch gains Salamence Lv80; Dragonite remains ace.
+- Bruno rematch replaces Hitmontop with Hariyama Lv78 while retaining Onix, Steelix, Hitmonchan, Hitmonlee and Machamp.
+- Agatha rematch gains Sableye Lv78 as a Full thematic Hoenn sixth; ownership is not represented as canonical.
+- Exact League and global identity validators updated.
+
+Continue global transversal audit of Gary/Blue, Giovanni, all Gym Leaders and Elite Four before final B3 closure.
