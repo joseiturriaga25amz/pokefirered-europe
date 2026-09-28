@@ -537,3 +537,25 @@ Approved final rematch:
 Gary/Blue rematch move review is now complete.
 
 **Status: 6/6 CLOSED.**
+
+
+### Global ace transversal review — Gloom
+
+User approved Erika's ace progression unchanged after dedicated moveset review.
+
+First battle — Gloom 35 ★:
+- Petal Dance / Sleep Powder / Moonlight / Acid.
+- Sitrus Berry.
+- .iv = 255.
+
+Rematch — Gloom 69 ★:
+- Solar Beam / Sludge Bomb / Sleep Powder / Sunny Day.
+- Miracle Seed.
+- .iv = 255.
+
+Rationale:
+- first battle preserves Yellow-era Gloom identity while replacing redundant secondary status with Moonlight sustain;
+- rematch uses a distinct sun-enabled ace pattern with dual STAB and Sleep Powder control;
+- no further move changes are required.
+
+**Status: APPROVED AS-IS.**
