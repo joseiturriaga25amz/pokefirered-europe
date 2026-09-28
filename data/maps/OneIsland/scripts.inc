@@ -5,11 +5,46 @@ OneIsland_MapScripts::
 
 OneIsland_OnTransition::
 	setworldmapflag FLAG_WORLD_MAP_ONE_ISLAND
+	call OneIsland_EventScript_UpdateFullBeastFirstContact
 	end
+
+OneIsland_EventScript_UpdateFullBeastFirstContact::
+	goto_if_unset FLAG_SYS_CAN_LINK_WITH_RS, OneIsland_EventScript_HideFullBeastFirstContact
+	goto_if_eq VAR_FULL_BEAST_INTRO, 2, OneIsland_EventScript_HideFullBeastFirstContact
+	goto_if_ne VAR_FULL_BEAST_INTRO, 0, OneIsland_EventScript_ShowFullBeastFirstContact
+	setvar VAR_FULL_BEAST_INTRO, 1
+OneIsland_EventScript_ShowFullBeastFirstContact::
+	clearflag FLAG_FULL_HIDE_BEAST_FIRST_CONTACT
+	return
+OneIsland_EventScript_HideFullBeastFirstContact::
+	setflag FLAG_FULL_HIDE_BEAST_FIRST_CONTACT
+	return
 
 OneIsland_OnFrame::
 	map_script_2 VAR_MAP_SCENE_ONE_ISLAND_HARBOR, 2, OneIsland_EventScript_EnterOneIslandFirstTime
+	map_script_2 VAR_FULL_BEAST_INTRO, 1, OneIsland_EventScript_FullBeastFirstContact
 	.2byte 0
+
+OneIsland_EventScript_FullBeastFirstContact::
+	lockall
+	msgbox OneIsland_Text_FullBeastFirstContact
+	waitse
+	playmoncry SPECIES_SUICUNE, CRY_MODE_ENCOUNTER
+	waitmoncry
+	playmoncry SPECIES_RAIKOU, CRY_MODE_NORMAL
+	waitmoncry
+	playmoncry SPECIES_ENTEI, CRY_MODE_NORMAL
+	waitmoncry
+	special Full_MarkRoamingBeastsSeen
+	msgbox OneIsland_Text_FullBeastTrioFlees
+	setvar VAR_FULL_BEAST_INTRO, 2
+	setflag FLAG_FULL_HIDE_BEAST_FIRST_CONTACT
+	removeobject LOCALID_FULL_RAIKOU
+	removeobject LOCALID_FULL_SUICUNE
+	removeobject LOCALID_FULL_ENTEI
+	special InitRoamer
+	releaseall
+	end
 
 OneIsland_EventScript_EnterOneIslandFirstTime::
 	lockall
