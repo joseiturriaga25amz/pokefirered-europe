@@ -50,7 +50,7 @@ EventScript_FullResetMewAfterKO::
 
 EventScript_FullResetCelebiAfterKO::
 	clearflag FLAG_FULL_CELEBI_KO_PENDING
-	setvar VAR_FULL_CELEBI_QUEST, 0
+	setvar VAR_FULL_CELEBI_QUEST, 2
 	return
 
 EventScript_ResetEliteFourEnd::

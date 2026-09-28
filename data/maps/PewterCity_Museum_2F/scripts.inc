@@ -22,6 +22,13 @@ PewterCity_Museum_2F_EventScript_BaldingMan::
 	end
 
 PewterCity_Museum_2F_EventScript_SpaceShuttle::
+	goto_if_ne VAR_FULL_AURORA_QUEST, 0, PewterCity_Museum_2F_EventScript_SpaceShuttleVanilla
+	goto_if_unset FLAG_SYS_CAN_LINK_WITH_RS, PewterCity_Museum_2F_EventScript_SpaceShuttleVanilla
+	msgbox PewterCity_Museum_1F_Text_FullSpaceAnomaly, MSGBOX_SIGN
+	setvar VAR_FULL_AURORA_QUEST, 1
+	end
+
+PewterCity_Museum_2F_EventScript_SpaceShuttleVanilla::
 	msgbox PewterCity_Museum_1F_Text_SpaceShuttle, MSGBOX_SIGN
 	end
 

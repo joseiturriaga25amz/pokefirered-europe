@@ -177,7 +177,8 @@ def main() -> None:
 
     load_save = read("src/load_save.c")
     assert "static const u8 sFullSaveMagic[4] = {'R', 'F', 'F', 'L'};" in load_save
-    assert "FULL_SAVE_SCHEMA_VERSION 1" in load_save
+    assert "FULL_SAVE_SCHEMA_VERSION 2" in load_save
+    assert "MigrateFullSaveV1ToV2" in load_save
     init_start = load_save.index("void InitFullSaveData(void)")
     init_end = load_save.index("void SetSaveBlocksPointers(void)", init_start)
     init_full = load_save[init_start:init_end]

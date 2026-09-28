@@ -121,7 +121,7 @@ def main():
         "setflag FLAG_FULL_CELEBI_CAUGHT",
         "setflag FLAG_FULL_CELEBI_KO_PENDING",
     )
-    require(hof, "clearflag FLAG_FULL_CELEBI_KO_PENDING", "setvar VAR_FULL_CELEBI_QUEST, 0")
+    require(hof, "clearflag FLAG_FULL_CELEBI_KO_PENDING", "setvar VAR_FULL_CELEBI_QUEST, 2")
 
     # Second Dojo reward: opposite species and no-room branch must not consume reward.
     dojo = read("data/maps/SaffronCity_Dojo/scripts.inc")

@@ -128,3 +128,11 @@ VermilionCity_Text_Route2AideHasPackageForYou::
 	.string "ROUTE 2, {PLAYER}.\p"
 	.string "If you're in the ROUTE 2 area,\n"
 	.string "please look for him.$"
+
+VermilionCity_Text_FullMaritimeBirdClue::
+    .string "SAILOR: We've logged three unusual bird\n"
+    .string "sightings across KANTO.\p"
+    .string "Each was followed by the same deep\n"
+    .string "call rolling in from the sea.\p"
+    .string "The crew at ONE ISLAND HARBOR has\n"
+    .string "been tracing the current. Ask there.$"

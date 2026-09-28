@@ -61,3 +61,17 @@ OneIsland_Text_ReturnToCinnabar::
 OneIsland_Text_IsntWarmClimateHereGreat::
     .string "¿Qué? ¿Disfrutando del paisaje?\n"
     .string "El tiempo es fabuloso, ¿eh?$"
+
+OneIsland_Text_FullBeastFirstContact::
+    .string "Un silencio extraño cae sobre la isla...\p"
+    .string "Tres POKéMON aparecen juntos.\n"
+    .string "SUICUNE da un paso al frente mientras\n"
+    .string "RAIKOU y ENTEI observan desde atrás.$"
+
+OneIsland_Text_FullBeastTrioFlees::
+    .string "Los tres fijan su mirada en {PLAYER}.\p"
+    .string "De pronto, se separan y desaparecen\n"
+    .string "a toda velocidad.\p"
+    .string "SUICUNE parece haberse quedado más\n"
+    .string "cerca. Su ruta ya figura en la POKéDEX.$"
+

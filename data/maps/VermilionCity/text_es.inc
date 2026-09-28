@@ -149,3 +149,11 @@ VermilionCity_Text_Route2AideHasPackageForYou::
     .string "Comentó que iría a buscarte por\n"
     .string "la RUTA 2, {PLAYER}.\p"
     .string "Si pasas por la RUTA 2, búscalo.$"
+
+VermilionCity_Text_FullMaritimeBirdClue::
+    .string "MARINERO: Hemos registrado avistamientos\n"
+    .string "de tres aves extrañas por KANTO.\p"
+    .string "Tras cada uno llegó desde el mar\n"
+    .string "el mismo canto profundo.\p"
+    .string "En el puerto de ISLA PRIMA siguen\n"
+    .string "esa corriente. Pregunta allí.$"

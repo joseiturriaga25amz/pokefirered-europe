@@ -11,10 +11,17 @@
 #include "overworld.h"
 #include "quest_log.h"
 #include "sloopsvc.h"
+#include "event_data.h"
+#include "pokedex.h"
+#include "constants/flags.h"
+#include "constants/items.h"
+#include "constants/pokedex.h"
+#include "constants/vars.h"
 
 #define SAVEBLOCK_MOVE_RANGE    128
 
-#define FULL_SAVE_SCHEMA_VERSION 1
+#define FULL_SAVE_SCHEMA_VERSION 2
+#define FULL_SAVE_SCHEMA_V1      1
 
 static const u8 sFullSaveMagic[4] = {'R', 'F', 'F', 'L'};
 
@@ -70,28 +77,129 @@ void ClearSav1(void)
     CpuFill16(0, &gSaveBlock1, sizeof(struct SaveBlock1) + sizeof(gSaveBlock1_DMA));
 }
 
-bool32 IsFullSaveDataInitialized(void)
+static bool32 HasFullSaveMagic(void)
 {
     return gSaveBlock1Ptr->fullHeader.magic[0] == sFullSaveMagic[0]
         && gSaveBlock1Ptr->fullHeader.magic[1] == sFullSaveMagic[1]
         && gSaveBlock1Ptr->fullHeader.magic[2] == sFullSaveMagic[2]
-        && gSaveBlock1Ptr->fullHeader.magic[3] == sFullSaveMagic[3]
+        && gSaveBlock1Ptr->fullHeader.magic[3] == sFullSaveMagic[3];
+}
+
+static void FullMarkRoamingBeastsSeen(void)
+{
+    GetSetPokedexFlag(NATIONAL_DEX_SUICUNE, FLAG_SET_SEEN);
+    GetSetPokedexFlag(NATIONAL_DEX_RAIKOU, FLAG_SET_SEEN);
+    GetSetPokedexFlag(NATIONAL_DEX_ENTEI, FLAG_SET_SEEN);
+}
+
+static bool32 FullRestoreEarnedTicket(u16 item, u16 receivedFlag, u16 shipFlag)
+{
+    FlagSet(receivedFlag);
+    FlagSet(shipFlag);
+    if (CheckBagHasItem(item, 1))
+        return TRUE;
+    return AddBagItem(item, 1);
+}
+
+static void MigrateFullSaveV1ToV2(void)
+{
+    u16 mysticState = VarGet(VAR_FULL_MYSTIC_QUEST);
+    u16 auroraState = VarGet(VAR_FULL_AURORA_QUEST);
+    u16 celebiState = VarGet(VAR_FULL_CELEBI_QUEST);
+    u16 roamerSequence = VarGet(VAR_FULL_ROAMER_SEQUENCE);
+
+    // V1 Mystic state 1 meant Celio had already awarded the ticket.
+    if (mysticState != 0
+     || FlagGet(FLAG_RECEIVED_MYSTIC_TICKET)
+     || FlagGet(FLAG_ENABLE_SHIP_NAVEL_ROCK)
+     || CheckBagHasItem(ITEM_MYSTIC_TICKET, 1))
+    {
+        if (FullRestoreEarnedTicket(ITEM_MYSTIC_TICKET, FLAG_RECEIVED_MYSTIC_TICKET, FLAG_ENABLE_SHIP_NAVEL_ROCK))
+            VarSet(VAR_FULL_MYSTIC_QUEST, 2);
+        else
+            VarSet(VAR_FULL_MYSTIC_QUEST, 1);
+    }
+
+    // V1 Aurora states 1/2 were the Celio -> Museum -> Celio investigation.
+    // Preserve partial progress at the autonomous Museum investigation; state 3
+    // (or any canonical receipt evidence) remains a completed award.
+    if (auroraState >= 3
+     || FlagGet(FLAG_RECEIVED_AURORA_TICKET)
+     || FlagGet(FLAG_ENABLE_SHIP_BIRTH_ISLAND)
+     || CheckBagHasItem(ITEM_AURORA_TICKET, 1))
+    {
+        if (FullRestoreEarnedTicket(ITEM_AURORA_TICKET, FLAG_RECEIVED_AURORA_TICKET, FLAG_ENABLE_SHIP_BIRTH_ISLAND))
+            VarSet(VAR_FULL_AURORA_QUEST, 2);
+        else
+            VarSet(VAR_FULL_AURORA_QUEST, 1);
+    }
+    else if (auroraState != 0)
+    {
+        VarSet(VAR_FULL_AURORA_QUEST, 1);
+    }
+
+    // Preserve terminal Celebi results. A fled V1 encounter becomes an
+    // investigation-complete, retryable V2 encounter rather than a softlock.
+    if (FlagGet(FLAG_FULL_CELEBI_CAUGHT) || FlagGet(FLAG_FULL_CELEBI_KO_PENDING))
+        VarSet(VAR_FULL_CELEBI_QUEST, 3);
+    else if (celebiState != 0)
+        VarSet(VAR_FULL_CELEBI_QUEST, 2);
+
+    // Old Full saves activated the first roamer immediately when Celio restored
+    // the Network Machine. Treat that legacy activation as the V2 first contact
+    // having already occurred, so migration never duplicates or replaces a roamer.
+    if (FlagGet(FLAG_SYS_CAN_LINK_WITH_RS))
+    {
+        FullMarkRoamingBeastsSeen();
+        if (roamerSequence < 3 && !gSaveBlock1Ptr->roamer.active)
+        {
+            // A valid V1 save normally has an active roamer here. If it does
+            // not, recover through the visible V2 first-contact scene instead
+            // of creating a new roamer silently during save loading.
+            VarSet(VAR_FULL_BEAST_INTRO, 1);
+            FlagClear(FLAG_FULL_HIDE_BEAST_FIRST_CONTACT);
+        }
+        else
+        {
+            VarSet(VAR_FULL_BEAST_INTRO, 2);
+            FlagSet(FLAG_FULL_HIDE_BEAST_FIRST_CONTACT);
+        }
+    }
+
+    // Ho-Oh must remain accessible for advanced saves that already captured it
+    // or have its old KO-pending state, without fabricating beast progress.
+    if (roamerSequence >= 3
+     || FlagGet(FLAG_FOUGHT_HO_OH)
+     || FlagGet(FLAG_HO_OH_FLEW_AWAY))
+        FlagSet(FLAG_FULL_HO_OH_UNLOCKED);
+}
+
+bool32 IsFullSaveDataInitialized(void)
+{
+    return HasFullSaveMagic()
         && gSaveBlock1Ptr->fullHeader.schemaVersion == FULL_SAVE_SCHEMA_VERSION;
 }
 
 void InitFullSaveData(void)
 {
-    if (IsFullSaveDataInitialized())
+    if (!HasFullSaveMagic())
+    {
+        // Schema 0 import: initialize only the Full-owned 16-byte header.
+        // Vanilla bag data and all standard save fields remain untouched.
+        memset(&gSaveBlock1Ptr->fullHeader, 0, sizeof(gSaveBlock1Ptr->fullHeader));
+        gSaveBlock1Ptr->fullHeader.magic[0] = sFullSaveMagic[0];
+        gSaveBlock1Ptr->fullHeader.magic[1] = sFullSaveMagic[1];
+        gSaveBlock1Ptr->fullHeader.magic[2] = sFullSaveMagic[2];
+        gSaveBlock1Ptr->fullHeader.magic[3] = sFullSaveMagic[3];
+        gSaveBlock1Ptr->fullHeader.schemaVersion = FULL_SAVE_SCHEMA_VERSION;
         return;
+    }
 
-    // Schema 0 import: initialize only the Full-owned 16-byte header.
-    // Vanilla bag data and all standard save fields remain untouched.
-    memset(&gSaveBlock1Ptr->fullHeader, 0, sizeof(gSaveBlock1Ptr->fullHeader));
-    gSaveBlock1Ptr->fullHeader.magic[0] = sFullSaveMagic[0];
-    gSaveBlock1Ptr->fullHeader.magic[1] = sFullSaveMagic[1];
-    gSaveBlock1Ptr->fullHeader.magic[2] = sFullSaveMagic[2];
-    gSaveBlock1Ptr->fullHeader.magic[3] = sFullSaveMagic[3];
-    gSaveBlock1Ptr->fullHeader.schemaVersion = FULL_SAVE_SCHEMA_VERSION;
+    if (gSaveBlock1Ptr->fullHeader.schemaVersion == FULL_SAVE_SCHEMA_V1)
+    {
+        MigrateFullSaveV1ToV2();
+        gSaveBlock1Ptr->fullHeader.schemaVersion = FULL_SAVE_SCHEMA_VERSION;
+    }
 }
 
 void SetSaveBlocksPointers(void)

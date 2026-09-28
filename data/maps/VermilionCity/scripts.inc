@@ -49,6 +49,12 @@ VermilionCity_EventScript_OldMan1SSAnneLeft::
 VermilionCity_EventScript_FerrySailor::
 	lock
 	faceplayer
+	goto_if_ne VAR_FULL_MYSTIC_QUEST, 0, VermilionCity_EventScript_FerrySailorContinue
+	specialvar VAR_RESULT, Full_AreLegendaryBirdsSeen
+	goto_if_eq VAR_RESULT, FALSE, VermilionCity_EventScript_FerrySailorContinue
+	msgbox VermilionCity_Text_FullMaritimeBirdClue
+	setvar VAR_FULL_MYSTIC_QUEST, 1
+VermilionCity_EventScript_FerrySailorContinue::
 	goto_if_eq VAR_MAP_SCENE_VERMILION_CITY, 3, VermilionCity_EventScript_CheckSeagallopPresent
 	msgbox VermilionCity_Text_WelcomeToTheSSAnne
 	release

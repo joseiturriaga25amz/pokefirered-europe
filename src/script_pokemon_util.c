@@ -11,6 +11,7 @@
 #include "constants/items.h"
 #include "constants/moves.h"
 #include "constants/pokemon.h"
+#include "constants/pokedex.h"
 
 static void CB2_ReturnFromChooseHalfParty(void);
 static void CB2_ReturnFromChooseBattleTowerParty(void);
@@ -138,6 +139,21 @@ void CreateScriptedWildMon(u16 species, u8 level, u16 item)
         heldItem[1] = item >> 8;
         SetMonData(&gEnemyParty[0], MON_DATA_HELD_ITEM, heldItem);
     }
+}
+
+void Full_AreLegendaryBirdsSeen(void)
+{
+    gSpecialVar_Result =
+        GetSetPokedexFlag(NATIONAL_DEX_ARTICUNO, FLAG_GET_SEEN)
+     && GetSetPokedexFlag(NATIONAL_DEX_ZAPDOS, FLAG_GET_SEEN)
+     && GetSetPokedexFlag(NATIONAL_DEX_MOLTRES, FLAG_GET_SEEN);
+}
+
+void Full_MarkRoamingBeastsSeen(void)
+{
+    GetSetPokedexFlag(NATIONAL_DEX_SUICUNE, FLAG_SET_SEEN);
+    GetSetPokedexFlag(NATIONAL_DEX_RAIKOU, FLAG_SET_SEEN);
+    GetSetPokedexFlag(NATIONAL_DEX_ENTEI, FLAG_SET_SEEN);
 }
 
 void Full_CreateMewEventMon(void)

@@ -201,6 +201,7 @@
 #define VAR_FULL_CELEBI_QUEST      0x408F
 #define VAR_FULL_ROAMER_SEQUENCE   0x4090
 #define VAR_FULL_LAST_REPEL        0x4091
+#define VAR_FULL_BEAST_INTRO        0x4092
 #define VAR_FULL_END               0x409B
 #define VAR_0x408D                 0x408D
 #define VAR_0x408E                 0x408E

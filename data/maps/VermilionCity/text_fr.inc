@@ -132,3 +132,8 @@ VermilionCity_Text_Route2AideHasPackageForYou::
 	.string "Si tu vas par là, essaie de le\n"
 	.string "trouver, {PLAYER}.$"
 
+VermilionCity_Text_FullMaritimeBirdClue::
+    .string "MARIN: Trois oiseaux rares ont été\n"
+    .string "aperçus à KANTO.\p"
+    .string "Le même cri profond a suivi depuis\n"
+    .string "la mer. Renseigne-toi à l'ILE 1.$"

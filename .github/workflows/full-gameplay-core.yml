@@ -12,6 +12,7 @@ on:
       - feature/b3-final-consistency-audit-v4
       - feature/b4-specialty-ball-economy
       - feature/b5-altering-cave-encounter-polish
+      - feature/b6-legendary-narrative-v2-core
 
 jobs:
   build:
@@ -641,6 +642,9 @@ jobs:
 
       - name: Validate B5 Altering Cave and encounter polish
         run: python3 tools/validate_b5_encounter_polish.py
+
+      - name: Validate B6 legendary narrative V2
+        run: python3 tools/validate_b6_legendary_narrative.py
 
       - name: Validate one-save baby obtainability
         run: python3 tools/validate_full_obtainability.py

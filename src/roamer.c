@@ -6,6 +6,7 @@
 #include "constants/maps.h"
 #include "constants/region_map_sections.h"
 #include "constants/vars.h"
+#include "constants/flags.h"
 
 // Despite having a variable to track it, the roamer is
 // hard-coded to only ever be in map group 3
@@ -234,7 +235,7 @@ void CreateRoamerMonInstance(void)
 
 bool8 TryStartRoamerEncounter(void)
 {
-    if (IsRoamerAt(gSaveBlock1Ptr->location.mapGroup, gSaveBlock1Ptr->location.mapNum) == TRUE && (Random() % 4) == 0)
+    if (IsRoamerAt(gSaveBlock1Ptr->location.mapGroup, gSaveBlock1Ptr->location.mapNum) == TRUE && (Random() % 2) == 0)
     {
         CreateRoamerMonInstance();
         return TRUE;
@@ -277,6 +278,7 @@ void SetRoamerInactive(void)
     else
     {
         VarSet(VAR_FULL_ROAMER_SEQUENCE, 3);
+        FlagSet(FLAG_FULL_HO_OH_UNLOCKED);
     }
 }
 
