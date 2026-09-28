@@ -180,9 +180,9 @@ static const struct TrainerMonItemCustomMoves sParty_RSTuberM[] = {
         .moves = {MOVE_GIGA_DRAIN, MOVE_SLUDGE_BOMB, MOVE_SLEEP_POWDER, MOVE_MOONLIGHT},
     },
     {
-        .iv = 214,
+        .iv = 255,
         .lvl = 69,
-        .species = SPECIES_VILEPLUME,
+        .species = SPECIES_GLOOM,
         .heldItem = ITEM_MIRACLE_SEED,
         .moves = {MOVE_SOLAR_BEAM, MOVE_SLUDGE_BOMB, MOVE_SLEEP_POWDER, MOVE_SUNNY_DAY},
     },
