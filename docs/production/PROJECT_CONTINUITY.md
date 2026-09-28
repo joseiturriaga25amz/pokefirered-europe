@@ -486,3 +486,21 @@ Applied to Erika rematch:
 - no global ace-IV rewrite is authorized.
 
 The ace audit must continue across all reviewed bosses using identity/fidelity criteria without altering IVs unless separately approved.
+
+
+## 2026-09-28 — Global ace audit rule
+
+Ace identity is now audited globally for Gym Leaders, Giovanni, Gary/Blue and the Elite Four across first encounters and rematches.
+
+Approved exception rule:
+- symbolic/canonical identity determines the ace;
+- intermediate-stage aces may receive max trainer IVs and an appropriate held item to justify remaining unevolved;
+- IV enhancement is not implied by ace status.
+
+Corrections applied:
+- Sabrina: Kadabra ace in first battle and rematch; max IV + Twisted Spoon. Alakazam remains on both teams at a lower level.
+- Koga: Golbat ace in first battle with max IV + Sharp Beak; Crobat ace in rematch. Weezing moves below the ace slot.
+- Erika's already-applied Gloom rule remains the model for intermediate-stage ace compensation.
+- Giovanni's Persian remains signature/motif rather than battle ace.
+
+Validator: tools/validate_b3_global_ace_identity.py.
