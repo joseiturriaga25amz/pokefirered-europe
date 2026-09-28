@@ -566,3 +566,42 @@ Current work after PR #6:
 - exact-head validators / CI;
 - correct any stale documentation or validation gaps;
 - create the next safe checkpoint only after CI passes.
+
+
+## 2026-09-28 — B3 final technical closure / B4 specialty Ball candidate
+
+B3 final consistency audit was merged through PR #7:
+- merge commit: `715649b259fb95eaaa24ea09f8dc6b2b0b510093`;
+- exact tested head before merge: `ed080dd78d05b52de10aa20dad06e0e043b1835f`;
+- Full Gameplay Core run `36432599241`: **SUCCESS**.
+
+B4 branch:
+- `feature/b4-specialty-ball-economy`.
+
+Implemented B4 scope:
+- Vermilion Mart: Net Ball;
+- Fuchsia Mart: Nest Ball;
+- Saffron Mart: Timer Ball;
+- Cinnabar Mart: Repeat Ball;
+- Celadon Department Store 2F: Luxury Ball + Premier Ball;
+- Four Island Mart: Dive Ball;
+- Seven Island Mart: complete legitimate late/postgame stock of Net/Nest/Repeat/Timer/Luxury/Dive/Premier Balls.
+
+Economy / compatibility:
+- existing item prices retained: specialty Balls 1,000; Premier Ball 200;
+- Master Ball and Safari Ball remain excluded from these shops;
+- `src/data/items.json` was not modified;
+- original Gen III Dive Ball behavior remains unchanged: 3.5x only on underwater map type, 1x otherwise;
+- caught-ball metadata / item IDs remain untouched.
+
+Validator:
+- `tools/validate_b4_specialty_balls.py`;
+- wired into Full Gameplay Core.
+
+Functional B4 checkpoint:
+- HEAD `354cc1ede9ebe7ea5c3675176a3c3a5b51b3ead3`;
+- Full Gameplay Core run `36433908751`: **SUCCESS**;
+- B4 specialty Ball validator: **PASS**;
+- reproducible ROM build, release integrity and MyBoy RC packaging: **PASS**.
+
+A final documentation-only exact-HEAD CI is required after this continuity update. If green, merge B4 and begin B5 — Altering Cave and encounter polish from the exact merged master checkpoint.

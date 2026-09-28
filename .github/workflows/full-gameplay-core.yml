@@ -10,6 +10,7 @@ on:
       - feature/b3-postgame-rematch-identity
       - feature/b3-global-canon-audit-v3
       - feature/b3-final-consistency-audit-v4
+      - feature/b4-specialty-ball-economy
 
 jobs:
   build:
@@ -629,6 +630,9 @@ jobs:
 
       - name: Validate B3 postgame progression bridge
         run: python3 tools/validate_b3_postgame_progression.py
+
+      - name: Validate B4 specialty Ball distribution
+        run: python3 tools/validate_b4_specialty_balls.py
 
       - name: Validate one-save baby obtainability
         run: python3 tools/validate_full_obtainability.py

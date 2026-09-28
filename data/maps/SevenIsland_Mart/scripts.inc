@@ -16,6 +16,13 @@ SevenIsland_Mart_EventScript_Clerk::
 SevenIsland_Mart_Items::
 	.2byte ITEM_ULTRA_BALL
 	.2byte ITEM_GREAT_BALL
+	.2byte ITEM_NET_BALL
+	.2byte ITEM_NEST_BALL
+	.2byte ITEM_REPEAT_BALL
+	.2byte ITEM_TIMER_BALL
+	.2byte ITEM_LUXURY_BALL
+	.2byte ITEM_DIVE_BALL
+	.2byte ITEM_PREMIER_BALL
 	.2byte ITEM_FULL_RESTORE
 	.2byte ITEM_MAX_POTION
 	.2byte ITEM_HYPER_POTION
