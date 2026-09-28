@@ -461,11 +461,11 @@ Implemented B3 scope:
 This documentation-only closure commit must also pass Full Gameplay Core before merge. After that, merge B3 to `master` and start B4 from the exact merged master checkpoint.
 
 
-### B3 closure candidate is ON HOLD
+### Historical — B3 closure candidate was ON HOLD (superseded)
 
 User clarified the intended review methodology: postgame rematches must receive the same one-by-one manual design review used for the first-cycle Gym Leaders, Gary, Giovanni and League.
 
-Therefore B3 is **not closed** and must not merge yet.
+At that historical point, B3 was **not closed** and was not to be merged yet.
 
 > **Superseded historical note:** the manual sequence below was completed later on 2026-09-28 and the resulting checkpoint was merged to `master` via PR #6 (merge commit `5c481fb4165c4b5e9a2fb25730d6821865c29814`). Do not treat this earlier pending-state note as current.
 
@@ -512,7 +512,7 @@ Implemented on feature/b3-global-canon-audit-v2:
 - Agatha rematch gains Sableye Lv78 as a Full thematic Hoenn sixth; ownership is not represented as canonical.
 - Exact League and global identity validators updated.
 
-Continue global transversal audit of Gary/Blue, Giovanni, all Gym Leaders and Elite Four before final B3 closure.
+Historical next step at that point: continue the global transversal audit of Gary/Blue, Giovanni, all Gym Leaders and Elite Four. This was subsequently completed and merged in PR #6.
 
 
 ## 2026-09-28 — Global ace audit design closure
