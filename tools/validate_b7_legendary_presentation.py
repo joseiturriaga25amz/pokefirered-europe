@@ -23,6 +23,28 @@ def main():
     scripts = read("data/maps/PokemonMansion_B1F/scripts.inc")
     text_es = read("data/maps/PokemonMansion_B1F/text_es.inc")
 
+    # Three non-interactive overworld sightings lead the player deeper through
+    # the mansion before the final B1F interaction.
+    sighting_specs = (
+        ("PokemonMansion_1F", "LOCALID_FULL_MEW_SIGHTING_1F", 1, (7, 6)),
+        ("PokemonMansion_2F", "LOCALID_FULL_MEW_SIGHTING_2F", 2, (8, 30)),
+        ("PokemonMansion_3F", "LOCALID_FULL_MEW_SIGHTING_3F", 3, (10, 16)),
+    )
+    for map_name, local_id, quest_state, coords in sighting_specs:
+        data = json.loads(read(f"data/maps/{map_name}/map.json"))
+        map_scripts = read(f"data/maps/{map_name}/scripts.inc")
+        objects = [obj for obj in data["object_events"] if obj.get("local_id") == local_id]
+        assert len(objects) == 1, (map_name, local_id)
+        obj = objects[0]
+        assert obj["graphics_id"] == "OBJ_EVENT_GFX_MEW"
+        assert obj["script"] == "0x0"
+        assert (obj["x"], obj["y"]) == coords
+        assert not any((w["x"], w["y"]) == coords for w in data["warp_events"])
+        updater = block(map_scripts, f"{map_name}_EventScript_UpdateFullMewSighting")
+        assert f"goto_if_ne VAR_FULL_MEW_QUEST, {quest_state}" in updater
+        assert f"showobjectat {local_id}" in updater
+        assert "StartLegendaryBattle" not in updater
+
     mew_objects = [
         obj for obj in map_data["object_events"]
         if obj.get("local_id") == "LOCALID_FULL_MEW_FINAL"
@@ -70,7 +92,7 @@ def main():
     assert "Diario: 1 de septiembre." in text_es
     assert "MEWTWO es demasiado poderoso." in text_es
 
-    print("B7 Mew presentation PASS: diary progression reveals an overworld Mew; battle starts only by interaction.")
+    print("B7 Mew presentation PASS: three overworld sightings lead to a final interactable Mew; battle starts only by interaction.")
 
 
 if __name__ == "__main__":
