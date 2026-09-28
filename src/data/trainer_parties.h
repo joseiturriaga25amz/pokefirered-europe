@@ -6108,7 +6108,7 @@ static const struct TrainerMonItemCustomMoves sParty_LeaderKoga[] = {
         .lvl = 46,
         .species = SPECIES_GOLBAT,
         .heldItem = ITEM_SHARP_BEAK,
-        .moves = {MOVE_WING_ATTACK, MOVE_BITE, MOVE_CONFUSE_RAY, MOVE_TOXIC},
+        .moves = {MOVE_WING_ATTACK, MOVE_BITE, MOVE_CONFUSE_RAY, MOVE_SCREECH},
     },
 };
 
