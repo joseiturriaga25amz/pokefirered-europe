@@ -92,6 +92,20 @@ def main():
     assert "Diario: 1 de septiembre." in text_es
     assert "MEWTWO es demasiado poderoso." in text_es
 
+    # Quest NPCs retain contextual identity after the first clue/handoff instead
+    # of immediately falling back to unrelated vanilla dialogue.
+    vermilion = read("data/maps/VermilionCity/scripts.inc")
+    ferry = block(vermilion, "VermilionCity_EventScript_FerrySailor")
+    assert "goto_if_eq VAR_FULL_MYSTIC_QUEST, 1, VermilionCity_EventScript_FerrySailorMysticReminder" in ferry
+    mystic_reminder = block(vermilion, "VermilionCity_EventScript_FerrySailorMysticReminder")
+    assert "VermilionCity_Text_FullMaritimeBirdClue" in mystic_reminder
+
+    pewter = read("data/maps/PewterCity_Museum_1F/scripts.inc")
+    scientist = block(pewter, "PewterCity_Museum_1F_EventScript_Scientist2")
+    assert "goto_if_eq VAR_FULL_AURORA_QUEST, 2, PewterCity_Museum_1F_EventScript_FullAuroraFollowup" in scientist
+    aurora_followup = block(pewter, "PewterCity_Museum_1F_EventScript_FullAuroraFollowup")
+    assert "PewterCity_Museum_1F_Text_FullAuroraSignal" in aurora_followup
+
     print("B7 Mew presentation PASS: three overworld sightings lead to a final interactable Mew; battle starts only by interaction.")
 
 
