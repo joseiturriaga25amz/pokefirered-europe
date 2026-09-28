@@ -251,3 +251,31 @@ MyBoy runtime on the frozen RC `a1c7fa573ac784ef089bfdf966aa38fc84861212` expose
 ### RC-F041 — Fighting Dojo Koichi sight-trigger script no longer began with `trainerbattle`
 **Status:** FIXED / CI PENDING / RUNTIME RETEST REQUIRED  
 MyBoy runtime reproduced a hard freeze every time the player entered Koichi's sight range after defeating the four preliminary Dojo trainers. The second-Dojo implementation had wrapped Koichi's first battle in `goto_if_not_defeated`, so `SaffronCity_Dojo_EventScript_MasterKoichi` no longer began with a trainer-battle opcode. That is invalid for a `TRAINER_TYPE_NORMAL` object that can approach the player: `ConfigureAndSetUpOneTrainerBattle()` bypasses normal script execution and calls `BattleSetup_ConfigureTrainerBattle(trainerScript + 1)`, assuming byte 0 is the `trainerbattle` command. The conditional opcode was therefore interpreted as trainer-battle payload, producing corrupted battle configuration and a deterministic freeze. The script now restores the vanilla-safe shape by making Koichi's first `trainerbattle_single` the first executable opcode; the post-first-battle Sabrina/second-trial logic remains after it for normal interaction. `validate_full_event_states.py` now asserts this structural invariant so the regression cannot recur silently.
+
+
+## 2026-09-28 — B4 specialty Ball economy acceptance evidence
+
+**Status:** STATIC/CI PASS — RUNTIME SHOP SPOT-CHECK DEFERRED TO FINAL MYBOY SUITE
+
+B4 adds legitimate staged shop availability for all approved Gen III specialty Balls without changing item IDs, caught-ball metadata, or capture formulas.
+
+Distribution:
+- Vermilion — Net Ball;
+- Fuchsia — Nest Ball;
+- Saffron — Timer Ball;
+- Cinnabar — Repeat Ball;
+- Celadon Department Store 2F — Luxury Ball and Premier Ball;
+- Four Island — Dive Ball;
+- Seven Island — consolidated late/postgame stock of all seven approved specialty Balls.
+
+Economic rules remain unchanged:
+- Net/Nest/Repeat/Timer/Luxury/Dive Ball: 1,000;
+- Premier Ball: 200;
+- Master Ball and Safari Ball are not sold.
+
+The original FireRed/Gen III Dive Ball branch is preserved exactly: underwater map type receives 3.5x capture multiplier; other maps receive 1x. No Surf/fishing reinterpretation was introduced.
+
+Validation:
+- `tools/validate_b4_specialty_balls.py` checks staged reachability, Seven Island consolidation, Master/Safari exclusion, item metadata/prices, and Dive Ball semantics.
+- Functional B4 HEAD `354cc1ede9ebe7ea5c3675176a3c3a5b51b3ead3`.
+- Full Gameplay Core run `36433908751`: **SUCCESS**.
