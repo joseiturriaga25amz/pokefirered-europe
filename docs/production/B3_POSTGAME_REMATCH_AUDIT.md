@@ -717,3 +717,25 @@ Rationale:
 - OHKO moves are intentionally excluded to avoid RNG-driven boss design.
 
 **Status: APPROVED AS-IS.**
+
+
+### Global ace transversal review — Lorelei
+
+User approved Lorelei's Lapras ace progression unchanged.
+
+First League — Lapras 61 ★:
+- Ice Beam / Surf / Thunderbolt / Body Slam.
+- Sitrus Berry.
+- .iv = 198.
+
+Rematch — Lapras 79 ★:
+- Ice Beam / Surf / Thunderbolt / Confuse Ray.
+- Leftovers.
+- .iv = 247.
+
+Rationale:
+- Ice Beam + Surf preserve the classic Lorelei/Lapras core;
+- Thunderbolt adds reliable postgame coverage;
+- Body Slam in the first League and Confuse Ray in the rematch together preserve major elements of Lorelei's original FRLG Lapras identity while giving each encounter a distinct tactical profile.
+
+**Status: APPROVED AS-IS.**
