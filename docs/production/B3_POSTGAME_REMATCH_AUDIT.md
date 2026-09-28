@@ -304,3 +304,14 @@ Important correction discovered by the global pass:
 - Sabrina's animated-series Ghost partner is **Haunter**, and it is documented as not having evolved. The current rematch Gengar therefore requires re-review rather than being treated as a straightforward anime reference.
 
 B3 remains open. No final merge until the global canon-depth pass, resulting approved edits, consolidated validators, exact-head CI and final MyBoy acceptance are complete.
+
+
+### Global canon-depth correction — Sabrina
+
+User-approved correction:
+- Sabrina rematch changes **Gengar 69 -> Haunter 69**.
+- Moves remain Shadow Ball / Thunderbolt / Hypnosis / Dream Eater with Spell Tag.
+- Rationale: Pokémon the Series associates Sabrina specifically with Haunter, and the character does not need a forced final-stage evolution merely because this is a rematch. This mirrors other fidelity-first choices such as Brock retaining Marshtomp.
+- Alakazam 72 remains Sabrina's combat ace.
+
+**Status: APPLIED.**
