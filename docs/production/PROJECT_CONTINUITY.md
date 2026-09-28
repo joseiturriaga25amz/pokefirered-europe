@@ -516,3 +516,19 @@ Implemented on feature/b3-global-canon-audit-v2:
 - Exact League and global identity validators updated.
 
 Continue global transversal audit of Gary/Blue, Giovanni, all Gym Leaders and Elite Four before final B3 closure.
+
+
+## 2026-09-28 — Global ace audit design closure
+
+Global symbolic-ace review completed across Gary/Blue, Giovanni, all Kanto Gym Leaders and the Elite Four, including first encounters and strengthened/rematch states.
+
+Design corrections required by the audit were limited to:
+- Erika -> Gloom;
+- Koga -> Golbat/Crobat;
+- Sabrina -> Kadabra;
+- Lance Gyarados -> Red/Shiny identity continuity.
+
+Other current ace assignments remain accepted:
+Brock Onix/Steelix; Misty Starmie; Surge Raichu; Blaine Magmar; Lorelei Lapras; Bruno Machamp; Agatha Gengar; Lance Dragonite; Gary Squirtle/Wartortle/Blastoise. Giovanni uses encounter-specific combat aces and Persian is not treated as the ace solely because it is his visual companion.
+
+Design audit is closed; technical closure still requires current exact-head CI and later runtime acceptance.
