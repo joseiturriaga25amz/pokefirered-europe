@@ -274,3 +274,20 @@ The following runtime-approved rules are authoritative for B1 and v1.0 closure:
 - No Pokémon/BoxPokemon or link-serialization changes.
 - No SaveBlock growth; allocate only an audited existing Full flag namespace.
 - Preserve the original diploma behavior and National/Kanto distinction.
+
+
+## A-011 — Signature staging identity correction
+
+**Date:** 2026-09-28  
+**Status:** APPROVED  
+**Supersedes:** only the affected signature-species mapping lines in A-007; all A-007 technical constraints remain in force.
+
+### Decision
+
+- Brock: **Onix** in the main-story Gym battle; **Steelix** for the postgame rematch.
+- Erika: **Gloom**, not Vileplume.
+- Koga: **Golbat** in the main-story Gym battle; **Crobat** for the postgame rematch.
+- Sabrina: **Kadabra**, not Alakazam.
+- The visible companion must be story-stage aware whenever the approved rematch identity changes.
+- Misty remains Starmie, Lt. Surge remains Raichu, Blaine remains Magmar, Giovanni remains Persian, Lorelei remains Lapras, Bruno remains Machamp, Agatha remains Gengar, Lance remains Dragonite, and Gary/Blue remains stage-aware Squirtle → Wartortle → Blastoise.
+- These visual changes reuse the same story/rematch gates already used by the trainer scripts and add no new save state.
