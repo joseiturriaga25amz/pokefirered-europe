@@ -467,10 +467,7 @@ User clarified the intended review methodology: postgame rematches must receive 
 
 Therefore B3 is **not closed** and must not merge yet.
 
-Pending manual sequence:
-Brock → Misty → Lt. Surge → Erika → Koga → Sabrina → Blaine → Giovanni → Lorelei → Bruno → Agatha → Lance → Gary/Blue Champion rematch.
-
-After the 13 individual reviews, run one final transversal progression audit, then exact-head CI, then close/merge B3.
+> **Superseded historical note:** the manual sequence below was completed later on 2026-09-28 and the resulting checkpoint was merged to `master` via PR #6 (merge commit `5c481fb4165c4b5e9a2fb25730d6821865c29814`). Do not treat this earlier pending-state note as current.
 
 
 ## 2026-09-28 — Erika ace / IV clarification
@@ -532,3 +529,40 @@ Other current ace assignments remain accepted:
 Brock Onix/Steelix; Misty Starmie; Surge Raichu; Blaine Magmar; Lorelei Lapras; Bruno Machamp; Agatha Gengar; Lance Dragonite; Gary Squirtle/Wartortle/Blastoise. Giovanni uses encounter-specific combat aces and Persian is not treated as the ace solely because it is his visual companion.
 
 Design audit is closed; technical closure still requires current exact-head CI and later runtime acceptance.
+
+
+## 2026-09-28 — Current B3 checkpoint after PR #6
+
+PR #6 merged the completed global canon/ace audit to `master` at:
+- merge commit `5c481fb4165c4b5e9a2fb25730d6821865c29814`.
+
+The manual transversal ace/moveset review through Lance is complete and user-approved.
+
+Approved gameplay changes in that pass:
+- Gary Nidoqueen: Superpower -> Hyper Beam.
+- Gary Magmar: Confuse Ray -> Psychic.
+- Koga first-battle Golbat: Toxic -> Screech.
+- Blaine rematch Magmar: Fire Punch -> Flamethrower, yielding Flamethrower / Fire Blast / Brick Break / Confuse Ray.
+
+Approved unchanged ace progressions:
+- Brock Onix -> Steelix.
+- Misty Starmie -> Starmie.
+- Lt. Surge Raichu -> Raichu.
+- Erika Gloom -> Gloom.
+- Koga Golbat -> Crobat after the Screech adjustment.
+- Sabrina Kadabra -> Kadabra.
+- Giovanni Rhydon -> Rhydon.
+- Lorelei Lapras -> Lapras.
+- Bruno Machamp -> Machamp.
+- Agatha Gengar -> Gengar.
+- Lance Dragonite -> Dragonite.
+- Gary/Blue Squirtle -> Wartortle -> Blastoise.
+
+Authoritative resume file:
+- `docs/production/B3_GLOBAL_AUDIT_CHECKPOINT.md`.
+
+Current work after PR #6:
+- final repository consistency audit;
+- exact-head validators / CI;
+- correct any stale documentation or validation gaps;
+- create the next safe checkpoint only after CI passes.
