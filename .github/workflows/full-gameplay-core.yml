@@ -14,6 +14,7 @@ on:
       - feature/b5-altering-cave-encounter-polish
       - feature/b6-legendary-narrative-v2-core
       - feature/b7-legendary-presentation-polish
+      - feature/b8-signature-pokemon-staging
 
 jobs:
   build:
@@ -649,6 +650,9 @@ jobs:
 
       - name: Validate B7 legendary presentation
         run: python3 tools/validate_b7_legendary_presentation.py
+
+      - name: Validate B8 signature staging
+        run: python3 tools/validate_b8_signature_staging.py
 
       - name: Validate one-save baby obtainability
         run: python3 tools/validate_full_obtainability.py
