@@ -169,8 +169,10 @@
 #define OBJ_EVENT_GFX_GENGAR 163
 #define OBJ_EVENT_GFX_DRAGONITE 164
 #define OBJ_EVENT_GFX_BLASTOISE 165
+#define OBJ_EVENT_GFX_SEEL_ICON 166
+#define OBJ_EVENT_GFX_STARYU_ICON 167
 
-#define NUM_OBJ_EVENT_GFX     166
+#define NUM_OBJ_EVENT_GFX     168
 
 // These are dynamic object gfx ids.
 // They correspond with the values of the VAR_OBJ_GFX_ID_X vars.
