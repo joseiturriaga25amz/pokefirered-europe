@@ -54,7 +54,7 @@ def main():
     pointers = (ROOT / "src/data/object_events/object_event_graphics_info_pointers.h").read_text(encoding="utf-8")
     assert "#define OBJ_EVENT_GFX_ONIX 152" in event_objects
     assert "#define OBJ_EVENT_GFX_STEELIX 153" in event_objects
-    assert "#define NUM_OBJ_EVENT_GFX     159" in event_objects
+    assert "#define NUM_OBJ_EVENT_GFX     160" in event_objects
     assert "OBJ_EVENT_PAL_TAG_MON_ICON_2" in movement
     assert "gMonIconPalettes[2]" in movement
     assert 'graphics/pokemon/onix/icon.4bpp' in graphics
@@ -84,7 +84,7 @@ def main():
 
     assert "#define OBJ_EVENT_GFX_GOLBAT 154" in event_objects
     assert "#define OBJ_EVENT_GFX_CROBAT 155" in event_objects
-    assert "#define NUM_OBJ_EVENT_GFX     159" in event_objects
+    assert "#define NUM_OBJ_EVENT_GFX     160" in event_objects
     assert 'graphics/pokemon/golbat/icon.4bpp' in graphics
     assert 'graphics/pokemon/crobat/icon.4bpp' in graphics
     assert "gObjectEventGraphicsInfo_Golbat" in info
@@ -104,7 +104,7 @@ def main():
     assert not any((w["x"], w["y"]) == (erika_signature["x"], erika_signature["y"]) for w in erika["warp_events"])
 
     assert "#define OBJ_EVENT_GFX_GLOOM 156" in event_objects
-    assert "#define NUM_OBJ_EVENT_GFX     159" in event_objects
+    assert "#define NUM_OBJ_EVENT_GFX     160" in event_objects
     assert 'graphics/pokemon/gloom/icon.4bpp' in graphics
     assert "gObjectEventGraphicsInfo_Gloom" in info
     assert "[OBJ_EVENT_GFX_GLOOM]" in pointers
@@ -121,7 +121,7 @@ def main():
     assert not any((w["x"], w["y"]) == (sabrina_signature["x"], sabrina_signature["y"]) for w in sabrina["warp_events"])
 
     assert "#define OBJ_EVENT_GFX_KADABRA 157" in event_objects
-    assert "#define NUM_OBJ_EVENT_GFX     159" in event_objects
+    assert "#define NUM_OBJ_EVENT_GFX     160" in event_objects
     assert 'graphics/pokemon/kadabra/icon.4bpp' in graphics
     assert "gObjectEventGraphicsInfo_Kadabra" in info
     assert "[OBJ_EVENT_GFX_KADABRA]" in pointers
@@ -138,10 +138,27 @@ def main():
     assert not any((w["x"], w["y"]) == (misty_signature["x"], misty_signature["y"]) for w in misty["warp_events"])
 
     assert "#define OBJ_EVENT_GFX_STARMIE 158" in event_objects
-    assert "#define NUM_OBJ_EVENT_GFX     159" in event_objects
+    assert "#define NUM_OBJ_EVENT_GFX     160" in event_objects
     assert 'graphics/pokemon/starmie/icon.4bpp' in graphics
     assert "gObjectEventGraphicsInfo_Starmie" in info
     assert "[OBJ_EVENT_GFX_STARMIE]" in pointers
+
+    surge = read_json("data/maps/VermilionCity_Gym/map.json")
+    surge_objs = surge["object_events"]
+    surge_signature = [o for o in surge_objs if o.get("local_id") == "LOCALID_FULL_SURGE_SIGNATURE"]
+    assert len(surge_signature) == 1
+    surge_signature = surge_signature[0]
+    assert surge_signature["graphics_id"] == "OBJ_EVENT_GFX_RAICHU"
+    assert (surge_signature["x"], surge_signature["y"]) == (4, 2)
+    assert surge_signature["script"] == "0x0"
+    assert surge_signature["trainer_type"] == "TRAINER_TYPE_NONE"
+    assert not any((w["x"], w["y"]) == (surge_signature["x"], surge_signature["y"]) for w in surge["warp_events"])
+
+    assert "#define OBJ_EVENT_GFX_RAICHU 159" in event_objects
+    assert "#define NUM_OBJ_EVENT_GFX     160" in event_objects
+    assert 'graphics/pokemon/raichu/icon.4bpp' in graphics
+    assert "gObjectEventGraphicsInfo_Raichu" in info
+    assert "[OBJ_EVENT_GFX_RAICHU]" in pointers
 
     koga_scripts = (ROOT / "data/maps/FuchsiaCity_Gym/scripts.inc").read_text(encoding="utf-8")
     assert "setvar VAR_OBJ_GFX_ID_1, OBJ_EVENT_GFX_GOLBAT" in koga_scripts
@@ -149,7 +166,7 @@ def main():
     assert "goto_if_unset FLAG_GOT_TM06_FROM_KOGA" in koga_scripts
     assert "setvar VAR_OBJ_GFX_ID_1, OBJ_EVENT_GFX_CROBAT" in koga_scripts
 
-    print("B8 signature staging PASS: Lorelei/Lapras stable; Brock Onix->Steelix, Misty/Starmie, Erika/Gloom, Koga Golbat->Crobat, and Sabrina/Kadabra are nonblocking and valid.")
+    print("B8 signature staging PASS: Lorelei/Lapras stable; Brock Onix->Steelix, Misty/Starmie, Surge/Raichu, Erika/Gloom, Koga Golbat->Crobat, and Sabrina/Kadabra are nonblocking and valid.")
 
 
 if __name__ == "__main__":
