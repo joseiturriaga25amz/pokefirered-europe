@@ -208,11 +208,12 @@ def main():
     assert len(agatha_signature) == 1
     agatha_signature = agatha_signature[0]
     assert agatha_signature["graphics_id"] == "OBJ_EVENT_GFX_GENGAR"
-    assert (agatha_signature["x"], agatha_signature["y"]) == (8, 5)
+    assert (agatha_signature["x"], agatha_signature["y"]) == (7, 5)
     assert agatha_signature["script"] == "0x0"
     assert agatha_signature["trainer_type"] == "TRAINER_TYPE_NONE"
     assert agatha_signature["flag"] == "0"
     assert agatha_signature["x"] != 6
+    assert abs(agatha_signature["x"] - agatha_trainer[0]["x"]) + abs(agatha_signature["y"] - agatha_trainer[0]["y"]) == 1
     assert not any((w["x"], w["y"]) == (agatha_signature["x"], agatha_signature["y"]) for w in agatha["warp_events"])
     assert "#define OBJ_EVENT_GFX_GENGAR 163" in event_objects
     assert "#define NUM_OBJ_EVENT_GFX     166" in event_objects

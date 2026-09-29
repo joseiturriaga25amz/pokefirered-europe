@@ -33,7 +33,7 @@
       "local_id": "LOCALID_FULL_AGATHA_SIGNATURE",
       "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_GENGAR",
-      "x": 8,
+      "x": 7,
       "y": 5,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
