@@ -258,13 +258,15 @@ def main():
     assert len(lance_signature) == 1
     lance_signature = lance_signature[0]
     assert lance_signature["graphics_id"] == "OBJ_EVENT_GFX_DRAGONITE"
-    assert (lance_signature["x"], lance_signature["y"]) == (9, 8)
+    assert (lance_signature["x"], lance_signature["y"]) == (7, 8)
     assert lance_signature["script"] == "0x0"
     assert lance_signature["trainer_type"] == "TRAINER_TYPE_NONE"
     assert lance_signature["flag"] == "0"
-    assert lance_signature["x"] != 6
-    assert (lance_signature["x"], lance_signature["y"]) not in {(5, 8), (7, 8)}
+    assert abs(lance_signature["x"] - lance_trainer[0]["x"]) + abs(lance_signature["y"] - lance_trainer[0]["y"]) == 1
     assert not any((w["x"], w["y"]) == (lance_signature["x"], lance_signature["y"]) for w in lance["warp_events"])
+
+    lance_scripts = (ROOT / "data/maps/PokemonLeague_LancesRoom/scripts.inc").read_text(encoding="utf-8")
+    assert "PokemonLeague_LancesRoom_Movement_LanceMoveOutOfWayRight::\n\twalk_up\n\twalk_right\n\twalk_right\n\twalk_down" in lance_scripts
 
     assert "#define OBJ_EVENT_GFX_DRAGONITE 164" in event_objects
     assert "#define NUM_OBJ_EVENT_GFX     166" in event_objects
