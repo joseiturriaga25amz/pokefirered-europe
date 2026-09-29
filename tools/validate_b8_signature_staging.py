@@ -187,11 +187,12 @@ def main():
     assert len(bruno_signature) == 1
     bruno_signature = bruno_signature[0]
     assert bruno_signature["graphics_id"] == "OBJ_EVENT_GFX_MACHAMP"
-    assert (bruno_signature["x"], bruno_signature["y"]) == (4, 5)
+    assert (bruno_signature["x"], bruno_signature["y"]) == (5, 5)
     assert bruno_signature["script"] == "0x0"
     assert bruno_signature["trainer_type"] == "TRAINER_TYPE_NONE"
     assert bruno_signature["flag"] == "0"
     assert bruno_signature["x"] != 6
+    assert abs(bruno_signature["x"] - bruno_trainer[0]["x"]) + abs(bruno_signature["y"] - bruno_trainer[0]["y"]) == 1
     assert not any((w["x"], w["y"]) == (bruno_signature["x"], bruno_signature["y"]) for w in bruno["warp_events"])
 
     assert "#define OBJ_EVENT_GFX_MACHAMP 162" in event_objects
