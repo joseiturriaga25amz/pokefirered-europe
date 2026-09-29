@@ -58,9 +58,9 @@
       "flag": "0"
     },
     {
-      "local_id": "LOCALID_FULL_BROCK_ONIX",
+      "local_id": "LOCALID_FULL_BROCK_SIGNATURE",
       "type": "object",
-      "graphics_id": "OBJ_EVENT_GFX_ONIX",
+      "graphics_id": "OBJ_EVENT_GFX_VAR_0",
       "x": 4,
       "y": 5,
       "elevation": 3,

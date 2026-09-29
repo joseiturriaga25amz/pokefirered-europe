@@ -135,6 +135,7 @@ const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Fearow;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Machoke;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Lapras;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Onix;
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Steelix;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Zapdos;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Moltres;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Articuno;
@@ -291,6 +292,7 @@ const struct ObjectEventGraphicsInfo *const gObjectEventGraphicsInfoPointers[NUM
     [OBJ_EVENT_GFX_MACHOKE]                  = &gObjectEventGraphicsInfo_Machoke,
     [OBJ_EVENT_GFX_LAPRAS]                   = &gObjectEventGraphicsInfo_Lapras,
     [OBJ_EVENT_GFX_ONIX]                     = &gObjectEventGraphicsInfo_Onix,
+    [OBJ_EVENT_GFX_STEELIX]                  = &gObjectEventGraphicsInfo_Steelix,
     [OBJ_EVENT_GFX_ZAPDOS]                   = &gObjectEventGraphicsInfo_Zapdos,
     [OBJ_EVENT_GFX_MOLTRES]                  = &gObjectEventGraphicsInfo_Moltres,
     [OBJ_EVENT_GFX_ARTICUNO]                 = &gObjectEventGraphicsInfo_Articuno,

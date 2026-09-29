@@ -120,6 +120,7 @@ const u16 gObjectEventPic_RocketM[] = INCBIN_U16("graphics/object_events/pics/pe
 const u16 gObjectEventPic_Celio[] = INCBIN_U16("graphics/object_events/pics/people/celio.4bpp");
 const u16 gObjectEventPic_Lapras[] = INCBIN_U16("graphics/object_events/pics/pokemon/lapras.4bpp");
 const u16 gObjectEventPic_Onix[] = INCBIN_U16("graphics/pokemon/onix/icon.4bpp");
+const u16 gObjectEventPic_Steelix[] = INCBIN_U16("graphics/pokemon/steelix/icon.4bpp");
 const u16 gObjectEventPic_Zapdos[] = INCBIN_U16("graphics/object_events/pics/pokemon/zapdos.4bpp");
 const u16 gObjectEventPic_Moltres[] = INCBIN_U16("graphics/object_events/pics/pokemon/moltres.4bpp");
 const u16 gObjectEventPic_Articuno[] = INCBIN_U16("graphics/object_events/pics/pokemon/articuno.4bpp");
