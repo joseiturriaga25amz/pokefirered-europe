@@ -139,6 +139,7 @@ const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Steelix;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Golbat;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Crobat;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Gloom;
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Kadabra;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Zapdos;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Moltres;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Articuno;
@@ -299,6 +300,7 @@ const struct ObjectEventGraphicsInfo *const gObjectEventGraphicsInfoPointers[NUM
     [OBJ_EVENT_GFX_GOLBAT]                    = &gObjectEventGraphicsInfo_Golbat,
     [OBJ_EVENT_GFX_CROBAT]                    = &gObjectEventGraphicsInfo_Crobat,
     [OBJ_EVENT_GFX_GLOOM]                     = &gObjectEventGraphicsInfo_Gloom,
+    [OBJ_EVENT_GFX_KADABRA]                   = &gObjectEventGraphicsInfo_Kadabra,
     [OBJ_EVENT_GFX_ZAPDOS]                   = &gObjectEventGraphicsInfo_Zapdos,
     [OBJ_EVENT_GFX_MOLTRES]                  = &gObjectEventGraphicsInfo_Moltres,
     [OBJ_EVENT_GFX_ARTICUNO]                 = &gObjectEventGraphicsInfo_Articuno,
