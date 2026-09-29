@@ -57,6 +57,71 @@ def main():
     graphics = (ROOT / "src/data/object_events/object_event_graphics.h").read_text(encoding="utf-8")
     info = (ROOT / "src/data/object_events/object_event_graphics_info.h").read_text(encoding="utf-8")
     pointers = (ROOT / "src/data/object_events/object_event_graphics_info_pointers.h").read_text(encoding="utf-8")
+    pic_tables = (ROOT / "src/data/object_events/object_event_pic_tables.h").read_text(encoding="utf-8")
+
+    # Global B8 graphics registry invariants.
+    expected_b8_assets = [
+        ("OBJ_EVENT_GFX_ONIX", 152, "Onix"),
+        ("OBJ_EVENT_GFX_STEELIX", 153, "Steelix"),
+        ("OBJ_EVENT_GFX_GOLBAT", 154, "Golbat"),
+        ("OBJ_EVENT_GFX_CROBAT", 155, "Crobat"),
+        ("OBJ_EVENT_GFX_GLOOM", 156, "Gloom"),
+        ("OBJ_EVENT_GFX_KADABRA", 157, "Kadabra"),
+        ("OBJ_EVENT_GFX_STARMIE", 158, "Starmie"),
+        ("OBJ_EVENT_GFX_RAICHU", 159, "Raichu"),
+        ("OBJ_EVENT_GFX_MAGMAR", 160, "Magmar"),
+        ("OBJ_EVENT_GFX_PERSIAN", 161, "Persian"),
+        ("OBJ_EVENT_GFX_MACHAMP", 162, "Machamp"),
+        ("OBJ_EVENT_GFX_GENGAR", 163, "Gengar"),
+        ("OBJ_EVENT_GFX_DRAGONITE", 164, "Dragonite"),
+        ("OBJ_EVENT_GFX_BLASTOISE", 165, "Blastoise"),
+        ("OBJ_EVENT_GFX_SEEL_ICON", 166, "SeelIcon"),
+        ("OBJ_EVENT_GFX_STARYU_ICON", 167, "StaryuIcon"),
+    ]
+    assert "#define NUM_OBJ_EVENT_GFX     168" in event_objects
+    for gfx_name, gfx_id, stem in expected_b8_assets:
+        assert event_objects.count(f"#define {gfx_name} {gfx_id}") == 1
+        assert graphics.count(f"gObjectEventPic_{stem}[]") == 1
+        assert info.count(f"gObjectEventGraphicsInfo_{stem} = {{") == 1
+        assert pointers.count(f"gObjectEventGraphicsInfo_{stem};") == 1
+        assert pointers.count(f"[{gfx_name}]") == 1
+        assert pic_tables.count(f"sPicTable_{stem}[]") == 1
+        info_block = info.split(f"const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_{stem} = {{", 1)[1].split("};", 1)[0]
+        assert ".size = 512" in info_block
+        assert ".width = 32" in info_block
+        assert ".height = 32" in info_block
+        assert ".inanimate = TRUE" in info_block
+        assert ".tracks = TRACKS_NONE" in info_block
+
+    # Global B8 map invariants: no duplicate local IDs, no object stacking,
+    # all LOCALID_FULL_* staging objects are non-interactive and never occupy warps.
+    b8_map_paths = [
+        "data/maps/PokemonLeague_LoreleisRoom/map.json",
+        "data/maps/PokemonLeague_BrunosRoom/map.json",
+        "data/maps/PokemonLeague_AgathasRoom/map.json",
+        "data/maps/PokemonLeague_LancesRoom/map.json",
+        "data/maps/PokemonLeague_ChampionsRoom/map.json",
+        "data/maps/PewterCity_Gym/map.json",
+        "data/maps/CeruleanCity_Gym/map.json",
+        "data/maps/VermilionCity_Gym/map.json",
+        "data/maps/CeladonCity_Gym/map.json",
+        "data/maps/FuchsiaCity_Gym/map.json",
+        "data/maps/SaffronCity_Gym/map.json",
+        "data/maps/CinnabarIsland_Gym/map.json",
+        "data/maps/ViridianCity_Gym/map.json",
+    ]
+    for map_path in b8_map_paths:
+        audit_map = read_json(map_path)
+        audit_objects = audit_map["object_events"]
+        explicit_local_ids = [o["local_id"] for o in audit_objects if "local_id" in o]
+        assert len(explicit_local_ids) == len(set(explicit_local_ids))
+        occupied_tiles = [(o["x"], o["y"], o["elevation"]) for o in audit_objects]
+        assert len(occupied_tiles) == len(set(occupied_tiles))
+        warp_tiles = {(w["x"], w["y"]) for w in audit_map["warp_events"]}
+        for staged in (o for o in audit_objects if o.get("local_id", "").startswith("LOCALID_FULL_")):
+            assert staged["script"] == "0x0"
+            assert staged["trainer_type"] == "TRAINER_TYPE_NONE"
+            assert (staged["x"], staged["y"]) not in warp_tiles
     assert "#define OBJ_EVENT_GFX_ONIX 152" in event_objects
     assert "#define OBJ_EVENT_GFX_STEELIX 153" in event_objects
     assert "#define NUM_OBJ_EVENT_GFX     168" in event_objects
