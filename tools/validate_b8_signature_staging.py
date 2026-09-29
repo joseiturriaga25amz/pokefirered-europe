@@ -280,6 +280,7 @@ def main():
     champion_rival = [o for o in champion_objs if o.get("local_id") == "LOCALID_CHAMPIONS_ROOM_RIVAL"]
     assert len(champion_rival) == 1
     assert (champion_rival[0]["x"], champion_rival[0]["y"]) == (6, 8)
+    assert champion_rival[0]["script"] == "PokemonLeague_ChampionsRoom_EventScript_Rival"
     champion_signature = [o for o in champion_objs if o.get("local_id") == "LOCALID_FULL_CHAMPION_SIGNATURE"]
     assert len(champion_signature) == 1
     champion_signature = champion_signature[0]
@@ -297,6 +298,21 @@ def main():
     assert "gObjectEventGraphicsInfo_Blastoise" in info
     assert "OBJ_EVENT_PAL_TAG_MON_ICON_2" in info
     assert "[OBJ_EVENT_GFX_BLASTOISE]" in pointers
+
+    champion_scripts = (ROOT / "data/maps/PokemonLeague_ChampionsRoom/scripts.inc").read_text(encoding="utf-8")
+    enter_room = champion_scripts.split("PokemonLeague_ChampionsRoom_EventScript_EnterRoom::", 1)[1].split("PokemonLeague_ChampionsRoom_EventScript_Rival::", 1)[0]
+    assert "applymovement LOCALID_PLAYER, PokemonLeague_ChampionsRoom_Movement_PlayerEnter" in enter_room
+    assert "setvar VAR_TEMP_1, 1" in enter_room
+    assert "PokemonLeague_ChampionsRoom_EventScript_Battle" not in enter_room
+    rival_talk = champion_scripts.split("PokemonLeague_ChampionsRoom_EventScript_Rival::", 1)[1].split("PokemonLeague_ChampionsRoom_EventScript_QuestLogTalkEnd::", 1)[0]
+    assert "faceplayer" in rival_talk
+    assert "PokemonLeague_ChampionsRoom_EventScript_Intro" in rival_talk
+    assert "PokemonLeague_ChampionsRoom_EventScript_RematchIntro" in rival_talk
+    assert "PokemonLeague_ChampionsRoom_EventScript_Battle" in rival_talk
+    assert "PokemonLeague_ChampionsRoom_EventScript_Rematch" in rival_talk
+    assert "setflag FLAG_DEFEATED_CHAMP" in rival_talk
+    assert "addobject LOCALID_CHAMPIONS_ROOM_PROF_OAK" in rival_talk
+    assert "warp MAP_POKEMON_LEAGUE_HALL_OF_FAME, 5, 12" in rival_talk
 
     giovanni = read_json("data/maps/ViridianCity_Gym/map.json")
     giovanni_objs = giovanni["object_events"]

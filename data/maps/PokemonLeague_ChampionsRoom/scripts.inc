@@ -50,9 +50,17 @@ PokemonLeague_ChampionsRoom_EventScript_EnterRoom::
 	applymovement LOCALID_PLAYER, PokemonLeague_ChampionsRoom_Movement_PlayerEnter
 	waitmovement 0
 	delay 20
+	setvar VAR_TEMP_1, 1
+	releaseall
+	end
+
+PokemonLeague_ChampionsRoom_EventScript_Rival::
+	lock
+	faceplayer
+	textcolor NPC_TEXT_COLOR_MALE
 	call_if_unset FLAG_SYS_GAME_CLEAR, PokemonLeague_ChampionsRoom_EventScript_Intro
 	call_if_set FLAG_SYS_GAME_CLEAR, PokemonLeague_ChampionsRoom_EventScript_RematchIntro
-	goto_if_questlog PokemonLeague_ChampionsRoom_EventScript_QuestLogEnd
+	goto_if_questlog PokemonLeague_ChampionsRoom_EventScript_QuestLogTalkEnd
 	setflag FLAG_TEMP_3
 	setflag FLAG_TEMP_5
 	savebgm MUS_VICTORY_GYM_LEADER
@@ -92,7 +100,11 @@ PokemonLeague_ChampionsRoom_EventScript_EnterRoom::
 	setvar VAR_TEMP_1, 1
 	warp MAP_POKEMON_LEAGUE_HALL_OF_FAME, 5, 12
 	waitstate
-	releaseall
+	release
+	end
+
+PokemonLeague_ChampionsRoom_EventScript_QuestLogTalkEnd::
+	release
 	end
 
 PokemonLeague_ChampionsRoom_EventScript_QuestLogEnd::
