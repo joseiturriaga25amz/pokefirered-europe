@@ -284,12 +284,11 @@ def main():
     assert len(champion_signature) == 1
     champion_signature = champion_signature[0]
     assert champion_signature["graphics_id"] == "OBJ_EVENT_GFX_BLASTOISE"
-    assert (champion_signature["x"], champion_signature["y"]) == (8, 8)
+    assert (champion_signature["x"], champion_signature["y"]) == (7, 8)
     assert champion_signature["script"] == "0x0"
     assert champion_signature["trainer_type"] == "TRAINER_TYPE_NONE"
     assert champion_signature["flag"] == "0"
-    assert champion_signature["x"] != 6
-    assert (champion_signature["x"], champion_signature["y"]) != (5, 8)
+    assert abs(champion_signature["x"] - champion_rival[0]["x"]) + abs(champion_signature["y"] - champion_rival[0]["y"]) == 1
     assert not any((w["x"], w["y"]) == (champion_signature["x"], champion_signature["y"]) for w in champion["warp_events"])
 
     assert "#define OBJ_EVENT_GFX_BLASTOISE 165" in event_objects

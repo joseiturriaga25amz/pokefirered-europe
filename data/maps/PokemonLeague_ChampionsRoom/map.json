@@ -49,7 +49,7 @@
       "local_id": "LOCALID_FULL_CHAMPION_SIGNATURE",
       "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_BLASTOISE",
-      "x": 8,
+      "x": 7,
       "y": 8,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
