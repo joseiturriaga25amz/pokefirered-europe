@@ -2585,7 +2585,7 @@ const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Magmar = {
     .affineAnims = gDummySpriteAffineAnimTable,
 };
 
-const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Rhydon = {
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Persian = {
     .tileTag = TAG_NONE,
     .paletteTag = OBJ_EVENT_PAL_TAG_MON_ICON_1,
     .reflectionPaletteTag = OBJ_EVENT_PAL_TAG_NONE,
@@ -2600,7 +2600,7 @@ const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Rhydon = {
     .oam = &gObjectEventBaseOam_32x32,
     .subspriteTables = gObjectEventSpriteOamTables_32x32,
     .anims = sAnimTable_Inanimate,
-    .images = sPicTable_Rhydon,
+    .images = sPicTable_Persian,
     .affineAnims = gDummySpriteAffineAnimTable,
 };
 

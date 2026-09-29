@@ -182,18 +182,18 @@ def main():
     giovanni_signature = [o for o in giovanni_objs if o.get("local_id") == "LOCALID_FULL_GIOVANNI_SIGNATURE"]
     assert len(giovanni_signature) == 1
     giovanni_signature = giovanni_signature[0]
-    assert giovanni_signature["graphics_id"] == "OBJ_EVENT_GFX_RHYDON"
+    assert giovanni_signature["graphics_id"] == "OBJ_EVENT_GFX_PERSIAN"
     assert (giovanni_signature["x"], giovanni_signature["y"]) == (1, 2)
     assert giovanni_signature["script"] == "0x0"
     assert giovanni_signature["trainer_type"] == "TRAINER_TYPE_NONE"
     assert giovanni_signature["flag"] == "FLAG_TEMP_2"
     assert not any((w["x"], w["y"]) == (giovanni_signature["x"], giovanni_signature["y"]) for w in giovanni["warp_events"])
 
-    assert "#define OBJ_EVENT_GFX_RHYDON 161" in event_objects
+    assert "#define OBJ_EVENT_GFX_PERSIAN 161" in event_objects
     assert "#define NUM_OBJ_EVENT_GFX     162" in event_objects
-    assert 'graphics/pokemon/rhydon/icon.4bpp' in graphics
-    assert "gObjectEventGraphicsInfo_Rhydon" in info
-    assert "[OBJ_EVENT_GFX_RHYDON]" in pointers
+    assert 'graphics/pokemon/persian/icon.4bpp' in graphics
+    assert "gObjectEventGraphicsInfo_Persian" in info
+    assert "[OBJ_EVENT_GFX_PERSIAN]" in pointers
 
     giovanni_scripts = (ROOT / "data/maps/ViridianCity_Gym/scripts.inc").read_text(encoding="utf-8")
     assert "clearflag FLAG_TEMP_2" in giovanni_scripts
@@ -206,7 +206,7 @@ def main():
     assert "goto_if_unset FLAG_GOT_TM06_FROM_KOGA" in koga_scripts
     assert "setvar VAR_OBJ_GFX_ID_1, OBJ_EVENT_GFX_CROBAT" in koga_scripts
 
-    print("B8 signature staging PASS: Lorelei/Lapras stable; Brock Onix->Steelix, Misty/Starmie, Surge/Raichu, Erika/Gloom, Koga Golbat->Crobat, Sabrina/Kadabra, Blaine/Magmar, and Giovanni/Rhydon are nonblocking and valid.")
+    print("B8 signature staging PASS: Lorelei/Lapras stable; Brock Onix->Steelix, Misty/Starmie, Surge/Raichu, Erika/Gloom, Koga Golbat->Crobat, Sabrina/Kadabra, Blaine/Magmar, and Giovanni/Persian are nonblocking and valid.")
 
 
 if __name__ == "__main__":

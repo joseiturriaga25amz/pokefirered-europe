@@ -143,7 +143,7 @@ const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Kadabra;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Starmie;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Raichu;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Magmar;
-const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Rhydon;
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Persian;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Zapdos;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Moltres;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Articuno;
@@ -308,7 +308,7 @@ const struct ObjectEventGraphicsInfo *const gObjectEventGraphicsInfoPointers[NUM
     [OBJ_EVENT_GFX_STARMIE]                   = &gObjectEventGraphicsInfo_Starmie,
     [OBJ_EVENT_GFX_RAICHU]                    = &gObjectEventGraphicsInfo_Raichu,
     [OBJ_EVENT_GFX_MAGMAR]                    = &gObjectEventGraphicsInfo_Magmar,
-    [OBJ_EVENT_GFX_RHYDON]                    = &gObjectEventGraphicsInfo_Rhydon,
+    [OBJ_EVENT_GFX_PERSIAN]                    = &gObjectEventGraphicsInfo_Persian,
     [OBJ_EVENT_GFX_ZAPDOS]                   = &gObjectEventGraphicsInfo_Zapdos,
     [OBJ_EVENT_GFX_MOLTRES]                  = &gObjectEventGraphicsInfo_Moltres,
     [OBJ_EVENT_GFX_ARTICUNO]                 = &gObjectEventGraphicsInfo_Articuno,
