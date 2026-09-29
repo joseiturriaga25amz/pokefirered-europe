@@ -237,15 +237,42 @@ No gameplay correction was required during the audit. Only validator coverage wa
 Next exact step:
 - **Run / verify validation and CI for the exact current HEAD.**
 
-## CI validation gate — initiated
+## CI validation gate — passed
 
-- Draft PR #13 was opened against `master` to exercise pull-request build/compatibility workflows.
-- The repository's `.github/workflows/full-gameplay-core.yml` was verified to include:
-  - push trigger for `feature/b8-signature-pokemon-staging`;
-  - explicit step `Validate B8 signature staging`;
-  - command `python3 tools/validate_b8_signature_staging.py`.
-- This documentation commit is intentionally the next branch push so **Full Gameplay Core** runs against the exact new branch HEAD.
-- B8 must not be marked closed until that exact-HEAD workflow completes successfully.
+Validated HEAD before this final checkpoint:
+- SHA: `0dbaa991e079185019bdb94cfa8e042585ce4f80`
+- Workflow: **Full Gameplay Core**
+- Run: **#605**
+- Run ID: `36639624956`
+- Conclusion: **success**
+- Job: **Build Spanish modern gameplay core** — **success**
+- Explicit B8 step: **Validate B8 signature staging** — **success**
+- Reproducible ROM build — **success**
+- Frozen Gary/boss rosters — **success**
+- B3/B4/B5/B6/B7 validators — **success**
+- Release integrity — **success**
+- Frozen Spanish baseline verification — **success**
+- Exact MyBoy RC IPS packaging — **success**
+
+Validation-only PR #13 also exercised the general pull-request workflows on the same SHA:
+- **Full Production Block 1** — success.
+- **Full Production Block 2** — failed on an obsolete generic CI assertion requiring `FULL_SAVE_SCHEMA_VERSION 1`; production code has intentionally been schema v2 since B6 and the primary Full Gameplay Core gate passed its schema/release validators.
+- **Upstream compatibility build** — failed while linking the vanilla upstream target against Full-only script text symbols; the Spanish modern gameplay-core target compiled successfully.
+- These two generic PR-workflow failures are outside B8 staging and did not fail the B8 gate.
+
+## B8 closure status
+
+**B8 implementation and audit are complete.**
+
+Closure conditions satisfied:
+1. Misty pool ambience implemented and validated.
+2. Full B8 map/script audit completed.
+3. Global object-graphics/map invariants added to the B8 validator.
+4. Exact-HEAD Full Gameplay Core gate passed.
+5. Explicit `Validate B8 signature staging` step passed.
+6. No gameplay defect remained open from the B8 audit.
+
+This final documentation commit is intentionally docs-only. Because the branch workflow triggers on every push, it must itself receive a final green Full Gameplay Core run before the branch is treated as the immutable B8 handoff point.
 
 ## Remaining B8 work from this checkpoint
 
