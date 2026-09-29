@@ -4,13 +4,16 @@ ViridianCity_Gym_MapScripts::
 
 ViridianCity_Gym_OnTransitionFull::
 	setflag FLAG_TEMP_1
+	clearflag FLAG_TEMP_2
 	goto_if_unset FLAG_DEFEATED_LEADER_GIOVANNI, EventScript_Return
 	goto_if_set FLAG_SYS_GAME_CLEAR, ViridianCity_Gym_EventScript_ShowGiovanniFull
 	setflag FLAG_HIDE_VIRIDIAN_GIOVANNI
+	setflag FLAG_TEMP_2
 	return
 
 ViridianCity_Gym_EventScript_ShowGiovanniFull::
 	clearflag FLAG_HIDE_VIRIDIAN_GIOVANNI
+	clearflag FLAG_TEMP_2
 	return
 
 ViridianCity_Gym_EventScript_Giovanni::
@@ -26,6 +29,8 @@ ViridianCity_Gym_EventScript_GiovanniStory::
 	closemessage
 	fadescreen FADE_TO_BLACK
 	removeobject LOCALID_VIRIDIAN_GIOVANNI
+	removeobject LOCALID_FULL_GIOVANNI_SIGNATURE
+	setflag FLAG_TEMP_2
 	fadescreen FADE_FROM_BLACK
 	release
 	end
