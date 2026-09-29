@@ -190,12 +190,21 @@ Completed audit microblocks:
   - existing B8 validator covers the Dragonite detour and the talk-to-battle split;
   - **no code correction required**.
 
-Next audit microblock:
+Completed audit microblocks:
 - **Gyms A: Brock / Misty / Lt. Surge / Erika**
-  - verify Brock Onix→Steelix state;
-  - verify Misty Starmie + Seel/Staryu pool ambience;
-  - verify Surge/Raichu placement;
-  - verify Erika/Gloom and Lisa relocation.
+  - Brock: Onix/Steelix stays at `(5,5)` beside Brock `(6,5)`; transition script selects Onix by default and Steelix only after game clear + Brock TM flag; no warp overlap.
+  - Misty: Starmie remains at `(7,6)` beside Misty `(8,6)`; Seel `(5,12)` and Staryu `(12,14)` remain static water ambience; all three icon-derived objects use palette 2 in `PALSLOT_NPC_SPECIAL`; no warp overlap.
+  - Lt. Surge: Raichu `(4,2)` is directly left of Surge `(5,2)`; no scripted trainer movement conflicts and no warp overlap.
+  - Erika: Gloom `(7,4)` remains directly right of Erika `(6,4)`; Lisa remains relocated to `(8,4)` with facing down and sight distance 2 preserved; no warp overlap.
+  - Validator hardening commit: `bb9383a7ca50bbb041507e31a47f62c25bdd184a` now locks Surge's trainer coordinate/adjacency and the shared Misty palette invariant.
+  - **no gameplay code correction required**.
+
+Next audit microblock:
+- **Gyms B: Koga / Sabrina / Blaine / Giovanni**
+  - verify Koga Golbat→Crobat state and adjacency;
+  - verify Sabrina/Kadabra placement;
+  - verify Blaine/Magmar placement;
+  - verify Giovanni/Persian visibility/removeobject flow.
 
 ## Remaining B8 work from this checkpoint
 
