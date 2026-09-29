@@ -1517,6 +1517,10 @@ static const struct SpriteFrameImage sPicTable_Dragonite[] = {
     overworld_frame(gObjectEventPic_Dragonite, 4, 4, 0),
 };
 
+static const struct SpriteFrameImage sPicTable_Blastoise[] = {
+    overworld_frame(gObjectEventPic_Blastoise, 4, 4, 0),
+};
+
 static const struct SpriteFrameImage sPicTable_Zapdos[] = {
     overworld_frame(gObjectEventPic_Zapdos, 4, 4, 0),
     overworld_frame(gObjectEventPic_Zapdos, 4, 4, 0),

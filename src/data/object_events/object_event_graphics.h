@@ -132,6 +132,7 @@ const u16 gObjectEventPic_Persian[] = INCBIN_U16("graphics/pokemon/persian/icon.
 const u16 gObjectEventPic_Machamp[] = INCBIN_U16("graphics/pokemon/machamp/icon.4bpp");
 const u16 gObjectEventPic_Gengar[] = INCBIN_U16("graphics/pokemon/gengar/icon.4bpp");
 const u16 gObjectEventPic_Dragonite[] = INCBIN_U16("graphics/pokemon/dragonite/icon.4bpp");
+const u16 gObjectEventPic_Blastoise[] = INCBIN_U16("graphics/pokemon/blastoise/icon.4bpp");
 const u16 gObjectEventPic_Zapdos[] = INCBIN_U16("graphics/object_events/pics/pokemon/zapdos.4bpp");
 const u16 gObjectEventPic_Moltres[] = INCBIN_U16("graphics/object_events/pics/pokemon/moltres.4bpp");
 const u16 gObjectEventPic_Articuno[] = INCBIN_U16("graphics/object_events/pics/pokemon/articuno.4bpp");
