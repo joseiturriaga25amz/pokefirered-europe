@@ -207,3 +207,131 @@ Start by:
 3. Do not reconstruct old decisions from memory if this checkpoint and repository disagree; repository + this checkpoint control.
 4. Continue with Bruno → Machamp as the next isolated B8 block.
 5. Maintain frequent visible checkpoints and avoid long repeated GitHub loops.
+
+## B8 visual-composition decisions — locked 2026-09-29
+
+These decisions supersede the earlier looser interpretation of "beside".
+
+### Final visual identity rule
+
+For every signature Pokémon in B8:
+
+1. The preferred composition is **trainer + signature Pokémon directly adjacent**, ideally left/right with no empty tile between them.
+2. The pair should read visually as one intentional unit and, when practical, be centered/balanced in the scene.
+3. Horizontal adjacency is preferred over vertical adjacency because the 32x32 Pokémon icon-derived sprites may overlap visually when stacked front/back.
+4. Vertical adjacency is acceptable when it genuinely looks better or when lateral placement is unsafe.
+5. A Pokémon making the player walk around it is **not** a valid reason to separate trainer and Pokémon.
+6. Separation by one or more empty tiles is allowed only for a real technical conflict:
+   - required scripted movement;
+   - unavoidable warp/access conflict;
+   - two objects needing the same tile;
+   - a collision/state-machine issue that cannot be solved cleanly.
+7. If a trainer script conflicts with the desired adjacent composition, prefer adapting that script safely rather than weakening the visual identity, provided gameplay invariants remain intact.
+8. Existing B8 signatures that were placed with conservative gaps must be revisited in the dedicated visual-composition polish pass.
+
+### Specific cases to revisit
+
+- **Lorelei → Lapras**
+  - Current staging is technically valid but too separated.
+  - Target: direct lateral adjacency if safe.
+
+- **Bruno → Machamp**
+  - Current staging is technically valid but too separated.
+  - Target: direct lateral adjacency if safe.
+
+- **Agatha → Gengar**
+  - Current staging is technically valid but too separated.
+  - Target: direct lateral adjacency if safe.
+
+- **Brock → Onix / Steelix**
+  - Current staging is technically valid but too separated.
+  - Target: direct lateral adjacency while preserving dynamic Onix→Steelix behavior.
+
+- **Koga → Golbat / Crobat**
+  - Current staging is technically valid but too separated.
+  - Target: direct lateral adjacency while preserving dynamic Golbat→Crobat behavior.
+
+- **Lance → Dragonite**
+  - Current Dragonite at (9,8) is intentionally conservative and must be revisited.
+  - Lance may have scripted lateral movement to (5,8) or (7,8).
+  - User preference: Dragonite should still be directly adjacent to Lance.
+  - If an adjacent tile conflicts with Lance's scripted movement, adjust Lance's movement safely rather than leaving Dragonite far away.
+  - The player needing to walk around Dragonite is acceptable.
+
+- **Gary/Blue Champion → Blastoise**
+  - Current Blastoise at (8,8) should be revisited for direct adjacency to Gary at (6,8).
+  - Oak uses the left side during the post-battle scene, so right-side adjacency is the preferred starting point.
+  - Preserve Gary's frozen battle rosters: Blastoise remains his Champion signature in both first League and rematch.
+
+- **Misty → Starmie**
+  - Current Starmie is vertically adjacent.
+  - Special visual option approved for analysis: place Starmie **in the pool/water immediately beside Misty** if the tile/elevation/rendering works cleanly.
+  - This is preferred over forcing an awkward dry-floor placement if the water composition looks more natural.
+  - Validate elevation, visual grounding/shadow and interaction with the pool layout before changing.
+
+- **Erika → Gloom**
+  - Erika currently has trainers occupying both immediate lateral tiles.
+  - Moving one nearby trainer is explicitly allowed if needed to give Gloom a direct lateral position beside Erika.
+  - If a trainer is moved, revalidate trainer sight/range and access; do not alter Erika's frozen roster or Gloom signature identity.
+
+- **Sabrina → Kadabra**
+  - Current Kadabra is vertically adjacent behind Sabrina.
+  - Re-evaluate (13,11) and (15,11) or other immediate lateral options.
+  - Prefer direct lateral adjacency if the platform/tiles look clean.
+
+- **Lt. Surge → Raichu**
+  - Already directly adjacent; preserve unless later visual review finds a stronger centered composition.
+
+- **Blaine → Magmar**
+  - Already directly adjacent; preserve unless later visual review finds a stronger centered composition.
+
+- **Giovanni → Persian**
+  - Already directly adjacent; preserve current functional hide/remove behavior and only adjust if a clearly better safe composition exists.
+
+### Champion Gary interaction change — approved for later microblock
+
+The current Champion room automatically moves the player forward, runs Gary's intro and starts the Champion battle without player interaction.
+
+Approved target behavior:
+
+1. Enter Champion room.
+2. Player regains normal control.
+3. Gary waits visibly with Blastoise beside him.
+4. Player walks up and talks to Gary.
+5. Gary's intro runs.
+6. Champion battle begins.
+7. Existing post-battle Oak/Hall of Fame sequence continues correctly.
+
+Requirements:
+- Preserve first-League and rematch rosters exactly.
+- Preserve save/re-entry behavior, Quest Log handling, VAR_TEMP_1, Champion defeat state and Oak sequence.
+- This is a scripting/presentation change only, not a roster redesign.
+
+### Future animated companion block — Gary requirement
+
+This is **not part of B8** and must remain separate from static signature staging.
+
+When the future fully animated follower/companion system is implemented, Gary/Blue must also be considered explicitly:
+
+- During adventure scenes where Gary walks into or through the scene, his signature partner should be able to walk with him using proper overworld walking animation.
+- Evolution by story stage should follow the already frozen Gary progression:
+  - early encounters: **Squirtle**;
+  - midgame after evolution: **Wartortle**;
+  - later game / Silph onward / League: **Blastoise**.
+- Gary's animated companion may be implemented as a dedicated scripted companion system if that is safer than reusing the player's generic follower system.
+- MyBoy compatibility remains mandatory.
+- Do not mix this animated-follower work into B8 static staging.
+
+### Next safe work after this decision checkpoint
+
+Proceed in microblocks after CI-green checkpoints. Recommended sequence:
+
+1. B8 visual composition polish, one trainer/signature pair or one tightly related room at a time.
+2. Start with simple direct-adjacency corrections (League rooms/Brock/Koga) before special rooms.
+3. Then handle Misty water staging.
+4. Then Erika trainer relocation + Gloom adjacency.
+5. Then Sabrina lateral Kadabra.
+6. Then Lance adjacency + any required movement-script adjustment.
+7. Then Gary Champion adjacency and the separate Champion-room "talk to initiate battle" scripting microblock.
+8. Re-run full B8 visual audit and validator coverage.
+9. Only after B8 is fully green and visually locked should the future animated companion block begin.
