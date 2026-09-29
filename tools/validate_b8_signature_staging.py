@@ -103,14 +103,23 @@ def main():
 
     erika = read_json("data/maps/CeladonCity_Gym/map.json")
     erika_objs = erika["object_events"]
+    erika_trainer = [o for o in erika_objs if o.get("graphics_id") == "OBJ_EVENT_GFX_ERIKA"]
+    assert len(erika_trainer) == 1
+    assert (erika_trainer[0]["x"], erika_trainer[0]["y"]) == (6, 4)
     erika_signature = [o for o in erika_objs if o.get("local_id") == "LOCALID_FULL_ERIKA_SIGNATURE"]
     assert len(erika_signature) == 1
     erika_signature = erika_signature[0]
     assert erika_signature["graphics_id"] == "OBJ_EVENT_GFX_GLOOM"
-    assert (erika_signature["x"], erika_signature["y"]) == (6, 3)
+    assert (erika_signature["x"], erika_signature["y"]) == (7, 4)
     assert erika_signature["script"] == "0x0"
     assert erika_signature["trainer_type"] == "TRAINER_TYPE_NONE"
+    assert abs(erika_signature["x"] - erika_trainer[0]["x"]) + abs(erika_signature["y"] - erika_trainer[0]["y"]) == 1
     assert not any((w["x"], w["y"]) == (erika_signature["x"], erika_signature["y"]) for w in erika["warp_events"])
+    erika_lisa = [o for o in erika_objs if o.get("script") == "CeladonCity_Gym_EventScript_Lisa"]
+    assert len(erika_lisa) == 1
+    assert (erika_lisa[0]["x"], erika_lisa[0]["y"]) == (8, 4)
+    assert erika_lisa[0]["movement_type"] == "MOVEMENT_TYPE_FACE_DOWN"
+    assert erika_lisa[0]["trainer_sight_or_berry_tree_id"] == "2"
 
     assert "#define OBJ_EVENT_GFX_GLOOM 156" in event_objects
     assert "#define NUM_OBJ_EVENT_GFX     166" in event_objects
