@@ -1505,6 +1505,10 @@ static const struct SpriteFrameImage sPicTable_Persian[] = {
     overworld_frame(gObjectEventPic_Persian, 4, 4, 0),
 };
 
+static const struct SpriteFrameImage sPicTable_Machamp[] = {
+    overworld_frame(gObjectEventPic_Machamp, 4, 4, 0),
+};
+
 static const struct SpriteFrameImage sPicTable_Zapdos[] = {
     overworld_frame(gObjectEventPic_Zapdos, 4, 4, 0),
     overworld_frame(gObjectEventPic_Zapdos, 4, 4, 0),

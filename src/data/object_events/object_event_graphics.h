@@ -129,6 +129,7 @@ const u16 gObjectEventPic_Starmie[] = INCBIN_U16("graphics/pokemon/starmie/icon.
 const u16 gObjectEventPic_Raichu[] = INCBIN_U16("graphics/pokemon/raichu/icon.4bpp");
 const u16 gObjectEventPic_Magmar[] = INCBIN_U16("graphics/pokemon/magmar/icon.4bpp");
 const u16 gObjectEventPic_Persian[] = INCBIN_U16("graphics/pokemon/persian/icon.4bpp");
+const u16 gObjectEventPic_Machamp[] = INCBIN_U16("graphics/pokemon/machamp/icon.4bpp");
 const u16 gObjectEventPic_Zapdos[] = INCBIN_U16("graphics/object_events/pics/pokemon/zapdos.4bpp");
 const u16 gObjectEventPic_Moltres[] = INCBIN_U16("graphics/object_events/pics/pokemon/moltres.4bpp");
 const u16 gObjectEventPic_Articuno[] = INCBIN_U16("graphics/object_events/pics/pokemon/articuno.4bpp");
