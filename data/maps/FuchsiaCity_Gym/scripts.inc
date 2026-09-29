@@ -1,5 +1,14 @@
 FuchsiaCity_Gym_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, FuchsiaCity_Gym_OnTransition
 	.byte 0
+
+FuchsiaCity_Gym_OnTransition::
+	setvar VAR_OBJ_GFX_ID_1, OBJ_EVENT_GFX_GOLBAT
+	goto_if_unset FLAG_SYS_GAME_CLEAR, FuchsiaCity_Gym_OnTransition_End
+	goto_if_unset FLAG_GOT_TM06_FROM_KOGA, FuchsiaCity_Gym_OnTransition_End
+	setvar VAR_OBJ_GFX_ID_1, OBJ_EVENT_GFX_CROBAT
+FuchsiaCity_Gym_OnTransition_End::
+	end
 
 FuchsiaCity_Gym_EventScript_Koga::
 	goto_if_unset FLAG_SYS_GAME_CLEAR, FuchsiaCity_Gym_EventScript_KogaStory
