@@ -120,31 +120,20 @@ The future fully animated follower mechanic is **not B8**.
   - Giovanni scripts clear/set the flag and remove the signature object as required.
   - Persian is the final corrected signature; the earlier Rhydon attempt is superseded.
 
-## Critical correction: Misty pool ambience is NOT currently in the branch
+## Misty pool ambience — implemented
 
-A previous chat response reported the Misty pool ambience as completed, but the repository was re-checked and that change is **not present** at the current branch HEAD.
+The previously missing pool ambience is now actually present in the branch.
 
-Current facts:
-
-- `CeruleanCity_Gym/map.json` contains Misty + Starmie but **no Seel and no Staryu/Goldeen pool objects**.
-- `tools/validate_b8_signature_staging.py` has **no pool ambience checks**.
-- `NUM_OBJ_EVENT_GFX` is still **166**, not 168.
-- Therefore **Misty pool ambience remains pending** and must be implemented again as its own microblock if it is kept in B8.
-
-Technical research already established for the retry:
-
-- Seel icon palette index: **2**
-- Staryu icon palette index: **2**
-- Starmie icon palette index: **2**
-- Goldeen/Seaking icon palette index: **0**
-- Current custom icon-derived overworld Pokémon use the single swappable `PALSLOT_NPC_SPECIAL`.
-- Two competing special icon palettes in the same room can overwrite each other's colors.
-- Therefore the safe ambience pair is **Seel + Staryu**, not Seel + Goldeen/Seaking, unless the palette system itself is deliberately expanded.
-- Suggested water positions previously analyzed:
-  - Seel `(5,12)`
-  - Staryu `(12,14)`
-- Those positions are pond-water tiles and do not overlap existing object/warp events.
-- Keep this decorative implementation static/non-interactive; do not expand the engine just for this detail.
+- Commit: `77bf851e6ad86aee6bcf4ddcd56e3810b56c60ed`
+- Seel: `LOCALID_FULL_MISTY_POOL_SEEL` at `(5,12)`, elevation 0.
+- Staryu: `LOCALID_FULL_MISTY_POOL_STARYU` at `(12,14)`, elevation 0.
+- Both are static, non-interactive 32x32 icon-derived objects.
+- Dedicated IDs avoid replacing FireRed's existing 16x16 Seel object:
+  - `OBJ_EVENT_GFX_SEEL_ICON = 166`
+  - `OBJ_EVENT_GFX_STARYU_ICON = 167`
+- Seel, Staryu and Starmie all use icon palette index 2 in the shared special palette slot.
+- `NUM_OBJ_EVENT_GFX = 168`.
+- `tools/validate_b8_signature_staging.py` now explicitly checks both ambience objects, coordinates, flags, graphics and warp non-overlap.
 
 ## Battle roster decision gate
 
@@ -179,24 +168,36 @@ Newest code work first:
 - `1fed0b91e2a05ca24af8f1127deafd7aa453258a` — tighten Agatha/Gengar composition
 - `c812be742d7a679fca8b075cc6b09650078be6c3` — tighten Bruno/Machamp composition
 
+## B8 audit progress
+
+Full audit is now in progress, still using microblocks.
+
+Completed audit microblock:
+- **League A: Lorelei / Bruno / Agatha**
+  - branch verified at the Misty ambience code state before this documentation update;
+  - Lorelei + Lapras: direct lateral adjacency, central lane preserved, no warp overlap, no conflicting trainer movement;
+  - Bruno + Machamp: direct lateral adjacency, no warp overlap; post-battle movements only turn Bruno in place and do not collide with Machamp;
+  - Agatha + Gengar: direct lateral adjacency, no warp overlap, no conflicting trainer movement;
+  - existing B8 validator covers all three placements;
+  - **no code correction required**.
+
+Next audit microblock:
+- **League B: Lance + Champion Gary/Blue**
+  - verify Dragonite detour;
+  - verify Blastoise adjacency;
+  - verify entering the Champion room does not auto-start battle;
+  - verify talking to Gary owns intro/battle/post-battle Oak/Hall of Fame flow.
+
 ## Remaining B8 work from this checkpoint
 
 Continue in this exact order, one microblock at a time:
 
-1. **Misty pool ambience**
-   - implement Seel + Staryu safely;
-   - add their two object graphics;
-   - update `NUM_OBJ_EVENT_GFX`;
-   - add validator coverage;
-   - commit atomically;
-   - verify branch HEAD after commit.
-
-2. **Full B8 audit**
-   - inspect every staged map and all B8-related scripts;
-   - check object positions, warps, collision/access, dynamic Brock/Koga state, Erika trainer relocation, Lance detour and Gary talk-to-battle flow;
+1. **Finish full B8 audit**
+   - continue from Lance + Champion;
+   - then audit all Gym staging, dynamic Brock/Koga state, Erika relocation, Misty pool ambience, Blaine/Giovanni and relevant scripts;
    - do not add new features during audit.
 
-3. **Run / verify validation and CI**
+2. **Run / verify validation and CI**
    - run the B8 validator through the project's normal CI path;
    - verify a real workflow result for the exact code HEAD;
    - do not claim CI-green from an old commit.
@@ -214,7 +215,7 @@ A new chat should:
 1. Read **this file first**.
 2. Verify current branch HEAD.
 3. Treat repository state as authoritative over previous chat messages.
-4. Notice that Misty pool ambience is still pending despite a prior chat claim.
-5. Continue with the Misty pool ambience microblock only.
+4. Notice that Misty pool ambience is now implemented at commit `77bf851e6ad86aee6bcf4ddcd56e3810b56c60ed`.
+5. Resume the full audit at **Lance + Champion Gary/Blue**.
 6. Keep battle rosters frozen.
 7. Continue reporting one microblock at a time.
