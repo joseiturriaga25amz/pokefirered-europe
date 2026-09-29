@@ -137,13 +137,17 @@ def main():
 
     misty = read_json("data/maps/CeruleanCity_Gym/map.json")
     misty_objs = misty["object_events"]
+    misty_trainer = [o for o in misty_objs if o.get("graphics_id") == "OBJ_EVENT_GFX_MISTY"]
+    assert len(misty_trainer) == 1
+    assert (misty_trainer[0]["x"], misty_trainer[0]["y"]) == (8, 6)
     misty_signature = [o for o in misty_objs if o.get("local_id") == "LOCALID_FULL_MISTY_SIGNATURE"]
     assert len(misty_signature) == 1
     misty_signature = misty_signature[0]
     assert misty_signature["graphics_id"] == "OBJ_EVENT_GFX_STARMIE"
-    assert (misty_signature["x"], misty_signature["y"]) == (8, 5)
+    assert (misty_signature["x"], misty_signature["y"]) == (7, 6)
     assert misty_signature["script"] == "0x0"
     assert misty_signature["trainer_type"] == "TRAINER_TYPE_NONE"
+    assert abs(misty_signature["x"] - misty_trainer[0]["x"]) + abs(misty_signature["y"] - misty_trainer[0]["y"]) == 1
     assert not any((w["x"], w["y"]) == (misty_signature["x"], misty_signature["y"]) for w in misty["warp_events"])
 
     assert "#define OBJ_EVENT_GFX_STARMIE 158" in event_objects
