@@ -223,6 +223,9 @@ def main():
 
     blaine = read_json("data/maps/CinnabarIsland_Gym/map.json")
     blaine_objs = blaine["object_events"]
+    blaine_trainer = [o for o in blaine_objs if o.get("graphics_id") == "OBJ_EVENT_GFX_BLAINE"]
+    assert len(blaine_trainer) == 1
+    assert (blaine_trainer[0]["x"], blaine_trainer[0]["y"]) == (5, 4)
     blaine_signature = [o for o in blaine_objs if o.get("local_id") == "LOCALID_FULL_BLAINE_SIGNATURE"]
     assert len(blaine_signature) == 1
     blaine_signature = blaine_signature[0]
@@ -230,6 +233,7 @@ def main():
     assert (blaine_signature["x"], blaine_signature["y"]) == (4, 4)
     assert blaine_signature["script"] == "0x0"
     assert blaine_signature["trainer_type"] == "TRAINER_TYPE_NONE"
+    assert abs(blaine_signature["x"] - blaine_trainer[0]["x"]) + abs(blaine_signature["y"] - blaine_trainer[0]["y"]) == 1
     assert not any((w["x"], w["y"]) == (blaine_signature["x"], blaine_signature["y"]) for w in blaine["warp_events"])
 
     assert "#define OBJ_EVENT_GFX_MAGMAR 160" in event_objects
@@ -351,6 +355,9 @@ def main():
 
     giovanni = read_json("data/maps/ViridianCity_Gym/map.json")
     giovanni_objs = giovanni["object_events"]
+    giovanni_trainer = [o for o in giovanni_objs if o.get("local_id") == "LOCALID_VIRIDIAN_GIOVANNI"]
+    assert len(giovanni_trainer) == 1
+    assert (giovanni_trainer[0]["x"], giovanni_trainer[0]["y"]) == (2, 2)
     giovanni_signature = [o for o in giovanni_objs if o.get("local_id") == "LOCALID_FULL_GIOVANNI_SIGNATURE"]
     assert len(giovanni_signature) == 1
     giovanni_signature = giovanni_signature[0]
@@ -359,6 +366,7 @@ def main():
     assert giovanni_signature["script"] == "0x0"
     assert giovanni_signature["trainer_type"] == "TRAINER_TYPE_NONE"
     assert giovanni_signature["flag"] == "FLAG_TEMP_2"
+    assert abs(giovanni_signature["x"] - giovanni_trainer[0]["x"]) + abs(giovanni_signature["y"] - giovanni_trainer[0]["y"]) == 1
     assert not any((w["x"], w["y"]) == (giovanni_signature["x"], giovanni_signature["y"]) for w in giovanni["warp_events"])
 
     assert "#define OBJ_EVENT_GFX_PERSIAN 161" in event_objects
@@ -368,9 +376,27 @@ def main():
     assert "[OBJ_EVENT_GFX_PERSIAN]" in pointers
 
     giovanni_scripts = (ROOT / "data/maps/ViridianCity_Gym/scripts.inc").read_text(encoding="utf-8")
-    assert "clearflag FLAG_TEMP_2" in giovanni_scripts
-    assert "setflag FLAG_TEMP_2" in giovanni_scripts
-    assert "removeobject LOCALID_FULL_GIOVANNI_SIGNATURE" in giovanni_scripts
+    giovanni_transition = giovanni_scripts.split("ViridianCity_Gym_OnTransitionFull::", 1)[1].split("ViridianCity_Gym_EventScript_ShowGiovanniFull::", 1)[0]
+    assert "setflag FLAG_TEMP_1" in giovanni_transition
+    assert "clearflag FLAG_TEMP_2" in giovanni_transition
+    assert "goto_if_unset FLAG_DEFEATED_LEADER_GIOVANNI, EventScript_Return" in giovanni_transition
+    assert "goto_if_set FLAG_SYS_GAME_CLEAR, ViridianCity_Gym_EventScript_ShowGiovanniFull" in giovanni_transition
+    assert "setflag FLAG_HIDE_VIRIDIAN_GIOVANNI" in giovanni_transition
+    assert "setflag FLAG_TEMP_2" in giovanni_transition
+    assert giovanni_transition.index("clearflag FLAG_TEMP_2") < giovanni_transition.index("goto_if_unset FLAG_DEFEATED_LEADER_GIOVANNI")
+    giovanni_postgame = giovanni_scripts.split("ViridianCity_Gym_EventScript_ShowGiovanniFull::", 1)[1].split("ViridianCity_Gym_EventScript_Giovanni::", 1)[0]
+    assert "clearflag FLAG_HIDE_VIRIDIAN_GIOVANNI" in giovanni_postgame
+    assert "clearflag FLAG_TEMP_2" in giovanni_postgame
+    giovanni_story = giovanni_scripts.split("ViridianCity_Gym_EventScript_GiovanniStory::", 1)[1].split("ViridianCity_Gym_EventScript_DefeatedGiovanni::", 1)[0]
+    assert "removeobject LOCALID_VIRIDIAN_GIOVANNI" in giovanni_story
+    assert "removeobject LOCALID_FULL_GIOVANNI_SIGNATURE" in giovanni_story
+    assert "setflag FLAG_TEMP_2" in giovanni_story
+    mewtwo_escape = giovanni_scripts.split("ViridianCity_Gym_Movement_MewtwoEscape:", 1)[1].split("ViridianCity_Gym_Movement_GiovanniPanic:", 1)[0]
+    giovanni_panic = giovanni_scripts.split("ViridianCity_Gym_Movement_GiovanniPanic:", 1)[1].split("ViridianCity_Gym_EventScript_GiveTM26::", 1)[0]
+    assert "fly_up" in mewtwo_escape
+    assert "walk_left" not in mewtwo_escape and "walk_right" not in mewtwo_escape
+    assert "walk_up" not in giovanni_panic and "walk_down" not in giovanni_panic
+    assert "walk_left" not in giovanni_panic and "walk_right" not in giovanni_panic
 
     koga_scripts = (ROOT / "data/maps/FuchsiaCity_Gym/scripts.inc").read_text(encoding="utf-8")
     assert "setvar VAR_OBJ_GFX_ID_1, OBJ_EVENT_GFX_GOLBAT" in koga_scripts
