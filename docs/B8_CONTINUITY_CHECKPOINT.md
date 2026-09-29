@@ -335,3 +335,18 @@ Proceed in microblocks after CI-green checkpoints. Recommended sequence:
 7. Then Gary Champion adjacency and the separate Champion-room "talk to initiate battle" scripting microblock.
 8. Re-run full B8 visual audit and validator coverage.
 9. Only after B8 is fully green and visually locked should the future animated companion block begin.
+
+
+## Decision gate — roster research deferred until B8 closes
+
+Locked by user on 2026-09-29:
+
+1. **Do not redesign, re-open, or keep mixing Gym Leader / Elite Four battle rosters into the current B8 work.**
+2. The user will personally perform a **new dedicated research pass** for:
+   - Gym Leader teams;
+   - Gym Leader rematch teams;
+   - Elite Four teams;
+   - Elite Four rematch teams.
+3. That research/review belongs to a **later block, only after the current B8 block is fully completed, validated, visually polished, and closed**.
+4. Until then, existing battle rosters remain frozen. B8 may change only presentation/staging behavior already in scope; it must not silently alter battle teams because of incidental discussion.
+5. Continue the current B8 work in **small microblocks**, with visible checkpoints between them, to avoid long tool loops or apparent stalls.
