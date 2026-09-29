@@ -199,12 +199,22 @@ Completed audit microblocks:
   - Validator hardening commit: `bb9383a7ca50bbb041507e31a47f62c25bdd184a` now locks Surge's trainer coordinate/adjacency and the shared Misty palette invariant.
   - **no gameplay code correction required**.
 
-Next audit microblock:
+Completed audit microblock:
 - **Gyms B: Koga / Sabrina / Blaine / Giovanni**
-  - verify Koga Golbat→Crobat state and adjacency;
-  - verify Sabrina/Kadabra placement;
-  - verify Blaine/Magmar placement;
-  - verify Giovanni/Persian visibility/removeobject flow.
+  - Koga: Golbat/Crobat stays at `(6,13)` beside Koga `(7,13)`; transition script selects Golbat by default and Crobat only after game clear + Koga TM flag; no warp overlap.
+  - Sabrina: Kadabra remains at `(13,11)` beside Sabrina `(14,11)`; no trainer movement conflict and no warp overlap.
+  - Blaine: Magmar remains at `(4,4)` beside Blaine `(5,4)`; no scripted movement conflict and no warp overlap.
+  - Giovanni: Persian remains at `(1,2)` beside Giovanni `(2,2)`; `FLAG_TEMP_2` keeps Persian visible with Giovanni before the story, hides it when Giovanni is hidden after the story, and clears again in postgame so both reappear together.
+  - Giovanni's Mewtwo escape sequence does not move Giovanni through Persian's tile; Giovanni only turns/shakes in place and Mewtwo exits vertically.
+  - Validator hardening commit: `47d4eeca7e2b30995c8ae5b705be453267d8c51f` now locks Blaine/Magmar adjacency, Giovanni/Persian adjacency, the structured `FLAG_TEMP_2` visibility flow and the non-crossing movement invariant.
+  - **no gameplay code correction required**.
+
+Next audit microblock:
+- **B8 global asset/invariant sweep**
+  - verify every B8 custom object graphics ID/pointer/info/pic-table entry is unique and present;
+  - verify `NUM_OBJ_EVENT_GFX = 168` matches the highest static ID;
+  - verify all staged signature objects remain non-interactive/static unless intentionally dynamic;
+  - look for duplicate local IDs, object-tile overlaps and any remaining validator coverage gaps.
 
 ## Remaining B8 work from this checkpoint
 
