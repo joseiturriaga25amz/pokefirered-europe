@@ -129,13 +129,17 @@ def main():
 
     sabrina = read_json("data/maps/SaffronCity_Gym/map.json")
     sabrina_objs = sabrina["object_events"]
+    sabrina_trainer = [o for o in sabrina_objs if o.get("graphics_id") == "OBJ_EVENT_GFX_SABRINA"]
+    assert len(sabrina_trainer) == 1
+    assert (sabrina_trainer[0]["x"], sabrina_trainer[0]["y"]) == (14, 11)
     sabrina_signature = [o for o in sabrina_objs if o.get("local_id") == "LOCALID_FULL_SABRINA_SIGNATURE"]
     assert len(sabrina_signature) == 1
     sabrina_signature = sabrina_signature[0]
     assert sabrina_signature["graphics_id"] == "OBJ_EVENT_GFX_KADABRA"
-    assert (sabrina_signature["x"], sabrina_signature["y"]) == (14, 10)
+    assert (sabrina_signature["x"], sabrina_signature["y"]) == (13, 11)
     assert sabrina_signature["script"] == "0x0"
     assert sabrina_signature["trainer_type"] == "TRAINER_TYPE_NONE"
+    assert abs(sabrina_signature["x"] - sabrina_trainer[0]["x"]) + abs(sabrina_signature["y"] - sabrina_trainer[0]["y"]) == 1
     assert not any((w["x"], w["y"]) == (sabrina_signature["x"], sabrina_signature["y"]) for w in sabrina["warp_events"])
 
     assert "#define OBJ_EVENT_GFX_KADABRA 157" in event_objects
