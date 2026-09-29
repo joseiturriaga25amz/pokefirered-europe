@@ -204,6 +204,9 @@ def main():
 
     agatha = read_json("data/maps/PokemonLeague_AgathasRoom/map.json")
     agatha_objs = agatha["object_events"]
+    agatha_trainer = [o for o in agatha_objs if o.get("graphics_id") == "OBJ_EVENT_GFX_AGATHA"]
+    assert len(agatha_trainer) == 1
+    assert (agatha_trainer[0]["x"], agatha_trainer[0]["y"]) == (6, 5)
     agatha_signature = [o for o in agatha_objs if o.get("local_id") == "LOCALID_FULL_AGATHA_SIGNATURE"]
     assert len(agatha_signature) == 1
     agatha_signature = agatha_signature[0]
