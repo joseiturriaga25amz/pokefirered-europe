@@ -237,6 +237,16 @@ No gameplay correction was required during the audit. Only validator coverage wa
 Next exact step:
 - **Run / verify validation and CI for the exact current HEAD.**
 
+## CI validation gate — initiated
+
+- Draft PR #13 was opened against `master` to exercise pull-request build/compatibility workflows.
+- The repository's `.github/workflows/full-gameplay-core.yml` was verified to include:
+  - push trigger for `feature/b8-signature-pokemon-staging`;
+  - explicit step `Validate B8 signature staging`;
+  - command `python3 tools/validate_b8_signature_staging.py`.
+- This documentation commit is intentionally the next branch push so **Full Gameplay Core** runs against the exact new branch HEAD.
+- B8 must not be marked closed until that exact-HEAD workflow completes successfully.
+
 ## Remaining B8 work from this checkpoint
 
 Continue in this exact order, one microblock at a time:
