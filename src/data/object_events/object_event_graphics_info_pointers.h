@@ -138,6 +138,7 @@ const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Onix;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Steelix;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Golbat;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Crobat;
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Gloom;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Zapdos;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Moltres;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Articuno;
