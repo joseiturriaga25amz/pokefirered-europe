@@ -172,21 +172,30 @@ Newest code work first:
 
 Full audit is now in progress, still using microblocks.
 
-Completed audit microblock:
+Completed audit microblocks:
 - **League A: Lorelei / Bruno / Agatha**
-  - branch verified at the Misty ambience code state before this documentation update;
   - Lorelei + Lapras: direct lateral adjacency, central lane preserved, no warp overlap, no conflicting trainer movement;
   - Bruno + Machamp: direct lateral adjacency, no warp overlap; post-battle movements only turn Bruno in place and do not collide with Machamp;
   - Agatha + Gengar: direct lateral adjacency, no warp overlap, no conflicting trainer movement;
   - existing B8 validator covers all three placements;
   - **no code correction required**.
 
-Next audit microblock:
 - **League B: Lance + Champion Gary/Blue**
-  - verify Dragonite detour;
-  - verify Blastoise adjacency;
-  - verify entering the Champion room does not auto-start battle;
-  - verify talking to Gary owns intro/battle/post-battle Oak/Hall of Fame flow.
+  - Lance + Dragonite: direct right-side adjacency at `(6,8)` / `(7,8)`;
+  - Lance's right-side movement detour is `up, right, right, down`, so he routes around Dragonite instead of crossing its tile;
+  - Champion Gary + Blastoise: direct right-side adjacency at `(6,8)` / `(7,8)`, with no warp overlap;
+  - Champion room entry only moves the player in and releases control; it does **not** start the battle;
+  - talking to Gary owns intro/rematch intro, battle/rematch battle, defeat flag, Oak entrance and Hall of Fame warp;
+  - Gary does not move across Blastoise during Oak's entrance; his movement sequence only turns him left;
+  - existing B8 validator covers the Dragonite detour and the talk-to-battle split;
+  - **no code correction required**.
+
+Next audit microblock:
+- **Gyms A: Brock / Misty / Lt. Surge / Erika**
+  - verify Brock Onix→Steelix state;
+  - verify Misty Starmie + Seel/Staryu pool ambience;
+  - verify Surge/Raichu placement;
+  - verify Erika/Gloom and Lisa relocation.
 
 ## Remaining B8 work from this checkpoint
 
