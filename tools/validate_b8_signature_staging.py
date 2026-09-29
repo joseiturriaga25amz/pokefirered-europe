@@ -38,14 +38,18 @@ def main():
 
     brock = read_json("data/maps/PewterCity_Gym/map.json")
     brock_objs = brock["object_events"]
+    brock_trainer = [o for o in brock_objs if o.get("graphics_id") == "OBJ_EVENT_GFX_BROCK"]
+    assert len(brock_trainer) == 1
+    assert (brock_trainer[0]["x"], brock_trainer[0]["y"]) == (6, 5)
     signature = [o for o in brock_objs if o.get("local_id") == "LOCALID_FULL_BROCK_SIGNATURE"]
     assert len(signature) == 1
     signature = signature[0]
     assert signature["graphics_id"] == "OBJ_EVENT_GFX_VAR_0"
-    assert (signature["x"], signature["y"]) == (4, 5)
+    assert (signature["x"], signature["y"]) == (5, 5)
     assert signature["script"] == "0x0"
     assert signature["trainer_type"] == "TRAINER_TYPE_NONE"
     assert signature["x"] != 6
+    assert abs(signature["x"] - brock_trainer[0]["x"]) + abs(signature["y"] - brock_trainer[0]["y"]) == 1
     assert not any((w["x"], w["y"]) == (signature["x"], signature["y"]) for w in brock["warp_events"])
 
     event_objects = (ROOT / "include/constants/event_objects.h").read_text(encoding="utf-8")
