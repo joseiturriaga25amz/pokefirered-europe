@@ -148,6 +148,8 @@ const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Machamp;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Gengar;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Dragonite;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Blastoise;
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_SeelIcon;
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_StaryuIcon;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Zapdos;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Moltres;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Articuno;
@@ -317,6 +319,8 @@ const struct ObjectEventGraphicsInfo *const gObjectEventGraphicsInfoPointers[NUM
     [OBJ_EVENT_GFX_GENGAR]                     = &gObjectEventGraphicsInfo_Gengar,
     [OBJ_EVENT_GFX_DRAGONITE]                  = &gObjectEventGraphicsInfo_Dragonite,
     [OBJ_EVENT_GFX_BLASTOISE]                  = &gObjectEventGraphicsInfo_Blastoise,
+    [OBJ_EVENT_GFX_SEEL_ICON]                  = &gObjectEventGraphicsInfo_SeelIcon,
+    [OBJ_EVENT_GFX_STARYU_ICON]                = &gObjectEventGraphicsInfo_StaryuIcon,
     [OBJ_EVENT_GFX_ZAPDOS]                   = &gObjectEventGraphicsInfo_Zapdos,
     [OBJ_EVENT_GFX_MOLTRES]                  = &gObjectEventGraphicsInfo_Moltres,
     [OBJ_EVENT_GFX_ARTICUNO]                 = &gObjectEventGraphicsInfo_Articuno,
