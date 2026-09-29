@@ -78,13 +78,17 @@ def main():
 
     koga = read_json("data/maps/FuchsiaCity_Gym/map.json")
     koga_objs = koga["object_events"]
+    koga_trainer = [o for o in koga_objs if o.get("graphics_id") == "OBJ_EVENT_GFX_KOGA"]
+    assert len(koga_trainer) == 1
+    assert (koga_trainer[0]["x"], koga_trainer[0]["y"]) == (7, 13)
     koga_signature = [o for o in koga_objs if o.get("local_id") == "LOCALID_FULL_KOGA_SIGNATURE"]
     assert len(koga_signature) == 1
     koga_signature = koga_signature[0]
     assert koga_signature["graphics_id"] == "OBJ_EVENT_GFX_VAR_1"
-    assert (koga_signature["x"], koga_signature["y"]) == (5, 13)
+    assert (koga_signature["x"], koga_signature["y"]) == (6, 13)
     assert koga_signature["script"] == "0x0"
     assert koga_signature["trainer_type"] == "TRAINER_TYPE_NONE"
+    assert abs(koga_signature["x"] - koga_trainer[0]["x"]) + abs(koga_signature["y"] - koga_trainer[0]["y"]) == 1
     assert not any((w["x"], w["y"]) == (koga_signature["x"], koga_signature["y"]) for w in koga["warp_events"])
 
     assert "#define OBJ_EVENT_GFX_GOLBAT 154" in event_objects
