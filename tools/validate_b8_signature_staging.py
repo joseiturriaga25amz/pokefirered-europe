@@ -54,7 +54,7 @@ def main():
     pointers = (ROOT / "src/data/object_events/object_event_graphics_info_pointers.h").read_text(encoding="utf-8")
     assert "#define OBJ_EVENT_GFX_ONIX 152" in event_objects
     assert "#define OBJ_EVENT_GFX_STEELIX 153" in event_objects
-    assert "#define NUM_OBJ_EVENT_GFX     156" in event_objects
+    assert "#define NUM_OBJ_EVENT_GFX     157" in event_objects
     assert "OBJ_EVENT_PAL_TAG_MON_ICON_2" in movement
     assert "gMonIconPalettes[2]" in movement
     assert 'graphics/pokemon/onix/icon.4bpp' in graphics
@@ -84,7 +84,7 @@ def main():
 
     assert "#define OBJ_EVENT_GFX_GOLBAT 154" in event_objects
     assert "#define OBJ_EVENT_GFX_CROBAT 155" in event_objects
-    assert "#define NUM_OBJ_EVENT_GFX     156" in event_objects
+    assert "#define NUM_OBJ_EVENT_GFX     157" in event_objects
     assert 'graphics/pokemon/golbat/icon.4bpp' in graphics
     assert 'graphics/pokemon/crobat/icon.4bpp' in graphics
     assert "gObjectEventGraphicsInfo_Golbat" in info
@@ -92,13 +92,30 @@ def main():
     assert "[OBJ_EVENT_GFX_GOLBAT]" in pointers
     assert "[OBJ_EVENT_GFX_CROBAT]" in pointers
 
+    erika = read_json("data/maps/CeladonCity_Gym/map.json")
+    erika_objs = erika["object_events"]
+    erika_signature = [o for o in erika_objs if o.get("local_id") == "LOCALID_FULL_ERIKA_SIGNATURE"]
+    assert len(erika_signature) == 1
+    erika_signature = erika_signature[0]
+    assert erika_signature["graphics_id"] == "OBJ_EVENT_GFX_GLOOM"
+    assert (erika_signature["x"], erika_signature["y"]) == (6, 3)
+    assert erika_signature["script"] == "0x0"
+    assert erika_signature["trainer_type"] == "TRAINER_TYPE_NONE"
+    assert not any((w["x"], w["y"]) == (erika_signature["x"], erika_signature["y"]) for w in erika["warp_events"])
+
+    assert "#define OBJ_EVENT_GFX_GLOOM 156" in event_objects
+    assert "#define NUM_OBJ_EVENT_GFX     157" in event_objects
+    assert 'graphics/pokemon/gloom/icon.4bpp' in graphics
+    assert "gObjectEventGraphicsInfo_Gloom" in info
+    assert "[OBJ_EVENT_GFX_GLOOM]" in pointers
+
     koga_scripts = (ROOT / "data/maps/FuchsiaCity_Gym/scripts.inc").read_text(encoding="utf-8")
     assert "setvar VAR_OBJ_GFX_ID_1, OBJ_EVENT_GFX_GOLBAT" in koga_scripts
     assert "goto_if_unset FLAG_SYS_GAME_CLEAR" in koga_scripts
     assert "goto_if_unset FLAG_GOT_TM06_FROM_KOGA" in koga_scripts
     assert "setvar VAR_OBJ_GFX_ID_1, OBJ_EVENT_GFX_CROBAT" in koga_scripts
 
-    print("B8 signature staging PASS: Lorelei/Lapras stable; Brock Onix->Steelix and Koga Golbat->Crobat are stage-aware and nonblocking.")
+    print("B8 signature staging PASS: Lorelei/Lapras stable; Brock Onix->Steelix, Erika/Gloom, and Koga Golbat->Crobat are nonblocking and valid.")
 
 
 if __name__ == "__main__":

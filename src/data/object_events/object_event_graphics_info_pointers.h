@@ -297,6 +297,7 @@ const struct ObjectEventGraphicsInfo *const gObjectEventGraphicsInfoPointers[NUM
     [OBJ_EVENT_GFX_STEELIX]                  = &gObjectEventGraphicsInfo_Steelix,
     [OBJ_EVENT_GFX_GOLBAT]                    = &gObjectEventGraphicsInfo_Golbat,
     [OBJ_EVENT_GFX_CROBAT]                    = &gObjectEventGraphicsInfo_Crobat,
+    [OBJ_EVENT_GFX_GLOOM]                     = &gObjectEventGraphicsInfo_Gloom,
     [OBJ_EVENT_GFX_ZAPDOS]                   = &gObjectEventGraphicsInfo_Zapdos,
     [OBJ_EVENT_GFX_MOLTRES]                  = &gObjectEventGraphicsInfo_Moltres,
     [OBJ_EVENT_GFX_ARTICUNO]                 = &gObjectEventGraphicsInfo_Articuno,
