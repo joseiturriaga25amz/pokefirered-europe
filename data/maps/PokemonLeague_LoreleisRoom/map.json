@@ -33,7 +33,7 @@
       "local_id": "LOCALID_FULL_LORELEI_LAPRAS",
       "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_LAPRAS",
-      "x": 4,
+      "x": 5,
       "y": 5,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",

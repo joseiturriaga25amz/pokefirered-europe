@@ -23,13 +23,14 @@ def main():
     assert len(companions) == 1
     lapras = companions[0]
     assert lapras["graphics_id"] == "OBJ_EVENT_GFX_LAPRAS"
-    assert (lapras["x"], lapras["y"]) == (4, 5)
+    assert (lapras["x"], lapras["y"]) == (5, 5)
     assert lapras["script"] == "0x0"
     assert lapras["flag"] == "0"
     assert lapras["trainer_type"] == "TRAINER_TYPE_NONE"
 
     # Keep the central League approach/exit lane unobstructed.
     assert lapras["x"] != 6
+    assert abs(lapras["x"] - trainer[0]["x"]) + abs(lapras["y"] - trainer[0]["y"]) == 1
     assert not any(
         (warp["x"], warp["y"]) == (lapras["x"], lapras["y"])
         for warp in lorelei["warp_events"]
