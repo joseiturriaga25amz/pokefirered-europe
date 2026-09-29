@@ -54,7 +54,7 @@ def main():
     pointers = (ROOT / "src/data/object_events/object_event_graphics_info_pointers.h").read_text(encoding="utf-8")
     assert "#define OBJ_EVENT_GFX_ONIX 152" in event_objects
     assert "#define OBJ_EVENT_GFX_STEELIX 153" in event_objects
-    assert "#define NUM_OBJ_EVENT_GFX     154" in event_objects
+    assert "#define NUM_OBJ_EVENT_GFX     156" in event_objects
     assert "OBJ_EVENT_PAL_TAG_MON_ICON_2" in movement
     assert "gMonIconPalettes[2]" in movement
     assert 'graphics/pokemon/onix/icon.4bpp' in graphics
