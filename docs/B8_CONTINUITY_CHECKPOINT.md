@@ -209,12 +209,33 @@ Completed audit microblock:
   - Validator hardening commit: `47d4eeca7e2b30995c8ae5b705be453267d8c51f` now locks Blaine/Magmar adjacency, Giovanni/Persian adjacency, the structured `FLAG_TEMP_2` visibility flow and the non-crossing movement invariant.
   - **no gameplay code correction required**.
 
-Next audit microblock:
+Completed audit microblock:
 - **B8 global asset/invariant sweep**
-  - verify every B8 custom object graphics ID/pointer/info/pic-table entry is unique and present;
-  - verify `NUM_OBJ_EVENT_GFX = 168` matches the highest static ID;
-  - verify all staged signature objects remain non-interactive/static unless intentionally dynamic;
-  - look for duplicate local IDs, object-tile overlaps and any remaining validator coverage gaps.
+  - B8 static graphics IDs are exactly `152..167`, unique and contiguous.
+  - `NUM_OBJ_EVENT_GFX = 168`, exactly highest static ID + 1.
+  - All 16 B8 custom assets have exactly one graphics declaration, graphics-info definition, pointer declaration, pointer-table entry and pic-table entry.
+  - All B8 custom icon-derived objects are 32x32, inanimate and use `TRACKS_NONE`.
+  - Across all 13 B8 maps there are no duplicate explicit local IDs.
+  - Across all 13 B8 maps there are no two object events occupying the same `(x,y,elevation)`.
+  - All `LOCALID_FULL_*` staging objects are non-interactive (`script = 0x0`, `TRAINER_TYPE_NONE`) and do not occupy warp tiles.
+  - Validator hardening commit: `8f2afeaf9a18c92a19ecb803bb3ab61e6add0f65` adds these global registry/map invariants permanently.
+  - **no gameplay code correction required**.
+
+## Full B8 audit status
+
+**COMPLETE.**
+
+Audited:
+- League: Lorelei, Bruno, Agatha, Lance, Champion Gary/Blue.
+- Gyms: Brock, Misty, Lt. Surge, Erika, Koga, Sabrina, Blaine, Giovanni.
+- Dynamic states: Brock Onix→Steelix, Koga Golbat→Crobat.
+- Special scripting: Lance detour, Champion talk-to-battle + Oak/Hall of Fame flow, Erika trainer relocation, Giovanni/Persian visibility, Misty pool ambience.
+- Global object graphics registry and map-level staging invariants.
+
+No gameplay correction was required during the audit. Only validator coverage was strengthened.
+
+Next exact step:
+- **Run / verify validation and CI for the exact current HEAD.**
 
 ## Remaining B8 work from this checkpoint
 
