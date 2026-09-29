@@ -71,7 +71,34 @@ def main():
     assert "goto_if_unset FLAG_GOT_TM39_FROM_BROCK" in brock_scripts
     assert "setvar VAR_OBJ_GFX_ID_0, OBJ_EVENT_GFX_STEELIX" in brock_scripts
 
-    print("B8 signature staging PASS: Lorelei/Lapras is stable; Brock changes Onix -> Steelix only at rematch stage.")
+    koga = read_json("data/maps/FuchsiaCity_Gym/map.json")
+    koga_objs = koga["object_events"]
+    koga_signature = [o for o in koga_objs if o.get("local_id") == "LOCALID_FULL_KOGA_SIGNATURE"]
+    assert len(koga_signature) == 1
+    koga_signature = koga_signature[0]
+    assert koga_signature["graphics_id"] == "OBJ_EVENT_GFX_VAR_1"
+    assert (koga_signature["x"], koga_signature["y"]) == (5, 13)
+    assert koga_signature["script"] == "0x0"
+    assert koga_signature["trainer_type"] == "TRAINER_TYPE_NONE"
+    assert not any((w["x"], w["y"]) == (koga_signature["x"], koga_signature["y"]) for w in koga["warp_events"])
+
+    assert "#define OBJ_EVENT_GFX_GOLBAT 154" in event_objects
+    assert "#define OBJ_EVENT_GFX_CROBAT 155" in event_objects
+    assert "#define NUM_OBJ_EVENT_GFX     156" in event_objects
+    assert 'graphics/pokemon/golbat/icon.4bpp' in graphics
+    assert 'graphics/pokemon/crobat/icon.4bpp' in graphics
+    assert "gObjectEventGraphicsInfo_Golbat" in info
+    assert "gObjectEventGraphicsInfo_Crobat" in info
+    assert "[OBJ_EVENT_GFX_GOLBAT]" in pointers
+    assert "[OBJ_EVENT_GFX_CROBAT]" in pointers
+
+    koga_scripts = (ROOT / "data/maps/FuchsiaCity_Gym/scripts.inc").read_text(encoding="utf-8")
+    assert "setvar VAR_OBJ_GFX_ID_1, OBJ_EVENT_GFX_GOLBAT" in koga_scripts
+    assert "goto_if_unset FLAG_SYS_GAME_CLEAR" in koga_scripts
+    assert "goto_if_unset FLAG_GOT_TM06_FROM_KOGA" in koga_scripts
+    assert "setvar VAR_OBJ_GFX_ID_1, OBJ_EVENT_GFX_CROBAT" in koga_scripts
+
+    print("B8 signature staging PASS: Lorelei/Lapras stable; Brock Onix->Steelix and Koga Golbat->Crobat are stage-aware and nonblocking.")
 
 
 if __name__ == "__main__":
