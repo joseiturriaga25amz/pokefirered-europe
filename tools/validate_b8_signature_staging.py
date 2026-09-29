@@ -193,9 +193,18 @@ def main():
     assert "gObjectEventGraphicsInfo_StaryuIcon" in info
     assert "[OBJ_EVENT_GFX_SEEL_ICON]" in pointers
     assert "[OBJ_EVENT_GFX_STARYU_ICON]" in pointers
+    starmie_info = info.split("const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Starmie = {", 1)[1].split("};", 1)[0]
+    seel_icon_info = info.split("const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_SeelIcon = {", 1)[1].split("};", 1)[0]
+    staryu_icon_info = info.split("const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_StaryuIcon = {", 1)[1].split("};", 1)[0]
+    for pool_info in (starmie_info, seel_icon_info, staryu_icon_info):
+        assert ".paletteTag = OBJ_EVENT_PAL_TAG_MON_ICON_2" in pool_info
+        assert ".paletteSlot = PALSLOT_NPC_SPECIAL" in pool_info
 
     surge = read_json("data/maps/VermilionCity_Gym/map.json")
     surge_objs = surge["object_events"]
+    surge_trainer = [o for o in surge_objs if o.get("graphics_id") == "OBJ_EVENT_GFX_LT_SURGE"]
+    assert len(surge_trainer) == 1
+    assert (surge_trainer[0]["x"], surge_trainer[0]["y"]) == (5, 2)
     surge_signature = [o for o in surge_objs if o.get("local_id") == "LOCALID_FULL_SURGE_SIGNATURE"]
     assert len(surge_signature) == 1
     surge_signature = surge_signature[0]
@@ -203,6 +212,7 @@ def main():
     assert (surge_signature["x"], surge_signature["y"]) == (4, 2)
     assert surge_signature["script"] == "0x0"
     assert surge_signature["trainer_type"] == "TRAINER_TYPE_NONE"
+    assert abs(surge_signature["x"] - surge_trainer[0]["x"]) + abs(surge_signature["y"] - surge_trainer[0]["y"]) == 1
     assert not any((w["x"], w["y"]) == (surge_signature["x"], surge_signature["y"]) for w in surge["warp_events"])
 
     assert "#define OBJ_EVENT_GFX_RAICHU 159" in event_objects
