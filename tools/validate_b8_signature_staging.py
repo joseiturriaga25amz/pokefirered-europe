@@ -54,7 +54,7 @@ def main():
     pointers = (ROOT / "src/data/object_events/object_event_graphics_info_pointers.h").read_text(encoding="utf-8")
     assert "#define OBJ_EVENT_GFX_ONIX 152" in event_objects
     assert "#define OBJ_EVENT_GFX_STEELIX 153" in event_objects
-    assert "#define NUM_OBJ_EVENT_GFX     163" in event_objects
+    assert "#define NUM_OBJ_EVENT_GFX     164" in event_objects
     assert "OBJ_EVENT_PAL_TAG_MON_ICON_2" in movement
     assert "gMonIconPalettes[2]" in movement
     assert 'graphics/pokemon/onix/icon.4bpp' in graphics
@@ -84,7 +84,7 @@ def main():
 
     assert "#define OBJ_EVENT_GFX_GOLBAT 154" in event_objects
     assert "#define OBJ_EVENT_GFX_CROBAT 155" in event_objects
-    assert "#define NUM_OBJ_EVENT_GFX     163" in event_objects
+    assert "#define NUM_OBJ_EVENT_GFX     164" in event_objects
     assert 'graphics/pokemon/golbat/icon.4bpp' in graphics
     assert 'graphics/pokemon/crobat/icon.4bpp' in graphics
     assert "gObjectEventGraphicsInfo_Golbat" in info
@@ -104,7 +104,7 @@ def main():
     assert not any((w["x"], w["y"]) == (erika_signature["x"], erika_signature["y"]) for w in erika["warp_events"])
 
     assert "#define OBJ_EVENT_GFX_GLOOM 156" in event_objects
-    assert "#define NUM_OBJ_EVENT_GFX     163" in event_objects
+    assert "#define NUM_OBJ_EVENT_GFX     164" in event_objects
     assert 'graphics/pokemon/gloom/icon.4bpp' in graphics
     assert "gObjectEventGraphicsInfo_Gloom" in info
     assert "[OBJ_EVENT_GFX_GLOOM]" in pointers
@@ -121,7 +121,7 @@ def main():
     assert not any((w["x"], w["y"]) == (sabrina_signature["x"], sabrina_signature["y"]) for w in sabrina["warp_events"])
 
     assert "#define OBJ_EVENT_GFX_KADABRA 157" in event_objects
-    assert "#define NUM_OBJ_EVENT_GFX     163" in event_objects
+    assert "#define NUM_OBJ_EVENT_GFX     164" in event_objects
     assert 'graphics/pokemon/kadabra/icon.4bpp' in graphics
     assert "gObjectEventGraphicsInfo_Kadabra" in info
     assert "[OBJ_EVENT_GFX_KADABRA]" in pointers
@@ -138,7 +138,7 @@ def main():
     assert not any((w["x"], w["y"]) == (misty_signature["x"], misty_signature["y"]) for w in misty["warp_events"])
 
     assert "#define OBJ_EVENT_GFX_STARMIE 158" in event_objects
-    assert "#define NUM_OBJ_EVENT_GFX     163" in event_objects
+    assert "#define NUM_OBJ_EVENT_GFX     164" in event_objects
     assert 'graphics/pokemon/starmie/icon.4bpp' in graphics
     assert "gObjectEventGraphicsInfo_Starmie" in info
     assert "[OBJ_EVENT_GFX_STARMIE]" in pointers
@@ -155,7 +155,7 @@ def main():
     assert not any((w["x"], w["y"]) == (surge_signature["x"], surge_signature["y"]) for w in surge["warp_events"])
 
     assert "#define OBJ_EVENT_GFX_RAICHU 159" in event_objects
-    assert "#define NUM_OBJ_EVENT_GFX     163" in event_objects
+    assert "#define NUM_OBJ_EVENT_GFX     164" in event_objects
     assert 'graphics/pokemon/raichu/icon.4bpp' in graphics
     assert "gObjectEventGraphicsInfo_Raichu" in info
     assert "[OBJ_EVENT_GFX_RAICHU]" in pointers
@@ -172,7 +172,7 @@ def main():
     assert not any((w["x"], w["y"]) == (blaine_signature["x"], blaine_signature["y"]) for w in blaine["warp_events"])
 
     assert "#define OBJ_EVENT_GFX_MAGMAR 160" in event_objects
-    assert "#define NUM_OBJ_EVENT_GFX     163" in event_objects
+    assert "#define NUM_OBJ_EVENT_GFX     164" in event_objects
     assert 'graphics/pokemon/magmar/icon.4bpp' in graphics
     assert "gObjectEventGraphicsInfo_Magmar" in info
     assert "[OBJ_EVENT_GFX_MAGMAR]" in pointers
@@ -194,11 +194,29 @@ def main():
     assert not any((w["x"], w["y"]) == (bruno_signature["x"], bruno_signature["y"]) for w in bruno["warp_events"])
 
     assert "#define OBJ_EVENT_GFX_MACHAMP 162" in event_objects
-    assert "#define NUM_OBJ_EVENT_GFX     163" in event_objects
+    assert "#define NUM_OBJ_EVENT_GFX     164" in event_objects
     assert 'graphics/pokemon/machamp/icon.4bpp' in graphics
     assert "gObjectEventGraphicsInfo_Machamp" in info
     assert "OBJ_EVENT_PAL_TAG_MON_ICON_0" in info
     assert "[OBJ_EVENT_GFX_MACHAMP]" in pointers
+
+    agatha = read_json("data/maps/PokemonLeague_AgathasRoom/map.json")
+    agatha_objs = agatha["object_events"]
+    agatha_signature = [o for o in agatha_objs if o.get("local_id") == "LOCALID_FULL_AGATHA_SIGNATURE"]
+    assert len(agatha_signature) == 1
+    agatha_signature = agatha_signature[0]
+    assert agatha_signature["graphics_id"] == "OBJ_EVENT_GFX_GENGAR"
+    assert (agatha_signature["x"], agatha_signature["y"]) == (8, 5)
+    assert agatha_signature["script"] == "0x0"
+    assert agatha_signature["trainer_type"] == "TRAINER_TYPE_NONE"
+    assert agatha_signature["flag"] == "0"
+    assert agatha_signature["x"] != 6
+    assert not any((w["x"], w["y"]) == (agatha_signature["x"], agatha_signature["y"]) for w in agatha["warp_events"])
+    assert "#define OBJ_EVENT_GFX_GENGAR 163" in event_objects
+    assert "#define NUM_OBJ_EVENT_GFX     164" in event_objects
+    assert 'graphics/pokemon/gengar/icon.4bpp' in graphics
+    assert "gObjectEventGraphicsInfo_Gengar" in info
+    assert "[OBJ_EVENT_GFX_GENGAR]" in pointers
 
     giovanni = read_json("data/maps/ViridianCity_Gym/map.json")
     giovanni_objs = giovanni["object_events"]
@@ -213,7 +231,7 @@ def main():
     assert not any((w["x"], w["y"]) == (giovanni_signature["x"], giovanni_signature["y"]) for w in giovanni["warp_events"])
 
     assert "#define OBJ_EVENT_GFX_PERSIAN 161" in event_objects
-    assert "#define NUM_OBJ_EVENT_GFX     163" in event_objects
+    assert "#define NUM_OBJ_EVENT_GFX     164" in event_objects
     assert 'graphics/pokemon/persian/icon.4bpp' in graphics
     assert "gObjectEventGraphicsInfo_Persian" in info
     assert "[OBJ_EVENT_GFX_PERSIAN]" in pointers
@@ -229,7 +247,7 @@ def main():
     assert "goto_if_unset FLAG_GOT_TM06_FROM_KOGA" in koga_scripts
     assert "setvar VAR_OBJ_GFX_ID_1, OBJ_EVENT_GFX_CROBAT" in koga_scripts
 
-    print("B8 signature staging PASS: Lorelei/Lapras stable; Bruno/Machamp, Brock Onix->Steelix, Misty/Starmie, Surge/Raichu, Erika/Gloom, Koga Golbat->Crobat, Sabrina/Kadabra, Blaine/Magmar, and Giovanni/Persian are nonblocking and valid.")
+    print("B8 signature staging PASS: Lorelei/Lapras stable; Bruno/Machamp, Agatha/Gengar, Brock Onix->Steelix, Misty/Starmie, Surge/Raichu, Erika/Gloom, Koga Golbat->Crobat, Sabrina/Kadabra, Blaine/Magmar, and Giovanni/Persian are nonblocking and valid.")
 
 
 if __name__ == "__main__":

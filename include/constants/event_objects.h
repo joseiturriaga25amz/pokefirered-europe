@@ -166,8 +166,9 @@
 #define OBJ_EVENT_GFX_MAGMAR 160
 #define OBJ_EVENT_GFX_PERSIAN 161
 #define OBJ_EVENT_GFX_MACHAMP 162
+#define OBJ_EVENT_GFX_GENGAR 163
 
-#define NUM_OBJ_EVENT_GFX     163
+#define NUM_OBJ_EVENT_GFX     164
 
 // These are dynamic object gfx ids.
 // They correspond with the values of the VAR_OBJ_GFX_ID_X vars.
