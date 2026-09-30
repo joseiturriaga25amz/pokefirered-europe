@@ -384,3 +384,42 @@ When an approved Leader roster changes a previously frozen trainer set:
 7. rerun the production gate on the exact integrated master HEAD before marking the microblock CLOSED.
 
 This procedure is part of the Gym Leader roster pass and should be reused for Misty and later Leaders when their approved rosters differ from the currently frozen production sets.
+
+### Misty — approved roster identity
+
+**First battle**
+- Staryu
+- Starmie
+- Psyduck
+- Poliwag
+
+Rationale:
+- Togepi and Horsea are strongly associated with Misty, but are excluded from the battle roster because the intended characterization distinguishes Pokémon she notably carried/cared for from Pokémon she regularly used to battle.
+- Psyduck and Poliwag therefore take the anime-identity battle slots alongside the Staryu/Starmie core.
+
+**Rematch**
+- Starmie
+- Gyarados
+- Corsola
+- Politoed
+- Togetic
+- Staryu
+
+**Ace/signature split**
+- First battle ace: Starmie.
+- First battle signature companion: Starmie.
+- Rematch ace: Gyarados.
+- Rematch signature companion: Starmie.
+- This intentionally separates combat strength from visual identity: Gyarados is the stronger rematch ace, while Starmie remains Misty's most iconic companion for staging.
+
+**Visual staging proposal — approved in concept, placement still to validate**
+- Keep Starmie beside Misty in both states.
+- Add Togepi near Misty as a non-battle identity/presentation object.
+- Add Horsea in the pool near the existing Seel ambience if a nonblocking water tile passes collision/warp/object-spacing validation.
+- Existing Seel and Staryu pool ambience remains unless exact placement review finds a conflict.
+- Do not implement the Togepi/Horsea staging until exact coordinates and graphics availability are verified.
+
+**Balance status**
+- Species/identity are approved.
+- Levels, order, held items and movesets are not yet approved and must be reviewed next before gameplay implementation.
+
