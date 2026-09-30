@@ -568,3 +568,163 @@ The Staryu and Politoed exceptions are identity-specific trainer-party exception
 - Trainer-only exceptions are limited to Psyduck Lv.20 Water Gun, Staryu Lv.23 Swift and Politoed Lv.63 Bounce.
 - Run #634 failed only because the audited `trainer_parties.h` blob lock still referenced the previous intentional trainer data; the lock was relocked after diff review and #635/#636 passed.
 - Do not begin Lt. Surge until explicitly requested by the user.
+
+
+### A-013 research pool — user-supplied canon associations
+
+**Status:** APPROVED RESEARCH INPUT / NOT A ROSTER DECISION.
+
+This list is preserved from the user's research and is the candidate pool to use for the remaining Gym Leader / Giovanni identity analysis. It must not be expanded, reduced, or silently corrected from chat memory. Inclusion here means "consider during analysis", not "approved for a battle roster".
+
+#### Brock
+
+**Kanto**
+- Onix (ace)
+- Geodude (icónico)
+- Zubat (no lo usaba tanto en principio)
+- Vulpix (se lo da Suzy)
+
+**Johto**
+- Zubat evolucionó a Golbat
+- Golbat evolucionó a Crobat (fuerte)
+- Pineco
+- Onix evolucionó a Steelix (fuerte y ace)
+
+**Bien**
+- Pineco evolucionó a Forretress
+- Lotad-Lombre-Ludicolo
+- Mudkip-Marshtomp
+
+#### Misty
+
+**Kanto**
+- Staryu (icónico y querido)
+- Starmie (ace)
+- Seel que luego es Dewgong (es del gimnasio)
+- Goldeen (poco uso)
+- Horsea (rescatado y tierno)
+- Psyduck (se auto atrapó)
+- Togepi (muy querido)
+- Poliwag (se encariñó con él)
+
+**Johto**
+- Su Poliwag evolucionó a Poliwhirl
+- Corsola (de sus Pokémon más fuertes)
+- Su Poliwhirl evolucionó a Politoed
+
+**Hoenn**
+- Gyarados (insignia y fuertísimo)
+- Togepi evolucionó a Togetic
+- Azurill
+- Luvdisc es caso especial: solo aparece en un capítulo especial; no se cuenta.
+
+#### Lt. Surge
+
+**Kanto**
+- Raichu (anime)
+- Voltorb (canon videojuegos)
+- Pikachu (canon videojuegos)
+
+**Johto**
+- Voltorb evolucionó a Electrode
+- Magneton
+
+**Oro HeartGold y Plata SoulSilver**
+- Electrike-Manectric
+- Electabuzz
+
+#### Erika
+
+**Kanto**
+- Weepinbell (Rojo, Azul, Amarillo) (anime)
+- Victreebel (Rojo Fuego y Verde Hoja)
+- Tangela (anime)
+- Gloom (Amarillo) (Pokémon insignia anime) (anime)
+- Vileplume (insignia juegos)
+
+**Johto**
+- Bellossom
+- Jumpluff (HeartGold y SoulSilver)
+
+**Hoenn**
+- Cradily (videojuegos)
+- Shiftry (videojuegos)
+- Exeggutor (videojuegos)
+
+#### Koga
+
+Visual identity note: en el gimnasio mantiene Voltorb camuflados como Poké Balls trampa para detener a los intrusos. El usuario quiere considerar implementarlo visualmente, sin combate, solo estético.
+
+**Kanto**
+- Koffing (Rojo, Azul, Rojo Fuego y Verde Hoja)
+- Weezing (Rojo, Azul, Rojo Fuego y Verde Hoja) (insignia en Rojo Fuego)
+- Muk
+- Venonat (anime) (Amarillo)
+- Venomoth (anime) (Amarillo)
+- Golbat (anime)
+
+**Johto — Oro, Plata, Cristal, HeartGold, SoulSilver**
+- Ariados
+- Forretress
+- Crobat
+
+**Hoenn**
+- Swalot (HeartGold y SoulSilver)
+
+#### Sabrina
+
+**Kanto**
+- Abra (icono anime, evoluciona a Kadabra)
+- Kadabra (icono del anime)
+- Mr. Mime (videojuegos)
+- Venomoth (Rojo, Azul, Rojo Fuego y Verde Hoja)
+- Alakazam (insignia videojuegos)
+
+**Johto — Oro, Plata, Cristal, HeartGold, SoulSilver**
+- Espeon
+
+**Hoenn**
+- Wobbuffet (HeartGold y SoulSilver)
+- Jynx (HeartGold y SoulSilver)
+
+#### Blaine
+
+**Kanto**
+- Growlithe (todos los videojuegos)
+- Arcanine (insignia videojuego) (todos los videojuegos)
+- Ponyta
+- Rapidash
+- Magmar (principal en Amarillo) (insignia anime)
+- Ninetales (Rojo, Azul, Rojo Fuego y Verde Hoja) (anime)
+- Rhydon (anime)
+
+**Johto**
+- Magcargo
+
+**Hoenn — HeartGold y SoulSilver**
+- Torkoal
+- Camerupt
+
+#### Giovanni
+
+**Kanto**
+- Rhyhorn
+- Onix
+- Nidorino
+- Nidorina
+- Nidoking (evolucionado de Nidorino)
+- Nidoqueen (evolucionado de Nidorina)
+- Dugtrio
+- Persian (Amarillo)
+- Kangaskhan
+- Mewtwo (anime)
+- Golem (se lo deja al Team Rocket para defender el gimnasio)
+- Machamp (se lo deja al Team Rocket para defender el gimnasio)
+- Kingler (se lo deja al Team Rocket para defender el gimnasio)
+- Rhydon (se ve en el anime como parte del arsenal de Pokémon) (insignia en Pokémon Origins)
+- Cloyster (se ve en el anime como parte del arsenal de Pokémon)
+
+**Hoenn — HeartGold y SoulSilver**
+- Camerupt
+- Golem
+- Sandslash
