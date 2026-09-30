@@ -658,6 +658,9 @@ jobs:
       - name: Validate B7 legendary presentation
         run: python3 tools/validate_b7_legendary_presentation.py
 
+      - name: Validate B8 signature staging
+        run: python3 tools/validate_b8_signature_staging.py
+
       - name: Validate one-save baby obtainability
         run: python3 tools/validate_full_obtainability.py
 

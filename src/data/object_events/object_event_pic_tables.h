@@ -1465,6 +1465,70 @@ static const struct SpriteFrameImage sPicTable_Lapras[] = {
     overworld_frame(gObjectEventPic_Lapras, 2, 2, 2),
 };
 
+static const struct SpriteFrameImage sPicTable_Onix[] = {
+    overworld_frame(gObjectEventPic_Onix, 4, 4, 0),
+};
+
+static const struct SpriteFrameImage sPicTable_Steelix[] = {
+    overworld_frame(gObjectEventPic_Steelix, 4, 4, 0),
+};
+
+static const struct SpriteFrameImage sPicTable_Golbat[] = {
+    overworld_frame(gObjectEventPic_Golbat, 4, 4, 0),
+};
+
+static const struct SpriteFrameImage sPicTable_Crobat[] = {
+    overworld_frame(gObjectEventPic_Crobat, 4, 4, 0),
+};
+
+static const struct SpriteFrameImage sPicTable_Gloom[] = {
+    overworld_frame(gObjectEventPic_Gloom, 4, 4, 0),
+};
+
+static const struct SpriteFrameImage sPicTable_Kadabra[] = {
+    overworld_frame(gObjectEventPic_Kadabra, 4, 4, 0),
+};
+
+static const struct SpriteFrameImage sPicTable_Starmie[] = {
+    overworld_frame(gObjectEventPic_Starmie, 4, 4, 0),
+};
+
+static const struct SpriteFrameImage sPicTable_Raichu[] = {
+    overworld_frame(gObjectEventPic_Raichu, 4, 4, 0),
+};
+
+static const struct SpriteFrameImage sPicTable_Magmar[] = {
+    overworld_frame(gObjectEventPic_Magmar, 4, 4, 0),
+};
+
+static const struct SpriteFrameImage sPicTable_Persian[] = {
+    overworld_frame(gObjectEventPic_Persian, 4, 4, 0),
+};
+
+static const struct SpriteFrameImage sPicTable_Machamp[] = {
+    overworld_frame(gObjectEventPic_Machamp, 4, 4, 0),
+};
+
+static const struct SpriteFrameImage sPicTable_Gengar[] = {
+    overworld_frame(gObjectEventPic_Gengar, 4, 4, 0),
+};
+
+static const struct SpriteFrameImage sPicTable_Dragonite[] = {
+    overworld_frame(gObjectEventPic_Dragonite, 4, 4, 0),
+};
+
+static const struct SpriteFrameImage sPicTable_Blastoise[] = {
+    overworld_frame(gObjectEventPic_Blastoise, 4, 4, 0),
+};
+
+static const struct SpriteFrameImage sPicTable_SeelIcon[] = {
+    overworld_frame(gObjectEventPic_SeelIcon, 4, 4, 0),
+};
+
+static const struct SpriteFrameImage sPicTable_StaryuIcon[] = {
+    overworld_frame(gObjectEventPic_StaryuIcon, 4, 4, 0),
+};
+
 static const struct SpriteFrameImage sPicTable_Zapdos[] = {
     overworld_frame(gObjectEventPic_Zapdos, 4, 4, 0),
     overworld_frame(gObjectEventPic_Zapdos, 4, 4, 0),
