@@ -8,17 +8,21 @@ This section is the current resume point. Later dated sections preserve history 
 
 - Canonical repository: `joseiturriaga25amz/pokefirered-europe`.
 - Integration branch: `master`.
-- Last block fully **CLOSED on master**: **B7 — Legendary presentation / environmental signals**.
-- B7 master merge checkpoint: `8b6502e7233f51b9ca19529479a7055a21261391`.
-- B7 exact feature HEAD `f79f6d7a138bc42b95a7163e829bf11512b71b30` passed Full Gameplay Core run `36488728918`.
-- B8 branch: `feature/b8-signature-pokemon-staging`, current HEAD `52ed97e6f20cad11903bcce1deda46400ae37ee9`.
-- B8 is **IMPLEMENTED + VALIDATED + CI-GREEN, NOT YET CLOSED**. Full Gameplay Core run `36643089722` succeeded on that exact HEAD, but the single-line production rule requires merge to `master` and verification of the resulting master HEAD before closure.
-- `fix/b8-misty-pool-ambience` is a diverged historical correction branch; do not resume production there.
-- Detailed B8 history is in `docs/B8_CONTINUITY_CHECKPOINT.md` on the B8 branch. It is block-local evidence, not a replacement for this file.
-- The B8 branch also carries approved amendments A-011 (signature staging identity correction) and A-012 (fully animated B10 follower target). Preserve those decisions when reconciling B8 with master.
-- This continuity/CI consolidation was prepared on `chore/continuity-consolidation` and changes documentation/validation authority only; it does not alter gameplay.
+- Last production block fully **CLOSED on master**: **B8 — Signature Pokémon staging**.
+- B8 reconciled feature HEAD: `8794674c33e0ff9ecf899f557da76ea07a57e27b`.
+- B8 exact-head Full Gameplay Core: run **#616** — **SUCCESS**.
+- B8 merged master checkpoint: `28f42346916bf9d19c558ce4ce19fb849f5b6e33`.
+- B8 post-integration Full Gameplay Core: run **#617** — **SUCCESS**. B8 is therefore **CLOSED**.
+- Approved amendment A-013 interposes the Gym Leader roster-research pass before resuming B9. This is an approved scope-order amendment, not a reopening of B8.
+- Active roster branch: `design/leader-roster-research`.
+- Brock roster microblock reconciled HEAD: `ccc85275d5954d48673fb7694c7379f1cc54e186`.
+- Brock status at that HEAD: **IMPLEMENTED + VALIDATED + CI-GREEN** via Full Gameplay Core run **#618**, but **NOT YET CLOSED** because integration to `master` and post-integration verification remain.
+- Brock approved identity remains Onix as first-battle ace/signature and Steelix as rematch ace/signature. Exact roster/moves/levels are recorded in A-013.
+- The leader-change procedure learned from Brock is now frozen in A-013: update intentional frozen roster expectations, preserve legality/audit locks, exact-head CI, integration, then exact integrated-head CI.
+- After Brock closes, continue the Gym Leader pass with **Misty** using the same compact candidate-list → roster → signature/ace → levels/moves → validation sequence.
+- B9 Pokédex usefulness remains the next production B-block after the explicitly interposed roster-research pass is complete.
 
-**Next production action:** merge this consolidation to `master`, reconcile the B8 branch with that exact new master HEAD, rerun Full Gameplay Core on the resulting B8 HEAD, merge B8 to master, verify merged master, then and only then open B9.
+**Next production action:** finish Brock closure by integrating its exact green branch into `master`, verify Full Gameplay Core on the resulting master HEAD, record Brock closed, then begin Misty analysis. Do not start Misty implementation before Brock closure.
 
 ### Existing continuity roles — do not duplicate
 
