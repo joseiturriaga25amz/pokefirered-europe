@@ -19,6 +19,14 @@ This section is the current resume point. Later dated sections preserve history 
 - Brock merged to `master` as `269d75b501a99c92fd8296189760899a6a5d4571`.
 - Brock post-integration Full Gameplay Core run **#620** on that exact master SHA: **SUCCESS**.
 - Brock roster microblock is therefore **CLOSED**.
+- Brock was later reopened only for an approved **second-pass tuning microblock**; the earlier closure remains historical evidence.
+- Brock second-pass feature HEAD `12b244fd3b1f87b8b653fd6aaaa3d21b53c967f2` passed Full Gameplay Core **#631**.
+- Brock second-pass merged to `master` as `193b14aa3e5426dbf6049efa32a6d7c2c4d0d050`.
+- Brock second-pass post-integration Full Gameplay Core **#632** on that exact master SHA: **SUCCESS**.
+- Brock second-pass tuning microblock is therefore **CLOSED**.
+- Final first battle: Zubat 13 / Vulpix 14 / Geodude 15 / Onix 17; only Onix holds an Oran Berry; Onix remains ace/signature.
+- Final rematch: Marshtomp 60 / Ludicolo 61 / Forretress 62 / Golem 63 / Crobat 64 / Steelix 68; only Steelix holds Metal Coat; Steelix remains ace/signature.
+- Trainer-only Brock move exceptions are limited to Zubat Lv.13 Wing Attack, Vulpix Lv.14 Fire Spin + Agility, and Geodude Lv.15 Revenge.
 - Brock approved identity is Onix as first-battle ace/signature and Steelix as rematch ace/signature. Exact roster/moves/levels are recorded in A-013.
 - The leader-change procedure learned from Brock is frozen in A-013: update intentional frozen roster expectations, preserve legality/audit locks, exact-head CI, integration, then exact integrated-head CI.
 - Misty roster feature HEAD `4c8d16bcf7878960b6dd5f7ffb5ee44c5ff2adf7` passed Full Gameplay Core run **#624**.
@@ -33,7 +41,7 @@ This section is the current resume point. Later dated sections preserve history 
 - The active next Gym Leader is **Lt. Surge**, using the same compact candidate-list → roster → signature/ace → levels/moves → validation sequence.
 - B9 Pokédex usefulness remains the next production B-block after the explicitly interposed roster-research pass is complete.
 
-**Next production action:** begin Lt. Surge roster analysis under A-013. Do not modify Lt. Surge gameplay until his first battle/rematch roster, signature/ace choice and balance changes are explicitly approved.
+**Next production action:** do not begin Lt. Surge yet. Await explicit user direction after the Brock second-pass closure.
 
 ### Existing continuity roles — do not duplicate
 

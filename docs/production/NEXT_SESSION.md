@@ -23,23 +23,25 @@ Use `docs/spec/` only for frozen historical design details.
 - Brock feature Full Gameplay Core **#619: SUCCESS**.
 - Brock merged master checkpoint: `269d75b501a99c92fd8296189760899a6a5d4571`.
 - Brock post-integration Full Gameplay Core **#620: SUCCESS**.
-- Brock roster microblock: **CLOSED**.
+- Brock original roster microblock: **CLOSED**.
+- Brock second-pass feature HEAD: `12b244fd3b1f87b8b653fd6aaaa3d21b53c967f2`.
+- Brock second-pass Full Gameplay Core **#631: SUCCESS**.
+- Brock second-pass merged master checkpoint: `193b14aa3e5426dbf6049efa32a6d7c2c4d0d050`.
+- Brock second-pass post-integration Full Gameplay Core **#632: SUCCESS**.
+- Brock second-pass tuning microblock: **CLOSED**.
 - A-013 defines the reusable Gym Leader review/implementation procedure.
 - Misty feature HEAD: `4c8d16bcf7878960b6dd5f7ffb5ee44c5ff2adf7`.
 - Misty feature Full Gameplay Core **#624: SUCCESS**.
 - Misty merged master checkpoint: `323ff3daef5e8019690cda83c4527b5ec07ff3c1`.
 - Misty post-integration Full Gameplay Core **#625: SUCCESS**.
 - Misty roster/identity microblock: **CLOSED**.
-- Next leader: **Lt. Surge**.
+- Do **not** begin Lt. Surge yet; await explicit user direction.
 
 ## Exact next action
 
-1. review Lt. Surge's complete canon-associated Pokémon list with brief potential notes;
-2. approve first battle and rematch rosters;
-3. explicitly confirm signature companion and ace for both stages;
-4. only then review levels, order, held items and Spanish-named moves;
-5. implement/validate using the A-013 procedure;
-6. keep Elite Four and Gary/Blue research deferred until the Gym Leader pass is complete.
+1. preserve Brock second-pass closure as the current completed roster-tuning state;
+2. do not modify Lt. Surge or any other leader until the user explicitly resumes that pass;
+3. if new Brock adjustments are requested, open a new scoped microblock rather than rewriting the closure history.
 
 ## Continuity rule
 

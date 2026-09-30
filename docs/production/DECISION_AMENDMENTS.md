@@ -502,3 +502,19 @@ This reopens Brock only as a new tuning microblock. The prior Brock closure rema
 - Geodude Lv.15 Revenge.
 
 These exceptions apply only to Brock's trainer party. They do not modify global learnsets, species data, move data, save compatibility or link/trade structures.
+
+
+### Brock second-pass closure evidence
+
+- Final second-pass feature HEAD: `12b244fd3b1f87b8b653fd6aaaa3d21b53c967f2`.
+- Full Gameplay Core **#631**: **SUCCESS**.
+- Merged to `master` as `193b14aa3e5426dbf6049efa32a6d7c2c4d0d050`.
+- Post-integration Full Gameplay Core **#632**: **SUCCESS**.
+- Second-pass tuning status: **CLOSED**.
+- Final held-item policy:
+  - first battle: only Onix holds Oran Berry;
+  - rematch: only Steelix holds Metal Coat;
+  - all other Brock rematch Pokémon hold no item.
+- Validation incident #628 was caused by a duplicate stale Brock rematch expectation in `validate_full_trainer_sets.py`; removed without gameplay rollback.
+- Runs #629/#630 were infrastructure-stalled before project validation and are not closure evidence.
+- Do not begin Lt. Surge until explicitly requested by the user.
