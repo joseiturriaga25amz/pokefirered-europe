@@ -318,5 +318,11 @@ Elite Four and Gary/Blue research remains a later phase after the Gym Leader pas
 - The rematch preserves three visible progression lines from the first battle: Geodude→Golem, Zubat→Crobat and Onix→Steelix.
 - Steelix remains the rematch ace; Onix remains the first-battle ace.
 - The B8 staging decision already matches this identity: Brock displays Onix pre-rematch and Steelix in the later state.
-- Exact levels, held items, order and movesets are still under review against production progression and the legality validator.
-- Brock rematch adjustment approved: Golem must **not** use Explosion. Steelix may retain its current held item, Leftovers/Restos, subject to the final held-item pass.
+- Brock implementation is now defined as follows:
+  - first battle levels: Geodude 13, Zubat 14, Vulpix 15, Onix 17;
+  - first-battle moves: Geodude — Rock Throw/Tackle/Defense Curl/Mud Sport; Zubat — Leech Life/Astonish/Supersonic; Vulpix — Ember/Quick Attack/Roar/Tail Whip; Onix — Rock Tomb/Bind/Screech/Tackle;
+  - rematch levels remain 60/61/62/63/64/66 with Golem/Crobat/Forretress/Ludicolo/Marshtomp/Steelix;
+  - Golem uses Earthquake/Rock Slide/Brick Break/Double-Edge and **must not use Explosion**;
+  - Steelix retains Leftovers and remains the rematch ace;
+  - exact roster assertions are enforced in `tools/validate_full_trainer_sets.py`.
+- English move identifiers above are repository constants; user-facing review should always present the Spanish in-game names.
