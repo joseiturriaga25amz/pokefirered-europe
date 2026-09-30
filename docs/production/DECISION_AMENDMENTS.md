@@ -412,12 +412,15 @@ Rationale:
 - Rematch signature companion: Starmie.
 - This intentionally separates combat strength from visual identity: Gyarados is the stronger rematch ace, while Starmie remains Misty's most iconic companion for staging.
 
-**Visual staging proposal — approved in concept, placement still to validate**
-- Keep Starmie beside Misty in both states.
-- Add Togepi near Misty as a non-battle identity/presentation object.
-- Add Horsea in the pool near the existing Seel ambience if a nonblocking water tile passes collision/warp/object-spacing validation.
-- Existing Seel and Staryu pool ambience remains unless exact placement review finds a conflict.
-- Do not implement the Togepi/Horsea staging until exact coordinates and graphics availability are verified.
+**Visual staging — approved**
+- Misty remains at (8,6).
+- Starmie remains immediately to Misty's left at (7,6) in both story/rematch states.
+- Togepi is placed immediately to Misty's right at (9,6) as a non-battle identity/presentation object.
+- Existing Seel remains in the pool at (5,12).
+- Horsea is placed in the pool at (6,12), directly beside Seel.
+- Existing Staryu pool ambience remains at (12,14).
+- The selected Togepi tile is the symmetric free platform tile beside Misty; the Horsea tile is a free water tile matching the existing pool ambience and conflicts with no object or warp.
+- Togepi and Horsea require new static icon-object registrations following the existing Seel/Staryu B8 icon pattern; no new Pokémon/save/link structure is required.
 
 **Balance status**
 - Species/identity are approved.
