@@ -47,11 +47,13 @@ def assert_top(name, species, level, allow_tie=False):
 
 def main():
     # Gym Leaders: first encounter -> postgame rematch.
+    # Misty's rematch intentionally separates visual identity from battle ace:
+    # Starmie remains her signature companion, while Gyarados is the unique highest-level ace.
     gym_aces = [
         ("sParty_LeaderBrock","ONIX",17,False),
         ("sParty_RSAromaLady","STEELIX",66,False),
         ("sParty_LeaderMisty","STARMIE",26,False),
-        ("sParty_RSRuinManiac","STARMIE",67,False),
+        ("sParty_RSRuinManiac","GYARADOS",68,False),
         ("sParty_LeaderLtSurge","RAICHU",30,False),
         ("sParty_RSTuberF","RAICHU",69,False),
         ("sParty_LeaderErika","GLOOM",35,False),
