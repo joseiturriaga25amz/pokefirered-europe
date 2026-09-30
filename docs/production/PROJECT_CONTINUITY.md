@@ -15,7 +15,8 @@ This section is the current resume point. Later dated sections preserve history 
 - B8 is **IMPLEMENTED + VALIDATED + CI-GREEN, NOT YET CLOSED**. Full Gameplay Core run `36643089722` succeeded on that exact HEAD, but the single-line production rule requires merge to `master` and verification of the resulting master HEAD before closure.
 - `fix/b8-misty-pool-ambience` is a diverged historical correction branch; do not resume production there.
 - Detailed B8 history is in `docs/B8_CONTINUITY_CHECKPOINT.md` on the B8 branch. It is block-local evidence, not a replacement for this file.
-- The current maintenance branch `chore/continuity-consolidation` changes documentation/CI authority only; it must not alter gameplay.
+- The B8 branch also carries approved amendments A-011 (signature staging identity correction) and A-012 (fully animated B10 follower target). Preserve those decisions when reconciling B8 with master.
+- This continuity/CI consolidation was prepared on `chore/continuity-consolidation` and changes documentation/validation authority only; it does not alter gameplay.
 
 **Next production action:** merge this consolidation to `master`, reconcile the B8 branch with that exact new master HEAD, rerun Full Gameplay Core on the resulting B8 HEAD, merge B8 to master, verify merged master, then and only then open B9.
 

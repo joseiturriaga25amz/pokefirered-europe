@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - master
-      - chore/continuity-consolidation
       - feature/full-gameplay-core
       - feature/b0-baseline-validator-truth
       - feature/b1-low-risk-qol
@@ -19,6 +18,10 @@ on:
       - feature/b8-signature-pokemon-staging
       - feature/b9-pokedex-usefulness
       - feature/b11-release-candidate
+
+  pull_request:
+    branches:
+      - master
 
 jobs:
   build:

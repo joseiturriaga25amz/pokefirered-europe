@@ -31,6 +31,7 @@ def main():
     require(workflow, "make -j2 firered_es_modern", "target")
     require(workflow, "      - master", "canonical integration branch")
     require(workflow, "      - feature/full-gameplay-core", "production branch")
+    require(workflow, "pull_request:\n    branches:\n      - master", "canonical PR gate")
 
     # Current production truth is gated by Full Gameplay Core. Historical
     # compatibility/block workflows remain available only for manual diagnostics
