@@ -78,7 +78,8 @@ def main():
         ("OBJ_EVENT_GFX_SEEL_ICON", 166, "SeelIcon"),
         ("OBJ_EVENT_GFX_STARYU_ICON", 167, "StaryuIcon"),
     ]
-    assert "#define NUM_OBJ_EVENT_GFX     168" in event_objects
+    assert "#define OBJ_EVENT_GFX_ONIX 152" in event_objects
+    assert "#define OBJ_EVENT_GFX_STARYU_ICON 167" in event_objects
     for gfx_name, gfx_id, stem in expected_b8_assets:
         assert event_objects.count(f"#define {gfx_name} {gfx_id}") == 1
         assert graphics.count(f"gObjectEventPic_{stem}[]") == 1
@@ -124,7 +125,8 @@ def main():
             assert (staged["x"], staged["y"]) not in warp_tiles
     assert "#define OBJ_EVENT_GFX_ONIX 152" in event_objects
     assert "#define OBJ_EVENT_GFX_STEELIX 153" in event_objects
-    assert "#define NUM_OBJ_EVENT_GFX     168" in event_objects
+    assert "#define OBJ_EVENT_GFX_ONIX 152" in event_objects
+    assert "#define OBJ_EVENT_GFX_STARYU_ICON 167" in event_objects
     assert "OBJ_EVENT_PAL_TAG_MON_ICON_2" in movement
     assert "gMonIconPalettes[2]" in movement
     assert 'graphics/pokemon/onix/icon.4bpp' in graphics
@@ -158,7 +160,8 @@ def main():
 
     assert "#define OBJ_EVENT_GFX_GOLBAT 154" in event_objects
     assert "#define OBJ_EVENT_GFX_CROBAT 155" in event_objects
-    assert "#define NUM_OBJ_EVENT_GFX     168" in event_objects
+    assert "#define OBJ_EVENT_GFX_ONIX 152" in event_objects
+    assert "#define OBJ_EVENT_GFX_STARYU_ICON 167" in event_objects
     assert 'graphics/pokemon/golbat/icon.4bpp' in graphics
     assert 'graphics/pokemon/crobat/icon.4bpp' in graphics
     assert "gObjectEventGraphicsInfo_Golbat" in info
@@ -187,7 +190,8 @@ def main():
     assert erika_lisa[0]["trainer_sight_or_berry_tree_id"] == "2"
 
     assert "#define OBJ_EVENT_GFX_GLOOM 156" in event_objects
-    assert "#define NUM_OBJ_EVENT_GFX     168" in event_objects
+    assert "#define OBJ_EVENT_GFX_ONIX 152" in event_objects
+    assert "#define OBJ_EVENT_GFX_STARYU_ICON 167" in event_objects
     assert 'graphics/pokemon/gloom/icon.4bpp' in graphics
     assert "gObjectEventGraphicsInfo_Gloom" in info
     assert "[OBJ_EVENT_GFX_GLOOM]" in pointers
@@ -208,7 +212,8 @@ def main():
     assert not any((w["x"], w["y"]) == (sabrina_signature["x"], sabrina_signature["y"]) for w in sabrina["warp_events"])
 
     assert "#define OBJ_EVENT_GFX_KADABRA 157" in event_objects
-    assert "#define NUM_OBJ_EVENT_GFX     168" in event_objects
+    assert "#define OBJ_EVENT_GFX_ONIX 152" in event_objects
+    assert "#define OBJ_EVENT_GFX_STARYU_ICON 167" in event_objects
     assert 'graphics/pokemon/kadabra/icon.4bpp' in graphics
     assert "gObjectEventGraphicsInfo_Kadabra" in info
     assert "[OBJ_EVENT_GFX_KADABRA]" in pointers
@@ -229,7 +234,8 @@ def main():
     assert not any((w["x"], w["y"]) == (misty_signature["x"], misty_signature["y"]) for w in misty["warp_events"])
 
     assert "#define OBJ_EVENT_GFX_STARMIE 158" in event_objects
-    assert "#define NUM_OBJ_EVENT_GFX     168" in event_objects
+    assert "#define OBJ_EVENT_GFX_ONIX 152" in event_objects
+    assert "#define OBJ_EVENT_GFX_STARYU_ICON 167" in event_objects
     assert 'graphics/pokemon/starmie/icon.4bpp' in graphics
     assert "gObjectEventGraphicsInfo_Starmie" in info
     assert "[OBJ_EVENT_GFX_STARMIE]" in pointers
@@ -281,7 +287,8 @@ def main():
     assert not any((w["x"], w["y"]) == (surge_signature["x"], surge_signature["y"]) for w in surge["warp_events"])
 
     assert "#define OBJ_EVENT_GFX_RAICHU 159" in event_objects
-    assert "#define NUM_OBJ_EVENT_GFX     168" in event_objects
+    assert "#define OBJ_EVENT_GFX_ONIX 152" in event_objects
+    assert "#define OBJ_EVENT_GFX_STARYU_ICON 167" in event_objects
     assert 'graphics/pokemon/raichu/icon.4bpp' in graphics
     assert "gObjectEventGraphicsInfo_Raichu" in info
     assert "[OBJ_EVENT_GFX_RAICHU]" in pointers
@@ -302,7 +309,8 @@ def main():
     assert not any((w["x"], w["y"]) == (blaine_signature["x"], blaine_signature["y"]) for w in blaine["warp_events"])
 
     assert "#define OBJ_EVENT_GFX_MAGMAR 160" in event_objects
-    assert "#define NUM_OBJ_EVENT_GFX     168" in event_objects
+    assert "#define OBJ_EVENT_GFX_ONIX 152" in event_objects
+    assert "#define OBJ_EVENT_GFX_STARYU_ICON 167" in event_objects
     assert 'graphics/pokemon/magmar/icon.4bpp' in graphics
     assert "gObjectEventGraphicsInfo_Magmar" in info
     assert "[OBJ_EVENT_GFX_MAGMAR]" in pointers
@@ -325,7 +333,8 @@ def main():
     assert not any((w["x"], w["y"]) == (bruno_signature["x"], bruno_signature["y"]) for w in bruno["warp_events"])
 
     assert "#define OBJ_EVENT_GFX_MACHAMP 162" in event_objects
-    assert "#define NUM_OBJ_EVENT_GFX     168" in event_objects
+    assert "#define OBJ_EVENT_GFX_ONIX 152" in event_objects
+    assert "#define OBJ_EVENT_GFX_STARYU_ICON 167" in event_objects
     assert 'graphics/pokemon/machamp/icon.4bpp' in graphics
     assert "gObjectEventGraphicsInfo_Machamp" in info
     assert "OBJ_EVENT_PAL_TAG_MON_ICON_0" in info
@@ -348,7 +357,8 @@ def main():
     assert abs(agatha_signature["x"] - agatha_trainer[0]["x"]) + abs(agatha_signature["y"] - agatha_trainer[0]["y"]) == 1
     assert not any((w["x"], w["y"]) == (agatha_signature["x"], agatha_signature["y"]) for w in agatha["warp_events"])
     assert "#define OBJ_EVENT_GFX_GENGAR 163" in event_objects
-    assert "#define NUM_OBJ_EVENT_GFX     168" in event_objects
+    assert "#define OBJ_EVENT_GFX_ONIX 152" in event_objects
+    assert "#define OBJ_EVENT_GFX_STARYU_ICON 167" in event_objects
     assert 'graphics/pokemon/gengar/icon.4bpp' in graphics
     assert "gObjectEventGraphicsInfo_Gengar" in info
     assert "[OBJ_EVENT_GFX_GENGAR]" in pointers
@@ -373,7 +383,8 @@ def main():
     assert "PokemonLeague_LancesRoom_Movement_LanceMoveOutOfWayRight::\n\twalk_up\n\twalk_right\n\twalk_right\n\twalk_down" in lance_scripts
 
     assert "#define OBJ_EVENT_GFX_DRAGONITE 164" in event_objects
-    assert "#define NUM_OBJ_EVENT_GFX     168" in event_objects
+    assert "#define OBJ_EVENT_GFX_ONIX 152" in event_objects
+    assert "#define OBJ_EVENT_GFX_STARYU_ICON 167" in event_objects
     assert 'graphics/pokemon/dragonite/icon.4bpp' in graphics
     assert "gObjectEventGraphicsInfo_Dragonite" in info
     assert "OBJ_EVENT_PAL_TAG_MON_ICON_2" in info
@@ -397,7 +408,8 @@ def main():
     assert not any((w["x"], w["y"]) == (champion_signature["x"], champion_signature["y"]) for w in champion["warp_events"])
 
     assert "#define OBJ_EVENT_GFX_BLASTOISE 165" in event_objects
-    assert "#define NUM_OBJ_EVENT_GFX     168" in event_objects
+    assert "#define OBJ_EVENT_GFX_ONIX 152" in event_objects
+    assert "#define OBJ_EVENT_GFX_STARYU_ICON 167" in event_objects
     assert 'graphics/pokemon/blastoise/icon.4bpp' in graphics
     assert "gObjectEventGraphicsInfo_Blastoise" in info
     assert "OBJ_EVENT_PAL_TAG_MON_ICON_2" in info
@@ -435,7 +447,8 @@ def main():
     assert not any((w["x"], w["y"]) == (giovanni_signature["x"], giovanni_signature["y"]) for w in giovanni["warp_events"])
 
     assert "#define OBJ_EVENT_GFX_PERSIAN 161" in event_objects
-    assert "#define NUM_OBJ_EVENT_GFX     168" in event_objects
+    assert "#define OBJ_EVENT_GFX_ONIX 152" in event_objects
+    assert "#define OBJ_EVENT_GFX_STARYU_ICON 167" in event_objects
     assert 'graphics/pokemon/persian/icon.4bpp' in graphics
     assert "gObjectEventGraphicsInfo_Persian" in info
     assert "[OBJ_EVENT_GFX_PERSIAN]" in pointers
@@ -462,6 +475,34 @@ def main():
     assert "walk_left" not in mewtwo_escape and "walk_right" not in mewtwo_escape
     assert "walk_up" not in giovanni_panic and "walk_down" not in giovanni_panic
     assert "walk_left" not in giovanni_panic and "walk_right" not in giovanni_panic
+
+    misty = read_json("data/maps/CeruleanCity_Gym/map.json")
+    misty_objs = misty["object_events"]
+    misty_trainer = [o for o in misty_objs if o.get("graphics_id") == "OBJ_EVENT_GFX_MISTY"]
+    assert len(misty_trainer) == 1 and (misty_trainer[0]["x"], misty_trainer[0]["y"]) == (8, 6)
+    starmie = [o for o in misty_objs if o.get("local_id") == "LOCALID_FULL_MISTY_SIGNATURE"]
+    togepi = [o for o in misty_objs if o.get("local_id") == "LOCALID_FULL_MISTY_TOGEPI"]
+    seel = [o for o in misty_objs if o.get("local_id") == "LOCALID_FULL_MISTY_POOL_SEEL"]
+    horsea = [o for o in misty_objs if o.get("local_id") == "LOCALID_FULL_MISTY_POOL_HORSEA"]
+    assert len(starmie) == len(togepi) == len(seel) == len(horsea) == 1
+    assert (starmie[0]["x"], starmie[0]["y"]) == (7, 6)
+    assert (togepi[0]["x"], togepi[0]["y"]) == (9, 6)
+    assert (seel[0]["x"], seel[0]["y"]) == (5, 12)
+    assert (horsea[0]["x"], horsea[0]["y"]) == (6, 12)
+    assert togepi[0]["graphics_id"] == "OBJ_EVENT_GFX_TOGEPI_ICON"
+    assert horsea[0]["graphics_id"] == "OBJ_EVENT_GFX_HORSEA_ICON"
+    for staged in (starmie[0], togepi[0], seel[0], horsea[0]):
+        assert staged["script"] == "0x0"
+        assert staged["trainer_type"] == "TRAINER_TYPE_NONE"
+    assert "#define OBJ_EVENT_GFX_TOGEPI_ICON 168" in event_objects
+    assert "#define OBJ_EVENT_GFX_HORSEA_ICON 169" in event_objects
+    assert "#define NUM_OBJ_EVENT_GFX     170" in event_objects
+    assert 'graphics/pokemon/togepi/icon.4bpp' in graphics
+    assert 'graphics/pokemon/horsea/icon.4bpp' in graphics
+    assert "gObjectEventGraphicsInfo_TogepiIcon" in info
+    assert "gObjectEventGraphicsInfo_HorseaIcon" in info
+    assert "[OBJ_EVENT_GFX_TOGEPI_ICON]" in pointers
+    assert "[OBJ_EVENT_GFX_HORSEA_ICON]" in pointers
 
     koga_scripts = (ROOT / "data/maps/FuchsiaCity_Gym/scripts.inc").read_text(encoding="utf-8")
     assert "setvar VAR_OBJ_GFX_ID_1, OBJ_EVENT_GFX_GOLBAT" in koga_scripts
