@@ -233,6 +233,8 @@ Implementation constraints:
 
 ## Production work order — small, reversible blocks
 
+A-013 temporarily interposes the approved Gym Leader roster-research pass after B8 closure and before B9. This does not remove or redefine B9–B12; it only changes the immediate execution order until the leader pass is complete.
+
 The following order is authoritative for the remaining v1.0 production pass. Each block must be independently reviewable and must end with compile/static validation plus documentation before the next begins.
 
 ### B0 — Baseline and validator truth
@@ -354,6 +356,8 @@ Exit gate:
 - script/map compile validation.
 
 ### B8 — Signature Pokémon staging
+**Status: CLOSED on master `28f4234`; post-integration Full Gameplay Core #617 SUCCESS.**
+
 Scope:
 - A-007 major-trainer companion objects;
 - implement only missing signature assets needed for the 13 trainer identities;

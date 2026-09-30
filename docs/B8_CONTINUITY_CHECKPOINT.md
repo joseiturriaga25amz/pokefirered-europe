@@ -305,3 +305,14 @@ A new chat should:
 5. Resume the full audit at **Lance + Champion Gary/Blue**.
 6. Keep battle rosters frozen.
 7. Continue reporting one microblock at a time.
+
+## Final integrated closure — 2026-09-30
+
+**Status: CERRADO.**
+
+- Reconciled B8 HEAD: `8794674c33e0ff9ecf899f557da76ea07a57e27b`.
+- Full Gameplay Core run **#616** on that exact feature HEAD: **SUCCESS**.
+- Merged to `master` as `28f42346916bf9d19c558ce4ce19fb849f5b6e33`.
+- Full Gameplay Core run **#617** on that exact integrated master HEAD: **SUCCESS**.
+- No B8 gameplay defect remained open at integration.
+- Subsequent Gym Leader roster research is governed by A-013 and is a separate post-B8 design/implementation pass; it does not reopen B8 staging.
