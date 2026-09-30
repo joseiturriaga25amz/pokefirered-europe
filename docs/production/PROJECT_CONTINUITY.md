@@ -21,10 +21,19 @@ This section is the current resume point. Later dated sections preserve history 
 - Brock roster microblock is therefore **CLOSED**.
 - Brock approved identity is Onix as first-battle ace/signature and Steelix as rematch ace/signature. Exact roster/moves/levels are recorded in A-013.
 - The leader-change procedure learned from Brock is frozen in A-013: update intentional frozen roster expectations, preserve legality/audit locks, exact-head CI, integration, then exact integrated-head CI.
-- The active next Gym Leader is **Misty**, using the same compact candidate-list → roster → signature/ace → levels/moves → validation sequence.
+- Misty roster feature HEAD `4c8d16bcf7878960b6dd5f7ffb5ee44c5ff2adf7` passed Full Gameplay Core run **#624**.
+- Misty merged to `master` as `323ff3daef5e8019690cda83c4527b5ec07ff3c1`.
+- Misty post-integration Full Gameplay Core run **#625** on that exact master SHA: **SUCCESS**.
+- Misty roster/identity microblock is therefore **CLOSED**.
+- Misty first battle: Psyduck 20 / Poliwag 21 / Staryu 23 / Starmie 26; Starmie remains first-battle ace/signature.
+- Misty rematch: Staryu 61 / Corsola 62 / Politoed 63 / Togetic 64 / Starmie 66 / Gyarados 68; Gyarados is ace while Starmie remains signature companion.
+- Misty gym staging now includes Starmie left of Misty, Togepi right of Misty, Seel + Horsea pool ambience and existing Staryu ambience.
+- Psyduck's Water Gun is an explicitly approved trainer-only legality exception; no global learnset/save/link/species data changed.
+- During validation, two stale expectations were corrected without gameplay rollback: the old Staryu Swift exception and the old Starmie-rematch-ace rule.
+- The active next Gym Leader is **Lt. Surge**, using the same compact candidate-list → roster → signature/ace → levels/moves → validation sequence.
 - B9 Pokédex usefulness remains the next production B-block after the explicitly interposed roster-research pass is complete.
 
-**Next production action:** begin Misty roster analysis under A-013. Do not modify Misty gameplay until her first battle/rematch roster, signature/ace choice and balance changes are explicitly approved.
+**Next production action:** begin Lt. Surge roster analysis under A-013. Do not modify Lt. Surge gameplay until his first battle/rematch roster, signature/ace choice and balance changes are explicitly approved.
 
 ### Existing continuity roles — do not duplicate
 

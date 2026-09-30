@@ -25,11 +25,16 @@ Use `docs/spec/` only for frozen historical design details.
 - Brock post-integration Full Gameplay Core **#620: SUCCESS**.
 - Brock roster microblock: **CLOSED**.
 - A-013 defines the reusable Gym Leader review/implementation procedure.
-- Next leader: **Misty**.
+- Misty feature HEAD: `4c8d16bcf7878960b6dd5f7ffb5ee44c5ff2adf7`.
+- Misty feature Full Gameplay Core **#624: SUCCESS**.
+- Misty merged master checkpoint: `323ff3daef5e8019690cda83c4527b5ec07ff3c1`.
+- Misty post-integration Full Gameplay Core **#625: SUCCESS**.
+- Misty roster/identity microblock: **CLOSED**.
+- Next leader: **Lt. Surge**.
 
 ## Exact next action
 
-1. review Misty's complete canon-associated Pokémon list with brief potential notes;
+1. review Lt. Surge's complete canon-associated Pokémon list with brief potential notes;
 2. approve first battle and rematch rosters;
 3. explicitly confirm signature companion and ace for both stages;
 4. only then review levels, order, held items and Spanish-named moves;

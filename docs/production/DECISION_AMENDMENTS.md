@@ -455,3 +455,16 @@ Rationale:
 - Starmie at (7,6), Misty at (8,6), Togepi icon at (9,6).
 - Seel icon at (5,12), Horsea icon at (6,12), existing Staryu icon at (12,14).
 - Togepi/Horsea use static icon objects and remain non-interactive/nonblocking.
+
+
+### Misty closure evidence
+
+- Final feature HEAD: `4c8d16bcf7878960b6dd5f7ffb5ee44c5ff2adf7`.
+- Full Gameplay Core run **#624**: **SUCCESS**.
+- Merged to `master` as `323ff3daef5e8019690cda83c4527b5ec07ff3c1`.
+- Post-integration Full Gameplay Core run **#625**: **SUCCESS**.
+- Misty roster/identity microblock status: **CLOSED**.
+- Validation incidents resolved during the cycle:
+  - removed obsolete Staryu Lv.23 Swift/Rapidez legality exception after the approved moveset changed;
+  - updated B3 ace validator from Starmie Lv.67 to Gyarados Lv.68 to match the approved ace/signature split.
+- Next leader under A-013: **Lt. Surge**.
