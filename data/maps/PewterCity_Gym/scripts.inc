@@ -1,5 +1,14 @@
 PewterCity_Gym_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, PewterCity_Gym_OnTransition
 	.byte 0
+
+PewterCity_Gym_OnTransition::
+	setvar VAR_OBJ_GFX_ID_0, OBJ_EVENT_GFX_ONIX
+	goto_if_unset FLAG_SYS_GAME_CLEAR, PewterCity_Gym_OnTransition_End
+	goto_if_unset FLAG_GOT_TM39_FROM_BROCK, PewterCity_Gym_OnTransition_End
+	setvar VAR_OBJ_GFX_ID_0, OBJ_EVENT_GFX_STEELIX
+PewterCity_Gym_OnTransition_End::
+	end
 
 PewterCity_Gym_EventScript_Brock::
 	goto_if_unset FLAG_SYS_GAME_CLEAR, PewterCity_Gym_EventScript_BrockStory

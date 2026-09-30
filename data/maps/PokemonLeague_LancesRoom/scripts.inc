@@ -160,6 +160,9 @@ PokemonLeague_LancesRoom_Movement_LanceMoveOutOfWayLeft::
 	step_end
 
 PokemonLeague_LancesRoom_Movement_LanceMoveOutOfWayRight::
+	walk_up
 	walk_right
+	walk_right
+	walk_down
 	walk_in_place_faster_left
 	step_end

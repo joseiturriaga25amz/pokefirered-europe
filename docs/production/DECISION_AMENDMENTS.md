@@ -274,3 +274,40 @@ The following runtime-approved rules are authoritative for B1 and v1.0 closure:
 - No Pokémon/BoxPokemon or link-serialization changes.
 - No SaveBlock growth; allocate only an audited existing Full flag namespace.
 - Preserve the original diploma behavior and National/Kanto distinction.
+
+
+## A-011 — Signature staging identity correction
+
+**Date:** 2026-09-28  
+**Status:** APPROVED  
+**Supersedes:** only the affected signature-species mapping lines in A-007; all A-007 technical constraints remain in force.
+
+### Decision
+
+- Brock: **Onix** in the main-story Gym battle; **Steelix** for the postgame rematch.
+- Erika: **Gloom**, not Vileplume.
+- Koga: **Golbat** in the main-story Gym battle; **Crobat** for the postgame rematch.
+- Sabrina: **Kadabra**, not Alakazam.
+- The visible companion must be story-stage aware whenever the approved rematch identity changes.
+- Misty remains Starmie, Lt. Surge remains Raichu, Blaine remains Magmar, Giovanni remains Persian, Lorelei remains Lapras, Bruno remains Machamp, Agatha remains Gengar, Lance remains Dragonite, and Gary/Blue remains stage-aware Squirtle → Wartortle → Blastoise.
+- These visual changes reuse the same story/rematch gates already used by the trainer scripts and add no new save state.
+
+
+## A-012 — Full animated follower presentation
+
+**Date:** 2026-09-28  
+**Status:** APPROVED  
+**Applies to:** B10 player-follower integration.
+
+### Decision
+
+- The player follower must use a **fully animated overworld walking presentation**, not a static Pokémon icon sliding behind the player.
+- The visible follower must have direction-aware movement and actual walking frames appropriate to the FireRed object-event engine.
+- The static icon-to-object bridge developed in B8 may be reused for trainer staging, but it is **not acceptable as the final player-follower rendering path**.
+- B10 must therefore use provenance-cleared/project-created animated overworld assets for supported species, with palette/OAM integration designed for follower runtime.
+- The follower remains a cosmetic projection of the party-slot-1 Pokémon and must not add a second stored Pokémon or change Pokémon/BoxPokemon, SaveBlock, or link serialization.
+- If complete animated coverage cannot be provided safely for all intended species, the feature must remain gated rather than silently degrading unsupported species to floating/static icons.
+
+### Acceptance intent
+
+The target presentation is HGSS-like in behavior: the Pokémon should visibly walk behind the player, turn with movement, and transition naturally through ordinary field movement. Final MyBoy QA remains required for animation, warps, ledges, doors, scripts, palette/OAM pressure, save/load, and link isolation.

@@ -209,12 +209,12 @@ Required v1.0 scope:
 - Gary/Blue rival/Champion scenes.
 
 Initial signature mapping:
-- Brock — Onix;
+- Brock — Onix (story) → Steelix (rematch);
 - Misty — Starmie;
 - Lt. Surge — Raichu;
-- Erika — Vileplume;
-- Koga — Weezing;
-- Sabrina — Alakazam;
+- Erika — Gloom;
+- Koga — Golbat (story) → Crobat (rematch);
+- Sabrina — Kadabra;
 - Blaine — Magmar;
 - Giovanni — Persian;
 - Lorelei — Lapras;

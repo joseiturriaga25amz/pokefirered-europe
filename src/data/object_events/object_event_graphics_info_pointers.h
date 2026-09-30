@@ -134,6 +134,22 @@ const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Doduo;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Fearow;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Machoke;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Lapras;
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Onix;
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Steelix;
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Golbat;
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Crobat;
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Gloom;
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Kadabra;
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Starmie;
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Raichu;
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Magmar;
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Persian;
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Machamp;
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Gengar;
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Dragonite;
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Blastoise;
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_SeelIcon;
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_StaryuIcon;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Zapdos;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Moltres;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Articuno;
@@ -289,6 +305,22 @@ const struct ObjectEventGraphicsInfo *const gObjectEventGraphicsInfoPointers[NUM
     [OBJ_EVENT_GFX_FEAROW]                   = &gObjectEventGraphicsInfo_Fearow,
     [OBJ_EVENT_GFX_MACHOKE]                  = &gObjectEventGraphicsInfo_Machoke,
     [OBJ_EVENT_GFX_LAPRAS]                   = &gObjectEventGraphicsInfo_Lapras,
+    [OBJ_EVENT_GFX_ONIX]                     = &gObjectEventGraphicsInfo_Onix,
+    [OBJ_EVENT_GFX_STEELIX]                  = &gObjectEventGraphicsInfo_Steelix,
+    [OBJ_EVENT_GFX_GOLBAT]                    = &gObjectEventGraphicsInfo_Golbat,
+    [OBJ_EVENT_GFX_CROBAT]                    = &gObjectEventGraphicsInfo_Crobat,
+    [OBJ_EVENT_GFX_GLOOM]                     = &gObjectEventGraphicsInfo_Gloom,
+    [OBJ_EVENT_GFX_KADABRA]                   = &gObjectEventGraphicsInfo_Kadabra,
+    [OBJ_EVENT_GFX_STARMIE]                   = &gObjectEventGraphicsInfo_Starmie,
+    [OBJ_EVENT_GFX_RAICHU]                    = &gObjectEventGraphicsInfo_Raichu,
+    [OBJ_EVENT_GFX_MAGMAR]                    = &gObjectEventGraphicsInfo_Magmar,
+    [OBJ_EVENT_GFX_PERSIAN]                    = &gObjectEventGraphicsInfo_Persian,
+    [OBJ_EVENT_GFX_MACHAMP]                    = &gObjectEventGraphicsInfo_Machamp,
+    [OBJ_EVENT_GFX_GENGAR]                     = &gObjectEventGraphicsInfo_Gengar,
+    [OBJ_EVENT_GFX_DRAGONITE]                  = &gObjectEventGraphicsInfo_Dragonite,
+    [OBJ_EVENT_GFX_BLASTOISE]                  = &gObjectEventGraphicsInfo_Blastoise,
+    [OBJ_EVENT_GFX_SEEL_ICON]                  = &gObjectEventGraphicsInfo_SeelIcon,
+    [OBJ_EVENT_GFX_STARYU_ICON]                = &gObjectEventGraphicsInfo_StaryuIcon,
     [OBJ_EVENT_GFX_ZAPDOS]                   = &gObjectEventGraphicsInfo_Zapdos,
     [OBJ_EVENT_GFX_MOLTRES]                  = &gObjectEventGraphicsInfo_Moltres,
     [OBJ_EVENT_GFX_ARTICUNO]                 = &gObjectEventGraphicsInfo_Articuno,
