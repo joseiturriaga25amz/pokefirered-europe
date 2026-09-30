@@ -518,3 +518,39 @@ These exceptions apply only to Brock's trainer party. They do not modify global 
 - Validation incident #628 was caused by a duplicate stale Brock rematch expectation in `validate_full_trainer_sets.py`; removed without gameplay rollback.
 - Runs #629/#630 were infrastructure-stalled before project validation and are not closure evidence.
 - Do not begin Lt. Surge until explicitly requested by the user.
+
+### Misty tuning amendment — second pass
+
+**Status:** APPROVED / IMPLEMENTED on branch `fix/misty-roster-adjustments-2`.
+
+This reopens Misty only as a new tuning microblock. The prior Misty closure remains valid historical evidence for the earlier approved version.
+
+**First battle**
+- Psyduck Lv.20 — Water Gun / Confusion / Disable / Scratch; no held item.
+- Poliwag Lv.21 — Water Gun / Bubble / DoubleSlap / Hypnosis; no held item.
+- Staryu Lv.23 — Water Pulse / Swift / Rapid Spin / Protect; no held item.
+- Starmie Lv.26 — Water Pulse / Swift / Rapid Spin / Recover; Mystic Water; remains ace/signature.
+
+**Rematch**
+- Togetic Lv.61 — Hidden Power / Metronome / Safeguard / Protect; no held item.
+- Staryu Lv.62 — Surf / Ice Beam / Double-Edge / Recover; no held item.
+- Politoed Lv.63 — Surf / Brick Break / Mega Punch / Bounce; no held item.
+- Corsola Lv.64 — Surf / Spike Cannon / Mirror Coat / Recover; no held item.
+- Starmie Lv.66 — Surf / Psychic / Protect / Recover; no held item; remains signature companion.
+- Gyarados Lv.68 — Waterfall / Earthquake / Rain Dance / Protect; Mystic Water; remains rematch ace.
+
+**Held-item policy**
+- First battle: only Starmie carries Mystic Water.
+- Rematch: only Gyarados carries Mystic Water.
+
+**Trainer-only legality exceptions**
+- Psyduck Lv.20 Water Gun (existing approved exception).
+- Staryu Lv.23 Swift.
+- Politoed Lv.63 Bounce.
+
+The Staryu and Politoed exceptions are identity-specific trainer-party exceptions only. They do not modify global learnsets, species data, move data, save compatibility or link/trade structures.
+
+**Mirror Coat compatibility check**
+- Corsola's Mirror Coat remains valid with Full's physical/special split.
+- Damage bookkeeping records physical/special damage from each move's explicit modern category via `IS_MOVE_PHYSICAL` / `IS_MOVE_SPECIAL`, and Mirror Coat reads the special-damage record.
+
