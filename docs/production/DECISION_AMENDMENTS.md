@@ -318,4 +318,5 @@ Elite Four and Gary/Blue research remains a later phase after the Gym Leader pas
 - The rematch preserves three visible progression lines from the first battle: Geodude→Golem, Zubat→Crobat and Onix→Steelix.
 - Steelix remains the rematch ace; Onix remains the first-battle ace.
 - The B8 staging decision already matches this identity: Brock displays Onix pre-rematch and Steelix in the later state.
-- Exact levels, held items, order and movesets are **not yet approved in this amendment**; they must be reviewed next against the production progression and legality validator.
+- Exact levels, held items, order and movesets are still under review against production progression and the legality validator.
+- Brock rematch adjustment approved: Golem must **not** use Explosion. Steelix may retain its current held item, Leftovers/Restos, subject to the final held-item pass.
