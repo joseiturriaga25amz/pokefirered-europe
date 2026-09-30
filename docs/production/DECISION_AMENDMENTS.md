@@ -384,3 +384,74 @@ When an approved Leader roster changes a previously frozen trainer set:
 7. rerun the production gate on the exact integrated master HEAD before marking the microblock CLOSED.
 
 This procedure is part of the Gym Leader roster pass and should be reused for Misty and later Leaders when their approved rosters differ from the currently frozen production sets.
+
+### Misty — approved roster identity
+
+**First battle**
+- Staryu
+- Starmie
+- Psyduck
+- Poliwag
+
+Rationale:
+- Togepi and Horsea are strongly associated with Misty, but are excluded from the battle roster because the intended characterization distinguishes Pokémon she notably carried/cared for from Pokémon she regularly used to battle.
+- Psyduck and Poliwag therefore take the anime-identity battle slots alongside the Staryu/Starmie core.
+
+**Rematch**
+- Starmie
+- Gyarados
+- Corsola
+- Politoed
+- Togetic
+- Staryu
+
+**Ace/signature split**
+- First battle ace: Starmie.
+- First battle signature companion: Starmie.
+- Rematch ace: Gyarados.
+- Rematch signature companion: Starmie.
+- This intentionally separates combat strength from visual identity: Gyarados is the stronger rematch ace, while Starmie remains Misty's most iconic companion for staging.
+
+**Visual staging — approved**
+- Misty remains at (8,6).
+- Starmie remains immediately to Misty's left at (7,6) in both story/rematch states.
+- Togepi is placed immediately to Misty's right at (9,6) as a non-battle identity/presentation object.
+- Existing Seel remains in the pool at (5,12).
+- Horsea is placed in the pool at (6,12), directly beside Seel.
+- Existing Staryu pool ambience remains at (12,14).
+- The selected Togepi tile is the symmetric free platform tile beside Misty; the Horsea tile is a free water tile matching the existing pool ambience and conflicts with no object or warp.
+- Togepi and Horsea require new static icon-object registrations following the existing Seel/Staryu B8 icon pattern; no new Pokémon/save/link structure is required.
+
+**Balance status**
+- Species/identity are approved.
+- Levels/order/held items remain under review.
+- Approved rematch move adjustments:
+  - Corsola uses Spike Cannon / Cañón Pincho instead of Ancient Power.
+  - Togetic uses Safeguard / Velo Sagrado, Metronome / Metrónomo, Psychic / Psíquico and Fly / Vuelo.
+- First-battle Psyduck uses Water Gun / Pistola Agua instead of Water Sport / Hidrochorro.
+  - This is an **explicit approved trainer-only move exception**.
+  - It does not modify Psyduck's global learnset, save structures, link/trade data, species data or move data.
+  - The legality validator must whitelist only `sParty_LeaderMisty / SPECIES_PSYDUCK / level 20 / MOVE_WATER_GUN`; no broader exception is approved.
+
+
+
+### Misty implementation specification
+
+**First battle**
+- Psyduck Lv.20 — Confusion / Disable / Scratch / Water Gun; no held item.
+- Poliwag Lv.21 — Water Gun / Hypnosis / DoubleSlap / Bubble; no held item.
+- Staryu Lv.23 — Water Pulse / Recover / Rapid Spin / Camouflage; no held item.
+- Starmie Lv.26 — Water Pulse / Swift / Rapid Spin / Recover; Sitrus Berry; ace and signature companion.
+
+**Rematch**
+- Staryu Lv.61 — Surf / Ice Beam / Cosmic Power / Recover; no held item.
+- Corsola Lv.62 — Surf / Spike Cannon / Recover / Mirror Coat; no held item.
+- Politoed Lv.63 — Surf / Ice Beam / Hypnosis / Perish Song; Sitrus Berry.
+- Togetic Lv.64 — Safeguard / Metronome / Psychic / Fly; Leftovers.
+- Starmie Lv.66 — Surf / Psychic / Thunderbolt / Recover; Twisted Spoon; signature companion.
+- Gyarados Lv.68 — Waterfall / Earthquake / Dragon Dance / Hyper Beam; Mystic Water; ace.
+
+**Gym staging**
+- Starmie at (7,6), Misty at (8,6), Togepi icon at (9,6).
+- Seel icon at (5,12), Horsea icon at (6,12), existing Staryu icon at (12,14).
+- Togepi/Horsea use static icon objects and remain non-interactive/nonblocking.
