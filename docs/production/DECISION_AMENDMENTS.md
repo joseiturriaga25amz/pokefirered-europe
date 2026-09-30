@@ -274,3 +274,48 @@ The following runtime-approved rules are authoritative for B1 and v1.0 closure:
 - No Pokémon/BoxPokemon or link-serialization changes.
 - No SaveBlock growth; allocate only an audited existing Full flag namespace.
 - Preserve the original diploma behavior and National/Kanto distinction.
+
+
+## A-013 — Major-trainer roster research method and Brock roster identity
+
+**Date:** 2026-09-30  
+**Status:** APPROVED  
+**Scope:** Gym Leader roster research pass; Brock completed. This records design decisions only. Gameplay implementation, levels and movesets remain a separate validated microblock.
+
+### Review method
+
+For each Gym Leader, review the complete canon-associated Pokémon pool one species/line at a time, with special weight given to anime-owned/used Pokémon as identity candidates. Anime chronology is not a hard restriction: canon is used to establish trainer identity, not to reproduce the exact episode timeline.
+
+For each leader:
+1. review the complete candidate list with a brief potential assessment;
+2. define first battle and rematch rosters;
+3. explicitly confirm signature/overworld companion and ace for both stages;
+4. only after roster approval, rebalance levels, order, held items and movesets against the real production progression;
+5. validate trainer-set legality and adjacent progression before implementation is considered complete.
+
+Elite Four and Gary/Blue research remains a later phase after the Gym Leader pass. Giovanni additionally requires review of non-Gym story appearances.
+
+### Brock — approved roster
+
+**First battle**
+- Geodude
+- Zubat
+- Vulpix
+- Onix — ace and signature companion
+
+**Rematch**
+- Golem
+- Crobat
+- Forretress
+- Ludicolo
+- Marshtomp
+- Steelix — ace and signature companion
+
+### Brock design intent
+
+- Zubat is intentionally present in the first battle despite not being a classic Brock Gym species because it strongly represents Brock's anime identity.
+- Vulpix receives a first-battle slot for the same identity reason and is intentionally dropped from the rematch.
+- The rematch preserves three visible progression lines from the first battle: Geodude→Golem, Zubat→Crobat and Onix→Steelix.
+- Steelix remains the rematch ace; Onix remains the first-battle ace.
+- The B8 staging decision already matches this identity: Brock displays Onix pre-rematch and Steelix in the later state.
+- Exact levels, held items, order and movesets are **not yet approved in this amendment**; they must be reviewed next against the production progression and legality validator.
