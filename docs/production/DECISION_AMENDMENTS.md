@@ -483,12 +483,17 @@ This reopens Brock only as a new tuning microblock. The prior Brock closure rema
 - Onix Lv.17 — Rock Tomb / Tackle / Bind / Screech; retains Oran Berry; remains ace/signature.
 
 **Rematch**
-- Marshtomp Lv.60 — Earthquake / Muddy Water / Mud Shot / Protect; Soft Sand.
-- Ludicolo Lv.61 — Surf / Giga Drain / Ice Beam / Bullet Seed; Mystic Water.
+- Marshtomp Lv.60 — Earthquake / Muddy Water / Mud Shot / Protect; no held item.
+- Ludicolo Lv.61 — Surf / Giga Drain / Ice Beam / Bullet Seed; no held item.
 - Forretress Lv.62 — Rapid Spin / Spikes / Protect / Explosion.
-- Golem Lv.63 — Earthquake / Rock Slide / Rollout / Defense Curl; Hard Stone.
-- Crobat Lv.64 — Sludge Bomb / Aerial Ace / Bite / Confuse Ray; Sharp Beak.
-- Steelix Lv.68 — Earthquake / Iron Tail / Crunch / Dragon Breath; Leftovers; remains ace/signature.
+- Golem Lv.63 — Earthquake / Rock Slide / Rollout / Defense Curl; no held item.
+- Crobat Lv.64 — Sludge Bomb / Aerial Ace / Bite / Confuse Ray; no held item.
+- Steelix Lv.68 — Earthquake / Iron Tail / Crunch / Dragon Breath; Metal Coat; remains ace/signature.
+
+**Held-item policy**
+- First battle: only Onix carries an Oran Berry.
+- Rematch: only Steelix carries a held item, Metal Coat, to reinforce its Steel-type ace identity.
+- Marshtomp, Ludicolo, Forretress, Golem and Crobat carry no held items.
 
 **Trainer-only legality exceptions**
 - Zubat Lv.13 Wing Attack.
