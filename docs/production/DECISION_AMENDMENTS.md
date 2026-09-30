@@ -424,5 +424,11 @@ Rationale:
 
 **Balance status**
 - Species/identity are approved.
-- Levels, order, held items and movesets are not yet approved and must be reviewed next before gameplay implementation.
+- Levels/order/held items remain under review.
+- Approved rematch move adjustments:
+  - Corsola uses Spike Cannon / Cañón Pincho instead of Ancient Power.
+  - Togetic uses Safeguard / Velo Sagrado, Metronome / Metrónomo, Psychic / Psíquico and Fly / Vuelo.
+- Requested first-battle Psyduck adjustment: Water Gun / Pistola Agua instead of Water Sport / Hidrochorro.
+  - Current Gen III legality data does **not** permit Water Gun on Psyduck through level-up, TM/HM, tutor or egg moves.
+  - Do not implement this move unless an explicit design exception is approved; Water Pulse / Hidropulso is a legal Misty-themed alternative.
 
