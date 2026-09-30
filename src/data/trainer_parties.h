@@ -6040,7 +6040,7 @@ static const struct TrainerMonItemCustomMoves sParty_LeaderMisty[] = {
     },
     {
         .iv = 83,
-        .lvl = 24,
+        .lvl = 26,
         .species = SPECIES_STARMIE,
         .heldItem = ITEM_MYSTIC_WATER,
         .moves = {MOVE_WATER_PULSE, MOVE_SWIFT, MOVE_RAPID_SPIN, MOVE_RECOVER},

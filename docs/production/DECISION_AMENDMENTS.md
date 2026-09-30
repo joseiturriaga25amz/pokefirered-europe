@@ -529,7 +529,7 @@ This reopens Misty only as a new tuning microblock. The prior Misty closure rema
 - Psyduck Lv.20 — Water Gun / Confusion / Disable / Scratch; no held item.
 - Poliwag Lv.21 — Water Gun / Bubble / DoubleSlap / Hypnosis; no held item.
 - Staryu Lv.23 — Water Pulse / Swift / Rapid Spin / Protect; no held item.
-- Starmie Lv.24 — Water Pulse / Swift / Rapid Spin / Recover; Mystic Water; remains ace/signature.
+- Starmie Lv.26 — Water Pulse / Swift / Rapid Spin / Recover; Mystic Water; remains ace/signature.
 
 **Rematch**
 - Togetic Lv.61 — Hidden Power / Metronome / Safeguard / Protect; no held item.

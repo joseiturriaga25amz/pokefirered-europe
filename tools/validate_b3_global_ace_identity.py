@@ -52,7 +52,7 @@ def main():
     gym_aces = [
         ("sParty_LeaderBrock","ONIX",17,False),
         ("sParty_RSAromaLady","STEELIX",68,False),
-        ("sParty_LeaderMisty","STARMIE",24,False),
+        ("sParty_LeaderMisty","STARMIE",26,False),
         ("sParty_RSRuinManiac","GYARADOS",68,False),
         ("sParty_LeaderLtSurge","RAICHU",30,False),
         ("sParty_RSTuberF","RAICHU",69,False),
