@@ -19,20 +19,22 @@ Use `docs/spec/` only for frozen historical design details.
 - Last production block **CLOSED on master**: **B8 — Signature Pokémon staging**.
 - B8 master checkpoint: `28f42346916bf9d19c558ce4ce19fb849f5b6e33`.
 - B8 post-integration Full Gameplay Core **#617: SUCCESS**.
-- Active branch: `design/leader-roster-research`.
-- Brock reconciled HEAD: `ccc85275d5954d48673fb7694c7379f1cc54e186`.
-- Brock Full Gameplay Core **#618: SUCCESS**.
-- Brock is **IMPLEMENTED + VALIDATED + CI-GREEN, NOT YET CLOSED** until merged and the resulting master HEAD is green.
+- Brock feature/documentation HEAD: `3d357df82120b779213b4fc5e8b9c56eb86ae1f1`.
+- Brock feature Full Gameplay Core **#619: SUCCESS**.
+- Brock merged master checkpoint: `269d75b501a99c92fd8296189760899a6a5d4571`.
+- Brock post-integration Full Gameplay Core **#620: SUCCESS**.
+- Brock roster microblock: **CLOSED**.
 - A-013 defines the reusable Gym Leader review/implementation procedure.
+- Next leader: **Misty**.
 
 ## Exact next action
 
-1. integrate the exact Brock branch into current `master`;
-2. verify Full Gameplay Core on the exact resulting master HEAD;
-3. record Brock **CLOSED**;
-4. then begin **Misty** analysis using A-013;
-5. keep Elite Four and Gary/Blue research deferred until the Gym Leader pass is complete;
-6. resume B9 only after the explicitly interposed leader-roster pass.
+1. review Misty's complete canon-associated Pokémon list with brief potential notes;
+2. approve first battle and rematch rosters;
+3. explicitly confirm signature companion and ace for both stages;
+4. only then review levels, order, held items and Spanish-named moves;
+5. implement/validate using the A-013 procedure;
+6. keep Elite Four and Gary/Blue research deferred until the Gym Leader pass is complete.
 
 ## Continuity rule
 

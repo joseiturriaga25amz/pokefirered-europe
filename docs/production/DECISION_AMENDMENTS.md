@@ -363,6 +363,15 @@ Elite Four and Gary/Blue research remains a later phase after the Gym Leader pas
   - exact roster assertions are enforced in `tools/validate_full_trainer_sets.py`.
 - English move identifiers above are repository constants; user-facing review should always present the Spanish in-game names.
 
+### Brock closure evidence
+
+- Final feature/documentation HEAD: `3d357df82120b779213b4fc5e8b9c56eb86ae1f1`.
+- Full Gameplay Core run **#619**: **SUCCESS**.
+- Merged to `master` as `269d75b501a99c92fd8296189760899a6a5d4571`.
+- Post-integration Full Gameplay Core run **#620**: **SUCCESS**.
+- Brock roster microblock status: **CLOSED**.
+- Next leader under this amendment: **Misty**.
+
 ### Implementation/validation procedure for later Leader changes
 
 When an approved Leader roster changes a previously frozen trainer set:

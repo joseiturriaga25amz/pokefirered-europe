@@ -15,14 +15,16 @@ This section is the current resume point. Later dated sections preserve history 
 - B8 post-integration Full Gameplay Core: run **#617** — **SUCCESS**. B8 is therefore **CLOSED**.
 - Approved amendment A-013 interposes the Gym Leader roster-research pass before resuming B9. This is an approved scope-order amendment, not a reopening of B8.
 - Active roster branch: `design/leader-roster-research`.
-- Brock roster microblock reconciled HEAD: `ccc85275d5954d48673fb7694c7379f1cc54e186`.
-- Brock status at that HEAD: **IMPLEMENTED + VALIDATED + CI-GREEN** via Full Gameplay Core run **#618**, but **NOT YET CLOSED** because integration to `master` and post-integration verification remain.
-- Brock approved identity remains Onix as first-battle ace/signature and Steelix as rematch ace/signature. Exact roster/moves/levels are recorded in A-013.
-- The leader-change procedure learned from Brock is now frozen in A-013: update intentional frozen roster expectations, preserve legality/audit locks, exact-head CI, integration, then exact integrated-head CI.
-- After Brock closes, continue the Gym Leader pass with **Misty** using the same compact candidate-list → roster → signature/ace → levels/moves → validation sequence.
+- Brock roster feature/documentation HEAD `3d357df82120b779213b4fc5e8b9c56eb86ae1f1` passed Full Gameplay Core run **#619**.
+- Brock merged to `master` as `269d75b501a99c92fd8296189760899a6a5d4571`.
+- Brock post-integration Full Gameplay Core run **#620** on that exact master SHA: **SUCCESS**.
+- Brock roster microblock is therefore **CLOSED**.
+- Brock approved identity is Onix as first-battle ace/signature and Steelix as rematch ace/signature. Exact roster/moves/levels are recorded in A-013.
+- The leader-change procedure learned from Brock is frozen in A-013: update intentional frozen roster expectations, preserve legality/audit locks, exact-head CI, integration, then exact integrated-head CI.
+- The active next Gym Leader is **Misty**, using the same compact candidate-list → roster → signature/ace → levels/moves → validation sequence.
 - B9 Pokédex usefulness remains the next production B-block after the explicitly interposed roster-research pass is complete.
 
-**Next production action:** finish Brock closure by integrating its exact green branch into `master`, verify Full Gameplay Core on the resulting master HEAD, record Brock closed, then begin Misty analysis. Do not start Misty implementation before Brock closure.
+**Next production action:** begin Misty roster analysis under A-013. Do not modify Misty gameplay until her first battle/rematch roster, signature/ace choice and balance changes are explicitly approved.
 
 ### Existing continuity roles — do not duplicate
 
