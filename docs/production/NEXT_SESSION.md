@@ -35,13 +35,18 @@ Use `docs/spec/` only for frozen historical design details.
 - Misty merged master checkpoint: `323ff3daef5e8019690cda83c4527b5ec07ff3c1`.
 - Misty post-integration Full Gameplay Core **#625: SUCCESS**.
 - Misty roster/identity microblock: **CLOSED**.
+- Misty second-pass feature HEAD: `a06ac70b39e3d4736de86a3680ffb0ffda1d079b`.
+- Misty second-pass Full Gameplay Core **#635: SUCCESS**.
+- Misty second-pass merged master checkpoint: `08bbd40374850595bc8261b1ab44ebae2012aa35`.
+- Misty second-pass post-integration Full Gameplay Core **#636: SUCCESS**.
+- Misty second-pass tuning microblock: **CLOSED**.
 - Do **not** begin Lt. Surge yet; await explicit user direction.
 
 ## Exact next action
 
-1. preserve Brock second-pass closure as the current completed roster-tuning state;
+1. preserve Brock and Misty second-pass closures as completed roster-tuning history;
 2. do not modify Lt. Surge or any other leader until the user explicitly resumes that pass;
-3. if new Brock adjustments are requested, open a new scoped microblock rather than rewriting the closure history.
+3. if new Brock or Misty adjustments are requested, open a new scoped microblock rather than rewriting closure history.
 
 ## Continuity rule
 

@@ -38,10 +38,19 @@ This section is the current resume point. Later dated sections preserve history 
 - Misty gym staging now includes Starmie left of Misty, Togepi right of Misty, Seel + Horsea pool ambience and existing Staryu ambience.
 - Psyduck's Water Gun is an explicitly approved trainer-only legality exception; no global learnset/save/link/species data changed.
 - During validation, two stale expectations were corrected without gameplay rollback: the old Staryu Swift exception and the old Starmie-rematch-ace rule.
+- Misty was later reopened only for an approved **second-pass tuning microblock**; the earlier closure remains historical evidence.
+- Misty second-pass feature HEAD `a06ac70b39e3d4736de86a3680ffb0ffda1d079b` passed Full Gameplay Core **#635**.
+- Misty second-pass merged to `master` as `08bbd40374850595bc8261b1ab44ebae2012aa35`.
+- Misty second-pass post-integration Full Gameplay Core **#636** on that exact master SHA: **SUCCESS**.
+- Misty second-pass tuning microblock is therefore **CLOSED**.
+- Final first battle: Psyduck 20 / Poliwag 21 / Staryu 23 / Starmie 26; only Starmie holds Mystic Water; Starmie remains ace/signature.
+- Final rematch: Togetic 61 / Staryu 62 / Politoed 63 / Corsola 64 / Starmie 66 / Gyarados 68; only Gyarados holds Mystic Water; Gyarados remains ace and Starmie remains signature companion.
+- Trainer-only Misty move exceptions are limited to Psyduck Lv.20 Water Gun, Staryu Lv.23 Swift and Politoed Lv.63 Bounce.
+- Full Gameplay Core #634 failed only because the audited `trainer_parties.h` blob lock still encoded the previous party data; the lock was intentionally relocked after reviewing the approved diff, with no gameplay rollback.
 - The active next Gym Leader is **Lt. Surge**, using the same compact candidate-list → roster → signature/ace → levels/moves → validation sequence.
 - B9 Pokédex usefulness remains the next production B-block after the explicitly interposed roster-research pass is complete.
 
-**Next production action:** do not begin Lt. Surge yet. Await explicit user direction after the Brock second-pass closure.
+**Next production action:** do not begin Lt. Surge yet. Await explicit user direction after the Misty second-pass closure.
 
 ### Existing continuity roles — do not duplicate
 

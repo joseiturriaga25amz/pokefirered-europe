@@ -521,7 +521,7 @@ These exceptions apply only to Brock's trainer party. They do not modify global 
 
 ### Misty tuning amendment — second pass
 
-**Status:** APPROVED / IMPLEMENTED on branch `fix/misty-roster-adjustments-2`.
+**Status:** **CLOSED**.
 
 This reopens Misty only as a new tuning microblock. The prior Misty closure remains valid historical evidence for the earlier approved version.
 
@@ -554,3 +554,17 @@ The Staryu and Politoed exceptions are identity-specific trainer-party exception
 - Corsola's Mirror Coat remains valid with Full's physical/special split.
 - Damage bookkeeping records physical/special damage from each move's explicit modern category via `IS_MOVE_PHYSICAL` / `IS_MOVE_SPECIAL`, and Mirror Coat reads the special-damage record.
 
+
+
+### Misty second-pass closure evidence
+
+- Final second-pass feature HEAD: `a06ac70b39e3d4736de86a3680ffb0ffda1d079b`.
+- Full Gameplay Core **#635**: **SUCCESS**.
+- Merged to `master` as `08bbd40374850595bc8261b1ab44ebae2012aa35`.
+- Post-integration Full Gameplay Core **#636** on that exact master SHA: **SUCCESS**.
+- Second-pass tuning status: **CLOSED**.
+- Final first-battle Starmie remains Lv.26 and carries Mystic Water.
+- Final rematch held-item policy: only Gyarados carries Mystic Water.
+- Trainer-only exceptions are limited to Psyduck Lv.20 Water Gun, Staryu Lv.23 Swift and Politoed Lv.63 Bounce.
+- Run #634 failed only because the audited `trainer_parties.h` blob lock still referenced the previous intentional trainer data; the lock was relocked after diff review and #635/#636 passed.
+- Do not begin Lt. Surge until explicitly requested by the user.
