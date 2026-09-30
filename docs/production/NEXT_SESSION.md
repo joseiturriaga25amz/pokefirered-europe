@@ -1,54 +1,44 @@
 # Next Session — Pokémon Rojo Fuego Full v1.0
 
-Resume the project from the repository, not from chat memory.
+Resume from the repository, never from chat memory.
 
-## Required first reads
+## Read first
 
-Read, in this order:
+1. `docs/production/PROJECT_CONTINUITY.md` — section 0 is the live resume point.
+2. `docs/production/REPOSITORY_GUARDRAILS.md`.
+3. `docs/production/DECISION_AMENDMENTS.md`.
+4. `docs/production/POLISH_IMPLEMENTATION_MATRIX.md`.
+5. Inspect live refs, exact HEADs and the Full Gameplay Core result for the SHA you intend to advance.
 
-1. `docs/production/PROJECT_CONTINUITY.md`
-2. `docs/production/DECISION_AMENDMENTS.md`
-3. `docs/production/RC_AUDIT_LOG.md`
-4. `docs/production/FINAL_AUDIT_PLAN.md`
-5. `docs/production/RC_MYBOY_CHECKLIST.md`
-6. `docs/production/SECOND_PASS_AUDIT.md`
+Use RC audit/checklist documents only when the active block or release gate requires them. Use `docs/spec/` only for frozen historical design details.
 
-Only consult `docs/spec/` when a frozen design detail is needed.
+## Current state
 
-## Current phase
+- Canonical repository: `joseiturriaga25amz/pokefirered-europe`.
+- Integration branch: `master`.
+- Last block **CLOSED on master**: B7.
+- B7 merge checkpoint: `8b6502e7233f51b9ca19529479a7055a21261391`.
+- B8 branch: `feature/b8-signature-pokemon-staging`.
+- B8 current HEAD: `52ed97e6f20cad11903bcce1deda46400ae37ee9`.
+- B8 status: **IMPLEMENTED + VALIDATED + CI-GREEN, NOT YET CLOSED**.
+- B8 exact-head Full Gameplay Core: run `36643089722` — **SUCCESS**.
+- Detailed B8 checkpoint: `docs/B8_CONTINUITY_CHECKPOINT.md` on the B8 branch.
+- `fix/b8-misty-pool-ambience` is historical/diverged and is not the resume branch.
 
-The project is in **Release Candidate final audit**, not broad implementation.
+## Exact next action
 
-The branch has received additional code-affecting audit fixes after the last historically validated payload. Do **not** inherit an older CI PASS or ROM checksum. Confirm the exact current HEAD and its consolidated workflow result before any RC freeze.
+After the documentation/CI consolidation is merged to `master`:
 
-## What to do next
+1. reconcile B8 with the new exact master HEAD without expanding its approved gameplay scope;
+2. rerun Full Gameplay Core on the resulting exact B8 HEAD;
+3. if green, merge B8 into `master`;
+4. verify the merged master HEAD and record B8 **CLOSED**;
+5. only then open B9 — Pokédex usefulness.
 
-Continue the **exhaustive final audit** in `FINAL_AUDIT_PLAN.md`.
+Do not start B9 in parallel and do not reopen the separate battle-roster research during B8 closure.
 
-Priority:
+## Continuity rule
 
-1. finish the remaining first-pass static sweep;
-2. continue the independent second-pass audit in `SECOND_PASS_AUDIT.md`;
-3. verify target-language/compiled-path correctness and semantic baseline diff coverage;
-4. correct any real implementation or validator defects found;
-5. keep `RC_AUDIT_LOG.md` and `PROJECT_CONTINUITY.md` synchronized;
-6. require exact current HEAD consolidated CI green;
-7. freeze one reproducible RC ROM + SHA-1 only after that green result;
-8. execute the final MyBoy runtime checklist on that exact ROM.
+No new generic continuity/backlog/handoff file is needed. Project continuity lives in `PROJECT_CONTINUITY.md`; approved decisions in `DECISION_AMENDMENTS.md`; approved work in `POLISH_IMPLEMENTATION_MATRIX.md`. Record block-local ideas as **PROPOSED / pending decision** in an existing relevant checkpoint/work-order section, not as approved decisions.
 
-Do **not** ask the user to repeat earlier decisions or reconstruct deleted chats.
-
-## Approved workflow
-
-- Advance autonomously and meticulously.
-- Do not return to repeated user-run tests after every small fix.
-- Use CI/static inspection during audit.
-- Reserve manual MyBoy testing for final RC acceptance or a runtime-only defect that cannot otherwise be resolved.
-- Do not declare v1.0 final from compilation alone.
-- Do not merge/tag final until the exact tested RC passes the final acceptance gates.
-
-## Critical amendments
-
-- MyBoy, not mGBA, is the required runtime QA environment.
-- Normal Items pocket remains vanilla 42 slots; never restore the abandoned 142-slot bag.
-- Chats are disposable; GitHub is the continuity authority.
+MyBoy remains the required runtime acceptance environment.

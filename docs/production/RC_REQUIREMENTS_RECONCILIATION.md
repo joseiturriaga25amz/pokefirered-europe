@@ -1,7 +1,7 @@
 # RC Requirement Reconciliation — 154 implementation requirements
 
-**Branch:** `feature/full-gameplay-core`  
-**Authority:** frozen v1.0 spec/matrix + A-001..A-004 + current implementation.  
+**Ledger role:** frozen 154-row requirement set reconciled against approved amendments and current implementation evidence.  
+**Authority:** frozen v1.0 spec/matrix + `DECISION_AMENDMENTS.md` + current implementation/validators.  
 
 This table is the Gate 1 disposition ledger. “Runtime evidence required” is intentionally not a PASS claim: the implementation exists, but final acceptance remains in MyBoy. Superseded rows are preserved historically and must not be restored.
 
@@ -84,17 +84,17 @@ This table is the Gate 1 disposition ledger. “Runtime evidence required” is 
 | EVT-004 | Eventos | Premio segundo Dojo | **implemented + runtime evidence required** | Scripts/state inspected; Gate 6 + final MyBoy checklist must execute terminal branches. |
 | EVT-005 | Eventos | Articuno/Zapdos/Moltres/Mewtwo respawn | **implemented + runtime evidence required** | Scripts/state inspected; Gate 6 + final MyBoy checklist must execute terminal branches. |
 | EVT-006 | Eventos | Lugia/Ho-Oh/Deoxys respawn | **implemented + runtime evidence required** | Scripts/state inspected; Gate 6 + final MyBoy checklist must execute terminal branches. |
-| EVT-007 | Eventos | Bestias errantes secuenciales | **A-005 redesign pending** | Old sequential implementation exists, but A-005 supersedes its introduction/UX; validate only after V2 cinematic + Suicune→Raikou→Entei flow is implemented. |
-| EVT-008 | Eventos | Roamer persistente | **implemented core + A-005 UX pending** | Vanilla single-roamer persistence remains the compatibility core; V2 route reliability/combat-window polish still requires implementation and runtime evidence. |
-| EVT-009 | Eventos | Pokédex del roamer | **A-005 redesign pending** | Final acceptance must cover the initial all-three-seen cinematic plus tracking of only the currently active roamer. |
-| EVT-010 | Eventos | MysticTicket quest | **A-005 redesign pending** | Celio distribution is obsolete; final truth is the maritime/birds-seen investigation leading to Lugia while Ho-Oh remains separately gated. |
-| EVT-011 | Eventos | AuroraTicket quest | **A-005 redesign pending** | Celio handoff is obsolete; final truth is the Pewter Museum / space-anomaly investigation and scientist handoff. |
-| EVT-012 | Eventos | Deoxys | **encounter implemented; A-005 access redesign pending** | Birth Island encounter/respawn core exists; final acceptance waits for the new AuroraTicket ownership path. |
-| EVT-013 | Eventos | Mew | **functional core runtime-proven; A-005 presentation pending** | Old RC proved capture flow; final acceptance requires preserved diary history plus visible overworld/interactable final Mew staging. |
+| EVT-007 | Eventos | Bestias errantes secuenciales | **implemented + runtime evidence required** | B6 implements the A-005 first-contact cinematic and Suicune→Raikou→Entei sequence; static validator coverage exists and final MyBoy proves live progression. |
+| EVT-008 | Eventos | Roamer persistente | **implemented + runtime evidence required** | B6 preserves single-roamer compatibility and implements the V2 state/UX path; save/load, route, flee/Roar/KO/capture behavior remains final MyBoy evidence. |
+| EVT-009 | Eventos | Pokédex del roamer | **implemented + runtime evidence required** | B6 implements all-three-seen first contact plus one-active-roamer tracking; final MyBoy confirms live Pokédex/route behavior. |
+| EVT-010 | Eventos | MysticTicket quest | **implemented + runtime evidence required** | B6 implements the birds-seen maritime investigation and MysticTicket/Lugia path; final MyBoy executes the complete quest. |
+| EVT-011 | Eventos | AuroraTicket quest | **implemented + runtime evidence required** | B6 implements the Pewter Museum / space-anomaly investigation and scientist AuroraTicket handoff; final MyBoy executes the complete quest. |
+| EVT-012 | Eventos | Deoxys | **implemented + runtime evidence required** | B6 integrates Birth Island with the redesigned AuroraTicket access path; runtime access/respawn terminal branches remain final MyBoy evidence. |
+| EVT-013 | Eventos | Mew | **implemented + runtime evidence required** | B7 adds staged overworld sightings and an interactable final Mew while preserving the diary/capture core; final MyBoy proves presentation flow. |
 | EVT-014 | Eventos | Mew moveset | **implemented + runtime evidence required** | Scripts/state inspected; Gate 6 + final MyBoy checklist must execute terminal branches. |
-| EVT-015 | Eventos | Celebi | **A-005 redesign pending** | Berry Forest identity remains, but all-three-beasts causal gating is obsolete; final acceptance waits for the independent nature investigation. |
+| EVT-015 | Eventos | Celebi | **implemented + runtime evidence required** | B6 implements the independent Berry Forest nature investigation without all-three-beasts causal gating; final MyBoy executes terminal branches. |
 | EVT-016 | Eventos | Celebi moveset | **implemented + runtime evidence required** | Scripts/state inspected; Gate 6 + final MyBoy checklist must execute terminal branches. |
-| EVT-017 | Eventos | Navel Rock | **destination core implemented; A-005 access split pending** | MysticTicket destination/IDs remain compatible; final acceptance must distinguish Lugia access from Ho-Oh beast-capstone gating. |
+| EVT-017 | Eventos | Navel Rock | **implemented + runtime evidence required** | B6 preserves the canonical destination while separating Lugia MysticTicket access from Ho-Oh beast-capstone eligibility; final MyBoy confirms both gates. |
 | EVT-018 | Eventos | Leyenda niveles | **implemented + runtime evidence required** | Scripts/state inspected; Gate 6 + final MyBoy checklist must execute terminal branches. |
 | EVT-019 | Eventos | Hoenn legendarios excluidos | **implemented + runtime evidence required** | Scripts/state inspected; Gate 6 + final MyBoy checklist must execute terminal branches. |
 | ECO-001 | Economía | Potenciadores de tipo en Azulona | **implemented + automated evidence** | validate_rc_freeze.py locks prices/stock/renewable data. |
@@ -164,9 +164,10 @@ This table is the Gate 1 disposition ledger. “Runtime evidence required” is 
 
 ## Counts
 
-- **implemented + automated evidence: 52**
-- **implemented + runtime evidence required: 99**
-- **superseded by amendment: 3**
+- **implemented + automated evidence: 51**
+- **implemented + runtime evidence required: 98**
+- **superseded by amendment: 5**
+- **amendment redesign pending: 0**
 
 Total classified: **154/154**.
 

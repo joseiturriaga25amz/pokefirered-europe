@@ -309,3 +309,30 @@ Validation:
 - functional HEAD `3d748663bf40e59aabba21b0a85790b7e478e6b0`;
 - Full Gameplay Core run `36457796839`: **SUCCESS**;
 - build reproducibility, B5 validator, obtainability, event-state audit, release integrity and RC packaging all **PASS**.
+
+
+## 2026-09-28 — B6 Legendary narrative V2 acceptance evidence
+
+**Status:** STATIC/CI PASS — FINAL QUEST/RUNTIME ACCEPTANCE DEFERRED TO MYBOY
+
+B6 implements A-005 legendary narrative/state-machine V2 while preserving Gen III IDs and structural compatibility: maritime birds→MysticTicket→Lugia, Pewter Museum→AuroraTicket→Deoxys, independent Celebi investigation, sequential Suicune→Raikou→Entei first-contact/activation, and Ho-Oh as beast-arc capstone.
+
+Validation:
+- `tools/validate_b6_legendary_narrative.py`;
+- exact feature HEAD `0ecd5b3aab140e9179368bd8edd0d6f06722e88c`;
+- Full Gameplay Core run `36468248366`: **SUCCESS**;
+- merged to master as `a371e1644a66949aa283def8a53de158866b3757`;
+- runtime quest/capture/state terminal branches remain final MyBoy evidence.
+
+## 2026-09-28 — B7 Legendary presentation / environmental signals acceptance evidence
+
+**Status:** STATIC/CI PASS — FINAL PRESENTATION/RUNTIME ACCEPTANCE DEFERRED TO MYBOY
+
+B7 layers presentation on B6 without changing legendary battle identity/state: staged Mew sightings, visible/interactable final Mew, contextual legendary/beast guidance and quest-NPC follow-ups.
+
+Validation:
+- `tools/validate_b7_legendary_presentation.py`;
+- exact feature HEAD `f79f6d7a138bc42b95a7163e829bf11512b71b30`;
+- Full Gameplay Core run `36488728918`: **SUCCESS**;
+- merged to master as `8b6502e7233f51b9ca19529479a7055a21261391`;
+- runtime presentation/interactions remain final MyBoy evidence.
