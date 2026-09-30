@@ -20,7 +20,9 @@ Before creating or updating a branch, file, blob, tree, commit or pull request:
 
 If any of those checks fail, **stop writes**. Read-only investigation may continue, but no production state may be claimed as implemented.
 
-## Current production branch
+## Branch-state snapshots
+
+The branch values below are **historical snapshots from when this guardrail was added**. Keep them as incident/governance history, but resolve current production state from live Git refs plus section 0 of `PROJECT_CONTINUITY.md`.
 
 At the time this guardrail was added:
 

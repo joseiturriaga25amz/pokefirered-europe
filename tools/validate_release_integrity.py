@@ -29,7 +29,21 @@ def require(text, token, label):
 def main():
     workflow = read(".github/workflows/full-gameplay-core.yml")
     require(workflow, "make -j2 firered_es_modern", "target")
-    require(workflow, "branches:\n      - feature/full-gameplay-core", "branch")
+    require(workflow, "      - master", "canonical integration branch")
+    require(workflow, "      - feature/full-gameplay-core", "production branch")
+    require(workflow, "pull_request:\n    branches:\n      - master", "canonical PR gate")
+
+    # Current production truth is gated by Full Gameplay Core. Historical
+    # compatibility/block workflows remain available only for manual diagnostics
+    # and must not create automatic red gates on current master/PRs.
+    for legacy_path in (
+        ".github/workflows/build.yml",
+        ".github/workflows/full-production-block1.yml",
+        ".github/workflows/full-production-block2.yml",
+    ):
+        legacy = read(legacy_path)
+        require(legacy, "workflow_dispatch:", f"{legacy_path} manual trigger")
+        assert "pull_request:" not in legacy, f"{legacy_path}: automatic PR trigger restored"
 
     # RC-F039: the RC handoff must rebuild against the exact frozen Spanish
     # baseline commit, and continuity must name the same immutable commit.

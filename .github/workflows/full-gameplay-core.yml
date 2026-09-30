@@ -3,6 +3,7 @@ name: Full Gameplay Core
 on:
   push:
     branches:
+      - master
       - feature/full-gameplay-core
       - feature/b0-baseline-validator-truth
       - feature/b1-low-risk-qol
@@ -14,6 +15,13 @@ on:
       - feature/b5-altering-cave-encounter-polish
       - feature/b6-legendary-narrative-v2-core
       - feature/b7-legendary-presentation-polish
+      - feature/b8-signature-pokemon-staging
+      - feature/b9-pokedex-usefulness
+      - feature/b11-release-candidate
+
+  pull_request:
+    branches:
+      - master
 
 jobs:
   build:

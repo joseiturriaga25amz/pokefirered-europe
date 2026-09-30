@@ -1,12 +1,7 @@
 name: Full Production Block 1
 
 on:
-  push:
-    branches:
-      - feature/baseline-toolchain
-  pull_request:
-    branches:
-      - master
+  workflow_dispatch:
 
 permissions:
   contents: write

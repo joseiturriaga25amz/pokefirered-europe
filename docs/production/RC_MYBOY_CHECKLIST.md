@@ -64,9 +64,9 @@ Use controlled Pokémon with deliberately different Atk/SpA and Def/SpD. Exercis
 **Covers runtime spot-check for:** QA-052..QA-070. Exact slot rates are CI-validated.
 
 1. Spot-check representative FireRed exclusives and Full additions in their frozen areas.
-2. In Altering Cave, use the researcher selector for each of the nine states and trigger at least one encounter per state.
+2. In Altering Cave, enter/leave repeatedly to advance the automatic nine-table rotation. At each state, talk to the researcher only to confirm the reported dominant species, then trigger at least one encounter.
 
-**PASS:** no LeafGreen exclusives replace FireRed exclusives; all nine Altering Cave states produce the intended species and the selector never strands the player.
+**PASS:** no LeafGreen exclusives replace FireRed exclusives; all nine Altering Cave states are reachable through automatic entry rotation, produce the intended species, remain coherent during a visit, and the researcher never changes the active state.
 
 ## RC-07 — Fossils and Fighting Dojo
 **Covers:** QA-071..QA-078.

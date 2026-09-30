@@ -2,6 +2,37 @@
 
 **Purpose:** make the repository sufficient to resume the project without relying on any previous chat.
 
+## 0. Current operational state — 2026-09-30
+
+This section is the current resume point. Later dated sections preserve history and may name branches that are no longer active.
+
+- Canonical repository: `joseiturriaga25amz/pokefirered-europe`.
+- Integration branch: `master`.
+- Last block fully **CLOSED on master**: **B7 — Legendary presentation / environmental signals**.
+- B7 master merge checkpoint: `8b6502e7233f51b9ca19529479a7055a21261391`.
+- B7 exact feature HEAD `f79f6d7a138bc42b95a7163e829bf11512b71b30` passed Full Gameplay Core run `36488728918`.
+- B8 branch: `feature/b8-signature-pokemon-staging`, current HEAD `52ed97e6f20cad11903bcce1deda46400ae37ee9`.
+- B8 is **IMPLEMENTED + VALIDATED + CI-GREEN, NOT YET CLOSED**. Full Gameplay Core run `36643089722` succeeded on that exact HEAD, but the single-line production rule requires merge to `master` and verification of the resulting master HEAD before closure.
+- `fix/b8-misty-pool-ambience` is a diverged historical correction branch; do not resume production there.
+- Detailed B8 history is in `docs/B8_CONTINUITY_CHECKPOINT.md` on the B8 branch. It is block-local evidence, not a replacement for this file.
+- The B8 branch also carries approved amendments A-011 (signature staging identity correction) and A-012 (fully animated B10 follower target). Preserve those decisions when reconciling B8 with master.
+- This continuity/CI consolidation was prepared on `chore/continuity-consolidation` and changes documentation/validation authority only; it does not alter gameplay.
+
+**Next production action:** merge this consolidation to `master`, reconcile the B8 branch with that exact new master HEAD, rerun Full Gameplay Core on the resulting B8 HEAD, merge B8 to master, verify merged master, then and only then open B9.
+
+### Existing continuity roles — do not duplicate
+
+- Project-wide continuity and handoff protocol: this file.
+- Short next-session pointer: `docs/production/NEXT_SESSION.md`.
+- Approved post-freeze decisions: `docs/production/DECISION_AMENDMENTS.md`.
+- Approved work order and future blocks: `docs/production/POLISH_IMPLEMENTATION_MATRIX.md`.
+- Defects / acceptance evidence: `docs/production/RC_AUDIT_LOG.md`.
+- Final static/release method: `FINAL_AUDIT_PLAN.md` and `SECOND_PASS_AUDIT.md`.
+- Final runtime acceptance: `RC_MYBOY_CHECKLIST.md`.
+- Frozen historical design: `docs/spec/`.
+
+No new generic continuity, backlog, decision-log or handoff file is needed. Out-of-scope ideas belong in the relevant existing block/checkpoint as **PROPOSED / pending decision**, or in `POLISH_IMPLEMENTATION_MATRIX.md` when they belong to an already approved future block. Only explicitly approved decisions belong in `DECISION_AMENDMENTS.md`.
+
 ## 1. Start here in every new session
 
 Before modifying code:
@@ -9,12 +40,11 @@ Before modifying code:
 1. Read this file.
 2. Read `docs/production/REPOSITORY_GUARDRAILS.md` and verify the canonical repository is `joseiturriaga25amz/pokefirered-europe` with `push: true` before any write.
 3. Read `docs/production/DECISION_AMENDMENTS.md`.
-4. Read `docs/production/RC_AUDIT_LOG.md`.
-5. Read `docs/production/FINAL_AUDIT_PLAN.md`.
-6. Read `docs/production/RC_MYBOY_CHECKLIST.md`.
-7. Read `docs/production/SECOND_PASS_AUDIT.md`.
-8. Inspect the current branch HEAD and latest GitHub Actions result.
-9. Only if a design detail is still needed, consult the frozen sources under `docs/spec/`.
+4. Read `docs/production/POLISH_IMPLEMENTATION_MATRIX.md`.
+5. Read `docs/production/NEXT_SESSION.md`.
+6. Inspect the current branch/HEAD and the latest **Full Gameplay Core** result for that exact SHA.
+7. Read `RC_AUDIT_LOG.md`, `FINAL_AUDIT_PLAN.md`, `SECOND_PASS_AUDIT.md` or `RC_MYBOY_CHECKLIST.md` when the active block/release gate requires them.
+8. Only if a frozen design detail is still needed, consult `docs/spec/`.
 
 Previous chats are **not required** and must not override the repository.
 
@@ -38,18 +68,18 @@ A historical frozen requirement superseded by an approved amendment must **not**
 - **A-003:** finish implementation/static verification first; concentrate user-run runtime QA in the final RC phase instead of stopping after every block.
 - **A-004:** GitHub is the continuity authority. Chats are disposable.
 
-## 4. Repository / branch / baseline
+## 4. Repository / branch / baseline — historical snapshot
 
 - Repository: `joseiturriaga25amz/pokefirered-europe`.
 - Upstream reference only: `CompuMaxx/pokefirered-europe` (never a production write target).
-- Active production branch: `feature/b3-postgame-rematch-identity`.
+- Historical active branch at this snapshot: `feature/b3-postgame-rematch-identity`. Current branch authority is section 0 plus live Git refs.
 - Repository write preflight is mandatory: exact full name + `push: true` before any mutation.
 - Frozen vanilla tag: `baseline-spanish-vanilla`.
 - Baseline commit: `e184c5cf898cd29efebd33bc1bfe5994277e21ab`.
 - Production target: `firered_es_modern`.
 - Baseline Spanish SHA-1: `ab8f6bfe0ccdaf41188cd015c8c74c314d02296a`.
 
-## 5. Current technical state at continuity freeze
+## 5. Technical state at the earlier continuity freeze — historical
 
 The first exhaustive static audit is nearly complete and an explicit **second-pass adversarial audit** is active.
 
@@ -115,7 +145,7 @@ Protects, among other things:
 - fossils and Cinnabar revival;
 - second Fighting Dojo state/reward;
 - approved evolution invariants;
-- all nine Altering Cave tables/selector values;
+- all nine Altering Cave tables and automatic-rotation invariants;
 - Porygon prize remains repeatable; A-008 changes final price/presentation to 5,500 coins / localized 5.500 FICHAS.
 
 ## 8. Save / compatibility facts
@@ -142,9 +172,9 @@ The audit is now using a second independent layer defined in `docs/production/SE
 
 A reproducible MyBoy RC was frozen at `a1c7fa573ac784ef089bfdf966aa38fc84861212` (ROM SHA-1 `6ebb0ce7cc736d7fd6c9c5bce09a21aaaf7d0443`) and entered runtime QA. Runtime invalidated it with two confirmed blockers: RC-F040 (pre-National cross-generation evolutions reached the animation but were canceled by a leftover vanilla National-Dex guard) and RC-F041 (Koichi's Fighting Dojo sight-trigger script no longer began with `trainerbattle`, causing deterministic MyBoy freeze when he approached the player). Both defects are fixed in source and statically gated. A replacement reproducible MyBoy artifact/checksum is required after the accumulated runtime-polish pass before final acceptance continues on the new candidate.
 
-## 9. What remains before v1.0 final
+## 9. Historical RC-era remaining-work note
 
-The project is no longer in a broad implementation phase. Remaining work is primarily **Release Candidate audit and runtime acceptance**:
+This section predates the later approved B0–B12 polish work order and is retained as release-history context. The current work order is `POLISH_IMPLEMENTATION_MATRIX.md`, and the live resume point is section 0. The final RC requirements below still apply when B11/B12 are reached:
 
 1. finish exhaustive static/specification audit described in `FINAL_AUDIT_PLAN.md`;
 2. ensure exact final HEAD CI is green;
@@ -171,7 +201,7 @@ Do not reintroduce a slow block-by-block approval workflow.
 
 ## 11. If a new chat starts
 
-The correct first action is to inspect this repository and continue from the RC audit. Do not ask the user to reconstruct old chat history and do not assume a stale commit from a previous conversation is still HEAD.
+Read section 0, inspect live refs/HEAD and the exact-SHA Full Gameplay Core result, then continue the current B-block. Do not reconstruct state from an old chat and do not treat a historical branch/checkpoint elsewhere in this file as current merely because it appears later in the document.
 
 
 ## 12. 2026-09-24 handoff — runtime QA closeout and approved polish scope
@@ -653,3 +683,16 @@ Next gate:
 - run exact-head CI after this documentation update;
 - if green, merge B5 to `master`;
 - then begin B6 — Legendary narrative V2 core from the exact merged master checkpoint.
+
+
+## 20. 2026-09-30 — continuity architecture audit
+
+The repository continuity architecture was audited before new gameplay work.
+
+- Existing files already cover continuity, decisions, approved work order, block checkpoints, release audit and MyBoy acceptance; no additional generic documentation file is needed.
+- Early “current” wording and `NEXT_SESSION.md` were stale; historical records are preserved but labeled as historical.
+- B6/B7 acceptance evidence is now recorded in `RC_AUDIT_LOG.md`.
+- The 154-row reconciliation ledger is advanced from pre-B6/B7 A-005 pending states to current implementation/runtime-evidence-required states.
+- Altering Cave MyBoy instructions now match B5 automatic rotation.
+- `Full Gameplay Core` is the production CI authority; legacy compatibility and Block 1/2 workflows remain manual diagnostics instead of automatic red gates.
+- Exact-SHA validation remains mandatory: a green result never transfers automatically to a changed HEAD.
