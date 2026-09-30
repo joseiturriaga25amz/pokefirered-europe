@@ -102,7 +102,6 @@ BROCK_EXPECTED = {
 APPROVED_MOVE_EXCEPTIONS = {
     ("sParty_LeaderMisty", "SPECIES_PSYDUCK", 20, "MOVE_WATER_GUN"),
     ("sParty_RivalCeruleanSquirtle", "SPECIES_ABRA", 18, "MOVE_CONFUSION"),
-    ("sParty_LeaderMisty", "SPECIES_STARYU", 23, "MOVE_SWIFT"),
     ("sParty_LeaderErika", "SPECIES_GLOOM", 35, "MOVE_PETAL_DANCE"),
     ("sParty_LeaderSabrina", "SPECIES_MR_MIME", 42, "MOVE_BATON_PASS"),
 }
