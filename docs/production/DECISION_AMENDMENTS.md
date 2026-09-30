@@ -428,7 +428,30 @@ Rationale:
 - Approved rematch move adjustments:
   - Corsola uses Spike Cannon / Cañón Pincho instead of Ancient Power.
   - Togetic uses Safeguard / Velo Sagrado, Metronome / Metrónomo, Psychic / Psíquico and Fly / Vuelo.
-- Requested first-battle Psyduck adjustment: Water Gun / Pistola Agua instead of Water Sport / Hidrochorro.
-  - Current Gen III legality data does **not** permit Water Gun on Psyduck through level-up, TM/HM, tutor or egg moves.
-  - Do not implement this move unless an explicit design exception is approved; Water Pulse / Hidropulso is a legal Misty-themed alternative.
+- First-battle Psyduck uses Water Gun / Pistola Agua instead of Water Sport / Hidrochorro.
+  - This is an **explicit approved trainer-only move exception**.
+  - It does not modify Psyduck's global learnset, save structures, link/trade data, species data or move data.
+  - The legality validator must whitelist only `sParty_LeaderMisty / SPECIES_PSYDUCK / level 20 / MOVE_WATER_GUN`; no broader exception is approved.
 
+
+
+### Misty implementation specification
+
+**First battle**
+- Psyduck Lv.20 — Confusion / Disable / Scratch / Water Gun; no held item.
+- Poliwag Lv.21 — Water Gun / Hypnosis / DoubleSlap / Bubble; no held item.
+- Staryu Lv.23 — Water Pulse / Recover / Rapid Spin / Camouflage; no held item.
+- Starmie Lv.26 — Water Pulse / Swift / Rapid Spin / Recover; Sitrus Berry; ace and signature companion.
+
+**Rematch**
+- Staryu Lv.61 — Surf / Ice Beam / Cosmic Power / Recover; no held item.
+- Corsola Lv.62 — Surf / Spike Cannon / Recover / Mirror Coat; no held item.
+- Politoed Lv.63 — Surf / Ice Beam / Hypnosis / Perish Song; Sitrus Berry.
+- Togetic Lv.64 — Safeguard / Metronome / Psychic / Fly; Leftovers.
+- Starmie Lv.66 — Surf / Psychic / Thunderbolt / Recover; Twisted Spoon; signature companion.
+- Gyarados Lv.68 — Waterfall / Earthquake / Dragon Dance / Hyper Beam; Mystic Water; ace.
+
+**Gym staging**
+- Starmie at (7,6), Misty at (8,6), Togepi icon at (9,6).
+- Seel icon at (5,12), Horsea icon at (6,12), existing Staryu icon at (12,14).
+- Togepi/Horsea use static icon objects and remain non-interactive/nonblocking.
