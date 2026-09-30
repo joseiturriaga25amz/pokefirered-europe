@@ -51,7 +51,7 @@ def main():
     # Starmie remains her signature companion, while Gyarados is the unique highest-level ace.
     gym_aces = [
         ("sParty_LeaderBrock","ONIX",17,False),
-        ("sParty_RSAromaLady","STEELIX",66,False),
+        ("sParty_RSAromaLady","STEELIX",68,False),
         ("sParty_LeaderMisty","STARMIE",26,False),
         ("sParty_RSRuinManiac","GYARADOS",68,False),
         ("sParty_LeaderLtSurge","RAICHU",30,False),

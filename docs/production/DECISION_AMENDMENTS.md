@@ -468,3 +468,37 @@ Rationale:
   - removed obsolete Staryu Lv.23 Swift/Rapidez legality exception after the approved moveset changed;
   - updated B3 ace validator from Starmie Lv.67 to Gyarados Lv.68 to match the approved ace/signature split.
 - Next leader under A-013: **Lt. Surge**.
+
+
+### Brock tuning amendment — second pass
+
+**Status:** APPROVED / IMPLEMENTED on branch `fix/brock-roster-adjustments-2`.
+
+This reopens Brock only as a new tuning microblock. The prior Brock closure remains valid historical evidence for the earlier approved version.
+
+**First battle**
+- Zubat Lv.13 — Wing Attack / Leech Life / Whirlwind / Supersonic.
+- Vulpix Lv.14 — Ember / Quick Attack / Fire Spin / Agility.
+- Geodude Lv.15 — Rock Throw / Tackle / Revenge / Defense Curl.
+- Onix Lv.17 — Rock Tomb / Tackle / Bind / Screech; retains Oran Berry; remains ace/signature.
+
+**Rematch**
+- Marshtomp Lv.60 — Earthquake / Muddy Water / Mud Shot / Protect; no held item.
+- Ludicolo Lv.61 — Surf / Giga Drain / Ice Beam / Bullet Seed; no held item.
+- Forretress Lv.62 — Rapid Spin / Spikes / Protect / Explosion.
+- Golem Lv.63 — Earthquake / Rock Slide / Rollout / Defense Curl; no held item.
+- Crobat Lv.64 — Sludge Bomb / Aerial Ace / Bite / Confuse Ray; no held item.
+- Steelix Lv.68 — Earthquake / Iron Tail / Crunch / Dragon Breath; Metal Coat; remains ace/signature.
+
+**Held-item policy**
+- First battle: only Onix carries an Oran Berry.
+- Rematch: only Steelix carries a held item, Metal Coat, to reinforce its Steel-type ace identity.
+- Marshtomp, Ludicolo, Forretress, Golem and Crobat carry no held items.
+
+**Trainer-only legality exceptions**
+- Zubat Lv.13 Wing Attack.
+- Vulpix Lv.14 Fire Spin.
+- Vulpix Lv.14 Agility.
+- Geodude Lv.15 Revenge.
+
+These exceptions apply only to Brock's trainer party. They do not modify global learnsets, species data, move data, save compatibility or link/trade structures.
