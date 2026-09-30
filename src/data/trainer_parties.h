@@ -28,9 +28,9 @@ static const struct TrainerMonItemCustomMoves sParty_RSAromaLady[] = {
     {
         .iv = 214,
         .lvl = 60,
-        .species = SPECIES_VULPIX,
-        .heldItem = ITEM_NONE,
-        .moves = {MOVE_FLAMETHROWER, MOVE_WILL_O_WISP, MOVE_CONFUSE_RAY, MOVE_PROTECT},
+        .species = SPECIES_GOLEM,
+        .heldItem = ITEM_HARD_STONE,
+        .moves = {MOVE_EARTHQUAKE, MOVE_ROCK_SLIDE, MOVE_BRICK_BREAK, MOVE_DOUBLE_EDGE},
     },
     {
         .iv = 214,
@@ -5988,17 +5988,31 @@ static const struct TrainerMonItemCustomMoves sParty_EliteFourLance[] = {
 static const struct TrainerMonItemCustomMoves sParty_LeaderBrock[] = {
     {
         .iv = 50,
-        .lvl = 14,
+        .lvl = 13,
         .species = SPECIES_GEODUDE,
         .heldItem = ITEM_NONE,
         .moves = {MOVE_ROCK_THROW, MOVE_TACKLE, MOVE_DEFENSE_CURL, MOVE_MUD_SPORT},
     },
     {
         .iv = 50,
+        .lvl = 14,
+        .species = SPECIES_ZUBAT,
+        .heldItem = ITEM_NONE,
+        .moves = {MOVE_LEECH_LIFE, MOVE_ASTONISH, MOVE_SUPERSONIC, MOVE_NONE},
+    },
+    {
+        .iv = 50,
+        .lvl = 15,
+        .species = SPECIES_VULPIX,
+        .heldItem = ITEM_NONE,
+        .moves = {MOVE_EMBER, MOVE_QUICK_ATTACK, MOVE_ROAR, MOVE_TAIL_WHIP},
+    },
+    {
+        .iv = 50,
         .lvl = 17,
         .species = SPECIES_ONIX,
         .heldItem = ITEM_ORAN_BERRY,
-        .moves = {MOVE_ROCK_TOMB, MOVE_ROCK_SMASH, MOVE_BIND, MOVE_SCREECH},
+        .moves = {MOVE_ROCK_TOMB, MOVE_BIND, MOVE_SCREECH, MOVE_TACKLE},
     },
 };
 

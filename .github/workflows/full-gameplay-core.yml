@@ -564,7 +564,7 @@ jobs:
                   assert re.sub(r"\s+"," ",block(other)).strip() == re.sub(r"\s+"," ",block(name)).strip(), other
 
           bosses = {
-              "sParty_LeaderBrock":[("GEODUDE",14),("ONIX",17)],
+              "sParty_LeaderBrock":[("GEODUDE",13),("ZUBAT",14),("VULPIX",15),("ONIX",17)],
               "sParty_LeaderMisty":[("GOLDEEN",21),("STARYU",23),("STARMIE",26)],
               "sParty_LeaderLtSurge":[("VOLTORB",25),("PIKACHU",26),("RAICHU",30)],
               "sParty_LeaderErika":[("WEEPINBELL",31),("TANGELA",32),("VILEPLUME",33),("GLOOM",35)],
@@ -588,7 +588,7 @@ jobs:
           assert by_id["TRAINER_BOSS_GIOVANNI_2"]["items"] == "ITEM_HYPER_POTION"
 
           rematches = {
-              "sParty_RSAromaLady":[("VULPIX",60),("CROBAT",61),("FORRETRESS",62),("LUDICOLO",63),("MARSHTOMP",64),("STEELIX",66)],
+              "sParty_RSAromaLady":[("GOLEM",60),("CROBAT",61),("FORRETRESS",62),("LUDICOLO",63),("MARSHTOMP",64),("STEELIX",66)],
               "sParty_RSRuinManiac":[("CORSOLA",61),("LUVDISC",62),("POLITOED",63),("TOGETIC",63),("STARMIE",67),("GYARADOS",65)],
               "sParty_RSTuberF":[("ELECTRODE",64),("MAGNETON",65),("ELECTABUZZ",66),("RAICHU",69)],
               "sParty_RSTuberM":[("TANGELA",62),("JUMPLUFF",63),("BELLOSSOM",64),("VICTREEBEL",65),("VILEPLUME",66),("GLOOM",69)],

@@ -311,3 +311,67 @@ The following runtime-approved rules are authoritative for B1 and v1.0 closure:
 ### Acceptance intent
 
 The target presentation is HGSS-like in behavior: the Pokémon should visibly walk behind the player, turn with movement, and transition naturally through ordinary field movement. Final MyBoy QA remains required for animation, warps, ledges, doors, scripts, palette/OAM pressure, save/load, and link isolation.
+
+## A-013 — Major-trainer roster research method and Brock roster identity
+
+**Date:** 2026-09-30  
+**Status:** APPROVED  
+**Scope:** Gym Leader roster research pass; Brock completed. This records design decisions only. Gameplay implementation, levels and movesets remain a separate validated microblock.
+
+### Review method
+
+For each Gym Leader, review the complete canon-associated Pokémon pool one species/line at a time, with special weight given to anime-owned/used Pokémon as identity candidates. Anime chronology is not a hard restriction: canon is used to establish trainer identity, not to reproduce the exact episode timeline.
+
+For each leader:
+1. review the complete candidate list with a brief potential assessment;
+2. define first battle and rematch rosters;
+3. explicitly confirm signature/overworld companion and ace for both stages;
+4. only after roster approval, rebalance levels, order, held items and movesets against the real production progression;
+5. validate trainer-set legality and adjacent progression before implementation is considered complete.
+
+Elite Four and Gary/Blue research remains a later phase after the Gym Leader pass. Giovanni additionally requires review of non-Gym story appearances.
+
+### Brock — approved roster
+
+**First battle**
+- Geodude
+- Zubat
+- Vulpix
+- Onix — ace and signature companion
+
+**Rematch**
+- Golem
+- Crobat
+- Forretress
+- Ludicolo
+- Marshtomp
+- Steelix — ace and signature companion
+
+### Brock design intent
+
+- Zubat is intentionally present in the first battle despite not being a classic Brock Gym species because it strongly represents Brock's anime identity.
+- Vulpix receives a first-battle slot for the same identity reason and is intentionally dropped from the rematch.
+- The rematch preserves three visible progression lines from the first battle: Geodude→Golem, Zubat→Crobat and Onix→Steelix.
+- Steelix remains the rematch ace; Onix remains the first-battle ace.
+- The B8 staging decision already matches this identity: Brock displays Onix pre-rematch and Steelix in the later state.
+- Brock implementation is now defined as follows:
+  - first battle levels: Geodude 13, Zubat 14, Vulpix 15, Onix 17;
+  - first-battle moves: Geodude — Rock Throw/Tackle/Defense Curl/Mud Sport; Zubat — Leech Life/Astonish/Supersonic; Vulpix — Ember/Quick Attack/Roar/Tail Whip; Onix — Rock Tomb/Bind/Screech/Tackle;
+  - rematch levels remain 60/61/62/63/64/66 with Golem/Crobat/Forretress/Ludicolo/Marshtomp/Steelix;
+  - Golem uses Earthquake/Rock Slide/Brick Break/Double-Edge and **must not use Explosion**;
+  - Steelix retains Leftovers and remains the rematch ace;
+  - exact roster assertions are enforced in `tools/validate_full_trainer_sets.py`.
+- English move identifiers above are repository constants; user-facing review should always present the Spanish in-game names.
+
+### Implementation/validation procedure for later Leader changes
+
+When an approved Leader roster changes a previously frozen trainer set:
+1. modify only the approved party/level/move/item scope;
+2. update every exact-roster/frozen expectation that intentionally describes that same set;
+3. preserve semantic legality validation and relock audited data blobs only after reviewing the intentional diff;
+4. run Full Gameplay Core on the exact feature HEAD;
+5. if infrastructure fails because it still encodes the superseded approved roster, update that expectation rather than reverting valid gameplay;
+6. integrate onto the current master only after the exact feature HEAD is green;
+7. rerun the production gate on the exact integrated master HEAD before marking the microblock CLOSED.
+
+This procedure is part of the Gym Leader roster pass and should be reused for Misty and later Leaders when their approved rosters differ from the currently frozen production sets.

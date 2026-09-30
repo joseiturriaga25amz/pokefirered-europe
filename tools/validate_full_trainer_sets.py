@@ -68,6 +68,23 @@ PARTIES = [
 
 # Strict design exceptions approved during the B2 first-cycle audit.
 # These are deliberately narrow: party + species + level + move must all match.
+BROCK_EXPECTED = {
+    "sParty_LeaderBrock": [
+        ("SPECIES_GEODUDE", 13, "ITEM_NONE", ("MOVE_ROCK_THROW", "MOVE_TACKLE", "MOVE_DEFENSE_CURL", "MOVE_MUD_SPORT")),
+        ("SPECIES_ZUBAT", 14, "ITEM_NONE", ("MOVE_LEECH_LIFE", "MOVE_ASTONISH", "MOVE_SUPERSONIC", "MOVE_NONE")),
+        ("SPECIES_VULPIX", 15, "ITEM_NONE", ("MOVE_EMBER", "MOVE_QUICK_ATTACK", "MOVE_ROAR", "MOVE_TAIL_WHIP")),
+        ("SPECIES_ONIX", 17, "ITEM_ORAN_BERRY", ("MOVE_ROCK_TOMB", "MOVE_BIND", "MOVE_SCREECH", "MOVE_TACKLE")),
+    ],
+    "sParty_RSAromaLady": [
+        ("SPECIES_GOLEM", 60, "ITEM_HARD_STONE", ("MOVE_EARTHQUAKE", "MOVE_ROCK_SLIDE", "MOVE_BRICK_BREAK", "MOVE_DOUBLE_EDGE")),
+        ("SPECIES_CROBAT", 61, "ITEM_SHARP_BEAK", ("MOVE_AERIAL_ACE", "MOVE_POISON_FANG", "MOVE_BITE", "MOVE_CONFUSE_RAY")),
+        ("SPECIES_FORRETRESS", 62, "ITEM_NONE", ("MOVE_SPIKES", "MOVE_RAPID_SPIN", "MOVE_PROTECT", "MOVE_EXPLOSION")),
+        ("SPECIES_LUDICOLO", 63, "ITEM_MYSTIC_WATER", ("MOVE_SURF", "MOVE_GIGA_DRAIN", "MOVE_ICE_BEAM", "MOVE_RAIN_DANCE")),
+        ("SPECIES_MARSHTOMP", 64, "ITEM_SOFT_SAND", ("MOVE_EARTHQUAKE", "MOVE_MUDDY_WATER", "MOVE_ICE_BEAM", "MOVE_PROTECT")),
+        ("SPECIES_STEELIX", 66, "ITEM_LEFTOVERS", ("MOVE_EARTHQUAKE", "MOVE_ROCK_SLIDE", "MOVE_IRON_TAIL", "MOVE_CRUNCH")),
+    ],
+}
+
 APPROVED_MOVE_EXCEPTIONS = {
     ("sParty_RivalCeruleanSquirtle", "SPECIES_ABRA", 18, "MOVE_CONFUSION"),
     ("sParty_LeaderMisty", "SPECIES_STARYU", 23, "MOVE_SWIFT"),
@@ -228,6 +245,21 @@ def main() -> None:
     reverse = parse_pre_evolutions()
 
     trainer_text = read("src/data/trainer_parties.h")
+
+    for party_name, expected in BROCK_EXPECTED.items():
+        block = array_block(trainer_text, party_name)
+        mons = MON_RE.findall(block)
+        actual = []
+        for mon in mons:
+            species = re.search(r"\.species\s*=\s*(SPECIES_[A-Z0-9_]+)", mon).group(1)
+            level = int(re.search(r"\.lvl\s*=\s*(\d+)", mon).group(1))
+            item_match = re.search(r"\.heldItem\s*=\s*(ITEM_[A-Z0-9_]+)", mon)
+            item = item_match.group(1) if item_match else "ITEM_NONE"
+            moves_match = re.search(r"\.moves\s*=\s*\{([^}]*)\}", mon, re.S)
+            moves = tuple(re.findall(r"MOVE_[A-Z0-9_]+", moves_match.group(1))) if moves_match else ()
+            actual.append((species, level, item, moves))
+        assert actual == expected, f"{party_name}: Brock roster drifted: {actual!r}"
+
     errors: list[str] = []
     used_exceptions: set[tuple[str, str, int, str]] = set()
     checked_mons = 0
