@@ -1,5 +1,14 @@
 CeladonCity_Gym_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, CeladonCity_Gym_OnTransition
 	.byte 0
+
+CeladonCity_Gym_OnTransition::
+	setvar VAR_OBJ_GFX_ID_2, OBJ_EVENT_GFX_GLOOM
+	goto_if_unset FLAG_SYS_GAME_CLEAR, CeladonCity_Gym_OnTransition_End
+	goto_if_unset FLAG_GOT_TM19_FROM_ERIKA, CeladonCity_Gym_OnTransition_End
+	setvar VAR_OBJ_GFX_ID_2, OBJ_EVENT_GFX_VILEPLUME
+CeladonCity_Gym_OnTransition_End::
+	end
 
 CeladonCity_Gym_EventScript_Erika::
 	goto_if_unset FLAG_SYS_GAME_CLEAR, CeladonCity_Gym_EventScript_ErikaStory

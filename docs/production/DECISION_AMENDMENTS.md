@@ -814,7 +814,7 @@ This baseline is intentionally reusable for Koga, Sabrina, Blaine and Giovanni. 
 
 ### Erika curve/identity amendment — approved target
 
-**Status:** APPROVED / NOT YET IMPLEMENTED.
+**Status:** APPROVED / IMPLEMENTED on branch `fix/erika-curve-identity`; validation and integration pending.
 
 The transversal curve audit approves the following target while preserving the rule that first Gym encounters use Kanto species only.
 
@@ -840,3 +840,14 @@ The transversal curve audit approves the following target while preserving the r
 - Rematch visual staging must show Vileplume beside Erika instead of Gloom.
 - Held-item policy: only first-battle Gloom holds Sitrus Berry; only rematch Vileplume holds Miracle Seed.
 - Roster-size progression for later Koga/Sabrina/Blaine/Giovanni remains open to future review; each change must be rechecked against the transversal curve baseline rather than assuming current roster sizes are permanent.
+
+
+### Erika implementation notes
+
+- First encounter keeps Gloom as the symbolic anime-priority ace with max trainer-IV compensation because it remains an intermediate stage.
+- Tangela Lv.33 Stun Spore is the only newly required trainer-only legality exception in this Erika microblock; it is scoped to Erika/Tangela/Lv.33 and does not change global learnsets.
+- Rematch Vileplume Lv.69 uses `.iv = 214`, the normal Erika rematch tier (about 26/31 actual IVs), replacing the prior `.iv = 255` compensation that existed only for unevolved Gloom.
+- The rematch contains one Vileplume, at Lv.69; the previous Lv.66 Vileplume slot is replaced by Cradily Lv.65 and Victreebel advances to Lv.66.
+- Celadon Gym staging remains Gloom through the story state and changes to Vileplume for postgame/rematch eligibility through `VAR_OBJ_GFX_ID_2`.
+- Vileplume reuses its existing 32x32 Pokémon icon and icon palette 0 through the established B8 inanimate-object architecture; no new art asset, species ID, save data or link structure is introduced.
+- Erika keeps her existing two Super Potions; reducing trainer-bag healing was analyzed but was not part of the approved change.
