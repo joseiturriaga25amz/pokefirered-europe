@@ -866,7 +866,7 @@ The transversal curve audit approves the following target while preserving the r
 ## A-014 — CI workflow resilience and documentation-only policy
 
 **Date:** 2026-10-01
-**Status:** APPROVED / IMPLEMENTED
+**Status:** APPROVED / IMPLEMENTED / VALIDATED / CI-GREEN / CLOSED
 
 ### Decision
 
@@ -882,3 +882,12 @@ The transversal curve audit approves the following target while preserving the r
 ### Rationale
 
 Full Gameplay Core #651 on documentation-only HEAD `5e39aec` stalled in dependency installation before compilation or project validation, while the integrated Erika gameplay HEAD `541a49b` had already passed #650. The change reduces unnecessary heavy CI work without weakening technical gates and makes transient runner/mirror handling more robust.
+
+### Closure evidence
+
+- Feature HEAD: `cfebaa25b6c02153f7c2a694b245854d679670b3`.
+- Full Gameplay Core **#652: SUCCESS** on that exact feature HEAD.
+- PR #25 merged to `master` as `f1e5da264e4791d8c023e596f64dfcb583a95a28`.
+- Full Gameplay Core **#653: SUCCESS** on that exact integrated master SHA.
+- No gameplay, ROM data, validators, save/link structures or assets changed in this microblock.
+- A-014 is therefore **CLOSED**.

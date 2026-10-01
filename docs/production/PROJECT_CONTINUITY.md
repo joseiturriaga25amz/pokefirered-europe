@@ -2,7 +2,7 @@
 
 **Purpose:** make the repository sufficient to resume the project without relying on any previous chat.
 
-## 0. Current operational state — 2026-09-30
+## 0. Current operational state — 2026-10-01
 
 This section is the current resume point. Later dated sections preserve history and may name branches that are no longer active.
 
@@ -60,7 +60,9 @@ This section is the current resume point. Later dated sections preserve history 
 
 **Erika closure evidence:** feature HEAD `9e0e105c36fa1e964bd21a879b6c892c9ff6cd7f` passed Full Gameplay Core **#649**; PR #24 merged to `master` as `541a49b56b84bc71f5e00ba9dcf976759968bbaf`; post-integration Full Gameplay Core **#650** passed on that exact master SHA. Runs #647/#648 exposed only stale Erika expectations in `validate_b3_global_ace_identity.py`; validator-only corrections `dda4848` and `9e0e105` aligned the gate with the approved design without changing gameplay.
 
-**Next production action:** do not modify Koga yet. When the user explicitly resumes the leader pass, begin Koga with the persisted transversal curve-audit baseline and re-evaluate roster size rather than assuming the current later-leader counts are final.
+**CI infrastructure closure evidence:** A-014 feature HEAD `cfebaa25b6c02153f7c2a694b245854d679670b3` passed Full Gameplay Core **#652**; PR #25 merged to `master` as `f1e5da264e4791d8c023e596f64dfcb583a95a28`; post-integration Full Gameplay Core **#653** passed on that exact master SHA. This microblock changed CI/workflow policy only; no gameplay was modified. A-014 is therefore **CLOSED**.
+
+**Next production action:** begin the Koga leader-pass analysis from the current `master`, using the persisted A-013 research pool and transversal curve-audit baseline. Re-evaluate roster size, levels, IVs, held items/healing, movesets, counterplay, first→rematch continuity and staging before any gameplay mutation.
 
 ### Existing continuity roles — do not duplicate
 

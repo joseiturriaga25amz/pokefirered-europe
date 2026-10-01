@@ -52,11 +52,12 @@ Use `docs/spec/` only for frozen historical design details.
 - PR #24 merged Erika to `master` as `541a49b56b84bc71f5e00ba9dcf976759968bbaf`.
 - Erika post-integration Full Gameplay Core **#650 SUCCESS** on that exact SHA.
 - Erika roster/curve microblock: **CLOSED**.
+- CI infrastructure microblock A-014: **CLOSED**. Feature HEAD `cfebaa25b6c02153f7c2a694b245854d679670b3` passed Full Gameplay Core **#652**; PR #25 merged as `f1e5da264e4791d8c023e596f64dfcb583a95a28`; post-integration Full Gameplay Core **#653 SUCCESS** on that exact master SHA.
 
 ## Exact next action
 
-1. do not modify Koga until the user explicitly resumes the leader pass;
-2. when resumed, reconstruct Koga from the persisted user research pool and A-013 workflow;
+1. begin Koga analysis from current `master` (`f1e5da264e4791d8c023e596f64dfcb583a95a28`);
+2. reconstruct Koga from the persisted user research pool and A-013 workflow before modifying gameplay;
 3. apply the transversal curve audit against the CLOSED Brock/Misty/Surge/Erika baseline, including roster size, levels, actual trainer IVs, items/healing, movesets, counterplay and first->rematch continuity;
 4. treat Koga/Sabrina/Blaine/Giovanni roster counts as open to review, not frozen by the current implementation.
 
