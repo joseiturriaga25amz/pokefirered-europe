@@ -116,31 +116,45 @@ static const struct TrainerMonNoItemDefaultMoves sParty_Interviewer[] = {DUMMY_T
 static const struct TrainerMonItemCustomMoves sParty_RSTuberF[] = {
     {
         .iv = 214,
+        .lvl = 62,
+        .species = SPECIES_PIKACHU,
+        .heldItem = ITEM_NONE,
+        .moves = {MOVE_THUNDERBOLT, MOVE_IRON_TAIL, MOVE_QUICK_ATTACK, MOVE_DOUBLE_TEAM},
+    },
+    {
+        .iv = 214,
         .lvl = 64,
         .species = SPECIES_ELECTRODE,
-        .heldItem = ITEM_MAGNET,
-        .moves = {MOVE_THUNDERBOLT, MOVE_TAUNT, MOVE_MIRROR_COAT, MOVE_EXPLOSION},
+        .heldItem = ITEM_NONE,
+        .moves = {MOVE_THUNDERBOLT, MOVE_ROLLOUT, MOVE_LIGHT_SCREEN, MOVE_EXPLOSION},
     },
     {
         .iv = 214,
         .lvl = 65,
         .species = SPECIES_MAGNETON,
-        .heldItem = ITEM_SITRUS_BERRY,
-        .moves = {MOVE_THUNDERBOLT, MOVE_THUNDER_WAVE, MOVE_TRI_ATTACK, MOVE_METAL_SOUND},
+        .heldItem = ITEM_NONE,
+        .moves = {MOVE_THUNDERBOLT, MOVE_TRI_ATTACK, MOVE_THUNDER_WAVE, MOVE_METAL_SOUND},
     },
     {
         .iv = 214,
         .lvl = 66,
+        .species = SPECIES_MANECTRIC,
+        .heldItem = ITEM_NONE,
+        .moves = {MOVE_THUNDERBOLT, MOVE_BITE, MOVE_THUNDER_WAVE, MOVE_ROAR},
+    },
+    {
+        .iv = 214,
+        .lvl = 67,
         .species = SPECIES_ELECTABUZZ,
         .heldItem = ITEM_NONE,
-        .moves = {MOVE_THUNDERBOLT, MOVE_BRICK_BREAK, MOVE_PSYCHIC, MOVE_LIGHT_SCREEN},
+        .moves = {MOVE_THUNDERBOLT, MOVE_THUNDER_PUNCH, MOVE_BRICK_BREAK, MOVE_LIGHT_SCREEN},
     },
     {
         .iv = 214,
         .lvl = 69,
         .species = SPECIES_RAICHU,
-        .heldItem = ITEM_LEFTOVERS,
-        .moves = {MOVE_THUNDERBOLT, MOVE_BRICK_BREAK, MOVE_IRON_TAIL, MOVE_THUNDER_WAVE},
+        .heldItem = ITEM_MAGNET,
+        .moves = {MOVE_THUNDER, MOVE_THUNDERBOLT, MOVE_MEGA_PUNCH, MOVE_BODY_SLAM},
     },
 };
 static const struct TrainerMonItemCustomMoves sParty_RSTuberM[] = {
@@ -6051,23 +6065,23 @@ static const struct TrainerMonItemCustomMoves sParty_LeaderLtSurge[] = {
     {
         .iv = 99,
         .lvl = 25,
+        .species = SPECIES_PIKACHU,
+        .heldItem = ITEM_NONE,
+        .moves = {MOVE_THUNDER_SHOCK, MOVE_QUICK_ATTACK, MOVE_DOUBLE_TEAM, MOVE_THUNDER_WAVE},
+    },
+    {
+        .iv = 99,
+        .lvl = 26,
         .species = SPECIES_VOLTORB,
         .heldItem = ITEM_NONE,
         .moves = {MOVE_SHOCK_WAVE, MOVE_TACKLE, MOVE_SONIC_BOOM, MOVE_SCREECH},
     },
     {
         .iv = 99,
-        .lvl = 26,
-        .species = SPECIES_PIKACHU,
-        .heldItem = ITEM_NONE,
-        .moves = {MOVE_SHOCK_WAVE, MOVE_THUNDER_WAVE, MOVE_QUICK_ATTACK, MOVE_DOUBLE_TEAM},
-    },
-    {
-        .iv = 99,
         .lvl = 30,
         .species = SPECIES_RAICHU,
         .heldItem = ITEM_SITRUS_BERRY,
-        .moves = {MOVE_SHOCK_WAVE, MOVE_MEGA_PUNCH, MOVE_THUNDER_WAVE, MOVE_QUICK_ATTACK},
+        .moves = {MOVE_SHOCK_WAVE, MOVE_MEGA_PUNCH, MOVE_SLAM, MOVE_THUNDER_WAVE},
     },
 };
 
