@@ -55,10 +55,12 @@ This section is the current resume point. Later dated sections preserve history 
 - Final rematch: Pikachu 62 / Electrode 64 / Magneton 65 / Manectric 66 / Electabuzz 67 / Raichu 69; only Raichu holds Magnet; Raichu remains ace/signature.
 - No trainer-only move exception was required for Lt. Surge.
 - Lt. Surge third-pass feature HEAD `32163f2677e4012032cce1070165b103f64a2ca5` passed Full Gameplay Core **#642**, merged to `master` as `fb9bf7caec094b451cd6bb61b1752a142adb4d78`, and post-integration Full Gameplay Core **#643** passed on that exact SHA. Third-pass status: **CLOSED**. Final first battle is Magnemite 24 / Pikachu 25 / Voltorb 26 / Raichu 30; rematch unchanged.
-- Erika approved roster/curve target is **IMPLEMENTED** on `fix/erika-curve-identity`: first battle Oddish 29 / Victreebel 31 / Tangela 33 / Gloom 35; rematch Tangela 62 / Jumpluff 63 / Bellossom 64 / Cradily 65 / Victreebel 66 / Vileplume 69. Gloom remains the first-battle ace with max-IV intermediate-stage compensation; Vileplume is the rematch ace at the normal rematch IV tier and replaces Gloom in postgame staging.
+- Erika roster/curve microblock is **CLOSED**. Final first battle: Oddish 29 / Victreebel 31 / Tangela 33 / Gloom 35; only Gloom holds Sitrus Berry and remains ace/signature with intermediate-stage max-IV compensation. Final rematch: Tangela 62 / Jumpluff 63 / Bellossom 64 / Cradily 65 / Victreebel 66 / Vileplume 69; only Vileplume holds Miracle Seed, uses the normal rematch IV tier (`.iv = 214`) and is the evolved ace/signature. Celadon staging changes Gloom -> Vileplume for postgame/rematch eligibility.
 - B9 Pokédex usefulness remains the next production B-block after the explicitly interposed roster-research pass is complete.
 
-**Next production action:** validate the exact Erika feature HEAD on `fix/erika-curve-identity`; integrate only if green, then rerun Full Gameplay Core on the exact integrated `master` HEAD before marking Erika CLOSED.
+**Erika closure evidence:** feature HEAD `9e0e105c36fa1e964bd21a879b6c892c9ff6cd7f` passed Full Gameplay Core **#649**; PR #24 merged to `master` as `541a49b56b84bc71f5e00ba9dcf976759968bbaf`; post-integration Full Gameplay Core **#650** passed on that exact master SHA. Runs #647/#648 exposed only stale Erika expectations in `validate_b3_global_ace_identity.py`; validator-only corrections `dda4848` and `9e0e105` aligned the gate with the approved design without changing gameplay.
+
+**Next production action:** do not modify Koga yet. When the user explicitly resumes the leader pass, begin Koga with the persisted transversal curve-audit baseline and re-evaluate roster size rather than assuming the current later-leader counts are final.
 
 ### Existing continuity roles — do not duplicate
 

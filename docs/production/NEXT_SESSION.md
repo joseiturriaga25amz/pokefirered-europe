@@ -48,14 +48,17 @@ Use `docs/spec/` only for frozen historical design details.
 - Lt. Surge third-pass feature HEAD `32163f2677e4012032cce1070165b103f64a2ca5`: Full Gameplay Core **#642 SUCCESS**.
 - Merged to `master` as `fb9bf7caec094b451cd6bb61b1752a142adb4d78`; post-integration Full Gameplay Core **#643 SUCCESS**.
 - Lt. Surge third-pass curve microblock: **CLOSED**.
-- Erika roster/curve microblock is **IMPLEMENTED** on `fix/erika-curve-identity`, pending exact-head validation and integration.
+- Erika feature HEAD `9e0e105c36fa1e964bd21a879b6c892c9ff6cd7f`: Full Gameplay Core **#649 SUCCESS**.
+- PR #24 merged Erika to `master` as `541a49b56b84bc71f5e00ba9dcf976759968bbaf`.
+- Erika post-integration Full Gameplay Core **#650 SUCCESS** on that exact SHA.
+- Erika roster/curve microblock: **CLOSED**.
 
 ## Exact next action
 
-1. validate the exact Erika feature HEAD with Full Gameplay Core;
-2. if green, integrate only that exact HEAD to `master`;
-3. run Full Gameplay Core on the exact integrated master SHA;
-4. persist Erika closure evidence and only then move to Koga analysis.
+1. do not modify Koga until the user explicitly resumes the leader pass;
+2. when resumed, reconstruct Koga from the persisted user research pool and A-013 workflow;
+3. apply the transversal curve audit against the CLOSED Brock/Misty/Surge/Erika baseline, including roster size, levels, actual trainer IVs, items/healing, movesets, counterplay and first->rematch continuity;
+4. treat Koga/Sabrina/Blaine/Giovanni roster counts as open to review, not frozen by the current implementation.
 
 ## Continuity rule
 

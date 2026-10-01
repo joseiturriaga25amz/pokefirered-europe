@@ -814,7 +814,7 @@ This baseline is intentionally reusable for Koga, Sabrina, Blaine and Giovanni. 
 
 ### Erika curve/identity amendment — approved target
 
-**Status:** APPROVED / IMPLEMENTED on branch `fix/erika-curve-identity`; validation and integration pending.
+**Status:** APPROVED / IMPLEMENTED / VALIDATED / CI-GREEN / CLOSED.
 
 The transversal curve audit approves the following target while preserving the rule that first Gym encounters use Kanto species only.
 
@@ -851,3 +851,13 @@ The transversal curve audit approves the following target while preserving the r
 - Celadon Gym staging remains Gloom through the story state and changes to Vileplume for postgame/rematch eligibility through `VAR_OBJ_GFX_ID_2`.
 - Vileplume reuses its existing 32x32 Pokémon icon and icon palette 0 through the established B8 inanimate-object architecture; no new art asset, species ID, save data or link structure is introduced.
 - Erika keeps her existing two Super Potions; reducing trainer-bag healing was analyzed but was not part of the approved change.
+
+
+### Erika closure evidence
+
+- Feature HEAD: `9e0e105c36fa1e964bd21a879b6c892c9ff6cd7f`.
+- Full Gameplay Core **#649: SUCCESS** on that exact feature HEAD.
+- PR #24 merged the exact green feature to `master` as `541a49b56b84bc71f5e00ba9dcf976759968bbaf`.
+- Full Gameplay Core **#650: SUCCESS** on that exact integrated master SHA.
+- Full Gameplay Core #647 and #648 failed only because `tools/validate_b3_global_ace_identity.py` still encoded superseded Erika Gloom-rematch/max-IV and old ace-moveset expectations. Validator-only commits `dda4848` and `9e0e105` corrected those stale expectations; no gameplay rollback or unrelated change was required.
+- Erika roster/curve/staging microblock is therefore **CLOSED**.
