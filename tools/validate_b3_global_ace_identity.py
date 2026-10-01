@@ -57,7 +57,7 @@ def main():
         ("sParty_LeaderLtSurge","RAICHU",30,False),
         ("sParty_RSTuberF","RAICHU",69,False),
         ("sParty_LeaderErika","GLOOM",35,False),
-        ("sParty_RSTuberM","GLOOM",69,False),
+        ("sParty_RSTuberM","VILEPLUME",69,False),
         ("sParty_LeaderKoga","GOLBAT",46,False),
         ("sParty_RSCooltrainerM","CROBAT",71,False),
         ("sParty_LeaderSabrina","KADABRA",47,False),
@@ -107,7 +107,6 @@ def main():
     # Intermediate-stage symbolic aces deliberately receive maximum trainer IVs plus a meaningful item.
     special = [
         ("sParty_LeaderErika","GLOOM",35,"SITRUS_BERRY"),
-        ("sParty_RSTuberM","GLOOM",69,"MIRACLE_SEED"),
         ("sParty_LeaderSabrina","KADABRA",47,"TWISTED_SPOON"),
         ("sParty_RSCooltrainerF","KADABRA",72,"TWISTED_SPOON"),
         ("sParty_LeaderKoga","GOLBAT",46,"SHARP_BEAK"),
@@ -116,6 +115,10 @@ def main():
         mon=exact_mon(name,species,level)
         assert mon["iv"] == 255, (name,species,"expected max IV",mon["iv"])
         assert mon["item"] == item, (name,species,"expected item",item,mon["item"])
+
+    erika_rematch_ace = exact_mon("sParty_RSTuberM","VILEPLUME",69)
+    assert erika_rematch_ace["iv"] == 214, ("sParty_RSTuberM","VILEPLUME","expected normal rematch IV",erika_rematch_ace["iv"])
+    assert erika_rematch_ace["item"] == "MIRACLE_SEED"
 
     # Lance's Gyarados is the same canonical Red Gyarados in both League encounters.
     battle_main = (ROOT / "src/battle_main.c").read_text(encoding="utf-8")
@@ -138,8 +141,8 @@ def main():
 
     # Freeze the exact user-approved ace movesets from the 2026-09-28 transversal pass.
     approved_moves = {
-        ("sParty_LeaderErika", "GLOOM", 35): ("PETAL_DANCE", "SLEEP_POWDER", "MOONLIGHT", "ACID"),
-        ("sParty_RSTuberM", "GLOOM", 69): ("SOLAR_BEAM", "SLUDGE_BOMB", "SLEEP_POWDER", "SUNNY_DAY"),
+        ("sParty_LeaderErika", "GLOOM", 35): ("PETAL_DANCE", "ACID", "POISON_POWDER", "SLEEP_POWDER"),
+        ("sParty_RSTuberM", "VILEPLUME", 69): ("SOLAR_BEAM", "SLUDGE_BOMB", "SYNTHESIS", "SUNNY_DAY"),
         ("sParty_LeaderKoga", "GOLBAT", 46): ("WING_ATTACK", "BITE", "CONFUSE_RAY", "SCREECH"),
         ("sParty_RSCooltrainerM", "CROBAT", 71): ("AERIAL_ACE", "POISON_FANG", "BITE", "CONFUSE_RAY"),
         ("sParty_LeaderSabrina", "KADABRA", 47): ("PSYCHIC", "CALM_MIND", "RECOVER", "REFLECT"),
