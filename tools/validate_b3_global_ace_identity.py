@@ -140,10 +140,10 @@ def main():
     assert "MOVE_SCREECH" in koga_text
     assert "MOVE_TOXIC" not in koga_text[koga_text.index("SPECIES_GOLBAT"):]
 
-    # Freeze the exact user-approved ace movesets from the 2026-09-28 transversal pass.
+    # Freeze the current user-approved ace movesets. Erika was intentionally amended after the 2026-09-28 pass.
     approved_moves = {
-        ("sParty_LeaderErika", "GLOOM", 35): ("PETAL_DANCE", "SLEEP_POWDER", "MOONLIGHT", "ACID"),
-        ("sParty_RSTuberM", "GLOOM", 69): ("SOLAR_BEAM", "SLUDGE_BOMB", "SLEEP_POWDER", "SUNNY_DAY"),
+        ("sParty_LeaderErika", "GLOOM", 35): ("PETAL_DANCE", "ACID", "POISON_POWDER", "SLEEP_POWDER"),
+        ("sParty_RSTuberM", "VILEPLUME", 69): ("SOLAR_BEAM", "SLUDGE_BOMB", "SYNTHESIS", "SUNNY_DAY"),
         ("sParty_LeaderKoga", "GOLBAT", 46): ("WING_ATTACK", "BITE", "CONFUSE_RAY", "SCREECH"),
         ("sParty_RSCooltrainerM", "CROBAT", 71): ("AERIAL_ACE", "POISON_FANG", "BITE", "CONFUSE_RAY"),
         ("sParty_LeaderSabrina", "KADABRA", 47): ("PSYCHIC", "CALM_MIND", "RECOVER", "REFLECT"),
