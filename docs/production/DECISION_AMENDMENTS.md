@@ -771,3 +771,31 @@ This decision uses only the persisted A-013 user-supplied canon research pool. R
 - Raichu remains ace/signature in both stages.
 - No trainer-only move exception was required.
 - Do not begin Erika until explicitly requested by the user.
+
+
+### A-013 curve-audit baseline and Lt. Surge third-pass amendment
+
+**Status:** APPROVED / IMPLEMENTED on branch `fix/lt-surge-magnemite-curve`; validation and integration pending.
+
+The Gym Leader pass now carries a transversal progression audit in addition to canon/identity review. For each remaining first encounter, compare against the already approved leaders using:
+- first-battle Kanto-only species restriction;
+- roster size and evolutionary stages;
+- levels and actual trainer IVs (`.iv * 31 / 255`);
+- held items and trainer bag healing;
+- move power/category, status pressure, recovery and speed;
+- practical counters available to the player before the Gym;
+- comparison to vanilla FireRed/LeafGreen and to adjacent Full leaders;
+- continuity from first encounter into rematch;
+- runtime feel remains a later acceptance layer and is not replaced by static analysis.
+
+This baseline is intentionally reusable for Koga, Sabrina, Blaine and Giovanni. Their current roster sizes are not frozen by this note: later approved changes must be re-evaluated against the whole curve rather than assuming the current 4/4/5/6 pattern remains final.
+
+**Lt. Surge third-pass change**
+- The previous Lt. Surge closure remains historical evidence for the prior approved version.
+- First battle gains a deliberately modest Kanto Magnemite at Lv.24: ThunderShock / Tackle / Supersonic / Metal Sound; no held item.
+- Final first-battle order becomes Magnemite 24 / Pikachu 25 / Voltorb 26 / Raichu 30.
+- Pikachu, Voltorb and Raichu retain their already approved sets/items.
+- Raichu remains the unique ace/signature and the only first-battle held-item user (Sitrus Berry).
+- Rematch remains unchanged: Pikachu 62 / Electrode 64 / Magneton 65 / Manectric 66 / Electabuzz 67 / Raichu 69.
+- Magnemite -> Magneton is an approved evolutionary-continuity inference for Full; it is not represented as a direct Kanto ownership claim from the research pool.
+- No trainer-only legality exception, global learnset change, save/link change or staging change is required.
