@@ -57,7 +57,7 @@ def main():
         ("sParty_LeaderLtSurge","RAICHU",30,False),
         ("sParty_RSTuberF","RAICHU",69,False),
         ("sParty_LeaderErika","GLOOM",35,False),
-        ("sParty_RSTuberM","GLOOM",69,False),
+        ("sParty_RSTuberM","VILEPLUME",69,False),
         ("sParty_LeaderKoga","GOLBAT",46,False),
         ("sParty_RSCooltrainerM","CROBAT",71,False),
         ("sParty_LeaderSabrina","KADABRA",47,False),
