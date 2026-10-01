@@ -775,7 +775,7 @@ This decision uses only the persisted A-013 user-supplied canon research pool. R
 
 ### A-013 curve-audit baseline and Lt. Surge third-pass amendment
 
-**Status:** APPROVED / IMPLEMENTED on branch `fix/lt-surge-magnemite-curve`; validation and integration pending.
+**Status:** **CLOSED**.
 
 The Gym Leader pass now carries a transversal progression audit in addition to canon/identity review. For each remaining first encounter, compare against the already approved leaders using:
 - first-battle Kanto-only species restriction;
@@ -799,3 +799,44 @@ This baseline is intentionally reusable for Koga, Sabrina, Blaine and Giovanni. 
 - Rematch remains unchanged: Pikachu 62 / Electrode 64 / Magneton 65 / Manectric 66 / Electabuzz 67 / Raichu 69.
 - Magnemite -> Magneton is an approved evolutionary-continuity inference for Full; it is not represented as a direct Kanto ownership claim from the research pool.
 - No trainer-only legality exception, global learnset change, save/link change or staging change is required.
+
+
+### Lt. Surge third-pass closure evidence
+
+- Feature HEAD: `32163f2677e4012032cce1070165b103f64a2ca5`.
+- Full Gameplay Core **#642**: **SUCCESS**.
+- Merged to `master` as `fb9bf7caec094b451cd6bb61b1752a142adb4d78`.
+- Post-integration Full Gameplay Core **#643** on that exact master SHA: **SUCCESS**.
+- Third-pass curve status: **CLOSED**.
+- Final first encounter: Magnemite Lv.24 / Pikachu Lv.25 / Voltorb Lv.26 / Raichu Lv.30.
+- Rematch is unchanged from the prior approved Surge closure.
+- Raichu remains ace/signature and the only held-item user in the first encounter.
+
+### Erika curve/identity amendment — approved target
+
+**Status:** APPROVED / NOT YET IMPLEMENTED.
+
+The transversal curve audit approves the following target while preserving the rule that first Gym encounters use Kanto species only.
+
+**First battle**
+- Oddish Lv.29 — Absorb / Acid / PoisonPowder / Stun Spore; no held item.
+- Victreebel Lv.31 — Giga Drain / Acid / PoisonPowder / Sleep Powder; no held item.
+- Tangela Lv.33 — Giga Drain / Bind / Stun Spore / Growth; no held item.
+- Gloom Lv.35 — Petal Dance / Acid / PoisonPowder / Sleep Powder; Sitrus Berry; ace/signature.
+
+**Rematch**
+- Tangela Lv.62 — Giga Drain / Tickle / PoisonPowder / Sleep Powder; no held item.
+- Jumpluff Lv.63 — Giga Drain / Leech Seed / Sleep Powder / Sunny Day; no held item.
+- Bellossom Lv.64 — SolarBeam / Petal Dance / Synthesis / Sunny Day; no held item.
+- Cradily Lv.65 — Rock Slide / Giga Drain / Confuse Ray / Recover; no held item.
+- Victreebel Lv.66 — Giga Drain / Sludge Bomb / Razor Leaf / PoisonPowder; no held item.
+- Vileplume Lv.69 — SolarBeam / Sludge Bomb / Synthesis / Sunny Day; Miracle Seed; ace/signature.
+
+**Identity / continuity**
+- Oddish -> Bellossom is an approved implied progression for one line.
+- First-battle Gloom -> rematch Vileplume is the approved ace/signature progression.
+- Because Vileplume is a final evolutionary stage, it must use the normal rematch trainer-IV tier rather than the prior max-IV compensation that existed solely to justify an unevolved Gloom ace.
+- The prior Gloom-rematch max-IV rule is superseded for Erika only; this is not a global ace-IV policy change.
+- Rematch visual staging must show Vileplume beside Erika instead of Gloom.
+- Held-item policy: only first-battle Gloom holds Sitrus Berry; only rematch Vileplume holds Miracle Seed.
+- Roster-size progression for later Koga/Sabrina/Blaine/Giovanni remains open to future review; each change must be rechecked against the transversal curve baseline rather than assuming current roster sizes are permanent.

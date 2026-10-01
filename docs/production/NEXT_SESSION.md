@@ -44,17 +44,19 @@ Use `docs/spec/` only for frozen historical design details.
 - Lt. Surge Full Gameplay Core **#639: SUCCESS**.
 - Lt. Surge merged master checkpoint: `27dc2ff8a99fb5d9c5135ef39e02670b2ca08196`.
 - Lt. Surge post-integration Full Gameplay Core **#640: SUCCESS**.
-- Lt. Surge prior roster/tuning microblock: **CLOSED historical version**.
-- Lt. Surge third-pass curve adjustment is **IMPLEMENTED** on `fix/lt-surge-magnemite-curve`, pending exact-head validation/integration.
-- Approved change: add Magnemite Lv.24 as the modest first member; rematch unchanged.
-- Erika roster/curve changes are approved but must not be implemented until this Surge microblock is closed.
+- Lt. Surge prior roster/tuning closure remains historical evidence.
+- Lt. Surge third-pass feature HEAD `32163f2677e4012032cce1070165b103f64a2ca5`: Full Gameplay Core **#642 SUCCESS**.
+- Merged to `master` as `fb9bf7caec094b451cd6bb61b1752a142adb4d78`; post-integration Full Gameplay Core **#643 SUCCESS**.
+- Lt. Surge third-pass curve microblock: **CLOSED**.
+- Erika roster/curve microblock is now the approved next work.
 
 ## Exact next action
 
-1. validate the exact Lt. Surge third-pass feature HEAD with Full Gameplay Core;
-2. integrate only that exact green HEAD to `master`;
-3. rerun Full Gameplay Core on the exact integrated master HEAD;
-4. only then open the approved Erika roster/curve microblock from that exact master checkpoint.
+1. open one Erika roster/curve branch from the exact green master checkpoint;
+2. implement Oddish 29 / Victreebel 31 / Tangela 33 / Gloom 35 for the first encounter using the approved moves/items;
+3. implement the approved rematch with Vileplume 69 as the former Gloom, normalizing its IV to the standard rematch tier;
+4. update Erika rematch staging so Vileplume, not Gloom, appears beside Erika;
+5. update exact expectations/audit locks, validate exact feature HEAD, integrate only if green, then validate the exact integrated master HEAD.
 
 ## Continuity rule
 

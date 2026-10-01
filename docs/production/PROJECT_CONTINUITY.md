@@ -54,10 +54,10 @@ This section is the current resume point. Later dated sections preserve history 
 - Final first battle: Pikachu 25 / Voltorb 26 / Raichu 30; only Raichu holds Sitrus Berry; Raichu remains ace/signature.
 - Final rematch: Pikachu 62 / Electrode 64 / Magneton 65 / Manectric 66 / Electabuzz 67 / Raichu 69; only Raichu holds Magnet; Raichu remains ace/signature.
 - No trainer-only move exception was required for Lt. Surge.
-- Lt. Surge is **REOPENED** only for an approved third-pass curve microblock on `fix/lt-surge-magnemite-curve`: add modest Magnemite Lv.24 before the already-closed Pikachu/Voltorb/Raichu core. The previous closure remains historical evidence.
+- Lt. Surge third-pass feature HEAD `32163f2677e4012032cce1070165b103f64a2ca5` passed Full Gameplay Core **#642**, merged to `master` as `fb9bf7caec094b451cd6bb61b1752a142adb4d78`, and post-integration Full Gameplay Core **#643** passed on that exact SHA. Third-pass status: **CLOSED**. Final first battle is Magnemite 24 / Pikachu 25 / Voltorb 26 / Raichu 30; rematch unchanged.
 - B9 Pokédex usefulness remains the next production B-block after the explicitly interposed roster-research pass is complete.
 
-**Next production action:** validate the exact Lt. Surge third-pass feature HEAD, integrate only if green, rerun Full Gameplay Core on the exact integrated master HEAD, then proceed to the already-approved Erika roster microblock.
+**Next production action:** begin the approved Erika roster/curve microblock from the exact green `master` checkpoint. First battle target: Oddish 29 / Victreebel 31 / Tangela 33 / Gloom 35. Rematch target includes Vileplume 69 as the evolved former Gloom, with normal rematch IV tier rather than max-IV compensation, and rematch staging must show Vileplume instead of Gloom.
 
 ### Existing continuity roles — do not duplicate
 
