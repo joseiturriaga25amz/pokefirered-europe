@@ -107,7 +107,6 @@ def main():
     # Intermediate-stage symbolic aces deliberately receive maximum trainer IVs plus a meaningful item.
     special = [
         ("sParty_LeaderErika","GLOOM",35,"SITRUS_BERRY"),
-        ("sParty_RSTuberM","GLOOM",69,"MIRACLE_SEED"),
         ("sParty_LeaderSabrina","KADABRA",47,"TWISTED_SPOON"),
         ("sParty_RSCooltrainerF","KADABRA",72,"TWISTED_SPOON"),
         ("sParty_LeaderKoga","GOLBAT",46,"SHARP_BEAK"),
@@ -116,6 +115,11 @@ def main():
         mon=exact_mon(name,species,level)
         assert mon["iv"] == 255, (name,species,"expected max IV",mon["iv"])
         assert mon["item"] == item, (name,species,"expected item",item,mon["item"])
+
+    # Erika's evolved rematch ace no longer needs intermediate-stage max-IV compensation.
+    erika_rematch_ace = exact_mon("sParty_RSTuberM","VILEPLUME",69)
+    assert erika_rematch_ace["iv"] == 214, ("sParty_RSTuberM","VILEPLUME","expected normal rematch IV",erika_rematch_ace["iv"])
+    assert erika_rematch_ace["item"] == "MIRACLE_SEED", ("sParty_RSTuberM","VILEPLUME","expected item","MIRACLE_SEED",erika_rematch_ace["item"])
 
     # Lance's Gyarados is the same canonical Red Gyarados in both League encounters.
     battle_main = (ROOT / "src/battle_main.c").read_text(encoding="utf-8")
