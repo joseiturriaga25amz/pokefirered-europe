@@ -861,3 +861,24 @@ The transversal curve audit approves the following target while preserving the r
 - Full Gameplay Core **#650: SUCCESS** on that exact integrated master SHA.
 - Full Gameplay Core #647 and #648 failed only because `tools/validate_b3_global_ace_identity.py` still encoded superseded Erika Gloom-rematch/max-IV and old ace-moveset expectations. Validator-only commits `dda4848` and `9e0e105` corrected those stale expectations; no gameplay rollback or unrelated change was required.
 - Erika roster/curve/staging microblock is therefore **CLOSED**.
+
+
+## A-014 — CI workflow resilience and documentation-only policy
+
+**Date:** 2026-10-01
+**Status:** APPROVED / IMPLEMENTED
+
+### Decision
+
+- Full Gameplay Core uses the explicit GitHub-hosted runner `ubuntu-24.04` instead of `ubuntu-latest`.
+- ARM/libpng dependencies remain installed by the workflow; transient APT/mirror failures use conservative retry support.
+- No arbitrary dependency-install timeout is added.
+- Full Gameplay Core is not triggered when a push or pull request changes only `docs/**` and/or Markdown files.
+- If a change mixes documentation with any technical file, the normal Full Gameplay Core gate still applies.
+- Workflow/build/validator changes themselves remain technical changes and require the full gate.
+- A documentation-only continuity commit does not invalidate the exact-head CI evidence of the immediately preceding gameplay commit when the diff is verified as documentation-only.
+- Pull requests remain an integration-control mechanism; they are not a substitute for the Actions runner and must not be created solely to evade runner failures.
+
+### Rationale
+
+Full Gameplay Core #651 on documentation-only HEAD `5e39aec` stalled in dependency installation before compilation or project validation, while the integrated Erika gameplay HEAD `541a49b` had already passed #650. The change reduces unnecessary heavy CI work without weakening technical gates and makes transient runner/mirror handling more robust.
