@@ -47,10 +47,17 @@ This section is the current resume point. Later dated sections preserve history 
 - Final rematch: Togetic 61 / Staryu 62 / Politoed 63 / Corsola 64 / Starmie 66 / Gyarados 68; only Gyarados holds Mystic Water; Gyarados remains ace and Starmie remains signature companion.
 - Trainer-only Misty move exceptions are limited to Psyduck Lv.20 Water Gun, Staryu Lv.23 Swift and Politoed Lv.63 Bounce.
 - Full Gameplay Core #634 failed only because the audited `trainer_parties.h` blob lock still encoded the previous party data; the lock was intentionally relocked after reviewing the approved diff, with no gameplay rollback.
-- Lt. Surge roster/tuning is **IMPLEMENTED** on active branch `fix/lt-surge-roster-tuning`, pending exact-head Full Gameplay Core validation and integration.
+- Lt. Surge feature HEAD `2bb74e404511e3e4b04a29d283c99b6d23a72e9d` passed Full Gameplay Core **#639**.
+- Lt. Surge merged to `master` as `27dc2ff8a99fb5d9c5135ef39e02670b2ca08196`.
+- Lt. Surge post-integration Full Gameplay Core **#640** on that exact master SHA: **SUCCESS**.
+- Lt. Surge roster/tuning microblock is therefore **CLOSED**.
+- Final first battle: Pikachu 25 / Voltorb 26 / Raichu 30; only Raichu holds Sitrus Berry; Raichu remains ace/signature.
+- Final rematch: Pikachu 62 / Electrode 64 / Magneton 65 / Manectric 66 / Electabuzz 67 / Raichu 69; only Raichu holds Magnet; Raichu remains ace/signature.
+- No trainer-only move exception was required for Lt. Surge.
+- The active next Gym Leader is **Erika**, using the same candidate-list → roster → signature/ace → levels/moves → validation sequence.
 - B9 Pokédex usefulness remains the next production B-block after the explicitly interposed roster-research pass is complete.
 
-**Next production action:** validate the exact Lt. Surge feature HEAD, integrate only if green, then rerun Full Gameplay Core on the exact integrated `master` HEAD before closure.
+**Next production action:** do not begin Erika yet. Await explicit user direction after the Lt. Surge closure.
 
 ### Existing continuity roles — do not duplicate
 

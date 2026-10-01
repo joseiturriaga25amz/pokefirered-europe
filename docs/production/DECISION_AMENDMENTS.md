@@ -732,7 +732,7 @@ Visual identity note: en el gimnasio mantiene Voltorb camuflados como Poké Ball
 
 ### Lt. Surge — approved roster and tuning
 
-**Status:** APPROVED / IMPLEMENTED on branch `fix/lt-surge-roster-tuning`.
+**Status:** **CLOSED**.
 
 This decision uses only the persisted A-013 user-supplied canon research pool. Raichu remains Lt. Surge's ace and signature companion in both stages; no B8 staging change is required.
 
@@ -757,3 +757,17 @@ This decision uses only the persisted A-013 user-supplied canon research pool. R
 - All approved moves are legal through the existing project level-up / TM-HM / tutor / pre-evolution lineage rules.
 - No trainer-only move exception is required.
 - No global learnset, species, move, save, staging, or link/trade structure change is approved by this microblock.
+
+
+### Lt. Surge closure evidence
+
+- Final feature HEAD: `2bb74e404511e3e4b04a29d283c99b6d23a72e9d`.
+- Full Gameplay Core **#639**: **SUCCESS**.
+- Merged to `master` as `27dc2ff8a99fb5d9c5135ef39e02670b2ca08196`.
+- Post-integration Full Gameplay Core **#640** on that exact master SHA: **SUCCESS**.
+- Lt. Surge roster/tuning status: **CLOSED**.
+- Final first battle: Pikachu Lv.25 / Voltorb Lv.26 / Raichu Lv.30; only Raichu holds Sitrus Berry.
+- Final rematch: Pikachu Lv.62 / Electrode Lv.64 / Magneton Lv.65 / Manectric Lv.66 / Electabuzz Lv.67 / Raichu Lv.69; only Raichu holds Magnet.
+- Raichu remains ace/signature in both stages.
+- No trainer-only move exception was required.
+- Do not begin Erika until explicitly requested by the user.

@@ -40,14 +40,18 @@ Use `docs/spec/` only for frozen historical design details.
 - Misty second-pass merged master checkpoint: `08bbd40374850595bc8261b1ab44ebae2012aa35`.
 - Misty second-pass post-integration Full Gameplay Core **#636: SUCCESS**.
 - Misty second-pass tuning microblock: **CLOSED**.
-- Lt. Surge roster/tuning is **IMPLEMENTED** on `fix/lt-surge-roster-tuning`; exact-head validation/integration is pending.
+- Lt. Surge feature HEAD: `2bb74e404511e3e4b04a29d283c99b6d23a72e9d`.
+- Lt. Surge Full Gameplay Core **#639: SUCCESS**.
+- Lt. Surge merged master checkpoint: `27dc2ff8a99fb5d9c5135ef39e02670b2ca08196`.
+- Lt. Surge post-integration Full Gameplay Core **#640: SUCCESS**.
+- Lt. Surge roster/tuning microblock: **CLOSED**.
+- Do **not** begin Erika yet; await explicit user direction.
 
 ## Exact next action
 
-1. validate the exact Lt. Surge feature HEAD with Full Gameplay Core;
-2. integrate only that exact green HEAD to `master`;
-3. rerun Full Gameplay Core on the exact integrated master HEAD before marking Lt. Surge CLOSED;
-4. do not begin Erika until Lt. Surge is formally closed.
+1. preserve Brock, Misty and Lt. Surge closures as completed roster-tuning history;
+2. do not modify Erika until the user explicitly resumes the leader pass;
+3. if a prior leader is revisited, open a new scoped microblock rather than rewriting closure history.
 
 ## Continuity rule
 
