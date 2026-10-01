@@ -47,10 +47,10 @@ This section is the current resume point. Later dated sections preserve history 
 - Final rematch: Togetic 61 / Staryu 62 / Politoed 63 / Corsola 64 / Starmie 66 / Gyarados 68; only Gyarados holds Mystic Water; Gyarados remains ace and Starmie remains signature companion.
 - Trainer-only Misty move exceptions are limited to Psyduck Lv.20 Water Gun, Staryu Lv.23 Swift and Politoed Lv.63 Bounce.
 - Full Gameplay Core #634 failed only because the audited `trainer_parties.h` blob lock still encoded the previous party data; the lock was intentionally relocked after reviewing the approved diff, with no gameplay rollback.
-- The active next Gym Leader is **Lt. Surge**, using the same compact candidate-list → roster → signature/ace → levels/moves → validation sequence.
+- Lt. Surge roster/tuning is **IMPLEMENTED** on active branch `fix/lt-surge-roster-tuning`, pending exact-head Full Gameplay Core validation and integration.
 - B9 Pokédex usefulness remains the next production B-block after the explicitly interposed roster-research pass is complete.
 
-**Next production action:** do not begin Lt. Surge yet. Await explicit user direction after the Misty second-pass closure.
+**Next production action:** validate the exact Lt. Surge feature HEAD, integrate only if green, then rerun Full Gameplay Core on the exact integrated `master` HEAD before closure.
 
 ### Existing continuity roles — do not duplicate
 

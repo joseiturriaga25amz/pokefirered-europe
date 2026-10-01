@@ -728,3 +728,32 @@ Visual identity note: en el gimnasio mantiene Voltorb camuflados como Poké Ball
 - Camerupt
 - Golem
 - Sandslash
+
+
+### Lt. Surge — approved roster and tuning
+
+**Status:** APPROVED / IMPLEMENTED on branch `fix/lt-surge-roster-tuning`.
+
+This decision uses only the persisted A-013 user-supplied canon research pool. Raichu remains Lt. Surge's ace and signature companion in both stages; no B8 staging change is required.
+
+**First battle**
+- Pikachu Lv.25 — ThunderShock / Quick Attack / Double Team / Thunder Wave; no held item.
+- Voltorb Lv.26 — Shock Wave / Tackle / SonicBoom / Screech; no held item.
+- Raichu Lv.30 — Shock Wave / Mega Punch / Slam / Thunder Wave; Sitrus Berry; ace/signature.
+
+**Rematch**
+- Pikachu Lv.62 — Thunderbolt / Iron Tail / Quick Attack / Double Team; no held item.
+- Electrode Lv.64 — Thunderbolt / Rollout / Light Screen / Explosion; no held item.
+- Magneton Lv.65 — Thunderbolt / Tri Attack / Thunder Wave / Metal Sound; no held item.
+- Manectric Lv.66 — Thunderbolt / Bite / Thunder Wave / Roar; no held item.
+- Electabuzz Lv.67 — Thunderbolt / ThunderPunch / Brick Break / Light Screen; no held item.
+- Raichu Lv.69 — Thunder / Thunderbolt / Mega Punch / Body Slam; Magnet; ace/signature.
+
+**Held-item policy**
+- First battle: only Raichu holds Sitrus Berry.
+- Rematch: only Raichu holds Magnet.
+
+**Legality**
+- All approved moves are legal through the existing project level-up / TM-HM / tutor / pre-evolution lineage rules.
+- No trainer-only move exception is required.
+- No global learnset, species, move, save, staging, or link/trade structure change is approved by this microblock.
