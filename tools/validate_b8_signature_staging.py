@@ -77,6 +77,7 @@ def main():
         ("OBJ_EVENT_GFX_BLASTOISE", 165, "Blastoise"),
         ("OBJ_EVENT_GFX_SEEL_ICON", 166, "SeelIcon"),
         ("OBJ_EVENT_GFX_STARYU_ICON", 167, "StaryuIcon"),
+        ("OBJ_EVENT_GFX_VILEPLUME", 170, "Vileplume"),
     ]
     assert "#define OBJ_EVENT_GFX_ONIX 152" in event_objects
     assert "#define OBJ_EVENT_GFX_STARYU_ICON 167" in event_objects
@@ -177,7 +178,7 @@ def main():
     erika_signature = [o for o in erika_objs if o.get("local_id") == "LOCALID_FULL_ERIKA_SIGNATURE"]
     assert len(erika_signature) == 1
     erika_signature = erika_signature[0]
-    assert erika_signature["graphics_id"] == "OBJ_EVENT_GFX_GLOOM"
+    assert erika_signature["graphics_id"] == "OBJ_EVENT_GFX_VAR_2"
     assert (erika_signature["x"], erika_signature["y"]) == (7, 4)
     assert erika_signature["script"] == "0x0"
     assert erika_signature["trainer_type"] == "TRAINER_TYPE_NONE"
@@ -190,11 +191,21 @@ def main():
     assert erika_lisa[0]["trainer_sight_or_berry_tree_id"] == "2"
 
     assert "#define OBJ_EVENT_GFX_GLOOM 156" in event_objects
+    assert "#define OBJ_EVENT_GFX_VILEPLUME 170" in event_objects
     assert "#define OBJ_EVENT_GFX_ONIX 152" in event_objects
     assert "#define OBJ_EVENT_GFX_STARYU_ICON 167" in event_objects
     assert 'graphics/pokemon/gloom/icon.4bpp' in graphics
+    assert 'graphics/pokemon/vileplume/icon.4bpp' in graphics
     assert "gObjectEventGraphicsInfo_Gloom" in info
+    assert "gObjectEventGraphicsInfo_Vileplume" in info
     assert "[OBJ_EVENT_GFX_GLOOM]" in pointers
+    assert "[OBJ_EVENT_GFX_VILEPLUME]" in pointers
+
+    erika_scripts = (ROOT / "data/maps/CeladonCity_Gym/scripts.inc").read_text(encoding="utf-8")
+    assert "setvar VAR_OBJ_GFX_ID_2, OBJ_EVENT_GFX_GLOOM" in erika_scripts
+    assert "goto_if_unset FLAG_SYS_GAME_CLEAR" in erika_scripts
+    assert "goto_if_unset FLAG_GOT_TM19_FROM_ERIKA" in erika_scripts
+    assert "setvar VAR_OBJ_GFX_ID_2, OBJ_EVENT_GFX_VILEPLUME" in erika_scripts
 
     sabrina = read_json("data/maps/SaffronCity_Gym/map.json")
     sabrina_objs = sabrina["object_events"]
@@ -496,7 +507,7 @@ def main():
         assert staged["trainer_type"] == "TRAINER_TYPE_NONE"
     assert "#define OBJ_EVENT_GFX_TOGEPI_ICON 168" in event_objects
     assert "#define OBJ_EVENT_GFX_HORSEA_ICON 169" in event_objects
-    assert "#define NUM_OBJ_EVENT_GFX     170" in event_objects
+    assert "#define NUM_OBJ_EVENT_GFX     171" in event_objects
     assert 'graphics/pokemon/togepi/icon.4bpp' in graphics
     assert 'graphics/pokemon/horsea/icon.4bpp' in graphics
     assert "gObjectEventGraphicsInfo_TogepiIcon" in info
@@ -510,7 +521,7 @@ def main():
     assert "goto_if_unset FLAG_GOT_TM06_FROM_KOGA" in koga_scripts
     assert "setvar VAR_OBJ_GFX_ID_1, OBJ_EVENT_GFX_CROBAT" in koga_scripts
 
-    print("B8 signature staging PASS: Lorelei/Lapras stable; Bruno/Machamp, Agatha/Gengar, Lance/Dragonite, Champion/Blastoise, Brock Onix->Steelix, Misty/Starmie, Surge/Raichu, Erika/Gloom, Koga Golbat->Crobat, Sabrina/Kadabra, Blaine/Magmar, and Giovanni/Persian are nonblocking and valid.")
+    print("B8 signature staging PASS: Lorelei/Lapras stable; Bruno/Machamp, Agatha/Gengar, Lance/Dragonite, Champion/Blastoise, Brock Onix->Steelix, Misty/Starmie, Surge/Raichu, Erika Gloom->Vileplume, Koga Golbat->Crobat, Sabrina/Kadabra, Blaine/Magmar, and Giovanni/Persian are nonblocking and valid.")
 
 
 if __name__ == "__main__":

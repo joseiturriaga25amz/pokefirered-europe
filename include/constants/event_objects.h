@@ -173,8 +173,9 @@
 #define OBJ_EVENT_GFX_STARYU_ICON 167
 #define OBJ_EVENT_GFX_TOGEPI_ICON 168
 #define OBJ_EVENT_GFX_HORSEA_ICON 169
+#define OBJ_EVENT_GFX_VILEPLUME 170
 
-#define NUM_OBJ_EVENT_GFX     170
+#define NUM_OBJ_EVENT_GFX     171
 
 // These are dynamic object gfx ids.
 // They correspond with the values of the VAR_OBJ_GFX_ID_X vars.

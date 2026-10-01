@@ -124,6 +124,7 @@ const u16 gObjectEventPic_Steelix[] = INCBIN_U16("graphics/pokemon/steelix/icon.
 const u16 gObjectEventPic_Golbat[] = INCBIN_U16("graphics/pokemon/golbat/icon.4bpp");
 const u16 gObjectEventPic_Crobat[] = INCBIN_U16("graphics/pokemon/crobat/icon.4bpp");
 const u16 gObjectEventPic_Gloom[] = INCBIN_U16("graphics/pokemon/gloom/icon.4bpp");
+const u16 gObjectEventPic_Vileplume[] = INCBIN_U16("graphics/pokemon/vileplume/icon.4bpp");
 const u16 gObjectEventPic_Kadabra[] = INCBIN_U16("graphics/pokemon/kadabra/icon.4bpp");
 const u16 gObjectEventPic_Starmie[] = INCBIN_U16("graphics/pokemon/starmie/icon.4bpp");
 const u16 gObjectEventPic_Raichu[] = INCBIN_U16("graphics/pokemon/raichu/icon.4bpp");
