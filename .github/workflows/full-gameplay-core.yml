@@ -566,7 +566,7 @@ jobs:
           bosses = {
               "sParty_LeaderBrock":[("ZUBAT",13),("VULPIX",14),("GEODUDE",15),("ONIX",17)],
               "sParty_LeaderMisty":[("PSYDUCK",20),("POLIWAG",21),("STARYU",23),("STARMIE",26)],
-              "sParty_LeaderLtSurge":[("PIKACHU",25),("VOLTORB",26),("RAICHU",30)],
+              "sParty_LeaderLtSurge":[("MAGNEMITE",24),("PIKACHU",25),("VOLTORB",26),("RAICHU",30)],
               "sParty_LeaderErika":[("WEEPINBELL",31),("TANGELA",32),("VILEPLUME",33),("GLOOM",35)],
               "sParty_LeaderKoga":[("VENOMOTH",40),("WEEZING",41),("MUK",43),("GOLBAT",46)],
               "sParty_LeaderSabrina":[("MR_MIME",42),("VENOMOTH",43),("ALAKAZAM",45),("KADABRA",47)],

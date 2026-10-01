@@ -54,10 +54,10 @@ This section is the current resume point. Later dated sections preserve history 
 - Final first battle: Pikachu 25 / Voltorb 26 / Raichu 30; only Raichu holds Sitrus Berry; Raichu remains ace/signature.
 - Final rematch: Pikachu 62 / Electrode 64 / Magneton 65 / Manectric 66 / Electabuzz 67 / Raichu 69; only Raichu holds Magnet; Raichu remains ace/signature.
 - No trainer-only move exception was required for Lt. Surge.
-- The active next Gym Leader is **Erika**, using the same candidate-list → roster → signature/ace → levels/moves → validation sequence.
+- Lt. Surge is **REOPENED** only for an approved third-pass curve microblock on `fix/lt-surge-magnemite-curve`: add modest Magnemite Lv.24 before the already-closed Pikachu/Voltorb/Raichu core. The previous closure remains historical evidence.
 - B9 Pokédex usefulness remains the next production B-block after the explicitly interposed roster-research pass is complete.
 
-**Next production action:** do not begin Erika yet. Await explicit user direction after the Lt. Surge closure.
+**Next production action:** validate the exact Lt. Surge third-pass feature HEAD, integrate only if green, rerun Full Gameplay Core on the exact integrated master HEAD, then proceed to the already-approved Erika roster microblock.
 
 ### Existing continuity roles — do not duplicate
 

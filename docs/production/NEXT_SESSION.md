@@ -44,14 +44,17 @@ Use `docs/spec/` only for frozen historical design details.
 - Lt. Surge Full Gameplay Core **#639: SUCCESS**.
 - Lt. Surge merged master checkpoint: `27dc2ff8a99fb5d9c5135ef39e02670b2ca08196`.
 - Lt. Surge post-integration Full Gameplay Core **#640: SUCCESS**.
-- Lt. Surge roster/tuning microblock: **CLOSED**.
-- Do **not** begin Erika yet; await explicit user direction.
+- Lt. Surge prior roster/tuning microblock: **CLOSED historical version**.
+- Lt. Surge third-pass curve adjustment is **IMPLEMENTED** on `fix/lt-surge-magnemite-curve`, pending exact-head validation/integration.
+- Approved change: add Magnemite Lv.24 as the modest first member; rematch unchanged.
+- Erika roster/curve changes are approved but must not be implemented until this Surge microblock is closed.
 
 ## Exact next action
 
-1. preserve Brock, Misty and Lt. Surge closures as completed roster-tuning history;
-2. do not modify Erika until the user explicitly resumes the leader pass;
-3. if a prior leader is revisited, open a new scoped microblock rather than rewriting closure history.
+1. validate the exact Lt. Surge third-pass feature HEAD with Full Gameplay Core;
+2. integrate only that exact green HEAD to `master`;
+3. rerun Full Gameplay Core on the exact integrated master HEAD;
+4. only then open the approved Erika roster/curve microblock from that exact master checkpoint.
 
 ## Continuity rule
 

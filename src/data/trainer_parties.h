@@ -6064,6 +6064,13 @@ static const struct TrainerMonItemCustomMoves sParty_LeaderMisty[] = {
 static const struct TrainerMonItemCustomMoves sParty_LeaderLtSurge[] = {
     {
         .iv = 99,
+        .lvl = 24,
+        .species = SPECIES_MAGNEMITE,
+        .heldItem = ITEM_NONE,
+        .moves = {MOVE_THUNDER_SHOCK, MOVE_TACKLE, MOVE_SUPERSONIC, MOVE_METAL_SOUND},
+    },
+    {
+        .iv = 99,
         .lvl = 25,
         .species = SPECIES_PIKACHU,
         .heldItem = ITEM_NONE,
