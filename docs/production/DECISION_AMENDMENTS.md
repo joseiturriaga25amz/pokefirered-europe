@@ -814,7 +814,7 @@ This baseline is intentionally reusable for Koga, Sabrina, Blaine and Giovanni. 
 
 ### Erika curve/identity amendment — approved target
 
-**Status:** APPROVED / NOT YET IMPLEMENTED.
+**Status:** APPROVED / IMPLEMENTED on branch `fix/erika-roster-curve-v2`; validation and integration pending.
 
 The transversal curve audit approves the following target while preserving the rule that first Gym encounters use Kanto species only.
 
@@ -840,3 +840,15 @@ The transversal curve audit approves the following target while preserving the r
 - Rematch visual staging must show Vileplume beside Erika instead of Gloom.
 - Held-item policy: only first-battle Gloom holds Sitrus Berry; only rematch Vileplume holds Miracle Seed.
 - Roster-size progression for later Koga/Sabrina/Blaine/Giovanni remains open to future review; each change must be rechecked against the transversal curve baseline rather than assuming current roster sizes are permanent.
+
+
+### Erika implementation note — curve/identity V2
+
+- First encounter implemented as Oddish 29 / Victreebel 31 / Tangela 33 / Gloom 35.
+- First-battle Gloom keeps max-IV compensation because it remains an intermediate-stage ace/signature.
+- Tangela Lv.33 Stun Spore is an explicit narrow trainer-only exception; the global learnset is unchanged.
+- Rematch implemented as Tangela 62 / Jumpluff 63 / Bellossom 64 / Cradily 65 / Victreebel 66 / Vileplume 69.
+- Vileplume Lv.69 uses the normal rematch IV tier 214 and Miracle Seed; the old max-IV Gloom compensation is removed.
+- Only Vileplume holds an item in the rematch.
+- Celadon Gym staging changes the signature companion from Gloom to Vileplume when the postgame rematch state is active.
+- Oddish -> Bellossom and Gloom -> Vileplume remain the approved implied evolutionary continuity.

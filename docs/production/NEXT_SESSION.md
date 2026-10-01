@@ -48,15 +48,18 @@ Use `docs/spec/` only for frozen historical design details.
 - Lt. Surge third-pass feature HEAD `32163f2677e4012032cce1070165b103f64a2ca5`: Full Gameplay Core **#642 SUCCESS**.
 - Merged to `master` as `fb9bf7caec094b451cd6bb61b1752a142adb4d78`; post-integration Full Gameplay Core **#643 SUCCESS**.
 - Lt. Surge third-pass curve microblock: **CLOSED**.
-- Erika roster/curve microblock is now the approved next work.
+- Erika curve/identity V2 is **IMPLEMENTED** on `fix/erika-roster-curve-v2`, pending exact-head validation/integration.
+- First encounter: Oddish 29 / Victreebel 31 / Tangela 33 / Gloom 35.
+- Rematch: Tangela 62 / Jumpluff 63 / Bellossom 64 / Cradily 65 / Victreebel 66 / Vileplume 69; Vileplume uses IV 214 and Miracle Seed.
+- Celadon Gym staging changes Gloom -> Vileplume in the rematch state.
 
 ## Exact next action
 
-1. open one Erika roster/curve branch from the exact green master checkpoint;
-2. implement Oddish 29 / Victreebel 31 / Tangela 33 / Gloom 35 for the first encounter using the approved moves/items;
-3. implement the approved rematch with Vileplume 69 as the former Gloom, normalizing its IV to the standard rematch tier;
-4. update Erika rematch staging so Vileplume, not Gloom, appears beside Erika;
-5. update exact expectations/audit locks, validate exact feature HEAD, integrate only if green, then validate the exact integrated master HEAD.
+1. validate the exact Erika feature HEAD with Full Gameplay Core;
+2. integrate only that exact green HEAD to `master`;
+3. rerun Full Gameplay Core on the exact integrated master HEAD;
+4. persist Erika closure evidence;
+5. do not begin Koga until Erika is formally closed.
 
 ## Continuity rule
 
