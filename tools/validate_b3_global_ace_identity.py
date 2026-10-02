@@ -58,7 +58,7 @@ def main():
         ("sParty_RSTuberF","RAICHU",69,False),
         ("sParty_LeaderErika","GLOOM",35,False),
         ("sParty_RSTuberM","VILEPLUME",69,False),
-        ("sParty_LeaderKoga","GOLBAT",46,False),
+        ("sParty_LeaderKoga","GOLBAT",44,False),
         ("sParty_RSCooltrainerM","CROBAT",71,False),
         ("sParty_LeaderSabrina","KADABRA",47,False),
         ("sParty_RSCooltrainerF","KADABRA",72,False),
@@ -109,7 +109,7 @@ def main():
         ("sParty_LeaderErika","GLOOM",35,"SITRUS_BERRY"),
         ("sParty_LeaderSabrina","KADABRA",47,"TWISTED_SPOON"),
         ("sParty_RSCooltrainerF","KADABRA",72,"TWISTED_SPOON"),
-        ("sParty_LeaderKoga","GOLBAT",46,"SHARP_BEAK"),
+        ("sParty_LeaderKoga","GOLBAT",44,"SHARP_BEAK"),
     ]
     for name,species,level,item in special:
         mon=exact_mon(name,species,level)
@@ -134,18 +134,18 @@ def main():
     assert "Random()" not in shiny_scope
     assert "Random32()" not in shiny_scope
 
-    # Koga first-battle ace identity: preserve anime Wing Attack + Screech core.
+    # Koga first-battle ace identity: anime-priority Golbat remains the max-IV signature ace.
     koga_text = block("sParty_LeaderKoga")
     assert "MOVE_WING_ATTACK" in koga_text
-    assert "MOVE_SCREECH" in koga_text
-    assert "MOVE_TOXIC" not in koga_text[koga_text.index("SPECIES_GOLBAT"):]
+    assert "MOVE_SLUDGE_BOMB" in koga_text[koga_text.index("SPECIES_GOLBAT"):]
+    assert "MOVE_TOXIC" in koga_text[koga_text.index("SPECIES_GOLBAT"):]
 
     # Freeze the current user-approved ace movesets. Erika was intentionally amended after the 2026-09-28 pass.
     approved_moves = {
         ("sParty_LeaderErika", "GLOOM", 35): ("PETAL_DANCE", "ACID", "POISON_POWDER", "SLEEP_POWDER"),
         ("sParty_RSTuberM", "VILEPLUME", 69): ("SOLAR_BEAM", "SLUDGE_BOMB", "SYNTHESIS", "SUNNY_DAY"),
-        ("sParty_LeaderKoga", "GOLBAT", 46): ("WING_ATTACK", "BITE", "CONFUSE_RAY", "SCREECH"),
-        ("sParty_RSCooltrainerM", "CROBAT", 71): ("AERIAL_ACE", "POISON_FANG", "BITE", "CONFUSE_RAY"),
+        ("sParty_LeaderKoga", "GOLBAT", 44): ("SLUDGE_BOMB", "WING_ATTACK", "BITE", "TOXIC"),
+        ("sParty_RSCooltrainerM", "CROBAT", 71): ("SLUDGE_BOMB", "AERIAL_ACE", "DOUBLE_TEAM", "TOXIC"),
         ("sParty_LeaderSabrina", "KADABRA", 47): ("PSYCHIC", "CALM_MIND", "RECOVER", "REFLECT"),
         ("sParty_RSCooltrainerF", "KADABRA", 72): ("PSYCHIC", "CALM_MIND", "RECOVER", "REFLECT"),
         ("sParty_LeaderBlaine", "MAGMAR", 52): ("FIRE_BLAST", "FLAMETHROWER", "FIRE_PUNCH", "BRICK_BREAK"),
