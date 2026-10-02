@@ -6250,7 +6250,7 @@
             "trainerName_italian": "LT. SURGE",
             "trainerName_french": "MAJOR BOB",
             "trainerName_german": "MAJOR BOB",
-            "items": "ITEM_SUPER_POTION",
+            "items": "ITEM_SUPER_POTION, ITEM_FULL_HEAL",
             "doubleBattle": "FALSE",
             "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
             "party": "ITEM_CUSTOM_MOVES(sParty_LeaderLtSurge)"
@@ -6265,7 +6265,7 @@
             "trainerName_italian": "ERIKA",
             "trainerName_french": "ERIKA",
             "trainerName_german": "ERIKA",
-            "items": "ITEM_SUPER_POTION, ITEM_SUPER_POTION",
+            "items": "ITEM_HYPER_POTION, ITEM_FULL_HEAL",
             "doubleBattle": "FALSE",
             "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
             "party": "ITEM_CUSTOM_MOVES(sParty_LeaderErika)"
@@ -6280,7 +6280,7 @@
             "trainerName_italian": "KOGA",
             "trainerName_french": "KOGA",
             "trainerName_german": "KOGA",
-            "items": "ITEM_HYPER_POTION, ITEM_HYPER_POTION",
+            "items": "ITEM_HYPER_POTION, ITEM_HYPER_POTION, ITEM_FULL_HEAL",
             "doubleBattle": "FALSE",
             "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
             "party": "ITEM_CUSTOM_MOVES(sParty_LeaderKoga)"
