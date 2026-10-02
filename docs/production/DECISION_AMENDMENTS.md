@@ -936,3 +936,29 @@ The transversal leader pass approves Koga with anime-priority Golbat identity in
 - Koga roster/identity/staging microblock is therefore **CLOSED**.
 - This closure includes the approved story/rematch rosters, Golbat max-IV ace compensation, Golbat -> Crobat staging, Crobat Double Team, ace-only held items, existing healing inventory, and two non-interactive Item Ball decoys in Fuchsia Gym.
 - The retrospective review of older leaders' trainer-bag/held-item policy remains a separate future microblock.
+
+
+## A-015 — Gym Leader trainer-bag healing baseline
+
+**Date:** 2026-10-02
+**Status:** APPROVED / IMPLEMENTED ON FEATURE BRANCH / VALIDATION PENDING
+
+### Decision
+
+For already closed story Gym Leaders, Full must not reduce trainer-bag healing/status resources below the original FireRed baseline. Additional Full difficulty may increase resources when justified, but progression should remain gradual.
+
+Approved story values:
+- Brock: 1 Potion. Full intentionally remains slightly above vanilla, which had no trainer item.
+- Misty: 1 Super Potion. Matches vanilla.
+- Lt. Surge: 1 Super Potion + 1 Full Heal. Restores the vanilla status-healing resource that Full had removed.
+- Erika: 1 Hyper Potion + 1 Full Heal. Restores the vanilla healing tier/status resource; supersedes the prior two-Super-Potion Full configuration.
+- Koga: 2 Hyper Potions + 1 Full Heal. Restores the vanilla status-healing resource while retaining his two Hyper Potions.
+
+Existing rematches are unchanged:
+- Brock / Misty / Lt. Surge / Erika: 2 Hyper Potions.
+- Koga: 2 Full Restores.
+
+Forward rule for the remaining leader pass:
+- Sabrina, Blaine and Gym Giovanni must be reviewed against their vanilla floor of 2 Hyper Potions + 1 Full Heal before any Full-specific increase or substitution is approved.
+- This amendment does not alter rosters, levels, movesets, IVs, held items, AI flags, save/link structures or map staging.
+- Champion/League healing is a separate later review; this microblock does not change it.
