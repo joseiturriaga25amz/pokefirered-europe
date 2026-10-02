@@ -53,13 +53,18 @@ Use `docs/spec/` only for frozen historical design details.
 - Erika post-integration Full Gameplay Core **#650 SUCCESS** on that exact SHA.
 - Erika roster/curve microblock: **CLOSED**.
 - CI infrastructure microblock A-014: **CLOSED**. Feature HEAD `cfebaa25b6c02153f7c2a694b245854d679670b3` passed Full Gameplay Core **#652**; PR #25 merged as `f1e5da264e4791d8c023e596f64dfcb583a95a28`; post-integration Full Gameplay Core **#653 SUCCESS** on that exact master SHA.
+- Koga feature HEAD `73788013338fc394c6ba125f9d3f966f1f21e948`: Full Gameplay Core **#655 SUCCESS**.
+- PR #26 merged Koga to `master` as `b00c95c7bcceaed2ad8a1538eb7659c5e421c881`.
+- Koga post-integration Full Gameplay Core **#656 SUCCESS** on that exact master SHA.
+- Koga roster/identity microblock: **CLOSED**.
+- #654 is historical only: it failed on a stale frozen-roster expectation and did not expose a gameplay defect.
 
 ## Exact next action
 
-1. begin Koga analysis from current `master` (`f1e5da264e4791d8c023e596f64dfcb583a95a28`);
-2. reconstruct Koga from the persisted user research pool and A-013 workflow before modifying gameplay;
-3. apply the transversal curve audit against the CLOSED Brock/Misty/Surge/Erika baseline, including roster size, levels, actual trainer IVs, items/healing, movesets, counterplay and first->rematch continuity;
-4. treat Koga/Sabrina/Blaine/Giovanni roster counts as open to review, not frozen by the current implementation.
+1. begin Sabrina analysis from current `master` after the Koga closure documentation commit;
+2. use the same leader-review flow proven on Koga: vanilla FireRed baseline -> current Full roster/moves/levels -> persisted candidate-pool analysis -> first/rematch proposal -> user revision/approval;
+3. apply the transversal curve audit against the CLOSED Brock/Misty/Surge/Erika/Koga baseline, including roster size, levels, actual trainer IVs, held items/healing, movesets, counterplay and first->rematch continuity;
+4. keep the separate retrospective review of trainer-bag/held-item policy for earlier leaders outside Sabrina unless it becomes a blocker.
 
 ## Continuity rule
 

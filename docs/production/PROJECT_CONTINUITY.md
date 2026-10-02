@@ -2,7 +2,7 @@
 
 **Purpose:** make the repository sufficient to resume the project without relying on any previous chat.
 
-## 0. Current operational state — 2026-10-01
+## 0. Current operational state — 2026-10-02
 
 This section is the current resume point. Later dated sections preserve history and may name branches that are no longer active.
 
@@ -62,7 +62,7 @@ This section is the current resume point. Later dated sections preserve history 
 
 **CI infrastructure closure evidence:** A-014 feature HEAD `cfebaa25b6c02153f7c2a694b245854d679670b3` passed Full Gameplay Core **#652**; PR #25 merged to `master` as `f1e5da264e4791d8c023e596f64dfcb583a95a28`; post-integration Full Gameplay Core **#653** passed on that exact master SHA. This microblock changed CI/workflow policy only; no gameplay was modified. A-014 is therefore **CLOSED**.
 
-**Next production action:** begin the Koga leader-pass analysis from the current `master`, using the persisted A-013 research pool and transversal curve-audit baseline. Re-evaluate roster size, levels, IVs, held items/healing, movesets, counterplay, first→rematch continuity and staging before any gameplay mutation.
+**Next production action:** begin the Sabrina leader-pass analysis from current `master` after this documentation-only closure commit, using the same A-013 flow proven on Koga: vanilla baseline → current Full state → candidate-pool analysis → proposed first/rematch teams → user review → implementation.
 
 ### Existing continuity roles — do not duplicate
 

@@ -895,7 +895,7 @@ Full Gameplay Core #651 on documentation-only HEAD `5e39aec` stalled in dependen
 
 ### Koga curve/identity amendment — approved target
 
-**Status:** APPROVED / IMPLEMENTED ON FEATURE BRANCH / VALIDATION PENDING.
+**Status:** APPROVED / IMPLEMENTED / VALIDATED / CI-GREEN / CLOSED.
 
 The transversal leader pass approves Koga with anime-priority Golbat identity in the first encounter and Crobat as its evolved rematch ace.
 
@@ -923,3 +923,16 @@ The transversal leader pass approves Koga with anime-priority Golbat identity in
 - Crobat's approved rematch set explicitly retains Double Team.
 - Fuchsia Gym adds two non-interactive Item Ball decoys as visual stand-ins for Koga's Voltorb-disguised-as-Poke-Ball trap identity. They do not trigger battle, rewards, flags or scripts.
 - The separate retrospective review of leader trainer-bag items is out of scope for this Koga microblock.
+
+
+### Koga closure evidence
+
+- Gameplay implementation commit: `1f7e65c05341ed3d6f4329810b4db12f29f8b25f`.
+- Frozen roster expectation alignment: `73788013338fc394c6ba125f9d3f966f1f21e948`.
+- Full Gameplay Core **#654** failed only because the workflow still encoded the superseded Koga first/rematch roster. Compilation, reproducibility and earlier invariants had already passed; no approved gameplay rollback was required.
+- Full Gameplay Core **#655: SUCCESS** on exact feature HEAD `73788013338fc394c6ba125f9d3f966f1f21e948`.
+- PR #26 merged to `master` as `b00c95c7bcceaed2ad8a1538eb7659c5e421c881`.
+- Full Gameplay Core **#656: SUCCESS** on that exact integrated master SHA.
+- Koga roster/identity/staging microblock is therefore **CLOSED**.
+- This closure includes the approved story/rematch rosters, Golbat max-IV ace compensation, Golbat -> Crobat staging, Crobat Double Team, ace-only held items, existing healing inventory, and two non-interactive Item Ball decoys in Fuchsia Gym.
+- The retrospective review of older leaders' trainer-bag/held-item policy remains a separate future microblock.
