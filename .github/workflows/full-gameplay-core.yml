@@ -593,6 +593,17 @@ jobs:
           assert by_id["TRAINER_BOSS_GIOVANNI"]["items"] == ""
           assert by_id["TRAINER_BOSS_GIOVANNI_2"]["items"] == "ITEM_HYPER_POTION"
 
+          # A-015: story Gym healing never drops below the vanilla FireRed baseline.
+          story_healing = {
+              "TRAINER_LEADER_BROCK":"ITEM_POTION",
+              "TRAINER_LEADER_MISTY":"ITEM_SUPER_POTION",
+              "TRAINER_LEADER_LT_SURGE":"ITEM_SUPER_POTION, ITEM_FULL_HEAL",
+              "TRAINER_LEADER_ERIKA":"ITEM_HYPER_POTION, ITEM_FULL_HEAL",
+              "TRAINER_LEADER_KOGA":"ITEM_HYPER_POTION, ITEM_HYPER_POTION, ITEM_FULL_HEAL",
+          }
+          for tid,items in story_healing.items():
+              assert by_id[tid]["items"] == items, (tid, by_id[tid]["items"], items)
+
           rematches = {
               "sParty_RSAromaLady":[("MARSHTOMP",60),("LUDICOLO",61),("FORRETRESS",62),("GOLEM",63),("CROBAT",64),("STEELIX",68)],
               "sParty_RSRuinManiac":[("TOGETIC",61),("STARYU",62),("POLITOED",63),("CORSOLA",64),("STARMIE",66),("GYARADOS",68)],
