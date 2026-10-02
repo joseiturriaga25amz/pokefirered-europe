@@ -891,3 +891,35 @@ Full Gameplay Core #651 on documentation-only HEAD `5e39aec` stalled in dependen
 - Full Gameplay Core **#653: SUCCESS** on that exact integrated master SHA.
 - No gameplay, ROM data, validators, save/link structures or assets changed in this microblock.
 - A-014 is therefore **CLOSED**.
+
+
+### Koga curve/identity amendment — approved target
+
+**Status:** APPROVED / IMPLEMENTED ON FEATURE BRANCH / VALIDATION PENDING.
+
+The transversal leader pass approves Koga with anime-priority Golbat identity in the first encounter and Crobat as its evolved rematch ace.
+
+**First battle**
+- Koffing Lv.38 — Self-Destruct / Sludge / Smokescreen / Toxic; no held item.
+- Venomoth Lv.39 — Silver Wind / Sleep Powder / Stun Spore / Toxic; no held item.
+- Muk Lv.40 — Sludge / Minimize / Acid Armor / Toxic; no held item.
+- Weezing Lv.42 — Sludge / Haze / Smokescreen / Toxic; no held item.
+- Golbat Lv.44 — Sludge Bomb / Wing Attack / Bite / Toxic; Sharp Beak; ace/signature.
+
+**Rematch**
+- Ariados Lv.64 — Sludge Bomb / Psychic / Spider Web / Toxic; no held item.
+- Forretress Lv.65 — Rapid Spin / Spikes / Toxic / Explosion; no held item.
+- Venomoth Lv.66 — Psychic / Silver Wind / Giga Drain / Sleep Powder; no held item.
+- Muk Lv.67 — Sludge Bomb / Body Slam / Acid Armor / Toxic; no held item.
+- Weezing Lv.69 — Sludge Bomb / Flamethrower / Toxic / Haze; no held item.
+- Crobat Lv.71 — Sludge Bomb / Aerial Ace / Double Team / Toxic; Sharp Beak; ace/signature.
+
+**Identity / progression**
+- First-battle Golbat remains the anime-priority symbolic ace and keeps max trainer-IV compensation (`.iv = 255`) because it is an intermediate evolutionary stage.
+- Golbat -> Crobat is the approved ace/signature progression into the rematch.
+- Weezing remains the second-strongest thematic pillar rather than replacing Golbat/Crobat as ace.
+- Only Golbat/Crobat hold an item; Forretress Focus Band and Muk Leftovers are removed from the rematch.
+- Koga keeps two Hyper Potions in the first battle and two Full Restores in the rematch.
+- Crobat's approved rematch set explicitly retains Double Team.
+- Fuchsia Gym adds two non-interactive Item Ball decoys as visual stand-ins for Koga's Voltorb-disguised-as-Poke-Ball trap identity. They do not trigger battle, rewards, flags or scripts.
+- The separate retrospective review of leader trainer-bag items is out of scope for this Koga microblock.

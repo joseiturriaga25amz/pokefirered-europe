@@ -149,6 +149,15 @@ def main():
     koga_trainer = [o for o in koga_objs if o.get("graphics_id") == "OBJ_EVENT_GFX_KOGA"]
     assert len(koga_trainer) == 1
     assert (koga_trainer[0]["x"], koga_trainer[0]["y"]) == (7, 13)
+    koga_traps = [o for o in koga_objs if o.get("local_id", "").startswith("LOCALID_FULL_KOGA_TRAP_")]
+    assert len(koga_traps) == 2
+    assert {(o["x"], o["y"]) for o in koga_traps} == {(1, 4), (13, 18)}
+    for trap in koga_traps:
+        assert trap["graphics_id"] == "OBJ_EVENT_GFX_ITEM_BALL"
+        assert trap["script"] == "0x0"
+        assert trap["trainer_type"] == "TRAINER_TYPE_NONE"
+        assert not any((w["x"], w["y"]) == (trap["x"], trap["y"]) for w in koga["warp_events"])
+
     koga_signature = [o for o in koga_objs if o.get("local_id") == "LOCALID_FULL_KOGA_SIGNATURE"]
     assert len(koga_signature) == 1
     koga_signature = koga_signature[0]
