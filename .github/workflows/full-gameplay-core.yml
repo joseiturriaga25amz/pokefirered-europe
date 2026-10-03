@@ -575,7 +575,7 @@ jobs:
               "sParty_LeaderLtSurge":[("MAGNEMITE",24),("PIKACHU",25),("VOLTORB",26),("RAICHU",30)],
               "sParty_LeaderErika":[("ODDISH",29),("VICTREEBEL",31),("TANGELA",33),("GLOOM",35)],
               "sParty_LeaderKoga":[("KOFFING",38),("VENOMOTH",39),("MUK",40),("WEEZING",42),("GOLBAT",44)],
-              "sParty_LeaderSabrina":[("MR_MIME",42),("VENOMOTH",43),("ALAKAZAM",45),("KADABRA",47)],
+              "sParty_LeaderSabrina":[("MR_MIME",42),("VENOMOTH",43),("HAUNTER",45),("KADABRA",47)],
               "sParty_LeaderBlaine":[("NINETALES",47),("RAPIDASH",48),("RHYDON",49),("ARCANINE",50),("MAGMAR",52)],
               "sParty_LeaderGiovanni":[("KINGLER",51),("NIDOQUEEN",52),("NIDOKING",53),("GOLEM",54),("RHYDON",56),("MEWTWO",56)],
               "sParty_EliteFourLorelei":[("DEWGONG",57),("SLOWBRO",58),("JYNX",59),("CLOYSTER",60),("LAPRAS",61)],
@@ -600,6 +600,7 @@ jobs:
               "TRAINER_LEADER_LT_SURGE":"ITEM_SUPER_POTION, ITEM_FULL_HEAL",
               "TRAINER_LEADER_ERIKA":"ITEM_HYPER_POTION, ITEM_FULL_HEAL",
               "TRAINER_LEADER_KOGA":"ITEM_HYPER_POTION, ITEM_HYPER_POTION, ITEM_FULL_HEAL",
+              "TRAINER_LEADER_SABRINA":"ITEM_HYPER_POTION, ITEM_HYPER_POTION, ITEM_FULL_HEAL",
           }
           for tid,items in story_healing.items():
               assert by_id[tid]["items"] == items, (tid, by_id[tid]["items"], items)
@@ -610,7 +611,7 @@ jobs:
               "sParty_RSTuberF":[("PIKACHU",62),("ELECTRODE",64),("MAGNETON",65),("MANECTRIC",66),("ELECTABUZZ",67),("RAICHU",69)],
               "sParty_RSTuberM":[("TANGELA",62),("JUMPLUFF",63),("BELLOSSOM",64),("CRADILY",65),("VICTREEBEL",66),("VILEPLUME",69)],
               "sParty_RSCooltrainerM":[("ARIADOS",64),("FORRETRESS",65),("VENOMOTH",66),("MUK",67),("WEEZING",69),("CROBAT",71)],
-              "sParty_RSCooltrainerF":[("VENOMOTH",65),("MR_MIME",65),("ALAKAZAM",66),("ESPEON",68),("HAUNTER",69),("KADABRA",72)],
+              "sParty_RSCooltrainerF":[("MR_MIME",65),("VENOMOTH",66),("WOBBUFFET",67),("ESPEON",68),("GENGAR",70),("ALAKAZAM",72)],
               "sParty_RSLady":[("NINETALES",66),("RAPIDASH",67),("ARCANINE",68),("MAGCARGO",68),("RHYDON",70),("MAGMAR",73)],
               "sParty_RSBeauty":[("PERSIAN",67),("CLOYSTER",68),("MACHAMP",69),("NIDOQUEEN",70),("NIDOKING",71),("RHYDON",74)],
           }
