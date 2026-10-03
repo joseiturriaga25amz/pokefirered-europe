@@ -60,13 +60,16 @@ Use `docs/spec/` only for frozen historical design details.
 - #654 is historical only: it failed on a stale frozen-roster expectation and did not expose a gameplay defect.
 - A-015 Gym healing baseline: **CLOSED**. Feature HEAD `463cba885435f05d99a5147ca525b749a15d7a5b` passed Full Gameplay Core **#657**; PR #27 merged as `899f421e176988ac211da4ede91dbefe707d15da`; post-integration Full Gameplay Core **#658 SUCCESS** on that exact master SHA.
 - Closed story-healing floor: Brock 1 Potion; Misty 1 Super Potion; Lt. Surge 1 Super Potion + 1 Full Heal; Erika 1 Hyper Potion + 1 Full Heal; Koga 2 Hyper Potions + 1 Full Heal. Existing rematches remain unchanged.
+- Sabrina final feature HEAD `714d552e31ab9c861c83da62c8836644f134c5b1`: Full Gameplay Core **#661 SUCCESS**; technical HEAD `86e5366566134b94428bdea49228a8f68fd27ca5` passed **#660**.
+- PR #28 merged Sabrina to `master` as `d63fe7839f9e7a3f21ddfb135660496c7069de89`; post-integration Full Gameplay Core **#662 SUCCESS** on that exact SHA.
+- Sabrina roster/identity/staging microblock: **CLOSED**. Story: Mr. Mime 42 / Venomoth 43 / Haunter 45 / Kadabra 47. Rematch: Mr. Mime 65 / Venomoth 66 / Wobbuffet 67 / Espeon 68 / Gengar 70 / Alakazam 72. Rematch Venomoth uses Giga Drain. Kadabra -> Alakazam staging is active.
 
 ## Exact next action
 
-1. begin Sabrina analysis from current `master` after the A-015 healing-baseline closure documentation commit;
-2. use the same leader-review flow proven on Koga: vanilla FireRed baseline -> current Full roster/moves/levels -> persisted candidate-pool analysis -> first/rematch proposal -> user revision/approval;
-3. apply the transversal curve audit against the CLOSED Brock/Misty/Surge/Erika/Koga baseline, including roster size, levels, actual trainer IVs, held items/healing, movesets, counterplay and first->rematch continuity;
-4. apply A-015 as Sabrina's healing floor: at least 2 Hyper Potions + 1 Full Heal unless a later explicit decision changes it; do not reopen the already closed Brock-Koga healing pass.
+1. begin Blaine analysis from current `master` after Sabrina closure;
+2. use the same leader-review flow proven through Sabrina: vanilla FireRed baseline -> current Full roster/moves/levels -> persisted candidate-pool analysis -> first/rematch proposal -> user revision/approval;
+3. apply the transversal curve audit against the CLOSED Brock/Misty/Surge/Erika/Koga/Sabrina baseline, including roster size, levels, actual trainer IVs, held items/healing, movesets, counterplay and first->rematch continuity;
+4. apply A-015 as Blaine's healing floor: at least 2 Hyper Potions + 1 Full Heal unless a later explicit decision changes it; do not reopen the already closed Brock-Sabrina healing decisions.
 
 ## Continuity rule
 
