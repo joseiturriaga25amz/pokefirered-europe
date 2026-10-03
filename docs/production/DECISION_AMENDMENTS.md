@@ -1019,7 +1019,7 @@ The transversal leader pass approves Sabrina with anime-priority Kadabra/Haunter
 
 ### Blaine curve/identity amendment — approved target
 
-**Status:** APPROVED / IMPLEMENTED / VALIDATED / CI-GREEN / INTEGRATION PENDING.
+**Status:** APPROVED / IMPLEMENTED / VALIDATED / CI-GREEN / CLOSED.
 
 The transversal leader pass approves Blaine with Magmar as the stable story/rematch ace and signature companion, while preserving the existing Kanto/Full level curve.
 
@@ -1051,4 +1051,7 @@ The transversal leader pass approves Blaine with Magmar as the stable story/rema
 **Feature validation evidence**
 - Technical feature HEAD: `80b2d6b5576b82bf305e04a9af430d7a2e387cb2`.
 - Full Gameplay Core **#663: SUCCESS** on that exact technical feature HEAD.
-- PR #29 is the controlled integration path; post-integration Full Gameplay Core is still required before this microblock can be marked CLOSED.
+- PR #29 merged to `master` as `d2b8922e932fdfc6a983c7783049e89b2013952f`.
+- Full Gameplay Core **#665: SUCCESS** on that exact integrated master SHA.
+- Blaine roster/identity microblock is therefore **CLOSED**.
+- Final closure includes the approved story/rematch rosters, ace-only Charcoal policy, A-015 story healing floor, explicit Magcargo Curse trainer-only exception, Rhydon Horn Drill rematch identity choice, and unchanged Magmar staging.
