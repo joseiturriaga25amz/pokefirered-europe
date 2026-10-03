@@ -58,13 +58,15 @@ Use `docs/spec/` only for frozen historical design details.
 - Koga post-integration Full Gameplay Core **#656 SUCCESS** on that exact master SHA.
 - Koga roster/identity microblock: **CLOSED**.
 - #654 is historical only: it failed on a stale frozen-roster expectation and did not expose a gameplay defect.
+- A-015 Gym healing baseline: **CLOSED**. Feature HEAD `463cba885435f05d99a5147ca525b749a15d7a5b` passed Full Gameplay Core **#657**; PR #27 merged as `899f421e176988ac211da4ede91dbefe707d15da`; post-integration Full Gameplay Core **#658 SUCCESS** on that exact master SHA.
+- Closed story-healing floor: Brock 1 Potion; Misty 1 Super Potion; Lt. Surge 1 Super Potion + 1 Full Heal; Erika 1 Hyper Potion + 1 Full Heal; Koga 2 Hyper Potions + 1 Full Heal. Existing rematches remain unchanged.
 
 ## Exact next action
 
-1. begin Sabrina analysis from current `master` after the Koga closure documentation commit;
+1. begin Sabrina analysis from current `master` after the A-015 healing-baseline closure documentation commit;
 2. use the same leader-review flow proven on Koga: vanilla FireRed baseline -> current Full roster/moves/levels -> persisted candidate-pool analysis -> first/rematch proposal -> user revision/approval;
 3. apply the transversal curve audit against the CLOSED Brock/Misty/Surge/Erika/Koga baseline, including roster size, levels, actual trainer IVs, held items/healing, movesets, counterplay and first->rematch continuity;
-4. keep the separate retrospective review of trainer-bag/held-item policy for earlier leaders outside Sabrina unless it becomes a blocker.
+4. apply A-015 as Sabrina's healing floor: at least 2 Hyper Potions + 1 Full Heal unless a later explicit decision changes it; do not reopen the already closed Brock-Koga healing pass.
 
 ## Continuity rule
 
