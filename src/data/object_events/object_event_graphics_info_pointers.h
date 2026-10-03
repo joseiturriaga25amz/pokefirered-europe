@@ -141,6 +141,7 @@ const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Crobat;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Gloom;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Vileplume;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Kadabra;
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Alakazam;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Starmie;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Raichu;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Magmar;
@@ -315,6 +316,7 @@ const struct ObjectEventGraphicsInfo *const gObjectEventGraphicsInfoPointers[NUM
     [OBJ_EVENT_GFX_GLOOM]                     = &gObjectEventGraphicsInfo_Gloom,
     [OBJ_EVENT_GFX_VILEPLUME]                 = &gObjectEventGraphicsInfo_Vileplume,
     [OBJ_EVENT_GFX_KADABRA]                   = &gObjectEventGraphicsInfo_Kadabra,
+    [OBJ_EVENT_GFX_ALAKAZAM]                 = &gObjectEventGraphicsInfo_Alakazam,
     [OBJ_EVENT_GFX_STARMIE]                   = &gObjectEventGraphicsInfo_Starmie,
     [OBJ_EVENT_GFX_RAICHU]                    = &gObjectEventGraphicsInfo_Raichu,
     [OBJ_EVENT_GFX_MAGMAR]                    = &gObjectEventGraphicsInfo_Magmar,

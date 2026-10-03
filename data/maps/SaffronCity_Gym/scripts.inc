@@ -1,5 +1,14 @@
 SaffronCity_Gym_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, SaffronCity_Gym_OnTransition
 	.byte 0
+
+SaffronCity_Gym_OnTransition::
+	setvar VAR_OBJ_GFX_ID_3, OBJ_EVENT_GFX_KADABRA
+	goto_if_unset FLAG_SYS_GAME_CLEAR, SaffronCity_Gym_OnTransition_End
+	goto_if_unset FLAG_GOT_TM04_FROM_SABRINA, SaffronCity_Gym_OnTransition_End
+	setvar VAR_OBJ_GFX_ID_3, OBJ_EVENT_GFX_ALAKAZAM
+SaffronCity_Gym_OnTransition_End::
+	end
 
 SaffronCity_Gym_EventScript_Sabrina::
 	goto_if_unset FLAG_SYS_GAME_CLEAR, SaffronCity_Gym_EventScript_SabrinaStory

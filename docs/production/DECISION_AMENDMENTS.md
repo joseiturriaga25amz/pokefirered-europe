@@ -975,3 +975,40 @@ Forward rule for the remaining leader pass:
 - Existing leader rematches remain unchanged: Brock/Misty/Lt. Surge/Erika keep 2 Hyper Potions; Koga keeps 2 Full Restores.
 - Sabrina/Blaine/Gym Giovanni retain the vanilla floor of 2 Hyper Potions + 1 Full Heal for their later review.
 - Champion/League healing remains a separate pending review and was not modified here.
+
+
+### Sabrina curve/identity amendment — approved target
+
+**Status:** APPROVED / IMPLEMENTED / VALIDATED / CI-GREEN / INTEGRATION PENDING.
+
+The transversal leader pass approves Sabrina with anime-priority Kadabra/Haunter identity in the story battle and evolved Alakazam/Gengar continuity in the rematch.
+
+**First battle**
+- Mr. Mime Lv.42 — Psybeam / Barrier / Calm Mind / Baton Pass; no held item.
+- Venomoth Lv.43 — Psybeam / Silver Wind / Gust / Supersonic; no held item.
+- Haunter Lv.45 — Shadow Ball / Lick / Confuse Ray / Torment; no held item.
+- Kadabra Lv.47 — Psychic / Reflect / Calm Mind / Recover; Twisted Spoon; ace/signature.
+
+**Rematch**
+- Mr. Mime Lv.65 — Psychic / Baton Pass / Calm Mind / Barrier; no held item.
+- Venomoth Lv.66 — Psychic / Silver Wind / Giga Drain / Sleep Powder; no held item.
+- Wobbuffet Lv.67 — Mirror Coat / Counter / Encore / Destiny Bond; no held item.
+- Espeon Lv.68 — Psychic / Shadow Ball / Morning Sun / Calm Mind; no held item.
+- Gengar Lv.70 — Psychic / Shadow Ball / Sludge Bomb / Confuse Ray; no held item.
+- Alakazam Lv.72 — Psychic / Shadow Ball / Calm Mind / Recover; Twisted Spoon; ace/signature.
+
+**Identity / progression**
+- Story Kadabra remains the symbolic anime-priority ace and keeps max trainer-IV compensation (`.iv = 255`) because it is an intermediate evolutionary stage.
+- Rematch Alakazam uses the normal Sabrina rematch trainer-IV tier (`.iv = 231`) because it is fully evolved.
+- Only Kadabra in the story battle and Alakazam in the rematch hold an item; both use Twisted Spoon.
+- Kadabra -> Alakazam and Haunter -> Gengar are approved Full progression lines. The anime directly supports Haunter remaining with Sabrina; Gengar is a Full progression choice and is not represented as a canonical anime evolution.
+- Saffron Gym staging shows Kadabra through the story and Alakazam after Hall of Fame/rematch eligibility.
+- Story trainer bag follows A-015: 2 Hyper Potions + 1 Full Heal. The rematch remains at 2 Full Restores.
+- The user's only correction to the analyzed rematch proposal was to normalize Venomoth's third slot to Giga Drain; that correction is incorporated here.
+
+**Feature validation evidence**
+- Technical feature HEAD: `86e5366566134b94428bdea49228a8f68fd27ca5`.
+- Full Gameplay Core **#659** failed only because the B8 staging validator retained the superseded `NUM_OBJ_EVENT_GFX 171` expectation after Alakazam increased the valid count to 172. Build, reproducibility, trainer legality and the preceding gates passed; no gameplay rollback was required.
+- Validator-only correction commit: `86e5366566134b94428bdea49228a8f68fd27ca5`.
+- Full Gameplay Core **#660: SUCCESS** on exact technical feature HEAD `86e5366566134b94428bdea49228a8f68fd27ca5`.
+- PR #28 is the controlled integration path; post-integration Full Gameplay Core is still required before this microblock can be marked CLOSED.

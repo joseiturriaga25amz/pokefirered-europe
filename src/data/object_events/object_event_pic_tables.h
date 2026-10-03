@@ -1493,6 +1493,10 @@ static const struct SpriteFrameImage sPicTable_Kadabra[] = {
     overworld_frame(gObjectEventPic_Kadabra, 4, 4, 0),
 };
 
+static const struct SpriteFrameImage sPicTable_Alakazam[] = {
+    overworld_frame(gObjectEventPic_Alakazam, 4, 4, 0),
+};
+
 static const struct SpriteFrameImage sPicTable_Starmie[] = {
     overworld_frame(gObjectEventPic_Starmie, 4, 4, 0),
 };

@@ -126,6 +126,7 @@ const u16 gObjectEventPic_Crobat[] = INCBIN_U16("graphics/pokemon/crobat/icon.4b
 const u16 gObjectEventPic_Gloom[] = INCBIN_U16("graphics/pokemon/gloom/icon.4bpp");
 const u16 gObjectEventPic_Vileplume[] = INCBIN_U16("graphics/pokemon/vileplume/icon.4bpp");
 const u16 gObjectEventPic_Kadabra[] = INCBIN_U16("graphics/pokemon/kadabra/icon.4bpp");
+const u16 gObjectEventPic_Alakazam[] = INCBIN_U16("graphics/pokemon/alakazam/icon.4bpp");
 const u16 gObjectEventPic_Starmie[] = INCBIN_U16("graphics/pokemon/starmie/icon.4bpp");
 const u16 gObjectEventPic_Raichu[] = INCBIN_U16("graphics/pokemon/raichu/icon.4bpp");
 const u16 gObjectEventPic_Magmar[] = INCBIN_U16("graphics/pokemon/magmar/icon.4bpp");
