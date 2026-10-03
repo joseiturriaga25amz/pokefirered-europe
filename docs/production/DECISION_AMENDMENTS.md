@@ -941,7 +941,7 @@ The transversal leader pass approves Koga with anime-priority Golbat identity in
 ## A-015 — Gym Leader trainer-bag healing baseline
 
 **Date:** 2026-10-02
-**Status:** APPROVED / IMPLEMENTED ON FEATURE BRANCH / VALIDATION PENDING
+**Status:** APPROVED / IMPLEMENTED / VALIDATED / CI-GREEN / CLOSED
 
 ### Decision
 
@@ -962,3 +962,16 @@ Forward rule for the remaining leader pass:
 - Sabrina, Blaine and Gym Giovanni must be reviewed against their vanilla floor of 2 Hyper Potions + 1 Full Heal before any Full-specific increase or substitution is approved.
 - This amendment does not alter rosters, levels, movesets, IVs, held items, AI flags, save/link structures or map staging.
 - Champion/League healing is a separate later review; this microblock does not change it.
+
+
+### A-015 closure evidence
+
+- Feature HEAD: `463cba885435f05d99a5147ca525b749a15d7a5b`.
+- Full Gameplay Core **#657: SUCCESS** on that exact feature HEAD.
+- PR #27 merged to `master` as `899f421e176988ac211da4ede91dbefe707d15da`.
+- Full Gameplay Core **#658: SUCCESS** on that exact integrated master SHA.
+- A-015 is therefore **CLOSED**.
+- Final story healing through Koga: Brock 1 Potion; Misty 1 Super Potion; Lt. Surge 1 Super Potion + 1 Full Heal; Erika 1 Hyper Potion + 1 Full Heal; Koga 2 Hyper Potions + 1 Full Heal.
+- Existing leader rematches remain unchanged: Brock/Misty/Lt. Surge/Erika keep 2 Hyper Potions; Koga keeps 2 Full Restores.
+- Sabrina/Blaine/Gym Giovanni retain the vanilla floor of 2 Hyper Potions + 1 Full Heal for their later review.
+- Champion/League healing remains a separate pending review and was not modified here.
