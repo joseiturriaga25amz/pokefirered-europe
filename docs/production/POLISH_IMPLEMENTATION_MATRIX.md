@@ -214,7 +214,7 @@ Initial signature mapping:
 - Lt. Surge — Raichu;
 - Erika — Gloom;
 - Koga — Golbat (story) → Crobat (rematch);
-- Sabrina — Kadabra;
+- Sabrina — Kadabra (story) → Alakazam (rematch);
 - Blaine — Magmar;
 - Giovanni — Persian;
 - Lorelei — Lapras;
