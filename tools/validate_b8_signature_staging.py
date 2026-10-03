@@ -525,7 +525,7 @@ def main():
         assert staged["trainer_type"] == "TRAINER_TYPE_NONE"
     assert "#define OBJ_EVENT_GFX_TOGEPI_ICON 168" in event_objects
     assert "#define OBJ_EVENT_GFX_HORSEA_ICON 169" in event_objects
-    assert "#define NUM_OBJ_EVENT_GFX     171" in event_objects
+    assert "#define NUM_OBJ_EVENT_GFX     172" in event_objects
     assert 'graphics/pokemon/togepi/icon.4bpp' in graphics
     assert 'graphics/pokemon/horsea/icon.4bpp' in graphics
     assert "gObjectEventGraphicsInfo_TogepiIcon" in info
