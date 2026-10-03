@@ -979,7 +979,7 @@ Forward rule for the remaining leader pass:
 
 ### Sabrina curve/identity amendment — approved target
 
-**Status:** APPROVED / IMPLEMENTED / VALIDATED / CI-GREEN / INTEGRATION PENDING.
+**Status:** APPROVED / IMPLEMENTED / VALIDATED / CI-GREEN / CLOSED.
 
 The transversal leader pass approves Sabrina with anime-priority Kadabra/Haunter identity in the story battle and evolved Alakazam/Gengar continuity in the rematch.
 
@@ -1011,4 +1011,7 @@ The transversal leader pass approves Sabrina with anime-priority Kadabra/Haunter
 - Full Gameplay Core **#659** failed only because the B8 staging validator retained the superseded `NUM_OBJ_EVENT_GFX 171` expectation after Alakazam increased the valid count to 172. Build, reproducibility, trainer legality and the preceding gates passed; no gameplay rollback was required.
 - Validator-only correction commit: `86e5366566134b94428bdea49228a8f68fd27ca5`.
 - Full Gameplay Core **#660: SUCCESS** on exact technical feature HEAD `86e5366566134b94428bdea49228a8f68fd27ca5`.
-- PR #28 is the controlled integration path; post-integration Full Gameplay Core is still required before this microblock can be marked CLOSED.
+- PR #28 merged to `master` as `d63fe7839f9e7a3f21ddfb135660496c7069de89`.
+- Full Gameplay Core **#662: SUCCESS** on that exact integrated master SHA.
+- Sabrina roster/identity/staging microblock is therefore **CLOSED**.
+- Final closure includes the approved story/rematch rosters, explicit rematch Venomoth Giga Drain, Kadabra max-IV intermediate-stage compensation, Alakazam normal rematch IV tier, ace-only Twisted Spoon policy, A-015 story healing floor, and Kadabra -> Alakazam Saffron staging.
