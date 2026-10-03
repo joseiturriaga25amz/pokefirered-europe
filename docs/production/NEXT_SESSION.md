@@ -63,13 +63,16 @@ Use `docs/spec/` only for frozen historical design details.
 - Sabrina final feature HEAD `714d552e31ab9c861c83da62c8836644f134c5b1`: Full Gameplay Core **#661 SUCCESS**; technical HEAD `86e5366566134b94428bdea49228a8f68fd27ca5` passed **#660**.
 - PR #28 merged Sabrina to `master` as `d63fe7839f9e7a3f21ddfb135660496c7069de89`; post-integration Full Gameplay Core **#662 SUCCESS** on that exact SHA.
 - Sabrina roster/identity/staging microblock: **CLOSED**. Story: Mr. Mime 42 / Venomoth 43 / Haunter 45 / Kadabra 47. Rematch: Mr. Mime 65 / Venomoth 66 / Wobbuffet 67 / Espeon 68 / Gengar 70 / Alakazam 72. Rematch Venomoth uses Giga Drain. Kadabra -> Alakazam staging is active.
+- Blaine technical feature HEAD `80b2d6b5576b82bf305e04a9af430d7a2e387cb2`: Full Gameplay Core **#663 SUCCESS**.
+- PR #29 merged Blaine to `master` as `d2b8922e932fdfc6a983c7783049e89b2013952f`; post-integration Full Gameplay Core **#665 SUCCESS** on that exact SHA.
+- Blaine roster/identity microblock: **CLOSED**. Story: Rapidash 47 / Rhydon 48 / Ninetales 49 / Arcanine 50 / Magmar 52. Rematch: Rapidash 66 / Rhydon 67 / Magcargo 68 / Ninetales 68 / Arcanine 70 / Magmar 73. Only Magmar holds Charcoal; Magcargo Curse is an explicit trainer-only exception.
 
 ## Exact next action
 
-1. begin Blaine analysis from current `master` after Sabrina closure;
-2. use the same leader-review flow proven through Sabrina: vanilla FireRed baseline -> current Full roster/moves/levels -> persisted candidate-pool analysis -> first/rematch proposal -> user revision/approval;
-3. apply the transversal curve audit against the CLOSED Brock/Misty/Surge/Erika/Koga/Sabrina baseline, including roster size, levels, actual trainer IVs, held items/healing, movesets, counterplay and first->rematch continuity;
-4. apply A-015 as Blaine's healing floor: at least 2 Hyper Potions + 1 Full Heal unless a later explicit decision changes it; do not reopen the already closed Brock-Sabrina healing decisions.
+1. begin Giovanni analysis from current `master` after Blaine closure;
+2. review both Giovanni's Gym battle/rematch and his earlier Rocket Hideout/Silph story appearances, as required by A-013;
+3. use vanilla FireRed baseline -> current Full state -> canon/identity pool -> transversal curve analysis -> user proposal/revision/approval before implementation;
+4. apply A-015 as Gym Giovanni's healing floor: at least 2 Hyper Potions + 1 Full Heal unless a later explicit decision changes it.
 
 ## Continuity rule
 
