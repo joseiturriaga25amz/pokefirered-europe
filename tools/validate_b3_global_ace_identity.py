@@ -61,7 +61,7 @@ def main():
         ("sParty_LeaderKoga","GOLBAT",44,False),
         ("sParty_RSCooltrainerM","CROBAT",71,False),
         ("sParty_LeaderSabrina","KADABRA",47,False),
-        ("sParty_RSCooltrainerF","KADABRA",72,False),
+        ("sParty_RSCooltrainerF","ALAKAZAM",72,False),
         ("sParty_LeaderBlaine","MAGMAR",52,False),
         ("sParty_RSLady","MAGMAR",73,False),
         # Mewtwo is an intentional narrative superweapon tied at Lv56; Rhydon is Giovanni's trainer ace.
@@ -108,13 +108,17 @@ def main():
     special = [
         ("sParty_LeaderErika","GLOOM",35,"SITRUS_BERRY"),
         ("sParty_LeaderSabrina","KADABRA",47,"TWISTED_SPOON"),
-        ("sParty_RSCooltrainerF","KADABRA",72,"TWISTED_SPOON"),
         ("sParty_LeaderKoga","GOLBAT",44,"SHARP_BEAK"),
     ]
     for name,species,level,item in special:
         mon=exact_mon(name,species,level)
         assert mon["iv"] == 255, (name,species,"expected max IV",mon["iv"])
         assert mon["item"] == item, (name,species,"expected item",item,mon["item"])
+
+    # Sabrina's evolved rematch ace uses the normal rematch IV tier.
+    sabrina_rematch_ace = exact_mon("sParty_RSCooltrainerF","ALAKAZAM",72)
+    assert sabrina_rematch_ace["iv"] == 231, ("sParty_RSCooltrainerF","ALAKAZAM","expected normal rematch IV",sabrina_rematch_ace["iv"])
+    assert sabrina_rematch_ace["item"] == "TWISTED_SPOON", ("sParty_RSCooltrainerF","ALAKAZAM","expected item","TWISTED_SPOON",sabrina_rematch_ace["item"])
 
     # Erika's evolved rematch ace no longer needs intermediate-stage max-IV compensation.
     erika_rematch_ace = exact_mon("sParty_RSTuberM","VILEPLUME",69)
@@ -146,8 +150,8 @@ def main():
         ("sParty_RSTuberM", "VILEPLUME", 69): ("SOLAR_BEAM", "SLUDGE_BOMB", "SYNTHESIS", "SUNNY_DAY"),
         ("sParty_LeaderKoga", "GOLBAT", 44): ("SLUDGE_BOMB", "WING_ATTACK", "BITE", "TOXIC"),
         ("sParty_RSCooltrainerM", "CROBAT", 71): ("SLUDGE_BOMB", "AERIAL_ACE", "DOUBLE_TEAM", "TOXIC"),
-        ("sParty_LeaderSabrina", "KADABRA", 47): ("PSYCHIC", "CALM_MIND", "RECOVER", "REFLECT"),
-        ("sParty_RSCooltrainerF", "KADABRA", 72): ("PSYCHIC", "CALM_MIND", "RECOVER", "REFLECT"),
+        ("sParty_LeaderSabrina", "KADABRA", 47): ("PSYCHIC", "REFLECT", "CALM_MIND", "RECOVER"),
+        ("sParty_RSCooltrainerF", "ALAKAZAM", 72): ("PSYCHIC", "SHADOW_BALL", "CALM_MIND", "RECOVER"),
         ("sParty_LeaderBlaine", "MAGMAR", 52): ("FIRE_BLAST", "FLAMETHROWER", "FIRE_PUNCH", "BRICK_BREAK"),
         ("sParty_RSLady", "MAGMAR", 73): ("FLAMETHROWER", "FIRE_BLAST", "BRICK_BREAK", "CONFUSE_RAY"),
         ("sParty_EliteFourLance", "DRAGONITE", 65): ("DRAGON_CLAW", "AERIAL_ACE", "ICE_BEAM", "FLAMETHROWER"),
