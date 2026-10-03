@@ -64,7 +64,9 @@ This section is the current resume point. Later dated sections preserve history 
 
 **A-015 healing-baseline closure evidence:** feature HEAD `463cba885435f05d99a5147ca525b749a15d7a5b` passed Full Gameplay Core **#657**; PR #27 merged to `master` as `899f421e176988ac211da4ede91dbefe707d15da`; post-integration Full Gameplay Core **#658** passed on that exact master SHA. A-015 healing-baseline microblock is **CLOSED**. Story healing floor now preserves vanilla-or-better resources for Brock through Koga; rematches remain unchanged.
 
-**Next production action:** begin the Sabrina leader-pass analysis from current `master` after this documentation-only closure commit, using the same A-013 flow proven on Koga: vanilla baseline → current Full state → candidate-pool analysis → proposed first/rematch teams → user review → implementation.
+**Sabrina closure evidence:** final feature HEAD `714d552e31ab9c861c83da62c8836644f134c5b1` passed Full Gameplay Core **#661**; technical feature HEAD `86e5366566134b94428bdea49228a8f68fd27ca5` had already passed **#660**. PR #28 merged to `master` as `d63fe7839f9e7a3f21ddfb135660496c7069de89`; post-integration Full Gameplay Core **#662** passed on that exact master SHA. Sabrina roster/identity/staging microblock is **CLOSED**. Final story team is Mr. Mime 42 / Venomoth 43 / Haunter 45 / Kadabra 47; final rematch is Mr. Mime 65 / Venomoth 66 / Wobbuffet 67 / Espeon 68 / Gengar 70 / Alakazam 72. Kadabra is the max-IV story ace with Twisted Spoon; Alakazam uses the normal rematch IV tier and Twisted Spoon. Saffron staging progresses Kadabra -> Alakazam. Story healing is 2 Hyper Potions + 1 Full Heal; rematch remains 2 Full Restores.
+
+**Next production action:** begin the Blaine leader-pass analysis from current `master`, using the same A-013 flow now proven through Sabrina: vanilla baseline → current Full state → candidate-pool analysis → proposed first/rematch teams → user review → implementation. Apply A-015 as Blaine's story healing floor: at least 2 Hyper Potions + 1 Full Heal unless a later explicit decision changes it.
 
 ### Existing continuity roles — do not duplicate
 
