@@ -152,8 +152,8 @@ def main():
         ("sParty_RSCooltrainerM", "CROBAT", 71): ("SLUDGE_BOMB", "AERIAL_ACE", "DOUBLE_TEAM", "TOXIC"),
         ("sParty_LeaderSabrina", "KADABRA", 47): ("PSYCHIC", "REFLECT", "CALM_MIND", "RECOVER"),
         ("sParty_RSCooltrainerF", "ALAKAZAM", 72): ("PSYCHIC", "SHADOW_BALL", "CALM_MIND", "RECOVER"),
-        ("sParty_LeaderBlaine", "MAGMAR", 52): ("FIRE_BLAST", "FLAMETHROWER", "FIRE_PUNCH", "BRICK_BREAK"),
-        ("sParty_RSLady", "MAGMAR", 73): ("FLAMETHROWER", "FIRE_BLAST", "BRICK_BREAK", "CONFUSE_RAY"),
+        ("sParty_LeaderBlaine", "MAGMAR", 52): ("FIRE_BLAST", "FLAMETHROWER", "FIRE_PUNCH", "STRENGTH"),
+        ("sParty_RSLady", "MAGMAR", 73): ("FLAMETHROWER", "FIRE_BLAST", "PSYCHIC", "BRICK_BREAK"),
         ("sParty_EliteFourLance", "DRAGONITE", 65): ("DRAGON_CLAW", "AERIAL_ACE", "ICE_BEAM", "FLAMETHROWER"),
         ("sParty_EliteFourLance2", "DRAGONITE", 82): ("OUTRAGE", "THUNDERBOLT", "ICE_BEAM", "FLAMETHROWER"),
     }
