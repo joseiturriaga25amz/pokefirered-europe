@@ -6295,7 +6295,7 @@
             "trainerName_italian": "BLAINE",
             "trainerName_french": "AUGUSTE",
             "trainerName_german": "PYRO",
-            "items": "ITEM_HYPER_POTION, ITEM_HYPER_POTION",
+            "items": "ITEM_HYPER_POTION, ITEM_HYPER_POTION, ITEM_FULL_HEAL",
             "doubleBattle": "FALSE",
             "aiFlags": "AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY",
             "party": "ITEM_CUSTOM_MOVES(sParty_LeaderBlaine)"

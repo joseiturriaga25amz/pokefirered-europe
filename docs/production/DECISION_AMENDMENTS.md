@@ -1015,3 +1015,40 @@ The transversal leader pass approves Sabrina with anime-priority Kadabra/Haunter
 - Full Gameplay Core **#662: SUCCESS** on that exact integrated master SHA.
 - Sabrina roster/identity/staging microblock is therefore **CLOSED**.
 - Final closure includes the approved story/rematch rosters, explicit rematch Venomoth Giga Drain, Kadabra max-IV intermediate-stage compensation, Alakazam normal rematch IV tier, ace-only Twisted Spoon policy, A-015 story healing floor, and Kadabra -> Alakazam Saffron staging.
+
+
+### Blaine curve/identity amendment — approved target
+
+**Status:** APPROVED / IMPLEMENTED / VALIDATED / CI-GREEN / INTEGRATION PENDING.
+
+The transversal leader pass approves Blaine with Magmar as the stable story/rematch ace and signature companion, while preserving the existing Kanto/Full level curve.
+
+**First battle**
+- Rapidash Lv.47 — Stomp / Bounce / Fire Spin / Fire Blast; no held item.
+- Rhydon Lv.48 — Dig / Rock Slide / Horn Attack / Stomp; no held item.
+- Ninetales Lv.49 — Flamethrower / Quick Attack / Tail Whip / Confuse Ray; no held item.
+- Arcanine Lv.50 — Flamethrower / Fire Blast / Take Down / Bite; no held item.
+- Magmar Lv.52 — Fire Blast / Flamethrower / Fire Punch / Strength; Charcoal; ace/signature.
+
+**Rematch**
+- Rapidash Lv.66 — Fire Blast / Bounce / Double-Edge / Agility; no held item.
+- Rhydon Lv.67 — Earthquake / Rock Slide / Megahorn / Horn Drill; no held item.
+- Magcargo Lv.68 — Flamethrower / Rock Slide / Sunny Day / Curse; no held item.
+- Ninetales Lv.68 — Flamethrower / Will-O-Wisp / Confuse Ray / Sunny Day; no held item.
+- Arcanine Lv.70 — Flamethrower / Crunch / Fire Blast / ExtremeSpeed; no held item.
+- Magmar Lv.73 — Flamethrower / Fire Blast / Psychic / Brick Break; Charcoal; ace/signature.
+
+**Identity / progression**
+- Magmar remains Blaine's story and rematch ace/signature companion and remains the only held-item user in both encounters.
+- Story trainer IV tier remains `.iv = 149`; rematch tier remains `.iv = 231`. No ace-specific IV exception is required because Magmar is fully evolved within Gen III.
+- Story healing follows A-015: 2 Hyper Potions + 1 Full Heal. Rematch healing remains 2 Full Restores.
+- The level curve is intentionally retained: Sabrina ace 47 -> Blaine ace 52 -> Giovanni ace 56 in the story; Sabrina 72 -> Blaine 73 -> Giovanni 74 in rematches.
+- Yellow's higher Blaine levels were considered as supporting evidence that the story curve is not overleveled, but the Full levels are not raised further because the five-member roster, stronger IVs and improved movesets already provide the intended seventh-Gym escalation.
+- Magcargo Lv.68 Curse is an explicit trainer-only legality exception. It applies only to `sParty_RSLady / SPECIES_MAGCARGO / Lv68 / MOVE_CURSE`; the global Slugma/Magcargo learnset is unchanged.
+- Rhydon rematch Horn Drill is intentionally retained as a canon/identity move despite its OHKO variance; it appears only in the postgame rematch.
+- Cinnabar Gym staging remains Magmar in both states; no staging change is required.
+
+**Feature validation evidence**
+- Technical feature HEAD: `80b2d6b5576b82bf305e04a9af430d7a2e387cb2`.
+- Full Gameplay Core **#663: SUCCESS** on that exact technical feature HEAD.
+- PR #29 is the controlled integration path; post-integration Full Gameplay Core is still required before this microblock can be marked CLOSED.
