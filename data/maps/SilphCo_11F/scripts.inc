@@ -70,6 +70,7 @@ SilphCo_11F_EventScript_BattleGiovanni::
 	closemessage
 	fadescreen FADE_TO_BLACK
 	removeobject LOCALID_SILPH_CO_GIOVANNI
+	removeobject LOCALID_SILPH_CO_GIOVANNI_SIGNATURE
 	removeobject LOCALID_SILPH_CO_11F_GRUNT1
 	removeobject LOCALID_SILPH_CO_11F_GRUNT2
 	fadescreen FADE_FROM_BLACK
