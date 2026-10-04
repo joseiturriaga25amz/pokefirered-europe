@@ -1055,3 +1055,66 @@ The transversal leader pass approves Blaine with Magmar as the stable story/rema
 - Full Gameplay Core **#665: SUCCESS** on that exact integrated master SHA.
 - Blaine roster/identity microblock is therefore **CLOSED**.
 - Final closure includes the approved story/rematch rosters, ace-only Charcoal policy, A-015 story healing floor, explicit Magcargo Curse trainer-only exception, Rhydon Horn Drill rematch identity choice, and unchanged Magmar staging.
+
+
+### Giovanni progression/identity amendment — approved target
+
+**Status:** APPROVED / IMPLEMENTED / VALIDATED / CI-GREEN / INTEGRATION PENDING.
+
+The A-013 Giovanni pass is approved as one four-encounter progression: Rocket Hideout -> Silph Co. -> Viridian Gym -> postgame rematch. Persian is Giovanni's persistent visual signature companion, while Rhydon remains his true combat ace at the Gym/rematch and Mewtwo remains a separate narrative superweapon.
+
+**Rocket Hideout / Celadon**
+- Onix Lv.29 — Rock Throw / Dig / Bind / Harden.
+- Rhyhorn Lv.30 — Horn Attack / Stomp / Tail Whip / Sand Attack.
+- Kangaskhan Lv.33 — Fake Out / Bite / Mega Punch / Brick Break.
+- No held items; no trainer healing.
+- Persian is staged beside Giovanni but is not a combat-party slot.
+
+**Silph Co.**
+- Nidorino Lv.45 — Horn Attack / Fury Attack / Poison Sting / Dig.
+- Kangaskhan Lv.46 — Fake Out / Bite / Strength / Brick Break.
+- Rhyhorn Lv.47 — Horn Attack / Rock Blast / Stomp / Magnitude.
+- Nidoqueen Lv.49 — Dig / Double Kick / Strength / Poison Sting.
+- No held items; trainer healing remains 1 Hyper Potion.
+- Persian is staged beside Giovanni but is not a combat-party slot.
+
+**Viridian Gym**
+- Kingler Lv.51 — Crabhammer / Stomp / Mud Shot / Protect; no held item.
+- Golem Lv.52 — Rock Slide / Earthquake / Defense Curl / Explosion; no held item.
+- Nidoking Lv.53 — Earthquake / Sludge Bomb / Megahorn / Flamethrower; no held item.
+- Nidoqueen Lv.54 — Earthquake / Sludge Bomb / Body Slam / Surf; no held item.
+- Rhydon Lv.56 — Earthquake / Rock Slide / Double-Edge / Brick Break; Soft Sand; combat ace.
+- Mewtwo Lv.56 — Psychic / Shadow Ball / Swift / Recover; no held item; fixed `.iv = 255`; narrative superweapon.
+- Normal Giovanni Gym tier remains `.iv = 165`.
+- Story healing follows A-015: 2 Hyper Potions + 1 Full Heal.
+- Persian remains staged beside Giovanni. The existing Mewtwo-breakout cutscene remains authoritative and unchanged in narrative role.
+
+**Postgame rematch**
+- Cloyster Lv.67 — Ice Beam / Surf / Spikes / Protect; no held item.
+- Camerupt Lv.68 — Earthquake / Fire Blast / Rock Slide / Fissure; no held item.
+- Machamp Lv.69 — Cross Chop / Body Slam / Revenge / Bulk Up; no held item.
+- Nidoking Lv.70 — Earthquake / Sludge Bomb / Body Slam / Ice Beam; no held item.
+- Nidoqueen Lv.71 — Earthquake / Sludge Bomb / Body Slam / Thunderbolt; no held item.
+- Rhydon Lv.74 — Earthquake / Rock Slide / Double-Edge / Megahorn; Soft Sand; combat ace.
+- Rematch tier remains `.iv = 231`; healing remains 2 Full Restores.
+- Persian remains the visual signature beside Giovanni; Mewtwo does not return as a rematch party member or repeat the breakout event.
+
+**Legality / design decisions**
+- Rhyhorn Lv.30 Sand Attack is an explicit trainer-only exception scoped only to `sParty_BossGiovanni / SPECIES_RHYHORN / Lv30 / MOVE_SAND_ATTACK`; the global Rhyhorn learnset is unchanged.
+- Rhyhorn Lv.47 Magnitude was initially expected to require an exception, but the repository legality validator proved it legal through existing project rules. No exception is recorded for Magnitude.
+- Camerupt's Fissure is legal by level-up and intentionally supplies the rematch's single OHKO threat.
+- Rhydon does **not** use Horn Drill in the rematch; Megahorn is the approved reliable fourth move.
+- The previous Giovanni rematch Rhydon Leftovers decision is superseded: the approved item is Soft Sand, matching the user's final decision and preserving ace-only held-item policy.
+- The prior global-ace decision excluding OHKO moves from Rhydon remains functionally satisfied; the only OHKO move is on non-ace Camerupt.
+
+**Staging**
+- Existing `OBJ_EVENT_GFX_PERSIAN` is reused; no new art or graphics ID is introduced.
+- Rocket Hideout stages Persian adjacent to Giovanni and removes it with Giovanni after the battle.
+- Silph Co. stages Persian adjacent to Giovanni, outside Giovanni's approach lane, and removes it during the existing post-battle fade.
+- Viridian keeps the existing Persian position on Giovanni's left and preserves the right-side Mewtwo breakout space/cutscene.
+
+**Feature validation evidence**
+- Initial technical HEAD `6d3d3a8c61f07a7b039157e96987835dec6605f2` compiled and passed reproducibility/roster locks but Full Gameplay Core **#666** stopped at trainer legality because an unnecessary Magnitude exception was declared.
+- The gameplay itself was not changed: validator-only commit `cf687ae709c366275f88861b69e282f425612374` removed that redundant exception.
+- Full Gameplay Core **#667: SUCCESS** on exact technical feature HEAD `cf687ae709c366275f88861b69e282f425612374`.
+- PR #30 is the controlled integration path; post-integration Full Gameplay Core remains required before this microblock is CLOSED.
