@@ -475,6 +475,38 @@ def main():
     assert abs(giovanni_signature["x"] - giovanni_trainer[0]["x"]) + abs(giovanni_signature["y"] - giovanni_trainer[0]["y"]) == 1
     assert not any((w["x"], w["y"]) == (giovanni_signature["x"], giovanni_signature["y"]) for w in giovanni["warp_events"])
 
+    hideout = read_json("data/maps/RocketHideout_B4F/map.json")
+    hideout_objs = hideout["object_events"]
+    hideout_giovanni = [o for o in hideout_objs if o.get("local_id") == "LOCALID_HIDEOUT_GIOVANNI"]
+    hideout_persian = [o for o in hideout_objs if o.get("local_id") == "LOCALID_HIDEOUT_GIOVANNI_SIGNATURE"]
+    assert len(hideout_giovanni) == len(hideout_persian) == 1
+    hideout_giovanni, hideout_persian = hideout_giovanni[0], hideout_persian[0]
+    assert hideout_persian["graphics_id"] == "OBJ_EVENT_GFX_PERSIAN"
+    assert (hideout_persian["x"], hideout_persian["y"]) == (18, 4)
+    assert hideout_persian["flag"] == "FLAG_HIDE_HIDEOUT_GIOVANNI"
+    assert hideout_persian["script"] == "0x0"
+    assert hideout_persian["trainer_type"] == "TRAINER_TYPE_NONE"
+    assert abs(hideout_persian["x"] - hideout_giovanni["x"]) + abs(hideout_persian["y"] - hideout_giovanni["y"]) == 1
+    assert not any((w["x"], w["y"]) == (hideout_persian["x"], hideout_persian["y"]) for w in hideout["warp_events"])
+    hideout_scripts = (ROOT / "data/maps/RocketHideout_B4F/scripts.inc").read_text(encoding="utf-8")
+    assert "removeobject LOCALID_HIDEOUT_GIOVANNI_SIGNATURE" in hideout_scripts
+
+    silph = read_json("data/maps/SilphCo_11F/map.json")
+    silph_objs = silph["object_events"]
+    silph_giovanni = [o for o in silph_objs if o.get("local_id") == "LOCALID_SILPH_CO_GIOVANNI"]
+    silph_persian = [o for o in silph_objs if o.get("local_id") == "LOCALID_SILPH_CO_GIOVANNI_SIGNATURE"]
+    assert len(silph_giovanni) == len(silph_persian) == 1
+    silph_giovanni, silph_persian = silph_giovanni[0], silph_persian[0]
+    assert silph_persian["graphics_id"] == "OBJ_EVENT_GFX_PERSIAN"
+    assert (silph_persian["x"], silph_persian["y"]) == (5, 11)
+    assert silph_persian["flag"] == "FLAG_HIDE_SILPH_ROCKETS"
+    assert silph_persian["script"] == "0x0"
+    assert silph_persian["trainer_type"] == "TRAINER_TYPE_NONE"
+    assert abs(silph_persian["x"] - silph_giovanni["x"]) + abs(silph_persian["y"] - silph_giovanni["y"]) == 1
+    assert not any((w["x"], w["y"]) == (silph_persian["x"], silph_persian["y"]) for w in silph["warp_events"])
+    silph_scripts = (ROOT / "data/maps/SilphCo_11F/scripts.inc").read_text(encoding="utf-8")
+    assert "removeobject LOCALID_SILPH_CO_GIOVANNI_SIGNATURE" in silph_scripts
+
     assert "#define OBJ_EVENT_GFX_PERSIAN 161" in event_objects
     assert "#define OBJ_EVENT_GFX_ONIX 152" in event_objects
     assert "#define OBJ_EVENT_GFX_STARYU_ICON 167" in event_objects
@@ -539,7 +571,7 @@ def main():
     assert "goto_if_unset FLAG_GOT_TM06_FROM_KOGA" in koga_scripts
     assert "setvar VAR_OBJ_GFX_ID_1, OBJ_EVENT_GFX_CROBAT" in koga_scripts
 
-    print("B8 signature staging PASS: Lorelei/Lapras stable; Bruno/Machamp, Agatha/Gengar, Lance/Dragonite, Champion/Blastoise, Brock Onix->Steelix, Misty/Starmie, Surge/Raichu, Erika Gloom->Vileplume, Koga Golbat->Crobat, Sabrina Kadabra->Alakazam, Blaine/Magmar, and Giovanni/Persian are nonblocking and valid.")
+    print("B8 signature staging PASS: Lorelei/Lapras stable; Bruno/Machamp, Agatha/Gengar, Lance/Dragonite, Champion/Blastoise, Brock Onix->Steelix, Misty/Starmie, Surge/Raichu, Erika Gloom->Vileplume, Koga Golbat->Crobat, Sabrina Kadabra->Alakazam, Blaine/Magmar, and Giovanni/Persian staging is valid in Hideout, Silph and Viridian.")
 
 
 if __name__ == "__main__":

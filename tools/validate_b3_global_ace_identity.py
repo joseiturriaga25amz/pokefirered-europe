@@ -115,6 +115,15 @@ def main():
         assert mon["iv"] == 255, (name,species,"expected max IV",mon["iv"])
         assert mon["item"] == item, (name,species,"expected item",item,mon["item"])
 
+    # Giovanni keeps Rhydon as the combat ace; Mewtwo is a separate narrative superweapon.
+    giovanni_story_ace = exact_mon("sParty_LeaderGiovanni","RHYDON",56)
+    assert giovanni_story_ace["item"] == "SOFT_SAND", ("sParty_LeaderGiovanni","RHYDON","expected item","SOFT_SAND",giovanni_story_ace["item"])
+    giovanni_rematch_ace = exact_mon("sParty_RSBeauty","RHYDON",74)
+    assert giovanni_rematch_ace["item"] == "SOFT_SAND", ("sParty_RSBeauty","RHYDON","expected item","SOFT_SAND",giovanni_rematch_ace["item"])
+    giovanni_mewtwo = exact_mon("sParty_LeaderGiovanni","MEWTWO",56)
+    assert giovanni_mewtwo["iv"] == 255, ("sParty_LeaderGiovanni","MEWTWO","expected max IV",giovanni_mewtwo["iv"])
+    assert giovanni_mewtwo["item"] == "NONE", ("sParty_LeaderGiovanni","MEWTWO","expected no item",giovanni_mewtwo["item"])
+
     # Sabrina's evolved rematch ace uses the normal rematch IV tier.
     sabrina_rematch_ace = exact_mon("sParty_RSCooltrainerF","ALAKAZAM",72)
     assert sabrina_rematch_ace["iv"] == 231, ("sParty_RSCooltrainerF","ALAKAZAM","expected normal rematch IV",sabrina_rematch_ace["iv"])
@@ -154,6 +163,9 @@ def main():
         ("sParty_RSCooltrainerF", "ALAKAZAM", 72): ("PSYCHIC", "SHADOW_BALL", "CALM_MIND", "RECOVER"),
         ("sParty_LeaderBlaine", "MAGMAR", 52): ("FIRE_BLAST", "FLAMETHROWER", "FIRE_PUNCH", "STRENGTH"),
         ("sParty_RSLady", "MAGMAR", 73): ("FLAMETHROWER", "FIRE_BLAST", "PSYCHIC", "BRICK_BREAK"),
+        ("sParty_LeaderGiovanni", "RHYDON", 56): ("EARTHQUAKE", "ROCK_SLIDE", "DOUBLE_EDGE", "BRICK_BREAK"),
+        ("sParty_RSBeauty", "RHYDON", 74): ("EARTHQUAKE", "ROCK_SLIDE", "DOUBLE_EDGE", "MEGAHORN"),
+        ("sParty_LeaderGiovanni", "MEWTWO", 56): ("PSYCHIC", "SHADOW_BALL", "SWIFT", "RECOVER"),
         ("sParty_EliteFourLance", "DRAGONITE", 65): ("DRAGON_CLAW", "AERIAL_ACE", "ICE_BEAM", "FLAMETHROWER"),
         ("sParty_EliteFourLance2", "DRAGONITE", 82): ("OUTRAGE", "THUNDERBOLT", "ICE_BEAM", "FLAMETHROWER"),
     }

@@ -28,6 +28,7 @@ RocketHideout_B4F_EventScript_Giovanni::
 	fadescreen FADE_TO_BLACK
 	closemessage
 	removeobject LOCALID_HIDEOUT_GIOVANNI
+	removeobject LOCALID_HIDEOUT_GIOVANNI_SIGNATURE
 	addobject LOCALID_SILPH_SCOPE
 	clearflag FLAG_HIDE_SILPH_SCOPE
 	setflag FLAG_HIDE_CELADON_ROCKETS

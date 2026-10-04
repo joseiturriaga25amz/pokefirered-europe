@@ -577,7 +577,9 @@ jobs:
               "sParty_LeaderKoga":[("KOFFING",38),("VENOMOTH",39),("MUK",40),("WEEZING",42),("GOLBAT",44)],
               "sParty_LeaderSabrina":[("MR_MIME",42),("VENOMOTH",43),("HAUNTER",45),("KADABRA",47)],
               "sParty_LeaderBlaine":[("RAPIDASH",47),("RHYDON",48),("NINETALES",49),("ARCANINE",50),("MAGMAR",52)],
-              "sParty_LeaderGiovanni":[("KINGLER",51),("NIDOQUEEN",52),("NIDOKING",53),("GOLEM",54),("RHYDON",56),("MEWTWO",56)],
+              "sParty_BossGiovanni":[("ONIX",29),("RHYHORN",30),("KANGASKHAN",33)],
+              "sParty_BossGiovanni2":[("NIDORINO",45),("KANGASKHAN",46),("RHYHORN",47),("NIDOQUEEN",49)],
+              "sParty_LeaderGiovanni":[("KINGLER",51),("GOLEM",52),("NIDOKING",53),("NIDOQUEEN",54),("RHYDON",56),("MEWTWO",56)],
               "sParty_EliteFourLorelei":[("DEWGONG",57),("SLOWBRO",58),("JYNX",59),("CLOYSTER",60),("LAPRAS",61)],
               "sParty_EliteFourBruno":[("ONIX",58),("HITMONCHAN",59),("HITMONLEE",60),("ONIX",60),("MACHAMP",62)],
               "sParty_EliteFourAgatha":[("HAUNTER",59),("GENGAR",60),("GOLBAT",60),("ARBOK",61),("GENGAR",63)],
@@ -602,6 +604,7 @@ jobs:
               "TRAINER_LEADER_KOGA":"ITEM_HYPER_POTION, ITEM_HYPER_POTION, ITEM_FULL_HEAL",
               "TRAINER_LEADER_SABRINA":"ITEM_HYPER_POTION, ITEM_HYPER_POTION, ITEM_FULL_HEAL",
               "TRAINER_LEADER_BLAINE":"ITEM_HYPER_POTION, ITEM_HYPER_POTION, ITEM_FULL_HEAL",
+              "TRAINER_LEADER_GIOVANNI":"ITEM_HYPER_POTION, ITEM_HYPER_POTION, ITEM_FULL_HEAL",
           }
           for tid,items in story_healing.items():
               assert by_id[tid]["items"] == items, (tid, by_id[tid]["items"], items)
@@ -614,7 +617,7 @@ jobs:
               "sParty_RSCooltrainerM":[("ARIADOS",64),("FORRETRESS",65),("VENOMOTH",66),("MUK",67),("WEEZING",69),("CROBAT",71)],
               "sParty_RSCooltrainerF":[("MR_MIME",65),("VENOMOTH",66),("WOBBUFFET",67),("ESPEON",68),("GENGAR",70),("ALAKAZAM",72)],
               "sParty_RSLady":[("RAPIDASH",66),("RHYDON",67),("MAGCARGO",68),("NINETALES",68),("ARCANINE",70),("MAGMAR",73)],
-              "sParty_RSBeauty":[("PERSIAN",67),("CLOYSTER",68),("MACHAMP",69),("NIDOQUEEN",70),("NIDOKING",71),("RHYDON",74)],
+              "sParty_RSBeauty":[("CLOYSTER",67),("CAMERUPT",68),("MACHAMP",69),("NIDOKING",70),("NIDOQUEEN",71),("RHYDON",74)],
           }
           for name,want in rematches.items():
               assert normalized(name)==want, (name, normalized(name), want)
