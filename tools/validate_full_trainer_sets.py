@@ -140,6 +140,8 @@ APPROVED_MOVE_EXCEPTIONS = {
     ("sParty_LeaderErika", "SPECIES_TANGELA", 33, "MOVE_STUN_SPORE"),
     ("sParty_LeaderSabrina", "SPECIES_MR_MIME", 42, "MOVE_BATON_PASS"),
     ("sParty_RSLady", "SPECIES_MAGCARGO", 68, "MOVE_CURSE"),
+    ("sParty_BossGiovanni", "SPECIES_RHYHORN", 30, "MOVE_SAND_ATTACK"),
+    ("sParty_BossGiovanni2", "SPECIES_RHYHORN", 47, "MOVE_MAGNITUDE"),
 }
 
 CONST_RE = re.compile(r"^\s*#define\s+([A-Z][A-Z0-9_]+)\b", re.M)
