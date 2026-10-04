@@ -66,13 +66,16 @@ Use `docs/spec/` only for frozen historical design details.
 - Blaine technical feature HEAD `80b2d6b5576b82bf305e04a9af430d7a2e387cb2`: Full Gameplay Core **#663 SUCCESS**.
 - PR #29 merged Blaine to `master` as `d2b8922e932fdfc6a983c7783049e89b2013952f`; post-integration Full Gameplay Core **#665 SUCCESS** on that exact SHA.
 - Blaine roster/identity microblock: **CLOSED**. Story: Rapidash 47 / Rhydon 48 / Ninetales 49 / Arcanine 50 / Magmar 52. Rematch: Rapidash 66 / Rhydon 67 / Magcargo 68 / Ninetales 68 / Arcanine 70 / Magmar 73. Only Magmar holds Charcoal; Magcargo Curse is an explicit trainer-only exception.
+- Giovanni technical feature HEAD `cf687ae709c366275f88861b69e282f425612374`: Full Gameplay Core **#667 SUCCESS**.
+- PR #30 merged Giovanni to `master` as `02636a3b785c9d3a21c2efeeee6a7fe2d770dc02`; post-integration Full Gameplay Core **#669 SUCCESS** on that exact SHA.
+- Giovanni four-encounter progression/identity/staging microblock: **CLOSED**. Hideout: Onix 29 / Rhyhorn 30 / Kangaskhan 33. Silph: Nidorino 45 / Kangaskhan 46 / Rhyhorn 47 / Nidoqueen 49. Gym: Kingler 51 / Golem 52 / Nidoking 53 / Nidoqueen 54 / Rhydon 56 / Mewtwo 56. Rematch: Cloyster 67 / Camerupt 68 / Machamp 69 / Nidoking 70 / Nidoqueen 71 / Rhydon 74. Persian stages beside Giovanni in Hideout, Silph and Viridian.
 
 ## Exact next action
 
-1. begin Giovanni analysis from current `master` after Blaine closure;
-2. review both Giovanni's Gym battle/rematch and his earlier Rocket Hideout/Silph story appearances, as required by A-013;
-3. use vanilla FireRed baseline -> current Full state -> canon/identity pool -> transversal curve analysis -> user proposal/revision/approval before implementation;
-4. apply A-015 as Gym Giovanni's healing floor: at least 2 Hyper Potions + 1 Full Heal unless a later explicit decision changes it.
+1. the Gym Leader + Giovanni A-013 pass is complete and CLOSED;
+2. begin the later major-trainer identity review with Lorelei from current `master`;
+3. compare vanilla FireRed baseline, current Full implementation and approved canon/identity evidence before proposing any changes;
+4. do not change Lorelei gameplay until the user reviews and approves the target; then continue Bruno -> Agatha -> Lance -> Gary/Blue.
 
 ## Continuity rule
 
