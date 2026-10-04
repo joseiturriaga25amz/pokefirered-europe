@@ -1059,7 +1059,7 @@ The transversal leader pass approves Blaine with Magmar as the stable story/rema
 
 ### Giovanni progression/identity amendment — approved target
 
-**Status:** APPROVED / IMPLEMENTED / VALIDATED / CI-GREEN / INTEGRATION PENDING.
+**Status:** APPROVED / IMPLEMENTED / VALIDATED / CI-GREEN / CLOSED.
 
 The A-013 Giovanni pass is approved as one four-encounter progression: Rocket Hideout -> Silph Co. -> Viridian Gym -> postgame rematch. Persian is Giovanni's persistent visual signature companion, while Rhydon remains his true combat ace at the Gym/rematch and Mewtwo remains a separate narrative superweapon.
 
@@ -1117,4 +1117,6 @@ The A-013 Giovanni pass is approved as one four-encounter progression: Rocket Hi
 - Initial technical HEAD `6d3d3a8c61f07a7b039157e96987835dec6605f2` compiled and passed reproducibility/roster locks but Full Gameplay Core **#666** stopped at trainer legality because an unnecessary Magnitude exception was declared.
 - The gameplay itself was not changed: validator-only commit `cf687ae709c366275f88861b69e282f425612374` removed that redundant exception.
 - Full Gameplay Core **#667: SUCCESS** on exact technical feature HEAD `cf687ae709c366275f88861b69e282f425612374`.
-- PR #30 is the controlled integration path; post-integration Full Gameplay Core remains required before this microblock is CLOSED.
+- PR #30 merged to `master` as `02636a3b785c9d3a21c2efeeee6a7fe2d770dc02`.
+- Full Gameplay Core **#669: SUCCESS** on that exact integrated master SHA.
+- Giovanni four-encounter progression/identity/staging microblock is therefore **CLOSED**.
