@@ -17,7 +17,7 @@ EXPECTED = {
     "src/data/battle_moves.h": "5dac9c551a0a555b04ee885105b9a9d1b6071157",
     "src/trade.c": "50c4b149ea999c8282af1a670c7238e8d3afe0d7",
     "src/data/trainers.json": "ace1c4d641d64e704f0aaaac0c4cd22d2efc1223",
-    "src/data/trainer_parties.h": "28e59c632c988d4989924111a0834efbc1ad89f9",
+    "src/data/trainer_parties.h": "dd565e57791574b0756f4c4163274fb2276e033d",
     "data/scripts/spanish/hall_of_fame.inc": "5ab6e9db94111d47961250803d5ac819ca21e7cc",
     "data/scripts/spanish/repel.inc": "d0255413c6a5453d5e1af15201b41d8b4663f22b",
     "data/scripts/spanish/move_tutors.inc": "f6fc0e15f3c7225bef69ae4d6362fced3c0e60f1",
