@@ -1161,3 +1161,51 @@ Approved transversal policy for the ongoing major-trainer review beginning with 
 Vanilla FireRed frequently uses non-monotonic party ordering, while several Full teams became visually sorted by level during curve design. A deliberate vanilla-like order gives better pacing without altering the approved level curve. The ace-only item rule restores a clearer hierarchy and is consistent with the direction already approved across the recent Gym Leader pass. Lower Full IV tiers are intentional difficulty tuning rather than an accidental nerf; level/moveset/roster improvements outweigh the small IV loss. Runtime feedback also established that unique-but-template-like rematch dialogue is not sufficient narrative polish.
 
 **Status:** APPROVED / DOCUMENTED. No gameplay or dialogue text changed by this amendment itself.
+
+
+### Lorelei curve/identity amendment — approved target
+
+**Status:** APPROVED / IMPLEMENTED / VALIDATED / CI-GREEN / INTEGRATION PENDING.
+
+Lorelei is the first Elite Four trainer reviewed under A-016. The approved design intentionally uses vanilla-like non-monotonic party ordering, keeps Lapras as the sole held-item user and preserves the existing Full IV/healing tiers. Six Pokémon are approved for Lorelei in both League encounters; this does **not** create a requirement that Bruno, Agatha or Lance must also use six in their first League teams.
+
+**First League**
+1. Dewgong Lv.57 — Ice Beam / Surf / Hail / Aurora Beam; no held item.
+2. Cloyster Lv.58 — Dive / Spikes / Hail / Protect; no held item.
+3. Slowpoke Lv.56 — Psychic / Headbutt / Amnesia / Disable; no held item.
+4. Slowbro Lv.59 — Ice Beam / Surf / Amnesia / Yawn; no held item.
+5. Jynx Lv.60 — Ice Beam / DoubleSlap / Lovely Kiss / Attract; no held item.
+6. Lapras Lv.61 — Ice Beam / Surf / Body Slam / Confuse Ray; Sitrus Berry; ace/signature.
+
+**Strengthened League / rematch**
+1. Dewgong Lv.75 — Ice Beam / Surf / Signal Beam / Safeguard; no held item.
+2. Cloyster Lv.77 — Surf / Ice Beam / Spikes / Protect; no held item.
+3. Piloswine Lv.74 — Blizzard / Earthquake / Double-Edge / Rock Slide; no held item.
+4. Slowking Lv.76 — Psychic / Surf / Ice Beam / Disable; no held item.
+5. Jynx Lv.75 — Ice Beam / Psychic / Lovely Kiss / Attract; no held item.
+6. Lapras Lv.79 — Surf / Blizzard / Thunderbolt / Protect; Leftovers; ace/signature.
+
+**Design intent**
+- Party ordering follows A-016: deliberate and vanilla-like, not random and not lowest-level -> highest-level.
+- Dewgong remains the lead in both encounters, preserving vanilla Lorelei's opening identity.
+- Slowpoke -> Slowking provides an encounter-to-rematch progression thread; Slowbro remains a distinct first-League member rather than being carried unchanged into the rematch.
+- Cloyster deliberately starts with its more tactical vanilla-like Dive / Spikes / Hail / Protect identity, then upgrades to Surf / Ice Beam / Spikes / Protect in the rematch.
+- Jynx preserves Lovely Kiss + Attract identity; DoubleSlap -> Psychic is the main rematch upgrade.
+- Lapras remains the true ace and visible signature companion. First-League Lapras restores the classic FRLG Ice Beam / Surf / Body Slam / Confuse Ray identity.
+- Rematch Lapras intentionally uses **Protect**, not Confuse Ray. Protect + Leftovers is an approved tactical identity choice; Surf / Blizzard / Thunderbolt provide the three attacking slots.
+- Six Pokémon are justified for Lorelei by the Slowpoke/Slowking progression and roster identity. Later Elite Four members are reviewed independently; no six-Pokémon symmetry is forced.
+- Existing Lapras staging at `PokemonLeague_LoreleisRoom` remains unchanged.
+
+**Difficulty / resources**
+- First League normal tier remains `.iv = 198`; Lapras also remains at that tier.
+- Rematch normal tier remains `.iv = 239`; Lapras remains `.iv = 247`.
+- Trainer healing remains 2 Full Restores in both encounters.
+- A-016 ace-only held-item policy is applied: only Lapras is equipped (Sitrus Berry first League, Leftovers rematch).
+- No global IV inflation is introduced.
+
+**Legality / validation**
+- All approved moves are legal through existing Gen III/Full repository learnability rules; no Lorelei trainer-only legality exception is needed.
+- Initial feature HEAD `b293804e2df22029cc2298bbaf1481ef2dc6a818` compiled, reproduced and passed exact rosters/trainer legality, but Full Gameplay Core **#670** stopped in the newly extended ace validator because the validator referenced an undefined local variable.
+- Validator-only commit `ba5af8fabfd4a62a78e15a4c664d39cb04838ac8` corrected the parser call; Lorelei gameplay data was unchanged.
+- Full Gameplay Core **#671: SUCCESS** on exact technical feature HEAD `ba5af8fabfd4a62a78e15a4c664d39cb04838ac8`.
+- PR #31 is the controlled integration path; post-integration Full Gameplay Core remains required before this microblock is CLOSED.
