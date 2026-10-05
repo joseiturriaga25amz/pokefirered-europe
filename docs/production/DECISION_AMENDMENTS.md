@@ -1165,7 +1165,7 @@ Vanilla FireRed frequently uses non-monotonic party ordering, while several Full
 
 ### Lorelei curve/identity amendment — approved target
 
-**Status:** APPROVED / IMPLEMENTED / VALIDATED / CI-GREEN / INTEGRATION PENDING.
+**Status:** APPROVED / IMPLEMENTED / VALIDATED / CI-GREEN / CLOSED.
 
 Lorelei is the first Elite Four trainer reviewed under A-016. The approved design intentionally uses vanilla-like non-monotonic party ordering, keeps Lapras as the sole held-item user and preserves the existing Full IV/healing tiers. Six Pokémon are approved for Lorelei in both League encounters; this does **not** create a requirement that Bruno, Agatha or Lance must also use six in their first League teams.
 
@@ -1208,4 +1208,6 @@ Lorelei is the first Elite Four trainer reviewed under A-016. The approved desig
 - Initial feature HEAD `b293804e2df22029cc2298bbaf1481ef2dc6a818` compiled, reproduced and passed exact rosters/trainer legality, but Full Gameplay Core **#670** stopped in the newly extended ace validator because the validator referenced an undefined local variable.
 - Validator-only commit `ba5af8fabfd4a62a78e15a4c664d39cb04838ac8` corrected the parser call; Lorelei gameplay data was unchanged.
 - Full Gameplay Core **#671: SUCCESS** on exact technical feature HEAD `ba5af8fabfd4a62a78e15a4c664d39cb04838ac8`.
-- PR #31 is the controlled integration path; post-integration Full Gameplay Core remains required before this microblock is CLOSED.
+- PR #31 merged the approved Lorelei branch to `master` as `d2cf0df0cd797bacbc88266be6e0f2ea0c4a0377`.
+- Post-integration Full Gameplay Core **#673: SUCCESS** on that exact master SHA.
+- Lorelei roster/identity microblock is therefore **CLOSED**.
