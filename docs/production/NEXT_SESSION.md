@@ -70,14 +70,19 @@ Use `docs/spec/` only for frozen historical design details.
 - PR #30 merged Giovanni to `master` as `02636a3b785c9d3a21c2efeeee6a7fe2d770dc02`; post-integration Full Gameplay Core **#669 SUCCESS** on that exact SHA.
 - Giovanni four-encounter progression/identity/staging microblock: **CLOSED**. Hideout: Onix 29 / Rhyhorn 30 / Kangaskhan 33. Silph: Nidorino 45 / Kangaskhan 46 / Rhyhorn 47 / Nidoqueen 49. Gym: Kingler 51 / Golem 52 / Nidoking 53 / Nidoqueen 54 / Rhydon 56 / Mewtwo 56. Rematch: Cloyster 67 / Camerupt 68 / Machamp 69 / Nidoking 70 / Nidoqueen 71 / Rhydon 74. Persian stages beside Giovanni in Hideout, Silph and Viridian.
 
+- Lorelei technical feature HEAD `ba5af8fabfd4a62a78e15a4c664d39cb04838ac8`: Full Gameplay Core **#671 SUCCESS**.
+- PR #31 merged Lorelei to `master` as `d2cf0df0cd797bacbc88266be6e0f2ea0c4a0377`.
+- Lorelei post-integration Full Gameplay Core **#673 SUCCESS** on that exact master SHA.
+- Lorelei roster/identity microblock: **CLOSED**. First League: Dewgong 57 / Cloyster 58 / Slowpoke 56 / Slowbro 59 / Jynx 60 / Lapras 61. Strengthened League: Dewgong 75 / Cloyster 77 / Piloswine 74 / Slowking 76 / Jynx 75 / Lapras 79. Only Lapras is equipped.
+
 ## Exact next action
 
-1. the Gym Leader + Giovanni A-013 pass is complete and CLOSED;
-2. continue the later major-trainer identity review with Lorelei from current `master`;
-3. apply A-016 while reviewing Lorelei/Bruno/Agatha/Lance/Gary: deliberate vanilla-like non-monotonic party order, ace-only held item by default, current Full IV tiers preserved unless a targeted compensation exception is approved;
+1. the Gym Leader + Giovanni A-013 pass and the Lorelei roster/identity microblock are complete and **CLOSED**;
+2. continue the later major-trainer identity review with **Bruno** from current `master`;
+3. apply A-016 while reviewing Bruno/Agatha/Lance/Gary: deliberate vanilla-like non-monotonic party order, ace-only held item by default, current Full IV tiers preserved unless a targeted compensation exception is approved;
 4. after those major-trainer rosters are closed, run one reorder-only transversal party-order polish audit for Gym Leaders/Giovanni/League/Gary;
 5. the eight Gym Leader rematch dialogue sets are functionally valid but narratively too template-like; handle their approved rewrite as a separate dialogue-only microblock after the roster review;
-6. do not change Lorelei gameplay until the user reviews and approves the target.
+6. do not change Bruno gameplay until the user reviews and approves the target.
 
 ## Continuity rule
 
