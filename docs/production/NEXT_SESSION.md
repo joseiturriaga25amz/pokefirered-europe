@@ -73,9 +73,11 @@ Use `docs/spec/` only for frozen historical design details.
 ## Exact next action
 
 1. the Gym Leader + Giovanni A-013 pass is complete and CLOSED;
-2. begin the later major-trainer identity review with Lorelei from current `master`;
-3. compare vanilla FireRed baseline, current Full implementation and approved canon/identity evidence before proposing any changes;
-4. do not change Lorelei gameplay until the user reviews and approves the target; then continue Bruno -> Agatha -> Lance -> Gary/Blue.
+2. continue the later major-trainer identity review with Lorelei from current `master`;
+3. apply A-016 while reviewing Lorelei/Bruno/Agatha/Lance/Gary: deliberate vanilla-like non-monotonic party order, ace-only held item by default, current Full IV tiers preserved unless a targeted compensation exception is approved;
+4. after those major-trainer rosters are closed, run one reorder-only transversal party-order polish audit for Gym Leaders/Giovanni/League/Gary;
+5. the eight Gym Leader rematch dialogue sets are functionally valid but narratively too template-like; handle their approved rewrite as a separate dialogue-only microblock after the roster review;
+6. do not change Lorelei gameplay until the user reviews and approves the target.
 
 ## Continuity rule
 
