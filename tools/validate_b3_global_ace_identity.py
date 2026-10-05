@@ -130,7 +130,7 @@ def main():
     lorelei_rematch_ace = exact_mon("sParty_EliteFourLorelei2","LAPRAS",79)
     assert lorelei_rematch_ace["item"] == "LEFTOVERS", ("sParty_EliteFourLorelei2","LAPRAS","expected item","LEFTOVERS",lorelei_rematch_ace["item"])
     for party_name, ace_species in (("sParty_EliteFourLorelei","LAPRAS"),("sParty_EliteFourLorelei2","LAPRAS")):
-        for mon in parties[party_name]:
+        for mon in rows(party_name):
             if mon["species"] != ace_species:
                 assert mon["item"] == "NONE", (party_name, mon["species"], "non-ace held item", mon["item"])
 
