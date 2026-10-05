@@ -1120,3 +1120,44 @@ The A-013 Giovanni pass is approved as one four-encounter progression: Rocket Hi
 - PR #30 merged to `master` as `02636a3b785c9d3a21c2efeeee6a7fe2d770dc02`.
 - Full Gameplay Core **#669: SUCCESS** on that exact integrated master SHA.
 - Giovanni four-encounter progression/identity/staging microblock is therefore **CLOSED**.
+
+
+## A-016 — Major-trainer battle presentation and rematch-dialogue policy
+
+### Decision
+
+Approved transversal policy for the ongoing major-trainer review beginning with Lorelei and later applying to Bruno, Agatha, Lance, Gary/Blue, plus a later cross-check of already-closed Gym Leaders and Giovanni.
+
+1. **Party order is intentional, not monotonically level-sorted and not random.**
+   - Do not default to lowest-level -> highest-level ordering.
+   - Choose the lead for trainer identity, matchup role or battle pacing.
+   - Intermediate party slots may deliberately mix levels in a vanilla-like order.
+   - Preserve the ace as the trainer's principal combat identity; the ace may remain late in the party where appropriate.
+   - Do not change approved levels solely to create a less ordered sequence.
+   - Because Gen III trainer AI can switch and choose a suitable replacement based on battle state, party-array order is treated primarily as lead/presentation control rather than a guaranteed full battle sequence.
+   - After Lorelei -> Bruno -> Agatha -> Lance -> Gary/Blue are reviewed, perform one small transversal **party-order polish** audit for the eight Gym Leaders, Giovanni, Elite Four and Gary/Blue. That audit must be reorder-only unless a separate change is explicitly approved.
+
+2. **Held items use an ace-only default.**
+   - For major trainers, only the approved ace should hold an item by default.
+   - Non-ace held items require an explicit identity or tactical justification and user approval.
+   - This policy applies prospectively during the Elite Four/Gary review and should be checked in the later transversal pass rather than reopening already-closed trainers ad hoc.
+   - Lorelei therefore enters review with Lapras as the default sole held-item user unless the user explicitly approves an exception.
+
+3. **Keep the current Full trainer-IV tiers unless a specific compensation rule is approved.**
+   - Do not raise Full trainer IVs merely to match vanilla's often near-perfect trainer IVs.
+   - The engine converts trainer-party `.iv` with `fixedIV = trainerIv * 31 / 255`; Full's higher levels, stronger movesets, larger rosters and improved coverage already create a stronger overall battle even when raw IVs are lower than vanilla.
+   - Intermediate-stage ace compensation remains a targeted exception mechanism, not a reason for global IV inflation.
+   - Each major-trainer review should still verify that its IV tier fits the surrounding progression.
+
+4. **Gym Leader rematch dialogue requires a dedicated narrative polish pass.**
+   - The existing eight dialogue sets are technically unique and functionally valid, but their offer structure is too repetitive/basic.
+   - Preserve optional consent to start a rematch; speaking to a leader must not force battle.
+   - Rewrite each leader's offer/intro/defeat/after text with stronger character voice, Champion acknowledgement where appropriate, training/progression references and signature-Pokémon identity.
+   - Treat this as a separate dialogue-only microblock after the current major-trainer roster review, not as incidental text churn during Lorelei/Bruno/Agatha/Lance/Gary gameplay work.
+   - Update the rematch-dialogue validator so it continues to enforce uniqueness without reducing quality to merely different wording.
+
+### Rationale
+
+Vanilla FireRed frequently uses non-monotonic party ordering, while several Full teams became visually sorted by level during curve design. A deliberate vanilla-like order gives better pacing without altering the approved level curve. The ace-only item rule restores a clearer hierarchy and is consistent with the direction already approved across the recent Gym Leader pass. Lower Full IV tiers are intentional difficulty tuning rather than an accidental nerf; level/moveset/roster improvements outweigh the small IV loss. Runtime feedback also established that unique-but-template-like rematch dialogue is not sufficient narrative polish.
+
+**Status:** APPROVED / DOCUMENTED. No gameplay or dialogue text changed by this amendment itself.
