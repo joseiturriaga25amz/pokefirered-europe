@@ -124,6 +124,16 @@ def main():
     assert giovanni_mewtwo["iv"] == 255, ("sParty_LeaderGiovanni","MEWTWO","expected max IV",giovanni_mewtwo["iv"])
     assert giovanni_mewtwo["item"] == "NONE", ("sParty_LeaderGiovanni","MEWTWO","expected no item",giovanni_mewtwo["item"])
 
+    # A-016 Lorelei: Lapras is the sole held-item user in both League encounters.
+    lorelei_story_ace = exact_mon("sParty_EliteFourLorelei","LAPRAS",61)
+    assert lorelei_story_ace["item"] == "SITRUS_BERRY", ("sParty_EliteFourLorelei","LAPRAS","expected item","SITRUS_BERRY",lorelei_story_ace["item"])
+    lorelei_rematch_ace = exact_mon("sParty_EliteFourLorelei2","LAPRAS",79)
+    assert lorelei_rematch_ace["item"] == "LEFTOVERS", ("sParty_EliteFourLorelei2","LAPRAS","expected item","LEFTOVERS",lorelei_rematch_ace["item"])
+    for party_name, ace_species in (("sParty_EliteFourLorelei","LAPRAS"),("sParty_EliteFourLorelei2","LAPRAS")):
+        for mon in parties[party_name]:
+            if mon["species"] != ace_species:
+                assert mon["item"] == "NONE", (party_name, mon["species"], "non-ace held item", mon["item"])
+
     # Sabrina's evolved rematch ace uses the normal rematch IV tier.
     sabrina_rematch_ace = exact_mon("sParty_RSCooltrainerF","ALAKAZAM",72)
     assert sabrina_rematch_ace["iv"] == 231, ("sParty_RSCooltrainerF","ALAKAZAM","expected normal rematch IV",sabrina_rematch_ace["iv"])
@@ -163,6 +173,8 @@ def main():
         ("sParty_RSCooltrainerF", "ALAKAZAM", 72): ("PSYCHIC", "SHADOW_BALL", "CALM_MIND", "RECOVER"),
         ("sParty_LeaderBlaine", "MAGMAR", 52): ("FIRE_BLAST", "FLAMETHROWER", "FIRE_PUNCH", "STRENGTH"),
         ("sParty_RSLady", "MAGMAR", 73): ("FLAMETHROWER", "FIRE_BLAST", "PSYCHIC", "BRICK_BREAK"),
+        ("sParty_EliteFourLorelei", "LAPRAS", 61): ("ICE_BEAM", "SURF", "BODY_SLAM", "CONFUSE_RAY"),
+        ("sParty_EliteFourLorelei2", "LAPRAS", 79): ("SURF", "BLIZZARD", "THUNDERBOLT", "PROTECT"),
         ("sParty_LeaderGiovanni", "RHYDON", 56): ("EARTHQUAKE", "ROCK_SLIDE", "DOUBLE_EDGE", "BRICK_BREAK"),
         ("sParty_RSBeauty", "RHYDON", 74): ("EARTHQUAKE", "ROCK_SLIDE", "DOUBLE_EDGE", "MEGAHORN"),
         ("sParty_LeaderGiovanni", "MEWTWO", 56): ("PSYCHIC", "SHADOW_BALL", "SWIFT", "RECOVER"),
