@@ -423,6 +423,26 @@ Current engine is FireRed-derived with existing Full physical/special-category A
 
 If eventually approved, isolate it in an independently reviewable technical microblock with explicit regression/legality validators, deterministic battle scenarios, exact-head Full Gameplay Core, controlled integration, integrated-head CI and targeted MyBoy runtime acceptance. No gameplay/AI changes are authorized by this entry.
 
+## FEASIBILITY REVIEW — Spanish character name Lorelei → Prima (2026-10-08)
+
+**Status:** PROPOSED / FEASIBILITY REVIEW COMPLETE / NOT APPROVED FOR IMPLEMENTATION. This is a user-suggested self-contained localization microblock, assessed at the safe checkpoint after Agatha closure and before Lance. No ROM/gameplay changes authorized. Do not silently treat this proposal as an approved design amendment.
+
+**Finding:** technically feasible with low predicted compatibility risk **if strictly limited to Spanish-facing display strings**. The existing trainer JSON has distinct `trainerName_english`, `trainerName_spanish`, `trainerName_italian`, `trainerName_french` and `trainerName_german` fields for each of the two Lorelei battles. Spanish currently uses `LORELEI` for both, while French already uses `OLGA`, confirming that localized character display names are supported. `PRIMA` is shorter than `LORELEI`, so the substitution does not introduce a longer trainer name. The unrelated location string `ISLA PRIMA` already exists in Spanish; it must **not** be altered.
+
+**Confirmed Spanish-facing references to review if approved:**
+1. `src/data/trainers.json` — `trainerName_spanish` for `TRAINER_ELITE_FOUR_LORELEI` and `TRAINER_ELITE_FOUR_LORELEI_2` (only these two name fields).
+2. `data/maps/PokemonLeague_LoreleisRoom/text_es.inc` — first battle and rematch self-introductions (2 visible name occurrences).
+3. `data/maps/FourIsland_LoreleisHouse/text_es.inc` — home dialogue name prefixes (2 occurrences).
+4. `data/maps/FourIsland_IcefallCave_Back/text_es.inc` — Team Rocket scene name prefixes (4 occurrences).
+5. `data/maps/FourIsland_Mart/text_es.inc` — NPC reference to her name (1 occurrence).
+6. `data/text/spanish/fame_checker.inc` — Fame Checker, related quotations and Pokémon Journal text (11 visible `LORELEI` lines, excluding symbols/identifiers).
+
+**Identity-preservation rules:** leave `TRAINER_ELITE_FOUR_LORELEI*`, `FAMECHECKER_LORELEI`, map paths/labels, trainer picture graphics, flags/vars, event scripts, pointers, all English/Italian/French/German names and texts, roster, battle AI, link/trade protocol and SaveBlock data unchanged. Do not broadly replace `Lorelei` in code; preserve internal symbols. Review any additional user-visible Spanish occurrences before implementation.
+
+**Validation and acceptance if separately approved:** make a dedicated small feature branch; adjust only the needed strings and Spanish trainer names, check in-game character encoding and Fame Checker/Pokémon Journal line layout, add a targeted Spanish-name/reference validator if justified, and refresh the audited `src/data/trainers.json` blob lock in `tools/validate_audited_data_blobs.py`. Run Full Gameplay Core on the exact feature HEAD and after integration, and test the battle introduction, rematch, Four Island home/cave/mart and Fame Checker in MyBoy, including existing save compatibility. This is a ROM-content change, **not** a docs-only exemption. No claim of absolute zero risk or of runtime validation is made here.
+
+**Decision pending:** user approval of the precise target **Spanish display name `PRIMA`**, while all other languages and technical identities stay as-is. Until then, Lance review remains the next production work.
+
 ## Documentation cadence
 
 After every B-block:
