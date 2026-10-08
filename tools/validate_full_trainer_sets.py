@@ -285,7 +285,41 @@ def allowed_moves(
     return allowed
 
 
+def validate_prima_spanish_localization() -> None:
+    """A localized display name must not rewrite Lorelei's internal identity."""
+    import json
+
+    data = json.loads(read("src/data/trainers.json"))
+    trainers = data.get("trainers", data)
+    by_id = {trainer["id"]: trainer for trainer in trainers}
+    for trainer_id in ("TRAINER_ELITE_FOUR_LORELEI", "TRAINER_ELITE_FOUR_LORELEI_2"):
+        trainer = by_id[trainer_id]
+        assert trainer["trainerName_spanish"] == "PRIMA", trainer_id
+        assert trainer["trainerName_english"] == "LORELEI", trainer_id
+        assert trainer["trainerName_italian"] == "LORELEI", trainer_id
+        assert trainer["trainerName_german"] == "LORELEI", trainer_id
+        assert trainer["trainerName_french"] == "OLGA", trainer_id
+
+    localized = {
+        "data/maps/PokemonLeague_LoreleisRoom/text_es.inc": 2,
+        "data/maps/FourIsland_LoreleisHouse/text_es.inc": 2,
+        "data/maps/FourIsland_IcefallCave_Back/text_es.inc": 4,
+        "data/maps/FourIsland_Mart/text_es.inc": 1,
+        "data/text/spanish/fame_checker.inc": 11,
+    }
+    for path, expected in localized.items():
+        lines = read(path).splitlines()
+        visible = [line for line in lines if line.lstrip().startswith(".string ")]
+        assert sum(line.count("PRIMA") for line in visible) >= expected, path
+        assert all("LORELEI" not in line for line in visible), path
+
+    # The pre-existing name of One Island is unrelated to the character.
+    assert 'ISLA PRIMA' in read("src/data/text/strings_1_es.h")
+
+
 def main() -> None:
+    validate_prima_spanish_localization()
+
     species_ids = constants("include/constants/species.h", "SPECIES_")
     move_ids = constants("include/constants/moves.h", "MOVE_")
     item_ids = constants("include/constants/items.h", "ITEM_")
