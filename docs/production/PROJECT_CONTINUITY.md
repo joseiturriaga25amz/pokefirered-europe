@@ -7,6 +7,8 @@
 This section is the current resume point. Later dated sections preserve history and may name branches that are no longer active.
 
 - Canonical repository: `joseiturriaga25amz/pokefirered-europe`.
+- **Current Bruno checkpoint (2026-10-08):** approved A-016 Bruno teams IMPLEMENTED on feature HEAD `4af261c4ad9d407cb22adff40188ac1dd6ca81bd`; exact feature Full Gameplay Core **#675 SUCCESS** (first attempt #674 failed solely in a newly added validator, since corrected). PR **#32** MERGED to `master` as `478e56c4f40f4ca4c12d36be13e8c5bee2728cd7`. This is **NOT CLOSED**: post-integration Full Gameplay Core on that exact integrated SHA has not been verified; `fetch_commit_workflow_runs` only returns pull-request-triggered runs and cannot establish whether a `push` run exists. Next: independently inspect `master` Actions for SHA `478e56c`, obtain exact-head post-merge SUCCESS, then record closure. Do not start Agatha before closure. The ensuing documentation-only continuity commit does not change gameplay/ROM and does not substitute for the missing technical gate.
+
 - Integration branch: `master`.
 - Last production block fully **CLOSED on master**: **B8 — Signature Pokémon staging**.
 - B8 reconciled feature HEAD: `8794674c33e0ff9ecf899f557da76ea07a57e27b`.
