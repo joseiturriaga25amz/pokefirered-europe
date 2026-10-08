@@ -3,7 +3,7 @@ FourIsland_Mart_Text_LoreleiGrewUpOnThisIsland::
     .string "ENTRENADORA fuerte y poderosa\l"
     .string "como pocas.\p"
     .string "Seguro que la conoces, se llama\n"
-    .string "LORELEI y es del ALTO MANDO.\p"
+    .string "PRIMA y es del ALTO MANDO.\p"
     .string "Yo le enseñé muchas cosas sobre\n"
     .string "los POKéMON cuando aún era un\l"
     .string "comino.$"
