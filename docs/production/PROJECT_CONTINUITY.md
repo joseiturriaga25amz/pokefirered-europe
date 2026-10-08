@@ -2,7 +2,7 @@
 
 **Purpose:** make the repository sufficient to resume the project without relying on any previous chat.
 
-## 0. Current operational state — 2026-10-05
+## 0. Current operational state — 2026-10-08
 
 This section is the current resume point. Later dated sections preserve history and may name branches that are no longer active.
 
@@ -72,7 +72,9 @@ This section is the current resume point. Later dated sections preserve history 
 
 **Lorelei closure evidence:** technical feature HEAD `ba5af8fabfd4a62a78e15a4c664d39cb04838ac8` passed Full Gameplay Core **#671**. Final feature HEAD `63c56d3bfb119de396418ca493c6a4f3a2d89069` adds only the approved-target documentation on top of the green technical payload. PR #31 merged to `master` as `d2cf0df0cd797bacbc88266be6e0f2ea0c4a0377`; post-integration Full Gameplay Core **#673** passed on that exact master SHA. Lorelei roster/identity microblock is **CLOSED**. Final first League: Dewgong 57 / Cloyster 58 / Slowpoke 56 / Slowbro 59 / Jynx 60 / Lapras 61. Final strengthened League: Dewgong 75 / Cloyster 77 / Piloswine 74 / Slowking 76 / Jynx 75 / Lapras 79. Only Lapras holds an item; existing IV tiers, healing and Lapras staging are preserved.
 
-**Next production action:** continue the later major-trainer identity review with **Bruno**, then Agatha, Lance and Gary/Blue. Apply approved A-016 during these reviews: intentional non-monotonic/vanilla-like party order (not random), ace-only held items by default, preserve current Full IV tiers unless a specific compensation exception is approved, and defer the approved Gym Leader rematch-dialogue rewrite to its own dialogue-only microblock after the major-trainer roster review. Do not modify Bruno gameplay until the user approves the target.
+**Bruno approved target:** design review and difficulty audit are complete. First League is Onix 58 / Hitmonchan 59 / Hitmonlee 60 / Onix 60 / Machamp 62 @ Sitrus Berry with vanilla-oriented tactical moves. Strengthened League is Hitmontop 75 / Hitmonchan 76 / Hitmonlee 76 / Hariyama 77 / Steelix 78 / Machamp 80 @ Black Belt. Only Machamp holds an item. Existing IV tiers and 2 Full Restores remain. Rematch Hitmonlee Lv76 Detect is an explicitly approved narrow trainer-only legality exception; Steelix Dig is legal and deliberately retained. Audit found no further move-strength adjustment necessary for Bruno's position as Elite Four #2.
+
+**Next production action:** implement the approved Bruno target on a fresh feature branch from the current `master`, including only necessary roster/validator/frozen-expectation changes. Validate, audit, run Full Gameplay Core on the exact feature HEAD, integrate through controlled PR, then verify the exact integrated `master` HEAD before closing Bruno. Do not begin Agatha until Bruno is CLOSED.
 
 ### Existing continuity roles — do not duplicate
 
