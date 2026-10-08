@@ -1215,7 +1215,9 @@ Lorelei is the first Elite Four trainer reviewed under A-016. The approved desig
 
 ### Bruno curve/identity amendment — approved target
 
-**Status:** APPROVED / DOCUMENTED / IMPLEMENTATION PENDING.
+**Status:** APPROVED / IMPLEMENTED / VALIDATED / CI-GREEN / CLOSED.
+
+**Closure evidence (2026-10-08):** feature HEAD `4af261c4ad9d407cb22adff40188ac1dd6ca81bd` passed Full Gameplay Core **#675 SUCCESS**. PR #32 merged to `master` as `478e56c4f40f4ca4c12d36be13e8c5bee2728cd7`; exact integrated master SHA passed Full Gameplay Core **#676 SUCCESS**, confirmed in GitHub Actions. Initial feature run #674 failed only in the new ace-validator check, fixed by `4af261c` without changing Bruno parties. No MyBoy final-RC runtime acceptance is implied.
 
 Bruno is the second Elite Four trainer reviewed under A-016. The first League deliberately restores the FireRed vanilla tactical identity at Full's approved levels/IV tier instead of maximizing coverage. The strengthened League expands Bruno into a clearer Fighting-style master: Hitmontop completes the Hitmon trio, Hariyama represents heavyweight fighting, one Onix lineage is preserved through Steelix, and Machamp remains the sole ace/signature and held-item user.
 
