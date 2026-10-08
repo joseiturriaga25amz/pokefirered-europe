@@ -1211,3 +1211,55 @@ Lorelei is the first Elite Four trainer reviewed under A-016. The approved desig
 - PR #31 merged the approved Lorelei branch to `master` as `d2cf0df0cd797bacbc88266be6e0f2ea0c4a0377`.
 - Post-integration Full Gameplay Core **#673: SUCCESS** on that exact master SHA.
 - Lorelei roster/identity microblock is therefore **CLOSED**.
+
+
+### Bruno curve/identity amendment — approved target
+
+**Status:** APPROVED / DOCUMENTED / IMPLEMENTATION PENDING.
+
+Bruno is the second Elite Four trainer reviewed under A-016. The first League deliberately restores the FireRed vanilla tactical identity at Full's approved levels/IV tier instead of maximizing coverage. The strengthened League expands Bruno into a clearer Fighting-style master: Hitmontop completes the Hitmon trio, Hariyama represents heavyweight fighting, one Onix lineage is preserved through Steelix, and Machamp remains the sole ace/signature and held-item user.
+
+**First League**
+1. Onix Lv.58 — Earthquake / Iron Tail / Roar / Rock Tomb; no held item.
+2. Hitmonchan Lv.59 — Sky Uppercut / Mach Punch / Rock Tomb / Counter; no held item.
+3. Hitmonlee Lv.60 — Mega Kick / Foresight / Brick Break / Facade; no held item.
+4. Onix Lv.60 — Double-Edge / Earthquake / Iron Tail / Sand Tomb; no held item.
+5. Machamp Lv.62 — Cross Chop / Rock Tomb / Scary Face / Bulk Up; Sitrus Berry; ace/signature.
+
+**Strengthened League / rematch**
+1. Hitmontop Lv.75 — Brick Break / Strength / Rolling Kick / Detect; no held item.
+2. Hitmonchan Lv.76 — Brick Break / Fire Punch / Ice Punch / ThunderPunch; no held item.
+3. Hitmonlee Lv.76 — Brick Break / Mega Kick / Hi Jump Kick / Detect; no held item.
+4. Hariyama Lv.77 — Fake Out / Vital Throw / Strength / Seismic Toss; no held item.
+5. Steelix Lv.78 — Iron Tail / Earthquake / Crunch / Dig; no held item.
+6. Machamp Lv.80 — Cross Chop / Rock Slide / Double-Edge / Bulk Up; Black Belt; ace/signature.
+
+**Design intent**
+- First-League order remains essentially vanilla because Bruno's vanilla presentation is already coherent and mostly ascending; A-016 does not require artificial non-monotonicity.
+- The first encounter intentionally keeps several vanilla tactical/identity moves (Roar, Counter, Foresight, Sand Tomb, Scary Face) rather than replacing every slot with maximum-coverage attacks.
+- Audit against Full's AI confirmed Roar, Counter, speed-control moves and Bulk Up have usable scoring logic; the first battle is not considered underpowered for Bruno's position as Elite Four #2.
+- Hitmonchan's elemental punches are physical in Full's move-based physical/special split and therefore correctly use its Attack stat.
+- Rematch identity differentiates roles: Hitmontop technique/rotation, Hitmonchan boxing/elemental punches, Hitmonlee kicking style, Hariyama heavyweight/sumo, Steelix defensive lineage, Machamp final power ace.
+- Hitmontop is a justified rematch addition because it completes the Hitmon family; Hariyama is a justified sixth slot because it strengthens Bruno's Fighting identity. Six Pokémon in the rematch does not imply six in the first League.
+- One first-League Onix progresses conceptually to Steelix; the other leaves the rematch roster rather than forcing both vanilla Steelix slots.
+- Machamp progression is deliberate: Rock Tomb -> Rock Slide and Scary Face -> Double-Edge, while Cross Chop + Bulk Up remain signature continuity.
+- Dig on Steelix is deliberately retained despite overlapping Ground typing with Earthquake; it is an approved identity/pacing choice rather than an optimization error.
+
+**Difficulty / resources**
+- First League normal tier remains `.iv = 206`; Machamp remains at that tier.
+- Rematch normal tier remains `.iv = 239`; Machamp remains `.iv = 247`.
+- Trainer healing remains 2 Full Restores in both encounters.
+- A-016 ace-only held-item policy is applied: only Machamp is equipped (Sitrus Berry first League, Black Belt rematch).
+- No global IV inflation is introduced.
+
+**Legality**
+- All proposed moves are legal under current Full repository learnability rules except rematch Hitmonlee Lv.76 Detect.
+- **Approved trainer-only exception:** `sParty_EliteFourBruno2 / SPECIES_HITMONLEE / Lv76 / MOVE_DETECT`.
+- This exception must be narrow and must not change Hitmonlee/Tyrogue global learnsets.
+- Steelix Dig is legal and explicitly approved.
+- No other Bruno trainer-only move exception is approved.
+
+**Implementation requirement**
+- Implement only this approved target plus the minimum validator/frozen-roster updates required by the intended change.
+- Preserve trainer healing, IV tiers and Machamp ace/signature role.
+- Run the normal technical validation/audit/Full Gameplay Core exact-head flow before integration.
