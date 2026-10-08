@@ -413,6 +413,16 @@ Scope:
 - repair any blocker, regenerate exact RC if code changes;
 - final audit log and release decision.
 
+## FUTURE PROPOSAL — Conservative trainer battle AI improvements (NOT APPROVED)
+
+**State:** PROPOSED / EVALUATION PENDING. Recorded on 2026-10-08 at the start of the Agatha roster review. This is an out-of-scope idea, not an approved design or implementation block; it must not interrupt Agatha.
+
+Investigate improving decision quality for important trainer battles (Gym Leaders, Elite Four, Giovanni and Gary/Blue) without unfair foreknowledge of the player's hidden moves/actions. Candidate research: move utility/type and KO selection, status/setup timing, and—only after risk assessment—switching and team-level decisions.
+
+Current engine is FireRed-derived with existing Full physical/special-category AI adaptations. Before approving a design, inspect AI flags and scripts, engine move selection, switch/item logic, double battles and battle RNG, and determine whether changes can be scoped without SaveBlock, link/trade protocol or battle-state ABI changes. Do not promise zero compatibility risk.
+
+If eventually approved, isolate it in an independently reviewable technical microblock with explicit regression/legality validators, deterministic battle scenarios, exact-head Full Gameplay Core, controlled integration, integrated-head CI and targeted MyBoy runtime acceptance. No gameplay/AI changes are authorized by this entry.
+
 ## Documentation cadence
 
 After every B-block:
