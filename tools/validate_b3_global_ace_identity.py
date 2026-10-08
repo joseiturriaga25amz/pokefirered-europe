@@ -142,7 +142,7 @@ def main():
         mons = rows(party_name)
         ace = exact_mon(party_name, "MACHAMP", level)
         assert ace["item"] == item and ace["iv"] == ace_iv, (party_name, ace)
-        assert all(mon["item"] == "NONE" and mon["iv"] == normal_iv for mon in mons if mon is not ace), party_name
+        assert all(mon["item"] == "NONE" and mon["iv"] == normal_iv for mon in mons if not (mon["species"] == "MACHAMP" and mon["lvl"] == level)), party_name
 
     # Sabrina's evolved rematch ace uses the normal rematch IV tier.
     sabrina_rematch_ace = exact_mon("sParty_RSCooltrainerF","ALAKAZAM",72)
