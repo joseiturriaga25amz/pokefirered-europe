@@ -1213,6 +1213,37 @@ Lorelei is the first Elite Four trainer reviewed under A-016. The approved desig
 - Lorelei roster/identity microblock is therefore **CLOSED**.
 
 
+### Agatha curve/identity amendment — approved target (2026-10-08)
+
+**Status:** APPROVED / IMPLEMENTED ON FEATURE BRANCH / CI AND INTEGRATION PENDING.
+
+Agatha is Elite Four #3. Preserve her Ghost/Poison attrition identity and the existing Full difficulty curve, with original FireRed-like tactical moves in the first League and an offensively stronger six-Pokémon rematch. All moves were checked against existing Gen III/Full level/TM/tutor/lineage data; no trainer-only exceptions or global learnset changes are required. **Haunter Protect** is the user's approved final correction replacing Curse, and is legal through TM17. Misdreavus retains Mean Look; final Gengar holds Spell Tag.
+
+**First League — exact approved order**
+1. Gengar Lv59 — Confuse Ray / Shadow Ball / Double Team / Toxic; no held item; trainer IV byte 214.
+2. Golbat Lv60 — Confuse Ray / Bite / Wing Attack / Toxic; no held item; trainer IV byte 214.
+3. Haunter Lv60 — Mean Look / Protect / Hypnosis / Dream Eater; no held item; trainer IV byte 214.
+4. Arbok Lv61 — Bite / Sludge Bomb / Screech / Iron Tail; no held item; trainer IV byte 214.
+5. Gengar Lv63 — Shadow Ball / Sludge Bomb / Hypnosis / Nightmare; **Sitrus Berry**, ace and signature; trainer IV byte 214.
+
+**Strengthened League — exact approved order**
+1. Gengar Lv76 — Shadow Ball / Psychic / Hypnosis / Confuse Ray; no held item; original trainer IV byte 247 retained.
+2. Misdreavus Lv77 — Shadow Ball / Psychic / Thunderbolt / Mean Look; no held item; trainer IV byte 239.
+3. Arbok Lv77 — Sludge Bomb / Earthquake / Screech / Toxic; no held item; trainer IV byte 239.
+4. Sableye Lv78 — Shadow Ball / Faint Attack / Detect / Confuse Ray; no held item; trainer IV byte 239.
+5. Crobat Lv79 — Aerial Ace / Sludge Bomb / Toxic / Confuse Ray; no held item; trainer IV byte 239.
+6. Gengar Lv81 — Shadow Ball / Sludge Bomb / Thunderbolt / Psychic; **Spell Tag**, ace and signature; original trainer IV byte 247 retained.
+
+**Constraints and rationale**
+- Only the final Gengar of each battle holds an item; first encounter uses Sitrus Berry and rematch uses Spell Tag.
+- Existing trainer IV tiers are preserved, including both rematch Gengar at 247. This does not approve new generic IV inflation.
+- Preserve Agatha's two Full Restores, all trainer AI flags, and existing Gengar overworld staging.
+- Do not modify global move metadata, trainer AI, save/link structures or other Elite Four parties in this microblock.
+- Shadow Ball and Sludge Bomb are special-category moves in Full; rematch ace is intentionally fully offensive.
+- Haunter's sleep/protection strategy is tactical but not guaranteed to execute optimally with FireRed-derived AI; no new AI behavior is approved here.
+- Validation requires exact roster/ace/item locks, trainer legality, audited blob relock, Full Gameplay Core exact-head success, controlled PR merge and post-integration exact master CI. MyBoy final RC runtime QA remains separate.
+- The independent future AI-polish proposal remains **PROPOSED** in POLISH_IMPLEMENTATION_MATRIX.md, not part of Agatha.
+
 ### Bruno curve/identity amendment — approved target
 
 **Status:** APPROVED / IMPLEMENTED / VALIDATED / CI-GREEN / CLOSED.

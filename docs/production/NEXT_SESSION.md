@@ -18,6 +18,8 @@ Use `docs/spec/` only for frozen historical design details.
 - **Current checkpoint — Bruno CLOSED:** feature HEAD `4af261c4ad9d407cb22adff40188ac1dd6ca81bd` passed Full Gameplay Core **#675 SUCCESS**; PR #32 merged as `478e56c4f40f4ca4c12d36be13e8c5bee2728cd7`; exact integrated master SHA passed Full Gameplay Core **#676 SUCCESS** (verified from GitHub Actions UI). Only documentary continuity changes followed. **Next: Agatha design/roster review; no Agatha changes approved yet.**
 
 - Integration branch: `master`.
+- **Agatha active microblock:** `feature/agatha-roster-identity`; exact approved moves, order and ace-only held items implemented. Haunter Lv60 has Protect instead of Curse; Misdreavus Lv77 keeps Mean Look; ace Gengar Lv81 holds Spell Tag. Existing IVs and 2 Full Restores stay unchanged. Approved target documented in `DECISION_AMENDMENTS.md`. **Current state: implementation on branch, pending validation, PR integration and exact integrated-head Full Gameplay Core.** First inspect live branch HEAD and any exact-head CI result. Do not start Lance before Agatha is CLOSED.
+
 - Last production block **CLOSED on master**: **B8 — Signature Pokémon staging**.
 - B8 master checkpoint: `28f42346916bf9d19c558ce4ce19fb849f5b6e33`.
 - B8 post-integration Full Gameplay Core **#617: SUCCESS**.
