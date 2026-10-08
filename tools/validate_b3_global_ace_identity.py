@@ -179,6 +179,24 @@ def main():
     assert erika_rematch_ace["iv"] == 214, ("sParty_RSTuberM","VILEPLUME","expected normal rematch IV",erika_rematch_ace["iv"])
     assert erika_rematch_ace["item"] == "MIRACLE_SEED", ("sParty_RSTuberM","VILEPLUME","expected item","MIRACLE_SEED",erika_rematch_ace["item"])
 
+    # A-016 Lance (2026-10-08): Dragonite is the sole item-carrying ace,
+    # with the Red Gyarados as the unique second-strongest Pokémon in
+    # both encounters. Preserve the approved existing Full IV tiers.
+    for party, gyarados_lvl, ace_lvl, normal_iv, ace_iv, ace_item in (
+        ("sParty_EliteFourLance", 64, 65, 223, 223, "SITRUS_BERRY"),
+        ("sParty_EliteFourLance2", 81, 82, 239, 247, "LEFTOVERS"),
+    ):
+        mons = rows(party)
+        assert mons[0]["species"] == "GYARADOS" and mons[0]["lvl"] == gyarados_lvl, party
+        ace = exact_mon(party, "DRAGONITE", ace_lvl)
+        assert ace["item"] == ace_item and ace["iv"] == ace_iv, party
+        assert max(m["lvl"] for m in mons if m["species"] != "DRAGONITE") == gyarados_lvl, party
+        assert sum(m["lvl"] == gyarados_lvl for m in mons) == 1, party
+        for mon in mons:
+            is_ace = mon["species"] == "DRAGONITE" and mon["lvl"] == ace_lvl
+            assert mon["item"] == (ace_item if is_ace else "NONE"), (party, mon)
+            assert mon["iv"] == (ace_iv if is_ace else normal_iv), (party, mon)
+
     # Lance's Gyarados is the same canonical Red Gyarados in both League encounters.
     battle_main = (ROOT / "src/battle_main.c").read_text(encoding="utf-8")
     shiny_scope = battle_main[battle_main.index("// Full canon identity: Lance owns the Red Gyarados"):
@@ -214,7 +232,7 @@ def main():
         ("sParty_RSBeauty", "RHYDON", 74): ("EARTHQUAKE", "ROCK_SLIDE", "DOUBLE_EDGE", "MEGAHORN"),
         ("sParty_LeaderGiovanni", "MEWTWO", 56): ("PSYCHIC", "SHADOW_BALL", "SWIFT", "RECOVER"),
         ("sParty_EliteFourLance", "DRAGONITE", 65): ("DRAGON_CLAW", "AERIAL_ACE", "ICE_BEAM", "FLAMETHROWER"),
-        ("sParty_EliteFourLance2", "DRAGONITE", 82): ("OUTRAGE", "THUNDERBOLT", "ICE_BEAM", "FLAMETHROWER"),
+        ("sParty_EliteFourLance2", "DRAGONITE", 82): ("DRAGON_DANCE", "DRAGON_CLAW", "EARTHQUAKE", "FLAMETHROWER"),
     }
     for (party, species, level), moves in approved_moves.items():
         mon = exact_mon(party, species, level)
