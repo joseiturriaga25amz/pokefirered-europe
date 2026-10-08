@@ -15,7 +15,7 @@ Use `docs/spec/` only for frozen historical design details.
 ## Current state
 
 - Canonical repository: `joseiturriaga25amz/pokefirered-europe`.
-- **Current checkpoint overrides the older Bruno pending text below:** Bruno gameplay and validators IMPLEMENTED, exact feature HEAD `4af261c4ad9d407cb22adff40188ac1dd6ca81bd` passed Full Gameplay Core **#675 SUCCESS**, and PR #32 was merged to `master` as `478e56c4f40f4ca4c12d36be13e8c5bee2728cd7`. Bruno is **INTEGRATED / NOT CLOSED** until Full Gameplay Core SUCCESS is verified for that exact integrated SHA. The GitHub connector's commit-runs lookup filters to PR runs; an empty result does not prove the post-merge push run was absent. Next action: inspect Actions for exact integrated master SHA using a source that exposes push runs; if successful record Bruno closure in both continuity documents, then begin Agatha review. Do not make gameplay changes or create an artificial PR solely to trigger CI.
+- **Current checkpoint — Bruno CLOSED:** feature HEAD `4af261c4ad9d407cb22adff40188ac1dd6ca81bd` passed Full Gameplay Core **#675 SUCCESS**; PR #32 merged as `478e56c4f40f4ca4c12d36be13e8c5bee2728cd7`; exact integrated master SHA passed Full Gameplay Core **#676 SUCCESS** (verified from GitHub Actions UI). Only documentary continuity changes followed. **Next: Agatha design/roster review; no Agatha changes approved yet.**
 
 - Integration branch: `master`.
 - Last production block **CLOSED on master**: **B8 — Signature Pokémon staging**.
@@ -77,7 +77,7 @@ Use `docs/spec/` only for frozen historical design details.
 - Lorelei post-integration Full Gameplay Core **#673 SUCCESS** on that exact master SHA.
 - Lorelei roster/identity microblock: **CLOSED**. First League: Dewgong 57 / Cloyster 58 / Slowpoke 56 / Slowbro 59 / Jynx 60 / Lapras 61. Strengthened League: Dewgong 75 / Cloyster 77 / Piloswine 74 / Slowking 76 / Jynx 75 / Lapras 79. Only Lapras is equipped.
 
-- Bruno target is **APPROVED / DOCUMENTED / IMPLEMENTATION PENDING**.
+- Bruno target is **APPROVED / IMPLEMENTED / VALIDATED / CI-GREEN / CLOSED**.
 - First League target: Onix 58 / Hitmonchan 59 / Hitmonlee 60 / Onix 60 / Machamp 62 @ Sitrus Berry.
 - Strengthened League target: Hitmontop 75 / Hitmonchan 76 / Hitmonlee 76 / Hariyama 77 / Steelix 78 / Machamp 80 @ Black Belt.
 - Only Machamp is equipped; existing IV tiers and 2 Full Restores remain.
@@ -86,12 +86,10 @@ Use `docs/spec/` only for frozen historical design details.
 
 ## Exact next action
 
-1. Lorelei is CLOSED and Bruno's design/difficulty audit is complete and approved;
-2. from the current `master`, create a fresh Bruno feature branch and implement exactly the approved target recorded in `DECISION_AMENDMENTS.md`;
-3. update the exact League roster lock, global ace/item validation and trainer-legality exception only as required by the intended Bruno change;
-4. validate and audit the feature, then require Full Gameplay Core SUCCESS on the exact feature HEAD;
-5. integrate through a controlled PR, verify the new exact `master` HEAD and require post-integration Full Gameplay Core before declaring Bruno CLOSED;
-6. do not begin Agatha until Bruno is CLOSED.
+1. Bruno is CLOSED after Full Gameplay Core #675 on feature HEAD and #676 on integrated `master` SHA `478e56c`.
+2. Begin Agatha first League/rematch roster and progression review, comparing the existing repository teams and A-016 principles with the Elite Four difficulty curve.
+3. Present any proposed changes for approval before altering Agatha gameplay; record approved decisions in existing `DECISION_AMENDMENTS.md`.
+4. After approval, proceed in one isolated feature microblock with validators, exact-head CI, controlled integration and post-integration CI.
 
 ## Continuity rule
 
