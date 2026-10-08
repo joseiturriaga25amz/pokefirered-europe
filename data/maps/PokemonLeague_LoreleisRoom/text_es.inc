@@ -1,6 +1,6 @@
 PokemonLeague_LoreleisRoom_Text_Intro::
     .string "¡Ésta es la LIGA POKéMON!\p"
-    .string "¡Yo soy LORELEI, del ALTO MANDO!\p"
+    .string "¡Yo soy PRIMA, del ALTO MANDO!\p"
     .string "¡Nadie me supera con los POKéMON\n"
     .string "que congelan!\p"
     .string "¡Los movimientos que hielan son\n"
@@ -12,7 +12,7 @@ PokemonLeague_LoreleisRoom_Text_Intro::
 
 PokemonLeague_LoreleisRoom_Text_RematchIntro::
     .string "¡Ésta es la LIGA POKéMON!\p"
-    .string "¡Yo soy LORELEI, del ALTO MANDO!\n"
+    .string "¡Yo soy PRIMA, del ALTO MANDO!\n"
     .string "¡Aquí me tienes de nuevo!\p"
     .string "¡Ya sabes que nadie me supera\n"
     .string "con los POKéMON que congelan!\p"

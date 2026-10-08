@@ -1,5 +1,5 @@
 FourIsland_LoreleisHouse_Text_IfAnythingWereToHappenToIsland::
-    .string "LORELEI: No me puedo quitar una\n"
+    .string "PRIMA: No me puedo quitar una\n"
     .string "cosa de la cabeza...\p"
     .string "Si ocurriera algo a la isla en la\n"
     .string "que nací...\p"
@@ -9,7 +9,7 @@ FourIsland_LoreleisHouse_Text_IfAnythingWereToHappenToIsland::
     .string "de lo ocurrido, ¿no?$"
 
 FourIsland_LoreleisHouse_Text_IllReturnToLeagueInShortWhile::
-    .string "LORELEI: ¿Que tú has solucionado\n"
+    .string "PRIMA: ¿Que tú has solucionado\n"
     .string "todos los problemas?\p"
     .string "Qué maravilla...\p"
     .string "Entonces, no tengo que quedarme\n"

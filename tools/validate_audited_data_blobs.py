@@ -16,7 +16,7 @@ EXPECTED = {
     "src/data/pokemon/evolution.h": "503be88f5381f51718a9f269aa2ed854ca67fbb4",
     "src/data/battle_moves.h": "5dac9c551a0a555b04ee885105b9a9d1b6071157",
     "src/trade.c": "50c4b149ea999c8282af1a670c7238e8d3afe0d7",
-    "src/data/trainers.json": "ace1c4d641d64e704f0aaaac0c4cd22d2efc1223",
+    "src/data/trainers.json": "99ad96ec2ad17b4b5ad2dd01936f4cc76134e639",
     "src/data/trainer_parties.h": "4d46248704039321bbf653f7f6671a8a1ee7df29",
     "data/scripts/spanish/hall_of_fame.inc": "5ab6e9db94111d47961250803d5ac819ca21e7cc",
     "data/scripts/spanish/repel.inc": "d0255413c6a5453d5e1af15201b41d8b4663f22b",

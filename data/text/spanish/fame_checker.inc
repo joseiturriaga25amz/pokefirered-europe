@@ -145,7 +145,7 @@ gFameCheckerFlavorText_Misty4::
 gFameCheckerFlavorText_Misty5::
 	.string "{COLOR BLUE}{SHADOW LIGHT_BLUE}¿Qué ponía aquí?\p"
 	.string "{COLOR DARK_GRAY}{SHADOW LIGHT_GRAY}Según fuentes cercanas, MISTY\n"
-	.string "adora a LORELEI, del ALTO MANDO.$"
+	.string "adora a PRIMA, del ALTO MANDO.$"
 
 gFameCheckerFlavorText_LtSurge0::
 	.string "{COLOR BLUE}{SHADOW LIGHT_BLUE}¿Qué ponía aquí?\p"
@@ -339,7 +339,7 @@ gFameCheckerFlavorText_Blaine5::
 
 gFameCheckerFlavorText_Lorelei0::
 	.string "{COLOR BLUE}{SHADOW LIGHT_BLUE}¿Qué ha dicho esta persona?\p"
-	.string "{FONT_FEMALE}{COLOR DARK_GRAY}{SHADOW LIGHT_GRAY}¡Yo soy LORELEI, del ALTO MANDO!$"
+	.string "{FONT_FEMALE}{COLOR DARK_GRAY}{SHADOW LIGHT_GRAY}¡Yo soy PRIMA, del ALTO MANDO!$"
 
 gFameCheckerFlavorText_Lorelei1::
 	.string "{COLOR BLUE}{SHADOW LIGHT_BLUE}¿Qué ha dicho esta persona?\p"
@@ -352,7 +352,7 @@ gFameCheckerFlavorText_Lorelei2::
 	.string "ENTRENADORA fuerte y poderosa\l"
 	.string "como pocas.\p"
 	.string "Seguro que la conoces, se llama\n"
-	.string "LORELEI y es del ALTO MANDO.$"
+	.string "PRIMA y es del ALTO MANDO.$"
 
 gFameCheckerFlavorText_Lorelei3::
 	.string "{COLOR BLUE}{SHADOW LIGHT_BLUE}¿Qué ponía aquí?\p"
@@ -362,7 +362,7 @@ gFameCheckerFlavorText_Lorelei3::
 
 gFameCheckerFlavorText_Lorelei4::
 	.string "{COLOR BLUE}{SHADOW LIGHT_BLUE}¿Qué ha dicho esta persona?\p"
-	.string "{FONT_FEMALE}{COLOR DARK_GRAY}{SHADOW LIGHT_GRAY}¿Sabías que LORELEI tiene un\n"
+	.string "{FONT_FEMALE}{COLOR DARK_GRAY}{SHADOW LIGHT_GRAY}¿Sabías que PRIMA tiene un\n"
 	.string "montón de muñecos de peluche?\p"
 	.string "¡Cada vez que vuelve a ISLA\n"
 	.string "QUARTA, aumenta la colección!$"
@@ -717,10 +717,10 @@ gFameCheckerPersonQuote_Blaine::
 	.string "POKéMON del tipo FUEGO hay?$"
 
 gFameCheckerPersonName_Lorelei::
-	.string "{COLOR BLUE}{SHADOW LIGHT_BLUE}LORELEI$"
+	.string "{COLOR BLUE}{SHADOW LIGHT_BLUE}PRIMA$"
 
 gFameCheckerPersonQuote_Lorelei::
-	.string "{COLOR BLUE}{SHADOW LIGHT_BLUE}Comentario de LORELEI\n"
+	.string "{COLOR BLUE}{SHADOW LIGHT_BLUE}Comentario de PRIMA\n"
 	.string "para {PLAYER}:\p"
 	.string "{FONT_FEMALE}{COLOR DARK_GRAY}{SHADOW LIGHT_GRAY}Estoy muy agradecida por tu ayuda.\p"
 	.string "¡Pero no te confíes, en combate\n"
@@ -1247,10 +1247,10 @@ gFameCheckerFlavorTextOriginObjectName_Blaine5::
 	.string "DIARIO POKéMON$"
 
 gFameCheckerFlavorTextOriginObjectName_Lorelei0::
-	.string "LORELEI$"
+	.string "PRIMA$"
 
 gFameCheckerFlavorTextOriginObjectName_Lorelei1::
-	.string "LORELEI$"
+	.string "PRIMA$"
 
 gFameCheckerFlavorTextOriginObjectName_Lorelei2::
 	.string "SEÑOR MAYOR$"
@@ -1385,7 +1385,7 @@ PokemonJournal_Text_SpecialFeatureMisty::
 	.string "Última hora sobre MISTY, LÍDER\n"
 	.string "del GIMNASIO de CELESTE.\p"
 	.string "Según fuentes cercanas, MISTY\n"
-	.string "adora a LORELEI, del ALTO MANDO.$"
+	.string "adora a PRIMA, del ALTO MANDO.$"
 
 PokemonJournal_Text_SpecialFeatureLtSurge::
 	.string "DIARIO POKéMON\p"
@@ -1434,9 +1434,9 @@ PokemonJournal_Text_SpecialFeatureBlaine::
 
 PokemonJournal_Text_SpecialFeatureLorelei::
 	.string "DIARIO POKéMON\p"
-	.string "Última hora sobre LORELEI,\n"
+	.string "Última hora sobre PRIMA,\n"
 	.string "miembro del ALTO MANDO.\p"
-	.string "Según fuentes cercanas, LORELEI\n"
+	.string "Según fuentes cercanas, PRIMA\n"
 	.string "guarda un gran secreto.\p"
 	.string "Lo que sí se conoce de ella es\n"
 	.string "su estilo de lucha elegante, único\l"

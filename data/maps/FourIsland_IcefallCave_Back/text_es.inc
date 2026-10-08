@@ -1,5 +1,5 @@
 FourIsland_IcefallCave_Back_Text_LoreleiKeepHandsOffMons::
-    .string "LORELEI: ¡Ni te acerques a los\n"
+    .string "PRIMA: ¡Ni te acerques a los\n"
     .string "POKéMON que hay en la cueva!\p"
     .string "Si no, te las tendrás que ver\n"
     .string "conmigo.$"
@@ -9,7 +9,7 @@ FourIsland_IcefallCave_Back_Text_ShutItLadyLeaveUsBe::
     .string "¡Chicos, sigamos a lo nuestro!$"
 
 FourIsland_IcefallCave_Back_Text_LoreleiPlayerHelpMeKickPoachersOut::
-    .string "LORELEI: ¡¿{PLAYER}?!\n"
+    .string "PRIMA: ¡¿{PLAYER}?!\n"
     .string "¿Qué haces aquí?\p"
     .string "Bueno, ya charlaremos después.\n"
     .string "Ayúdame con estos elementos.\p"
@@ -30,7 +30,7 @@ FourIsland_IcefallCave_Back_Text_GruntDefeat::
     .string "¡No me esperaba yo esto!$"
 
 FourIsland_IcefallCave_Back_Text_LoreleiWhereHaveYouTakenMons::
-    .string "LORELEI: Ja.\n"
+    .string "PRIMA: Ja.\n"
     .string "Qué cosa más endeble...\p"
     .string "A ver, tú.\n"
     .string "Dime.\p"
@@ -44,7 +44,7 @@ FourIsland_IcefallCave_Back_Text_NotTellingYouThat::
     .string "¡No pienso decírtelo!$"
 
 FourIsland_IcefallCave_Back_Text_LoreleiWellDeepFreezeYou::
-    .string "LORELEI: Como no me lo digas,\n"
+    .string "PRIMA: Como no me lo digas,\n"
     .string "¡acabarás congelado!\p"
     .string "Mi LAPRAS está que trina por lo\n"
     .string "que les habéis hecho a sus amigos.\p"
