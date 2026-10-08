@@ -425,7 +425,7 @@ If eventually approved, isolate it in an independently reviewable technical micr
 
 ## FEASIBILITY REVIEW — Spanish character name Lorelei → Prima (2026-10-08)
 
-**Status:** PROPOSED / FEASIBILITY REVIEW COMPLETE / NOT APPROVED FOR IMPLEMENTATION. This is a user-suggested self-contained localization microblock, assessed at the safe checkpoint after Agatha closure and before Lance. No ROM/gameplay changes authorized. Do not silently treat this proposal as an approved design amendment.
+**Status:** USER APPROVED (2026-10-08) / IMPLEMENTATION IN PROGRESS on `feature/prima-spanish-localization` / NOT VALIDATED OR CLOSED. This is a user-approved self-contained localization microblock, assessed after Agatha closure and before Lance. The approval is strictly limited to Spanish player-visible character name; trainer IDs and other-language names remain unchanged. Do not broaden the scope.
 
 **Finding:** technically feasible with low predicted compatibility risk **if strictly limited to Spanish-facing display strings**. The existing trainer JSON has distinct `trainerName_english`, `trainerName_spanish`, `trainerName_italian`, `trainerName_french` and `trainerName_german` fields for each of the two Lorelei battles. Spanish currently uses `LORELEI` for both, while French already uses `OLGA`, confirming that localized character display names are supported. `PRIMA` is shorter than `LORELEI`, so the substitution does not introduce a longer trainer name. The unrelated location string `ISLA PRIMA` already exists in Spanish; it must **not** be altered.
 
@@ -441,7 +441,7 @@ If eventually approved, isolate it in an independently reviewable technical micr
 
 **Validation and acceptance if separately approved:** make a dedicated small feature branch; adjust only the needed strings and Spanish trainer names, check in-game character encoding and Fame Checker/Pokémon Journal line layout, add a targeted Spanish-name/reference validator if justified, and refresh the audited `src/data/trainers.json` blob lock in `tools/validate_audited_data_blobs.py`. Run Full Gameplay Core on the exact feature HEAD and after integration, and test the battle introduction, rematch, Four Island home/cave/mart and Fame Checker in MyBoy, including existing save compatibility. This is a ROM-content change, **not** a docs-only exemption. No claim of absolute zero risk or of runtime validation is made here.
 
-**Decision pending:** user approval of the precise target **Spanish display name `PRIMA`**, while all other languages and technical identities stay as-is. Until then, Lance review remains the next production work.
+**Decision recorded:** the user explicitly approved **Spanish display name `PRIMA`** with other languages and technical identities unchanged. Implement and validate the isolated branch, merge and verify exact integrated-head CI; afterward resume Lance.
 
 ## Documentation cadence
 
