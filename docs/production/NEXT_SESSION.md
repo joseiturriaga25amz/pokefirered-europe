@@ -15,6 +15,8 @@ Use `docs/spec/` only for frozen historical design details.
 ## Current state
 
 - Canonical repository: `joseiturriaga25amz/pokefirered-europe`.
+- **Current checkpoint overrides the older Bruno pending text below:** Bruno gameplay and validators IMPLEMENTED, exact feature HEAD `4af261c4ad9d407cb22adff40188ac1dd6ca81bd` passed Full Gameplay Core **#675 SUCCESS**, and PR #32 was merged to `master` as `478e56c4f40f4ca4c12d36be13e8c5bee2728cd7`. Bruno is **INTEGRATED / NOT CLOSED** until Full Gameplay Core SUCCESS is verified for that exact integrated SHA. The GitHub connector's commit-runs lookup filters to PR runs; an empty result does not prove the post-merge push run was absent. Next action: inspect Actions for exact integrated master SHA using a source that exposes push runs; if successful record Bruno closure in both continuity documents, then begin Agatha review. Do not make gameplay changes or create an artificial PR solely to trigger CI.
+
 - Integration branch: `master`.
 - Last production block **CLOSED on master**: **B8 — Signature Pokémon staging**.
 - B8 master checkpoint: `28f42346916bf9d19c558ce4ce19fb849f5b6e33`.
