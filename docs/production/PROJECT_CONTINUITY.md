@@ -7,7 +7,7 @@
 This section is the current resume point. Later dated sections preserve history and may name branches that are no longer active.
 
 - Canonical repository: `joseiturriaga25amz/pokefirered-europe`.
-- **Current Bruno checkpoint (2026-10-08):** approved A-016 Bruno teams IMPLEMENTED on feature HEAD `4af261c4ad9d407cb22adff40188ac1dd6ca81bd`; exact feature Full Gameplay Core **#675 SUCCESS** (first attempt #674 failed solely in a newly added validator, since corrected). PR **#32** MERGED to `master` as `478e56c4f40f4ca4c12d36be13e8c5bee2728cd7`. This is **NOT CLOSED**: post-integration Full Gameplay Core on that exact integrated SHA has not been verified; `fetch_commit_workflow_runs` only returns pull-request-triggered runs and cannot establish whether a `push` run exists. Next: independently inspect `master` Actions for SHA `478e56c`, obtain exact-head post-merge SUCCESS, then record closure. Do not start Agatha before closure. The ensuing documentation-only continuity commit does not change gameplay/ROM and does not substitute for the missing technical gate.
+- **Bruno roster/identity microblock CLOSED (2026-10-08):** approved A-016 first League and strengthened League parties implemented on feature HEAD `4af261c4ad9d407cb22adff40188ac1dd6ca81bd`; Full Gameplay Core **#675 SUCCESS** on that exact feature HEAD. Earlier #674 failed only in the newly introduced ace validator and was corrected without gameplay changes. PR **#32** merged to `master` as `478e56c4f40f4ca4c12d36be13e8c5bee2728cd7`. Post-integration Full Gameplay Core **#676 SUCCESS** on exact merged master SHA (GitHub Actions UI evidence, 2026-10-08). This block is **CLOSED**. The subsequent continuity-only commits change documentation, not gameplay or CI. **Next:** review Agatha's first League/rematch design before implementation; no Agatha design is presumed approved.
 
 - Integration branch: `master`.
 - Last production block fully **CLOSED on master**: **B8 — Signature Pokémon staging**.
@@ -76,7 +76,7 @@ This section is the current resume point. Later dated sections preserve history 
 
 **Bruno approved target:** design review and difficulty audit are complete. First League is Onix 58 / Hitmonchan 59 / Hitmonlee 60 / Onix 60 / Machamp 62 @ Sitrus Berry with vanilla-oriented tactical moves. Strengthened League is Hitmontop 75 / Hitmonchan 76 / Hitmonlee 76 / Hariyama 77 / Steelix 78 / Machamp 80 @ Black Belt. Only Machamp holds an item. Existing IV tiers and 2 Full Restores remain. Rematch Hitmonlee Lv76 Detect is an explicitly approved narrow trainer-only legality exception; Steelix Dig is legal and deliberately retained. Audit found no further move-strength adjustment necessary for Bruno's position as Elite Four #2.
 
-**Next production action:** implement the approved Bruno target on a fresh feature branch from the current `master`, including only necessary roster/validator/frozen-expectation changes. Validate, audit, run Full Gameplay Core on the exact feature HEAD, integrate through controlled PR, then verify the exact integrated `master` HEAD before closing Bruno. Do not begin Agatha until Bruno is CLOSED.
+**Next production action:** Bruno is CLOSED on `master` (post-integration Full Gameplay Core #676 SUCCESS). Begin Agatha's design/roster review using A-016 principles, auditing first League and strengthened League progression, legal moves, items and IV tiers. Do not implement any new Agatha design before approval.
 
 ### Existing continuity roles — do not duplicate
 
