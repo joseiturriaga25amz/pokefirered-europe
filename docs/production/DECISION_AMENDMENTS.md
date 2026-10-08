@@ -1298,3 +1298,23 @@ Bruno is the second Elite Four trainer reviewed under A-016. The first League de
 - Implement only this approved target plus the minimum validator/frozen-roster updates required by the intended change.
 - Preserve trainer healing, IV tiers and Machamp ace/signature role.
 - Run the normal technical validation/audit/Full Gameplay Core exact-head flow before integration.
+
+## A-017 — Spanish localization: Lorelei displayed as Prima
+
+**Date:** 2026-10-08
+**Status:** APPROVED / IMPLEMENTED / VALIDATED / CI-GREEN / INTEGRATED / CLOSED.
+
+### Approved decision and technical scope
+
+The user approved using **PRIMA**, the character's familiar Latin American dub name, in the Spanish-facing game only. The change covers both League trainer display names (`TRAINER_ELITE_FOUR_LORELEI` and `TRAINER_ELITE_FOUR_LORELEI_2`) and player-visible Spanish name occurrences in the League introduction/rematch, Lorelei's Four Island house, Icefall Cave, Four Island Mart, Fame Checker and related journal/flavor text. The existing string **ISLA PRIMA** is an unrelated island name and remains unchanged.
+
+Internal identifiers and references (`LORELEI` trainer constants, map/script labels, Fame Checker IDs, flags, graphic paths), non-Spanish names and dialogue, trainer parties, AI, save data structures and link/trade protocol must remain unchanged. The existing trainer legality validator now asserts both Spanish `PRIMA` names, preserves the other-language names and locks Spanish visible-name references; the audited `trainers.json` blob hash was refreshed. The scope is localization, not a gameplay rebalance or AI change.
+
+### Verified completion
+
+- Feature branch `feature/prima-spanish-localization`, exact HEAD `ddd049c8bb712032207523dcc6fa3be4f219ff4e`: **Full Gameplay Core #680 SUCCESS**, build and validators.
+- Controlled merge PR **#34**: integrated master commit `7c0031b312534cc44119216ea37bc9a9df076d87`.
+- Exact merged master commit: **Full Gameplay Core #681 SUCCESS**, run ID `37749207866`, `push` event, verified via GitHub API and user-provided screenshot; Spanish RC MyBoy ROM artifact generated.
+- Follow-up documentation-only commits did not change ROM, validators, workflow or runtime since the integrated SHA.
+- **Microblock CLOSED**, while hands-on MyBoy runtime QA remains a distinct release-acceptance requirement. No claim of final runtime certification.
+- **Next production action:** Lance first and strengthened League roster review; changes require separate approval. The trainer AI improvement idea remains independently PROPOSED.
