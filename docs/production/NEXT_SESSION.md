@@ -15,13 +15,14 @@ Use `docs/spec/` only for frozen historical design details.
 ## Current state
 
 - Canonical repository: `joseiturriaga25amz/pokefirered-europe`.
-- **Current checkpoint — Bruno CLOSED:** feature HEAD `4af261c4ad9d407cb22adff40188ac1dd6ca81bd` passed Full Gameplay Core **#675 SUCCESS**; PR #32 merged as `478e56c4f40f4ca4c12d36be13e8c5bee2728cd7`; exact integrated master SHA passed Full Gameplay Core **#676 SUCCESS** (verified from GitHub Actions UI). Only documentary continuity changes followed. **Next: Agatha design/roster review; no Agatha changes approved yet.**
+- **Active resume checkpoint (2026-10-08): Agatha CLOSED.** Exact feature HEAD `c8c4c2ab33bfdf085c65a1ea400aefee40c82674`: Full Gameplay Core **#678 SUCCESS**. PR #33 merged as `8197d040b7dcc0c5e3bf5a08ed3f6968ba477e16`; Full Gameplay Core **#679 SUCCESS** on that exact integrated master SHA, evidenced by GitHub Actions screenshot (push event and green job). Only continuity documentation commits followed; they did not change ROM/build/validators. Next block: **Lance research and proposal review**, with user approval before gameplay. AI-polish idea remains **PROPOSED** in `POLISH_IMPLEMENTATION_MATRIX.md` and is not part of Lance.
+- **Current checkpoint — Bruno CLOSED:** feature HEAD `4af261c4ad9d407cb22adff40188ac1dd6ca81bd` passed Full Gameplay Core **#675 SUCCESS**; PR #32 merged as `478e56c4f40f4ca4c12d36be13e8c5bee2728cd7`; exact integrated master SHA passed Full Gameplay Core **#676 SUCCESS** (verified from GitHub Actions UI). Only documentary continuity changes followed. **Historical checkpoint:** Agatha subsequently approved, implemented, integrated and CLOSED.
 
 
-- **Agatha CI checkpoint:** exact feature HEAD `c8c4c2ab33bfdf085c65a1ea400aefee40c82674` passed Full Gameplay Core **#678 SUCCESS**; #677 identified an outdated frozen Agatha party order assertion and workflow expectation was corrected. PR **#33 MERGED** as `8197d040b7dcc0c5e3bf5a08ed3f6968ba477e16`. Master verified identical before documentary followups. **Not CLOSED:** require proof of Full Gameplay Core post-integration SUCCESS for that exact merge SHA. Connector PR-filtered lookup cannot verify `push` runs. Next: check GitHub Actions UI for `8197d04` and record closure upon green. Do not begin Lance before closure.
+- **Agatha CI checkpoint:** exact feature HEAD `c8c4c2ab33bfdf085c65a1ea400aefee40c82674` passed Full Gameplay Core **#678 SUCCESS**; #677 identified an outdated frozen Agatha party order assertion and workflow expectation was corrected. PR **#33 MERGED** as `8197d040b7dcc0c5e3bf5a08ed3f6968ba477e16`. Master verified identical before documentary followups. **Final status: CLOSED:** GitHub Actions push-run Full Gameplay Core #679 SUCCESS on `8197d04`, verified by user-provided screenshot. Continue with Lance review; no Lance implementation without approved design.
 
 - Integration branch: `master`.
-- **Agatha integrated microblock:** `feature/agatha-roster-identity`; exact approved moves, order and ace-only held items implemented. Haunter Lv60 has Protect instead of Curse; Misdreavus Lv77 keeps Mean Look; ace Gengar Lv81 holds Spell Tag. Existing IVs and 2 Full Restores stay unchanged. Approved target documented in `DECISION_AMENDMENTS.md`. **Current state: implementation on branch, pending validation, PR integration and exact integrated-head Full Gameplay Core.** First inspect live branch HEAD and any exact-head CI result. Do not start Lance before Agatha is CLOSED.
+- **Agatha integrated microblock:** `feature/agatha-roster-identity`; exact approved moves, order and ace-only held items implemented. Haunter Lv60 has Protect instead of Curse; Misdreavus Lv77 keeps Mean Look; ace Gengar Lv81 holds Spell Tag. Existing IVs and 2 Full Restores stay unchanged. Approved target documented in `DECISION_AMENDMENTS.md`. **Final state: CLOSED after feature CI #678, merged PR #33 and exact integrated CI #679.** Begin Lance design review; no feature implementation yet.
 
 - Last production block **CLOSED on master**: **B8 — Signature Pokémon staging**.
 - B8 master checkpoint: `28f42346916bf9d19c558ce4ce19fb849f5b6e33`.
@@ -91,10 +92,11 @@ Use `docs/spec/` only for frozen historical design details.
 
 ## Exact next action
 
-1. Bruno is CLOSED after Full Gameplay Core #675 on feature HEAD and #676 on integrated `master` SHA `478e56c`.
-2. Begin Agatha first League/rematch roster and progression review, comparing the existing repository teams and A-016 principles with the Elite Four difficulty curve.
-3. Present any proposed changes for approval before altering Agatha gameplay; record approved decisions in existing `DECISION_AMENDMENTS.md`.
-4. After approval, proceed in one isolated feature microblock with validators, exact-head CI, controlled integration and post-integration CI.
+1. Bruno and Agatha are CLOSED. Agatha proof: feature Full Gameplay Core #678 SUCCESS, PR #33 merged as `8197d04`, integrated Full Gameplay Core #679 SUCCESS.
+2. Review Lance's actual first League and strengthened League teams in the current repository, comparing vanilla FireRed, difficulty progression, A-016 move/item/IV policies and signature identity.
+3. Present options for the user's approval before modifying Lance gameplay. Record decisions in existing `DECISION_AMENDMENTS.md` only after approval.
+4. Implement approved Lance decisions in one isolated feature microblock with validators, exact-head CI, controlled integration and post-integration CI.
+5. Keep the trainer AI improvement proposal separate and unapproved.
 
 ## Continuity rule
 
