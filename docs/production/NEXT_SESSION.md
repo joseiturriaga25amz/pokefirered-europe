@@ -75,14 +75,21 @@ Use `docs/spec/` only for frozen historical design details.
 - Lorelei post-integration Full Gameplay Core **#673 SUCCESS** on that exact master SHA.
 - Lorelei roster/identity microblock: **CLOSED**. First League: Dewgong 57 / Cloyster 58 / Slowpoke 56 / Slowbro 59 / Jynx 60 / Lapras 61. Strengthened League: Dewgong 75 / Cloyster 77 / Piloswine 74 / Slowking 76 / Jynx 75 / Lapras 79. Only Lapras is equipped.
 
+- Bruno target is **APPROVED / DOCUMENTED / IMPLEMENTATION PENDING**.
+- First League target: Onix 58 / Hitmonchan 59 / Hitmonlee 60 / Onix 60 / Machamp 62 @ Sitrus Berry.
+- Strengthened League target: Hitmontop 75 / Hitmonchan 76 / Hitmonlee 76 / Hariyama 77 / Steelix 78 / Machamp 80 @ Black Belt.
+- Only Machamp is equipped; existing IV tiers and 2 Full Restores remain.
+- Rematch Hitmonlee Lv76 Detect is an explicitly approved narrow trainer-only exception. Steelix Dig is legal and deliberately retained.
+- Difficulty audit found no additional move-strength changes necessary for Elite Four #2.
+
 ## Exact next action
 
-1. the Gym Leader + Giovanni A-013 pass and the Lorelei roster/identity microblock are complete and **CLOSED**;
-2. continue the later major-trainer identity review with **Bruno** from current `master`;
-3. apply A-016 while reviewing Bruno/Agatha/Lance/Gary: deliberate vanilla-like non-monotonic party order, ace-only held item by default, current Full IV tiers preserved unless a targeted compensation exception is approved;
-4. after those major-trainer rosters are closed, run one reorder-only transversal party-order polish audit for Gym Leaders/Giovanni/League/Gary;
-5. the eight Gym Leader rematch dialogue sets are functionally valid but narratively too template-like; handle their approved rewrite as a separate dialogue-only microblock after the roster review;
-6. do not change Bruno gameplay until the user reviews and approves the target.
+1. Lorelei is CLOSED and Bruno's design/difficulty audit is complete and approved;
+2. from the current `master`, create a fresh Bruno feature branch and implement exactly the approved target recorded in `DECISION_AMENDMENTS.md`;
+3. update the exact League roster lock, global ace/item validation and trainer-legality exception only as required by the intended Bruno change;
+4. validate and audit the feature, then require Full Gameplay Core SUCCESS on the exact feature HEAD;
+5. integrate through a controlled PR, verify the new exact `master` HEAD and require post-integration Full Gameplay Core before declaring Bruno CLOSED;
+6. do not begin Agatha until Bruno is CLOSED.
 
 ## Continuity rule
 
