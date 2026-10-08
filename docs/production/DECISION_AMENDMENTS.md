@@ -1213,6 +1213,38 @@ Lorelei is the first Elite Four trainer reviewed under A-016. The approved desig
 - Lorelei roster/identity microblock is therefore **CLOSED**.
 
 
+### Lance curve/identity amendment — approved target (2026-10-08)
+
+**Status:** USER APPROVED / IMPLEMENTED ON ISOLATED FEATURE / FULL GAMEPLAY CORE AND MERGE PENDING.
+
+**Authority:** explicit user approval after a transversal audit of the eight Gym Leaders, Giovanni, current League and Gary/Blue. A-016 governs deliberate order, ace-only held items and preservation of Full IV tiers. The user explicitly identifies **Dragonite as Lance's strongest ace and signature** and the **canonical shiny Red Gyarados as his unique second-strongest Pokémon** in each encounter. Retain existing shiny-generation implementation, trainer AI flags and the two Full Restores.
+
+**First League — exact order and moves:**
+1. Red/shiny Gyarados Lv64 — Waterfall / Dragon Dance / Earthquake / Double-Edge, no item, trainer IV byte 223.
+2. Dragonair Lv61 — Dragon Breath / Thunder Wave / Ice Beam / Safeguard, no item, IV 223.
+3. Aerodactyl Lv63 — Rock Slide / Aerial Ace / Earthquake / Double-Edge, no item, IV 223.
+4. Dragonair Lv62 — Outrage / Flamethrower / Thunderbolt / Thunder Wave, no item, IV 223.
+5. **Dragonite Lv65** — Dragon Claw / Aerial Ace / Ice Beam / Flamethrower, **Sitrus Berry**, IV 223; ace and signature.
+
+**Strengthened League / rematch — exact order and moves:**
+1. Red/shiny Gyarados Lv81 — Waterfall / Dragon Dance / Earthquake / Double-Edge, no item, IV 239.
+2. Kingdra Lv79 — Waterfall / Dragon Dance / Ice Beam / Dragon Breath, no item, IV 239.
+3. Charizard Lv80 — Flamethrower / Dragon Claw / Aerial Ace / Earthquake, no item, IV 239.
+4. Salamence Lv80 — Dragon Claw / Flamethrower / Earthquake / Rock Slide, no item, IV 239.
+5. Aerodactyl Lv80 — Rock Slide / Aerial Ace / Earthquake / Double-Edge, no item, IV 239.
+6. **Dragonite Lv82** — Dragon Dance / Dragon Claw / Earthquake / Flamethrower, **Leftovers**, IV 247; ace and signature.
+
+**Final reviewed design choices:**
+- User specifically rejected Altaria for the rematch and restored Aerodactyl. One Dragonite only in rematch; the previous intermediate Dragonite Lv79 is replaced. Charizard and Salamence coexist with Kingdra and Aerodactyl.
+- The rematch ace deliberately replaces Outrage with reliable Dragon Claw and carries Dragon Dance to support Dragon Claw and Earthquake. Flamethrower covers Steel and other targets. Leftovers supports setup. Trainer AI recognizes Dragon Dance but is probabilistic; no AI improvements are authorized here.
+- Gyarados receives Lv64 and Lv81 as the unique second-highest-level party member, with three physical attacks benefiting from Dragon Dance. Hyper Beam was removed because in Full it is special-category and would not benefit from Dragon Dance.
+- Gyarados remains shiny red through the *existing*, narrowly scoped battle engine path; no changes to global shiny odds, trainer IDs or species handling.
+- Only each final Dragonite holds an item, consistent with A-016. Full IV tiers unchanged: first League 223 for all, rematch 239 for non-ace and 247 for Dragonite. Two Full Restores unchanged.
+- Preserve original trainer dialogue/map staging, save/link formats, global move effects/categories, and all other parties, including the Champion. Lance's natural Ice/Rock vulnerabilities are accepted; no global defensive buffs added.
+- The 11 approved Pokémon have 44 legal moves under existing Full Gen III level/TM/HM/tutor/egg ancestry data; no newly approved learnset exceptions required.
+- Feature must pass exact roster locks, ace/IV/item and shiny identity validators, audited trainer-party blob, Full Gameplay Core on exact feature HEAD, controlled PR integration and integrated master CI before **CLOSED**. MyBoy combat/runtime QA is separate.
+- After Lance technical closure, the next *design review* is Gary/Blue; the separately proposed future AI improvement is not part of this microblock.
+
 ### Agatha curve/identity amendment — approved target (2026-10-08)
 
 **Status:** APPROVED / IMPLEMENTED / VALIDATED / CI-GREEN / INTEGRATED / CLOSED.
