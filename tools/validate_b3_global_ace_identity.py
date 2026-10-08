@@ -134,6 +134,16 @@ def main():
             if mon["species"] != ace_species:
                 assert mon["item"] == "NONE", (party_name, mon["species"], "non-ace held item", mon["item"])
 
+    # A-016 Bruno: Machamp alone holds an item; approved IV tiers remain intact.
+    for party_name, level, item, normal_iv, ace_iv in (
+        ("sParty_EliteFourBruno", 62, "SITRUS_BERRY", 206, 206),
+        ("sParty_EliteFourBruno2", 80, "BLACK_BELT", 239, 247),
+    ):
+        mons = rows(party_name)
+        ace = exact_mon(party_name, "MACHAMP", level)
+        assert ace["item"] == item and ace["iv"] == ace_iv, (party_name, ace)
+        assert all(mon["item"] == "NONE" and mon["iv"] == normal_iv for mon in mons if not (mon["species"] == "MACHAMP" and mon["lvl"] == level)), party_name
+
     # Sabrina's evolved rematch ace uses the normal rematch IV tier.
     sabrina_rematch_ace = exact_mon("sParty_RSCooltrainerF","ALAKAZAM",72)
     assert sabrina_rematch_ace["iv"] == 231, ("sParty_RSCooltrainerF","ALAKAZAM","expected normal rematch IV",sabrina_rematch_ace["iv"])
