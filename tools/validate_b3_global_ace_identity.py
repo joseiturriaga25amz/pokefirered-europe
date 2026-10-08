@@ -144,6 +144,31 @@ def main():
         assert ace["item"] == item and ace["iv"] == ace_iv, (party_name, ace)
         assert all(mon["item"] == "NONE" and mon["iv"] == normal_iv for mon in mons if not (mon["species"] == "MACHAMP" and mon["lvl"] == level)), party_name
 
+    # A-016 Agatha: first League Gengar Lv63 has Sitrus Berry; strengthened
+    # League Gengar Lv81 has Spell Tag. Keep existing approved IV tiers,
+    # including the Lv76 Gengar (247), without adding held items.
+    agatha_story = rows("sParty_EliteFourAgatha")
+    agatha_rematch = rows("sParty_EliteFourAgatha2")
+    assert [(m["species"], m["lvl"]) for m in agatha_story] == [
+        ("GENGAR", 59), ("GOLBAT", 60), ("HAUNTER", 60),
+        ("ARBOK", 61), ("GENGAR", 63)
+    ], "Agatha story ordering"
+    assert [(m["species"], m["lvl"]) for m in agatha_rematch] == [
+        ("GENGAR", 76), ("MISDREAVUS", 77), ("ARBOK", 77),
+        ("SABLEYE", 78), ("CROBAT", 79), ("GENGAR", 81)
+    ], "Agatha rematch ordering"
+    for mons, ace_lvl, ace_item, normal_iv in (
+        (agatha_story, 63, "SITRUS_BERRY", 214),
+        (agatha_rematch, 81, "SPELL_TAG", 239),
+    ):
+        ace = [m for m in mons if m["species"] == "GENGAR" and m["lvl"] == ace_lvl]
+        assert len(ace) == 1 and ace[0]["item"] == ace_item, "Agatha ace held item"
+        for mon in mons:
+            is_ace = mon["species"] == "GENGAR" and mon["lvl"] == ace_lvl
+            assert (mon["item"] == ace_item if is_ace else mon["item"] == "NONE"), ("Agatha item", mon)
+            expect_iv = 214 if mons is agatha_story else (247 if mon["species"] == "GENGAR" else normal_iv)
+            assert mon["iv"] == expect_iv, ("Agatha IV", mon)
+
     # Sabrina's evolved rematch ace uses the normal rematch IV tier.
     sabrina_rematch_ace = exact_mon("sParty_RSCooltrainerF","ALAKAZAM",72)
     assert sabrina_rematch_ace["iv"] == 231, ("sParty_RSCooltrainerF","ALAKAZAM","expected normal rematch IV",sabrina_rematch_ace["iv"])
