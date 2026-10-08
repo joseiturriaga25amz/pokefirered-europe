@@ -5965,17 +5965,24 @@ static const struct TrainerMonItemCustomMoves sParty_EliteFourAgatha[] = {
 static const struct TrainerMonItemCustomMoves sParty_EliteFourLance[] = {
     {
         .iv = 223,
-        .lvl = 61,
+        .lvl = 64,
         .species = SPECIES_GYARADOS,
         .heldItem = ITEM_NONE,
-        .moves = {MOVE_WATERFALL, MOVE_DRAGON_DANCE, MOVE_EARTHQUAKE, MOVE_HYPER_BEAM},
+        .moves = {MOVE_WATERFALL, MOVE_DRAGON_DANCE, MOVE_EARTHQUAKE, MOVE_DOUBLE_EDGE},
     },
     {
         .iv = 223,
         .lvl = 61,
         .species = SPECIES_DRAGONAIR,
         .heldItem = ITEM_NONE,
-        .moves = {MOVE_OUTRAGE, MOVE_THUNDER_WAVE, MOVE_ICE_BEAM, MOVE_SAFEGUARD},
+        .moves = {MOVE_DRAGON_BREATH, MOVE_THUNDER_WAVE, MOVE_ICE_BEAM, MOVE_SAFEGUARD},
+    },
+    {
+        .iv = 223,
+        .lvl = 63,
+        .species = SPECIES_AERODACTYL,
+        .heldItem = ITEM_NONE,
+        .moves = {MOVE_ROCK_SLIDE, MOVE_AERIAL_ACE, MOVE_EARTHQUAKE, MOVE_DOUBLE_EDGE},
     },
     {
         .iv = 223,
@@ -5986,16 +5993,9 @@ static const struct TrainerMonItemCustomMoves sParty_EliteFourLance[] = {
     },
     {
         .iv = 223,
-        .lvl = 63,
-        .species = SPECIES_AERODACTYL,
-        .heldItem = ITEM_HARD_STONE,
-        .moves = {MOVE_ROCK_SLIDE, MOVE_AERIAL_ACE, MOVE_EARTHQUAKE, MOVE_DOUBLE_EDGE},
-    },
-    {
-        .iv = 223,
         .lvl = 65,
         .species = SPECIES_DRAGONITE,
-        .heldItem = ITEM_DRAGON_FANG,
+        .heldItem = ITEM_SITRUS_BERRY,
         .moves = {MOVE_DRAGON_CLAW, MOVE_AERIAL_ACE, MOVE_ICE_BEAM, MOVE_FLAMETHROWER},
     },
 };
@@ -11251,37 +11251,37 @@ static const struct TrainerMonItemCustomMoves sParty_EliteFourAgatha2[] = {
 static const struct TrainerMonItemCustomMoves sParty_EliteFourLance2[] = {
     {
         .iv = 239,
-        .lvl = 78,
+        .lvl = 81,
         .species = SPECIES_GYARADOS,
-        .heldItem = ITEM_MYSTIC_WATER,
-        .moves = {MOVE_WATERFALL, MOVE_DRAGON_DANCE, MOVE_EARTHQUAKE, MOVE_HYPER_BEAM},
+        .heldItem = ITEM_NONE,
+        .moves = {MOVE_WATERFALL, MOVE_DRAGON_DANCE, MOVE_EARTHQUAKE, MOVE_DOUBLE_EDGE},
     },
     {
         .iv = 239,
         .lvl = 79,
         .species = SPECIES_KINGDRA,
         .heldItem = ITEM_NONE,
-        .moves = {MOVE_WATERFALL, MOVE_ICE_BEAM, MOVE_DRAGON_DANCE, MOVE_HYPER_BEAM},
+        .moves = {MOVE_WATERFALL, MOVE_DRAGON_DANCE, MOVE_ICE_BEAM, MOVE_DRAGON_BREATH},
     },
     {
-        .iv = 247,
-        .lvl = 79,
-        .species = SPECIES_DRAGONITE,
-        .heldItem = ITEM_DRAGON_FANG,
-        .moves = {MOVE_EARTHQUAKE, MOVE_DRAGON_CLAW, MOVE_FLAMETHROWER, MOVE_ICE_BEAM},
+        .iv = 239,
+        .lvl = 80,
+        .species = SPECIES_CHARIZARD,
+        .heldItem = ITEM_NONE,
+        .moves = {MOVE_FLAMETHROWER, MOVE_DRAGON_CLAW, MOVE_AERIAL_ACE, MOVE_EARTHQUAKE},
     },
     {
         .iv = 239,
         .lvl = 80,
         .species = SPECIES_SALAMENCE,
-        .heldItem = ITEM_LUM_BERRY,
-        .moves = {MOVE_DRAGON_CLAW, MOVE_FLAMETHROWER, MOVE_ROCK_SLIDE, MOVE_REST},
+        .heldItem = ITEM_NONE,
+        .moves = {MOVE_DRAGON_CLAW, MOVE_FLAMETHROWER, MOVE_EARTHQUAKE, MOVE_ROCK_SLIDE},
     },
     {
         .iv = 239,
-        .lvl = 81,
+        .lvl = 80,
         .species = SPECIES_AERODACTYL,
-        .heldItem = ITEM_HARD_STONE,
+        .heldItem = ITEM_NONE,
         .moves = {MOVE_ROCK_SLIDE, MOVE_AERIAL_ACE, MOVE_EARTHQUAKE, MOVE_DOUBLE_EDGE},
     },
     {
@@ -11289,7 +11289,7 @@ static const struct TrainerMonItemCustomMoves sParty_EliteFourLance2[] = {
         .lvl = 82,
         .species = SPECIES_DRAGONITE,
         .heldItem = ITEM_LEFTOVERS,
-        .moves = {MOVE_OUTRAGE, MOVE_THUNDERBOLT, MOVE_ICE_BEAM, MOVE_FLAMETHROWER},
+        .moves = {MOVE_DRAGON_DANCE, MOVE_DRAGON_CLAW, MOVE_EARTHQUAKE, MOVE_FLAMETHROWER},
     },
 };
 
