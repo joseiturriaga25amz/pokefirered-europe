@@ -1215,9 +1215,9 @@ Lorelei is the first Elite Four trainer reviewed under A-016. The approved desig
 
 ### Agatha curve/identity amendment — approved target (2026-10-08)
 
-**Status:** APPROVED / IMPLEMENTED / VALIDATED / FEATURE CI-GREEN / INTEGRATED / POST-INTEGRATION CI PENDING — NOT CLOSED.
+**Status:** APPROVED / IMPLEMENTED / VALIDATED / CI-GREEN / INTEGRATED / CLOSED.
 
-**Feature and integration evidence (2026-10-08):** approved roster feature HEAD `c8c4c2ab33bfdf085c65a1ea400aefee40c82674` passed Full Gameplay Core **#678 SUCCESS**. Initial run #677 failed in a now-corrected obsolete frozen Agatha order validator, not in gameplay compilation. PR #33 merged to `master` as `8197d040b7dcc0c5e3bf5a08ed3f6968ba477e16`. Require post-merge Full Gameplay Core SUCCESS on that exact SHA before closing this microblock. Subsequent commits in continuity docs do not alter gameplay.
+**Feature and integration evidence (2026-10-08):** approved roster feature HEAD `c8c4c2ab33bfdf085c65a1ea400aefee40c82674` passed Full Gameplay Core **#678 SUCCESS**. Initial run #677 failed in a now-corrected obsolete frozen Agatha order validator, not in gameplay compilation. PR #33 merged to `master` as `8197d040b7dcc0c5e3bf5a08ed3f6968ba477e16`. Post-merge Full Gameplay Core **#679 SUCCESS** on that exact merged SHA, confirmed by GitHub Actions push-run screenshot (master, 2026-10-08; compiled ROM artifact). Agatha roster/identity microblock **CLOSED**. Subsequent continuity-only commits do not alter gameplay, validators or ROM. MyBoy runtime playtesting remains a separate release QA stage.
 
 Agatha is Elite Four #3. Preserve her Ghost/Poison attrition identity and the existing Full difficulty curve, with original FireRed-like tactical moves in the first League and an offensively stronger six-Pokémon rematch. All moves were checked against existing Gen III/Full level/TM/tutor/lineage data; no trainer-only exceptions or global learnset changes are required. **Haunter Protect** is the user's approved final correction replacing Curse, and is legal through TM17. Misdreavus retains Mean Look; final Gengar holds Spell Tag.
 
