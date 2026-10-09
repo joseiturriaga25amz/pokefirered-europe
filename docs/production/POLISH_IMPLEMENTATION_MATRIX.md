@@ -145,6 +145,10 @@ Validator:
 - static inventory of intended high-value rematch trainers and their final tiers;
 - no change to global EXP formula.
 
+### P-06 follow-up proposal (2026-10-09) — NPC battle levels / farming economy
+
+**Status: PROPOSED — NOT APPROVED OR IMPLEMENTED.** User suggests potentially raising selected non-boss NPC trainer parties by +1 or +2 levels, partly because NPC/rematch battles are used for training and EXP farming. Do not apply globally. During a separate P-06 balancing study, audit trainer location, story timing, VS Seeker repeatability, encounter and boss level curve, EXP rewards and level-grinding opportunities; compare original vs Full NPC tiers. Evaluate selective +1/+2 only if it improves pacing without producing excessive EXP or making optional farming mandatory. Preserve global EXP mechanics, existing trainer progression decisions, and economy. Present recommendation and affected scope to user for approval before any trainer-data changes. Excludes the current A-016 party-order-only microblock.
+
 ## P-07 Environmental signals
 
 Add restrained hints before major optional content:
