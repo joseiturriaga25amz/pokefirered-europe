@@ -124,17 +124,21 @@ SaffronCity_Gym_EventScript_FullRematchWon::
 	end
 
 SaffronCity_Gym_EventScript_FullRematchDecline::
+	msgbox SaffronCity_Gym_Text_FullRematchDeclined
 	release
 	end
 
+SaffronCity_Gym_Text_FullRematchDeclined::
+	.string "Lo comprendo. Nuestro próximo\nencuentro llegará a su tiempo.$"
+
 SaffronCity_Gym_Text_FullRematchOffer::
-	.string "Ya percibí que volverías.\p¿Deseas comprobar otra vez tu poder?$"
+	.string "He presentido tu retorno.\pMi ALAKAZAM y yo hemos\nexplorado nuevos límites.\p¿Deseas otra batalla?$"
 
 SaffronCity_Gym_Text_FullRematchIntro::
-	.string "El resultado aún no está escrito.$"
+	.string "Tu mente y la mía\nescribirán este resultado.$"
 
 SaffronCity_Gym_Text_FullRematchDefeat::
-	.string "Tu voluntad volvió a cambiar el futuro.$"
+	.string "Una vez más, tu voluntad\nha cambiado lo que vi.$"
 
 SaffronCity_Gym_Text_FullRematchAfter::
-	.string "Cuando tu mente busque otro desafío,\nsabrás dónde encontrarme.$"
+	.string "El futuro no está inmóvil.\pCuando busques otra prueba,\nvolveré a esperarte aquí.$"

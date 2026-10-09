@@ -112,17 +112,21 @@ CeladonCity_Gym_EventScript_FullRematchWon::
 	end
 
 CeladonCity_Gym_EventScript_FullRematchDecline::
+	msgbox CeladonCity_Gym_Text_FullRematchDeclined
 	release
 	end
 
+CeladonCity_Gym_Text_FullRematchDeclined::
+	.string "Por supuesto. Las flores\nno se apresuran al crecer.$"
+
 CeladonCity_Gym_Text_FullRematchOffer::
-	.string "Mis Pokémon han seguido floreciendo.\p¿Deseas combatir otra vez?$"
+	.string "Qué agradable visita, CAMPEÓN.\pMis plantas han crecido\ndesde nuestro último duelo.\p¿Te apetece combatir de nuevo?$"
 
 CeladonCity_Gym_Text_FullRematchIntro::
-	.string "Que este combate muestre cuánto hemos crecido.$"
+	.string "Que este encuentro florezca\ncon todo nuestro esfuerzo.$"
 
 CeladonCity_Gym_Text_FullRematchDefeat::
-	.string "Tu fuerza ha florecido maravillosamente.$"
+	.string "Oh... Has cultivado\nuna fuerza admirable.$"
 
 CeladonCity_Gym_Text_FullRematchAfter::
-	.string "Regresa cuando quieras. Aquí siempre\nhabrá un nuevo reto para ti.$"
+	.string "Mi VILEPLUME sigue creciendo.\pEspero poder mostrarte\nsus progresos otra vez.$"

@@ -1124,6 +1124,11 @@ The A-013 Giovanni pass is approved as one four-encounter progression: Rocket Hi
 
 ## A-016 — Major-trainer battle presentation and rematch-dialogue policy
 
+### Leader dialogue scope expansion — 2026-10-09
+
+**User-approved scope expansion; implementation on feature only, validation/integration pending.** In addition to P-03's four rematch lines per leader, review and polish *all direct player-facing conversations with the eight Gym Leaders* in their story and rematch states, including conditional branches, bag-full wording, receipt/advice (without altering mechanical info), and refusal responses. Preserve first-victory reward details, event order, yes/no opt-in, save flags, Fame Checker, Mewtwo escape, and other canonical scenes; Giovanni's Rocket Hideout B4F and Silph Co 11F direct conversations are included. Scope does not authorize dialogue churn by unrelated Gym trainers or other NPCs. Existing full team/AI/EXP and NPC-level proposal untouched. Feature `feature/a016-full-leader-dialogue-polish` PR #38, technical HEAD `316060d`, exact CI run #37929444175 in progress. Follow Full Gameplay Core, audit, controlled merge, exact integrated CI and closure.
+
+
 ### A-016 transversal order-only closure (2026-10-09)
 
 **CLOSED 2026-10-09:** A-016 transversal party-order-only changes feature HEAD `cb923dd8b8ddafea06189130a52473e1d40a2114` passed Full Gameplay Core #37922920204 SUCCESS. Initial #37922475005 failed an obsolete strict reorder expectation; `cb923dd` corrected exactly three frozen expectations without weakening any legality gate. PR #37 merged as `36913f2cb62d421c76636cf95fec831e74ce2135`; exact integrated master push Full Gameplay Core #37923377038 SUCCESS. Four reorders only: Surge Voltorb lead, Erika Victreebel lead, Misty rematch Staryu lead, Giovanni rematch Nidoking lead. Member arrays unchanged as unordered sets (same species, levels, moves, IVs, items and ace), no AI/healing/save/link change. P-06 NPC +1/+2 level/farming idea remains PROPOSED in existing matrix; no levels changed. Next: standalone Gym Leader rematch-dialogue polish, then resume B9 in approved sequence. MyBoy runtime QA is independent.

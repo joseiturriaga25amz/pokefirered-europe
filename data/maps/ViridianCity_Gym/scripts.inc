@@ -187,21 +187,24 @@ ViridianCity_Gym_EventScript_FullRematchWon::
 	end
 
 ViridianCity_Gym_EventScript_FullRematchDecline::
+	msgbox ViridianCity_Gym_Text_FullRematchDeclined
 	release
 	end
 
+ViridianCity_Gym_Text_FullRematchDeclined::
+	.string "La prudencia no es cobardía.\nRegresa cuando estés preparado.$"
+
 ViridianCity_Gym_Text_FullRematchOffer::
-	.string "No confundas una derrota con debilidad.\p¿Te atreves a enfrentarme otra vez?$"
+	.string "Has regresado, CAMPEÓN.\pNi el TEAM ROCKET ni MEWTWO\nvolverán a dictar mi destino.\pHe reconstruido mi disciplina.\n¿Quieres enfrentarte a mí?$"
 
 ViridianCity_Gym_Text_FullRematchIntro::
-	.string "Te mostraré cuánto poder aún conservo.$"
+	.string "No busco excusas.\nSolo un combate digno.$"
 
 ViridianCity_Gym_Text_FullRematchDefeat::
-	.string "Así que tu fuerza no fue casualidad.$"
+	.string "Has demostrado que tu fuerza\nno dependía de la suerte.$"
 
 ViridianCity_Gym_Text_FullRematchAfter::
-	.string "Puedes regresar. Un verdadero líder\nsiempre está dispuesto a medir su poder.$"
-
+	.string "Esta derrota me pertenece.\pPerfeccionaré mis tácticas,\ny estaré listo si regresas.$"
 
 ViridianCity_Gym_Text_MewtwoPower::
 	.string "MEWTWO: Ahora comprendo todo mi\n"

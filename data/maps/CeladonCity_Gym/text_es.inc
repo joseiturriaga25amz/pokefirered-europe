@@ -1,26 +1,16 @@
 CeladonCity_Gym_Text_ErikaIntro::
-    .string "¡Hola! ¡Qué buen tiempo hace!\n"
-    .string "Es tan agradable.\p"
-    .string "¡Ah, hola!... ¡Debo de haberme\n"
-    .string "dormido! ¿Qué tal?\p"
-    .string "Me llamo ERIKA. Soy la LÍDER del\n"
-    .string "GIMNASIO de CIUDAD AZULONA.\p"
-    .string "Enseño el arte de las flores.\n"
-    .string "Mis POKéMON son del tipo PLANTA.\p"
-    .string "¡Oh, perdona! ¡No tenía ni idea de\n"
-    .string "que quisieras desafiarme!\p"
-    .string "¡Como quieras! ¡No pienso perder!{PLAY_BGM}{MUS_ENCOUNTER_GYM_LEADER}$"
+    .string "Oh... ¡Bienvenido a AZULONA!\p"
+    .string "Soy ERIKA. Me gustan las flores\ny los POKéMON de tipo PLANTA.\p"
+    .string "Un jardín exige paciencia,\npero también mucha firmeza.\p"
+    .string "¿Probamos tu habilidad?{PLAY_BGM}{MUS_ENCOUNTER_GYM_LEADER}$"
 
 CeladonCity_Gym_Text_ErikaDefeat::
-    .string "¡Reconozco mi derrota!\p"
-    .string "Eres muy fuerte.\p"
-    .string "Te voy a dar la MEDALLA ARCOIRIS.$"
+    .string "Oh... qué combate tan bello.\p"
+    .string "Has superado a mis POKéMON.\nTe concedo la MEDALLA ARCOIRIS.$"
 
 CeladonCity_Gym_Text_ErikaPostBattle::
-    .string "¿Estás estudiando a los POKéMON?\n"
-    .string "Admito que me has impresionado.\p"
-    .string "No coleccionaría POKéMON si\n"
-    .string "fueran feos.$"
+    .string "La belleza de un POKéMON\nreside también en su esfuerzo.\p"
+    .string "Has cuidado muy bien\nde tus compañeros.$"
 
 CeladonCity_Gym_Text_ExplainRainbowBadgeTakeThis::
     .string "La MEDALLA ARCOIRIS hará que los\n"
@@ -36,12 +26,11 @@ CeladonCity_Gym_Text_ReceivedTM19FromErika::
 
 CeladonCity_Gym_Text_ExplainTM19::
     .string "La MT19 contiene GIGADRENADO.\p"
-    .string "La mitad del daño que produce es\n"
-    .string "usado para curar a tus POKéMON.\p"
-    .string "No me digas que no es estupenda.$"
+    .string "Absorbe energía del rival\ny cura a quien lo utiliza.\p"
+    .string "¡Es como renovar un jardín!$"
 
 CeladonCity_Gym_Text_ShouldMakeRoomForThis::
-    .string "Deberías hacerle sitio a esto.$"
+    .string "Oh, tu mochila está llena.\nHaz espacio para esta MT.$"
 
 CeladonCity_Gym_Text_KayIntro::
     .string "¿Sabes una cosa de este GIMNASIO?\p"

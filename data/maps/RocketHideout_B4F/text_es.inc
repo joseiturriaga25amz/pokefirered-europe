@@ -1,24 +1,16 @@
 RocketHideout_B4F_Text_GiovanniIntro::
-    .string "¡Mmm! ¡Estoy muy impresionado\n"
-    .string "de que hayas llegado hasta aquí!\p"
-    .string "¡El TEAM ROCKET necesita los\n"
-    .string "POKéMON para financiar sus\l"
-    .string "malvados planes!\p"
-    .string "¡Yo soy GIOVANNI, su líder!\p"
-    .string "¡Y te las vas a tener que ver\n"
-    .string "conmigo, metomentodo!$"
+    .string "Así que has llegado\nhasta mi guarida.\p"
+    .string "Soy GIOVANNI, líder del\nTEAM ROCKET.\p"
+    .string "Los POKéMON son la fuerza\nque sostiene mis planes.\p"
+    .string "No permitiré que un intruso\narruine lo que he construido.$"
 
 RocketHideout_B4F_Text_GiovanniDefeat::
-    .string "¿QUÉ?\n"
-    .string "¡Esto es imposible!$"
+    .string "¿Cómo...?\n¡No esperaba esta derrota!$"
 
 RocketHideout_B4F_Text_GiovanniPostBattle::
-    .string "Ya veo que has entrenado a tus\n"
-    .string "POKéMON con mucho cuidado.\p"
-    .string "¡Pero jamás entenderías\n"
-    .string "cuáles son mis planes!\p"
-    .string "¡En esta ocasión te dejaré pasar!\p"
-    .string "Espero que nos volvamos a ver.$"
+    .string "Has entrenado con habilidad.\nEso no puedo negarlo.\p"
+    .string "Pero aún no comprendes\nel alcance de mis planes.\p"
+    .string "Por esta vez, me retiraré.\nVolveremos a encontrarnos.$"
 
 RocketHideout_B4F_Text_Grunt2Intro::
     .string "¡Te conozco! ¡Tú arruinaste\n"

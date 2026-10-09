@@ -22,6 +22,7 @@ LABEL_SUFFIXES = (
     "Text_FullRematchIntro",
     "Text_FullRematchDefeat",
     "Text_FullRematchAfter",
+    "Text_FullRematchDeclined",
 )
 
 def extract_string_block(text: str, label: str) -> str:
@@ -46,6 +47,16 @@ def main() -> None:
         assert "FLAG_SYS_NATIONAL_DEX" not in text, f"{gym}: National Dex still gates rematch"
         assert f"cleartrainerflag {trainer}" in text, f"{gym}: rematch repeatability reset missing"
         assert trainer in text, f"{gym}: rematch trainer missing"
+        assert f"{gym}_EventScript_FullRematchDecline::\n\tmsgbox {gym}_Text_FullRematchDeclined\n\trelease" in text, (
+            f"{gym}: decline response or player release missing"
+        )
+        assert f"goto_if_eq VAR_RESULT, NO, {gym}_EventScript_FullRematchDecline" in text, (
+            f"{gym}: optional decline branch changed"
+        )
+        assert f"{gym}_EventScript_FullRematchWon::\n\tmsgbox {gym}_Text_FullRematchAfter" in text, (
+            f"{gym}: victory dialogue missing"
+        )
+        assert f"trainerbattle_single {trainer}" in text, f"{gym}: rematch trigger changed"
 
         values = tuple(
             extract_string_block(text, f"{gym}_{suffix}")

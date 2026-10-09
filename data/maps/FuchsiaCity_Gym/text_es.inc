@@ -1,29 +1,15 @@
 FuchsiaCity_Gym_Text_KogaIntro::
-    .string "KOGA: ¡Uajajaja!\p"
-    .string "¿Alguien tan enclenque como tú\n"
-    .string "se atreve a desafiarme?\p"
-    .string "¡Me parto de la risa!\p"
-    .string "¡Como maestro ninja, te enseñaré\n"
-    .string "qué es el miedo!\p"
-    .string "¡Sentirás la desesperación de las\n"
-    .string "técnicas del envenenamiento y del\l"
-    .string "sueño!\p"
-    .string "¡Adoro a mis temidos POKéMON\n"
-    .string "del tipo VENENO!{PLAY_BGM}{MUS_ENCOUNTER_GYM_LEADER}$"
+    .string "¡Uajajaja! Soy KOGA,\nmaestro de las artes ninja.\p"
+    .string "No solo gana el más fuerte: \nel veneno y la paciencia\lpueden decidir un combate.\p"
+    .string "¡Intenta leer mis movimientos!{PLAY_BGM}{MUS_ENCOUNTER_GYM_LEADER}$"
 
 FuchsiaCity_Gym_Text_KogaDefeat::
-    .string "¡Ejem!\n"
-    .string "¡Has demostrado tu valor!\p"
-    .string "¡Aquí tienes la MEDALLA ALMA!$"
+    .string "¡Impresionante!\p"
+    .string "Has descubierto mis engaños.\nLa MEDALLA ALMA es tuya.$"
 
 FuchsiaCity_Gym_Text_KogaPostBattle::
-    .string "¡Si los POKéMON son INTOXICADOS\n"
-    .string "sufrirán más y más durante el\l"
-    .string "combate!\p"
-    .string "¡Y lo seguirán haciendo una vez\n"
-    .string "que acabe la lucha!\p"
-    .string "¡El veneno aterroriza a todo\n"
-    .string "el mundo!$"
+    .string "El veneno castiga a quien\nse confía demasiado.\p"
+    .string "Observa a tu rival,\ny no desperdicies un turno.$"
 
 FuchsiaCity_Gym_Text_KogaExplainSoulBadge::
     .string "¡Ahora que tienes la MEDALLA ALMA,\n"
@@ -39,12 +25,12 @@ FuchsiaCity_Gym_Text_ReceivedTM06FromKoga::
     .string "de manos de KOGA!$"
 
 FuchsiaCity_Gym_Text_KogaExplainTM06::
-    .string "¡La MT06 contiene TÓXICO!\p"
-    .string "¡Es una técnica secreta de hace\n"
-    .string "más de 400 años!$"
+    .string "La MT06 enseña TÓXICO.\p"
+    .string "El veneno se agrava\ncon cada turno que pasa.\p"
+    .string "¡Es una técnica ninja\ntransmitida por generaciones!$"
 
 FuchsiaCity_Gym_Text_MakeSpaceForThis::
-    .string "¡Hazle sitio a esto!$"
+    .string "Hasta un ninja necesita espacio.\n¡Vacía tu mochila y vuelve!$"
 
 FuchsiaCity_Gym_Text_KaydenIntro::
     .string "La fuerza no es la clave con los\n"

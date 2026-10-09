@@ -1,22 +1,15 @@
 CinnabarIsland_Gym_Text_BlaineIntro::
-    .string "¡Ja!\p"
-    .string "¡Soy BLAINE! ¡LÍDER del GIMNASIO\n"
-    .string "de CANELA!\p"
-    .string "¡Mis feroces POKéMON de FUEGO\n"
-    .string "quemarán a quien me desafíe!\p"
-    .string "¡Ja! ¡Más vale que tengas\n"
-    .string "ANTIQUEMAR!{PLAY_BGM}{MUS_ENCOUNTER_GYM_LEADER}$"
+    .string "¡Ja, ja! ¡Soy BLAINE,\nLÍDER del GIMNASIO de CANELA!\p"
+    .string "¡Pregunta de examen!\n¿Qué arde más que una llama?\p"
+    .string "¡Mi pasión por los POKéMON!\n¡Prepárate para combatir!{PLAY_BGM}{MUS_ENCOUNTER_GYM_LEADER}$"
 
 CinnabarIsland_Gym_Text_BlaineDefeat::
-    .string "¡Me has machacado!\n"
-    .string "¡He quedado reducido a nada!\p"
-    .string "¡Has ganado la MEDALLA VOLCÁN!$"
+    .string "¡Ja! ¡Me has dejado sin llama!\p"
+    .string "Pero no sin admiración.\n¡La MEDALLA VOLCÁN es tuya!$"
 
 CinnabarIsland_Gym_Text_FireBlastIsUltimateFireMove::
-    .string "¡LLAMARADA es lo máximo en la\n"
-    .string "técnica de las quemaduras!\p"
-    .string "¡No la malgastes con los POKéMON\n"
-    .string "acuáticos!$"
+    .string "¡LLAMARADA golpea con fuerza!\p"
+    .string "Pero ni siquiera el fuego\nvence a todos los tipos.$"
 
 CinnabarIsland_Gym_Text_ExplainVolcanoBadge::
     .string "¡Ja!\p"
@@ -30,14 +23,12 @@ CinnabarIsland_Gym_Text_ReceivedTM38FromBlaine::
     .string "de manos de BLAINE!$"
 
 CinnabarIsland_Gym_Text_BlainePostBattle::
-    .string "¡La MT38 contiene LLAMARADA!\p"
-    .string "¡Enseña este ataque a los POKéMON\n"
-    .string "del tipo FUEGO!\p"
-    .string "¡CHARMELEON o PONYTA serían\n"
-    .string "las mejores apuestas!$"
+    .string "¡LLAMARADA exige decisión!\p"
+    .string "Hasta el fuego más potente\nfracasa sin buena estrategia.\p"
+    .string "¡Entrena y haz que arda\ntu espíritu competitivo!$"
 
 CinnabarIsland_Gym_Text_MakeSpaceForThis::
-    .string "¡Hazle sitio a esto, anda!$"
+    .string "¡Ja! ¡No cabe ni una chispa!\nHaz sitio en tu mochila.$"
 
 CinnabarIsland_Gym_Text_ErikIntro::
     .string "¿Sabes el calor que puede dar el\n"

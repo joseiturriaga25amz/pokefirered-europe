@@ -1,17 +1,13 @@
 CeruleanCity_Gym_Text_MistyIntro::
-    .string "¡Hola! ¡Tú no eres de por aquí!\p"
-    .string "¡Los ENTRENADORES profesionales\n"
-    .string "deben tener una estrategia para\l"
-    .string "sus POKéMON!\p"
-    .string "¿Qué táctica sigues tú para\n"
-    .string "atrapar y entrenar POKéMON?\p"
-    .string "¡Mi táctica es la ofensiva total\n"
-    .string "con los POKéMON del tipo AGUA!{PLAY_BGM}{MUS_ENCOUNTER_GYM_LEADER}$"
+    .string "¡Hola! Soy MISTY, la LÍDER\ndel GIMNASIO de CELESTE.\p"
+    .string "Los POKéMON de AGUA no dejan\nde moverse ni de atacar.\p"
+    .string "¿Tienes una estrategia para\nseguir nuestro ritmo?\p"
+    .string "¡Pues ven a demostrarlo!{PLAY_BGM}{MUS_ENCOUNTER_GYM_LEADER}$"
 
 CeruleanCity_Gym_Text_ExplainTM03::
-    .string "¡La MT03 enseña HIDROPULSO!\p"
-    .string "¡Úsala con los POKéMON del tipo\n"
-    .string "AGUA!$"
+    .string "La MT03 enseña HIDROPULSO.\p"
+    .string "Además de causar daño, puede\nconfundir al adversario.\p"
+    .string "¡Combina fuerza y estrategia!$"
 
 CeruleanCity_Gym_Text_ExplainCascadeBadge::
     .string "¡La MEDALLA CASCADA obligará a\n"
@@ -29,14 +25,12 @@ CeruleanCity_Gym_Text_ReceivedTM03FromMisty::
     .string "de manos de MISTY!$"
 
 CeruleanCity_Gym_Text_BetterMakeRoomForThis::
-    .string "¡Más vale que le hagas sitio!$"
+    .string "¡Haz sitio en tu mochila!\nLa MT03 te estará esperando.$"
 
 CeruleanCity_Gym_Text_MistyDefeat::
-    .string "¡Uauuu!\n"
-    .string "¡Eres demasiado!\p"
-    .string "¡Muy bien!\p"
-    .string "¡Toma la MEDALLA CASCADA para que\n"
-    .string "todos sepan que me has ganado!$"
+    .string "¡Vaya! ¡Qué combate!\p"
+    .string "Has sabido adaptarte mejor\nque yo.\p"
+    .string "¡La MEDALLA CASCADA es tuya!$"
 
 CeruleanCity_Gym_Text_DianaIntro::
     .string "¡Soy demasiado buena para ti!\p"

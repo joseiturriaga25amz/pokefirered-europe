@@ -729,17 +729,21 @@ CinnabarIsland_Gym_EventScript_FullRematchWon::
 	end
 
 CinnabarIsland_Gym_EventScript_FullRematchDecline::
+	msgbox CinnabarIsland_Gym_Text_FullRematchDeclined
 	release
 	end
 
+CinnabarIsland_Gym_Text_FullRematchDeclined::
+	.string "¡Ja, ja! ¡Guardaré las brasas\npara nuestro próximo combate!$"
+
 CinnabarIsland_Gym_Text_FullRematchOffer::
-	.string "¡Mi espíritu sigue ardiendo!\p¿Quieres avivar las llamas otra vez?$"
+	.string "¡Ja, ja! ¡El volcán no duerme!\pMi MAGMAR arde con más fuerza\ndesde nuestra última batalla.\p¿Aceptas otro desafío?$"
 
 CinnabarIsland_Gym_Text_FullRematchIntro::
-	.string "¡Este combate estará al rojo vivo!$"
+	.string "¡Pregunta de examen!\n¿Puedes resistir este calor?$"
 
 CinnabarIsland_Gym_Text_FullRematchDefeat::
-	.string "¡Magnífico! Ni mis llamas pudieron frenarte.$"
+	.string "¡Ja! ¡Has dado con\nla respuesta correcta!$"
 
 CinnabarIsland_Gym_Text_FullRematchAfter::
-	.string "¡Vuelve cuando quieras! Mantendré\nencendido el fuego del desafío.$"
+	.string "¡Magnífico, CAMPEÓN!\nEstudiaré nuevas tácticas\lpara nuestro próximo duelo.$"
