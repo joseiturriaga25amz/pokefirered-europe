@@ -1124,6 +1124,11 @@ The A-013 Giovanni pass is approved as one four-encounter progression: Rocket Hi
 
 ## A-016 — Major-trainer battle presentation and rematch-dialogue policy
 
+### A-016 transversal order-only closure (2026-10-09)
+
+**CLOSED 2026-10-09:** A-016 transversal party-order-only changes feature HEAD `cb923dd8b8ddafea06189130a52473e1d40a2114` passed Full Gameplay Core #37922920204 SUCCESS. Initial #37922475005 failed an obsolete strict reorder expectation; `cb923dd` corrected exactly three frozen expectations without weakening any legality gate. PR #37 merged as `36913f2cb62d421c76636cf95fec831e74ce2135`; exact integrated master push Full Gameplay Core #37923377038 SUCCESS. Four reorders only: Surge Voltorb lead, Erika Victreebel lead, Misty rematch Staryu lead, Giovanni rematch Nidoking lead. Member arrays unchanged as unordered sets (same species, levels, moves, IVs, items and ace), no AI/healing/save/link change. P-06 NPC +1/+2 level/farming idea remains PROPOSED in existing matrix; no levels changed. Next: standalone Gym Leader rematch-dialogue polish, then resume B9 in approved sequence. MyBoy runtime QA is independent.
+
+
 ### Decision
 
 Approved transversal policy for the ongoing major-trainer review beginning with Lorelei and later applying to Bruno, Agatha, Lance, Gary/Blue, plus a later cross-check of already-closed Gym Leaders and Giovanni.
