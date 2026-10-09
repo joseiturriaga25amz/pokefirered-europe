@@ -29,7 +29,8 @@ PewterCity_Gym_Text_ReceivedTM39FromBrock::
 PewterCity_Gym_Text_ExplainTM39::
     .string "La MT39 contiene TUMBA ROCAS.\p"
     .string "Golpea y reduce la VELOCIDAD\ndel rival. Úsala con cabeza.\p"
-    .string "Una MT solo se puede usar una\nvez: elige bien a tu POKéMON.$"
+    .string "¡Puedes usar una MT tantas\nveces como quieras!\p"
+    .string "¡Prueba nuevas estrategias!$"
 
 PewterCity_Gym_Text_BrockPostBattle::
     .string "Has demostrado algo más que\nfuerza: sabes mantenerte firme.\p"
