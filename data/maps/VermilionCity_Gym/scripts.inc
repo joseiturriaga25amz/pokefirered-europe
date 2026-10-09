@@ -311,13 +311,13 @@ VermilionCity_Gym_EventScript_FullRematchDecline::
 	end
 
 VermilionCity_Gym_Text_FullRematchOffer::
-	.string "¡Soldado! Aún tengo voltaje de sobra.\p¿Listo para otra descarga?$"
+	.string "¡CAMPEÓN! Mis POKéMON han\nrecargado sus baterías.\p¿Te atreves a volver\nal campo de batalla?$"
 
 VermilionCity_Gym_Text_FullRematchIntro::
-	.string "¡Prepárate para un combate eléctrico!$"
+	.string "¡Atención, soldado!\n¡Empieza la descarga!$"
 
 VermilionCity_Gym_Text_FullRematchDefeat::
-	.string "¡Ja! Aguantaste toda la descarga.$"
+	.string "¡Bien hecho! ¡Ni toda mi\nenergía pudo detenerte!$"
 
 VermilionCity_Gym_Text_FullRematchAfter::
-	.string "Cuando quieras otra prueba de fuego,\n¡vuelve al frente!$"
+	.string "¡Mantén la guardia alta!\nMi RAICHU y yo seguiremos\lentrenando para la revancha.$"

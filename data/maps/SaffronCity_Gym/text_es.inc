@@ -1,25 +1,16 @@
 SaffronCity_Gym_Text_SabrinaIntro::
-    .string "¡He visto que venías!\p"
-    .string "¡Tengo poderes psíquicos desde\n"
-    .string "que era niña!\p"
-    .string "Primero aprendí a doblar cucharas\n"
-    .string "con la mente.\p"
-    .string "¡Odio luchar, pero si quieres\n"
-    .string "puedo enseñarte mis poderes!{PLAY_BGM}{MUS_ENCOUNTER_GYM_LEADER}$"
+    .string "Sabía que vendrías.\p"
+    .string "Soy SABRINA. Desde niña\npuedo mover objetos\lcon la mente.\p"
+    .string "No disfruto del combate,\npero respeto tu determinación.\p"
+    .string "Muéstrame qué camino eliges.{PLAY_BGM}{MUS_ENCOUNTER_GYM_LEADER}$"
 
 SaffronCity_Gym_Text_SabrinaDefeat::
-    .string "¡Estoy impresionada!\n"
-    .string "Acepto mi derrota.\p"
-    .string "¡Admito que no he sido lo bastante\n"
-    .string "fuerte y por eso he perdido!\p"
-    .string "¡Has ganado la MEDALLA PANTANO!$"
+    .string "No había previsto\nesta posibilidad...\p"
+    .string "Acepto mi derrota.\nTe has ganado la MEDALLA PANTANO.$"
 
 SaffronCity_Gym_Text_SabrinaPostBattle::
-    .string "Todo el mundo tiene poderes\n"
-    .string "mentales, pero la gente no lo\l"
-    .string "sabe.\p"
-    .string "La mente es muy poderosa, pero\n"
-    .string "no todo el mundo la aprovecha.$"
+    .string "La mente cambia\ncuando aprendemos a escuchar.\p"
+    .string "Tu vínculo con tus POKéMON\nte permitirá ir aún más lejos.$"
 
 SaffronCity_Gym_Text_ExplainMarshBadgeTakeThis::
     .string "¡Con la MEDALLA PANTANO, todo\n"
@@ -38,10 +29,9 @@ SaffronCity_Gym_Text_ReceivedTM04FromSabrina::
     .string "de manos de SABRINA!$"
 
 SaffronCity_Gym_Text_ExplainTM04::
-    .string "¡La MT04 contiene PAZ MENTAL!\p"
-    .string "Hace concentrarse a los POKéMON\n"
-    .string "para que aumente su AT. ESP. \l"
-    .string "y su DEF. ESP.$"
+    .string "La MT04 enseña PAZ MENTAL.\p"
+    .string "Concentrarse refuerza el\nATAQUE ESP. y la DEFENSA ESP.\p"
+    .string "La calma también es poder.$"
 
 SaffronCity_Gym_Text_BagFullOfOtherItems::
     .string "¡Tu mochila está llena de otros\n"

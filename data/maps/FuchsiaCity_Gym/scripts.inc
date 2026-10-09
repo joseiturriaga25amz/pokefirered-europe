@@ -122,13 +122,13 @@ FuchsiaCity_Gym_EventScript_FullRematchDecline::
 	end
 
 FuchsiaCity_Gym_Text_FullRematchOffer::
-	.string "Un ninja nunca revela todos sus trucos.\p¿Quieres desafiarme de nuevo?$"
+	.string "Un ninja estudia cada derrota.\pMi CROBAT y yo dominamos\nnuevas técnicas.\p¿Te atreves a desafiarnos?$"
 
 FuchsiaCity_Gym_Text_FullRematchIntro::
-	.string "Intenta seguir el rastro de mis Pokémon.$"
+	.string "¡Uajajaja! ¡Intenta seguir\nla sombra de mi CROBAT!$"
 
 FuchsiaCity_Gym_Text_FullRematchDefeat::
-	.string "Has atravesado incluso mis nuevas técnicas.$"
+	.string "¡Has visto a través\nde mis nuevos trucos!$"
 
 FuchsiaCity_Gym_Text_FullRematchAfter::
-	.string "No te confíes. La próxima vez\nel veneno será aún más sutil.$"
+	.string "Recuerda, CAMPEÓN: la victoria\nse prepara en silencio.\pAquí aguardaré tu regreso.$"

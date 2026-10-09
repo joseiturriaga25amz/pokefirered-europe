@@ -1,28 +1,17 @@
 ViridianCity_Gym_Text_GiovanniIntro::
-    .string "¡Je, je, je!\n"
-    .string "¡Ésta es mi guarida!\p"
-    .string "¡Quería volver a formar al TEAM\n"
-    .string "ROCKET desde aquí!\p"
-    .string "¡Pero has vuelto a encontrarme!\n"
-    .string "¡Estoy que me subo por las\l"
-    .string "paredes! ¡Esta vez, verás!\p"
-    .string "¡Volverás a enfrentarte al gran\n"
-    .string "GIOVANNI, al mejor de los\l"
-    .string "ENTRENADORES!{PLAY_BGM}{MUS_ENCOUNTER_ROCKET}$"
+    .string "Así que has llegado\nhasta mi último GIMNASIO.\p"
+    .string "Soy GIOVANNI. Mis planes\ncon el TEAM ROCKET\lno han terminado aquí.\p"
+    .string "La fuerza exige control.\n¡Te lo demostraré!{PLAY_BGM}{MUS_ENCOUNTER_ROCKET}$"
 
 ViridianCity_Gym_Text_GiovanniDefeat::
-    .string "¡Imposible...!\n"
-    .string "¡Has vencido incluso a mi arma\l"
-    .string "más poderosa!$"
+    .string "No puede ser...\p"
+    .string "¡Has superado incluso\na mi creación más poderosa!$"
 
 ViridianCity_Gym_Text_GiovanniPostBattle::
-    .string "¡He perdido, ya no soy digno\n"
-    .string "de dirigir a mis secuaces!\p"
-    .string "¡Se acabó el TEAM ROCKET!\p"
-    .string "¡Dedicaré mi vida al estudio\n"
-    .string "de los POKéMON!\p"
-    .string "¡Espero que nos volvamos a ver!\n"
-    .string "¡Adiós!$"
+    .string "He perdido y debo asumirlo.\p"
+    .string "El TEAM ROCKET\nno puede continuar así.\p"
+    .string "Me retiraré para comprender\nlo que significa ser fuerte.\p"
+    .string "Puede que volvamos a vernos.$"
 
 ViridianCity_Gym_Text_ExplainEarthBadgeTakeThis::
     .string "¡Con la MEDALLA TIERRA, todos\n"
@@ -39,14 +28,12 @@ ViridianCity_Gym_Text_ReceivedTM26FromGiovanni::
     .string "de manos de GIOVANNI!$"
 
 ViridianCity_Gym_Text_ExplainTM26::
-    .string "¡La MT26 es TERREMOTO!\p"
-    .string "¡Es muy potente, causa un\n"
-    .string "temblor devastador!\p"
-    .string "La inventé cuando dirigía este\n"
-    .string "GIMNASIO, hace ya mucho tiempo...$"
+    .string "La MT26 contiene TERREMOTO.\p"
+    .string "Es un poderoso ataque TIERRA\nque sacude todo el campo.\p"
+    .string "Úsalo con la precisión\nque exige un verdadero líder.$"
 
 ViridianCity_Gym_Text_YouDoNotHaveSpace::
-    .string "¡Llevas muchas cosas!$"
+    .string "Tu mochila está llena.\nVuelve cuando tengas espacio.$"
 
 ViridianCity_Gym_Text_YujiIntro::
     .string "¡Oye!\n"

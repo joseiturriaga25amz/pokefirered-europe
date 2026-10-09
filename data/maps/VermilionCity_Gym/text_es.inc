@@ -1,19 +1,12 @@
 VermilionCity_Gym_Text_LtSurgeIntro::
-    .string "¡Oye!\n"
-    .string "¿Pero qué haces?\p"
-    .string "¡No resistirás mucho luchando!\n"
-    .string "¡Seguro!\p"
-    .string "¡Los POKéMON ELÉCTRICOS\n"
-    .string "me salvaron en combate!\p"
-    .string "¡Paralizaron a mis enemigos!\p"
-    .string "¡Y eso mismo voy a hacer yo\n"
-    .string "contigo!{PLAY_BGM}{MUS_ENCOUNTER_GYM_LEADER}$"
+    .string "¡ALTO, soldado! Soy LT. SURGE.\p"
+    .string "En combate aprendí que un\ninstante decide una victoria.\p"
+    .string "Mis POKéMON ELÉCTRICOS\nparalizarán tus planes.\p"
+    .string "¡Prepárate para la descarga!{PLAY_BGM}{MUS_ENCOUNTER_GYM_LEADER}$"
 
 VermilionCity_Gym_Text_LtSurgePostBattle::
-    .string "¡Te daré un pequeño consejo!\p"
-    .string "¡La electricidad es muy potente!\p"
-    .string "¡Pero no afecta a los POKéMON\n"
-    .string "del tipo TIERRA!$"
+    .string "Ni un ejército de rayos puede\ncon un buen POKéMON TIERRA.\p"
+    .string "Recuerda: conoce el terreno\nantes de entrar en combate.$"
 
 VermilionCity_Gym_Text_ExplainThunderBadgeTakeThis::
     .string "¡La MEDALLA TRUENO aumenta la\n"
@@ -28,17 +21,15 @@ VermilionCity_Gym_Text_ReceivedTM34FromLtSurge::
     .string "de manos de LT. SURGE!$"
 
 VermilionCity_Gym_Text_ExplainTM34::
-    .string "¡MT34 contiene ONDA VOLTIO!\p"
-    .string "¡Enséñaselo a un POKéMON\n"
-    .string "eléctrico!$"
+    .string "La MT34 contiene ONDA VOLTIO.\p"
+    .string "Es un ataque ELÉCTRICO que\nno falla. ¡Úsalo con cabeza!$"
 
 VermilionCity_Gym_Text_MakeRoomInYourBag::
-    .string "¡Más vale que le hagas sitio!$"
+    .string "¡Mochila llena, soldado!\n¡Despeja el equipo y vuelve!$"
 
 VermilionCity_Gym_Text_LtSurgeDefeat::
-    .string "¡Guau!\p"
-    .string "¡Tú sí que eres fuerte!\p"
-    .string "¡Anda, toma la MEDALLA TRUENO!$"
+    .string "¡Buen trabajo, soldado!\p"
+    .string "Has resistido mi ofensiva.\n¡La MEDALLA TRUENO es tuya!$"
 
 VermilionCity_Gym_Text_TuckerIntro::
     .string "¡Cuando estaba en el ejército,\n"
