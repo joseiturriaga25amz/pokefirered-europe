@@ -1217,7 +1217,9 @@ Lorelei is the first Elite Four trainer reviewed under A-016. The approved desig
 
 ### Gary / Blue progression and Champion amendment — implementation checkpoint (2026-10-09)
 
-**Status: APPROVED / IMPLEMENTED ON FEATURE / NOT YET CI-GREEN, INTEGRATED OR CLOSED.** User approved refinement of their complete nine-encounter Gary proposal, including adjustments for legality, strategy, levels and battle presentation. This amendment is the authoritative design target, not evidence of successful CI. See feature `feature/gary-roster-progression`, technical implementation commit `26d621c`, PR #36, Full Gameplay Core run `37909349310` pending.
+**Status: APPROVED / IMPLEMENTED / VALIDATED / FEATURE CI-GREEN / INTEGRATED / INTEGRATED CI-GREEN / CLOSED.**
+
+**Gary CLOSED evidence (2026-10-09):** approved nine-encounter roster feature HEAD `3ba3811fc62f2dd4d2d7151b0a6933171038fd3b` passed exact feature Full Gameplay Core **#37909837264 SUCCESS**. Initial feature run `#37909349310` failed an obsolete inline Gary-roster freeze in workflow, corrected at `3ba3811` without weakening the rule. PR **#36** merged to `master` as `076cffb80967d4b7c220aa5f14627e4217b20813`; exact integrated push Full Gameplay Core **#37910445569 SUCCESS**. Gary gameplay/validator block **CLOSED**; MyBoy hands-on RC runtime QA is separate. Next: A-016 transversal party-order-only audit of Gym Leaders, Giovanni, Elite Four and Gary; thereafter separate dialogue polish and B9 according to approved matrix. User approved refinement of their complete nine-encounter Gary proposal, including adjustments for legality, strategy, levels and battle presentation. This amendment is the authoritative design target, not evidence of successful CI. Implementation commit `26d621c`, documentation-only followup `f63ddb5`, and exact validated feature HEAD `3ba3811` (workflows relocked); PR #36 merged. All closure evidence above.
 
 **All nine encounter rosters (left to right = party-array presentation/lead order; ace last; held item only on ace from Silph onwards).** Moves use English constant names below for precise audit:
 
