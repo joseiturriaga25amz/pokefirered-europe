@@ -1213,6 +1213,26 @@ Lorelei is the first Elite Four trainer reviewed under A-016. The approved desig
 - Lorelei roster/identity microblock is therefore **CLOSED**.
 
 
+
+
+### Gary / Blue progression and Champion amendment — implementation checkpoint (2026-10-09)
+
+**Status: APPROVED / IMPLEMENTED ON FEATURE / NOT YET CI-GREEN, INTEGRATED OR CLOSED.** User approved refinement of their complete nine-encounter Gary proposal, including adjustments for legality, strategy, levels and battle presentation. This amendment is the authoritative design target, not evidence of successful CI. See feature `feature/gary-roster-progression`, technical implementation commit `26d621c`, PR #36, Full Gameplay Core run `37909349310` pending.
+
+**All nine encounter rosters (left to right = party-array presentation/lead order; ace last; held item only on ace from Silph onwards).** Moves use English constant names below for precise audit:
+
+1. Oak: Squirtle 5 — Tackle / Tail Whip.
+2. Route 22 early: Pidgey 10 — Gust / Tackle / Sand Attack; Squirtle 12 — Bubble / Tackle / Withdraw / Tail Whip.
+3. Cerulean: Pidgeotto 20 — Quick Attack / Gust / Sand Attack / Whirlwind; Nidorino 19 — Peck / Double Kick / Poison Sting / Focus Energy; Kadabra 18 — Confusion / Disable / Kinesis / Teleport; Wartortle 22 — Water Gun / Bite / Withdraw / Tail Whip.
+4. S.S. Anne: Nidorino 24 — Horn Attack / Double Kick / Poison Sting / Focus Energy; Pidgeotto 25 — Quick Attack / Gust / Sand Attack / Whirlwind; Kadabra 25 — Psybeam / Recover / Disable / Reflect; Wartortle 28 — Water Pulse / Bite / Protect / Rapid Spin.
+5. Pokemon Tower: Exeggcute 30 — Confusion / Hypnosis / Leech Seed / Reflect; Pidgeotto 31 — Quick Attack / Gust / Wing Attack / Whirlwind; Growlithe 31 — Flame Wheel / Take Down / Ember / Roar; Nidoking 30 — Peck / Horn Attack / Dig / Double Kick; Kadabra 32 — Psybeam / Recover / Future Sight / Reflect; Wartortle 34 — Water Pulse / Bite / Protect / Rapid Spin.
+6. Silph: Pidgeot 44 — Quick Attack / Feather Dance / Aerial Ace / Whirlwind; Nidoking 43 — Earthquake / Horn Attack / Megahorn / Double Kick; Exeggutor 43 — Psychic / Giga Drain / Egg Bomb / Hypnosis; Arcanine 44 — Flame Wheel / Take Down / Flamethrower / Roar; Alakazam 46 — Psychic / Calm Mind / Reflect / Recover; Blastoise 49 @ Sitrus Berry — Rain Dance / Protect / Bite / Surf.
+7. Route 22 late: Exeggutor 56 — Psychic / Giga Drain / Egg Bomb / Hypnosis; Pidgeot 56 — Quick Attack / Feather Dance / Aerial Ace / Agility; Nidoking 57 — Earthquake / Megahorn / Toxic / Brick Break; Alakazam 58 — Psychic / Calm Mind / Shock Wave / Recover; Arcanine 59 — Flamethrower / Extreme Speed / Bite / Roar; Blastoise 61 @ Mystic Water — Rain Dance / Ice Beam / Bite / Surf.
+8. Champion first: Pidgeot 64 — Aerial Ace / Double-Edge / Steel Wing / Feather Dance; Nidoking 65 — Earthquake / Rock Slide / Brick Break / Toxic; Alakazam 65 — Psychic / Shadow Ball / Recover / Calm Mind; Arcanine 67 — Extreme Speed / Flamethrower / Dig / Sunny Day; Exeggutor 66 — Solar Beam / Giga Drain / Psychic / Hypnosis; Blastoise 69 @ Leftovers — Hydro Pump / Ice Beam / Earthquake / Rain Dance.
+9. Champion rematch: Umbreon 80 — Bite / Toxic / Confuse Ray / Moonlight; Golem 81 — Earthquake / Explosion / Double-Edge / Rock Slide; Nidoqueen 80 — Earthquake / Sludge Bomb / Ice Beam / Thunderbolt; Scizor 82 — Steel Wing / Aerial Ace / Quick Attack / Swords Dance; Arcanine 83 — Fire Blast / Extreme Speed / Dig / Flamethrower; Blastoise 85 @ Leftovers — Hydro Pump / Ice Beam / Earthquake / Rain Dance.
+
+**Design and compatibility:** preserves existing Full level and IV-byte bands (0 / 50 / 83 / 99 / 116 / 149 / 198 / 231+247 / 239+247), two Champion Full Restores, established trainer AI and fixed RIV-001 Squirtle routing regardless of player starter. Clones the nine rosters in the original Bulbasaur/Charmander unused datasets for validator compatibility. New six-member parties at Tower and Silph. Nidoking evolves early and follows Gary through Champion; Exeggutor returns at Champion; rematch deliberately replaces old squad with Umbreon, Nidoqueen, Golem and Scizor alongside Arcanine and Blastoise. Arcanine cannot learn Earthquake; use Dig. Nidorino cannot learn Fury Attack at 19/24; use Double Kick/Horn Attack. Kadabra from Celeste replaces Abra; prior trainer-only Abra Confusion exception is removed. Umbreon uses endurance/status, not low-special-stat Psychic/Shadow Ball. Blastoise rematch prefers coverage via Earthquake to Protect; ace identity remains last. Sunny Day + Solar Beam is a possible tactic, NOT guaranteed turn sequencing by unchanged AI. No global move metadata/AI/map/save/link changes permitted. Full Gameplay Core, independent audit, controlled integration and exact integrated master CI required before CLOSED; MyBoy runtime QA remains independent.
+
 ### Lance curve/identity amendment — approved target (2026-10-08)
 
 **Status:** USER APPROVED / IMPLEMENTED / VALIDATED / FEATURE CI-GREEN / INTEGRATED / INTEGRATED CI-GREEN / CLOSED.
