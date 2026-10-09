@@ -15,9 +15,9 @@ Use `docs/spec/` only for frozen historical design details.
 ## Current state
 
 - Canonical repository: `joseiturriaga25amz/pokefirered-europe`.
-- **Latest Lance handoff (2026-10-09):** approved first League/rematch parties implemented and audited; feature HEAD `473c00f2f0c9ff5a43453dbc085fc96ed6bd2f8d` passed Full Gameplay Core **#682 SUCCESS**. PR #35 merged as `657f69e3f4bc445e10ec762b2e5ab9005cd8ea92`; exact merged master SHA matched master before docs-only edits. Post-integration Full Gameplay Core **#683** (run `37881229687`, event `push`, integrated SHA `657f69e`) was IN PROGRESS. **Lance not CLOSED until CI #683 SUCCESS.** Once verified, record closure in both continuity docs and Lance amendment, then begin Gary design review. No Gary gameplay changes until then.
+- **Current Lance handoff (2026-10-09):** **CLOSED (2026-10-09)**. Feature HEAD `473c00f2f0c9ff5a43453dbc085fc96ed6bd2f8d`: Full Gameplay Core **#682 SUCCESS**. PR **#35** merged to `master` at `657f69e3f4bc445e10ec762b2e5ab9005cd8ea92`. Post-integration Full Gameplay Core **#683 SUCCESS** (run ID `37881229687`, `push`, exact integrated SHA; 46 successful steps). Subsequent master commits `f0bc860` and `e21b634` changed only `docs/production/PROJECT_CONTINUITY.md` and `docs/production/NEXT_SESSION.md`, respectively; validated ROM/gameplay unchanged. MyBoy runtime QA remains a distinct release-stage gate. Next: Gary/Blue roster/progression/identity design review, without gameplay edits until user approval.
 
-- **Lance implementation record: Lance rosters, user-approved, implementation on feature only.** Branch `feature/lance-roster-identity` based on master `88c7b20d1d32194c7606f18a06c18ec9cb14d162`. Exact target in `DECISION_AMENDMENTS.md`: Gyarados shiny is 2nd strongest (Lv64 story/Lv81 rematch); Dragonite ace Lv65 @ Sitrus Berry and Lv82 @ Leftovers. Rematch includes Kingdra, Charizard, Salamence and Aerodactyl; no Altaria or duplicate Dragonite. First encounter retains two differentiated Dragonair and Aerodactyl. Party, frozen order, ace/item/IV assertions and audited blob updated. **Final feature CI #682 SUCCESS; PR #35 MERGED; exact integrated master CI #683 RUNNING; NOT YET CLOSED.** First verify latest branch SHA, exact Full Gameplay Core status, PR integration and integrated master CI before closure. No Gary gameplay until Lance closes.
+- **Lance implementation record: Lance rosters, user-approved, implementation on feature only.** Branch `feature/lance-roster-identity` based on master `88c7b20d1d32194c7606f18a06c18ec9cb14d162`. Exact target in `DECISION_AMENDMENTS.md`: Gyarados shiny is 2nd strongest (Lv64 story/Lv81 rematch); Dragonite ace Lv65 @ Sitrus Berry and Lv82 @ Leftovers. Rematch includes Kingdra, Charizard, Salamence and Aerodactyl; no Altaria or duplicate Dragonite. First encounter retains two differentiated Dragonair and Aerodactyl. Party, frozen order, ace/item/IV assertions and audited blob updated. **Final state: CLOSED.** Exact feature CI #682 SUCCESS; PR #35 merged; integrated exact-SHA CI #683 SUCCESS. Gary/Blue design review is next, not yet approved or implemented.
 
 - **Prima Spanish-localization checkpoint:** feature HEAD `ddd049c8bb712032207523dcc6fa3be4f219ff4e` passed Full Gameplay Core **#680 SUCCESS**; PR #34 merged into `master` at `7c0031b312534cc44119216ea37bc9a9df076d87`. GitHub Actions Full Gameplay Core **#681**, event `push`, run ID 37749207866 was started for that exact merge SHA. **Final outcome: #681 SUCCESS, exact `master` merge SHA `7c0031b`; Prima localization CLOSED.** Resume Lance design review. Only Spanish player-visible text and trainer display names changed; internal identifiers, other languages, gameplay, saves/link untouched. MyBoy runtime QA is separate.
 
@@ -100,11 +100,11 @@ Use `docs/spec/` only for frozen historical design details.
 
 ## Exact next action
 
-1. Bruno, Agatha and Spanish Prima localization are CLOSED. Prima proof: exact feature Full Gameplay Core #680 SUCCESS, PR #34 merged as `7c0031b`, integrated Full Gameplay Core #681 SUCCESS.
-2. Review Lance's actual first League and strengthened League teams in the current repository, comparing vanilla FireRed, difficulty progression, A-016 move/item/IV policies and signature identity.
-3. Present options for the user's approval before modifying Lance gameplay. Record decisions in existing `DECISION_AMENDMENTS.md` only after approval.
-4. Implement approved Lance decisions in one isolated feature microblock with validators, exact-head CI, controlled integration and post-integration CI.
-5. Keep the trainer AI improvement proposal separate and unapproved.
+1. Lance is **CLOSED**: feature Full Gameplay Core #682 SUCCESS, PR #35 merged as `657f69e`, integrated Full Gameplay Core #683 SUCCESS on that exact SHA. Documentation-only followups did not alter the validated ROM.
+2. Review Gary/Blue's actual trainer parties and starter-dependent variations throughout the story, Champion and later rematches, using the current repository and A-016 as evidence. Verify levels, moveset legality, battle order, ace/signature identity, held items, IV tiers, healing and progression.
+3. Present proposed choices and any ambiguities to the user for explicit design approval **before** Gary gameplay changes. Persist an approved design only after approval in existing `DECISION_AMENDMENTS.md`.
+4. Once approved, implement in a scoped feature microblock with audit, relevant validators, exact feature-head Full Gameplay Core, controlled merge and exact integrated-head CI before closure.
+5. Keep the separate battle-AI proposal **PROPOSED**; MyBoy runtime acceptance remains a distinct release gate.
 
 ## Continuity rule
 

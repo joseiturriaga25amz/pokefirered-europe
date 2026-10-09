@@ -1215,7 +1215,9 @@ Lorelei is the first Elite Four trainer reviewed under A-016. The approved desig
 
 ### Lance curve/identity amendment — approved target (2026-10-08)
 
-**Status:** USER APPROVED / IMPLEMENTED ON ISOLATED FEATURE / FULL GAMEPLAY CORE AND MERGE PENDING.
+**Status:** USER APPROVED / IMPLEMENTED / VALIDATED / FEATURE CI-GREEN / INTEGRATED / INTEGRATED CI-GREEN / CLOSED.
+
+**Closure evidence (2026-10-09):** **CLOSED (2026-10-09)**. Feature HEAD `473c00f2f0c9ff5a43453dbc085fc96ed6bd2f8d`: Full Gameplay Core **#682 SUCCESS**. PR **#35** merged to `master` at `657f69e3f4bc445e10ec762b2e5ab9005cd8ea92`. Post-integration Full Gameplay Core **#683 SUCCESS** (run ID `37881229687`, `push`, exact integrated SHA; 46 successful steps). Subsequent master commits `f0bc860` and `e21b634` changed only `docs/production/PROJECT_CONTINUITY.md` and `docs/production/NEXT_SESSION.md`, respectively; validated ROM/gameplay unchanged. MyBoy runtime QA remains a distinct release-stage gate. Next: Gary/Blue roster/progression/identity design review, without gameplay edits until user approval.
 
 **Authority:** explicit user approval after a transversal audit of the eight Gym Leaders, Giovanni, current League and Gary/Blue. A-016 governs deliberate order, ace-only held items and preservation of Full IV tiers. The user explicitly identifies **Dragonite as Lance's strongest ace and signature** and the **canonical shiny Red Gyarados as his unique second-strongest Pokémon** in each encounter. Retain existing shiny-generation implementation, trainer AI flags and the two Full Restores.
 
