@@ -89,8 +89,12 @@ CeruleanCity_Gym_EventScript_FullRematchWon::
 	end
 
 CeruleanCity_Gym_EventScript_FullRematchDecline::
+	msgbox CeruleanCity_Gym_Text_FullRematchDeclined
 	release
 	end
+
+CeruleanCity_Gym_Text_FullRematchDeclined::
+	.string "¡Vale! Yo seguiré entrenando.\n¡No tardes en volver!$"
 
 CeruleanCity_Gym_Text_FullRematchOffer::
 	.string "¡Has llegado lejos, CAMPEÓN!\pMis POKéMON y yo nadamos\ncontra corrientes más duras.\p¿Aceptas una nueva revancha?$"

@@ -112,8 +112,12 @@ CeladonCity_Gym_EventScript_FullRematchWon::
 	end
 
 CeladonCity_Gym_EventScript_FullRematchDecline::
+	msgbox CeladonCity_Gym_Text_FullRematchDeclined
 	release
 	end
+
+CeladonCity_Gym_Text_FullRematchDeclined::
+	.string "Por supuesto. Las flores\nno se apresuran al crecer.$"
 
 CeladonCity_Gym_Text_FullRematchOffer::
 	.string "Qué agradable visita, CAMPEÓN.\pMis plantas han crecido\ndesde nuestro último duelo.\p¿Te apetece combatir de nuevo?$"

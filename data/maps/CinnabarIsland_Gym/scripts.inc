@@ -729,8 +729,12 @@ CinnabarIsland_Gym_EventScript_FullRematchWon::
 	end
 
 CinnabarIsland_Gym_EventScript_FullRematchDecline::
+	msgbox CinnabarIsland_Gym_Text_FullRematchDeclined
 	release
 	end
+
+CinnabarIsland_Gym_Text_FullRematchDeclined::
+	.string "¡Ja, ja! ¡Guardaré las brasas\npara nuestro próximo combate!$"
 
 CinnabarIsland_Gym_Text_FullRematchOffer::
 	.string "¡Ja, ja! ¡El volcán no duerme!\pMi MAGMAR arde con más fuerza\ndesde nuestra última batalla.\p¿Aceptas otro desafío?$"

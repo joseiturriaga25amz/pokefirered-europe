@@ -118,8 +118,12 @@ FuchsiaCity_Gym_EventScript_FullRematchWon::
 	end
 
 FuchsiaCity_Gym_EventScript_FullRematchDecline::
+	msgbox FuchsiaCity_Gym_Text_FullRematchDeclined
 	release
 	end
+
+FuchsiaCity_Gym_Text_FullRematchDeclined::
+	.string "Una retirada calculada\ntambién es una técnica ninja.$"
 
 FuchsiaCity_Gym_Text_FullRematchOffer::
 	.string "Un ninja estudia cada derrota.\pMi CROBAT y yo dominamos\nnuevas técnicas.\p¿Te atreves a desafiarnos?$"

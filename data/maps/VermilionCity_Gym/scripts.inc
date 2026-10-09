@@ -307,8 +307,12 @@ VermilionCity_Gym_EventScript_FullRematchWon::
 	end
 
 VermilionCity_Gym_EventScript_FullRematchDecline::
+	msgbox VermilionCity_Gym_Text_FullRematchDeclined
 	release
 	end
+
+VermilionCity_Gym_Text_FullRematchDeclined::
+	.string "¡Descansa, soldado!\n¡Te espero en el frente!$"
 
 VermilionCity_Gym_Text_FullRematchOffer::
 	.string "¡CAMPEÓN! Mis POKéMON han\nrecargado sus baterías.\p¿Te atreves a volver\nal campo de batalla?$"

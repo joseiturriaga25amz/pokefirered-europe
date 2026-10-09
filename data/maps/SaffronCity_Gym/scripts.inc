@@ -124,8 +124,12 @@ SaffronCity_Gym_EventScript_FullRematchWon::
 	end
 
 SaffronCity_Gym_EventScript_FullRematchDecline::
+	msgbox SaffronCity_Gym_Text_FullRematchDeclined
 	release
 	end
+
+SaffronCity_Gym_Text_FullRematchDeclined::
+	.string "Lo comprendo. Nuestro próximo\nencuentro llegará a su tiempo.$"
 
 SaffronCity_Gym_Text_FullRematchOffer::
 	.string "He presentido tu retorno.\pMi ALAKAZAM y yo hemos\nexplorado nuevos límites.\p¿Deseas otra batalla?$"

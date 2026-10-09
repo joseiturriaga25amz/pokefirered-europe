@@ -187,8 +187,12 @@ ViridianCity_Gym_EventScript_FullRematchWon::
 	end
 
 ViridianCity_Gym_EventScript_FullRematchDecline::
+	msgbox ViridianCity_Gym_Text_FullRematchDeclined
 	release
 	end
+
+ViridianCity_Gym_Text_FullRematchDeclined::
+	.string "La prudencia no es cobardía.\nRegresa cuando estés preparado.$"
 
 ViridianCity_Gym_Text_FullRematchOffer::
 	.string "Has regresado, CAMPEÓN.\pNi el TEAM ROCKET ni MEWTWO\nvolverán a dictar mi destino.\pHe reconstruido mi disciplina.\n¿Quieres enfrentarte a mí?$"

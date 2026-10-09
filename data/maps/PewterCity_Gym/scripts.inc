@@ -110,8 +110,12 @@ PewterCity_Gym_EventScript_FullRematchWon::
 	end
 
 PewterCity_Gym_EventScript_FullRematchDecline::
+	msgbox PewterCity_Gym_Text_FullRematchDeclined
 	release
 	end
+
+PewterCity_Gym_Text_FullRematchDeclined::
+	.string "No hay prisa. Una buena base\nse construye con paciencia.$"
 
 PewterCity_Gym_Text_FullRematchOffer::
 	.string "Las rocas guardan la huella\nde cada combate.\p¿Quieres medir de nuevo\ntu resistencia?$"
