@@ -93,7 +93,7 @@ def main():
     gary = [
         ("sParty_RivalOaksLabSquirtle","SQUIRTLE",5),
         ("sParty_RivalRoute22EarlySquirtle","SQUIRTLE",12),
-        ("sParty_RivalCeruleanSquirtle","SQUIRTLE",22),
+        ("sParty_RivalCeruleanSquirtle","WARTORTLE",22),
         ("sParty_RivalSsAnneSquirtle","WARTORTLE",28),
         ("sParty_RivalPokemonTowerSquirtle","WARTORTLE",34),
         ("sParty_RivalSilphSquirtle","BLASTOISE",49),
