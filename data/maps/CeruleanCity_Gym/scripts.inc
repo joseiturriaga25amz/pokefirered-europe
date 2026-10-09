@@ -93,13 +93,13 @@ CeruleanCity_Gym_EventScript_FullRematchDecline::
 	end
 
 CeruleanCity_Gym_Text_FullRematchOffer::
-	.string "El agua nunca deja de moverse.\p¿Quieres otra revancha conmigo?$"
+	.string "¡Has llegado lejos, CAMPEÓN!\pMis POKéMON y yo nadamos\ncontra corrientes más duras.\p¿Aceptas una nueva revancha?$"
 
 CeruleanCity_Gym_Text_FullRematchIntro::
-	.string "¡Veamos si puedes seguir mi ritmo!$"
+	.string "¡A ver si sigues el ritmo\nde mi equipo acuático!$"
 
 CeruleanCity_Gym_Text_FullRematchDefeat::
-	.string "Vaya... Has vuelto a superarme.$"
+	.string "¡Uau! ¡Ni mi mejor ofensiva\npudo superarte!$"
 
 CeruleanCity_Gym_Text_FullRematchAfter::
-	.string "Sigue entrenando. La próxima vez\nquiero ver cuánto más has mejorado.$"
+	.string "¡No pienso quedarme atrás!\pVolveré a entrenar con STARMIE.\n¡Nos vemos en la revancha!$"

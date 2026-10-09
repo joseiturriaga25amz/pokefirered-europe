@@ -1,15 +1,8 @@
 PewterCity_Gym_Text_BrockIntro::
-    .string "¡Soy BROCK! ¡LÍDER del\n"
-    .string "GIMNASIO de PLATEADA!\p"
-    .string "¡Creo en la gran resistencia de la\n"
-    .string "roca y en la determinación!\p"
-    .string "¡Por eso todos mis POKéMON son\n"
-    .string "del tipo ROCA!\p"
-    .string "¿Todavía quieres desafiarme?\p"
-    .string "Sé que te mueve el orgullo de\n"
-    .string "los ENTRENADORES POKéMON.\p"
-    .string "¡Muy bien!\n"
-    .string "¡Enséñame lo que vales!{PLAY_BGM}{MUS_ENCOUNTER_GYM_LEADER}$"
+    .string "¡Soy BROCK, LÍDER de PLATEADA!\p"
+    .string "La roca resiste golpes, pero\ntambién exige disciplina.\p"
+    .string "Mis POKéMON no retrocederán.\p"
+    .string "¡Demuéstrame de qué está hecho\ntu equipo!{PLAY_BGM}{MUS_ENCOUNTER_GYM_LEADER}$"
 
 @ NOTE: This defeat text actually causes a buffer overflow. It's too long for the gDisplayedStringBattle
 @ buffer that it's put into, and it stomps all over the gBattleTextBuffs after, as well as the otherwise
@@ -27,33 +20,23 @@ PewterCity_Gym_Text_BrockDefeat::
     .string "ser utilizada en todo momento!$"
 
 PewterCity_Gym_Text_TakeThisWithYou::
-    .string "¡Espera!\n"
-    .string "¡Lleva esto contigo!$"
+    .string "Un último consejo antes de irte.\n¡Llévate esta MT!$"
 
 PewterCity_Gym_Text_ReceivedTM39FromBrock::
     .string "¡{PLAYER} obtuvo la MT39\n"
     .string "de manos de BROCK!$"
 
 PewterCity_Gym_Text_ExplainTM39::
-    .string "¡La MT incluye un ataque que\n"
-    .string "puede ser enseñado a los POKéMON!\p"
-    .string "¡Pero sólo puedes usarla una vez!\p"
-    .string "¡Así que elige con cuidado a qué\n"
-    .string "POKéMON se la enseñas!\p"
-    .string "¡La MT39 contiene TUMBA ROCAS!\p"
-    .string "¡Podrás lanzar rocas al rival\n"
-    .string "y bajar su VELOCIDAD!$"
+    .string "La MT39 contiene TUMBA ROCAS.\p"
+    .string "Golpea y reduce la VELOCIDAD\ndel rival. Úsala con cabeza.\p"
+    .string "Una MT solo se puede usar una\nvez: elige bien a tu POKéMON.$"
 
 PewterCity_Gym_Text_BrockPostBattle::
-    .string "¡En el mundo hay todo tipo de\n"
-    .string "ENTRENADORES!\p"
-    .string "¡Pareces ser muy hábil\n"
-    .string "entrenando POKéMON!\p"
-    .string "¡Vete al GIMNASIO de CELESTE y\n"
-    .string "pon a prueba tus habilidades!$"
+    .string "Has demostrado algo más que\nfuerza: sabes mantenerte firme.\p"
+    .string "Ahora sigue hacia CELESTE.\n¡Aún te espera mucho camino!$"
 
 PewterCity_Gym_Text_DontHaveRoomForThis::
-    .string "¡No tienes sitio para esto!$"
+    .string "Tu mochila está llena.\nHaz sitio y vuelve a hablarme.$"
 
 PewterCity_Gym_Text_LiamIntro::
     .string "¡Alto ahí, enclenque!\p"

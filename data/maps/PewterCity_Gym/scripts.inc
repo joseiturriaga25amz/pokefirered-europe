@@ -114,13 +114,13 @@ PewterCity_Gym_EventScript_FullRematchDecline::
 	end
 
 PewterCity_Gym_Text_FullRematchOffer::
-	.string "Las rocas se pulen con cada golpe.\p¿Quieres poner a prueba tu fuerza otra vez?$"
+	.string "Las rocas guardan la huella\nde cada combate.\p¿Quieres medir de nuevo\ntu resistencia?$"
 
 PewterCity_Gym_Text_FullRematchIntro::
-	.string "¡Muéstrame una base más sólida!$"
+	.string "¡Mi STEELIX y yo no cederemos\nni un paso ante ti!$"
 
 PewterCity_Gym_Text_FullRematchDefeat::
-	.string "Tu determinación es más dura que la roca.$"
+	.string "Tu firmeza ha superado\na la mía. ¡Bien hecho!$"
 
 PewterCity_Gym_Text_FullRematchAfter::
-	.string "Cuando quieras medir tu resistencia,\nvuelve. Estaré listo.$"
+	.string "Ser CAMPEÓN no es el final.\pPerfecciona tus bases,\ny vuelve cuando quieras.$"
