@@ -42,27 +42,19 @@ SilphCo_11F_Text_ThanksForRescuingUs::
     .string "PRESIDENTE admiramos tu valor.$"
 
 SilphCo_11F_Text_GiovanniIntro::
-    .string "¡Hola, {PLAYER}!\n"
-    .string "¡Volvemos a encontrarnos!\p"
-    .string "¡El PRESIDENTE y yo estamos\n"
-    .string "hablando de algo muy importante!\p"
-    .string "¡No te metas en los asuntos\n"
-    .string "de los mayores!\p"
-    .string "¡O sufrirás mi ira!$"
+    .string "Otra vez tú, {PLAYER}.\p"
+    .string "El PRESIDENTE de SILPH y yo\ntenemos asuntos pendientes.\p"
+    .string "No pienso permitir que\ninterfieras por segunda vez.\p"
+    .string "¡Conocerás el poder\ndel TEAM ROCKET!$"
 
 SilphCo_11F_Text_GiovanniDefeat::
-    .string "¡¡Arr!!\n"
-    .string "¿¡He vuelto a perder!?$"
+    .string "¿Otra vez derrotado...?\n¡Esto no puede ser!$"
 
 SilphCo_11F_Text_GiovanniPostBattle::
-    .string "¡Qué mal! ¡Arruinaste nuestros\n"
-    .string "planes con respecto a SILPH!\p"
-    .string "¡Pero el TEAM ROCKET no caerá\n"
-    .string "jamás!\p"
-    .string "¡{PLAYER}, no olvides jamás que\n"
-    .string "todos los POKéMON son para\l"
-    .string "el TEAM ROCKET!\p"
-    .string "¡Ahora debo irme, pero volveré!$"
+    .string "Has frustrado mi operación\nen SILPH S. A.\p"
+    .string "Pero no confundas una\nderrota con el final.\p"
+    .string "El TEAM ROCKET seguirá\nadelante mientras yo lo dirija.\p"
+    .string "Recuerda mi nombre, {PLAYER}.\nVolveremos a vernos.$"
 
 SilphCo_11F_Text_Grunt2Intro::
     .string "¡Alto ahí!\n"
