@@ -583,7 +583,7 @@ jobs:
               "sParty_EliteFourLorelei":[("DEWGONG",57),("CLOYSTER",58),("SLOWPOKE",56),("SLOWBRO",59),("JYNX",60),("LAPRAS",61)],
               "sParty_EliteFourBruno":[("ONIX",58),("HITMONCHAN",59),("HITMONLEE",60),("ONIX",60),("MACHAMP",62)],
               "sParty_EliteFourAgatha":[("GENGAR",59),("GOLBAT",60),("HAUNTER",60),("ARBOK",61),("GENGAR",63)],
-              "sParty_EliteFourLance":[("GYARADOS",61),("DRAGONAIR",61),("DRAGONAIR",62),("AERODACTYL",63),("DRAGONITE",65)],
+              "sParty_EliteFourLance":[("GYARADOS",64),("DRAGONAIR",61),("AERODACTYL",63),("DRAGONAIR",62),("DRAGONITE",65)],
           }
           for name,want in bosses.items():
               assert normalized(name)==want, (name, normalized(name), want)
