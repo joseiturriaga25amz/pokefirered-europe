@@ -39,3 +39,15 @@ CeladonCity_Condominiums_3F_Text_ItsScriptBetterNotLookAtEnding::
 
 CeladonCity_Condominiums_3F_Text_GameFreakDevelopmentRoom::
     .string "Sala de desarrollo de GAME FREAK$"
+
+CeladonCity_Condominiums_3F_Text_KantoExtraPrize::
+    .string "¡Has completado la POKéDEX\nde KANTO!\p"
+    .string "Además del diploma, tu\nesfuerzo merece un premio.\p"
+    .string "¡Te entregaré una MASTER BALL!$"
+
+CeladonCity_Condominiums_3F_Text_KantoReceivedMasterBall::
+    .string "¡Has recibido una MASTER BALL!$"
+
+CeladonCity_Condominiums_3F_Text_KantoMasterBallNoRoom::
+    .string "No tienes espacio en la mochila.\p"
+    .string "Guarda algo y vuelve:\nel premio te esperará.$"

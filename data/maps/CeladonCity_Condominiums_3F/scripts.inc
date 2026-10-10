@@ -33,6 +33,23 @@ CeladonCity_Condominiums_3F_EventScript_ShowDiploma::
 	goto_if_questlog EventScript_ReleaseEnd
 	special ShowDiploma
 	waitstate
+	goto_if_set FLAG_FULL_KANTO_DEX_MASTER_BALL_CLAIMED, CeladonCity_Condominiums_3F_EventScript_DiplomaFinish
+	msgbox CeladonCity_Condominiums_3F_Text_KantoExtraPrize
+	checkitemspace ITEM_MASTER_BALL
+	goto_if_eq VAR_RESULT, FALSE, CeladonCity_Condominiums_3F_EventScript_MasterBallNoRoom
+	additem ITEM_MASTER_BALL
+	goto_if_eq VAR_RESULT, FALSE, CeladonCity_Condominiums_3F_EventScript_MasterBallNoRoom
+	setflag FLAG_FULL_KANTO_DEX_MASTER_BALL_CLAIMED
+	msgreceiveditem CeladonCity_Condominiums_3F_Text_KantoReceivedMasterBall, ITEM_MASTER_BALL
+	goto CeladonCity_Condominiums_3F_EventScript_DiplomaFinish
+	end
+
+CeladonCity_Condominiums_3F_EventScript_MasterBallNoRoom::
+	msgbox CeladonCity_Condominiums_3F_Text_KantoMasterBallNoRoom
+	goto CeladonCity_Condominiums_3F_EventScript_DiplomaFinish
+	end
+
+CeladonCity_Condominiums_3F_EventScript_DiplomaFinish::
 	release
 	end
 
