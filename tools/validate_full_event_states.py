@@ -335,6 +335,37 @@ def main():
         assert "setflag FLAG_FULL" not in offer
         assert "setvar VAR_FULL" not in offer
 
+    # B9 / A-010: The diploma remains available after Kanto completion;
+    # one-time Master Ball entitlement is claimed only after a successful add.
+    game_freak = read("data/maps/CeladonCity_Condominiums_3F/scripts.inc")
+    require(
+        game_freak,
+        "specialvar VAR_RESULT, HasAllKantoMons",
+        "goto_if_questlog EventScript_ReleaseEnd",
+        "special ShowDiploma",
+        "waitstate",
+        "goto_if_set FLAG_FULL_KANTO_DEX_MASTER_BALL_CLAIMED",
+        "checkitemspace ITEM_MASTER_BALL",
+        "additem ITEM_MASTER_BALL",
+        "setflag FLAG_FULL_KANTO_DEX_MASTER_BALL_CLAIMED",
+        "msgreceiveditem CeladonCity_Condominiums_3F_Text_KantoReceivedMasterBall, ITEM_MASTER_BALL",
+    )
+    kanto_prize = block(game_freak, "CeladonCity_Condominiums_3F_EventScript_ShowDiploma")
+    require(
+        kanto_prize,
+        "goto_if_eq VAR_RESULT, FALSE, CeladonCity_Condominiums_3F_EventScript_MasterBallNoRoom",
+    )
+    assert kanto_prize.index("special ShowDiploma") < kanto_prize.index("checkitemspace ITEM_MASTER_BALL")
+    assert kanto_prize.index("checkitemspace ITEM_MASTER_BALL") < kanto_prize.index("additem ITEM_MASTER_BALL")
+    assert kanto_prize.index("additem ITEM_MASTER_BALL") < kanto_prize.index("setflag FLAG_FULL_KANTO_DEX_MASTER_BALL_CLAIMED")
+    assert kanto_prize.count("goto_if_eq VAR_RESULT, FALSE, CeladonCity_Condominiums_3F_EventScript_MasterBallNoRoom") == 2
+    no_room_prize = block(game_freak, "CeladonCity_Condominiums_3F_EventScript_MasterBallNoRoom")
+    assert "setflag" not in no_room_prize and "additem" not in no_room_prize
+    for locale in ("text.inc", "text_es.inc", "text_fr.inc", "text_it.inc", "text_de.inc"):
+        localized = read(f"data/maps/CeladonCity_Condominiums_3F/{locale}")
+        for suffix in ("KantoExtraPrize", "KantoReceivedMasterBall", "KantoMasterBallNoRoom"):
+            require(localized, f"CeladonCity_Condominiums_3F_Text_{suffix}::")
+
     print("Persistent event-state audit PASS: terminal branches and recovery transitions are locked.")
 
 
