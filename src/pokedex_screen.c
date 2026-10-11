@@ -3179,30 +3179,35 @@ static const u8 sDexMethodSurf[] = _("Surf");
 static const u8 sDexMethodRock[] = _("Roca");
 static const u8 sDexMethodFish[] = _("Pesca");
 static const u8 sDexMethodLevel[] = _(" Nv.");
+static const u8 sDexMethodMany[] = _("Varios");
 #elif GAME_LANGUAGE == LANGUAGE_FRENCH
 static const u8 sDexMethodLand[] = _("Herbe");
 static const u8 sDexMethodSurf[] = _("Surf");
 static const u8 sDexMethodRock[] = _("Roche");
 static const u8 sDexMethodFish[] = _("Pêche");
 static const u8 sDexMethodLevel[] = _(" Nv.");
+static const u8 sDexMethodMany[] = _("Divers");
 #elif GAME_LANGUAGE == LANGUAGE_ITALIAN
 static const u8 sDexMethodLand[] = _("Erba");
 static const u8 sDexMethodSurf[] = _("Surf");
 static const u8 sDexMethodRock[] = _("Roccia");
 static const u8 sDexMethodFish[] = _("Pesca");
 static const u8 sDexMethodLevel[] = _(" Lv.");
+static const u8 sDexMethodMany[] = _("Vari");
 #elif GAME_LANGUAGE == LANGUAGE_GERMAN
 static const u8 sDexMethodLand[] = _("Gras");
 static const u8 sDexMethodSurf[] = _("Surfer");
 static const u8 sDexMethodRock[] = _("Felsen");
 static const u8 sDexMethodFish[] = _("Angeln");
 static const u8 sDexMethodLevel[] = _(" Lv.");
+static const u8 sDexMethodMany[] = _("Mehrere");
 #else
 static const u8 sDexMethodLand[] = _("Grass");
 static const u8 sDexMethodSurf[] = _("Surf");
 static const u8 sDexMethodRock[] = _("Rock");
 static const u8 sDexMethodFish[] = _("Fishing");
 static const u8 sDexMethodLevel[] = _(" Lv.");
+static const u8 sDexMethodMany[] = _("Multiple");
 #endif
 
 static const u8 sDexMethodSeparator[] = _("/");
@@ -3213,8 +3218,10 @@ static void DexScreen_PrintEncounterSummary(u16 species)
     struct PokedexEncounterSummary summary;
     u8 buffer[80];
     u8 number[4];
+    u8 suffix[24];
     u8 methods = 0;
     u8 i;
+    u16 width;
     static const u8 *const names[] = {
         sDexMethodLand, sDexMethodSurf, sDexMethodRock, sDexMethodFish
     };
@@ -3231,17 +3238,28 @@ static void DexScreen_PrintEncounterSummary(u16 species)
             StringAppend(buffer, sDexMethodSeparator);
         StringAppend(buffer, names[i]);
     }
-    StringAppend(buffer, sDexMethodLevel);
+    StringCopy(suffix, sDexMethodLevel);
     ConvertIntToDecimalStringN(number, summary.minLevel, STR_CONV_MODE_LEFT_ALIGN, 3);
-    StringAppend(buffer, number);
+    StringAppend(suffix, number);
     if (summary.maxLevel != summary.minLevel)
     {
-        StringAppend(buffer, sDexMethodRangeSeparator);
+        StringAppend(suffix, sDexMethodRangeSeparator);
         ConvertIntToDecimalStringN(number, summary.maxLevel, STR_CONV_MODE_LEFT_ALIGN, 3);
-        StringAppend(buffer, number);
+        StringAppend(suffix, number);
     }
-    if (GetStringWidth(FONT_SMALL, buffer, 0) <= 230)
-        DexScreen_AddTextPrinterParameterized(0, FONT_SMALL, buffer, 5, 2, 4);
+    StringAppend(buffer, suffix);
+
+    // Never suppress all guidance just because several methods exceed the
+    // 240-pixel GBA header. Keep the level range with a localized fallback.
+    width = GetStringWidth(FONT_SMALL, buffer, 0);
+    if (width > 230)
+    {
+        StringCopy(buffer, sDexMethodMany);
+        StringAppend(buffer, suffix);
+        width = GetStringWidth(FONT_SMALL, buffer, 0);
+    }
+    if (width <= 230)
+        DexScreen_AddTextPrinterParameterized(0, FONT_SMALL, buffer, (240 - width) / 2, 2, 4);
 }
 
 u8 DexScreen_DrawMonAreaPage(void)
