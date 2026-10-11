@@ -19,6 +19,7 @@
 #include "constants/songs.h"
 #include "constants/sound.h"
 #include "pokedex_area_markers.h"
+#include "wild_pokemon_area.h"
 #include "field_specials.h"
 
 #define TAG_AREA_MARKERS 2001
@@ -3171,6 +3172,78 @@ u8 RemoveDexPageWindows(void)
     return 0;
 }
 
+
+#if GAME_LANGUAGE == LANGUAGE_SPANISH
+static const u8 sDexMethodLand[] = _("Hierba");
+static const u8 sDexMethodSurf[] = _("Surf");
+static const u8 sDexMethodRock[] = _("Roca");
+static const u8 sDexMethodFish[] = _("Pesca");
+static const u8 sDexMethodLevel[] = _(" Nv.");
+#elif GAME_LANGUAGE == LANGUAGE_FRENCH
+static const u8 sDexMethodLand[] = _("Herbe");
+static const u8 sDexMethodSurf[] = _("Surf");
+static const u8 sDexMethodRock[] = _("Roche");
+static const u8 sDexMethodFish[] = _("Pêche");
+static const u8 sDexMethodLevel[] = _(" Nv.");
+#elif GAME_LANGUAGE == LANGUAGE_ITALIAN
+static const u8 sDexMethodLand[] = _("Erba");
+static const u8 sDexMethodSurf[] = _("Surf");
+static const u8 sDexMethodRock[] = _("Roccia");
+static const u8 sDexMethodFish[] = _("Pesca");
+static const u8 sDexMethodLevel[] = _(" Lv.");
+#elif GAME_LANGUAGE == LANGUAGE_GERMAN
+static const u8 sDexMethodLand[] = _("Gras");
+static const u8 sDexMethodSurf[] = _("Surfer");
+static const u8 sDexMethodRock[] = _("Felsen");
+static const u8 sDexMethodFish[] = _("Angeln");
+static const u8 sDexMethodLevel[] = _(" Lv.");
+#else
+static const u8 sDexMethodLand[] = _("Grass");
+static const u8 sDexMethodSurf[] = _("Surf");
+static const u8 sDexMethodRock[] = _("Rock");
+static const u8 sDexMethodFish[] = _("Fishing");
+static const u8 sDexMethodLevel[] = _(" Lv.");
+#endif
+
+static const u8 sDexMethodSeparator[] = _("/");
+static const u8 sDexMethodRangeSeparator[] = _("-");
+
+static void DexScreen_PrintEncounterSummary(u16 species)
+{
+    struct PokedexEncounterSummary summary;
+    u8 buffer[80];
+    u8 number[4];
+    u8 methods = 0;
+    u8 i;
+    static const u8 *const names[] = {
+        sDexMethodLand, sDexMethodSurf, sDexMethodRock, sDexMethodFish
+    };
+
+    if (!GetPokedexEncounterSummary(species, &summary))
+        return;
+
+    buffer[0] = EOS;
+    for (i = 0; i < ARRAY_COUNT(names); i++)
+    {
+        if (!(summary.methods & (1 << i)))
+            continue;
+        if (methods++)
+            StringAppend(buffer, sDexMethodSeparator);
+        StringAppend(buffer, names[i]);
+    }
+    StringAppend(buffer, sDexMethodLevel);
+    ConvertIntToDecimalStringN(number, summary.minLevel, STR_CONV_MODE_LEFT_ALIGN, 3);
+    StringAppend(buffer, number);
+    if (summary.maxLevel != summary.minLevel)
+    {
+        StringAppend(buffer, sDexMethodRangeSeparator);
+        ConvertIntToDecimalStringN(number, summary.maxLevel, STR_CONV_MODE_LEFT_ALIGN, 3);
+        StringAppend(buffer, number);
+    }
+    if (GetStringWidth(FONT_SMALL, buffer, 0) <= 230)
+        DexScreen_AddTextPrinterParameterized(0, FONT_SMALL, buffer, 5, 2, 4);
+}
+
 u8 DexScreen_DrawMonAreaPage(void)
 {
     int i;
@@ -3335,6 +3408,10 @@ u8 DexScreen_DrawMonAreaPage(void)
     DexScreen_PrintControlInfo(gText_CancelPreviousData);
     PutWindowTilemap(1);
     CopyWindowToVram(1, COPYWIN_GFX);
+
+    // Window 0 occupies the otherwise unused two-tile header above the map.
+    DexScreen_PrintEncounterSummary(species);
+    CopyWindowToVram(0, COPYWIN_GFX);
 
     return 1;
 }
