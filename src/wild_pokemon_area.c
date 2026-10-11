@@ -6,6 +6,7 @@
 #include "overworld.h"
 #include "pokedex.h"
 #include "pokedex_area_markers.h"
+#include "wild_pokemon_area.h"
 #include "constants/region_map_sections.h"
 #include "constants/maps.h"
 
