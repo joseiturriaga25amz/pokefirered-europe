@@ -3174,35 +3174,35 @@ u8 RemoveDexPageWindows(void)
 
 
 #if GAME_LANGUAGE == LANGUAGE_SPANISH
-static const u8 sDexMethodLand[] = _("Hierba");
+static const u8 sDexMethodLand[] = _("A pie");
 static const u8 sDexMethodSurf[] = _("Surf");
 static const u8 sDexMethodRock[] = _("Roca");
 static const u8 sDexMethodFish[] = _("Pesca");
 static const u8 sDexMethodLevel[] = _(" Nv.");
 static const u8 sDexMethodMany[] = _("Varios");
 #elif GAME_LANGUAGE == LANGUAGE_FRENCH
-static const u8 sDexMethodLand[] = _("Herbe");
+static const u8 sDexMethodLand[] = _("À pied");
 static const u8 sDexMethodSurf[] = _("Surf");
 static const u8 sDexMethodRock[] = _("Roche");
 static const u8 sDexMethodFish[] = _("Pêche");
 static const u8 sDexMethodLevel[] = _(" Nv.");
 static const u8 sDexMethodMany[] = _("Divers");
 #elif GAME_LANGUAGE == LANGUAGE_ITALIAN
-static const u8 sDexMethodLand[] = _("Erba");
+static const u8 sDexMethodLand[] = _("A piedi");
 static const u8 sDexMethodSurf[] = _("Surf");
 static const u8 sDexMethodRock[] = _("Roccia");
 static const u8 sDexMethodFish[] = _("Pesca");
 static const u8 sDexMethodLevel[] = _(" Lv.");
 static const u8 sDexMethodMany[] = _("Vari");
 #elif GAME_LANGUAGE == LANGUAGE_GERMAN
-static const u8 sDexMethodLand[] = _("Gras");
+static const u8 sDexMethodLand[] = _("Zu Fuß");
 static const u8 sDexMethodSurf[] = _("Surfer");
 static const u8 sDexMethodRock[] = _("Felsen");
 static const u8 sDexMethodFish[] = _("Angeln");
 static const u8 sDexMethodLevel[] = _(" Lv.");
 static const u8 sDexMethodMany[] = _("Mehrere");
 #else
-static const u8 sDexMethodLand[] = _("Grass");
+static const u8 sDexMethodLand[] = _("On foot");
 static const u8 sDexMethodSurf[] = _("Surf");
 static const u8 sDexMethodRock[] = _("Rock");
 static const u8 sDexMethodFish[] = _("Fishing");
