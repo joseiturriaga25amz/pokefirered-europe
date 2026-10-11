@@ -4,6 +4,9 @@
 
 ## 0. Current operational state — 2026-10-08
 
+- **B9 / P-05 seen-species encounter guidance (2026-10-11; ACTIVE / CI PENDING):** On `feature/b9-pokedex-encounter-guidance`, technical commit `c143f8515cf856a3af62fe7c01a8259d843852cc`, PR #41. Adds a read-only method/level summary to the unused Pokédex area-page header, derived from the live wild-encounter tables for already seen species; restricts scans to existing Kanto/unlocked Sevii map areas, preserves the active Altering Cave rotation, and excludes roaming beasts' special live locations from generic wild metadata. Existing map markers, encounters, save layout, link protocol and runtime flags are unchanged. **Not yet validated or closed.** Full Gameplay Core run `38106955066` (#705) started for the exact technical SHA and must complete and be audited before merge. Next: inspect #705, repair failures without unrelated gameplay, verify feature CI, merge PR #41, check integrated master CI, then document closure. National 100%-reward decision remains NOT APPROVED and is a later B9 microblock. MyBoy runtime QA separately pending.
+
+
 This section is the current resume point. Later dated sections preserve history and may name branches that are no longer active.
 
 - Canonical repository: `joseiturriaga25amz/pokefirered-europe`.

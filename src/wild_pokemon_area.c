@@ -6,6 +6,7 @@
 #include "overworld.h"
 #include "pokedex.h"
 #include "pokedex_area_markers.h"
+#include "wild_pokemon_area.h"
 #include "constants/region_map_sections.h"
 #include "constants/maps.h"
 
@@ -254,6 +255,91 @@ static s32 GetRoamerPokedexAreaMarkers(u16 species, struct Subsprite * subsprite
         }
     }
     return 0;
+}
+
+
+static void AddPokedexEncounterTable(const struct WildPokemonInfo *info, u8 count, u16 species, u8 method, struct PokedexEncounterSummary *summary)
+{
+    u8 i;
+
+    if (info == NULL || info->encounterRate == 0)
+        return;
+
+    for (i = 0; i < count; i++)
+    {
+        const struct WildPokemon *mon = &info->wildPokemon[i];
+        if (mon->species != species)
+            continue;
+
+        if (summary->methods == 0 || mon->minLevel < summary->minLevel)
+            summary->minLevel = mon->minLevel;
+        if (summary->methods == 0 || mon->maxLevel > summary->maxLevel)
+            summary->maxLevel = mon->maxLevel;
+        summary->methods |= method;
+    }
+}
+
+// Read-only encounter context: use precisely the map visibility and active
+// Altering Cave rotation rules of GetSpeciesPokedexAreaMarkers().
+bool8 GetPokedexEncounterSummary(u16 species, struct PokedexEncounterSummary *summary)
+{
+    s32 i, j, index;
+    u16 mapSec, dexArea;
+    u8 unlockedSevii;
+    u8 alteringSet, alteringCount;
+
+    summary->methods = 0;
+    summary->minLevel = 0;
+    summary->maxLevel = 0;
+
+    if (!GetSetPokedexFlag(SpeciesToNationalPokedexNum(species), FLAG_GET_SEEN))
+        return FALSE;
+
+    // The beasts use a separate roaming-location rule, not wild tables.
+    if (GetRoamerIndex(species) >= 0)
+        return FALSE;
+
+    unlockedSevii = GetUnlockedSeviiAreas();
+    alteringSet = VarGet(VAR_ALTERING_CAVE_WILD_SET);
+    if (alteringSet >= NUM_ALTERING_CAVE_TABLES)
+        alteringSet = 0;
+    alteringCount = 0;
+
+    for (i = 0; gWildMonHeaders[i].mapGroup != MAP_GROUP(MAP_UNDEFINED); i++)
+    {
+        const struct WildPokemonHeader *header = &gWildMonHeaders[i];
+        bool8 visible = FALSE;
+
+        mapSec = GetMapSecIdFromWildMonHeader(header);
+        if (mapSec == MAPSEC_ALTERING_CAVE)
+        {
+            if (alteringCount++ != alteringSet)
+                continue;
+        }
+
+        index = 0;
+        if (FindDexAreaByMapSec(mapSec, sDexAreas_Kanto, ARRAY_COUNT(sDexAreas_Kanto), &index, &dexArea)
+         && dexArea != DEX_AREA_NONE)
+            visible = TRUE;
+        for (j = 0; j < ARRAY_COUNT(sSeviiDexAreas); j++)
+        {
+            if (!(unlockedSevii & (1 << j)))
+                continue;
+            index = 0;
+            if (FindDexAreaByMapSec(mapSec, sSeviiDexAreas[j].table, sSeviiDexAreas[j].count, &index, &dexArea)
+             && dexArea != DEX_AREA_NONE)
+                visible = TRUE;
+        }
+
+        if (!visible)
+            continue;
+
+        AddPokedexEncounterTable(header->landMonsInfo, LAND_WILD_COUNT, species, DEX_ENCOUNTER_LAND, summary);
+        AddPokedexEncounterTable(header->waterMonsInfo, WATER_WILD_COUNT, species, DEX_ENCOUNTER_SURF, summary);
+        AddPokedexEncounterTable(header->rockSmashMonsInfo, ROCK_WILD_COUNT, species, DEX_ENCOUNTER_ROCK, summary);
+        AddPokedexEncounterTable(header->fishingMonsInfo, FISH_WILD_COUNT, species, DEX_ENCOUNTER_FISH, summary);
+    }
+    return summary->methods != 0;
 }
 
 static bool32 IsSpeciesOnMap(const struct WildPokemonHeader * data, s32 species)
