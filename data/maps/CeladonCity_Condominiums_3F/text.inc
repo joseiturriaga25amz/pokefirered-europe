@@ -51,3 +51,17 @@ CeladonCity_Condominiums_3F_Text_KantoReceivedMasterBall::
 CeladonCity_Condominiums_3F_Text_KantoMasterBallNoRoom::
     .string "Your BAG is full.\p"
     .string "Make room and come back.\nYour prize will be waiting!$"
+
+CeladonCity_Condominiums_3F_Text_NationalExtraPrize::
+    .string "You completed the NATIONAL\n"
+    .string "POKéDEX!\p"
+    .string "Your diploma also comes\n"
+    .string "with a LUCKY EGG!$"
+
+CeladonCity_Condominiums_3F_Text_NationalReceivedLuckyEgg::
+    .string "You received a LUCKY EGG!$"
+
+CeladonCity_Condominiums_3F_Text_NationalEggNoRoom::
+    .string "Your BAG is full.\p"
+    .string "Make room and return for\n"
+    .string "your NATIONAL prize!$"

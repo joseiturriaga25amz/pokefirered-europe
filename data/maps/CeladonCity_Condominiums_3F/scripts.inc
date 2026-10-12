@@ -50,6 +50,24 @@ CeladonCity_Condominiums_3F_EventScript_MasterBallNoRoom::
 	end
 
 CeladonCity_Condominiums_3F_EventScript_DiplomaFinish::
+	// Preserve the Kanto reward flow above, then check the separate National claim.
+	specialvar VAR_RESULT, HasAllMons
+	goto_if_eq VAR_RESULT, FALSE, CeladonCity_Condominiums_3F_EventScript_DiplomaRelease
+	goto_if_set FLAG_FULL_NATIONAL_DEX_LUCKY_EGG_CLAIMED, CeladonCity_Condominiums_3F_EventScript_DiplomaRelease
+	msgbox CeladonCity_Condominiums_3F_Text_NationalExtraPrize
+	checkitemspace ITEM_LUCKY_EGG
+	goto_if_eq VAR_RESULT, FALSE, CeladonCity_Condominiums_3F_EventScript_NationalEggNoRoom
+	additem ITEM_LUCKY_EGG
+	goto_if_eq VAR_RESULT, FALSE, CeladonCity_Condominiums_3F_EventScript_NationalEggNoRoom
+	setflag FLAG_FULL_NATIONAL_DEX_LUCKY_EGG_CLAIMED
+	msgreceiveditem CeladonCity_Condominiums_3F_Text_NationalReceivedLuckyEgg, ITEM_LUCKY_EGG
+	goto CeladonCity_Condominiums_3F_EventScript_DiplomaRelease
+
+CeladonCity_Condominiums_3F_EventScript_NationalEggNoRoom::
+	msgbox CeladonCity_Condominiums_3F_Text_NationalEggNoRoom
+	goto CeladonCity_Condominiums_3F_EventScript_DiplomaRelease
+
+CeladonCity_Condominiums_3F_EventScript_DiplomaRelease::
 	release
 	end
 

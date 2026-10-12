@@ -85,7 +85,6 @@ CeladonCity_DepartmentStore_4F_PostNationalItems::
 	.2byte ITEM_LEFTOVERS
 	.2byte ITEM_THICK_CLUB
 	.2byte ITEM_CHOICE_BAND
-	.2byte ITEM_LUCKY_EGG
 	.2byte ITEM_ETHER
 	.2byte ITEM_MAX_ETHER
 	.2byte ITEM_ELIXIR

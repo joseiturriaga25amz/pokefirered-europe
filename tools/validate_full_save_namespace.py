@@ -51,6 +51,7 @@ def main():
         "FLAG_FULL_HO_OH_UNLOCKED": 0x8CD,
         "FLAG_FULL_HIDE_BEAST_FIRST_CONTACT": 0x8CE,
         "FLAG_FULL_KANTO_DEX_MASTER_BALL_CLAIMED": 0x8CF,
+        "FLAG_FULL_NATIONAL_DEX_LUCKY_EGG_CLAIMED": 0x8D0,
     }
     for name, value in expected_flags.items():
         pattern = rf"^#define\s+{name}\s+0x{value:X}\s*$"

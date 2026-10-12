@@ -50,3 +50,17 @@ CeladonCity_Condominiums_3F_Text_KantoReceivedMasterBall::
 CeladonCity_Condominiums_3F_Text_KantoMasterBallNoRoom::
     .string "La BORSA è piena.\p"
     .string "Fai spazio e torna qui.\nIl premio ti aspetterà!$"
+
+CeladonCity_Condominiums_3F_Text_NationalExtraPrize::
+    .string "Hai completato il POKéDEX\n"
+    .string "NAZIONALE!\p"
+    .string "Oltre al diploma, ricevi\n"
+    .string "un FORTUNUOVO!$"
+
+CeladonCity_Condominiums_3F_Text_NationalReceivedLuckyEgg::
+    .string "Hai ricevuto un FORTUNUOVO!$"
+
+CeladonCity_Condominiums_3F_Text_NationalEggNoRoom::
+    .string "La BORSA è piena.\p"
+    .string "Fai spazio e torna per il\n"
+    .string "premio NAZIONALE!$"
