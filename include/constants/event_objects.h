@@ -158,6 +158,10 @@
 
 #define NUM_OBJ_EVENT_GFX     152
 
+// Runtime-only graphics slot for the isolated follower prototype.
+// The slot resolves to an existing native sprite; it does not enter saved map templates.
+#define OBJ_EVENT_GFX_FULL_FOLLOWER NUM_OBJ_EVENT_GFX
+
 // These are dynamic object gfx ids.
 // They correspond with the values of the VAR_OBJ_GFX_ID_X vars.
 // More info about them in include/constants/vars.h

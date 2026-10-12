@@ -94,3 +94,19 @@ jobs:
           assert direction_distinct_walk <= frame_variation
           print("Required final scope: 386 species, fully animated; prototype inventory does not certify release readiness")
           PY
+
+      - name: Verify species-indexed 8-bit graphics slot
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          constants = Path("include/constants/event_objects.h").read_text()
+          follower = Path("src/full_follower.c").read_text()
+          movement = Path("src/event_object_movement.c").read_text()
+          assert "#define OBJ_EVENT_GFX_FULL_FOLLOWER NUM_OBJ_EVENT_GFX" in constants
+          assert "graphicsId = FullFollower_GetSpriteGraphicsId();" in movement
+          assert "OBJ_EVENT_GFX_FULL_FOLLOWER,\n            MOVEMENT_TYPE_COPY_PLAYER" in follower
+          assert "previousGraphicsId != graphicsId" in follower
+          assert "ObjectEventSetGraphicsId(follower, OBJ_EVENT_GFX_FULL_FOLLOWER);" in follower
+          assert "return SPECIES_NONE;" in follower
+          print("Species-indexed follower slot and swap contract PASS")
+          PY

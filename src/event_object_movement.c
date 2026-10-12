@@ -2042,6 +2042,11 @@ const struct ObjectEventGraphicsInfo *GetObjectEventGraphicsInfo(u8 graphicsId)
 {
     if (graphicsId >= OBJ_EVENT_GFX_VARS)
         graphicsId = VarGetObjectEventGraphicsId(graphicsId - OBJ_EVENT_GFX_VARS);
+
+    // One 8-bit follower object ID can display different species without
+    // modifying ObjectEvent, saved templates or the global graphics pointer table.
+    if (graphicsId == OBJ_EVENT_GFX_FULL_FOLLOWER)
+        graphicsId = FullFollower_GetSpriteGraphicsId();
     
     if (graphicsId >= NUM_OBJ_EVENT_GFX)
         graphicsId = OBJ_EVENT_GFX_LITTLE_BOY;

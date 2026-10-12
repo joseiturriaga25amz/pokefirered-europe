@@ -13,6 +13,7 @@
 
 static bool8 sFollowerEnabled = TRUE;
 static u16 sFollowerSpecies = SPECIES_NONE;
+// The graphics slot is 8-bit; the selected species is held only at runtime.
 static u8 sFollowerGraphicsId = OBJ_EVENT_GFX_PIKACHU;
 
 static void Task_FullFollower(u8 taskId);
@@ -31,6 +32,11 @@ void FullFollower_SetEnabled(bool8 enabled)
 bool8 FullFollower_IsEnabled(void)
 {
     return sFollowerEnabled;
+}
+
+u8 FullFollower_GetSpriteGraphicsId(void)
+{
+    return sFollowerGraphicsId;
 }
 
 static u8 GetPrototypeFollowerGraphicsId(u16 species)
@@ -142,6 +148,7 @@ static void RefreshFollower(void)
     struct ObjectEvent *follower = FindFollowerObject();
     u16 species = GetEligiblePrototypeFollowerSpecies();
     u8 graphicsId;
+    u8 previousGraphicsId = sFollowerGraphicsId;
 
     if (species == SPECIES_NONE)
     {
@@ -159,7 +166,7 @@ static void RefreshFollower(void)
     {
         struct ObjectEvent *player = &gObjectEvents[gPlayerAvatar.objectEventId];
         int objectEventId = SpawnSpecialObjectEventParameterized(
-            graphicsId,
+            OBJ_EVENT_GFX_FULL_FOLLOWER,
             MOVEMENT_TYPE_COPY_PLAYER,
             OBJ_EVENT_ID_FULL_FOLLOWER,
             player->currentCoords.x,
@@ -172,9 +179,11 @@ static void RefreshFollower(void)
         follower = &gObjectEvents[objectEventId];
         PositionFollowerBehindPlayer(follower);
     }
-    else if (follower->graphicsId != graphicsId)
+    else if (follower->graphicsId != OBJ_EVENT_GFX_FULL_FOLLOWER || previousGraphicsId != graphicsId)
     {
-        ObjectEventSetGraphicsId(follower, graphicsId);
+        // Even when the object ID stays constant, a new species needs its
+        // native graphic metadata, tile allocation and sprite tables refreshed.
+        ObjectEventSetGraphicsId(follower, OBJ_EVENT_GFX_FULL_FOLLOWER);
         PositionFollowerBehindPlayer(follower);
     }
 
