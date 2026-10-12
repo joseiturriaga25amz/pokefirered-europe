@@ -146,6 +146,12 @@ static void PositionFollowerBehindPlayer(struct ObjectEvent *follower, s16 x, s1
     MoveObjectEventToMapCoords(follower, x, y);
     follower->currentElevation = player->currentElevation;
     follower->previousElevation = player->currentElevation;
+
+    // COPY_PLAYER rotates actions relative to its initial facing. Neutralize
+    // that rotation: a follower must copy actual compass directions, not turn
+    // north whenever the player starts walking in the direction they faced.
+    // The native CopyPlayer Step0 preserves nonzero directionSequenceIndex.
+    follower->directionSequenceIndex = DIR_NORTH;
 }
 
 static void RefreshFollower(void)
