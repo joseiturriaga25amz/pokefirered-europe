@@ -150,11 +150,13 @@ static void RefreshFollower(void)
     u8 graphicsId;
     u8 previousGraphicsId = sFollowerGraphicsId;
 
-    if (species == SPECIES_NONE)
+    if (!sFollowerEnabled || species == SPECIES_NONE)
     {
+        // A hidden follower would still consume a scarce object-event slot.
+        // Remove the runtime-only object, never a saved map object or flag.
         sFollowerSpecies = SPECIES_NONE;
         if (follower != NULL)
-            gSprites[follower->spriteId].invisible = TRUE;
+            RemoveFullFollowerObjectEvent(follower);
         return;
     }
 

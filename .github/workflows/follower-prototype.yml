@@ -110,3 +110,24 @@ jobs:
           assert "return SPECIES_NONE;" in follower
           print("Species-indexed follower slot and swap contract PASS")
           PY
+
+      - name: Audit follower slot cleanup on ineligible lead
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          follower = Path("src/full_follower.c").read_text()
+          movement = Path("src/event_object_movement.c").read_text()
+          header = Path("include/event_object_movement.h").read_text()
+          assert "if (!sFollowerEnabled || species == SPECIES_NONE)" in follower
+          assert "RemoveFullFollowerObjectEvent(follower);" in follower
+          assert "void RemoveFullFollowerObjectEvent(struct ObjectEvent *objectEvent);" in header
+          start = movement.index("void RemoveFullFollowerObjectEvent(struct ObjectEvent *objectEvent)")
+          end = movement.index("\nstatic void RemoveObjectEventInternal(", start)
+          helper = movement[start:end]
+          assert "objectEvent->active" in helper
+          assert "objectEvent->localId == OBJ_EVENT_ID_FULL_FOLLOWER" in helper
+          assert "RemoveObjectEvent(objectEvent);" in helper
+          assert "FlagSet(" not in helper
+          assert "RemoveObjectEventByLocalIdAndMap(" not in helper
+          print("Runtime follower frees object slot without modifying event flags")
+          PY

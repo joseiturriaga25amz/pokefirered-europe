@@ -1528,6 +1528,16 @@ void RemoveObjectEventByLocalIdAndMap(u8 localId, u8 mapNum, u8 mapGroup)
     }
 }
 
+// A transient follower must not call RemoveObjectEventByLocalIdAndMap: 
+// that script-facing helper sets a persistent event flag.
+void RemoveFullFollowerObjectEvent(struct ObjectEvent *objectEvent)
+{
+    if (objectEvent != NULL
+     && objectEvent->active
+     && objectEvent->localId == OBJ_EVENT_ID_FULL_FOLLOWER)
+        RemoveObjectEvent(objectEvent);
+}
+
 static void RemoveObjectEventInternal(struct ObjectEvent *objectEvent)
 {
     struct SpriteFrameImage image;
