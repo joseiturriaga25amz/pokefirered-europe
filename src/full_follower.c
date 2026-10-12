@@ -22,7 +22,7 @@ static struct ObjectEvent *FindFollowerObject(void);
 static u8 GetPrototypeFollowerGraphicsId(u16 species);
 static u16 GetEligiblePrototypeFollowerSpecies(void);
 static bool8 ShouldSuppressFollower(void);
-static void PositionFollowerBehindPlayer(struct ObjectEvent *follower);
+static void PositionFollowerBehindPlayer(struct ObjectEvent *follower, s16 x, s16 y);
 static void RefreshFollower(void);
 
 void FullFollower_SetEnabled(bool8 enabled)
