@@ -402,12 +402,15 @@ Decision gate:
 - PASS → integrate conservatively and then expand coverage;
 - FAIL or unresolved provenance → exclude follower from v1.0 without blocking B0–B9.
 
-**Future locomotion idea — PROPOSED, NOT APPROVED (2026-10-12):**
-- Use HeartGold/SoulSilver as reference for presentation: recall follower on bicycle/Surf, safely reappear on foot, with large-Pokémon interior limitations subject to MyBoy QA.
-- Distinguish *visual locomotion* from battle learnset/HM: grounded runners (e.g. Dodrio, regardless of Fly compatibility), winged low-altitude followers (e.g. Charizard/Pidgeot/Crobat), levitators (e.g. Gastly/Magnemite), species requiring special handling.
-- Flying follower could hover slightly behind/alongside the player with direction-aware wing animation; no extra gameplay collision, save flags, Pokémon data fields or Fly requirement.
-- Before any implementation, audit 386 species/form assignments, actual frame availability including shiny, wing cycles, height/shadow behavior, collision/occlusion, palette/OAM/VRAM budgets, indoor transitions and source provenance. File coverage does not establish unique flight animations.
-- Do **not** expand runtime behavior on this suggestion alone; request explicit design approval after feasibility review.
+**Indoor follower visibility and contextual recall — APPROVED DESIGN (2026-10-12, A-012 amendment):**
+- Keep the follower beside the trainer in safe outdoor **and indoor** areas by default; no global hide-on-entering-building rule.
+- Recall it temporarily on bicycle, Surf and unsafe Fly/warp/link/cutscene transitions; respawn safely on foot in compatible areas.
+- Very large Pokémon may require recall in cramped interiors; never let sprites clip walls, obscure critical NPCs or block gameplay. Implement only after per-species/per-map feasibility audit, isolated CI and MyBoy runtime QA.
+- This approval does not change saved Pokémon, flags, link data or release gates.
+
+**Species-natural locomotion — PROPOSED, FEASIBILITY PENDING (not implemented):**
+- Evaluate walking/running, flapping low flight (e.g. Charizard/Pidgeot/Crobat), hovering/levitation (e.g. Gastly/Magnemite) and special-size cases independently from HM Fly learnability (Dodrio remains a ground-runner candidate).
+- Require audited animated normal/shiny graphics, wing cycles, palette/OAM/VRAM and indoor occlusion before approving particular species categories or adding code. No 386-coverage claim based on mere filenames.
 
 ### B11 — Consolidated validators and replacement RC
 Scope:

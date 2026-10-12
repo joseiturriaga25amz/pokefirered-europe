@@ -313,6 +313,20 @@ The following runtime-approved rules are authoritative for B1 and v1.0 closure:
 
 The target presentation is HGSS-like in behavior: the Pokémon should visibly walk behind the player, turn with movement, and transition naturally through ordinary field movement. Final MyBoy QA remains required for animation, warps, ledges, doors, scripts, palette/OAM pressure, save/load, and link isolation.
 
+### A-012 amendment — indoor presence and safe recall (2026-10-12)
+
+**Status:** APPROVED DESIGN RULE / NOT IMPLEMENTED OR MYBOY-VALIDATED.
+
+The user approves this general policy for the intended 386-species follower system:
+
+- **Default presence:** keep the eligible party follower beside the trainer in outdoor maps **and ordinary indoor spaces** (homes, Pokémon Centers, shops and other suitable rooms) when the species' presentation fits and the map/runtime is safe. Do **not** hide every follower merely because the map is indoors.
+- **Exception by circumstance, not a blanket indoor rule:** temporary Poké Ball recall for bicycle, Surf and other unsafe transitions (Fly/warp/link/trade, relevant cutscenes/scripted control). Reappearance follows when on foot and in a compatible safe state, without duplication, blocked NPC/player movement, stale sprites or persistent changes.
+- **Size and geometry:** exceptionally large Pokémon or unsuitable narrow interiors may require temporary recall. Do not force unrealistic scaling or allow clipping into walls, tiles or NPCs; audit eligibility by sprite dimensions, layout and transition conditions before enabling a category.
+- **Presentation only:** natural locomotion, including possible low flight by Charizard and hovering by some species, is a separate species-by-species animation **proposal still requiring technical feasibility and asset review**. Learnability of HM Fly alone is not a visual flight criterion (e.g. Dodrio). The approval here establishes *presence and contextual recall*, not a completed 386-species movement taxonomy or acceptance of unverified flying assets.
+- **Technical gates remain mandatory:** 386 species with genuine direction-aware animations and normal/shiny coverage; audited provenance/permission for any imported graphics; GBA palette/OAM/VRAM budget and tile/collision/occlusion review; isolated CI and real MyBoy testing, including indoor/outdoor crossings, link, old saves and trades. Do not change Pokémon, BoxPokemon, SaveBlock or link layouts.
+
+This amends A-006/A-012 presentation intent without retroactively declaring B10 integrated, fully animated or release-ready.
+
 ## A-013 — Major-trainer roster research method and Brock roster identity
 
 **Date:** 2026-09-30  
