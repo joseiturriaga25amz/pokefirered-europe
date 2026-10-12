@@ -279,3 +279,23 @@ GitHub Actions run `36013304188` completed successfully:
 - compatibility invariants: PASS.
 
 This is **not** a production approval. The branch remains blocked from integration until the MyBoy runtime matrix in section 6 is exercised and Save/Link behavior is verified.
+
+## 8. B10 coverage and integration gate — 2026-10-12
+
+**Status:** READ-ONLY AUDIT / isolated prototype only; **NOT** approved for master integration or 386-species release.
+
+- Canonical production baseline: `master` at `2ef9a2fb87228e715d68831da4ff9f577c9e3ce6`, last gameplay commit `f91b8e0`, integrated Full Gameplay Core #718 SUCCESS; all subsequent master modifications were documentation only.
+- Prototype `prototype/follower-runtime` had exact #3 SUCCESS at `ee9fbc3404496e91519f43462b484bfe5925110b` (compile and simple first-party-lead guard only). The prototype supports **six** hardcoded graphics mappings; no release QA. A further prototype-only audit commit `da1c64a94e85aa4f50ff4b391358877656588166` adds an inventory test, CI #4 pending at the time of this note.
+- Inventory by existing `src/data/object_events/object_event_graphics.h` + `object_event_pic_tables.h`: **42** native Pokémon overworld sheets. **32** use several frame indices; **10** use one image repeated. **None of these 42** varies the actual walking frames within every directional movement group. Direction poses alone **must not** be marked as animated followers. Existing Mew, Suicune and Snorlax event graphics are static. Count does not mean 42 complete species.
+- Alternate research sources, *not imported*: `monhacks/arrantemerald` `followers-expanded-id` implements HGSS-style 386-species followers in Emerald but changes the object-event graphics-ID/field ABI to 16-bit; copying it into FireRed Full is ruled out. `teobz/pkmn-hgss-animated-overworld-sprites` advertises 493-species directional 4-frame GIF/APNG and variants, derived from veekun/HGSS Nintendo artworks. That improves technical reference coverage but **does not clear source/asset redistribution rights**. A public repository, credit request, or repackager's broad reuse statement is not a license from the copyright owner. Do not bulk-import either sprite set into the public Full repository without resolving provenance/permissions.
+- The **approved gameplay target is all 386 Gen III species**, normal/shiny where appropriate, with real direction-aware animated walking. No placeholders, static icons, wrong-species substitution or silent dropping allowed in a final 386-species claim.
+
+**Required next engineering gates, each separate from MyBoy acceptance:**
+
+1. Identify a provenance-cleared, species-complete set of directional walking frames, spritesheet dimensions, shiny/form metadata, palette ownership, animated tile count and conversion rules. Maintain a per-species audited coverage manifest and fail the 386 gate if even one required entry lacks legitimate, functional assets.
+2. Build a FireRed-native **runtime-selected graphics slot** keyed by species instead of one generic 8-bit `graphicsId` per Pokémon; leave `struct ObjectEvent`, `ObjectEventTemplate`, Pokémon/save/link layouts unchanged. Do not transplant Emerald's 16-bit graphics-ID ABI. Budget decompression, VRAM, OAM, per-map object count and palettes for 16–64px sprites before enabling 386.
+3. Correct prototype mechanics in isolated microblocks: first eligible party member/egg/fainted handling; real following movement and animation; safe follower despawn and task cleanup on warp/door/Surf/bike/Fly/link/battle/cutscene; on/off UX; shiny/forms; no collision/trainer-sight regression.
+4. Obtain a reproducible exact-ROM build and automated species/graphics manifest validation in an isolated integration candidate; then **MyBoy runtime QA** for movement, exits, warps, ledges, stairs, trainer sight, scripts, OAM/palettes, old saves and trade/link. Gate final integration on real QA evidence rather than a green compile-only prototype workflow.
+5. If provenance, animation quality, full species coverage or MyBoy compatibility is unresolved, preserve B0–B9 production as releasable, and keep B10 excluded until the gate is satisfied.
+
+No 386-species ROM or complete follower sprite pack exists in Full at this checkpoint. Historical prototype CI is **not** a Full Gameplay Core build of current `master`.
