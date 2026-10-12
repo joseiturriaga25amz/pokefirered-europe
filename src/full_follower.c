@@ -120,27 +120,28 @@ static bool8 ShouldSuppressFollower(void)
     return FALSE;
 }
 
-static void PositionFollowerBehindPlayer(struct ObjectEvent *follower)
+static bool8 GetSafeFollowerSpawnCoords(s16 *x, s16 *y)
 {
     struct ObjectEvent *player = &gObjectEvents[gPlayerAvatar.objectEventId];
-    s16 x = player->currentCoords.x;
-    s16 y = player->currentCoords.y;
+    u8 direction;
 
-    switch (player->facingDirection)
-    {
-    case DIR_NORTH:
-        y++;
-        break;
-    case DIR_SOUTH:
-        y--;
-        break;
-    case DIR_WEST:
-        x++;
-        break;
-    case DIR_EAST:
-        x--;
-        break;
-    }
+    if (player->facingDirection < DIR_SOUTH || player->facingDirection > DIR_EAST)
+        return FALSE;
+
+    direction = GetOppositeDirection(player->facingDirection);
+    *x = player->currentCoords.x;
+    *y = player->currentCoords.y;
+    MoveCoords(direction, x, y);
+
+    // Use the player's normal map/NPC collision rules for the initial tile.
+    // A follower is nonblocking once spawned, so testing its own collision
+    // would not detect an occupied tile. Do not spawn into walls or NPCs.
+    return GetCollisionAtCoords(player, *x, *y, direction) == COLLISION_NONE;
+}
+
+static void PositionFollowerBehindPlayer(struct ObjectEvent *follower, s16 x, s16 y)
+{
+    struct ObjectEvent *player = &gObjectEvents[gPlayerAvatar.objectEventId];
 
     MoveObjectEventToMapCoords(follower, x, y);
     follower->currentElevation = player->currentElevation;
@@ -184,7 +185,16 @@ static void RefreshFollower(void)
     if (follower == NULL)
     {
         struct ObjectEvent *player = &gObjectEvents[gPlayerAvatar.objectEventId];
-        int objectEventId = SpawnSpecialObjectEventParameterized(
+        s16 spawnX;
+        s16 spawnY;
+        int objectEventId;
+
+        // This also covers safe indoor reappearance after doors/warps.
+        // If the tile behind the player is blocked, retry on a later frame.
+        if (!GetSafeFollowerSpawnCoords(&spawnX, &spawnY))
+            return;
+
+        objectEventId = SpawnSpecialObjectEventParameterized(
             OBJ_EVENT_GFX_FULL_FOLLOWER,
             MOVEMENT_TYPE_COPY_PLAYER,
             OBJ_EVENT_ID_FULL_FOLLOWER,
@@ -196,7 +206,7 @@ static void RefreshFollower(void)
             return;
 
         follower = &gObjectEvents[objectEventId];
-        PositionFollowerBehindPlayer(follower);
+        PositionFollowerBehindPlayer(follower, spawnX, spawnY);
     }
 
     // The object-event engine owns sprite invisibility/off-screen culling.

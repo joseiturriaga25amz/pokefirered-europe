@@ -258,3 +258,34 @@ jobs:
           assert "MOVEMENT_TYPE_COPY_PLAYER" in f
           print("Follower ID excluded from recorded NPC steps and Quest Log playback")
           PY
+
+      - name: Audit safe indoor follower spawn tile
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          f = Path("src/full_follower.c").read_text()
+          event = Path("src/event_object_movement.c").read_text()
+          start = f.index("static bool8 GetSafeFollowerSpawnCoords(s16 *x, s16 *y)\n{")
+          end = f.index("\nstatic void PositionFollowerBehindPlayer(", start)
+          body = f[start:end]
+          assert "GetOppositeDirection(player->facingDirection)" in body
+          assert "MoveCoords(direction, x, y);" in body
+          assert "GetCollisionAtCoords(player, *x, *y, direction) == COLLISION_NONE" in body
+          assert "DIR_SOUTH" in body and "DIR_EAST" in body
+          start = f.index("static void RefreshFollower(void)\n{")
+          end = f.index("\nstatic void Task_FullFollower(", start)
+          refresh = f[start:end]
+          guard = refresh.index("if (!GetSafeFollowerSpawnCoords(&spawnX, &spawnY))\n            return;")
+          spawn = refresh.index("SpawnSpecialObjectEventParameterized(")
+          pos = refresh.index("PositionFollowerBehindPlayer(follower, spawnX, spawnY);")
+          assert guard < spawn < pos
+          assert "if (objectEventId >= OBJECT_EVENTS_COUNT)\n            return;" in refresh
+          assert "MoveObjectEventToMapCoords(follower, x, y);" in f
+          collision = event[event.index("u8 GetCollisionAtCoords(struct ObjectEvent *objectEvent, s16 x, s16 y, u32 dir)\n{"):event.index("\nu8 GetCollisionFlagsAtCoords(",event.index("u8 GetCollisionAtCoords(struct ObjectEvent *objectEvent, s16 x, s16 y, u32 dir)\n{"))]
+          assert "MapGridGetCollisionAt(x, y)" in collision
+          assert "DoesObjectCollideWithObjectAt(objectEvent, x, y)" in collision
+          assert "IsElevationMismatchAt(objectEvent->currentElevation, x, y)" in collision
+          # No blanket MAP_TYPE_INDOOR rejection: approved policy allows safe interiors.
+          assert "MAP_TYPE_INDOOR" not in body
+          print("Follower spawns only on passable unoccupied tile, indoors allowed")
+          PY
