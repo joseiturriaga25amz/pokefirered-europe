@@ -317,7 +317,9 @@ jobs:
           assert "sTrailY[next] = sLastPlayerY;" in s
           assert "sTrailCount == FOLLOWER_TRAIL_CAPACITY" in s
           assert "ObjectEventClearHeldMovementIfFinished(follower) == 0" in s
-          assert "GetCollisionAtCoords(follower, x, y, direction) != COLLISION_NONE" in s
+          assert "collision = GetCollisionAtCoords(follower, x, y, direction);" in s
+          assert "if (collision == COLLISION_OBJECT_EVENT)" in s
+          assert "if (collision != COLLISION_NONE)" in s
           assert "ObjectEventSetHeldMovement(follower, GetWalkNormalMovementAction(direction))" in s
           for name in ("DIR_NORTH", "DIR_SOUTH", "DIR_EAST", "DIR_WEST"):
               assert "direction = " + name + ";" in s
@@ -357,7 +359,7 @@ jobs:
           assert "curObject->previousCoords.x == x && curObject->previousCoords.y == y" in body
           assert "AreElevationsCompatible(objectEvent->currentElevation, curObject->currentElevation)" in body
           assert "objectEvent->localId == OBJ_EVENT_ID_FULL_FOLLOWER\n             || curObject->localId" not in body
-          assert "GetCollisionAtCoords(follower, x, y, direction) != COLLISION_NONE" in f
+          assert "collision = GetCollisionAtCoords(follower, x, y, direction);" in f
           assert body.index("if (curObject->localId == OBJ_EVENT_ID_FULL_FOLLOWER)") < body.index("if (objectEvent->localId == OBJ_EVENT_ID_FULL_FOLLOWER && curObject->isPlayer)") < body.index("if ((curObject->currentCoords.x == x")
           # Contract model: follower is intangible as an obstacle, but respects
           # current player tile and both occupied NPC tiles.
@@ -373,4 +375,48 @@ jobs:
           assert blocked(True, False, False, (0,0), (-1,0), (-1,0))
           assert not blocked(False, True, False, (0,0), (0,0), (0,0))
           print("Follower yields to NPCs and current player tile, allows vacated player tile, remains nonblocking to world")
+          PY
+
+      - name: Audit follower trail collision recovery
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          f = Path("src/full_follower.c").read_text()
+          e = Path("src/event_object_movement.c").read_text()
+          constants = Path("include/global.fieldmap.h").read_text()
+          start = f.index("static bool8 FollowRecordedPlayerSteps(struct ObjectEvent *follower)\n{")
+          end = f.index("\nstatic void RefreshFollower(void)\n{", start)
+          body = f[start:end]
+          assert "COLLISION_NONE," in constants
+          assert "COLLISION_OBJECT_EVENT," in constants
+          assert "COLLISION_IMPASSABLE," in constants
+          assert "COLLISION_ELEVATION_MISMATCH," in constants
+          assert "COLLISION_OUTSIDE_RANGE," in constants
+          assert "collision = GetCollisionAtCoords(follower, x, y, direction);" in body
+          wait = body.index("if (collision == COLLISION_OBJECT_EVENT)\n        return TRUE;")
+          abort = body.index("if (collision != COLLISION_NONE)\n        return FALSE;")
+          step = body.index("if (!ObjectEventSetHeldMovement(follower, GetWalkNormalMovementAction(direction)))")
+          assert wait < abort < step
+          assert "if (GetCollisionAtCoords(follower, x, y, direction) != COLLISION_NONE)" not in body
+          refresh = f[f.index("static void RefreshFollower(void)\n{"):f.index("\nstatic void Task_FullFollower(",f.index("static void RefreshFollower(void)\n{"))]
+          assert "if (!FollowRecordedPlayerSteps(follower))" in refresh
+          assert "RemoveFullFollowerObjectEvent(follower);" in refresh
+          assert "sTrailCount = 0;" in refresh
+          assert "sTrailCount == FOLLOWER_TRAIL_CAPACITY" in body
+          collision_fn = e[e.index("u8 GetCollisionAtCoords(struct ObjectEvent *objectEvent, s16 x, s16 y, u32 dir)\n{"):e.index("\nu8 GetCollisionFlagsAtCoords(",e.index("u8 GetCollisionAtCoords(struct ObjectEvent *objectEvent, s16 x, s16 y, u32 dir)\n{"))]
+          assert "return COLLISION_OBJECT_EVENT;" in collision_fn
+          assert "return COLLISION_IMPASSABLE;" in collision_fn
+          assert "return COLLISION_ELEVATION_MISMATCH;" in collision_fn
+          def next_action(collision):
+              if collision == "object":
+                  return "wait"
+              if collision != "none":
+                  return "recall"
+              return "walk"
+          assert next_action("object") == "wait"
+          assert next_action("impassable") == "recall"
+          assert next_action("elevation") == "recall"
+          assert next_action("border") == "recall"
+          assert next_action("none") == "walk"
+          print("NPCs: wait; impassable/elevation/border: recall; unblocked: native held step")
           PY

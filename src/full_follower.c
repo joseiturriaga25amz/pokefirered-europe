@@ -177,6 +177,7 @@ static bool8 FollowRecordedPlayerSteps(struct ObjectEvent *follower)
     s16 dx = player->currentCoords.x - sLastPlayerX;
     s16 dy = player->currentCoords.y - sLastPlayerY;
     u8 direction;
+    u8 collision;
 
     if (dx != 0 || dy != 0)
     {
@@ -221,9 +222,14 @@ static bool8 FollowRecordedPlayerSteps(struct ObjectEvent *follower)
     else
         return FALSE;
 
-    // Wait for occupied tiles; recall if this fills the bounded history.
-    if (GetCollisionAtCoords(follower, x, y, direction) != COLLISION_NONE)
+    // Dynamic NPC occupancy can clear on a later frame. Terrain, elevation
+    // and map borders cannot be resolved by waiting on the same invalid step;
+    // recall and retry safe spawning instead of filling the trail indefinitely.
+    collision = GetCollisionAtCoords(follower, x, y, direction);
+    if (collision == COLLISION_OBJECT_EVENT)
         return TRUE;
+    if (collision != COLLISION_NONE)
+        return FALSE;
 
     if (!ObjectEventSetHeldMovement(follower, GetWalkNormalMovementAction(direction)))
     {
