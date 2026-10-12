@@ -402,6 +402,13 @@ Decision gate:
 - PASS → integrate conservatively and then expand coverage;
 - FAIL or unresolved provenance → exclude follower from v1.0 without blocking B0–B9.
 
+**Future locomotion idea — PROPOSED, NOT APPROVED (2026-10-12):**
+- Use HeartGold/SoulSilver as reference for presentation: recall follower on bicycle/Surf, safely reappear on foot, with large-Pokémon interior limitations subject to MyBoy QA.
+- Distinguish *visual locomotion* from battle learnset/HM: grounded runners (e.g. Dodrio, regardless of Fly compatibility), winged low-altitude followers (e.g. Charizard/Pidgeot/Crobat), levitators (e.g. Gastly/Magnemite), species requiring special handling.
+- Flying follower could hover slightly behind/alongside the player with direction-aware wing animation; no extra gameplay collision, save flags, Pokémon data fields or Fly requirement.
+- Before any implementation, audit 386 species/form assignments, actual frame availability including shiny, wing cycles, height/shadow behavior, collision/occlusion, palette/OAM/VRAM budgets, indoor transitions and source provenance. File coverage does not establish unique flight animations.
+- Do **not** expand runtime behavior on this suggestion alone; request explicit design approval after feasibility review.
+
 ### B11 — Consolidated validators and replacement RC
 Scope:
 - update FINAL_AUDIT_PLAN / RC_MYBOY_CHECKLIST to final V2 truth;
