@@ -65,11 +65,14 @@ static u16 GetEligiblePrototypeFollowerSpecies(void)
         u16 hp = GetMonData(&gPlayerParty[i], MON_DATA_HP);
         bool8 isEgg = GetMonData(&gPlayerParty[i], MON_DATA_IS_EGG);
 
-        if (species != SPECIES_NONE
-         && hp != 0
-         && !isEgg
-         && GetPrototypeFollowerGraphicsId(species) != 0xFF)
+        if (species != SPECIES_NONE && hp != 0 && !isEgg)
+        {
+            // The follower represents the first eligible party Pokémon, not
+            // the first one with a prototype sprite. Hide unsupported leads.
+            if (GetPrototypeFollowerGraphicsId(species) == 0xFF)
+                return SPECIES_NONE;
             return species;
+        }
     }
 
     return SPECIES_NONE;

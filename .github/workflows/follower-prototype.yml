@@ -8,7 +8,7 @@ on:
 jobs:
   build:
     name: Build follower prototype
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
 
@@ -28,3 +28,18 @@ jobs:
           grep -q 'MOVEMENT_TYPE_COPY_PLAYER' src/full_follower.c
           ! grep -q 'u16 graphicsId;' include/global.fieldmap.h
           ! grep -q 'graphics/object_events/pics/pokemon/bulbasaur.png' src/full_follower.c
+
+      - name: Audit first-eligible lead identity
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          s = Path("src/full_follower.c").read_text()
+          start = s.index("static u16 GetEligiblePrototypeFollowerSpecies(void)\\n{".replace("\\n", "\n"))
+          end = s.index("\nstatic struct ObjectEvent *FindFollowerObject(void)", start)
+          body = s[start:end]
+          assert "species != SPECIES_NONE && hp != 0 && !isEgg" in body
+          assert "if (GetPrototypeFollowerGraphicsId(species) == 0xFF)" in body
+          assert body.index("return SPECIES_NONE;") < body.index("return species;")
+          assert "MON_DATA_IS_EGG" in body and "MON_DATA_HP" in body
+          print("Follower prototype party identity guard PASS")
+          PY
