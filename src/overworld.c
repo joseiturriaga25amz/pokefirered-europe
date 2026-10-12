@@ -2106,7 +2106,7 @@ static void ResumeMap(bool32 inLink)
 {
     // This return path can reuse active local object events. Strip the
     // runtime follower before sprite reset so it cannot reappear in link play.
-    if (inLink)
+    if (inLink || QL_IS_PLAYBACK_STATE)
         FullFollower_DiscardForLink();
     ResetTasks();
     ResetSpriteData();
