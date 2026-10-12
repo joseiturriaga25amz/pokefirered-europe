@@ -176,6 +176,22 @@ static void ResetFollowerTrail(const struct ObjectEvent *player)
     sLastPlayerY = player->currentCoords.y;
 }
 
+void FullFollower_OnCameraCoordsShift(s16 dx, s16 dy)
+{
+    u8 i;
+    if (FindFollowerObject() == NULL)
+        return;
+
+    sLastPlayerX -= dx;
+    sLastPlayerY -= dy;
+    for (i = 0; i < sTrailCount; i++)
+    {
+        u8 index = (sTrailHead + i) % FOLLOWER_TRAIL_CAPACITY;
+        sTrailX[index] -= dx;
+        sTrailY[index] -= dy;
+    }
+}
+
 static bool8 FollowRecordedPlayerSteps(struct ObjectEvent *follower)
 {
     const struct ObjectEvent *player = &gObjectEvents[gPlayerAvatar.objectEventId];

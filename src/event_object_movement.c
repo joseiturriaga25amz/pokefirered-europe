@@ -2334,6 +2334,7 @@ void UpdateObjectEventCoordsForCameraUpdate(void)
                 gObjectEvents[i].previousCoords.y -= dy;
             }
         }
+        FullFollower_OnCameraCoordsShift(dx, dy);
     }
 }
 

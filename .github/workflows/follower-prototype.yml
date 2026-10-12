@@ -471,3 +471,26 @@ jobs:
           assert 10 * nframes("sSpeedNormalStepFuncs") == 160
           print("Running and follower fast walk both 8 frames; active ledge jumps suppress follower")
           PY
+
+      - name: Audit follower camera-coordinate synchronization
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          h=Path("include/full_follower.h").read_text()
+          f=Path("src/full_follower.c").read_text()
+          e=Path("src/event_object_movement.c").read_text()
+          assert "void FullFollower_OnCameraCoordsShift(s16 dx, s16 dy);" in h
+          camera=e[e.index("void UpdateObjectEventCoordsForCameraUpdate(void)\n{"):e.index("\nu8 GetObjectEventIdByPosition(")]
+          assert camera.index("gObjectEvents[i].previousCoords.y -= dy;") < camera.index("FullFollower_OnCameraCoordsShift(dx, dy);")
+          body=f[f.index("void FullFollower_OnCameraCoordsShift(s16 dx, s16 dy)\n{"):f.index("\nstatic bool8 FollowRecordedPlayerSteps(")]
+          for part in ("if (FindFollowerObject() == NULL)", "sLastPlayerX -= dx;", "sLastPlayerY -= dy;", "i < sTrailCount", "(sTrailHead + i) % FOLLOWER_TRAIL_CAPACITY", "sTrailX[index] -= dx;", "sTrailY[index] -= dy;"):
+              assert part in body
+          xs=list(range(8));ys=list(range(10,18));head,count,dx,dy=6,4,1,-2
+          for i in range(count):
+              p=(head+i)%8
+              xs[p]-=dx;ys[p]-=dy
+          assert xs==[-1,0,2,3,4,5,5,6]
+          assert ys==[12,13,12,13,14,15,18,19]
+          assert ((23-dx)-(22-dx),(13-dy)-(13-dy))==(1,0)
+          print("Camera-coordinates and ring-buffer trail stay aligned")
+          PY
