@@ -122,6 +122,13 @@ static bool8 ShouldSuppressFollower(void)
                             | PLAYER_AVATAR_FLAG_SURFING))
         return TRUE;
 
+    // Two-tile ledge jumps are not ordinary trail steps. Hide while the
+    // native player jump is still animating; return only after it finishes.
+    // Copyable movement 8 is set by PlayerJumpLedge/acro jumps.
+    if (PlayerGetCopyableMovement() == 8
+     && ObjectEventCheckHeldMovementStatus(&gObjectEvents[gPlayerAvatar.objectEventId]) == 0)
+        return TRUE;
+
     // The prototype suppresses presentation during scripted field control.
     // This keeps follower state out of cutscenes/trainer-sight/link-sensitive scripts.
     if (ScriptContext_IsEnabled())
@@ -178,6 +185,7 @@ static bool8 FollowRecordedPlayerSteps(struct ObjectEvent *follower)
     s16 dy = player->currentCoords.y - sLastPlayerY;
     u8 direction;
     u8 collision;
+    u8 movementAction;
 
     if (dx != 0 || dy != 0)
     {
@@ -231,7 +239,16 @@ static bool8 FollowRecordedPlayerSteps(struct ObjectEvent *follower)
     if (collision != COLLISION_NONE)
         return FALSE;
 
-    if (!ObjectEventSetHeldMovement(follower, GetWalkNormalMovementAction(direction)))
+    // Running shoes use the native 8-frame run step. A 16-frame follower
+    // walk would fall increasingly behind and overflow the bounded trail.
+    // Use the ordinary 8-frame NPC walk animation; do not apply player gfx.
+    if (player->movementActionId >= MOVEMENT_ACTION_PLAYER_RUN_DOWN
+     && player->movementActionId <= MOVEMENT_ACTION_PLAYER_RUN_RIGHT)
+        movementAction = GetWalkFastMovementAction(direction);
+    else
+        movementAction = GetWalkNormalMovementAction(direction);
+
+    if (!ObjectEventSetHeldMovement(follower, movementAction))
     {
         sTrailHead = (sTrailHead + 1) % FOLLOWER_TRAIL_CAPACITY;
         sTrailCount--;

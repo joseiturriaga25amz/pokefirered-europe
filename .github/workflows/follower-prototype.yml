@@ -320,7 +320,9 @@ jobs:
           assert "collision = GetCollisionAtCoords(follower, x, y, direction);" in s
           assert "if (collision == COLLISION_OBJECT_EVENT)" in s
           assert "if (collision != COLLISION_NONE)" in s
-          assert "ObjectEventSetHeldMovement(follower, GetWalkNormalMovementAction(direction))" in s
+          assert "ObjectEventSetHeldMovement(follower, movementAction)" in s
+          assert "GetWalkFastMovementAction(direction)" in s
+          assert "GetWalkNormalMovementAction(direction)" in s
           for name in ("DIR_NORTH", "DIR_SOUTH", "DIR_EAST", "DIR_WEST"):
               assert "direction = " + name + ";" in s
           assert "MOVEMENT_TYPE_NONE" in s and "MOVEMENT_TYPE_COPY_PLAYER," not in s
@@ -419,4 +421,47 @@ jobs:
           assert next_action("border") == "recall"
           assert next_action("none") == "walk"
           print("NPCs: wait; impassable/elevation/border: recall; unblocked: native held step")
+          PY
+
+      - name: Audit follower running pace and ledge jump recall
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          f = Path("src/full_follower.c").read_text()
+          e = Path("src/event_object_movement.c").read_text()
+          avatar = Path("src/field_player_avatar.c").read_text()
+          moves = Path("include/constants/event_object_movement.h").read_text()
+          suppress = f[f.index("static bool8 ShouldSuppressFollower(void)\n{"):f.index("\nstatic bool8 GetSafeFollowerSpawnCoords(",f.index("static bool8 ShouldSuppressFollower(void)\n{"))]
+          assert "PlayerGetCopyableMovement() == 8" in suppress
+          assert "ObjectEventCheckHeldMovementStatus(&gObjectEvents[gPlayerAvatar.objectEventId]) == 0" in suppress
+          assert "PlayerSetAnimId(GetJump2MovementAction(direction), 8);" in avatar
+          assert "PlayerSetAnimId(GetAcroWheelieJumpMovementAction(direction), 8);" in avatar
+          assert "if (objectEvent->heldMovementActive)" in e
+          assert "return objectEvent->heldMovementFinished;" in e
+          assert "return 16;" in e
+          trail = f[f.index("static bool8 FollowRecordedPlayerSteps(struct ObjectEvent *follower)\n{"):f.index("\nstatic void RefreshFollower(",f.index("static bool8 FollowRecordedPlayerSteps(struct ObjectEvent *follower)\n{"))]
+          assert "player->movementActionId >= MOVEMENT_ACTION_PLAYER_RUN_DOWN" in trail
+          assert "player->movementActionId <= MOVEMENT_ACTION_PLAYER_RUN_RIGHT" in trail
+          assert "movementAction = GetWalkFastMovementAction(direction);" in trail
+          assert "movementAction = GetWalkNormalMovementAction(direction);" in trail
+          assert "ObjectEventSetHeldMovement(follower, movementAction)" in trail
+          assert "GetWalkFasterMovementAction(direction)" not in trail
+          assert "StartRunningAnim(objectEvent, sprite, DIR_SOUTH);" in e
+          assert "InitNpcForMovement(objectEvent, sprite, direction, MOVE_SPEED_FAST_1);" in e
+          assert "InitMovementNormal(objectEvent, sprite, DIR_SOUTH, MOVE_SPEED_FAST_1);" in e
+          assert "InitMovementNormal(objectEvent, sprite, DIR_SOUTH, MOVE_SPEED_NORMAL);" in e
+          def nframes(name):
+              begin = e.index("static const SpriteStepFunc " + name + "[] = {")
+              end = e.index("\n};", begin)
+              return len(re.findall(r"Step[1-8],", e[begin:end]))
+          assert nframes("sSpeedNormalStepFuncs") == 16
+          assert nframes("sSpeedFast1StepFuncs") == 8
+          assert "#define MOVEMENT_ACTION_PLAYER_RUN_DOWN" in moves
+          assert "#define MOVEMENT_ACTION_PLAYER_RUN_RIGHT" in moves
+          # A running player makes 10 steps / 80 frames; the fast follower
+          # can cover 10 tiles in that time, unlike a 16-frame normal follower.
+          assert 10 * nframes("sSpeedFast1StepFuncs") == 80
+          assert 10 * nframes("sSpeedNormalStepFuncs") == 160
+          print("Running and follower fast walk both 8 frames; active ledge jumps suppress follower")
           PY
