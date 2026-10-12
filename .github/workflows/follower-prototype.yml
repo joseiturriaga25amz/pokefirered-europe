@@ -105,8 +105,10 @@ jobs:
           assert "#define OBJ_EVENT_GFX_FULL_FOLLOWER NUM_OBJ_EVENT_GFX" in constants
           assert "graphicsId = FullFollower_GetSpriteGraphicsId();" in movement
           assert "OBJ_EVENT_GFX_FULL_FOLLOWER,\n            MOVEMENT_TYPE_COPY_PLAYER" in follower
-          assert "previousGraphicsId != graphicsId" in follower
-          assert "ObjectEventSetGraphicsId(follower, OBJ_EVENT_GFX_FULL_FOLLOWER);" in follower
+          assert "sFollowerSpecies != species" in follower
+          assert "sFollowerGraphicsId != graphicsId" in follower
+          assert "RemoveFullFollowerObjectEvent(follower);" in follower
+          assert "ObjectEventSetGraphicsId(follower," not in follower
           assert "return SPECIES_NONE;" in follower
           print("Species-indexed follower slot and swap contract PASS")
           PY
@@ -130,4 +132,28 @@ jobs:
           assert "FlagSet(" not in helper
           assert "RemoveObjectEventByLocalIdAndMap(" not in helper
           print("Runtime follower frees object slot without modifying event flags")
+          PY
+
+      - name: Audit follower graphics swap lifecycle
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          s = Path("src/full_follower.c").read_text()
+          cleanup = Path("src/event_object_movement.c").read_text()
+          start = s.index("static void RefreshFollower(void)\n{")
+          end = s.index("\nstatic void Task_FullFollower(", start)
+          body = s[start:end]
+          remove = body.index("RemoveFullFollowerObjectEvent(follower);", body.index("graphicsId = GetPrototypeFollowerGraphicsId(species);"))
+          update_species = body.index("sFollowerSpecies = species;")
+          update_graphics = body.index("sFollowerGraphicsId = graphicsId;")
+          spawn = body.index("SpawnSpecialObjectEventParameterized(")
+          assert remove < update_species < spawn and remove < update_graphics < spawn
+          assert "sFollowerSpecies != species" in body
+          assert "sFollowerGraphicsId != graphicsId" in body
+          assert "follower = NULL;" in body[remove:update_species]
+          assert "ObjectEventSetGraphicsId(" not in body
+          assert "if (objectEventId >= OBJECT_EVENTS_COUNT)" in body
+          assert "RemoveFullFollowerObjectEvent(follower);" in body[:body.index("graphicsId = GetPrototypeFollowerGraphicsId(species);")]
+          assert "FlagSet(" not in cleanup[cleanup.index("void RemoveFullFollowerObjectEvent("):cleanup.index("static void RemoveObjectEventInternal(")]
+          print("Follower sprite recreated on species change, old graphics cleaned up before slot switch")
           PY

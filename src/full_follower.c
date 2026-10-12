@@ -148,7 +148,6 @@ static void RefreshFollower(void)
     struct ObjectEvent *follower = FindFollowerObject();
     u16 species = GetEligiblePrototypeFollowerSpecies();
     u8 graphicsId;
-    u8 previousGraphicsId = sFollowerGraphicsId;
 
     if (!sFollowerEnabled || species == SPECIES_NONE)
     {
@@ -161,6 +160,19 @@ static void RefreshFollower(void)
     }
 
     graphicsId = GetPrototypeFollowerGraphicsId(species);
+
+    // The graphics slot is resolved through the current runtime species.
+    // Destroy the OLD sprite while the slot still resolves to its old graphics:
+    // otherwise its tile cleanup could use the NEW species' frame dimensions.
+    if (follower != NULL
+     && (follower->graphicsId != OBJ_EVENT_GFX_FULL_FOLLOWER
+      || sFollowerSpecies != species
+      || sFollowerGraphicsId != graphicsId))
+    {
+        RemoveFullFollowerObjectEvent(follower);
+        follower = NULL;
+    }
+
     sFollowerSpecies = species;
     sFollowerGraphicsId = graphicsId;
 
@@ -179,13 +191,6 @@ static void RefreshFollower(void)
             return;
 
         follower = &gObjectEvents[objectEventId];
-        PositionFollowerBehindPlayer(follower);
-    }
-    else if (follower->graphicsId != OBJ_EVENT_GFX_FULL_FOLLOWER || previousGraphicsId != graphicsId)
-    {
-        // Even when the object ID stays constant, a new species needs its
-        // native graphic metadata, tile allocation and sprite tables refreshed.
-        ObjectEventSetGraphicsId(follower, OBJ_EVENT_GFX_FULL_FOLLOWER);
         PositionFollowerBehindPlayer(follower);
     }
 
