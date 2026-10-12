@@ -482,7 +482,10 @@ jobs:
           assert "void FullFollower_OnCameraCoordsShift(s16 dx, s16 dy);" in h
           camera=e[e.index("void UpdateObjectEventCoordsForCameraUpdate(void)\n{"):e.index("\nu8 GetObjectEventIdByPosition(")]
           assert camera.index("gObjectEvents[i].previousCoords.y -= dy;") < camera.index("FullFollower_OnCameraCoordsShift(dx, dy);")
-          body=f[f.index("void FullFollower_OnCameraCoordsShift(s16 dx, s16 dy)\n{"):f.index("\nstatic bool8 FollowRecordedPlayerSteps(")]
+          start=f.index("void FullFollower_OnCameraCoordsShift(s16 dx, s16 dy)\n{")
+          end=f.index("\nstatic bool8 FollowRecordedPlayerSteps(struct ObjectEvent *follower)\n{", start)
+          assert end > start
+          body=f[start:end]
           for part in ("if (FindFollowerObject() == NULL)", "sLastPlayerX -= dx;", "sLastPlayerY -= dy;", "i < sTrailCount", "(sTrailHead + i) % FOLLOWER_TRAIL_CAPACITY", "sTrailX[index] -= dx;", "sTrailY[index] -= dy;"):
               assert part in body
           xs=list(range(8));ys=list(range(10,18));head,count,dx,dy=6,4,1,-2
