@@ -64,7 +64,8 @@ jobs:
           assert not missing, f"Native Pokémon sheets missing graphics tables: {missing}"
 
           directional = 0
-          native_walk = 0
+          frame_variation = 0
+          direction_distinct_walk = 0
           static = 0
           for name in native:
               indices = [int(i) for i in re.findall(
@@ -80,11 +81,16 @@ jobs:
               # alternating walk slots per facing direction. Direction poses
               # by themselves do not count as animated walking.
               walk_groups = ((0, 3, 4), (1, 5, 6), (2, 7, 8))
-              if all(len({indices[j] for j in group}) > 1 for group in walk_groups):
-                  native_walk += 1
+              groups = [frozenset(indices[j] for j in group) for group in walk_groups]
+              if all(len(group) > 1 for group in groups):
+                  frame_variation += 1
+                  if len(set(groups)) == len(groups):
+                      direction_distinct_walk += 1
 
           assert {"pikachu", "snorlax", "mew", "suicune", "pidgey", "spearow"} <= set(native.values())
           print(f"Native sheets: {len(native)}; directional poses: {directional}; single-pose sheets: {static}")
-          print(f"Native sheets with frame variations in all three walking directions: {native_walk}")
+          print(f"Native sheets with any walking-frame variation in all three directions: {frame_variation}")
+          print(f"Native sheets with direction-distinct animated walking groups: {direction_distinct_walk}")
+          assert direction_distinct_walk <= frame_variation
           print("Required final scope: 386 species, fully animated; prototype inventory does not certify release readiness")
           PY
