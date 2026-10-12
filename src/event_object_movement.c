@@ -4922,11 +4922,20 @@ static bool8 DoesObjectCollideWithObjectAt(struct ObjectEvent *objectEvent, s16 
         curObject = &gObjectEvents[i];
         if (curObject->active && curObject != objectEvent)
         {
-            // Runtime follower is presentation-only: it must never block the player,
-            // NPCs, or itself while shadowing the player's previous tile.
-            if (objectEvent->localId == OBJ_EVENT_ID_FULL_FOLLOWER
-             || curObject->localId == OBJ_EVENT_ID_FULL_FOLLOWER)
+            // No event may collide with the cosmetic follower.
+            if (curObject->localId == OBJ_EVENT_ID_FULL_FOLLOWER)
                 continue;
+
+            // The follower must respect NPCs and the player's CURRENT tile.
+            // The player's previous tile is precisely the tile it should trail,
+            // so the follower alone may enter that already-vacated position.
+            if (objectEvent->localId == OBJ_EVENT_ID_FULL_FOLLOWER && curObject->isPlayer)
+            {
+                if (curObject->currentCoords.x == x && curObject->currentCoords.y == y
+                 && AreElevationsCompatible(objectEvent->currentElevation, curObject->currentElevation))
+                    return TRUE;
+                continue;
+            }
 
             if ((curObject->currentCoords.x == x && curObject->currentCoords.y == y) || (curObject->previousCoords.x == x && curObject->previousCoords.y == y))
             {
