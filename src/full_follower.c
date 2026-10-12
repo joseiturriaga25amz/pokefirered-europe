@@ -3,6 +3,7 @@
 #include "field_player_avatar.h"
 #include "full_follower.h"
 #include "pokemon.h"
+#include "quest_log.h"
 #include "script.h"
 #include "task.h"
 #include "constants/event_object_movement.h"
@@ -100,6 +101,11 @@ static struct ObjectEvent *FindFollowerObject(void)
 
 static bool8 ShouldSuppressFollower(void)
 {
+    // Quest Log playback uses a fixed NPC movement table; follower ID 254
+    // is never a map-template NPC and must not enter that playback path.
+    if (QL_IS_PLAYBACK_STATE)
+        return TRUE;
+
     // The caller separately checks the party lead and the on/off preference.
     if (TestPlayerAvatarFlags(PLAYER_AVATAR_FLAG_MACH_BIKE
                             | PLAYER_AVATAR_FLAG_ACRO_BIKE

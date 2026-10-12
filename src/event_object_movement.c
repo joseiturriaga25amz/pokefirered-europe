@@ -5291,7 +5291,10 @@ static void ObjectEventSetSingleMovement(struct ObjectEvent *objectEvent, struct
     objectEvent->movementActionId = movementActionId;
     sprite->data[2] = 0;
     
-    if (gQuestLogPlaybackState == QL_PLAYBACK_STATE_RECORDING)
+    // Follower localId 254 is runtime-only and outside Quest Log's fixed
+    // sMovementScripts[OBJECT_EVENT_TEMPLATES_COUNT] index range.
+    if (gQuestLogPlaybackState == QL_PLAYBACK_STATE_RECORDING
+     && objectEvent->localId != OBJ_EVENT_ID_FULL_FOLLOWER)
         QuestLogRecordNPCStep(objectEvent->localId, objectEvent->mapNum, objectEvent->mapGroup, movementActionId);
 }
 
