@@ -459,7 +459,8 @@ jobs:
           def nframes(name):
               begin = e.index("static const SpriteStepFunc " + name + "[] = {")
               end = e.index("\n};", begin)
-              return len(re.findall(r"Step[1-8],", e[begin:end]))
+              # Sprite-step tables omit the final trailing comma; count whole entries.
+              return len(re.findall(r"(?m)^\s*Step[1-8]\s*,?\s*$", e[begin:end]))
           assert nframes("sSpeedNormalStepFuncs") == 16
           assert nframes("sSpeedFast1StepFuncs") == 8
           assert "#define MOVEMENT_ACTION_PLAYER_RUN_DOWN" in moves
