@@ -43,3 +43,48 @@ jobs:
           assert "MON_DATA_IS_EGG" in body and "MON_DATA_HP" in body
           print("Follower prototype party identity guard PASS")
           PY
+
+      - name: Inventory native walking-frame coverage (informational)
+        run: |
+          python3 - <<'PY'
+          import re
+          from pathlib import Path
+
+          graphics = Path("src/data/object_events/object_event_graphics.h").read_text()
+          frames = Path("src/data/object_events/object_event_pic_tables.h").read_text()
+          native = dict(re.findall(
+              r'gObjectEventPic_(\w+)\[\] = INCBIN_U16\("graphics/object_events/pics/pokemon/([^"]+)\.4bpp"\)',
+              graphics,
+          ))
+          frame_tables = dict(re.findall(
+              r'sPicTable_(\w+)\[\] = \{(.*?)\n\};', frames, re.S,
+          ))
+          assert native, "No Pokémon overworld sheets found"
+          missing = sorted(set(native) - set(frame_tables))
+          assert not missing, f"Native Pokémon sheets missing graphics tables: {missing}"
+
+          directional = 0
+          native_walk = 0
+          static = 0
+          for name in native:
+              indices = [int(i) for i in re.findall(
+                  r'overworld_frame\([^,]+,\s*\d+,\s*\d+,\s*(\d+)\)',
+                  frame_tables[name],
+              )]
+              assert len(indices) >= 9, f"Invalid object-event frame table: {name}"
+              if len(set(indices)) > 1:
+                  directional += 1
+              else:
+                  static += 1
+              # The standard FireRed table stores one neutral frame and two
+              # alternating walk slots per facing direction. Direction poses
+              # by themselves do not count as animated walking.
+              walk_groups = ((0, 3, 4), (1, 5, 6), (2, 7, 8))
+              if all(len({indices[j] for j in group}) > 1 for group in walk_groups):
+                  native_walk += 1
+
+          assert {"pikachu", "snorlax", "mew", "suicune", "pidgey", "spearow"} <= set(native.values())
+          print(f"Native sheets: {len(native)}; directional poses: {directional}; single-pose sheets: {static}")
+          print(f"Native sheets with frame variations in all three walking directions: {native_walk}")
+          print("Required final scope: 386 species, fully animated; prototype inventory does not certify release readiness")
+          PY
