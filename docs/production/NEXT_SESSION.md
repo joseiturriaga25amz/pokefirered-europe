@@ -14,6 +14,9 @@ Use `docs/spec/` only for frozen historical design details.
 
 ## Current state
 
+- **B10 Quest Log replay sprite lifecycle (2026-10-12; CI pending):** Follower Prototype #15 run `38302058283` SUCCESS on exact `8a6787ae7e1d8a10b67f4c1215950c5454841b93`. Audit found Quest Log map resume could reconstruct previously active follower sprites, and local initialization could schedule a follower during replay. Prototype commits `07d21f0`, `44ebb7b` guard those paths; test commit `7fd4b50722c7751a091a055e36bf020e2079028b` (HEAD) runs Follower Prototype #18 (`38303182183`), PENDING at checkpoint. No follower merge, no MyBoy QA or 386 animated regular/shiny asset coverage. **Next:** check exact #18, then movement/door/ledge/stairs and palette/OAM independent audit. Production gameplay unchanged.
+
+
 - **B10 safe interior respawn microblock (2026-10-12):** Independently verified previous isolated prototype `a3a182a90f3995aa5737178ed320f955eea667b0` **CI #13 SUCCESS** (run `38299958371`), including Quest Log exclusion. Audit found the follower's initial placement behind the player did not check map/NPC collision, potentially appearing inside walls or NPCs on indoor transitions. Isolated technical commit `e31d2f94ec87d09efdff42a80addb81135beb4d2` uses the existing player collision engine to check the behind-player tile before spawning; if blocked, retries in subsequent refreshes instead of creating the sprite in an invalid place. No global indoor suppression, save/link layout changes or sprite import. **Follower Prototype #14 run `38300778543` was QUEUED at this checkpoint: IMPLEMENTED, not yet CI-GREEN or MyBoy-validated.** Next: verify exact #14 and independently audit motion on cramped corridors, ledges, special warps, OAM/palette lifetime, object slot pressure and realistic HGSS-follow behavior. Target of 386 animated regular/shiny species remains unimplemented and asset provenance uncleared. No production gameplay change.
 
 
