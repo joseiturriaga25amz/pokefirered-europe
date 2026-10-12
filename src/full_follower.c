@@ -20,7 +20,7 @@ static void Task_FullFollower(u8 taskId);
 static struct ObjectEvent *FindFollowerObject(void);
 static u8 GetPrototypeFollowerGraphicsId(u16 species);
 static u16 GetEligiblePrototypeFollowerSpecies(void);
-static bool8 ShouldHideFollower(void);
+static bool8 ShouldSuppressFollower(void);
 static void PositionFollowerBehindPlayer(struct ObjectEvent *follower);
 static void RefreshFollower(void);
 
@@ -98,11 +98,9 @@ static struct ObjectEvent *FindFollowerObject(void)
     return NULL;
 }
 
-static bool8 ShouldHideFollower(void)
+static bool8 ShouldSuppressFollower(void)
 {
-    if (!sFollowerEnabled || sFollowerSpecies == SPECIES_NONE)
-        return TRUE;
-
+    // The caller separately checks the party lead and the on/off preference.
     if (TestPlayerAvatarFlags(PLAYER_AVATAR_FLAG_MACH_BIKE
                             | PLAYER_AVATAR_FLAG_ACRO_BIKE
                             | PLAYER_AVATAR_FLAG_SURFING))
@@ -149,9 +147,10 @@ static void RefreshFollower(void)
     u16 species = GetEligiblePrototypeFollowerSpecies();
     u8 graphicsId;
 
-    if (!sFollowerEnabled || species == SPECIES_NONE)
+    if (!sFollowerEnabled || species == SPECIES_NONE || ShouldSuppressFollower())
     {
-        // A hidden follower would still consume a scarce object-event slot.
+        // Suppressed presentation must release its object slot AND sprite/OAM
+        // allocation, not leave a hidden object behind through bike/Surf/scripts.
         // Remove the runtime-only object, never a saved map object or flag.
         sFollowerSpecies = SPECIES_NONE;
         if (follower != NULL)
@@ -194,7 +193,8 @@ static void RefreshFollower(void)
         PositionFollowerBehindPlayer(follower);
     }
 
-    gSprites[follower->spriteId].invisible = ShouldHideFollower();
+    // The object-event engine owns sprite invisibility/off-screen culling.
+    // Forcing invisible = FALSE here could expose an off-screen sprite.
 }
 
 static void Task_FullFollower(u8 taskId)
