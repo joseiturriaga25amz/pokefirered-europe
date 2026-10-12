@@ -299,3 +299,17 @@ This is **not** a production approval. The branch remains blocked from integrati
 5. If provenance, animation quality, full species coverage or MyBoy compatibility is unresolved, preserve B0–B9 production as releasable, and keep B10 excluded until the gate is satisfied.
 
 No 386-species ROM or complete follower sprite pack exists in Full at this checkpoint. Historical prototype CI is **not** a Full Gameplay Core build of current `master`.
+
+### Verified source-file coverage (2026-10-12)
+
+A read-only GitHub tree audit of `teobz/pkmn-hgss-animated-overworld-sprites`, `main` tree `f9ee9f83d0f53b196b64d65f7bb70369b196f33b`, checked all species numbers **001–386** under `APNG/by-direction/{down,up,left,right}/{regular,shiny}/`.
+
+- **386/386** have the expected four direction-named **regular** APNG files (**1,544** paths).
+- **386/386** have the expected four direction-named **shiny** APNG files (**1,544** paths).
+- This is **filename coverage**, not verification of pixel content, correct species assignment, APNG frame timing, per-species size, palette compatibility, memory consumption or animation quality. Forms/sex variation require their own later inventory.
+- The files remain outside the Full repository. The third-party pack says it rearranges veekun/HGSS artwork; redistribution rights from Pokémon/Nintendo have **not** been established. Do not embed this pack into a publicly distributed ROM merely because 386/386 filenames exist.
+
+**Updated isolated prototype test:** commit `1da448b7dd642eb425bfd61399b40d3d904c1a83` passed Follower Prototype #5, run `38280331311`. It independently reported 42 native sheets, 32 multiple-pose / 10 single-pose, 5 shared two-frame walk alternations and **0 direction-distinct animated walking groups**. No MyBoy QA was performed; no follower code is integrated in `master`.
+
+**Next authorized task:** design/test a FireRed-safe species-indexed graphics indirection and asset importer contract in the isolated prototype, keeping source files separate until provenance is resolved; thereafter gate all 386 entries and run MyBoy before considering production merge.
+

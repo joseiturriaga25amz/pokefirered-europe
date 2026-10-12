@@ -14,6 +14,9 @@ Use `docs/spec/` only for frozen historical design details.
 
 ## Current state
 
+- **B10 asset verification update (2026-10-12; RESEARCH):** External `teobz/pkmn-hgss-animated-overworld-sprites` tree `f9ee9f83...` contains regular and shiny APNG filenames in all four directions for every species 001–386 (1,544 per variant). This is filename coverage, **not** a licensed, adapted or QA-validated animated ROM. Local FireRed Full still has 42 native sheets; 5 reuse two frames across all directions and 0 show verified direction-distinct animated walking groups. Isolated follower audit `1da448b7` passed Prototype CI **#5** run `38280331311`. **No production merge or external sprite import.** See `FOLLOWER_TECHNICAL_RESEARCH.md` section 8 for scope, source SHA and gates.
+
+
 - **B10 386-species animated follower audit (2026-10-12; NOT INTEGRATED):** User wants all 386 Gen III followers, fully animated, in an integrated test ROM. Production `master` latest gameplay B9 is fully CI-green; follower prototype branch `prototype/follower-runtime` has six hardcoded species and isolated CI #3 at `ee9fbc3`; audit commit `da1c64a` completed CI #4 SUCCESS and `1da448b` refines the directional animation gate (exact CI #5 pending). Native Pokémon overworld sheets: 42 total, 32 multi-pose and 10 one-frame; 5 reuse the same two-frame movement alternation across all directions, and 0 have verified distinct animated walking sequences by direction. HGSS 386 reference and newer 493 GIF/APNG derivative source are available for research, **not cleared for third-party bulk redistribution**. No 386-species production ROM or MyBoy QA. Next engineering microblock: gather provenance-authorized sprites and design a dynamic species-to-graphics slot without changing 8-bit object-event ABI/save/link, then isolated compile, animations, transitions, 386 coverage gate and MyBoy QA. See `FOLLOWER_TECHNICAL_RESEARCH.md` section 8.
 
 
