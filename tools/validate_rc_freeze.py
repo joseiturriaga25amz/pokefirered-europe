@@ -117,11 +117,15 @@ def main() -> None:
     for item_id in (
         "ITEM_SUN_STONE", "ITEM_MOON_STONE", "ITEM_KINGS_ROCK",
         "ITEM_METAL_COAT", "ITEM_DRAGON_SCALE", "ITEM_UP_GRADE",
-        "ITEM_LUCKY_EGG", "ITEM_ETHER", "ITEM_MAX_ETHER",
+        "ITEM_ETHER", "ITEM_MAX_ETHER",
         "ITEM_ELIXIR", "ITEM_MAX_ELIXIR",
     ):
         assert item_id not in pre_nat, item_id
         assert item_id in post_nat, item_id
+
+    # B9: Lucky Egg now belongs to National completion (GAME FREAK),
+    # not the post-National department-store stock.
+    assert "ITEM_LUCKY_EGG" not in celadon
 
     for item_id in (
         "ITEM_EXP_SHARE", "ITEM_AMULET_COIN", "ITEM_SOOTHE_BELL", "ITEM_MACHO_BRACE"

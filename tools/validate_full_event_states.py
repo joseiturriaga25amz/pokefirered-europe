@@ -359,11 +359,24 @@ def main():
     assert kanto_prize.index("checkitemspace ITEM_MASTER_BALL") < kanto_prize.index("additem ITEM_MASTER_BALL")
     assert kanto_prize.index("additem ITEM_MASTER_BALL") < kanto_prize.index("setflag FLAG_FULL_KANTO_DEX_MASTER_BALL_CLAIMED")
     assert kanto_prize.count("goto_if_eq VAR_RESULT, FALSE, CeladonCity_Condominiums_3F_EventScript_MasterBallNoRoom") == 2
+    # National reward must be gated by HasAllMons, claimed once only after
+    # successful additem, and retry-safe independently of the Kanto reward.
+    national = block(game_freak, "CeladonCity_Condominiums_3F_EventScript_DiplomaFinish")
+    require(national, "specialvar VAR_RESULT, HasAllMons",
+            "goto_if_set FLAG_FULL_NATIONAL_DEX_LUCKY_EGG_CLAIMED",
+            "checkitemspace ITEM_LUCKY_EGG", "additem ITEM_LUCKY_EGG",
+            "setflag FLAG_FULL_NATIONAL_DEX_LUCKY_EGG_CLAIMED")
+    assert national.index("checkitemspace ITEM_LUCKY_EGG") < national.index("additem ITEM_LUCKY_EGG") < national.index("setflag FLAG_FULL_NATIONAL_DEX_LUCKY_EGG_CLAIMED")
+    assert national.count("goto_if_eq VAR_RESULT, FALSE, CeladonCity_Condominiums_3F_EventScript_NationalEggNoRoom") == 2
+    no_room_national = block(game_freak, "CeladonCity_Condominiums_3F_EventScript_NationalEggNoRoom")
+    assert "setflag" not in no_room_national and "additem" not in no_room_national
+    shop = read("data/maps/CeladonCity_DepartmentStore_4F/scripts.inc")
+    assert "ITEM_LUCKY_EGG" not in shop
     no_room_prize = block(game_freak, "CeladonCity_Condominiums_3F_EventScript_MasterBallNoRoom")
     assert "setflag" not in no_room_prize and "additem" not in no_room_prize
     for locale in ("text.inc", "text_es.inc", "text_fr.inc", "text_it.inc", "text_de.inc"):
         localized = read(f"data/maps/CeladonCity_Condominiums_3F/{locale}")
-        for suffix in ("KantoExtraPrize", "KantoReceivedMasterBall", "KantoMasterBallNoRoom"):
+        for suffix in ("KantoExtraPrize", "KantoReceivedMasterBall", "KantoMasterBallNoRoom", "NationalExtraPrize", "NationalReceivedLuckyEgg", "NationalEggNoRoom"):
             require(localized, f"CeladonCity_Condominiums_3F_Text_{suffix}::")
 
     print("Persistent event-state audit PASS: terminal branches and recovery transitions are locked.")

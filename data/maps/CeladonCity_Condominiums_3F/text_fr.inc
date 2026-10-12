@@ -49,3 +49,17 @@ CeladonCity_Condominiums_3F_Text_KantoReceivedMasterBall::
 CeladonCity_Condominiums_3F_Text_KantoMasterBallNoRoom::
     .string "Ton SAC est plein.\p"
     .string "Fais de la place et reviens.\nLe prix t'attendra!$"
+
+CeladonCity_Condominiums_3F_Text_NationalExtraPrize::
+    .string "Tu as complété le POKéDEX\n"
+    .string "NATIONAL!\p"
+    .string "Avec ton diplôme, voici\n"
+    .string "un OEUF CHANCE!$"
+
+CeladonCity_Condominiums_3F_Text_NationalReceivedLuckyEgg::
+    .string "Tu reçois un OEUF CHANCE!$"
+
+CeladonCity_Condominiums_3F_Text_NationalEggNoRoom::
+    .string "Ton SAC est plein.\p"
+    .string "Fais de la place et reviens\n"
+    .string "chercher ton prix!$"

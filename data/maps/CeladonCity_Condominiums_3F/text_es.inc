@@ -51,3 +51,17 @@ CeladonCity_Condominiums_3F_Text_KantoReceivedMasterBall::
 CeladonCity_Condominiums_3F_Text_KantoMasterBallNoRoom::
     .string "No tienes espacio en la mochila.\p"
     .string "Guarda algo y vuelve:\nel premio te esperará.$"
+
+CeladonCity_Condominiums_3F_Text_NationalExtraPrize::
+    .string "¡Has completado la POKéDEX\n"
+    .string "NACIONAL!\p"
+    .string "Además del diploma, te\n"
+    .string "entrego un HUEVO SUERTE.$"
+
+CeladonCity_Condominiums_3F_Text_NationalReceivedLuckyEgg::
+    .string "¡Recibes un HUEVO SUERTE!$"
+
+CeladonCity_Condominiums_3F_Text_NationalEggNoRoom::
+    .string "No tienes sitio en la mochila.\p"
+    .string "Haz espacio y vuelve a por\n"
+    .string "tu premio NACIONAL.$"

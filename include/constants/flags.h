@@ -1478,6 +1478,7 @@
 #define FLAG_FULL_HO_OH_UNLOCKED                                    0x8CD
 #define FLAG_FULL_HIDE_BEAST_FIRST_CONTACT                         0x8CE
 #define FLAG_FULL_KANTO_DEX_MASTER_BALL_CLAIMED                    0x8CF
+#define FLAG_FULL_NATIONAL_DEX_LUCKY_EGG_CLAIMED                    0x8D0
 #define FLAG_FULL_END                                               0x8E2
 #define FLAG_0x8C4                                                  (SYS_FLAGS + 0xC4)
 #define FLAG_0x8C5                                                  (SYS_FLAGS + 0xC5)
