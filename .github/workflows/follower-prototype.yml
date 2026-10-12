@@ -165,13 +165,15 @@ jobs:
           s = Path("src/overworld.c").read_text()
           f = Path("src/full_follower.c").read_text()
           header = Path("include/full_follower.h").read_text()
-          def body(name, next_name):
-              start = s.index("static bool32 " + name + "(")
-              end = s.index("static bool32 " + next_name + "(", start)
+          def implementation(name):
+              # Require the opening brace to skip forward declarations.
+              signature = "static bool32 " + name + "(u8 *state)\n{"
+              start = s.index(signature)
+              end = s.index("\nstatic ", start + len(signature))
               return s[start:end]
-          local = body("ReturnToFieldLocal", "ReturnToFieldLink")
-          link = body("ReturnToFieldLink", "LoadMapInStepsLocal") if False else s[s.index("static bool32 ReturnToFieldLink(u8 *state)\n{"):s.index("\nstatic void DoMapLoadLoop(", s.index("static bool32 ReturnToFieldLink(u8 *state)\n{"))]
-          playback = s[s.index("static bool32 LoadMap_QLPlayback(u8 *state)\n{"):s.index("\nstatic ", s.index("static bool32 LoadMap_QLPlayback(u8 *state)\n{") + 8)]
+          local = implementation("ReturnToFieldLocal")
+          link = implementation("ReturnToFieldLink")
+          playback = implementation("LoadMap_QLPlayback")
           assert "ReloadObjectsAndRunReturnToFieldMapScript(TRUE);" in local
           assert "ReloadObjectsAndRunReturnToFieldMapScript(FALSE);" in link
           assert "ReloadObjectsAndRunReturnToFieldMapScript(FALSE);" in playback
