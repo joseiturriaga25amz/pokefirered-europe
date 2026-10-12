@@ -157,3 +157,34 @@ jobs:
           assert "FlagSet(" not in cleanup[cleanup.index("void RemoveFullFollowerObjectEvent("):cleanup.index("static void RemoveObjectEventInternal(")]
           print("Follower sprite recreated on species change, old graphics cleaned up before slot switch")
           PY
+
+      - name: Audit local/link/quest-log follower isolation
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          s = Path("src/overworld.c").read_text()
+          f = Path("src/full_follower.c").read_text()
+          header = Path("include/full_follower.h").read_text()
+          def body(name, next_name):
+              start = s.index("static bool32 " + name + "(")
+              end = s.index("static bool32 " + next_name + "(", start)
+              return s[start:end]
+          local = body("ReturnToFieldLocal", "ReturnToFieldLink")
+          link = body("ReturnToFieldLink", "LoadMapInStepsLocal") if False else s[s.index("static bool32 ReturnToFieldLink(u8 *state)\n{"):s.index("\nstatic void DoMapLoadLoop(", s.index("static bool32 ReturnToFieldLink(u8 *state)\n{"))]
+          playback = s[s.index("static bool32 LoadMap_QLPlayback(u8 *state)\n{"):s.index("\nstatic ", s.index("static bool32 LoadMap_QLPlayback(u8 *state)\n{") + 8)]
+          assert "ReloadObjectsAndRunReturnToFieldMapScript(TRUE);" in local
+          assert "ReloadObjectsAndRunReturnToFieldMapScript(FALSE);" in link
+          assert "ReloadObjectsAndRunReturnToFieldMapScript(FALSE);" in playback
+          assert s.count("ReloadObjectsAndRunReturnToFieldMapScript(TRUE);") == 1
+          assert s.count("ReloadObjectsAndRunReturnToFieldMapScript(FALSE);") == 2
+          gate = s[s.index("static void ReloadObjectsAndRunReturnToFieldMapScript(bool8 allowFollower)\n{"):s.index("\nstatic void SetCameraToTrackPlayer(", s.index("static void ReloadObjectsAndRunReturnToFieldMapScript(bool8 allowFollower)\n{"))]
+          assert "if (allowFollower)\n        FullFollower_OnLocalMapReady();" in gate
+          resume = s[s.index("static void ResumeMap(bool32 inLink)\n{"):s.index("\nstatic void InitObjectEventsLink(", s.index("static void ResumeMap(bool32 inLink)\n{"))]
+          assert resume.index("if (inLink)\n        FullFollower_DiscardForLink();") < resume.index("ResetSpriteData();")
+          assert "void FullFollower_DiscardForLink(void);" in header
+          discard = f[f.index("void FullFollower_DiscardForLink(void)\n{"):f.index("\nvoid FullFollower_OnLocalMapReady(void)", f.index("void FullFollower_DiscardForLink(void)\n{"))]
+          assert "follower->active = FALSE;" in discard
+          assert "sFollowerSpecies = SPECIES_NONE;" in discard
+          assert "DestroySprite(" not in discard and "FlagSet(" not in discard
+          print("Link return and quest-log replay suppress follower; pre-reset object cleared")
+          PY

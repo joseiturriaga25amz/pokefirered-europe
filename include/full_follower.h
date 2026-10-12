@@ -6,6 +6,7 @@
 #define OBJ_EVENT_ID_FULL_FOLLOWER 254
 
 void FullFollower_OnLocalMapReady(void);
+void FullFollower_DiscardForLink(void);
 void FullFollower_SetEnabled(bool8 enabled);
 bool8 FullFollower_IsEnabled(void);
 u8 FullFollower_GetSpriteGraphicsId(void);

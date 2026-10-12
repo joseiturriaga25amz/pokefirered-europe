@@ -203,9 +203,20 @@ static void Task_FullFollower(u8 taskId)
     RefreshFollower();
 }
 
+void FullFollower_DiscardForLink(void)
+{
+    struct ObjectEvent *follower = FindFollowerObject();
+
+    // ResumeMap(TRUE) resets sprite memory immediately afterward. Only drop
+    // the transient object-event state here; no sprite teardown or save flag.
+    if (follower != NULL)
+        follower->active = FALSE;
+    sFollowerSpecies = SPECIES_NONE;
+}
+
 void FullFollower_OnLocalMapReady(void)
 {
-    // Link maps never call this hook. The prototype is deliberately local-only.
+    // Called only by the local load/return paths, not link or quest-log replay.
     if (FindTaskIdByFunc(Task_FullFollower) == TASK_NONE)
         CreateTask(Task_FullFollower, FOLLOWER_TASK_PRIORITY);
 
