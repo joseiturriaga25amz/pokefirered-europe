@@ -250,7 +250,7 @@ jobs:
           refresh = f[f.index("static void RefreshFollower(void)\n{"):f.index("\nstatic void Task_FullFollower(", f.index("static void RefreshFollower(void)\n{"))]
           assert "species == SPECIES_NONE || ShouldSuppressFollower()" in refresh
           assert "RemoveFullFollowerObjectEvent(follower);" in refresh
-          record = e[e.index("static void ObjectEventSetSingleMovement(struct ObjectEvent *objectEvent, struct Sprite *sprite)\n{"):e.index("\nstatic void FaceDirection(", e.index("static void ObjectEventSetSingleMovement(struct ObjectEvent *objectEvent, struct Sprite *sprite)\n{"))]
+          record = e[e.index("static void ObjectEventSetSingleMovement(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 movementActionId)\n{"):e.index("\nstatic void FaceDirection(", e.index("static void ObjectEventSetSingleMovement(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 movementActionId)\n{"))]
           assert "objectEvent->localId != OBJ_EVENT_ID_FULL_FOLLOWER" in record
           assert record.index("objectEvent->localId != OBJ_EVENT_ID_FULL_FOLLOWER") < record.index("QuestLogRecordNPCStep(")
           assert "sMovementScripts[OBJECT_EVENT_TEMPLATES_COUNT][2]" in q
