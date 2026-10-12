@@ -648,7 +648,6 @@ static const u8 *const sEggOriginTexts[] = {
 static const u8 sText_FullEvControls[] = _("SELECT: EV");
 static const u8 sText_FullStatsControls[] = _("SELECT: STATS");
 static const u8 sText_FullEvTotal[] = _("EV TOTAL");
-static const u8 sText_FullEvScale[] = _("MAX. STAT 252 / TOTAL 510");
 static const u8 sText_FullMoveCategoryLabel[] = _("CAT.");
 static const u8 sText_FullMoveCategoryPhysical[] = _("FISICO");
 static const u8 sText_FullMoveCategorySpecial[] = _("ESPECIAL");
@@ -2537,16 +2536,11 @@ static void PrintInfoPage(void)
 static void PrintFullEvValue(u8 ev, u8 y)
 {
     u8 value[4];
-    u8 width = (ev * 28) / 252;
 
     ConvertIntToDecimalStringN(value, ev, STR_CONV_MODE_RIGHT_ALIGN, 3);
     AddTextPrinterParameterized3(sMonSummaryScreen->windowIds[POKESUM_WIN_RIGHT_PANE], FONT_NORMAL,
                                  56, y, sLevelNickTextColors[0], TEXT_SKIP_DRAW, value);
 
-    // 28-pixel track scaled to the per-stat Gen III cap of 252 EV.
-    FillWindowPixelRect(sMonSummaryScreen->windowIds[POKESUM_WIN_RIGHT_PANE], 14, 50, y + 10, 28, 2);
-    if (width != 0)
-        FillWindowPixelRect(sMonSummaryScreen->windowIds[POKESUM_WIN_RIGHT_PANE], 10, 50, y + 10, width, 2);
 }
 
 static void PrintFullEvSkillsPage(void)
@@ -2924,12 +2918,12 @@ static void PokeSum_PrintFullEvSummary(void)
           + GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_SPEED_EV);
 
     ConvertIntToDecimalStringN(totalStr, total, STR_CONV_MODE_LEFT_ALIGN, 3);
+    // Keep the 112x32-pixel lower pane uncluttered: a single centered row,
+    // with native summary font, palette and right-aligned total.
     AddTextPrinterParameterized3(sMonSummaryScreen->windowIds[POKESUM_WIN_TRAINER_MEMO], FONT_NORMAL,
-                                 3, 5, sLevelNickTextColors[0], TEXT_SKIP_DRAW, sText_FullEvTotal);
+                                 8, 12, sLevelNickTextColors[0], TEXT_SKIP_DRAW, sText_FullEvTotal);
     AddTextPrinterParameterized3(sMonSummaryScreen->windowIds[POKESUM_WIN_TRAINER_MEMO], FONT_NORMAL,
-                                 62, 5, sLevelNickTextColors[0], TEXT_SKIP_DRAW, totalStr);
-    AddTextPrinterParameterized3(sMonSummaryScreen->windowIds[POKESUM_WIN_TRAINER_MEMO], FONT_SMALL,
-                                 3, 21, sLevelNickTextColors[0], TEXT_SKIP_DRAW, sText_FullEvScale);
+                                 78, 12, sLevelNickTextColors[0], TEXT_SKIP_DRAW, totalStr);
 }
 
 static void PokeSum_PrintExpPoints_NextLv(void)

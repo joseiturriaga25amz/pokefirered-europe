@@ -4,6 +4,9 @@
 
 ## 0. Current operational state — 2026-10-08
 
+- **UI-001 numeric-only EV layout (2026-10-11; ACTIVE / CI PENDING):** User explicitly approved removing the decorative mini-bar EV charts; keep only six per-stat numeric EV counts and one total with native Summary Screen font/shadow/palette, intact SELECT-toggle and EV/save mechanics. Feature `feature/ui001-ev-numeric-layout` from post-B9 documentation master `c73b70a`, technical commit `0c7d34143695c6d0b7cfa1871187e4f98cd52e0e`, PR #42. Removed 28px per-stat mini tracks and the cramped secondary MAX / 252 / 510 text, repositioned bottom EV total into a single legible row. Exact feature Full Gameplay Core #711 (run `38185938493`) pending. Next: check exact CI, audit source/layout and regression, integrate PR #42, verify exact master CI, document closure. MyBoy visual runtime acceptance still pending. No unrelated gameplay changes.
+
+
 - **B9 / P-05 seen-species encounter guidance (2026-10-11; CLOSED TECHNICALLY):** Feature PR #41 (technical commits `c143f85`, compiler include repair `1634d13`, UI width fallback `7ad629f`, and honest on-foot terminology `5e43420`) merged as `cfa0ce4ad9ff9bf40f58ccdc6c012268a44ee867`; exact feature Full Gameplay Core #709 run `38107859214` SUCCESS (46 steps), exact integrated `master` Full Gameplay Core #710 run `38185544115` SUCCESS (46 steps). Read-only seen-species encounter method and level ranges in existing Pokédex area screen; only unlocked Sevii/active Altering Cave tables considered; roaming beasts excluded; existing map markers and save/link untouched. MyBoy visual and runtime QA remains pending. B9 overall OPEN pending separate user decision for National 100% reward. **Next approved separate visual microblock:** UI-001 EV count-only cleanup: remove 28-pixel per-stat mini-bars, keep six aligned EV numbers and total, and preserve summary page, font/palette, save/link and SELECT toggle. No change to EV mechanics.
 
 

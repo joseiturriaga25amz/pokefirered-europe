@@ -144,7 +144,9 @@ jobs:
           grep -q 'showFullEvView' src/pokemon_summary_screen.c
           grep -q 'MON_DATA_HP_EV' src/pokemon_summary_screen.c
           grep -q 'MON_DATA_SPEED_EV' src/pokemon_summary_screen.c
-          grep -q 'MAX. STAT 252 / TOTAL 510' src/pokemon_summary_screen.c
+          grep -q 'sText_FullEvTotal' src/pokemon_summary_screen.c
+          grep -q 'PokeSum_PrintFullEvSummary' src/pokemon_summary_screen.c
+          ! grep -q 'sText_FullEvScale' src/pokemon_summary_screen.c
           # Frozen bugfix audit (BUG-001..012 relevant source invariants)
           grep -q 'u32 ivs = data\[0\].*data\[1\].*data\[2\].*data\[3\]' src/pokemon.c
           grep -q 'if (gBattleOutcome == B_OUTCOME_CAUGHT)' src/battle_main.c
