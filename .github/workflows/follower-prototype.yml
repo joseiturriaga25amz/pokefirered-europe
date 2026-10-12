@@ -25,7 +25,7 @@ jobs:
           grep -q '#define OBJ_EVENT_ID_FULL_FOLLOWER 254' include/full_follower.h
           grep -q 'u8 graphicsId;' include/global.fieldmap.h
           grep -q 'struct Pokemon' include/pokemon.h
-          grep -q 'MOVEMENT_TYPE_COPY_PLAYER' src/full_follower.c
+          grep -q 'MOVEMENT_TYPE_NONE' src/full_follower.c
           ! grep -q 'u16 graphicsId;' include/global.fieldmap.h
           ! grep -q 'graphics/object_events/pics/pokemon/bulbasaur.png' src/full_follower.c
 
@@ -104,7 +104,7 @@ jobs:
           movement = Path("src/event_object_movement.c").read_text()
           assert "#define OBJ_EVENT_GFX_FULL_FOLLOWER NUM_OBJ_EVENT_GFX" in constants
           assert "graphicsId = FullFollower_GetSpriteGraphicsId();" in movement
-          assert "OBJ_EVENT_GFX_FULL_FOLLOWER,\n            MOVEMENT_TYPE_COPY_PLAYER" in follower
+          assert "OBJ_EVENT_GFX_FULL_FOLLOWER,\n            MOVEMENT_TYPE_NONE" in follower
           assert "sFollowerSpecies != species" in follower
           assert "sFollowerGraphicsId != graphicsId" in follower
           assert "RemoveFullFollowerObjectEvent(follower);" in follower
@@ -255,7 +255,7 @@ jobs:
           assert record.index("objectEvent->localId != OBJ_EVENT_ID_FULL_FOLLOWER") < record.index("QuestLogRecordNPCStep(")
           assert "sMovementScripts[OBJECT_EVENT_TEMPLATES_COUNT][2]" in q
           assert "sMovementScripts[sCurSceneActions[gQuestLogCurActionIdx].data.a.localId][0]" in q
-          assert "MOVEMENT_TYPE_COPY_PLAYER" in f
+          assert "MOVEMENT_TYPE_NONE" in f
           print("Follower ID excluded from recorded NPC steps and Quest Log playback")
           PY
 
@@ -305,41 +305,39 @@ jobs:
           print("Quest Log follower excluded before sprite reset and task creation")
           PY
 
-      - name: Audit follower cardinal movement mapping
+
+      - name: Audit bounded follower tile trail and corners
         run: |
           python3 - <<'PY'
-          import re
           from pathlib import Path
-          follower = Path("src/full_follower.c").read_text()
-          movement = Path("src/event_object_movement.c").read_text()
-          start = follower.index("static void PositionFollowerBehindPlayer(struct ObjectEvent *follower, s16 x, s16 y)\n{")
-          end = follower.index("\nstatic void RefreshFollower(", start)
-          position = follower[start:end]
-          assert "follower->directionSequenceIndex = DIR_NORTH;" in position
-          assert "PositionFollowerBehindPlayer(follower, spawnX, spawnY);" in follower
-          step0 = movement[movement.index("static bool8 MovementType_CopyPlayer_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)\n{"):movement.index("\nstatic bool8 MovementType_CopyPlayer_Step1(", movement.index("static bool8 MovementType_CopyPlayer_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)\n{"))]
-          assert "if (objectEvent->directionSequenceIndex == 0)" in step0
-          assert "objectEvent->directionSequenceIndex = GetPlayerFacingDirection();" in step0
-          assert "MOVEMENT_TYPE_COPY_PLAYER" in follower
-          def parse_table(name):
-              start = movement.index("static const u8 " + name + "[][4] = {")
-              end = movement.index("\n};", start)
-              rows = re.findall(r"\{\s*([1-4])\s*,\s*([1-4])\s*,\s*([1-4])\s*,\s*([1-4])\s*\}", movement[start:end])
-              assert len(rows) == 4, (name, rows)
-              return [tuple(map(int, row)) for row in rows]
-          player = parse_table("sPlayerDirectionsForCopy")
-          copied = parse_table("sPlayerDirectionToCopyDirection")
-          north = 2
-          # Verified from native rotation tables: neutral NORTH/NORTH gives
-          # an absolute cardinal copy regardless of the player's facing at spawn.
-          for direction in range(1, 5):
-              rotated = player[north - 1][direction - 1]
-              result = copied[north - 1][rotated - 1]
-              assert result == direction, (direction, result)
-          # The old initial-facing choice was not a literal trailing movement.
-          for facing in (1, 3, 4):
-              rotated = player[facing - 1][facing - 1]
-              result = copied[north - 1][rotated - 1]
-              assert result != facing, (facing, result)
-          print("Follower copies all four absolute directions; no initial-facing rotation")
+          s = Path("src/full_follower.c").read_text()
+          e = Path("src/event_object_movement.c").read_text()
+          assert "#define FOLLOWER_TRAIL_CAPACITY 8" in s
+          assert "sTrailX[next] = sLastPlayerX;" in s
+          assert "sTrailY[next] = sLastPlayerY;" in s
+          assert "sTrailCount == FOLLOWER_TRAIL_CAPACITY" in s
+          assert "ObjectEventClearHeldMovementIfFinished(follower) == 0" in s
+          assert "GetCollisionAtCoords(follower, x, y, direction) != COLLISION_NONE" in s
+          assert "ObjectEventSetHeldMovement(follower, GetWalkNormalMovementAction(direction))" in s
+          for name in ("DIR_NORTH", "DIR_SOUTH", "DIR_EAST", "DIR_WEST"):
+              assert "direction = " + name + ";" in s
+          assert "MOVEMENT_TYPE_NONE" in s and "MOVEMENT_TYPE_COPY_PLAYER," not in s
+          assert "PositionFollowerBehindPlayer(follower, spawnX, spawnY);\n        ResetFollowerTrail(player);" in s
+          assert "if (!FollowRecordedPlayerSteps(follower))" in s
+          assert "RemoveFullFollowerObjectEvent(follower);" in s
+          assert "movement_type_empty_callback(MovementType_None)" in e
+          assert "ObjectEventExecHeldMovementAction(objectEvent, sprite);" in e
+          # Deterministic model: every target must be a vacated tile, not a diagonal.
+          def follow(start, steps):
+              player=(0,0)
+              follower=start
+              for dx,dy in steps:
+                  old=player
+                  player=(player[0]+dx,player[1]+dy)
+                  assert abs(old[0]-follower[0])+abs(old[1]-follower[1])==1
+                  follower=old
+              return follower,player
+          assert follow((0,1),[(0,-1),(1,0),(1,0)])==((1,-1),(2,-1))
+          assert follow((-1,0),[(1,0),(0,1),(-1,0)])==((1,1),(0,1))
+          print("Bounded tile history; orthogonal corners; collision and reset gates")
           PY

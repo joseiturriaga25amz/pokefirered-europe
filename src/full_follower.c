@@ -11,11 +11,19 @@
 #include "constants/pokemon.h"
 
 #define FOLLOWER_TASK_PRIORITY 0x51
+#define FOLLOWER_TRAIL_CAPACITY 8
 
 static bool8 sFollowerEnabled = TRUE;
 static u16 sFollowerSpecies = SPECIES_NONE;
 // The graphics slot is 8-bit; the selected species is held only at runtime.
 static u8 sFollowerGraphicsId = OBJ_EVENT_GFX_PIKACHU;
+// Unsaved, bounded history of the player's vacated map tiles.
+static s16 sTrailX[FOLLOWER_TRAIL_CAPACITY];
+static s16 sTrailY[FOLLOWER_TRAIL_CAPACITY];
+static s16 sLastPlayerX;
+static s16 sLastPlayerY;
+static u8 sTrailHead;
+static u8 sTrailCount;
 
 static void Task_FullFollower(u8 taskId);
 static struct ObjectEvent *FindFollowerObject(void);
@@ -23,6 +31,8 @@ static u8 GetPrototypeFollowerGraphicsId(u16 species);
 static u16 GetEligiblePrototypeFollowerSpecies(void);
 static bool8 ShouldSuppressFollower(void);
 static void PositionFollowerBehindPlayer(struct ObjectEvent *follower, s16 x, s16 y);
+static void ResetFollowerTrail(const struct ObjectEvent *player);
+static bool8 FollowRecordedPlayerSteps(struct ObjectEvent *follower);
 static void RefreshFollower(void);
 
 void FullFollower_SetEnabled(bool8 enabled)
@@ -147,11 +157,80 @@ static void PositionFollowerBehindPlayer(struct ObjectEvent *follower, s16 x, s1
     follower->currentElevation = player->currentElevation;
     follower->previousElevation = player->currentElevation;
 
-    // COPY_PLAYER rotates actions relative to its initial facing. Neutralize
-    // that rotation: a follower must copy actual compass directions, not turn
-    // north whenever the player starts walking in the direction they faced.
-    // The native CopyPlayer Step0 preserves nonzero directionSequenceIndex.
-    follower->directionSequenceIndex = DIR_NORTH;
+    // The next move is selected from the player's vacated tiles.
+}
+
+
+static void ResetFollowerTrail(const struct ObjectEvent *player)
+{
+    sTrailHead = 0;
+    sTrailCount = 0;
+    sLastPlayerX = player->currentCoords.x;
+    sLastPlayerY = player->currentCoords.y;
+}
+
+static bool8 FollowRecordedPlayerSteps(struct ObjectEvent *follower)
+{
+    const struct ObjectEvent *player = &gObjectEvents[gPlayerAvatar.objectEventId];
+    s16 x;
+    s16 y;
+    s16 dx = player->currentCoords.x - sLastPlayerX;
+    s16 dy = player->currentCoords.y - sLastPlayerY;
+    u8 direction;
+
+    if (dx != 0 || dy != 0)
+    {
+        u8 next;
+
+        // Jump, warp or lost history: recall instead of cutting corners.
+        if ((dx != 0 && dy != 0) || dx > 1 || dx < -1 || dy > 1 || dy < -1
+         || sTrailCount == FOLLOWER_TRAIL_CAPACITY)
+            return FALSE;
+
+        next = (sTrailHead + sTrailCount) % FOLLOWER_TRAIL_CAPACITY;
+        sTrailX[next] = sLastPlayerX;
+        sTrailY[next] = sLastPlayerY;
+        sTrailCount++;
+        sLastPlayerX = player->currentCoords.x;
+        sLastPlayerY = player->currentCoords.y;
+    }
+
+    // MOVEMENT_TYPE_NONE executes held movements in the native sprite callback.
+    if (ObjectEventClearHeldMovementIfFinished(follower) == 0)
+        return TRUE;
+    if (sTrailCount == 0)
+        return TRUE;
+
+    x = sTrailX[sTrailHead];
+    y = sTrailY[sTrailHead];
+    if (follower->currentCoords.x == x && follower->currentCoords.y == y)
+    {
+        sTrailHead = (sTrailHead + 1) % FOLLOWER_TRAIL_CAPACITY;
+        sTrailCount--;
+        return TRUE;
+    }
+
+    if (follower->currentCoords.x == x && follower->currentCoords.y + 1 == y)
+        direction = DIR_SOUTH;
+    else if (follower->currentCoords.x == x && follower->currentCoords.y - 1 == y)
+        direction = DIR_NORTH;
+    else if (follower->currentCoords.x + 1 == x && follower->currentCoords.y == y)
+        direction = DIR_EAST;
+    else if (follower->currentCoords.x - 1 == x && follower->currentCoords.y == y)
+        direction = DIR_WEST;
+    else
+        return FALSE;
+
+    // Wait for occupied tiles; recall if this fills the bounded history.
+    if (GetCollisionAtCoords(follower, x, y, direction) != COLLISION_NONE)
+        return TRUE;
+
+    if (!ObjectEventSetHeldMovement(follower, GetWalkNormalMovementAction(direction)))
+    {
+        sTrailHead = (sTrailHead + 1) % FOLLOWER_TRAIL_CAPACITY;
+        sTrailCount--;
+    }
+    return TRUE;
 }
 
 static void RefreshFollower(void)
@@ -166,6 +245,7 @@ static void RefreshFollower(void)
         // allocation, not leave a hidden object behind through bike/Surf/scripts.
         // Remove the runtime-only object, never a saved map object or flag.
         sFollowerSpecies = SPECIES_NONE;
+        sTrailCount = 0;
         if (follower != NULL)
             RemoveFullFollowerObjectEvent(follower);
         return;
@@ -202,7 +282,7 @@ static void RefreshFollower(void)
 
         objectEventId = SpawnSpecialObjectEventParameterized(
             OBJ_EVENT_GFX_FULL_FOLLOWER,
-            MOVEMENT_TYPE_COPY_PLAYER,
+            MOVEMENT_TYPE_NONE,
             OBJ_EVENT_ID_FULL_FOLLOWER,
             player->currentCoords.x,
             player->currentCoords.y,
@@ -213,6 +293,14 @@ static void RefreshFollower(void)
 
         follower = &gObjectEvents[objectEventId];
         PositionFollowerBehindPlayer(follower, spawnX, spawnY);
+        ResetFollowerTrail(player);
+    }
+
+    if (!FollowRecordedPlayerSteps(follower))
+    {
+        RemoveFullFollowerObjectEvent(follower);
+        sFollowerSpecies = SPECIES_NONE;
+        sTrailCount = 0;
     }
 
     // The object-event engine owns sprite invisibility/off-screen culling.
@@ -234,6 +322,7 @@ void FullFollower_DiscardForLink(void)
     if (follower != NULL)
         follower->active = FALSE;
     sFollowerSpecies = SPECIES_NONE;
+    sTrailCount = 0;
 }
 
 void FullFollower_OnLocalMapReady(void)
