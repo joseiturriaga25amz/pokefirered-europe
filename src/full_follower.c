@@ -232,7 +232,9 @@ void FullFollower_DiscardForLink(void)
 
 void FullFollower_OnLocalMapReady(void)
 {
-    // Called only by the local load/return paths, not link or quest-log replay.
+    // Local map loading can run during Quest Log playback.
+    if (QL_IS_PLAYBACK_STATE)
+        return;
     if (FindTaskIdByFunc(Task_FullFollower) == TASK_NONE)
         CreateTask(Task_FullFollower, FOLLOWER_TASK_PRIORITY);
 
