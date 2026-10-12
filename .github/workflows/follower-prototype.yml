@@ -397,8 +397,13 @@ jobs:
           assert "collision = GetCollisionAtCoords(follower, x, y, direction);" in body
           wait = body.index("if (collision == COLLISION_OBJECT_EVENT)\n        return TRUE;")
           abort = body.index("if (collision != COLLISION_NONE)\n        return FALSE;")
-          step = body.index("if (!ObjectEventSetHeldMovement(follower, GetWalkNormalMovementAction(direction)))")
-          assert wait < abort < step
+          # Collision recovery still precedes BOTH selectable movement speeds.
+          # The former single-speed assertion became obsolete with running.
+          speed = body.index("if (player->movementActionId >= MOVEMENT_ACTION_PLAYER_RUN_DOWN")
+          assert "movementAction = GetWalkFastMovementAction(direction);" in body
+          assert "movementAction = GetWalkNormalMovementAction(direction);" in body
+          step = body.index("if (!ObjectEventSetHeldMovement(follower, movementAction))")
+          assert wait < abort < speed < step
           assert "if (GetCollisionAtCoords(follower, x, y, direction) != COLLISION_NONE)" not in body
           refresh = f[f.index("static void RefreshFollower(void)\n{"):f.index("\nstatic void Task_FullFollower(",f.index("static void RefreshFollower(void)\n{"))]
           assert "if (!FollowRecordedPlayerSteps(follower))" in refresh
