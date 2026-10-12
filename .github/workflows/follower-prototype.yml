@@ -182,7 +182,7 @@ jobs:
           gate = s[s.index("static void ReloadObjectsAndRunReturnToFieldMapScript(bool8 allowFollower)\n{"):s.index("\nstatic void SetCameraToTrackPlayer(", s.index("static void ReloadObjectsAndRunReturnToFieldMapScript(bool8 allowFollower)\n{"))]
           assert "if (allowFollower)\n        FullFollower_OnLocalMapReady();" in gate
           resume = s[s.index("static void ResumeMap(bool32 inLink)\n{"):s.index("\nstatic void InitObjectEventsLink(", s.index("static void ResumeMap(bool32 inLink)\n{"))]
-          assert resume.index("if (inLink)\n        FullFollower_DiscardForLink();") < resume.index("ResetSpriteData();")
+          assert resume.index("if (inLink || QL_IS_PLAYBACK_STATE)\n        FullFollower_DiscardForLink();") < resume.index("ResetSpriteData();")
           assert "void FullFollower_DiscardForLink(void);" in header
           discard = f[f.index("void FullFollower_DiscardForLink(void)\n{"):f.index("\nvoid FullFollower_OnLocalMapReady(void)", f.index("void FullFollower_DiscardForLink(void)\n{"))]
           assert "follower->active = FALSE;" in discard
@@ -288,4 +288,19 @@ jobs:
           # No blanket MAP_TYPE_INDOOR rejection: approved policy allows safe interiors.
           assert "MAP_TYPE_INDOOR" not in body
           print("Follower spawns only on passable unoccupied tile, indoors allowed")
+          PY
+
+      - name: Audit Quest Log follower task gate
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          f = Path("src/full_follower.c").read_text()
+          s = Path("src/overworld.c").read_text()
+          start = f.index("void FullFollower_OnLocalMapReady(void)\n{")
+          ready = f[start:]
+          assert ready.index("if (QL_IS_PLAYBACK_STATE)\n        return;") < ready.index("CreateTask(")
+          begin = s.index("static void ResumeMap(bool32 inLink)\n{")
+          resume = s[begin:s.index("\nstatic void InitObjectEventsLink(", begin)]
+          assert resume.index("if (inLink || QL_IS_PLAYBACK_STATE)") < resume.index("ResetSpriteData();")
+          print("Quest Log follower excluded before sprite reset and task creation")
           PY
