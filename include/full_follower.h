@@ -7,6 +7,7 @@
 
 void FullFollower_OnLocalMapReady(void);
 void FullFollower_DiscardForLink(void);
+void FullFollower_RecallForWarp(void);
 void FullFollower_OnCameraCoordsShift(s16 dx, s16 dy);
 void FullFollower_SetEnabled(bool8 enabled);
 bool8 FullFollower_IsEnabled(void);

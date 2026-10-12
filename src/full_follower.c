@@ -24,6 +24,9 @@ static s16 sLastPlayerX;
 static s16 sLastPlayerY;
 static u8 sTrailHead;
 static u8 sTrailCount;
+// Transient gate: source warp -> locked destination entrance -> player control.
+static bool8 sFollowerWarpTransition;
+static bool8 sFollowerExitLockObserved;
 
 static void Task_FullFollower(u8 taskId);
 static struct ObjectEvent *FindFollowerObject(void);
@@ -114,6 +117,21 @@ static bool8 ShouldSuppressFollower(void)
     // Quest Log playback uses a fixed NPC movement table; follower ID 254
     // is never a map-template NPC and must not enter that playback path.
     if (QL_IS_PLAYBACK_STATE)
+        return TRUE;
+
+    // A warp is not finished until destination entrance controls unlock.
+    // The field-control lock is independent of ScriptContext_IsEnabled().
+    if (sFollowerWarpTransition)
+    {
+        if (ArePlayerFieldControlsLocked())
+            sFollowerExitLockObserved = TRUE;
+        if (!sFollowerExitLockObserved || ArePlayerFieldControlsLocked())
+            return TRUE;
+        sFollowerWarpTransition = FALSE;
+        sFollowerExitLockObserved = FALSE;
+    }
+
+    if (ArePlayerFieldControlsLocked())
         return TRUE;
 
     // The caller separately checks the party lead and the on/off preference.
@@ -352,6 +370,18 @@ static void Task_FullFollower(u8 taskId)
     RefreshFollower();
 }
 
+void FullFollower_RecallForWarp(void)
+{
+    struct ObjectEvent *follower = FindFollowerObject();
+
+    sFollowerWarpTransition = TRUE;
+    sFollowerExitLockObserved = FALSE;
+    if (follower != NULL)
+        RemoveFullFollowerObjectEvent(follower);
+    sFollowerSpecies = SPECIES_NONE;
+    sTrailCount = 0;
+}
+
 void FullFollower_DiscardForLink(void)
 {
     struct ObjectEvent *follower = FindFollowerObject();
@@ -362,6 +392,8 @@ void FullFollower_DiscardForLink(void)
         follower->active = FALSE;
     sFollowerSpecies = SPECIES_NONE;
     sTrailCount = 0;
+    sFollowerWarpTransition = FALSE;
+    sFollowerExitLockObserved = FALSE;
 }
 
 void FullFollower_OnLocalMapReady(void)
@@ -369,8 +401,13 @@ void FullFollower_OnLocalMapReady(void)
     // Local map loading can run during Quest Log playback.
     if (QL_IS_PLAYBACK_STATE)
         return;
+    if (sFollowerWarpTransition)
+        sFollowerExitLockObserved = FALSE;
     if (FindTaskIdByFunc(Task_FullFollower) == TASK_NONE)
         CreateTask(Task_FullFollower, FOLLOWER_TASK_PRIORITY);
 
-    RefreshFollower();
+    // The destination field callback has not locked the entrance animation
+    // yet. Defer reappearance until the task sees that lock and its release.
+    if (!sFollowerWarpTransition)
+        RefreshFollower();
 }

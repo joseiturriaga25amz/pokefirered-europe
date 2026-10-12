@@ -497,3 +497,56 @@ jobs:
           assert ((23-dx)-(22-dx),(13-dy)-(13-dy))==(1,0)
           print("Camera-coordinates and ring-buffer trail stay aligned")
           PY
+
+      - name: Audit warp recall through entrance unlock
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          h=Path("include/full_follower.h").read_text()
+          f=Path("src/full_follower.c").read_text()
+          t=Path("src/field_fadetransition.c").read_text()
+          script=Path("src/script.c").read_text()
+          assert "void FullFollower_RecallForWarp(void);" in h
+          assert "sLockFieldControls = TRUE;" in script and "sLockFieldControls = FALSE;" in script
+          assert "bool8 ArePlayerFieldControlsLocked(void)" in script
+          def function(src,signature):
+              start=src.index(signature+"\n{")
+              end=src.index("\n}",start)
+              return src[start:end]
+          suppress=function(f,"static bool8 ShouldSuppressFollower(void)")
+          for item in ("if (sFollowerWarpTransition)", "sFollowerExitLockObserved = TRUE;", "if (!sFollowerExitLockObserved || ArePlayerFieldControlsLocked())", "sFollowerWarpTransition = FALSE;", "if (ArePlayerFieldControlsLocked())\n        return TRUE;", "if (ScriptContext_IsEnabled())"):
+              assert item in suppress,item
+          recall=function(f,"void FullFollower_RecallForWarp(void)")
+          for item in ("sFollowerWarpTransition = TRUE;", "sFollowerExitLockObserved = FALSE;", "RemoveFullFollowerObjectEvent(follower);", "sFollowerSpecies = SPECIES_NONE;", "sTrailCount = 0;"):
+              assert item in recall,item
+          entries=["DoWarp(void)","DoDiveWarp(void)","DoDoorWarp(void)","DoTeleport2Warp(void)","DoUnionRoomWarp(void)","DoEscalatorWarp(u8 metatileBehavior)","DoLavaridgeGymB1FWarp(void)","DoLavaridgeGym1FWarp(void)","DoTeleportWarp(void)","DoCableClubWarp(void)","DoStairWarp(u16 metatileBehavior, u16 delay)"]
+          for entry in entries:
+              body=function(t,"void "+entry)
+              assert body.count("FullFollower_RecallForWarp();")==1,entry
+              for op in ("LockPlayerFieldControls();","Task_StairWarp(taskId);","StartEscalatorWarp(","StartLavaridgeGym"):
+                  if op in body:
+                      assert body.index("FullFollower_RecallForWarp();") < body.index(op),entry
+          assert "DoDiveWarp();\n    gFieldCallback = FieldCB_FallWarpExit;" in t
+          ready=function(f,"void FullFollower_OnLocalMapReady(void)")
+          assert "if (sFollowerWarpTransition)\n        sFollowerExitLockObserved = FALSE;" in ready
+          assert "if (!sFollowerWarpTransition)\n        RefreshFollower();" in ready
+          discard=function(f,"void FullFollower_DiscardForLink(void)")
+          assert "sFollowerWarpTransition = FALSE;" in discard
+          assert "sFollowerExitLockObserved = FALSE;" in discard
+          # Destination loads before field callback starts its entrance lock:
+          # never respawn in that transient unlocked frame.
+          pending,seen=True,False
+          def gate(locked):
+              global pending,seen
+              if pending:
+                  if locked: seen=True
+                  if not seen or locked: return True
+                  pending=False;seen=False
+              return locked
+          assert gate(False) is True
+          assert gate(True) is True
+          assert gate(True) is True
+          assert gate(False) is False
+          assert pending is False
+          print("Entrances recall immediately; no respawn until observed lock release")
+          PY
