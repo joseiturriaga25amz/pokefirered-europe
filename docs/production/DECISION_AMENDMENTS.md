@@ -266,6 +266,7 @@ The following runtime-approved rules are authoritative for B1 and v1.0 closure:
 - Full-bag handling must be safe: if the player cannot receive the Master Ball, do **not** mark the reward as claimed. The player may return later and receive it once space is available.
 - The dialogue should acknowledge the diploma and then explicitly recognize that the achievement merits an additional prize.
 - `HasAllMons()` / National Pokédex completion retains the National diploma, but its additional 100%-completion reward is intentionally **not frozen yet**. It will be designed separately before B9 closes rather than defaulting to a second Master Ball.
+- **2026-10-12 user-approved amendment:** National diploma completion additionally grants one `ITEM_LUCKY_EGG` exactly once through GAME FREAK's designer, with bag-full retry-safe claim. Remove it from Celadon Department Store 4F post-National shop, retaining Chansey rare held-item source. No save layout/item ID changes; use audited Full flag in existing reserved namespace.
 
 ### Compatibility constraints
 
