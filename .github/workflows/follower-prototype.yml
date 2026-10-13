@@ -799,3 +799,7 @@ jobs:
       - name: Audit 386 packed sprite output manifest and GBA frame budget (synthetic)
         run: |
           python3 tools/validate_follower_graphics.py --self-test
+
+      - name: Audit pinned real HGSS APNG sample color and animation compatibility
+        run: |
+          python3 tools/audit_follower_source_samples.py
