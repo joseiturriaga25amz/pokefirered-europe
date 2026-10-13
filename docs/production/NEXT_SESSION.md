@@ -14,6 +14,9 @@ Use `docs/spec/` only for frozen historical design details.
 
 ## Current state
 
+- **Immediate B10 action (2026-10-13):** exact prototype HEAD `929125b661d5429d8e5e685ddc5729803fbef4e0` is synthetic 16-frame 4-direction diagnostic for Pikachu slot, contrasting blue/pink shared NPC palette slots; **no real Pokémon shiny sprite yet**. CI #38 SUCCESS on previous head; #39 run `38409285014` status `in_progress` at checkpoint. Verify #39 exact result and fix proven compiler/gate errors if any; then plan dedicated palette/VRAM-safe normal/shiny art integration, not another unrelated warp audit. 386 normal+shiny animated species mandatory, not completed. No MyBoy runtime execution or master gameplay merge.
+
+
 - **B10 next (2026-10-13, 386/shiny mandatory):** Source prototype `c91b199e4daac6404af751c5fc89790164075ba2` implements shiny *identity* (not shiny overworld rendering) for first eligible alive/non-egg lead, swap and recall, alongside six original prototype sprite IDs. Prior #37 `38406562439` SUCCESS on `99b1753`. Exact #38 `38407893537` was in progress at checkpoint: verify before CI-GREEN. Then build an isolated proof of runtime palette and directional animation using synthetic/cleared assets, validate resource budgets, and progress to **all 386 normal+shiny animated** graphics as mandatory acceptance. Licensing/provenance is unresolved for public HGSS packs; do not falsely claim assets imported. `master` docs only, no follower merge.
 
 
