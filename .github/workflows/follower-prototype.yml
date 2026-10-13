@@ -592,3 +592,46 @@ jobs:
           assert pending is False
           print("Entrances recall immediately; no respawn until observed lock release")
           PY
+
+      - name: Audit follower-owned field effect lifetime
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          movement = Path("src/event_object_movement.c").read_text()
+          effects = Path("src/field_effect_helpers.c").read_text()
+          header = Path("include/field_effect_helpers.h").read_text()
+          assert "void RemoveFullFollowerFieldEffects(const struct ObjectEvent *follower);" in header
+          remove = movement.split("static void RemoveObjectEvent(struct ObjectEvent *objectEvent)\\n{".replace("\\n","\n"),1)[1].split("\n}",1)[0]
+          assert remove.index("RemoveFullFollowerFieldEffects(objectEvent);") < remove.index("objectEvent->active = FALSE;")
+          assert remove.index("objectEvent->active = FALSE;") < remove.index("RemoveObjectEventInternal(objectEvent);")
+          guard = movement.split("void RemoveFullFollowerObjectEvent(struct ObjectEvent *objectEvent)\\n{".replace("\\n","\n"),1)[1].split("\n}",1)[0]
+          assert "objectEvent->localId == OBJ_EVENT_ID_FULL_FOLLOWER" in guard
+          assert "RemoveObjectEvent(objectEvent);" in guard
+          cleanup = effects.split("void RemoveFullFollowerFieldEffects(const struct ObjectEvent *follower)\\n{".replace("\\n","\n"),1)[1]
+          assert "if (!sprite->inUse)" in cleanup
+          assert "sprite->data[0] == objectEventId" in cleanup
+          assert "sprite->data[1] == follower->localId" in cleanup
+          assert "sprite->inUse = FALSE;" in cleanup
+          assert "(u8)(sprite->data[3] >> 8) == follower->localId" in cleanup
+          assert "(u8)sprite->data[3] == follower->mapNum" in cleanup
+          assert "(u8)sprite->data[4] == follower->mapGroup" in cleanup
+          for callback, kind in (
+              ("UpdateShadowFieldEffect", "FLDEFF_SHADOW"),
+              ("UpdateShortGrassFieldEffect", "FLDEFF_SHORT_GRASS"),
+              ("UpdateSandPileFieldEffect", "FLDEFF_SAND_PILE"),
+              ("UpdateHotSpringsWaterFieldEffect", "FLDEFF_HOT_SPRINGS_WATER"),
+              ("UpdateFeetInFlowingWaterFieldEffect", "FLDEFF_FEET_IN_FLOWING_WATER"),
+              ("UpdateSplashFieldEffect", "FLDEFF_SPLASH"),
+              ("UpdateTallGrassFieldEffect", "FLDEFF_TALL_GRASS"),
+              ("UpdateLongGrassFieldEffect", "FLDEFF_LONG_GRASS"),
+          ):
+              assert "sprite->callback == " + callback in cleanup
+              assert kind in cleanup
+          assert "FlagSet(" not in cleanup
+          # An old effect tied to the stable follower ID would otherwise
+          # match a newly allocated object immediately after same-frame swap.
+          old = {"local":254, "map":3, "group":7, "slot":5}
+          new = {"local":254, "map":3, "group":7, "slot":5}
+          assert all(old[k] == new[k] for k in old)
+          print("Follower field-effect cleanup before reusable object slot teardown PASS")
+          PY

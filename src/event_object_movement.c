@@ -1514,6 +1514,10 @@ static bool8 GetAvailableObjectEventId(u16 localId, u8 mapNum, u8 mapGroup, u8 *
 
 static void RemoveObjectEvent(struct ObjectEvent *objectEvent)
 {
+    // Object slots are reusable during this frame. Detach the follower's
+    // transient field-effect sprites before a new follower takes its ID.
+    if (objectEvent->localId == OBJ_EVENT_ID_FULL_FOLLOWER)
+        RemoveFullFollowerFieldEffects(objectEvent);
     objectEvent->active = FALSE;
     RemoveObjectEventInternal(objectEvent);
 }

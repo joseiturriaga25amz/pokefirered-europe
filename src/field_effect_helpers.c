@@ -1419,3 +1419,54 @@ static void UpdateGrassFieldEffectSubpriority(struct Sprite *sprite, u8 z, u8 of
         }
     }
 }
+
+void RemoveFullFollowerFieldEffects(const struct ObjectEvent *follower)
+{
+    u8 i;
+    u8 objectEventId = follower - gObjectEvents;
+
+    // Only runtime-owned effects are removed. Reflections share their source
+    // sprite's tiles; native reflection teardown only invalidates the copy.
+    // Attached terrain effects use either (localId, mapNum, mapGroup) or
+    // the packed localId/mapNum used by the grass overlay callbacks.
+    for (i = 0; i < MAX_SPRITES; i++)
+    {
+        struct Sprite *sprite = &gSprites[i];
+
+        if (!sprite->inUse)
+            continue;
+
+        if (sprite->callback == UpdateObjectReflectionSprite)
+        {
+            if (sprite->data[0] == objectEventId
+             && sprite->data[1] == follower->localId)
+                sprite->inUse = FALSE;
+        }
+        else if (sprite->callback == UpdateTallGrassFieldEffect
+              || sprite->callback == UpdateLongGrassFieldEffect)
+        {
+            if ((u8)(sprite->data[3] >> 8) == follower->localId
+             && (u8)sprite->data[3] == follower->mapNum
+             && (u8)sprite->data[4] == follower->mapGroup)
+                FieldEffectStop(sprite, sprite->callback == UpdateTallGrassFieldEffect
+                                           ? FLDEFF_TALL_GRASS : FLDEFF_LONG_GRASS);
+        }
+        else if (sprite->data[0] == follower->localId
+              && sprite->data[1] == follower->mapNum
+              && sprite->data[2] == follower->mapGroup)
+        {
+            if (sprite->callback == UpdateShadowFieldEffect)
+                FieldEffectStop(sprite, FLDEFF_SHADOW);
+            else if (sprite->callback == UpdateShortGrassFieldEffect)
+                FieldEffectStop(sprite, FLDEFF_SHORT_GRASS);
+            else if (sprite->callback == UpdateSandPileFieldEffect)
+                FieldEffectStop(sprite, FLDEFF_SAND_PILE);
+            else if (sprite->callback == UpdateHotSpringsWaterFieldEffect)
+                FieldEffectStop(sprite, FLDEFF_HOT_SPRINGS_WATER);
+            else if (sprite->callback == UpdateFeetInFlowingWaterFieldEffect)
+                FieldEffectStop(sprite, FLDEFF_FEET_IN_FLOWING_WATER);
+            else if (sprite->callback == UpdateSplashFieldEffect)
+                FieldEffectStop(sprite, FLDEFF_SPLASH);
+        }
+    }
+}
