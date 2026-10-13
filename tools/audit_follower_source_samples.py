@@ -18,8 +18,18 @@ from convert_follower_apng import DIRECTIONS, VARIANTS, pack_variant, read_apng,
 
 SOURCE_REPO = "teobz/pkmn-hgss-animated-overworld-sprites"
 SOURCE_REVISION = "f9ee9f83d0f53b196b64d65f7bb70369b196f33b"
-SAMPLES = ((1, "001_bulbasaur"), (25, "025_pikachu"), (143, "143_snorlax"),
-           (321, "321_wailord"), (386, "386_deoxys"))
+# Representative Gen I-III color, rare/form, shiny and 64px pressure cases.
+# The 20-sample gate is evidence of feasibility, NOT 386/386 acceptance.
+SAMPLES = (
+    (1, "001_bulbasaur"), (3, "003_venusaur"), (6, "006_charizard"),
+    (25, "025_pikachu"), (65, "065_alakazam"), (94, "094_gengar"),
+    (130, "130_gyarados"), (143, "143_snorlax"), (150, "150_mewtwo"),
+    (151, "151_mew"), (201, "201_unown"), (248, "248_tyranitar"),
+    (249, "249_lugia"), (321, "321_wailord"), (351, "351_castform"),
+    (376, "376_metagross"), (382, "382_kyogre"), (383, "383_groudon"),
+    (384, "384_rayquaza"), (386, "386_deoxys"),
+)
+OBJ_VRAM_BYTES = 32 * 1024  # GBA character data for objects, not free-space count.
 
 
 def download(url):
@@ -73,8 +83,16 @@ def summarize_variant(folder):
         reasons.append("semi_transparent_pixels")
     if any(d["unique_BGR555_frames"] < 2 for d in direction_stats.values()):
         reasons.append("animation_collapses_after_color_quantization")
+    # One frame is resident in object tiles; sixteen walking frames belong
+    # in ROM and must be streamed via Gen III SpriteFrameImage, not copied
+    # as a single 64x64 sheet into the 32-KiB OBJ tile area.
+    frame_bytes = dimension * dimension // 2
     result = {
         "frame_px": dimension,
+        "frame_vram_bytes": frame_bytes,
+        "follower_plus_reflection_frame_bytes": frame_bytes * 2,
+        "four_directions_sixteen_frames_rom_bytes": frame_bytes * 16,
+        "obj_vram_tile_bytes": OBJ_VRAM_BYTES,
         "unique_opaque_BGR555_colors": len(colors),
         "semi_transparent_pixel_instances": semi_alpha,
         "directions": direction_stats,
@@ -87,6 +105,9 @@ def summarize_variant(folder):
             result["packed_bytes_4bpp"] = len(tiles)
             result["packed_palette_bytes"] = len(palette)
             result["packed_color_count"] = palette_colors
+            # Hash of the actual GBA renderable pixels *and* palette, rather
+            # than an APNG filename or source-byte difference.
+            result["packed_render_sha256"] = hashlib.sha256(tiles + palette).hexdigest()
             if out_size != dimension:
                 raise AssertionError("size mismatch after packing")
         except (ValueError, AssertionError) as error:
@@ -114,8 +135,14 @@ def main():
                     (variant_root / (direction + ".png")).write_bytes(data)
                 entry["variants"][variant] = summarize_variant(variant_root)
                 entry["variants"][variant]["input_bundle_sha256"] = sha.hexdigest()
-            if entry["variants"]["normal"]["frame_px"] != entry["variants"]["shiny"]["frame_px"]:
+            regular = entry["variants"]["normal"]
+            shiny = entry["variants"]["shiny"]
+            if regular["frame_px"] != shiny["frame_px"]:
                 entry["normal_shiny_size_mismatch"] = True
+            if regular["status"] == "SOURCE_FEASIBLE" and shiny["status"] == "SOURCE_FEASIBLE":
+                entry["normal_shiny_distinct_after_conversion"] = (
+                    regular["packed_render_sha256"] != shiny["packed_render_sha256"]
+                )
             results.append(entry)
     report = {
         "scope": "READ_ONLY_SOURCE_FEASIBILITY_NOT_REDISTRIBUTION_OR_MYBOY",
@@ -124,10 +151,15 @@ def main():
         "species": results,
     }
     print(json.dumps(report, sort_keys=True, separators=(",", ":")))
-    eligible = sum(all(x["status"] == "SOURCE_FEASIBLE"
-                       for x in entry["variants"].values()) for entry in results)
-    print("HGSS source sample inspected: %s species, %s normal+shiny pairs "
-          "compatible without color reduction" % (len(results), eligible))
+    compatible = sum(all(x["status"] == "SOURCE_FEASIBLE"
+                         for x in entry["variants"].values()) for entry in results)
+    distinct = sum(entry.get("normal_shiny_distinct_after_conversion") is True
+                   for entry in results)
+    large = sum(any(x["frame_px"] == 64 for x in entry["variants"].values())
+                for entry in results)
+    print("HGSS pinned real APNG sample: %s species, %s normal+shiny pairs "
+          "convertible losslessly, %s genuinely distinct pairs, %s 64px species"
+          % (len(results), compatible, distinct, large))
     print("Source-blocked species remain research tasks; no actual art is committed or integrated.")
 
 
