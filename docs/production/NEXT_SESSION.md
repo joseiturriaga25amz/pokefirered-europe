@@ -14,6 +14,9 @@ Use `docs/spec/` only for frozen historical design details.
 
 ## Current state
 
+- **Next B10 action (2026-10-13):** `prototype/follower-runtime` technical HEAD `9fe7ed0be77d41cfcd18ac7c4a8ccdda941a695f`, Metapod down-only held middle APNG frame (150/300/150 → 150/150/150/150). Last CI-green #47 at previous SHA found 385/386. CI #48 run `38446871759` `in_progress` at checkpoint. Verify exact outcome and log full source coverage 386/386 before claiming. No HGSS image files in Git, no real 386 overworld rendering, no MyBoy, no integration.
+
+
 - **B10 next (2026-10-13):** prototype `prototype/follower-runtime` HEAD `bdba657909e41bdb7a7101008f8c408b2be17803` adds full 386 pinned HGSS APNG *source-only* coverage audit. Last confirmed CI-GREEN #45 exact `f6b7e45`; #47 `38444562698` `in_progress` when written. Verify #47 and extract numeric 386 coverage/color blockers, investigate conversion/code defects separately from temporary network issues. No actual source assets are imported to Git or ROM, no MyBoy, no 386 gameplay/render completion. Prior approved 8-bit graphics ID and SaveBlock/link contracts remain untouched.
 
 
