@@ -53,13 +53,15 @@ def download(url):
             time.sleep(attempt + 1)
 
 
-def summarize_variant(folder):
+def summarize_variant(folder, species=None):
     colors = set()
     direction_stats = {}
     semi_alpha = 0
     dimension = None
     for direction in DIRECTIONS:
-        size, frames = read_apng(folder / (direction + ".png"))
+        metapod_hold = species == 11 and direction == "down"
+        size, frames = read_apng(folder / (direction + ".png"),
+                                 allow_metapod_three_down=metapod_hold)
         if dimension is not None and dimension != size:
             raise ValueError("inconsistent frame dimension")
         dimension = size
@@ -77,7 +79,8 @@ def summarize_variant(folder):
                     visible.append(c)
             converted.append(tuple(visible))
         direction_stats[direction] = {
-            "native_frames": len(frames),
+            "native_frames": 3 if metapod_hold else len(frames),
+            "packed_frames": len(frames),
             "unique_BGR555_frames": len(set(converted))
         }
     reasons = []
@@ -105,7 +108,7 @@ def summarize_variant(folder):
     }
     if not reasons:
         try:
-            out_size, tiles, palette, palette_colors = pack_variant(folder)
+            out_size, tiles, palette, palette_colors = pack_variant(folder, species=species)
             result["packed_bytes_4bpp"] = len(tiles)
             result["packed_palette_bytes"] = len(palette)
             result["packed_color_count"] = palette_colors
@@ -190,7 +193,7 @@ def audit_complete_gen3(archive, first=1, last=386):
                     if entry["reasons"]:
                         break
                     try:
-                        data = summarize_variant(dest_dir)
+                        data = summarize_variant(dest_dir, species=species)
                     except (ValueError, OSError, AssertionError, IndexError, KeyError) as exc:
                         data = {"status": "SOURCE_BLOCKED",
                                 "reasons": ["decoder_or_format:" + str(exc)[:140]]}
@@ -201,6 +204,8 @@ def audit_complete_gen3(archive, first=1, last=386):
                         "semi_alpha": data.get("semi_transparent_pixel_instances"),
                         "packed_render_sha256": data.get("packed_render_sha256"),
                         "reasons": data.get("reasons", []),
+                        "metapod_down_held_frame": species == 11
+                            and data.get("directions", {}).get("down", {}).get("native_frames") == 3,
                         "minimum_unique_frames_per_direction": min(
                             (v["unique_BGR555_frames"] for v in data.get("directions", {}).values()),
                             default=None),
@@ -225,6 +230,9 @@ def audit_complete_gen3(archive, first=1, last=386):
                 "normal_colors": r["normal"].get("colors"),
                 "shiny_colors": r["shiny"].get("colors")}
                for r in results if r["status"] != "SOURCE_FEASIBLE"]
+    held = [r["species"] for r in results if r["status"] == "SOURCE_FEASIBLE"
+            and r["normal"].get("metapod_down_held_frame")
+            and r["shiny"].get("metapod_down_held_frame")]
     size_counts = {}
     for entry in results:
         if entry["status"] == "SOURCE_FEASIBLE":
@@ -238,6 +246,7 @@ def audit_complete_gen3(archive, first=1, last=386):
         "blocked_species_count": len(blocked),
         "feasible_ids": pass_ids,
         "frame_sizes": size_counts,
+        "timing_preserved_three_frame_exceptions": held,
         "blocked": blocked
     }
 
@@ -257,7 +266,19 @@ def synthetic_full_test():
     assert "normal_shiny_render_identical" in report["blocked"][0]["reasons"]
     assert report["blocked"][1]["id"] == 2
     assert "species_folder_count_0" in report["blocked"][1]["reasons"]
-    print("Pinned-archive inventory, missing species and identical shiny rejection PASS")
+
+    extra = io.BytesIO()
+    with zipfile.ZipFile(extra, "w", compression=zipfile.ZIP_DEFLATED) as zf:
+        for variant in ("regular", "shiny"):
+            for direction in DIRECTIONS:
+                zf.writestr("source-pinned/APNG/by-pokemon/011_metapod/" +
+                            variant + "/" + direction + ".png",
+                            synthetic_apng(frame_count=3 if direction == "down" else 4,
+                                           color_bias=8 if variant == "shiny" else 0))
+    metapod = audit_complete_gen3(extra.getvalue(), first=11, last=11)
+    assert metapod["source_feasible_species"] == 1, metapod["blocked"]
+    assert metapod["timing_preserved_three_frame_exceptions"] == [11]
+    print("Pinned-archive inventory, 386 source contract and Metapod timed hold PASS")
 
 
 def main():
@@ -293,7 +314,7 @@ def main():
                     data = download(url)
                     sha.update(data)
                     (variant_root / (direction + ".png")).write_bytes(data)
-                entry["variants"][variant] = summarize_variant(variant_root)
+                entry["variants"][variant] = summarize_variant(variant_root, species=species)
                 entry["variants"][variant]["input_bundle_sha256"] = sha.hexdigest()
             regular = entry["variants"]["normal"]
             shiny = entry["variants"]["shiny"]

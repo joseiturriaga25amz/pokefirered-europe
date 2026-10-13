@@ -103,7 +103,7 @@ def alpha_over(src, dst):
     return (*out, oa)
 
 
-def read_apng(path):
+def read_apng(path, allow_metapod_three_down=False):
     header = None
     declared = None
     controls = []
@@ -124,14 +124,15 @@ def read_apng(path):
         elif kind == b"fcTL":
             if declared is None or len(payload) != 26:
                 raise ValueError("bad fcTL")
-            seq, fw, fh, x, y, _, _, dispose, blend = struct.unpack(">IIIIIHHBB", payload)
+            seq, fw, fh, x, y, delay_num, delay_den, dispose, blend = struct.unpack(">IIIIIHHBB", payload)
             if seq != expected_seq or fw == 0 or fh == 0 or x + fw > header[0] or y + fh > header[1]:
                 raise ValueError("bad APNG frame control")
             if dispose > 2 or blend > 1:
                 raise ValueError("unknown APNG blend/dispose")
             expected_seq += 1
             controls.append({"w": fw, "h": fh, "x": x, "y": y, "dispose": dispose,
-                             "blend": blend, "compressed": bytearray()})
+                             "blend": blend, "delay_num": delay_num, "delay_den": delay_den,
+                             "compressed": bytearray()})
         elif kind in (b"IDAT", b"fdAT"):
             if not controls or declared is None:
                 raise ValueError("missing APNG frame control")
@@ -145,8 +146,19 @@ def read_apng(path):
                 expected_seq += 1
                 controls[-1]["compressed"].extend(payload[4:])
             seen_data = True
-    if declared != 4 or len(controls) != 4 or not seen_data:
-        raise ValueError("requires exactly four animated frames")
+    # The pinned Metapod *down* source has three genuine frames with
+    # 150/300/150 ms timings, in both palettes. Duplicate only the middle
+    # frame to retain 150/150/150/150 ms cadence in a four-slot GBA sheet.
+    # This is a duration hold, not an invented sprite or a general fallback.
+    expected = 3 if allow_metapod_three_down else 4
+    if declared != expected or len(controls) != expected or not seen_data:
+        raise ValueError("requires exactly %d animated source frames" % expected)
+    if allow_metapod_three_down:
+        durations = [(frame["delay_num"], frame["delay_den"] or 100) for frame in controls]
+        first, middle, last = durations
+        if (first[0] * last[1] != last[0] * first[1]
+                or middle[0] * first[1] != 2 * first[0] * middle[1]):
+            raise ValueError("unexpected Metapod three-frame timing; manual review required")
     w, h = header
     canvas = [(0, 0, 0, 0)] * (w * h)
     frames = []
@@ -170,6 +182,8 @@ def read_apng(path):
             canvas = previous
     if len(set(tuple(frame) for frame in frames)) < 2:
         raise ValueError("animated source has no distinct frames")
+    if allow_metapod_three_down:
+        frames.insert(2, frames[1].copy())
     return w, frames
 
 
@@ -197,12 +211,14 @@ def tiled_frame(frame, width, lookup):
     return output
 
 
-def pack_variant(source_dir):
+def pack_variant(source_dir, species=None):
     all_frames = []
     width = None
     per_direction = {}
     for direction in DIRECTIONS:
-        candidate, frames = read_apng(source_dir / (direction + ".png"))
+        candidate, frames = read_apng(
+            source_dir / (direction + ".png"),
+            allow_metapod_three_down=(species == 11 and direction == "down"))
         if width is not None and width != candidate:
             raise ValueError("inconsistent sprite frame dimensions")
         width = candidate
@@ -235,7 +251,7 @@ def pack_species(root, species):
     result = {}
     dimension = None
     for variant, source_variant in VARIANTS:
-        size, tiles, pal, colors = pack_variant(folder / source_variant)
+        size, tiles, pal, colors = pack_variant(folder / source_variant, species=species)
         if dimension is not None and size != dimension:
             raise ValueError("%03d: normal/shiny frame dimensions disagree" % species)
         dimension = size
@@ -277,16 +293,20 @@ def chunk(kind, payload):
     return struct.pack(">I", len(payload)) + kind + payload + struct.pack(">I", zlib.crc32(kind + payload) & 0xffffffff)
 
 
-def synthetic_apng(size=16):
+def synthetic_apng(size=16, frame_count=4, color_bias=0):
     # First frame full-canvas; later frames are PARTIAL rectangles as in HGSS.
     output = PNG_SIG + chunk(b"IHDR", struct.pack(">IIBBBBB", size, size, 8, 6, 0, 0, 0))
-    output += chunk(b"acTL", struct.pack(">II", 4, 0))
+    output += chunk(b"acTL", struct.pack(">II", frame_count, 0))
     seq = 0
-    for index in range(4):
+    for index in range(frame_count):
         w, h, x, y = (size, size, 0, 0) if index == 0 else (8, 8, 3, 3)
-        output += chunk(b"fcTL", struct.pack(">IIIIIHHBB", seq, w, h, x, y, 1, 10, 0, 0))
+        # Native Metapod downward timing: 150, 300, 150 ms.
+        numerator = 3 if frame_count == 3 else 1
+        denominator = 10 if frame_count != 3 or index == 1 else 20
+        output += chunk(b"fcTL", struct.pack(">IIIIIHHBB", seq, w, h, x, y,
+                                              numerator, denominator, 0, 0))
         seq += 1
-        pixel = bytes((index * 55, 64, 80, 255))
+        pixel = bytes((index * 55 + color_bias, 64, 80, 255))
         raw = (b"\x00" + pixel * w) * h
         comp = zlib.compress(raw)
         if index == 0:
@@ -323,7 +343,45 @@ def self_test():
             pass
         else:
             raise AssertionError("corrupt APNG was accepted")
-    print("Synthetic APNG partial-frame decoder, four-direction 4bpp packer and BGR555 palette PASS")
+
+        # Actual Metapod down is three source frames with a held middle pose.
+        # Use three-frame synthetic APNG only on species 011 and direction down.
+        special = root / "011_metapod"
+        for variant in ("regular", "shiny"):
+            for direction in DIRECTIONS:
+                path = special / variant / (direction + ".png")
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_bytes(synthetic_apng(
+                    frame_count=3 if direction == "down" else 4,
+                    color_bias=8 if variant == "shiny" else 0))
+        down = special / "regular" / "down.png"
+        try:
+            read_apng(down)
+        except ValueError:
+            pass
+        else:
+            raise AssertionError("generic 3-frame source was accepted")
+        size, frames = read_apng(down, allow_metapod_three_down=True)
+        assert size == 16 and len(frames) == 4
+        assert frames[0] != frames[1] and frames[1] == frames[2] and frames[2] != frames[3]
+        special_report = convert(root, dest, [11])
+        assert special_report[0]["species"] == 11
+        assert (dest / "011/normal.4bpp").stat().st_size == 16 * 16 // 2 * 16
+        assert (dest / "011/shiny.gbapal").stat().st_size == 32
+        # A different species may never use Metapod's exception.
+        other = root / "010_caterpie"
+        for variant in ("regular", "shiny"):
+            for direction in DIRECTIONS:
+                p = other / variant / (direction + ".png")
+                p.parent.mkdir(parents=True, exist_ok=True)
+                p.write_bytes(synthetic_apng(frame_count=3 if direction == "down" else 4))
+        try:
+            convert(root, dest, [10])
+        except ValueError:
+            pass
+        else:
+            raise AssertionError("3-frame non-Metapod input was accepted")
+    print("Synthetic APNG and Metapod timed three-frame hold -> four GBA slots PASS")
 
 
 def main():
