@@ -14,6 +14,9 @@ Use `docs/spec/` only for frozen historical design details.
 
 ## Current state
 
+- **Immediate B10 (2026-10-13):** prototype technical HEAD `07cd8db161f10426803a0cf4c0964dcbff177e65` extends real HGSS APNG audit to 20 Gen I–III samples and render hashes, frame VRAM/ROM budgets. #42 SUCCESS run `38429105044` on former `3a77b3b` (all five tested pairs feasible). Exact #43 run `38438450305` currently `in_progress`; verify before claiming CI-GREEN, report any incompatible species. Then isolate dedicated runtime palette and frame streaming design for 16/32/64px without changing save/link ABI. No assets integrated; MyBoy pending.
+
+
 - **Next B10 (2026-10-13):** prototype HEAD `3a77b3b615c174e9cd22024329896658826ade7e`, real-pinned-source audit code (no artwork committed), CI #42 `38429105044` `in_progress` at checkpoint. Verify exact CI #42 results/logs; distinguish upstream fetch from decoder failure and gather quantitative sample results. Only then decide minimal converter and palette changes. All 386 normal/shiny animated followers remain mandatory; not complete; no MyBoy and no merge.
 
 
