@@ -2108,6 +2108,8 @@ static void ResumeMap(bool32 inLink)
     // runtime follower before sprite reset so it cannot reappear in link play.
     if (inLink || QL_IS_PLAYBACK_STATE)
         FullFollower_DiscardForLink();
+    else
+        FullFollower_DiscardForLocalReload();
     ResetTasks();
     ResetSpriteData();
     ResetPaletteFade();

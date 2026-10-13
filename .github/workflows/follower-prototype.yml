@@ -183,12 +183,25 @@ jobs:
           assert "if (allowFollower)\n        FullFollower_OnLocalMapReady();" in gate
           resume = s[s.index("static void ResumeMap(bool32 inLink)\n{"):s.index("\nstatic void InitObjectEventsLink(", s.index("static void ResumeMap(bool32 inLink)\n{"))]
           assert resume.index("if (inLink || QL_IS_PLAYBACK_STATE)\n        FullFollower_DiscardForLink();") < resume.index("ResetSpriteData();")
+          assert resume.index("else\n        FullFollower_DiscardForLocalReload();") < resume.index("ResetSpriteData();")
           assert "void FullFollower_DiscardForLink(void);" in header
+          assert "void FullFollower_DiscardForLocalReload(void);" in header
+          local = f[f.index("void FullFollower_DiscardForLocalReload(void)\n{"):f.index("\nvoid FullFollower_DiscardForLink(void)", f.index("void FullFollower_DiscardForLocalReload(void)\n{"))]
           discard = f[f.index("void FullFollower_DiscardForLink(void)\n{"):f.index("\nvoid FullFollower_OnLocalMapReady(void)", f.index("void FullFollower_DiscardForLink(void)\n{"))]
-          assert "follower->active = FALSE;" in discard
-          assert "sFollowerSpecies = SPECIES_NONE;" in discard
+          assert "follower->active = FALSE;" in local
+          assert "sFollowerSpecies = SPECIES_NONE;" in local and "sTrailCount = 0;" in local
+          assert "sFollowerWarpTransition = FALSE;" not in local
+          assert "sFollowerExitLockObserved = FALSE;" not in local
+          assert "FullFollower_DiscardForLocalReload();" in discard
+          assert "sFollowerWarpTransition = FALSE;" in discard
+          assert "sFollowerExitLockObserved = FALSE;" in discard
+          assert "DestroySprite(" not in local and "FlagSet(" not in local
           assert "DestroySprite(" not in discard and "FlagSet(" not in discard
-          print("Link return and quest-log replay suppress follower; pre-reset object cleared")
+          event = Path("src/event_object_movement.c").read_text()
+          rebuild = event[event.index("void SpawnObjectEventsOnReturnToField(s16 x, s16 y)\n{"):event.index("\nstatic void SpawnObjectEventOnReturnToField(", event.index("void SpawnObjectEventsOnReturnToField(s16 x, s16 y)\n{"))]
+          assert "if (gObjectEvents[i].active)" in rebuild
+          assert resume.index("FullFollower_DiscardForLocalReload();") < resume.index("ResetSpriteData();")
+          print("Local reload drops transient follower before sprite rebuild; link and Quest Log reset warp gate")
           PY
 
       - name: Audit follower sprite/OAM suppression and native graphics budget

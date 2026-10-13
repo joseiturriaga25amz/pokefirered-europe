@@ -382,16 +382,22 @@ void FullFollower_RecallForWarp(void)
     sTrailCount = 0;
 }
 
-void FullFollower_DiscardForLink(void)
+void FullFollower_DiscardForLocalReload(void)
 {
     struct ObjectEvent *follower = FindFollowerObject();
 
-    // ResumeMap(TRUE) resets sprite memory immediately afterward. Only drop
-    // the transient object-event state here; no sprite teardown or save flag.
+    // ResumeMap resets sprite memory before rebuilding surviving objects.
+    // Invalidate the transient follower so that the object reconstruction
+    // cannot recreate a stale sprite. Preserve any pending warp entrance gate.
     if (follower != NULL)
         follower->active = FALSE;
     sFollowerSpecies = SPECIES_NONE;
     sTrailCount = 0;
+}
+
+void FullFollower_DiscardForLink(void)
+{
+    FullFollower_DiscardForLocalReload();
     sFollowerWarpTransition = FALSE;
     sFollowerExitLockObserved = FALSE;
 }
