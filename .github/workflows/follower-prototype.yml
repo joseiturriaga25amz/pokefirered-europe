@@ -795,3 +795,7 @@ jobs:
       - name: Convert synthetic HGSS partial-frame APNG to FireRed 4bpp
         run: |
           python3 tools/convert_follower_apng.py --self-test
+
+      - name: Audit 386 packed sprite output manifest and GBA frame budget (synthetic)
+        run: |
+          python3 tools/validate_follower_graphics.py --self-test
