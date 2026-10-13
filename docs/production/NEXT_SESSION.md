@@ -14,6 +14,9 @@ Use `docs/spec/` only for frozen historical design details.
 
 ## Current state
 
+- **Immediate next B10 (2026-10-13):** prototype HEAD `fb532e1d88e0d07b3b7c5484f8d056d9e10f3d70` adds empty 386 species × normal/shiny pointer registry to native follower graphics resolver. #48 CI success at old SHA confirmed 386/386 source-convertible; #49 run `38449232252` was `in_progress` at checkpoint. Check exact #49 outcome and fix any verified build/gate defects. Then implement verified, reproducible generator of C graphics/normal-shiny palette bindings from cleared converted 4bpp data, starting with a genuine single-species runtime pilot (not another synthetic-only review). Do not present null registry as asset integration. No MyBoy runtime, no master gameplay merge.
+
+
 - **Next B10 action (2026-10-13):** `prototype/follower-runtime` technical HEAD `9fe7ed0be77d41cfcd18ac7c4a8ccdda941a695f`, Metapod down-only held middle APNG frame (150/300/150 → 150/150/150/150). Last CI-green #47 at previous SHA found 385/386. CI #48 run `38446871759` `in_progress` at checkpoint. Verify exact outcome and log full source coverage 386/386 before claiming. No HGSS image files in Git, no real 386 overworld rendering, no MyBoy, no integration.
 
 
