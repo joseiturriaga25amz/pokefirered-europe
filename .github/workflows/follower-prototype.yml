@@ -759,3 +759,35 @@ jobs:
           # shiny sprites; graphics remain six native prototype OW sheets.
           print("Follower runtime shiny identity selection/swap/recall PASS")
           PY
+
+      - name: Audit diagnostic follower four-direction palette rendering pilot
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          src = Path("src/event_object_movement.c").read_text()
+          images = Path("src/data/object_events/follower_pilot_graphics.h").read_text()
+          follower = Path("src/full_follower.c").read_text()
+          assert '#include "data/object_events/follower_pilot_graphics.h"' in src
+          assert "if (graphicsId == OBJ_EVENT_GFX_PIKACHU)" in src
+          assert "FullFollower_IsShiny() ? &sFollowerPilotShinyGraphics : &sFollowerPilotNormalGraphics" in src
+          assert "sFollowerIsShiny != isShiny" in follower
+          assert "sFollowerIsShiny = isShiny;" in follower
+          assert "static const u32 sFollowerPilotPixels[16][32]" in images
+          assert len(re.findall(r'\{ \(const u8 \*\)sFollowerPilotPixels\[\d+\], 16 \* 16 / 2 \}', images)) == 16
+          for label in ("South", "North", "West", "East"):
+              for prefix in ("Face", "Walk", "Fast", "Faster", "Fastest"):
+                  assert "sFollowerPilot" + prefix + label + "[]" in images
+              for enum in ("FACE", "GO", "GO_FAST", "GO_FASTER", "GO_FASTEST"):
+                  assert "ANIM_STD_" + enum + "_" + label.upper() in images
+          assert "[ANIM_RAISE_HAND] = sFollowerPilotFaceSouth" in images
+          assert "PALSLOT_NPC_1" in images and "PALSLOT_NPC_2" in images
+          assert "OBJ_EVENT_PAL_TAG_NPC_BLUE" in images and "OBJ_EVENT_PAL_TAG_NPC_PINK" in images
+          for name in ("Normal","Shiny"):
+              assert "static const struct ObjectEventGraphicsInfo sFollowerPilot" + name + "Graphics" in images
+              assert ".size = 16 * 16 / 2" in images
+              assert ".images = sFollowerPilotImages" in images
+              assert ".anims = sFollowerPilotAnims" in images
+          assert "#define OBJ_EVENT_GFX_FULL_FOLLOWER NUM_OBJ_EVENT_GFX" in Path("include/constants/event_objects.h").read_text()
+          print("16 distinct diagnostic pilot frame slots, four directions, variant palettes PASS")
+          PY

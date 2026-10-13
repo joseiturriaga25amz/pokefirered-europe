@@ -1,0 +1,234 @@
+/* Diagnostic-only graphics for proving FireRed-native 4-direction / 4-frame
+   follower presentation. NOT Pokemon artwork and NOT the accepted final sprites. */
+static const u32 sFollowerPilotPixels[16][32] = {
+    /* South frame 0 */
+    {0x00000000, 0x00000000, 0x00000000, 0x44440000, 0x44440000, 0x44440000, 0x11120000, 0x11110000, 0x00000000, 0x00000000, 0x00000000, 0x00004444, 0x00004444, 0x00004444, 0x00001121, 0x00001112, 0x21110000, 0x12110000, 0x11210000, 0x11120000, 0x11110000, 0x33300000, 0x00000000, 0x00000000, 0x00001111, 0x00002111, 0x00001211, 0x00001121, 0x00001112, 0x00003333, 0x00000000, 0x00000000},
+    /* South frame 1 */
+    {0x00000000, 0x00000000, 0x00000000, 0x44440000, 0x44440000, 0x44440000, 0x12110000, 0x11210000, 0x00000000, 0x00000000, 0x00000000, 0x00004444, 0x00004444, 0x00004444, 0x00002111, 0x00001211, 0x11120000, 0x11110000, 0x21110000, 0x12110000, 0x11210000, 0x33000000, 0x00000000, 0x00000000, 0x00001121, 0x00001112, 0x00001111, 0x00002111, 0x00001211, 0x00003333, 0x00000000, 0x00000000},
+    /* South frame 2 */
+    {0x00000000, 0x00000000, 0x00000000, 0x44440000, 0x44440000, 0x44440000, 0x11110000, 0x21110000, 0x00000000, 0x00000000, 0x00000000, 0x00004444, 0x00004444, 0x00004444, 0x00001112, 0x00001111, 0x12110000, 0x11210000, 0x11120000, 0x11110000, 0x21110000, 0x30000000, 0x00000000, 0x00000000, 0x00002111, 0x00001211, 0x00001121, 0x00001112, 0x00001111, 0x00003333, 0x00000000, 0x00000000},
+    /* South frame 3 */
+    {0x00000000, 0x00000000, 0x00000000, 0x44440000, 0x44440000, 0x44440000, 0x11210000, 0x11120000, 0x00000000, 0x00000000, 0x00000000, 0x00004444, 0x00004444, 0x00004444, 0x00001211, 0x00001121, 0x11110000, 0x21110000, 0x12110000, 0x11210000, 0x11120000, 0x00000000, 0x00000000, 0x00000000, 0x00001112, 0x00001111, 0x00002111, 0x00001211, 0x00001121, 0x00003333, 0x00000000, 0x00000000},
+    /* North frame 0 */
+    {0x00000000, 0x00000000, 0x00000000, 0x12110000, 0x11210000, 0x11120000, 0x11110000, 0x21110000, 0x00000000, 0x00000000, 0x00000000, 0x00002111, 0x00001211, 0x00001121, 0x00001112, 0x00001111, 0x12110000, 0x11210000, 0x44440000, 0x44440000, 0x44440000, 0x33300000, 0x00000000, 0x00000000, 0x00002111, 0x00001211, 0x00004444, 0x00004444, 0x00004444, 0x00003333, 0x00000000, 0x00000000},
+    /* North frame 1 */
+    {0x00000000, 0x00000000, 0x00000000, 0x11110000, 0x21110000, 0x12110000, 0x11210000, 0x11120000, 0x00000000, 0x00000000, 0x00000000, 0x00001112, 0x00001111, 0x00002111, 0x00001211, 0x00001121, 0x11110000, 0x21110000, 0x44440000, 0x44440000, 0x44440000, 0x33000000, 0x00000000, 0x00000000, 0x00001112, 0x00001111, 0x00004444, 0x00004444, 0x00004444, 0x00003333, 0x00000000, 0x00000000},
+    /* North frame 2 */
+    {0x00000000, 0x00000000, 0x00000000, 0x11210000, 0x11120000, 0x11110000, 0x21110000, 0x12110000, 0x00000000, 0x00000000, 0x00000000, 0x00001211, 0x00001121, 0x00001112, 0x00001111, 0x00002111, 0x11210000, 0x11120000, 0x44440000, 0x44440000, 0x44440000, 0x30000000, 0x00000000, 0x00000000, 0x00001211, 0x00001121, 0x00004444, 0x00004444, 0x00004444, 0x00003333, 0x00000000, 0x00000000},
+    /* North frame 3 */
+    {0x00000000, 0x00000000, 0x00000000, 0x21110000, 0x12110000, 0x11210000, 0x11120000, 0x11110000, 0x00000000, 0x00000000, 0x00000000, 0x00001111, 0x00002111, 0x00001211, 0x00001121, 0x00001112, 0x21110000, 0x12110000, 0x44440000, 0x44440000, 0x44440000, 0x00000000, 0x00000000, 0x00000000, 0x00001111, 0x00002111, 0x00004444, 0x00004444, 0x00004444, 0x00003333, 0x00000000, 0x00000000},
+    /* West frame 0 */
+    {0x00000000, 0x00000000, 0x00000000, 0x11210000, 0x11120000, 0x11110000, 0x21110000, 0x12110000, 0x00000000, 0x00000000, 0x00000000, 0x00004441, 0x00004441, 0x00004442, 0x00004441, 0x00004441, 0x11210000, 0x11120000, 0x11110000, 0x21110000, 0x12110000, 0x33300000, 0x00000000, 0x00000000, 0x00004441, 0x00004441, 0x00004442, 0x00004441, 0x00004441, 0x00003333, 0x00000000, 0x00000000},
+    /* West frame 1 */
+    {0x00000000, 0x00000000, 0x00000000, 0x21110000, 0x12110000, 0x11210000, 0x11120000, 0x11110000, 0x00000000, 0x00000000, 0x00000000, 0x00004441, 0x00004441, 0x00004441, 0x00004441, 0x00004442, 0x21110000, 0x12110000, 0x11210000, 0x11120000, 0x11110000, 0x33000000, 0x00000000, 0x00000000, 0x00004441, 0x00004441, 0x00004441, 0x00004441, 0x00004442, 0x00003333, 0x00000000, 0x00000000},
+    /* West frame 2 */
+    {0x00000000, 0x00000000, 0x00000000, 0x11120000, 0x11110000, 0x21110000, 0x12110000, 0x11210000, 0x00000000, 0x00000000, 0x00000000, 0x00004441, 0x00004442, 0x00004441, 0x00004441, 0x00004441, 0x11120000, 0x11110000, 0x21110000, 0x12110000, 0x11210000, 0x30000000, 0x00000000, 0x00000000, 0x00004441, 0x00004442, 0x00004441, 0x00004441, 0x00004441, 0x00003333, 0x00000000, 0x00000000},
+    /* West frame 3 */
+    {0x00000000, 0x00000000, 0x00000000, 0x12110000, 0x11210000, 0x11120000, 0x11110000, 0x21110000, 0x00000000, 0x00000000, 0x00000000, 0x00004441, 0x00004441, 0x00004441, 0x00004442, 0x00004441, 0x12110000, 0x11210000, 0x11120000, 0x11110000, 0x21110000, 0x00000000, 0x00000000, 0x00000000, 0x00004441, 0x00004441, 0x00004441, 0x00004442, 0x00004441, 0x00003333, 0x00000000, 0x00000000},
+    /* East frame 0 */
+    {0x00000000, 0x00000000, 0x00000000, 0x14440000, 0x14440000, 0x24440000, 0x14440000, 0x14440000, 0x00000000, 0x00000000, 0x00000000, 0x00001121, 0x00001112, 0x00001111, 0x00002111, 0x00001211, 0x14440000, 0x14440000, 0x24440000, 0x14440000, 0x14440000, 0x33300000, 0x00000000, 0x00000000, 0x00001121, 0x00001112, 0x00001111, 0x00002111, 0x00001211, 0x00003333, 0x00000000, 0x00000000},
+    /* East frame 1 */
+    {0x00000000, 0x00000000, 0x00000000, 0x14440000, 0x14440000, 0x14440000, 0x14440000, 0x24440000, 0x00000000, 0x00000000, 0x00000000, 0x00002111, 0x00001211, 0x00001121, 0x00001112, 0x00001111, 0x14440000, 0x14440000, 0x14440000, 0x14440000, 0x24440000, 0x33000000, 0x00000000, 0x00000000, 0x00002111, 0x00001211, 0x00001121, 0x00001112, 0x00001111, 0x00003333, 0x00000000, 0x00000000},
+    /* East frame 2 */
+    {0x00000000, 0x00000000, 0x00000000, 0x14440000, 0x24440000, 0x14440000, 0x14440000, 0x14440000, 0x00000000, 0x00000000, 0x00000000, 0x00001112, 0x00001111, 0x00002111, 0x00001211, 0x00001121, 0x14440000, 0x24440000, 0x14440000, 0x14440000, 0x14440000, 0x30000000, 0x00000000, 0x00000000, 0x00001112, 0x00001111, 0x00002111, 0x00001211, 0x00001121, 0x00003333, 0x00000000, 0x00000000},
+    /* East frame 3 */
+    {0x00000000, 0x00000000, 0x00000000, 0x14440000, 0x14440000, 0x14440000, 0x24440000, 0x14440000, 0x00000000, 0x00000000, 0x00000000, 0x00001211, 0x00001121, 0x00001112, 0x00001111, 0x00002111, 0x14440000, 0x14440000, 0x14440000, 0x24440000, 0x14440000, 0x00000000, 0x00000000, 0x00000000, 0x00001211, 0x00001121, 0x00001112, 0x00001111, 0x00002111, 0x00003333, 0x00000000, 0x00000000},
+};
+
+static const struct SpriteFrameImage sFollowerPilotImages[] = {
+    { (const u8 *)sFollowerPilotPixels[0], 16 * 16 / 2 },
+    { (const u8 *)sFollowerPilotPixels[1], 16 * 16 / 2 },
+    { (const u8 *)sFollowerPilotPixels[2], 16 * 16 / 2 },
+    { (const u8 *)sFollowerPilotPixels[3], 16 * 16 / 2 },
+    { (const u8 *)sFollowerPilotPixels[4], 16 * 16 / 2 },
+    { (const u8 *)sFollowerPilotPixels[5], 16 * 16 / 2 },
+    { (const u8 *)sFollowerPilotPixels[6], 16 * 16 / 2 },
+    { (const u8 *)sFollowerPilotPixels[7], 16 * 16 / 2 },
+    { (const u8 *)sFollowerPilotPixels[8], 16 * 16 / 2 },
+    { (const u8 *)sFollowerPilotPixels[9], 16 * 16 / 2 },
+    { (const u8 *)sFollowerPilotPixels[10], 16 * 16 / 2 },
+    { (const u8 *)sFollowerPilotPixels[11], 16 * 16 / 2 },
+    { (const u8 *)sFollowerPilotPixels[12], 16 * 16 / 2 },
+    { (const u8 *)sFollowerPilotPixels[13], 16 * 16 / 2 },
+    { (const u8 *)sFollowerPilotPixels[14], 16 * 16 / 2 },
+    { (const u8 *)sFollowerPilotPixels[15], 16 * 16 / 2 },
+};
+
+static const union AnimCmd sFollowerPilotFaceSouth[] = { ANIMCMD_FRAME(0, 16), ANIMCMD_JUMP(0) };
+static const union AnimCmd sFollowerPilotWalkSouth[] = {
+    ANIMCMD_FRAME(0, 4),
+    ANIMCMD_FRAME(1, 4),
+    ANIMCMD_FRAME(2, 4),
+    ANIMCMD_FRAME(3, 4),
+    ANIMCMD_JUMP(0),
+};
+static const union AnimCmd sFollowerPilotFastSouth[] = {
+    ANIMCMD_FRAME(0, 2),
+    ANIMCMD_FRAME(1, 2),
+    ANIMCMD_FRAME(2, 2),
+    ANIMCMD_FRAME(3, 2),
+    ANIMCMD_JUMP(0),
+};
+static const union AnimCmd sFollowerPilotFasterSouth[] = {
+    ANIMCMD_FRAME(0, 1),
+    ANIMCMD_FRAME(1, 1),
+    ANIMCMD_FRAME(2, 1),
+    ANIMCMD_FRAME(3, 1),
+    ANIMCMD_JUMP(0),
+};
+static const union AnimCmd sFollowerPilotFastestSouth[] = {
+    ANIMCMD_FRAME(0, 1),
+    ANIMCMD_FRAME(1, 1),
+    ANIMCMD_FRAME(2, 1),
+    ANIMCMD_FRAME(3, 1),
+    ANIMCMD_JUMP(0),
+};
+static const union AnimCmd sFollowerPilotFaceNorth[] = { ANIMCMD_FRAME(4, 16), ANIMCMD_JUMP(0) };
+static const union AnimCmd sFollowerPilotWalkNorth[] = {
+    ANIMCMD_FRAME(4, 4),
+    ANIMCMD_FRAME(5, 4),
+    ANIMCMD_FRAME(6, 4),
+    ANIMCMD_FRAME(7, 4),
+    ANIMCMD_JUMP(0),
+};
+static const union AnimCmd sFollowerPilotFastNorth[] = {
+    ANIMCMD_FRAME(4, 2),
+    ANIMCMD_FRAME(5, 2),
+    ANIMCMD_FRAME(6, 2),
+    ANIMCMD_FRAME(7, 2),
+    ANIMCMD_JUMP(0),
+};
+static const union AnimCmd sFollowerPilotFasterNorth[] = {
+    ANIMCMD_FRAME(4, 1),
+    ANIMCMD_FRAME(5, 1),
+    ANIMCMD_FRAME(6, 1),
+    ANIMCMD_FRAME(7, 1),
+    ANIMCMD_JUMP(0),
+};
+static const union AnimCmd sFollowerPilotFastestNorth[] = {
+    ANIMCMD_FRAME(4, 1),
+    ANIMCMD_FRAME(5, 1),
+    ANIMCMD_FRAME(6, 1),
+    ANIMCMD_FRAME(7, 1),
+    ANIMCMD_JUMP(0),
+};
+static const union AnimCmd sFollowerPilotFaceWest[] = { ANIMCMD_FRAME(8, 16), ANIMCMD_JUMP(0) };
+static const union AnimCmd sFollowerPilotWalkWest[] = {
+    ANIMCMD_FRAME(8, 4),
+    ANIMCMD_FRAME(9, 4),
+    ANIMCMD_FRAME(10, 4),
+    ANIMCMD_FRAME(11, 4),
+    ANIMCMD_JUMP(0),
+};
+static const union AnimCmd sFollowerPilotFastWest[] = {
+    ANIMCMD_FRAME(8, 2),
+    ANIMCMD_FRAME(9, 2),
+    ANIMCMD_FRAME(10, 2),
+    ANIMCMD_FRAME(11, 2),
+    ANIMCMD_JUMP(0),
+};
+static const union AnimCmd sFollowerPilotFasterWest[] = {
+    ANIMCMD_FRAME(8, 1),
+    ANIMCMD_FRAME(9, 1),
+    ANIMCMD_FRAME(10, 1),
+    ANIMCMD_FRAME(11, 1),
+    ANIMCMD_JUMP(0),
+};
+static const union AnimCmd sFollowerPilotFastestWest[] = {
+    ANIMCMD_FRAME(8, 1),
+    ANIMCMD_FRAME(9, 1),
+    ANIMCMD_FRAME(10, 1),
+    ANIMCMD_FRAME(11, 1),
+    ANIMCMD_JUMP(0),
+};
+static const union AnimCmd sFollowerPilotFaceEast[] = { ANIMCMD_FRAME(12, 16), ANIMCMD_JUMP(0) };
+static const union AnimCmd sFollowerPilotWalkEast[] = {
+    ANIMCMD_FRAME(12, 4),
+    ANIMCMD_FRAME(13, 4),
+    ANIMCMD_FRAME(14, 4),
+    ANIMCMD_FRAME(15, 4),
+    ANIMCMD_JUMP(0),
+};
+static const union AnimCmd sFollowerPilotFastEast[] = {
+    ANIMCMD_FRAME(12, 2),
+    ANIMCMD_FRAME(13, 2),
+    ANIMCMD_FRAME(14, 2),
+    ANIMCMD_FRAME(15, 2),
+    ANIMCMD_JUMP(0),
+};
+static const union AnimCmd sFollowerPilotFasterEast[] = {
+    ANIMCMD_FRAME(12, 1),
+    ANIMCMD_FRAME(13, 1),
+    ANIMCMD_FRAME(14, 1),
+    ANIMCMD_FRAME(15, 1),
+    ANIMCMD_JUMP(0),
+};
+static const union AnimCmd sFollowerPilotFastestEast[] = {
+    ANIMCMD_FRAME(12, 1),
+    ANIMCMD_FRAME(13, 1),
+    ANIMCMD_FRAME(14, 1),
+    ANIMCMD_FRAME(15, 1),
+    ANIMCMD_JUMP(0),
+};
+static const union AnimCmd *const sFollowerPilotAnims[] = {
+    [ANIM_STD_FACE_SOUTH] = sFollowerPilotFaceSouth,
+    [ANIM_STD_FACE_NORTH] = sFollowerPilotFaceNorth,
+    [ANIM_STD_FACE_WEST] = sFollowerPilotFaceWest,
+    [ANIM_STD_FACE_EAST] = sFollowerPilotFaceEast,
+    [ANIM_STD_GO_SOUTH] = sFollowerPilotWalkSouth,
+    [ANIM_STD_GO_NORTH] = sFollowerPilotWalkNorth,
+    [ANIM_STD_GO_WEST] = sFollowerPilotWalkWest,
+    [ANIM_STD_GO_EAST] = sFollowerPilotWalkEast,
+    [ANIM_STD_GO_FAST_SOUTH] = sFollowerPilotFastSouth,
+    [ANIM_STD_GO_FAST_NORTH] = sFollowerPilotFastNorth,
+    [ANIM_STD_GO_FAST_WEST] = sFollowerPilotFastWest,
+    [ANIM_STD_GO_FAST_EAST] = sFollowerPilotFastEast,
+    [ANIM_STD_GO_FASTER_SOUTH] = sFollowerPilotFasterSouth,
+    [ANIM_STD_GO_FASTER_NORTH] = sFollowerPilotFasterNorth,
+    [ANIM_STD_GO_FASTER_WEST] = sFollowerPilotFasterWest,
+    [ANIM_STD_GO_FASTER_EAST] = sFollowerPilotFasterEast,
+    [ANIM_STD_GO_FASTEST_SOUTH] = sFollowerPilotFastestSouth,
+    [ANIM_STD_GO_FASTEST_NORTH] = sFollowerPilotFastestNorth,
+    [ANIM_STD_GO_FASTEST_WEST] = sFollowerPilotFastestWest,
+    [ANIM_STD_GO_FASTEST_EAST] = sFollowerPilotFastestEast,
+    [ANIM_RAISE_HAND] = sFollowerPilotFaceSouth,
+};
+
+static const struct ObjectEventGraphicsInfo sFollowerPilotNormalGraphics = {
+    .tileTag = TAG_NONE,
+    .paletteTag = OBJ_EVENT_PAL_TAG_NPC_BLUE,
+    .reflectionPaletteTag = OBJ_EVENT_PAL_TAG_NONE,
+    .size = 16 * 16 / 2,
+    .width = 16,
+    .height = 16,
+    .paletteSlot = PALSLOT_NPC_1,
+    .shadowSize = SHADOW_SIZE_M,
+    .inanimate = FALSE,
+    .disableReflectionPaletteLoad = FALSE,
+    .tracks = TRACKS_FOOT,
+    .oam = &gObjectEventBaseOam_16x16,
+    .subspriteTables = gObjectEventSpriteOamTables_16x16,
+    .anims = sFollowerPilotAnims,
+    .images = sFollowerPilotImages,
+    .affineAnims = gDummySpriteAffineAnimTable,
+};
+
+static const struct ObjectEventGraphicsInfo sFollowerPilotShinyGraphics = {
+    .tileTag = TAG_NONE,
+    .paletteTag = OBJ_EVENT_PAL_TAG_NPC_PINK,
+    .reflectionPaletteTag = OBJ_EVENT_PAL_TAG_NONE,
+    .size = 16 * 16 / 2,
+    .width = 16,
+    .height = 16,
+    .paletteSlot = PALSLOT_NPC_2,
+    .shadowSize = SHADOW_SIZE_M,
+    .inanimate = FALSE,
+    .disableReflectionPaletteLoad = FALSE,
+    .tracks = TRACKS_FOOT,
+    .oam = &gObjectEventBaseOam_16x16,
+    .subspriteTables = gObjectEventSpriteOamTables_16x16,
+    .anims = sFollowerPilotAnims,
+    .images = sFollowerPilotImages,
+    .affineAnims = gDummySpriteAffineAnimTable,
+};
+

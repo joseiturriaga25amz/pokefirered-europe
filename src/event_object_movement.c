@@ -478,6 +478,8 @@ static const u8 gInitialMovementTypeFacingDirections[MOVEMENT_TYPES_COUNT] = {
 #include "data/object_events/base_oam.h"
 #include "data/object_events/object_event_subsprites.h"
 #include "data/object_events/object_event_graphics_info.h"
+// Isolated diagnostic assets: 16 frames, 4 directions, 2 native palette slots.
+#include "data/object_events/follower_pilot_graphics.h"
 
 static const struct SpritePalette sObjectEventSpritePalettes[] = {
     {gObjectEventPal_NpcBlue,                 OBJ_EVENT_PAL_TAG_NPC_BLUE},
@@ -2060,7 +2062,14 @@ const struct ObjectEventGraphicsInfo *GetObjectEventGraphicsInfo(u8 graphicsId)
     // One 8-bit follower object ID can display different species without
     // modifying ObjectEvent, saved templates or the global graphics pointer table.
     if (graphicsId == OBJ_EVENT_GFX_FULL_FOLLOWER)
+    {
         graphicsId = FullFollower_GetSpriteGraphicsId();
+        // Pikachu alone exercises independent four-direction animation and
+        // normal/shiny palette routing without altering normal Pikachu NPCs.
+        // Diagnostic graphics are not approved Pokemon follower artwork.
+        if (graphicsId == OBJ_EVENT_GFX_PIKACHU)
+            return FullFollower_IsShiny() ? &sFollowerPilotShinyGraphics : &sFollowerPilotNormalGraphics;
+    }
     
     if (graphicsId >= NUM_OBJ_EVENT_GFX)
         graphicsId = OBJ_EVENT_GFX_LITTLE_BOY;
