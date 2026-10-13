@@ -14,6 +14,9 @@ Use `docs/spec/` only for frozen historical design details.
 
 ## Current state
 
+- **Immediate B10 (2026-10-13):** `prototype/follower-runtime` HEAD `cb02d48ea6e019efa29c61cbd58521b757c7abab` adds strict **packed** 4bpp and BGR555 palette manifest verification; runs on synthetic fixtures only. #40 SUCCESS `38414609819` on prior `8d4649a`. #41 `38425305781` is awaiting exact conclusion. Check that run, resolve any gate failures, then examine real sample APNG/converted assets (none downloaded into this cycle), colors/64px memory and dedicated follower palette before mass 386 graphics integration. No MyBoy QA or gameplay merge yet.
+
+
 - **Immediate next B10 (2026-10-13):** `prototype/follower-runtime` HEAD `8d4649a5177b14b006bab59117ffdaf1382e7424` adds tested-on-CI-pending `tools/convert_follower_apng.py` pilot for 4-frame HGSS-style APNG→GBA 4bpp/BGR555 sheets, synthetic examples only. Exact #39 SUCCESS on previous `929125b`. #40 `38414609819` status `in_progress` at checkpoint; confirm conclusion and fix real defects if any. Then bounded audit of converter source palette limits and design dedicated follower palette + size-aware rendering; normal/shiny 386 implementation remains mandatory, absent; no MyBoy executed or follower merged.
 
 
