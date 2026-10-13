@@ -878,3 +878,8 @@ jobs:
           assert "gSprites[gObjectEvents[objectEventId].spriteId].images = graphicsInfo->images" in movement
           print("Follower diagnostic 16/32/64 frame counts, shape, size and VRAM allocation contract PASS")
           PY
+
+      - name: Audit pinned complete 386 HGSS APNG source inventory (read-only)
+        run: |
+          python3 tools/audit_follower_source_samples.py --self-test-all
+          python3 tools/audit_follower_source_samples.py --full-gen3
