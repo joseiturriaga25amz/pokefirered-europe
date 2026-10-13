@@ -14,6 +14,9 @@ Use `docs/spec/` only for frozen historical design details.
 
 ## Current state
 
+- **Immediate B10 (2026-10-13):** prototype HEAD `c72f22092c82ca11b1a9a8cb9ad2ebdd98ecf85a` has dynamic palette *diagnostic pilot only*. Exact #43 SUCCESS for 20 real sample pairs at old HEAD. #44 run `38439549516` was `in_progress` at this checkpoint. Verify #44 exact result, inspect any failure and test palette lifetime / weather / object reflections under slot pressure; do not extrapolate to 386 or MyBoy. Sprite art not imported. No gameplay merge.
+
+
 - **Immediate B10 (2026-10-13):** prototype technical HEAD `07cd8db161f10426803a0cf4c0964dcbff177e65` extends real HGSS APNG audit to 20 Gen I–III samples and render hashes, frame VRAM/ROM budgets. #42 SUCCESS run `38429105044` on former `3a77b3b` (all five tested pairs feasible). Exact #43 run `38438450305` currently `in_progress`; verify before claiming CI-GREEN, report any incompatible species. Then isolate dedicated runtime palette and frame streaming design for 16/32/64px without changing save/link ABI. No assets integrated; MyBoy pending.
 
 
