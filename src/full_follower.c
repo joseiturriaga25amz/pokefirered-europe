@@ -15,6 +15,8 @@
 
 static bool8 sFollowerEnabled = TRUE;
 static u16 sFollowerSpecies = SPECIES_NONE;
+// Visual variant comes from the actual first eligible party Pokémon.
+static bool8 sFollowerIsShiny = FALSE;
 // The graphics slot is 8-bit; the selected species is held only at runtime.
 static u8 sFollowerGraphicsId = OBJ_EVENT_GFX_PIKACHU;
 // Unsaved, bounded history of the player's vacated map tiles.
@@ -31,7 +33,7 @@ static bool8 sFollowerExitLockObserved;
 static void Task_FullFollower(u8 taskId);
 static struct ObjectEvent *FindFollowerObject(void);
 static u8 GetPrototypeFollowerGraphicsId(u16 species);
-static u16 GetEligiblePrototypeFollowerSpecies(void);
+static u16 GetEligiblePrototypeFollowerSpecies(bool8 *isShiny);
 static bool8 ShouldSuppressFollower(void);
 static void PositionFollowerBehindPlayer(struct ObjectEvent *follower, s16 x, s16 y);
 static void ResetFollowerTrail(const struct ObjectEvent *player);
@@ -51,6 +53,11 @@ bool8 FullFollower_IsEnabled(void)
 u8 FullFollower_GetSpriteGraphicsId(void)
 {
     return sFollowerGraphicsId;
+}
+
+bool8 FullFollower_IsShiny(void)
+{
+    return sFollowerIsShiny;
 }
 
 static u8 GetPrototypeFollowerGraphicsId(u16 species)
@@ -75,10 +82,11 @@ static u8 GetPrototypeFollowerGraphicsId(u16 species)
     }
 }
 
-static u16 GetEligiblePrototypeFollowerSpecies(void)
+static u16 GetEligiblePrototypeFollowerSpecies(bool8 *isShiny)
 {
     u32 i;
 
+    *isShiny = FALSE;
     for (i = 0; i < PARTY_SIZE; i++)
     {
         u16 species = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES);
@@ -91,6 +99,7 @@ static u16 GetEligiblePrototypeFollowerSpecies(void)
             // the first one with a prototype sprite. Hide unsupported leads.
             if (GetPrototypeFollowerGraphicsId(species) == 0xFF)
                 return SPECIES_NONE;
+            *isShiny = IsMonShiny(&gPlayerParty[i]);
             return species;
         }
     }
@@ -293,7 +302,8 @@ static bool8 FollowRecordedPlayerSteps(struct ObjectEvent *follower)
 static void RefreshFollower(void)
 {
     struct ObjectEvent *follower = FindFollowerObject();
-    u16 species = GetEligiblePrototypeFollowerSpecies();
+    bool8 isShiny = FALSE;
+    u16 species = GetEligiblePrototypeFollowerSpecies(&isShiny);
     u8 graphicsId;
 
     if (ShouldSuppressFollower() || !sFollowerEnabled || species == SPECIES_NONE)
@@ -301,10 +311,11 @@ static void RefreshFollower(void)
         // Suppressed presentation must release its object slot AND sprite/OAM
         // allocation, not leave a hidden object behind through bike/Surf/scripts.
         // Remove the runtime-only object, never a saved map object or flag.
-        sFollowerSpecies = SPECIES_NONE;
-        sTrailCount = 0;
         if (follower != NULL)
             RemoveFullFollowerObjectEvent(follower);
+        sFollowerSpecies = SPECIES_NONE;
+        sFollowerIsShiny = FALSE;
+        sTrailCount = 0;
         return;
     }
 
@@ -316,6 +327,7 @@ static void RefreshFollower(void)
     if (follower != NULL
      && (follower->graphicsId != OBJ_EVENT_GFX_FULL_FOLLOWER
       || sFollowerSpecies != species
+      || sFollowerIsShiny != isShiny
       || sFollowerGraphicsId != graphicsId))
     {
         RemoveFullFollowerObjectEvent(follower);
@@ -323,6 +335,7 @@ static void RefreshFollower(void)
     }
 
     sFollowerSpecies = species;
+    sFollowerIsShiny = isShiny;
     sFollowerGraphicsId = graphicsId;
 
     if (follower == NULL)
@@ -357,6 +370,7 @@ static void RefreshFollower(void)
     {
         RemoveFullFollowerObjectEvent(follower);
         sFollowerSpecies = SPECIES_NONE;
+        sFollowerIsShiny = FALSE;
         sTrailCount = 0;
     }
 
@@ -379,6 +393,7 @@ void FullFollower_RecallForWarp(void)
     if (follower != NULL)
         RemoveFullFollowerObjectEvent(follower);
     sFollowerSpecies = SPECIES_NONE;
+    sFollowerIsShiny = FALSE;
     sTrailCount = 0;
 }
 
@@ -392,6 +407,7 @@ void FullFollower_DiscardForLocalReload(void)
     if (follower != NULL)
         follower->active = FALSE;
     sFollowerSpecies = SPECIES_NONE;
+    sFollowerIsShiny = FALSE;
     sTrailCount = 0;
 }
 

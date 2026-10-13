@@ -34,7 +34,7 @@ jobs:
           python3 - <<'PY'
           from pathlib import Path
           s = Path("src/full_follower.c").read_text()
-          start = s.index("static u16 GetEligiblePrototypeFollowerSpecies(void)\\n{".replace("\\n", "\n"))
+          start = s.index("static u16 GetEligiblePrototypeFollowerSpecies(bool8 *isShiny)\\n{".replace("\\n", "\n"))
           end = s.index("\nstatic struct ObjectEvent *FindFollowerObject(void)", start)
           body = s[start:end]
           assert "species != SPECIES_NONE && hp != 0 && !isEgg" in body
@@ -728,3 +728,34 @@ jobs:
       - name: Validate future 386-follower graphics import contract (synthetic assets)
         run: |
           python3 tools/validate_follower_graphics.py --self-test
+
+      - name: Audit follower shiny variant identity across slot lifecycle
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          f = Path("src/full_follower.c").read_text()
+          h = Path("include/full_follower.h").read_text()
+          p = Path("include/pokemon.h").read_text()
+          assert "bool8 IsMonShiny(struct Pokemon *mon);" in p
+          assert "bool8 FullFollower_IsShiny(void);" in h
+          assert "static bool8 sFollowerIsShiny = FALSE;" in f
+          lead = f.split("static u16 GetEligiblePrototypeFollowerSpecies(bool8 *isShiny)\n{",1)[1].split("\nstatic struct ObjectEvent *FindFollowerObject(",1)[0]
+          assert "*isShiny = FALSE;" in lead
+          assert "species != SPECIES_NONE && hp != 0 && !isEgg" in lead
+          assert "if (GetPrototypeFollowerGraphicsId(species) == 0xFF)" in lead
+          assert "return SPECIES_NONE;" in lead
+          assert "*isShiny = IsMonShiny(&gPlayerParty[i]);" in lead
+          assert lead.index("if (GetPrototypeFollowerGraphicsId(species) == 0xFF)") < lead.index("IsMonShiny(&gPlayerParty[i])")
+          refresh = f.split("static void RefreshFollower(void)\n{",1)[1].split("\nstatic void Task_FullFollower(",1)[0]
+          assert "GetEligiblePrototypeFollowerSpecies(&isShiny)" in refresh
+          assert "sFollowerIsShiny != isShiny" in refresh
+          assert refresh.index("RemoveFullFollowerObjectEvent(follower);") < refresh.index("sFollowerIsShiny = isShiny;")
+          assert "sFollowerIsShiny = isShiny;" in refresh
+          assert refresh.count("sFollowerIsShiny = FALSE;") >= 2
+          for name in ("FullFollower_RecallForWarp", "FullFollower_DiscardForLocalReload"):
+              body = f.split("void " + name + "(void)\n{",1)[1].split("\n}",1)[0]
+              assert "sFollowerIsShiny = FALSE;" in body
+          # This gate proves identity/teardown sequencing, not visible
+          # shiny sprites; graphics remain six native prototype OW sheets.
+          print("Follower runtime shiny identity selection/swap/recall PASS")
+          PY
