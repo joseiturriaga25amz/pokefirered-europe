@@ -14,6 +14,9 @@ Use `docs/spec/` only for frozen historical design details.
 
 ## Current state
 
+- **Next B10 microblock (2026-10-13):** Prototype HEAD `99b1753861cccd1c2e3ee03a6ef5d741af487a58` adds strict manifest/4bpp graphical preflight and synthetic CI test. #36 SUCCESS at `8d5eb13`, #37 on new HEAD pending confirmation. Verify exact #37, then audit import manifest robustness and GBA palette/VRAM budget as a separate microblock; no real HGSS sprite assets imported or MyBoy visual QA performed. Keep graphics ID 8-bit and Pokémon/save/link ABI unchanged. 
+
+
 - **Immediate B10 (2026-10-13):** technical prototype `prototype/follower-runtime` HEAD `8d5eb13b11dac69843a669863db24ee3bb2101ef` (validator repair only; last code change `cd0b67e`). #35 `38400264028` failed at stale regex step 23 *after ROM build succeeded*. #36 `38405274080` was `in_progress` when recorded. Verify exact #36 before CI-GREEN claim. Continue bounded object/OAM pressure audit; no MyBoy executed and no graphics imported. All sprite/ABI changes remain prototype-only.
 
 
