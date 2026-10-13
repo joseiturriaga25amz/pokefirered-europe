@@ -6,7 +6,11 @@ runner. No third-party sprites are committed, built into Full or uploaded.
 Results classify source compatibility; blocked input is not a build regression.
 Network/source-fetch failures are errors and must not be reported as readiness.
 """
+import argparse
 import hashlib
+import io
+import re
+import zipfile
 import json
 import tempfile
 import time
@@ -116,7 +120,163 @@ def summarize_variant(folder):
     return result
 
 
+def download_archive():
+    """Download the pinned upstream archive once, never materialize as a ROM asset."""
+    url = ("https://codeload.github.com/" + SOURCE_REPO + "/zip/" + SOURCE_REVISION)
+    request = urllib.request.Request(
+        url, headers={"User-Agent": "FireRedFull-B10-read-only-coverage/1"})
+    for attempt in range(3):
+        try:
+            with urllib.request.urlopen(request, timeout=90) as response:
+                archive = response.read(100 * 1024 * 1024 + 1)
+            if len(archive) > 100 * 1024 * 1024 or not zipfile.is_zipfile(io.BytesIO(archive)):
+                raise ValueError("invalid/oversized pinned source archive")
+            return archive
+        except (urllib.error.URLError, TimeoutError, urllib.error.HTTPError) as exc:
+            if isinstance(exc, urllib.error.HTTPError) and exc.code not in (429, 500, 502, 503, 504):
+                raise RuntimeError("non-retryable upstream archive response") from exc
+            if attempt == 2:
+                raise RuntimeError("upstream archive could not be retrieved") from exc
+            time.sleep(attempt + 1)
+
+
+def audit_complete_gen3(archive, first=1, last=386):
+    """Audit every Gen I–III Dex ID, reporting blockers rather than dropping IDs.
+
+    A successful *audit run* can report source blockers. Only a 386/386 result
+    with all normal/shiny variants distinct would pass future asset-coverage
+    acceptance; this audit never means the sprites are integrated in FireRed.
+    """
+    inventory = {}
+    expected_files = {v + "/" + d + ".png" for _, v in VARIANTS for d in DIRECTIONS}
+    archive_prefix = re.compile(
+        r"^[^/]+/APNG/by-pokemon/(\d{3}_[a-z0-9_-]+)/((?:regular|shiny)/(?:down|up|left|right)\.png)$")
+    with zipfile.ZipFile(io.BytesIO(archive)) as zf:
+        for item in zf.infolist():
+            found = archive_prefix.fullmatch(item.filename)
+            if not found:
+                continue
+            name, relative = found.groups()
+            species = int(name[:3])
+            if first <= species <= last:
+                inventory.setdefault(species, {}).setdefault(name, {})[relative] = item
+        results = []
+        with tempfile.TemporaryDirectory(prefix="hgss-full-gen3-audit-") as temp:
+            root = Path(temp)
+            for species in range(first, last + 1):
+                folders = inventory.get(species, {})
+                entry = {"species": species, "status": "SOURCE_BLOCKED",
+                         "reasons": [], "normal": {}, "shiny": {}}
+                if len(folders) != 1:
+                    entry["reasons"].append("species_folder_count_" + str(len(folders)))
+                    results.append(entry)
+                    continue
+                folder, file_map = next(iter(folders.items()))
+                entry["folder"] = folder
+                missing = sorted(expected_files - set(file_map))
+                if missing:
+                    entry["reasons"].append("missing_directional_files:" + ",".join(missing))
+                    results.append(entry)
+                    continue
+                for variant, upstream_variant in VARIANTS:
+                    dest_dir = root / ("%03d" % species) / upstream_variant
+                    dest_dir.mkdir(parents=True, exist_ok=True)
+                    for direction in DIRECTIONS:
+                        asset = file_map[upstream_variant + "/" + direction + ".png"]
+                        if asset.file_size > 500_000:
+                            entry["reasons"].append(variant + ":over_500KB_per_APNG")
+                            break
+                        (dest_dir / (direction + ".png")).write_bytes(zf.read(asset))
+                    if entry["reasons"]:
+                        break
+                    try:
+                        data = summarize_variant(dest_dir)
+                    except (ValueError, OSError, AssertionError, IndexError, KeyError) as exc:
+                        data = {"status": "SOURCE_BLOCKED",
+                                "reasons": ["decoder_or_format:" + str(exc)[:140]]}
+                    entry[variant] = {
+                        "status": data["status"],
+                        "colors": data.get("unique_opaque_BGR555_colors"),
+                        "frame_px": data.get("frame_px"),
+                        "semi_alpha": data.get("semi_transparent_pixel_instances"),
+                        "packed_render_sha256": data.get("packed_render_sha256"),
+                        "reasons": data.get("reasons", []),
+                        "minimum_unique_frames_per_direction": min(
+                            (v["unique_BGR555_frames"] for v in data.get("directions", {}).values()),
+                            default=None),
+                    }
+                if (entry["normal"].get("status") == "SOURCE_FEASIBLE"
+                        and entry["shiny"].get("status") == "SOURCE_FEASIBLE"):
+                    if entry["normal"]["frame_px"] != entry["shiny"]["frame_px"]:
+                        entry["reasons"].append("normal_shiny_size_mismatch")
+                    elif (entry["normal"]["packed_render_sha256"]
+                          == entry["shiny"]["packed_render_sha256"]):
+                        entry["reasons"].append("normal_shiny_render_identical")
+                    else:
+                        entry["status"] = "SOURCE_FEASIBLE"
+                else:
+                    for variant in ("normal", "shiny"):
+                        if entry[variant].get("status") not in (None, "SOURCE_FEASIBLE"):
+                            entry["reasons"].append(variant + ":" +
+                                ",".join(entry[variant].get("reasons", [])))
+                results.append(entry)
+    pass_ids = [r["species"] for r in results if r["status"] == "SOURCE_FEASIBLE"]
+    blocked = [{"id": r["species"], "reasons": r["reasons"],
+                "normal_colors": r["normal"].get("colors"),
+                "shiny_colors": r["shiny"].get("colors")}
+               for r in results if r["status"] != "SOURCE_FEASIBLE"]
+    size_counts = {}
+    for entry in results:
+        if entry["status"] == "SOURCE_FEASIBLE":
+            size = str(entry["normal"]["frame_px"])
+            size_counts[size] = size_counts.get(size, 0) + 1
+    return {
+        "scope": "PINNED_READ_ONLY_HGSS_GEN3_SOURCE_AUDIT_NOT_RUNTIME_OR_ART_REDISTRIBUTION",
+        "source_revision": SOURCE_REVISION,
+        "expected_species": last - first + 1,
+        "source_feasible_species": len(pass_ids),
+        "blocked_species_count": len(blocked),
+        "feasible_ids": pass_ids,
+        "frame_sizes": size_counts,
+        "blocked": blocked
+    }
+
+
+def synthetic_full_test():
+    from convert_follower_apng import synthetic_apng
+    data = io.BytesIO()
+    with zipfile.ZipFile(data, "w", compression=zipfile.ZIP_DEFLATED) as zf:
+        for variant in ("regular", "shiny"):
+            for direction in DIRECTIONS:
+                zf.writestr("source-pinned/APNG/by-pokemon/001_synthetic/" +
+                            variant + "/" + direction + ".png", synthetic_apng())
+    report = audit_complete_gen3(data.getvalue(), first=1, last=2)
+    assert report["expected_species"] == 2
+    assert report["blocked_species_count"] == 2
+    assert report["blocked"][0]["id"] == 1
+    assert "normal_shiny_render_identical" in report["blocked"][0]["reasons"]
+    assert report["blocked"][1]["id"] == 2
+    assert "species_folder_count_0" in report["blocked"][1]["reasons"]
+    print("Pinned-archive inventory, missing species and identical shiny rejection PASS")
+
+
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--full-gen3", action="store_true",
+                        help="audit all 386 pinned upstream normal/shiny APNGs")
+    parser.add_argument("--self-test-all", action="store_true")
+    args = parser.parse_args()
+    if args.self_test_all:
+        synthetic_full_test()
+        return
+    if args.full_gen3:
+        report = audit_complete_gen3(download_archive())
+        print("HGSS_FULL_GEN3_REPORT=" + json.dumps(report, sort_keys=True, separators=(",", ":")))
+        print("HGSS full pinned audit: %d/%d normal/shiny pairs source-convertible; "
+              "%d source blockers" % (report["source_feasible_species"],
+              report["expected_species"], report["blocked_species_count"]))
+        print("This is a source feasibility audit, not ROM integration or legal clearance.")
+        return
     results = []
     with tempfile.TemporaryDirectory(prefix="follower-source-audit-") as temp:
         root = Path(temp)
