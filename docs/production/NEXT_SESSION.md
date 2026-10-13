@@ -14,6 +14,9 @@ Use `docs/spec/` only for frozen historical design details.
 
 ## Current state
 
+- **B10 next (2026-10-13):** prototype `prototype/follower-runtime` HEAD `bdba657909e41bdb7a7101008f8c408b2be17803` adds full 386 pinned HGSS APNG *source-only* coverage audit. Last confirmed CI-GREEN #45 exact `f6b7e45`; #47 `38444562698` `in_progress` when written. Verify #47 and extract numeric 386 coverage/color blockers, investigate conversion/code defects separately from temporary network issues. No actual source assets are imported to Git or ROM, no MyBoy, no 386 gameplay/render completion. Prior approved 8-bit graphics ID and SaveBlock/link contracts remain untouched.
+
+
 - **B10 next (2026-10-13):** `prototype/follower-runtime` HEAD `f6b7e45a8ec0f05e4f5f4ef9277e4c8b1a9bbc8d` adds 32px Snorlax-ID and 64px Mew-ID synthetic diagnostic follower 16-frame graphics, with normal/shiny palette selection. #44 SUCCESS on previous `c72f220`; #45 `38440557027` status `in_progress` when recorded; verify exact result. Then audit OAM/VRAM allocation and palette lifetime under stress, continue 386 real animated normal/shiny implementation path. No actual HGSS assets integrated, no MyBoy runtime, no master gameplay merge.
 
 
