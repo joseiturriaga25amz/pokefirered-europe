@@ -14,6 +14,9 @@ Use `docs/spec/` only for frozen historical design details.
 
 ## Current state
 
+- **Immediate next B10 (2026-10-13):** `prototype/follower-runtime` HEAD `8d4649a5177b14b006bab59117ffdaf1382e7424` adds tested-on-CI-pending `tools/convert_follower_apng.py` pilot for 4-frame HGSS-style APNG→GBA 4bpp/BGR555 sheets, synthetic examples only. Exact #39 SUCCESS on previous `929125b`. #40 `38414609819` status `in_progress` at checkpoint; confirm conclusion and fix real defects if any. Then bounded audit of converter source palette limits and design dedicated follower palette + size-aware rendering; normal/shiny 386 implementation remains mandatory, absent; no MyBoy executed or follower merged.
+
+
 - **Immediate B10 action (2026-10-13):** exact prototype HEAD `929125b661d5429d8e5e685ddc5729803fbef4e0` is synthetic 16-frame 4-direction diagnostic for Pikachu slot, contrasting blue/pink shared NPC palette slots; **no real Pokémon shiny sprite yet**. CI #38 SUCCESS on previous head; #39 run `38409285014` status `in_progress` at checkpoint. Verify #39 exact result and fix proven compiler/gate errors if any; then plan dedicated palette/VRAM-safe normal/shiny art integration, not another unrelated warp audit. 386 normal+shiny animated species mandatory, not completed. No MyBoy runtime execution or master gameplay merge.
 
 
