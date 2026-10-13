@@ -14,6 +14,9 @@ Use `docs/spec/` only for frozen historical design details.
 
 ## Current state
 
+- **Next B10 (2026-10-13):** prototype HEAD `85742cdc41b226c95a1a730e30928a13c796626d` fixes internal Gen III vs National Dex registry lookup (Treecko internal 277→National 252), accepts registered pairs without widening 8-bit graphicsId. #49 SUCCESS at previous `fb532e1`; #50 run `38450370206` `in_progress` at checkpoint, check exact result. Registry still EMPTY and no actual art committed; next reproducible packed-graphics-to-ROM C generator, isolated real source end-to-end build with clear provenance, followed by visual MyBoy QA. Do not describe 386/386 convertible as integrated.
+
+
 - **Immediate next B10 (2026-10-13):** prototype HEAD `fb532e1d88e0d07b3b7c5484f8d056d9e10f3d70` adds empty 386 species × normal/shiny pointer registry to native follower graphics resolver. #48 CI success at old SHA confirmed 386/386 source-convertible; #49 run `38449232252` was `in_progress` at checkpoint. Check exact #49 outcome and fix any verified build/gate defects. Then implement verified, reproducible generator of C graphics/normal-shiny palette bindings from cleared converted 4bpp data, starting with a genuine single-species runtime pilot (not another synthetic-only review). Do not present null registry as asset integration. No MyBoy runtime, no master gameplay merge.
 
 
