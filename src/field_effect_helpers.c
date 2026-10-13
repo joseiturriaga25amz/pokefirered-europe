@@ -33,8 +33,14 @@ static u32 ShowDisguiseFieldEffect(u8 fldEff, u8 templateIdx, u8 paletteNum);
 void SetUpReflection(struct ObjectEvent * objectEvent, struct Sprite *sprite, bool8 stillReflection)
 {
     struct Sprite *reflectionSprite;
+    u8 reflectionSpriteId;
 
-    reflectionSprite = &gSprites[CreateCopySpriteAt(sprite, sprite->x, sprite->y, 0x98)];
+    // Sprite slots are shared by NPCs, field effects and the follower.
+    // CreateCopySpriteAt returns MAX_SPRITES when all 64 are occupied.
+    reflectionSpriteId = CreateCopySpriteAt(sprite, sprite->x, sprite->y, 0x98);
+    if (reflectionSpriteId == MAX_SPRITES)
+        return;
+    reflectionSprite = &gSprites[reflectionSpriteId];
     reflectionSprite->callback = UpdateObjectReflectionSprite;
     reflectionSprite->oam.priority = 3;
     reflectionSprite->oam.paletteNum = gReflectionEffectPaletteMap[reflectionSprite->oam.paletteNum];
@@ -1451,9 +1457,12 @@ void RemoveFullFollowerFieldEffects(const struct ObjectEvent *follower)
                 FieldEffectStop(sprite, sprite->callback == UpdateTallGrassFieldEffect
                                            ? FLDEFF_TALL_GRASS : FLDEFF_LONG_GRASS);
         }
-        else if (sprite->data[0] == follower->localId
-              && sprite->data[1] == follower->mapNum
-              && sprite->data[2] == follower->mapGroup)
+        // Native StartFieldEffectForObjectEvent writes u8 IDs into u32
+        // arguments; pre-existing high bits can survive in sprite data.
+        // Match the same low-byte identity as native field-effect callbacks.
+        else if ((u8)sprite->data[0] == follower->localId
+              && (u8)sprite->data[1] == follower->mapNum
+              && (u8)sprite->data[2] == follower->mapGroup)
         {
             if (sprite->callback == UpdateShadowFieldEffect)
                 FieldEffectStop(sprite, FLDEFF_SHADOW);

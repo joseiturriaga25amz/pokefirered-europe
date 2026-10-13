@@ -635,3 +635,47 @@ jobs:
           assert all(old[k] == new[k] for k in old)
           print("Follower field-effect cleanup before reusable object slot teardown PASS")
           PY
+
+      - name: Audit follower field-effect low-byte identity and reflection capacity
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          effects = Path("src/field_effect_helpers.c").read_text()
+          movement = Path("src/event_object_movement.c").read_text()
+          effect_header = Path("include/field_effect.h").read_text()
+
+          # ObjectEventGetLocalIdAndMap writes only u8 values to u32
+          # gFieldEffectArguments. Native callbacks compare u8 IDs.
+          assert "extern u32 gFieldEffectArguments[8];" in effect_header
+          emit = movement.split("u32 StartFieldEffectForObjectEvent(", 1)[1].split("\\n}", 1)[0]
+          assert "(u8 *)&gFieldEffectArguments[0]" in emit
+          assert "(u8 *)&gFieldEffectArguments[1]" in emit
+          assert "(u8 *)&gFieldEffectArguments[2]" in emit
+
+          cleanup = effects.split("void RemoveFullFollowerFieldEffects(", 1)[1]
+          for index, name in enumerate(("localId", "mapNum", "mapGroup")):
+              assert f"(u8)sprite->data[{index}] == follower->{name}" in cleanup
+          assert "if (!sprite->inUse)" in cleanup
+          assert "sprite->callback == UpdateObjectReflectionSprite" in cleanup
+          assert "sprite->inUse = FALSE;" in cleanup
+
+          # Reproduce stale upper bytes: a second object with the same
+          # stable follower local ID must not inherit an old terrain sprite.
+          saved = [0x12AB00FE, 0x90000105, 0xFEDC0003]
+          fields = [254, 5, 3]
+          dirty = [((v & ~0xff) | val) & 0xffff for v, val in zip(saved, fields)]
+          assert dirty != fields
+          assert [v & 0xff for v in dirty] == fields
+
+          # Guard allocation failure before gSprites[spriteId] indexing.
+          reflect = effects.split("void SetUpReflection(", 1)[1].split("\\n}", 1)[0]
+          create = reflect.index("reflectionSpriteId = CreateCopySpriteAt(")
+          guard = reflect.index("if (reflectionSpriteId == MAX_SPRITES)")
+          deref = reflect.index("reflectionSprite = &gSprites[reflectionSpriteId];")
+          assert create < guard < deref
+          assert re.search(r"if \\(reflectionSpriteId == MAX_SPRITES\\)\\s*return;", reflect)
+          assert "return MAX_SPRITES;" in movement.split("u8 CreateCopySpriteAt(", 1)[1].split("\\n}", 1)[0]
+          print("Low-byte ownership and exhausted reflection-sprite guard PASS")
+          PY
