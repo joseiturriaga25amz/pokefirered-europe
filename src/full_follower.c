@@ -60,6 +60,11 @@ bool8 FullFollower_IsShiny(void)
     return sFollowerIsShiny;
 }
 
+bool8 FullFollower_UsesPilotGraphics(void)
+{
+    return sFollowerGraphicsId == OBJ_EVENT_GFX_PIKACHU;
+}
+
 static u8 GetPrototypeFollowerGraphicsId(u16 species)
 {
     // Prototype deliberately uses only overworld assets already present in FireRed Full.

@@ -15,5 +15,7 @@ bool8 FullFollower_IsEnabled(void);
 u8 FullFollower_GetSpriteGraphicsId(void);
 // Runtime-only variant key for future registered normal/shiny overworld graphics.
 bool8 FullFollower_IsShiny(void);
+// Pilot only; final 386-species asset registry will replace this gate.
+bool8 FullFollower_UsesPilotGraphics(void);
 
 #endif // GUARD_FULL_FOLLOWER_H

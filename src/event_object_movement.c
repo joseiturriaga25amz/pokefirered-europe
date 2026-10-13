@@ -1516,12 +1516,18 @@ static bool8 GetAvailableObjectEventId(u16 localId, u8 mapNum, u8 mapGroup, u8 *
 
 static void RemoveObjectEvent(struct ObjectEvent *objectEvent)
 {
-    // Object slots are reusable during this frame. Detach the follower's
-    // transient field-effect sprites before a new follower takes its ID.
+    // Only the diagnostic follower uses a tagged, dynamic OBJ palette.
+    // Release field effects and main sprite first, then its palette tag.
+    bool8 pilotFollower = objectEvent->localId == OBJ_EVENT_ID_FULL_FOLLOWER
+                        && objectEvent->graphicsId == OBJ_EVENT_GFX_FULL_FOLLOWER
+                        && FullFollower_UsesPilotGraphics();
+
     if (objectEvent->localId == OBJ_EVENT_ID_FULL_FOLLOWER)
         RemoveFullFollowerFieldEffects(objectEvent);
     objectEvent->active = FALSE;
     RemoveObjectEventInternal(objectEvent);
+    if (pilotFollower)
+        FreeSpritePaletteByTag(FOLLOWER_PILOT_PALETTE_TAG);
 }
 
 void RemoveObjectEventByLocalIdAndMap(u8 localId, u8 mapNum, u8 mapGroup)
@@ -1570,6 +1576,7 @@ static u8 TrySetupObjectEventSprite(const struct ObjectEventTemplate *objectEven
     struct Sprite *sprite;
     struct ObjectEvent *objectEvent;
     const struct ObjectEventGraphicsInfo *graphicsInfo;
+    u8 followerPaletteNum = 0xFF;
 
     objectEventId = InitObjectEventStateFromTemplate(objectEventTemplate, mapNum, mapGroup);
     if (objectEventId == OBJECT_EVENTS_COUNT)
@@ -1577,6 +1584,25 @@ static u8 TrySetupObjectEventSprite(const struct ObjectEventTemplate *objectEven
 
     objectEvent = &gObjectEvents[objectEventId];
     graphicsInfo = GetObjectEventGraphicsInfo(objectEvent->graphicsId);
+    if (objectEvent->localId == OBJ_EVENT_ID_FULL_FOLLOWER
+     && objectEvent->graphicsId == OBJ_EVENT_GFX_FULL_FOLLOWER
+     && FullFollower_UsesPilotGraphics())
+    {
+        // The 12 native reserved slots belong to player/NPC/reflections.
+        // LoadSpritePalette only allocates among remaining free slots (12-15).
+        struct SpritePalette palette = {
+            FullFollower_IsShiny() ? sFollowerPilotShinyPalette : sFollowerPilotNormalPalette,
+            FOLLOWER_PILOT_PALETTE_TAG
+        };
+        followerPaletteNum = LoadSpritePalette(&palette);
+        if (followerPaletteNum == 0xFF)
+        {
+            // No spare OBJ palette: keep NPC colors intact and retry later.
+            objectEvent->active = FALSE;
+            return OBJECT_EVENTS_COUNT;
+        }
+        ApplyGlobalFieldPaletteTint(followerPaletteNum);
+    }
     if (graphicsInfo->paletteSlot == PALSLOT_PLAYER)
         LoadPlayerObjectReflectionPalette(graphicsInfo->paletteTag, graphicsInfo->paletteSlot);
     else if (graphicsInfo->paletteSlot == PALSLOT_NPC_SPECIAL)
@@ -1590,6 +1616,9 @@ static u8 TrySetupObjectEventSprite(const struct ObjectEventTemplate *objectEven
     spriteId = CreateSprite(spriteTemplate, 0, 0, 0);
     if (spriteId == MAX_SPRITES)
     {
+        // Release a transient palette if sprite slots were exhausted.
+        if (followerPaletteNum != 0xFF)
+            FreeSpritePaletteByTag(FOLLOWER_PILOT_PALETTE_TAG);
         gObjectEvents[objectEventId].active = FALSE;
         return OBJECT_EVENTS_COUNT;
     }
@@ -1600,7 +1629,7 @@ static u8 TrySetupObjectEventSprite(const struct ObjectEventTemplate *objectEven
     sprite->centerToCornerVecY = -(graphicsInfo->height >> 1);
     sprite->x += 8;
     sprite->y += 16 + sprite->centerToCornerVecY;
-    sprite->oam.paletteNum = graphicsInfo->paletteSlot;
+    sprite->oam.paletteNum = followerPaletteNum != 0xFF ? followerPaletteNum : graphicsInfo->paletteSlot;
     sprite->coordOffsetEnabled = TRUE;
     sprite->data[0] = objectEventId;
     objectEvent->spriteId = spriteId;

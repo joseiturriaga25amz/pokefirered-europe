@@ -51,7 +51,11 @@ void SetUpReflection(struct ObjectEvent * objectEvent, struct Sprite *sprite, bo
     reflectionSprite = &gSprites[reflectionSpriteId];
     reflectionSprite->callback = UpdateObjectReflectionSprite;
     reflectionSprite->oam.priority = 3;
-    reflectionSprite->oam.paletteNum = gReflectionEffectPaletteMap[reflectionSprite->oam.paletteNum];
+    // Dynamic palette indices 12-15 are not in the vanilla reflection map.
+    // The pilot reflection shares its main palette rather than borrowing the
+    // player's reflection palette. Native NPC reflections remain unchanged.
+    if (objectEvent->localId != OBJ_EVENT_ID_FULL_FOLLOWER || !FullFollower_UsesPilotGraphics())
+        reflectionSprite->oam.paletteNum = gReflectionEffectPaletteMap[reflectionSprite->oam.paletteNum];
     reflectionSprite->usingSheet = TRUE;
     reflectionSprite->anims = gDummySpriteAnimTable;
     StartSpriteAnim(reflectionSprite, 0);
@@ -61,7 +65,8 @@ void SetUpReflection(struct ObjectEvent * objectEvent, struct Sprite *sprite, bo
     reflectionSprite->data[0] = sprite->data[0];
     reflectionSprite->data[1] = objectEvent->localId;
     reflectionSprite->data[7] = stillReflection;
-    LoadObjectReflectionPalette(objectEvent, reflectionSprite);
+    if (objectEvent->localId != OBJ_EVENT_ID_FULL_FOLLOWER || !FullFollower_UsesPilotGraphics())
+        LoadObjectReflectionPalette(objectEvent, reflectionSprite);
 
     if (!stillReflection)
         reflectionSprite->oam.affineMode = ST_OAM_AFFINE_NORMAL;
@@ -132,7 +137,10 @@ static void UpdateObjectReflectionSprite(struct Sprite *reflectionSprite)
     }
     else
     {
-        reflectionSprite->oam.paletteNum = gReflectionEffectPaletteMap[mainSprite->oam.paletteNum];
+        if (objectEvent->localId == OBJ_EVENT_ID_FULL_FOLLOWER && FullFollower_UsesPilotGraphics())
+            reflectionSprite->oam.paletteNum = mainSprite->oam.paletteNum;
+        else
+            reflectionSprite->oam.paletteNum = gReflectionEffectPaletteMap[mainSprite->oam.paletteNum];
         reflectionSprite->oam.shape = mainSprite->oam.shape;
         reflectionSprite->oam.size = mainSprite->oam.size;
         reflectionSprite->oam.matrixNum = mainSprite->oam.matrixNum | ST_OAM_VFLIP;

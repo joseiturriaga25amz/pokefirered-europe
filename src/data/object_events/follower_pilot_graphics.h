@@ -194,9 +194,20 @@ static const union AnimCmd *const sFollowerPilotAnims[] = {
     [ANIM_RAISE_HAND] = sFollowerPilotFaceSouth,
 };
 
+// Diagnostic-only palette data. Slot is allocated dynamically among the 4
+// nonreserved OBJ palette slots; normal NPC palette slots are never patched.
+#define FOLLOWER_PILOT_PALETTE_TAG 0xF0A0
+static const u16 sFollowerPilotNormalPalette[16] = {
+    0, 0x7FFF, 0x4210, 0x03E0, 0x001F, 0x7C00, 0x56B5, 0x294A,
+    0, 0, 0, 0, 0, 0, 0, 0
+};
+static const u16 sFollowerPilotShinyPalette[16] = {
+    0, 0x7FFF, 0x4210, 0x7C1F, 0x7FE0, 0x03FF, 0x56B5, 0x294A,
+    0, 0, 0, 0, 0, 0, 0, 0
+};
 static const struct ObjectEventGraphicsInfo sFollowerPilotNormalGraphics = {
     .tileTag = TAG_NONE,
-    .paletteTag = OBJ_EVENT_PAL_TAG_NPC_BLUE,
+    .paletteTag = TAG_NONE,
     .reflectionPaletteTag = OBJ_EVENT_PAL_TAG_NONE,
     .size = 16 * 16 / 2,
     .width = 16,
@@ -215,7 +226,7 @@ static const struct ObjectEventGraphicsInfo sFollowerPilotNormalGraphics = {
 
 static const struct ObjectEventGraphicsInfo sFollowerPilotShinyGraphics = {
     .tileTag = TAG_NONE,
-    .paletteTag = OBJ_EVENT_PAL_TAG_NPC_PINK,
+    .paletteTag = TAG_NONE,
     .reflectionPaletteTag = OBJ_EVENT_PAL_TAG_NONE,
     .size = 16 * 16 / 2,
     .width = 16,
