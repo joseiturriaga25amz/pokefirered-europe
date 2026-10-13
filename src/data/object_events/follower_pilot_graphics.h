@@ -404,6 +404,18 @@ sFollowerRegisteredGraphics[FOLLOWER_GRAPHICS_SPECIES_COUNT + 1][2] = {
     { NULL, NULL }, /* species 0 is invalid */
 };
 
+// Generated locally alongside graphics entries; default NULL for every species.
+static const u16 *const sFollowerRegisteredPalettes[FOLLOWER_GRAPHICS_SPECIES_COUNT + 1][2] = {
+    { NULL, NULL }, /* species 0 is invalid */
+};
+
+static const u16 *GetFollowerRegisteredPalette(u16 species, bool8 shiny)
+{
+    if (species == SPECIES_NONE || species > FOLLOWER_GRAPHICS_SPECIES_COUNT)
+        return NULL;
+    return sFollowerRegisteredPalettes[species][shiny ? 1 : 0];
+}
+
 static const struct ObjectEventGraphicsInfo *GetFollowerRegisteredGraphicsInfo(u16 species, bool8 shiny)
 {
     if (species == SPECIES_NONE || species > FOLLOWER_GRAPHICS_SPECIES_COUNT)

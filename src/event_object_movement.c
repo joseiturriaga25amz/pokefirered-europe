@@ -1590,8 +1590,10 @@ static u8 TrySetupObjectEventSprite(const struct ObjectEventTemplate *objectEven
     {
         // The 12 native reserved slots belong to player/NPC/reflections.
         // LoadSpritePalette only allocates among remaining free slots (12-15).
+        const u16 *registeredPalette = GetFollowerRegisteredPalette(FullFollower_GetSpecies(), FullFollower_IsShiny());
         struct SpritePalette palette = {
-            FullFollower_IsShiny() ? sFollowerPilotShinyPalette : sFollowerPilotNormalPalette,
+            registeredPalette != NULL ? registeredPalette :
+                (FullFollower_IsShiny() ? sFollowerPilotShinyPalette : sFollowerPilotNormalPalette),
             FOLLOWER_PILOT_PALETTE_TAG
         };
         followerPaletteNum = LoadSpritePalette(&palette);
