@@ -2083,6 +2083,13 @@ void PlayerObjectTurn(struct PlayerAvatar *playerAvatar, u8 direction)
     ObjectEventTurn(&gObjectEvents[playerAvatar->objectEventId], direction);
 }
 
+bool8 FullFollower_HasRegisteredGraphics(u16 nationalDexNum)
+{
+    // A complete pair is mandatory; never present normal-only art as shiny.
+    return GetFollowerRegisteredGraphicsInfo(nationalDexNum, FALSE) != NULL
+        && GetFollowerRegisteredGraphicsInfo(nationalDexNum, TRUE) != NULL;
+}
+
 const struct ObjectEventGraphicsInfo *GetObjectEventGraphicsInfo(u8 graphicsId)
 {
     if (graphicsId >= OBJ_EVENT_GFX_VARS)

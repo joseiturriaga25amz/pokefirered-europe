@@ -17,6 +17,8 @@ u8 FullFollower_GetSpriteGraphicsId(void);
 bool8 FullFollower_IsShiny(void);
 // Unsaved, 16-bit National species key; never changes 8-bit object graphics ID.
 u16 FullFollower_GetSpecies(void);
+// Expects National Dex species ID, NOT Gen III internal species ID.
+bool8 FullFollower_HasRegisteredGraphics(u16 nationalDexNum);
 // Pilot only; final 386-species asset registry will replace this gate.
 bool8 FullFollower_UsesPilotGraphics(void);
 

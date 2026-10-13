@@ -62,19 +62,29 @@ bool8 FullFollower_IsShiny(void)
 
 u16 FullFollower_GetSpecies(void)
 {
-    return sFollowerSpecies;
+    // Gen III Hoenn internal species IDs are not National Dex numbers.
+    // The generated sprite registry is indexed by National Dex 1..386.
+    if (sFollowerSpecies == SPECIES_NONE)
+        return 0;
+    return SpeciesToNationalPokedexNum(sFollowerSpecies);
 }
 
 bool8 FullFollower_UsesPilotGraphics(void)
 {
     return sFollowerGraphicsId == OBJ_EVENT_GFX_PIKACHU
         || sFollowerGraphicsId == OBJ_EVENT_GFX_SNORLAX
-        || sFollowerGraphicsId == OBJ_EVENT_GFX_MEW;
+        || sFollowerGraphicsId == OBJ_EVENT_GFX_MEW
+        || FullFollower_HasRegisteredGraphics(FullFollower_GetSpecies());
 }
 
 static u8 GetPrototypeFollowerGraphicsId(u16 species)
 {
-    // Prototype deliberately uses only overworld assets already present in FireRed Full.
+    // A generated National Dex species reuses the existing 8-bit follower ID.
+    // Proxy is only a fallback; graphics resolve through the National key.
+    if (FullFollower_HasRegisteredGraphics(SpeciesToNationalPokedexNum(species)))
+        return OBJ_EVENT_GFX_PIKACHU;
+
+    // Prototype otherwise uses only overworld assets already present in FireRed Full.
     switch (species)
     {
     case SPECIES_PIKACHU:
