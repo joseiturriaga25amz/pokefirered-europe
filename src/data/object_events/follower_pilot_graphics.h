@@ -243,3 +243,151 @@ static const struct ObjectEventGraphicsInfo sFollowerPilotShinyGraphics = {
     .affineAnims = gDummySpriteAffineAnimTable,
 };
 
+
+// Size-aware synthetic follower pilots. The only nontransparent pixels are
+// small diagnostic tile markers; these are NOT Pokemon artwork. Each frame
+// occupies only one size-matched OBJ tile allocation at runtime.
+static const u32 sFollowerPilot32Pixels[16][128] = {
+    { [40] = 0x11111111, [44] = 0x11111111 }, // direction 0, step 0
+    { [40] = 0x22222222, [44] = 0x11111111 }, // direction 0, step 1
+    { [40] = 0x33333333, [44] = 0x11111111 }, // direction 0, step 2
+    { [40] = 0x44444444, [44] = 0x11111111 }, // direction 0, step 3
+    { [40] = 0x11111111, [44] = 0x22222222 }, // direction 1, step 0
+    { [40] = 0x22222222, [44] = 0x22222222 }, // direction 1, step 1
+    { [40] = 0x33333333, [44] = 0x22222222 }, // direction 1, step 2
+    { [40] = 0x44444444, [44] = 0x22222222 }, // direction 1, step 3
+    { [40] = 0x11111111, [44] = 0x33333333 }, // direction 2, step 0
+    { [40] = 0x22222222, [44] = 0x33333333 }, // direction 2, step 1
+    { [40] = 0x33333333, [44] = 0x33333333 }, // direction 2, step 2
+    { [40] = 0x44444444, [44] = 0x33333333 }, // direction 2, step 3
+    { [40] = 0x11111111, [44] = 0x44444444 }, // direction 3, step 0
+    { [40] = 0x22222222, [44] = 0x44444444 }, // direction 3, step 1
+    { [40] = 0x33333333, [44] = 0x44444444 }, // direction 3, step 2
+    { [40] = 0x44444444, [44] = 0x44444444 }, // direction 3, step 3
+};
+static const struct SpriteFrameImage sFollowerPilot32Images[] = {
+    { (const u8 *)sFollowerPilot32Pixels[0], 32 * 32 / 2 },
+    { (const u8 *)sFollowerPilot32Pixels[1], 32 * 32 / 2 },
+    { (const u8 *)sFollowerPilot32Pixels[2], 32 * 32 / 2 },
+    { (const u8 *)sFollowerPilot32Pixels[3], 32 * 32 / 2 },
+    { (const u8 *)sFollowerPilot32Pixels[4], 32 * 32 / 2 },
+    { (const u8 *)sFollowerPilot32Pixels[5], 32 * 32 / 2 },
+    { (const u8 *)sFollowerPilot32Pixels[6], 32 * 32 / 2 },
+    { (const u8 *)sFollowerPilot32Pixels[7], 32 * 32 / 2 },
+    { (const u8 *)sFollowerPilot32Pixels[8], 32 * 32 / 2 },
+    { (const u8 *)sFollowerPilot32Pixels[9], 32 * 32 / 2 },
+    { (const u8 *)sFollowerPilot32Pixels[10], 32 * 32 / 2 },
+    { (const u8 *)sFollowerPilot32Pixels[11], 32 * 32 / 2 },
+    { (const u8 *)sFollowerPilot32Pixels[12], 32 * 32 / 2 },
+    { (const u8 *)sFollowerPilot32Pixels[13], 32 * 32 / 2 },
+    { (const u8 *)sFollowerPilot32Pixels[14], 32 * 32 / 2 },
+    { (const u8 *)sFollowerPilot32Pixels[15], 32 * 32 / 2 },
+};
+static const struct ObjectEventGraphicsInfo sFollowerPilot32NormalGraphics = {
+    .tileTag = TAG_NONE,
+    .paletteTag = TAG_NONE,
+    .reflectionPaletteTag = OBJ_EVENT_PAL_TAG_NONE,
+    .size = 32 * 32 / 2,
+    .width = 32,
+    .height = 32,
+    .paletteSlot = PALSLOT_NPC_1,
+    .shadowSize = SHADOW_SIZE_M,
+    .inanimate = FALSE,
+    .disableReflectionPaletteLoad = FALSE,
+    .tracks = TRACKS_FOOT,
+    .oam = &gObjectEventBaseOam_32x32,
+    .subspriteTables = gObjectEventSpriteOamTables_32x32,
+    .anims = sFollowerPilotAnims,
+    .images = sFollowerPilot32Images,
+    .affineAnims = gDummySpriteAffineAnimTable,
+};
+static const struct ObjectEventGraphicsInfo sFollowerPilot32ShinyGraphics = {
+    .tileTag = TAG_NONE,
+    .paletteTag = TAG_NONE,
+    .reflectionPaletteTag = OBJ_EVENT_PAL_TAG_NONE,
+    .size = 32 * 32 / 2,
+    .width = 32,
+    .height = 32,
+    .paletteSlot = PALSLOT_NPC_2,
+    .shadowSize = SHADOW_SIZE_M,
+    .inanimate = FALSE,
+    .disableReflectionPaletteLoad = FALSE,
+    .tracks = TRACKS_FOOT,
+    .oam = &gObjectEventBaseOam_32x32,
+    .subspriteTables = gObjectEventSpriteOamTables_32x32,
+    .anims = sFollowerPilotAnims,
+    .images = sFollowerPilot32Images,
+    .affineAnims = gDummySpriteAffineAnimTable,
+};
+static const u32 sFollowerPilot64Pixels[16][512] = {
+    { [216] = 0x11111111, [220] = 0x11111111 }, // direction 0, step 0
+    { [216] = 0x22222222, [220] = 0x11111111 }, // direction 0, step 1
+    { [216] = 0x33333333, [220] = 0x11111111 }, // direction 0, step 2
+    { [216] = 0x44444444, [220] = 0x11111111 }, // direction 0, step 3
+    { [216] = 0x11111111, [220] = 0x22222222 }, // direction 1, step 0
+    { [216] = 0x22222222, [220] = 0x22222222 }, // direction 1, step 1
+    { [216] = 0x33333333, [220] = 0x22222222 }, // direction 1, step 2
+    { [216] = 0x44444444, [220] = 0x22222222 }, // direction 1, step 3
+    { [216] = 0x11111111, [220] = 0x33333333 }, // direction 2, step 0
+    { [216] = 0x22222222, [220] = 0x33333333 }, // direction 2, step 1
+    { [216] = 0x33333333, [220] = 0x33333333 }, // direction 2, step 2
+    { [216] = 0x44444444, [220] = 0x33333333 }, // direction 2, step 3
+    { [216] = 0x11111111, [220] = 0x44444444 }, // direction 3, step 0
+    { [216] = 0x22222222, [220] = 0x44444444 }, // direction 3, step 1
+    { [216] = 0x33333333, [220] = 0x44444444 }, // direction 3, step 2
+    { [216] = 0x44444444, [220] = 0x44444444 }, // direction 3, step 3
+};
+static const struct SpriteFrameImage sFollowerPilot64Images[] = {
+    { (const u8 *)sFollowerPilot64Pixels[0], 64 * 64 / 2 },
+    { (const u8 *)sFollowerPilot64Pixels[1], 64 * 64 / 2 },
+    { (const u8 *)sFollowerPilot64Pixels[2], 64 * 64 / 2 },
+    { (const u8 *)sFollowerPilot64Pixels[3], 64 * 64 / 2 },
+    { (const u8 *)sFollowerPilot64Pixels[4], 64 * 64 / 2 },
+    { (const u8 *)sFollowerPilot64Pixels[5], 64 * 64 / 2 },
+    { (const u8 *)sFollowerPilot64Pixels[6], 64 * 64 / 2 },
+    { (const u8 *)sFollowerPilot64Pixels[7], 64 * 64 / 2 },
+    { (const u8 *)sFollowerPilot64Pixels[8], 64 * 64 / 2 },
+    { (const u8 *)sFollowerPilot64Pixels[9], 64 * 64 / 2 },
+    { (const u8 *)sFollowerPilot64Pixels[10], 64 * 64 / 2 },
+    { (const u8 *)sFollowerPilot64Pixels[11], 64 * 64 / 2 },
+    { (const u8 *)sFollowerPilot64Pixels[12], 64 * 64 / 2 },
+    { (const u8 *)sFollowerPilot64Pixels[13], 64 * 64 / 2 },
+    { (const u8 *)sFollowerPilot64Pixels[14], 64 * 64 / 2 },
+    { (const u8 *)sFollowerPilot64Pixels[15], 64 * 64 / 2 },
+};
+static const struct ObjectEventGraphicsInfo sFollowerPilot64NormalGraphics = {
+    .tileTag = TAG_NONE,
+    .paletteTag = TAG_NONE,
+    .reflectionPaletteTag = OBJ_EVENT_PAL_TAG_NONE,
+    .size = 64 * 64 / 2,
+    .width = 64,
+    .height = 64,
+    .paletteSlot = PALSLOT_NPC_1,
+    .shadowSize = SHADOW_SIZE_M,
+    .inanimate = FALSE,
+    .disableReflectionPaletteLoad = FALSE,
+    .tracks = TRACKS_FOOT,
+    .oam = &gObjectEventBaseOam_64x64,
+    .subspriteTables = gObjectEventSpriteOamTables_64x64,
+    .anims = sFollowerPilotAnims,
+    .images = sFollowerPilot64Images,
+    .affineAnims = gDummySpriteAffineAnimTable,
+};
+static const struct ObjectEventGraphicsInfo sFollowerPilot64ShinyGraphics = {
+    .tileTag = TAG_NONE,
+    .paletteTag = TAG_NONE,
+    .reflectionPaletteTag = OBJ_EVENT_PAL_TAG_NONE,
+    .size = 64 * 64 / 2,
+    .width = 64,
+    .height = 64,
+    .paletteSlot = PALSLOT_NPC_2,
+    .shadowSize = SHADOW_SIZE_M,
+    .inanimate = FALSE,
+    .disableReflectionPaletteLoad = FALSE,
+    .tracks = TRACKS_FOOT,
+    .oam = &gObjectEventBaseOam_64x64,
+    .subspriteTables = gObjectEventSpriteOamTables_64x64,
+    .anims = sFollowerPilotAnims,
+    .images = sFollowerPilot64Images,
+    .affineAnims = gDummySpriteAffineAnimTable,
+};

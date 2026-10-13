@@ -784,7 +784,7 @@ jobs:
           assert "#define FOLLOWER_PILOT_PALETTE_TAG 0xF0A0" in images
           assert "sFollowerPilotNormalPalette[16]" in images
           assert "sFollowerPilotShinyPalette[16]" in images
-          assert images.count(".paletteTag = TAG_NONE,") == 2
+          assert images.count(".paletteTag = TAG_NONE,") == 6
           for name in ("Normal","Shiny"):
               assert "static const struct ObjectEventGraphicsInfo sFollowerPilot" + name + "Graphics" in images
               assert ".size = 16 * 16 / 2" in images
@@ -835,4 +835,46 @@ jobs:
           assert effects.count("gReflectionEffectPaletteMap[") >= 2
           assert "reflectionSprite->oam.paletteNum = gReflectionEffectPaletteMap[mainSprite->oam.paletteNum];" in effects
           print("Dynamic follower palette allocation/release, NPC and reflection isolation PASS")
+          PY
+
+      - name: Audit 16 32 64 pixel follower diagnostic animation VRAM allocation
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          gfx = Path("src/data/object_events/follower_pilot_graphics.h").read_text()
+          movement = Path("src/event_object_movement.c").read_text()
+          follower = Path("src/full_follower.c").read_text()
+          sprite = Path("src/sprite.c").read_text()
+          assert "FullFollower_UsesPilotGraphics()" in movement
+          assert "|| sFollowerGraphicsId == OBJ_EVENT_GFX_SNORLAX" in follower
+          assert "|| sFollowerGraphicsId == OBJ_EVENT_GFX_MEW" in follower
+          assert "if (graphicsId == OBJ_EVENT_GFX_PIKACHU)" in movement
+          assert "if (graphicsId == OBJ_EVENT_GFX_SNORLAX)" in movement
+          assert "if (graphicsId == OBJ_EVENT_GFX_MEW)" in movement
+          for px in (32, 64):
+              frame_bytes = px * px // 2
+              assert f"static const u32 sFollowerPilot{px}Pixels[16][{frame_bytes // 4}]" in gfx
+              assert len(re.findall(
+                  rf"\{{ \(const u8 \*\)sFollowerPilot{px}Pixels\[\d+\], {px} \* {px} / 2 \}}", gfx)) == 16
+              assert f"&gObjectEventBaseOam_{px}x{px}" in gfx
+              assert f"gObjectEventSpriteOamTables_{px}x{px}" in gfx
+              for variant in ("Normal", "Shiny"):
+                  block = gfx.split(
+                      f"static const struct ObjectEventGraphicsInfo sFollowerPilot{px}{variant}Graphics = {{", 1
+                  )[1].split("};", 1)[0]
+                  assert f".size = {px} * {px} / 2" in block
+                  assert f".width = {px}" in block and f".height = {px}" in block
+                  assert f".images = sFollowerPilot{px}Images" in block
+                  assert ".anims = sFollowerPilotAnims" in block
+              for variant in ("Normal", "Shiny"):
+                  assert f"&sFollowerPilot{px}{variant}Graphics" in movement
+              assert frame_bytes in (512, 2048)
+              assert frame_bytes // 32 <= 255
+          # Gen III allocates a single frame from unreserved OBJ VRAM,
+          # not 16 animation frames at once.
+          assert "AllocSpriteTiles((u8)(sprite->images->size / TILE_SIZE_4BPP))" in sprite
+          assert "spriteFrameImage.size = graphicsInfo->size" in movement
+          assert "gSprites[gObjectEvents[objectEventId].spriteId].images = graphicsInfo->images" in movement
+          print("Follower diagnostic 16/32/64 frame counts, shape, size and VRAM allocation contract PASS")
           PY

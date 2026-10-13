@@ -62,7 +62,9 @@ bool8 FullFollower_IsShiny(void)
 
 bool8 FullFollower_UsesPilotGraphics(void)
 {
-    return sFollowerGraphicsId == OBJ_EVENT_GFX_PIKACHU;
+    return sFollowerGraphicsId == OBJ_EVENT_GFX_PIKACHU
+        || sFollowerGraphicsId == OBJ_EVENT_GFX_SNORLAX
+        || sFollowerGraphicsId == OBJ_EVENT_GFX_MEW;
 }
 
 static u8 GetPrototypeFollowerGraphicsId(u16 species)

@@ -2093,11 +2093,15 @@ const struct ObjectEventGraphicsInfo *GetObjectEventGraphicsInfo(u8 graphicsId)
     if (graphicsId == OBJ_EVENT_GFX_FULL_FOLLOWER)
     {
         graphicsId = FullFollower_GetSpriteGraphicsId();
-        // Pikachu alone exercises independent four-direction animation and
-        // normal/shiny palette routing without altering normal Pikachu NPCs.
-        // Diagnostic graphics are not approved Pokemon follower artwork.
+        // Isolated size pilots: 16px Pikachu, 32px Snorlax, 64px Mew.
+        // Synthetic diagnostic tiles only, never presented as final art.
+        // Normal NPC graphics are unaffected by the follower-only ID.
         if (graphicsId == OBJ_EVENT_GFX_PIKACHU)
             return FullFollower_IsShiny() ? &sFollowerPilotShinyGraphics : &sFollowerPilotNormalGraphics;
+        if (graphicsId == OBJ_EVENT_GFX_SNORLAX)
+            return FullFollower_IsShiny() ? &sFollowerPilot32ShinyGraphics : &sFollowerPilot32NormalGraphics;
+        if (graphicsId == OBJ_EVENT_GFX_MEW)
+            return FullFollower_IsShiny() ? &sFollowerPilot64ShinyGraphics : &sFollowerPilot64NormalGraphics;
     }
     
     if (graphicsId >= NUM_OBJ_EVENT_GFX)
