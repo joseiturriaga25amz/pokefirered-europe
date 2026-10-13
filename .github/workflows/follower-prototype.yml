@@ -791,3 +791,7 @@ jobs:
           assert "#define OBJ_EVENT_GFX_FULL_FOLLOWER NUM_OBJ_EVENT_GFX" in Path("include/constants/event_objects.h").read_text()
           print("16 distinct diagnostic pilot frame slots, four directions, variant palettes PASS")
           PY
+
+      - name: Convert synthetic HGSS partial-frame APNG to FireRed 4bpp
+        run: |
+          python3 tools/convert_follower_apng.py --self-test
