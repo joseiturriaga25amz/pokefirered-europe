@@ -724,3 +724,7 @@ jobs:
               assert has_reflection
           print("Follower reflection retry after capacity exhaustion PASS")
           PY
+
+      - name: Validate future 386-follower graphics import contract (synthetic assets)
+        run: |
+          python3 tools/validate_follower_graphics.py --self-test
