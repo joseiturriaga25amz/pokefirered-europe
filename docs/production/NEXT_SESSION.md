@@ -14,6 +14,9 @@ Use `docs/spec/` only for frozen historical design details.
 
 ## Current state
 
+- **B10 next (2026-10-13, 386/shiny mandatory):** Source prototype `c91b199e4daac6404af751c5fc89790164075ba2` implements shiny *identity* (not shiny overworld rendering) for first eligible alive/non-egg lead, swap and recall, alongside six original prototype sprite IDs. Prior #37 `38406562439` SUCCESS on `99b1753`. Exact #38 `38407893537` was in progress at checkpoint: verify before CI-GREEN. Then build an isolated proof of runtime palette and directional animation using synthetic/cleared assets, validate resource budgets, and progress to **all 386 normal+shiny animated** graphics as mandatory acceptance. Licensing/provenance is unresolved for public HGSS packs; do not falsely claim assets imported. `master` docs only, no follower merge.
+
+
 - **Next B10 microblock (2026-10-13):** Prototype HEAD `99b1753861cccd1c2e3ee03a6ef5d741af487a58` adds strict manifest/4bpp graphical preflight and synthetic CI test. #36 SUCCESS at `8d5eb13`, #37 on new HEAD pending confirmation. Verify exact #37, then audit import manifest robustness and GBA palette/VRAM budget as a separate microblock; no real HGSS sprite assets imported or MyBoy visual QA performed. Keep graphics ID 8-bit and Pokémon/save/link ABI unchanged. 
 
 
