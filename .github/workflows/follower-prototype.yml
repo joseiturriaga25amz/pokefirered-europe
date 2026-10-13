@@ -529,7 +529,24 @@ jobs:
           assert "DoDiveWarp();\n    gFieldCallback = FieldCB_FallWarpExit;" in t
           ready=function(f,"void FullFollower_OnLocalMapReady(void)")
           assert "if (sFollowerWarpTransition)\n        sFollowerExitLockObserved = FALSE;" in ready
-          assert "if (!sFollowerWarpTransition)\n        RefreshFollower();" in ready
+          assert "CreateTask(Task_FullFollower, FOLLOWER_TASK_PRIORITY);" in ready
+          assert "RefreshFollower();" not in ready
+          assert ready.index("if (QL_IS_PLAYBACK_STATE)") < ready.index("CreateTask(Task_FullFollower")
+          # Both normal warp loads and local returns invoke the follower hook
+          # before the field callback acquires its entrance-control lock.
+          world=Path("src/overworld.c").read_text()
+          mapload=function(world,"static bool32 LoadMapInStepsLocal(u8 *state, bool32 inLink)")
+          assert mapload.index("InitObjectEventsLocal();") < mapload.index("if (RunFieldCallback())")
+          initobj=function(world,"static void InitObjectEventsLocal(void)")
+          assert "FullFollower_OnLocalMapReady();" in initobj
+          returnlocal=function(world,"static bool32 ReturnToFieldLocal(u8 *state)")
+          assert returnlocal.index("ReloadObjectsAndRunReturnToFieldMapScript(TRUE);") < returnlocal.index("if (RunFieldCallback())")
+          reload=function(world,"static void ReloadObjectsAndRunReturnToFieldMapScript(bool8 allowFollower)")
+          assert "if (allowFollower)\n        FullFollower_OnLocalMapReady();" in reload
+          # Task callback alone may create or move the follower after the
+          # field callback runs, preventing premature sprite allocation.
+          task=function(f,"static void Task_FullFollower(u8 taskId)")
+          assert "RefreshFollower();" in task
           refresh=function(f,"static void RefreshFollower(void)")
           assert "if (ShouldSuppressFollower() || !sFollowerEnabled || species == SPECIES_NONE)" in refresh
           assert refresh.index("ShouldSuppressFollower()") < refresh.index("species == SPECIES_NONE")

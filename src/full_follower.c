@@ -406,8 +406,7 @@ void FullFollower_OnLocalMapReady(void)
     if (FindTaskIdByFunc(Task_FullFollower) == TASK_NONE)
         CreateTask(Task_FullFollower, FOLLOWER_TASK_PRIORITY);
 
-    // The destination field callback has not locked the entrance animation
-    // yet. Defer reappearance until the task sees that lock and its release.
-    if (!sFollowerWarpTransition)
-        RefreshFollower();
+    // Map-load and local-return callers invoke this before RunFieldCallback.
+    // Never allocate or move a follower before the entrance callback locks
+    // controls; the task handles suppression and safe return afterward.
 }
