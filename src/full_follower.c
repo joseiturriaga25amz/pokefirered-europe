@@ -296,7 +296,7 @@ static void RefreshFollower(void)
     u16 species = GetEligiblePrototypeFollowerSpecies();
     u8 graphicsId;
 
-    if (!sFollowerEnabled || species == SPECIES_NONE || ShouldSuppressFollower())
+    if (ShouldSuppressFollower() || !sFollowerEnabled || species == SPECIES_NONE)
     {
         // Suppressed presentation must release its object slot AND sprite/OAM
         // allocation, not leave a hidden object behind through bike/Surf/scripts.

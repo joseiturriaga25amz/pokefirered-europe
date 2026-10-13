@@ -120,7 +120,7 @@ jobs:
           follower = Path("src/full_follower.c").read_text()
           movement = Path("src/event_object_movement.c").read_text()
           header = Path("include/event_object_movement.h").read_text()
-          assert "if (!sFollowerEnabled || species == SPECIES_NONE || ShouldSuppressFollower())" in follower
+          assert "if (ShouldSuppressFollower() || !sFollowerEnabled || species == SPECIES_NONE)" in follower
           assert "RemoveFullFollowerObjectEvent(follower);" in follower
           assert "void RemoveFullFollowerObjectEvent(struct ObjectEvent *objectEvent);" in header
           start = movement.index("void RemoveFullFollowerObjectEvent(struct ObjectEvent *objectEvent)")
@@ -203,7 +203,7 @@ jobs:
           end = f.index("\nstatic void Task_FullFollower(", start)
           refresh = f[start:end]
           suppress = f[f.index("static bool8 ShouldSuppressFollower(void)\n{"):f.index("\nstatic void PositionFollowerBehindPlayer(", f.index("static bool8 ShouldSuppressFollower(void)\n{"))]
-          guard = "if (!sFollowerEnabled || species == SPECIES_NONE || ShouldSuppressFollower())"
+          guard = "if (ShouldSuppressFollower() || !sFollowerEnabled || species == SPECIES_NONE)"
           assert guard in refresh
           early = refresh[refresh.index(guard):refresh.index("graphicsId = GetPrototypeFollowerGraphicsId(species);")]
           assert "RemoveFullFollowerObjectEvent(follower);" in early
@@ -248,7 +248,7 @@ jobs:
           assert "if (QL_IS_PLAYBACK_STATE)\n        return TRUE;" in suppress
           assert "QL_IS_PLAYBACK_STATE" in constants
           refresh = f[f.index("static void RefreshFollower(void)\n{"):f.index("\nstatic void Task_FullFollower(", f.index("static void RefreshFollower(void)\n{"))]
-          assert "species == SPECIES_NONE || ShouldSuppressFollower()" in refresh
+          assert "if (ShouldSuppressFollower() || !sFollowerEnabled || species == SPECIES_NONE)" in refresh
           assert "RemoveFullFollowerObjectEvent(follower);" in refresh
           record = e[e.index("static void ObjectEventSetSingleMovement(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 movementActionId)\n{"):e.index("\nstatic void FaceDirection(", e.index("static void ObjectEventSetSingleMovement(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 movementActionId)\n{"))]
           assert "objectEvent->localId != OBJ_EVENT_ID_FULL_FOLLOWER" in record
@@ -530,6 +530,18 @@ jobs:
           ready=function(f,"void FullFollower_OnLocalMapReady(void)")
           assert "if (sFollowerWarpTransition)\n        sFollowerExitLockObserved = FALSE;" in ready
           assert "if (!sFollowerWarpTransition)\n        RefreshFollower();" in ready
+          refresh=function(f,"static void RefreshFollower(void)")
+          assert "if (ShouldSuppressFollower() || !sFollowerEnabled || species == SPECIES_NONE)" in refresh
+          assert refresh.index("ShouldSuppressFollower()") < refresh.index("species == SPECIES_NONE")
+          # Even an unsupported/fainted lead must advance the destination lock gate.
+          # The player's later party change must not resurrect an old transition.
+          for lead_eligible in (False, True):
+              pending,seen=True,False
+              for locked in (False, True, True, False):
+                  if pending:
+                      if locked: seen=True
+                      if seen and not locked: pending,seen=False,False
+              assert not pending,lead_eligible
           discard=function(f,"void FullFollower_DiscardForLink(void)")
           assert "sFollowerWarpTransition = FALSE;" in discard
           assert "sFollowerExitLockObserved = FALSE;" in discard
