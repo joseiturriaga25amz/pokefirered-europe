@@ -14,6 +14,9 @@ Use `docs/spec/` only for frozen historical design details.
 
 ## Current state
 
+- **B10 next (2026-10-13):** `prototype/follower-runtime` HEAD `f6b7e45a8ec0f05e4f5f4ef9277e4c8b1a9bbc8d` adds 32px Snorlax-ID and 64px Mew-ID synthetic diagnostic follower 16-frame graphics, with normal/shiny palette selection. #44 SUCCESS on previous `c72f220`; #45 `38440557027` status `in_progress` when recorded; verify exact result. Then audit OAM/VRAM allocation and palette lifetime under stress, continue 386 real animated normal/shiny implementation path. No actual HGSS assets integrated, no MyBoy runtime, no master gameplay merge.
+
+
 - **Immediate B10 (2026-10-13):** prototype HEAD `c72f22092c82ca11b1a9a8cb9ad2ebdd98ecf85a` has dynamic palette *diagnostic pilot only*. Exact #43 SUCCESS for 20 real sample pairs at old HEAD. #44 run `38439549516` was `in_progress` at this checkpoint. Verify #44 exact result, inspect any failure and test palette lifetime / weather / object reflections under slot pressure; do not extrapolate to 386 or MyBoy. Sprite art not imported. No gameplay merge.
 
 
