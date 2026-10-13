@@ -14,6 +14,9 @@ Use `docs/spec/` only for frozen historical design details.
 
 ## Current state
 
+- **B10 immediate next action (2026-10-13):** `prototype/follower-runtime` technical HEAD `cd0b67e2111e3b62a7bc018b98f771721aa8a090` (follower-only reflection retry after sprite saturation; retains #34 validated owner cleanup). Follower Prototype #35 run `38400264028` was `IN_PROGRESS` when documented. First verify **exact** run #35 conclusion and failing step if needed. Then separately audit reflection recovery and rapid spawn/despawn under object/sprite pressure; prepare targeted MyBoy scenario checks. Maintain old saves/link structures and GBA graphics-id ABI. No broad HGSS import without rights; B10 still experimental and unmerged.
+
+
 - **Immediate B10 resume (2026-10-13; follower sprite pressure fix pending CI):** Isolated prototype `prototype/follower-runtime` HEAD `05295757b90ba99728ba861fbe13a9faf6e8f563` includes technical correction `3cb6d6b` (low-byte field-effect owner matching and safe no-slot reflection creation) and test-parser correction `0529575`. Prior #32 SUCCESS applies only to `7b27543`, **NOT** to new HEAD. Check workflow for exact `05295757`, examine failing step if any, then audit repeated effect teardown/spawn and sprite-capacity pressure. Still no MyBoy tests or 386 licensed normal/shiny sprite integration. Prototype is not merged; this `master` update is documentation-only.
 
 
