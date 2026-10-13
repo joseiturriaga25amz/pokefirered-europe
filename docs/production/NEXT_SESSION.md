@@ -14,6 +14,9 @@ Use `docs/spec/` only for frozen historical design details.
 
 ## Current state
 
+- **B10 immediate (2026-10-13):** technical prototype HEAD `f7a99a3cd764844074a3faa1e848e6bef0a7c329`: source→temporary-checkout C graphics generator and runner-only HGSS three-species normal/shiny ROM build. #50 failed only wrong enum-define source gate after ROM success, #51 fixed gate exact CI SUCCESS; #54 run `38452060147` `in_progress` at checkpoint. Check exact #54 and logs, repair grounded errors, then MyBoy test. Do NOT report generated art in Git, general 386 runtime coverage or distribution clearance. Master remains documentary-only while B10 isolated.
+
+
 - **Next B10 (2026-10-13):** prototype HEAD `85742cdc41b226c95a1a730e30928a13c796626d` fixes internal Gen III vs National Dex registry lookup (Treecko internal 277→National 252), accepts registered pairs without widening 8-bit graphicsId. #49 SUCCESS at previous `fb532e1`; #50 run `38450370206` `in_progress` at checkpoint, check exact result. Registry still EMPTY and no actual art committed; next reproducible packed-graphics-to-ROM C generator, isolated real source end-to-end build with clear provenance, followed by visual MyBoy QA. Do not describe 386/386 convertible as integrated.
 
 
