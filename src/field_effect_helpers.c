@@ -4,6 +4,7 @@
 #include "field_camera.h"
 #include "field_effect.h"
 #include "field_effect_helpers.h"
+#include "full_follower.h"
 #include "field_weather.h"
 #include "fieldmap.h"
 #include "metatile_behavior.h"
@@ -39,7 +40,14 @@ void SetUpReflection(struct ObjectEvent * objectEvent, struct Sprite *sprite, bo
     // CreateCopySpriteAt returns MAX_SPRITES when all 64 are occupied.
     reflectionSpriteId = CreateCopySpriteAt(sprite, sprite->x, sprite->y, 0x98);
     if (reflectionSpriteId == MAX_SPRITES)
+    {
+        // The ground-effect engine already set hasReflection before calling
+        // us. Keep follower reflections retryable after sprite pressure drops.
+        // Ordinary NPC reflection behavior remains unchanged.
+        if (objectEvent->localId == OBJ_EVENT_ID_FULL_FOLLOWER)
+            objectEvent->hasReflection = FALSE;
         return;
+    }
     reflectionSprite = &gSprites[reflectionSpriteId];
     reflectionSprite->callback = UpdateObjectReflectionSprite;
     reflectionSprite->oam.priority = 3;
