@@ -14,6 +14,9 @@ Use `docs/spec/` only for frozen historical design details.
 
 ## Current state
 
+- **Immediate B10 (2026-10-13):** technical prototype `prototype/follower-runtime` HEAD `8d5eb13b11dac69843a669863db24ee3bb2101ef` (validator repair only; last code change `cd0b67e`). #35 `38400264028` failed at stale regex step 23 *after ROM build succeeded*. #36 `38405274080` was `in_progress` when recorded. Verify exact #36 before CI-GREEN claim. Continue bounded object/OAM pressure audit; no MyBoy executed and no graphics imported. All sprite/ABI changes remain prototype-only.
+
+
 - **B10 immediate next action (2026-10-13):** `prototype/follower-runtime` technical HEAD `cd0b67e2111e3b62a7bc018b98f771721aa8a090` (follower-only reflection retry after sprite saturation; retains #34 validated owner cleanup). Follower Prototype #35 run `38400264028` was `IN_PROGRESS` when documented. First verify **exact** run #35 conclusion and failing step if needed. Then separately audit reflection recovery and rapid spawn/despawn under object/sprite pressure; prepare targeted MyBoy scenario checks. Maintain old saves/link structures and GBA graphics-id ABI. No broad HGSS import without rights; B10 still experimental and unmerged.
 
 
