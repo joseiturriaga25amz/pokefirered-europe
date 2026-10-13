@@ -336,3 +336,20 @@ Validation:
 - Full Gameplay Core run `36488728918`: **SUCCESS**;
 - merged to master as `8b6502e7233f51b9ca19529479a7055a21261391`;
 - runtime presentation/interactions remain final MyBoy evidence.
+
+## 2026-10-12 — B10 follower native graphics/resource feasibility audit (prototype only)
+
+**Evidence HEAD:** `11544894c7e206ea47575fa5c4843e30cd810dc6` on `prototype/follower-runtime`, Follower Prototype #31 (`38328701482`) SUCCESS. This is not a Full Gameplay Core integration or MyBoy evidence.
+
+Independently inspected `src/full_follower.c`, `src/event_object_movement.c`, `src/overworld.c`, `src/data/object_events/object_event_graphics_info.h` and `src/data/object_events/object_event_pic_tables.h`. The dynamic 8-bit follower slot maps to native object-event graphics; teardown obtains the currently displayed sprite's size before graphics-id mutation. Local/link/Quest Log map return paths discard the transient follower object before sprite data is reset and native objects are reconstructed. Shared NPC palette slots are reinitialized on map load; no separate dynamic Pokémon palette allocation is present.
+
+| Current prototype species | Sprite dimensions | Graphics bytes/frame | Distinct image frames (of 9 table entries) | Shared palette slot |
+|---|---|---:|---:|---|
+| Pikachu | 16×16 | 128 | 3 | NPC 1 / BLUE |
+| Pidgey | 16×16 | 128 | 3 | NPC 1 / BLUE |
+| Spearow | 16×16 | 128 | 3 | NPC 4 / WHITE |
+| Snorlax | 32×32 | 512 | 1 | NPC 1 / BLUE |
+| Mew | 16×16 | 128 | 1 | NPC 3 / GREEN |
+| Suicune | 16×16 | 128 | 1 | NPC 2 / PINK |
+
+Nine frame-table entries do **not** imply nine unique frames. None of this proves 386 directional animated sprites, normal/shiny variants, correct colours for imported art, runtime field effects, complete OAM/VRAM budgets or MyBoy visual acceptance. No additional proven defect requiring source changes arose from these particular paths; this is an **audit-only/documentation-only checkpoint** with no ROM change or new CI claim. Next audit native shadow/reflection/grass effect sprite lifetime on despawn/reentry and rapid scene changes before broad asset ingestion. B10 remains open, experimental and unmerged.
