@@ -2092,6 +2092,10 @@ const struct ObjectEventGraphicsInfo *GetObjectEventGraphicsInfo(u8 graphicsId)
     // modifying ObjectEvent, saved templates or the global graphics pointer table.
     if (graphicsId == OBJ_EVENT_GFX_FULL_FOLLOWER)
     {
+        const struct ObjectEventGraphicsInfo *registered = GetFollowerRegisteredGraphicsInfo(
+            FullFollower_GetSpecies(), FullFollower_IsShiny());
+        if (registered != NULL)
+            return registered;
         graphicsId = FullFollower_GetSpriteGraphicsId();
         // Isolated size pilots: 16px Pikachu, 32px Snorlax, 64px Mew.
         // Synthetic diagnostic tiles only, never presented as final art.

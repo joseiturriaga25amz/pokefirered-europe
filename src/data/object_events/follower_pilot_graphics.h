@@ -391,3 +391,22 @@ static const struct ObjectEventGraphicsInfo sFollowerPilot64ShinyGraphics = {
     .images = sFollowerPilot64Images,
     .affineAnims = gDummySpriteAffineAnimTable,
 };
+
+/* B10 species-keyed animated graphics contract. The 386 entries are deliberately
+ * empty until audited/cleared art is installed. This static lookup does not
+ * modify ObjectEvent.graphicsId, Pokemon, saves or link serialization.
+ * A later import microblock populates entries with 16 SpriteFrameImages and
+ * species-specific normal/shiny palettes. No diagnostic art is considered final.
+ */
+#define FOLLOWER_GRAPHICS_SPECIES_COUNT 386
+static const struct ObjectEventGraphicsInfo *const
+sFollowerRegisteredGraphics[FOLLOWER_GRAPHICS_SPECIES_COUNT + 1][2] = {
+    { NULL, NULL }, /* species 0 is invalid */
+};
+
+static const struct ObjectEventGraphicsInfo *GetFollowerRegisteredGraphicsInfo(u16 species, bool8 shiny)
+{
+    if (species == SPECIES_NONE || species > FOLLOWER_GRAPHICS_SPECIES_COUNT)
+        return NULL;
+    return sFollowerRegisteredGraphics[species][shiny ? 1 : 0];
+}

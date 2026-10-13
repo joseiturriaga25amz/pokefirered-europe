@@ -60,6 +60,11 @@ bool8 FullFollower_IsShiny(void)
     return sFollowerIsShiny;
 }
 
+u16 FullFollower_GetSpecies(void)
+{
+    return sFollowerSpecies;
+}
+
 bool8 FullFollower_UsesPilotGraphics(void)
 {
     return sFollowerGraphicsId == OBJ_EVENT_GFX_PIKACHU
