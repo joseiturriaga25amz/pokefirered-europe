@@ -14,6 +14,9 @@ Use `docs/spec/` only for frozen historical design details.
 
 ## Current state
 
+- **Next B10 (2026-10-13):** prototype HEAD `3a77b3b615c174e9cd22024329896658826ade7e`, real-pinned-source audit code (no artwork committed), CI #42 `38429105044` `in_progress` at checkpoint. Verify exact CI #42 results/logs; distinguish upstream fetch from decoder failure and gather quantitative sample results. Only then decide minimal converter and palette changes. All 386 normal/shiny animated followers remain mandatory; not complete; no MyBoy and no merge.
+
+
 - **Immediate B10 (2026-10-13):** `prototype/follower-runtime` HEAD `cb02d48ea6e019efa29c61cbd58521b757c7abab` adds strict **packed** 4bpp and BGR555 palette manifest verification; runs on synthetic fixtures only. #40 SUCCESS `38414609819` on prior `8d4649a`. #41 `38425305781` is awaiting exact conclusion. Check that run, resolve any gate failures, then examine real sample APNG/converted assets (none downloaded into this cycle), colors/64px memory and dedicated follower palette before mass 386 graphics integration. No MyBoy QA or gameplay merge yet.
 
 
