@@ -934,7 +934,7 @@ jobs:
           print("Gen III internal species 277 != National Dex 252; registered follower maps safely PASS")
           PY
 
-      - name: Compile temporary ROM with real 32px and 64px HGSS follower normal-shiny bindings
+      - name: Compile temporary ROM with all 386 real HGSS follower normal-shiny bindings
         run: |
           set -euo pipefail
           python3 tools/generate_follower_graphics.py --self-test
@@ -950,7 +950,7 @@ jobs:
           source = download_archive()
           with tempfile.TemporaryDirectory() as root:
               root = Path(root)
-              ids = {1, 252, 384}  # Bulbasaur, Treecko (National-ID mapping), Rayquaza 64px
+              ids = set(range(1, 387))  # Complete Gen I-III National Dex, including 64px and shiny
               count = 0
               with zipfile.ZipFile(io.BytesIO(source)) as zf:
                   for entry in zf.infolist():
@@ -971,4 +971,6 @@ jobs:
           PY
           make -j2 firered_es_modern
           git diff --stat -- src/data/object_events/follower_pilot_graphics.h
-          echo "Real-source follower graphics compiled into test ROM; no ROM or sprites uploaded."
+          test -s pokefirered_modern_es.gba
+          test "$(stat -c %s pokefirered_modern_es.gba)" -le 33554432
+          echo "Full 386 real-source normal/shiny follower graphics compiled into a <=32 MiB test ROM; no ROM or sprites uploaded."
