@@ -17,6 +17,44 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y gcc-arm-none-eabi binutils-arm-none-eabi libpng-dev
 
+      - name: End-to-end private 386 follower ROM builder, SHA manifest and worktree cleanup
+        run: |
+          set -euo pipefail
+          before="$(git worktree list --porcelain)"
+          private_dir="$(mktemp -d "$RUNNER_TEMP/b10-private-check-XXXXXX")"
+          trap 'rm -rf "$private_dir"' EXIT
+          private_rom="$private_dir/follower-private.gba"
+          python3 tools/build_follower_diagnostic.py --download-pinned --output "$private_rom"
+          python3 - "$private_rom" "$GITHUB_SHA" <<'PY'
+          import hashlib
+          import json
+          import sys
+          from pathlib import Path
+
+          rom = Path(sys.argv[1])
+          sha = sys.argv[2]
+          manifest = rom.with_suffix(".diagnostic.json")
+          assert rom.is_file() and manifest.is_file()
+          report = json.loads(manifest.read_text())
+          contents = rom.read_bytes()
+          assert 0 < len(contents) <= 32 * 1024 * 1024
+          assert report["rom_bytes"] == len(contents)
+          assert report["rom_sha1"] == hashlib.sha1(contents).hexdigest()
+          assert report["rom_sha256"] == hashlib.sha256(contents).hexdigest()
+          assert report["project_git_sha"] == sha
+          assert report["national_species_count"] == 386
+          assert report["normal_shiny_variants"] == 2
+          assert report["runtime_qa"] == "NOT_EXECUTED"
+          assert report["asset_redistribution"] == "NOT_AUTHORIZED_BY_THIS_TOOL"
+          assert report["source"].startswith("teobz/pkmn-hgss-animated-overworld-sprites@")
+          print("PRIVATE_DIAGNOSTIC_E2E_PASS", "species=386", "sha1=" + report["rom_sha1"])
+          print("No runtime QA was performed; private ROM is deleted after validation.")
+          PY
+          after="$(git worktree list --porcelain)"
+          test "$before" = "$after"
+          echo "Private builder worktree registered state restored; no ROM or sprite upload."
+
+
       - name: Build firered_es_modern
         run: make -j2 firered_es_modern
 
@@ -936,43 +974,6 @@ jobs:
 
       - name: Audit private MyBoy diagnostic build isolation (synthetic, no ROM upload)
         run: python3 tools/build_follower_diagnostic.py --self-test
-
-      - name: End-to-end private 386 follower ROM builder, SHA manifest and worktree cleanup
-        run: |
-          set -euo pipefail
-          before="$(git worktree list --porcelain)"
-          private_dir="$(mktemp -d "$RUNNER_TEMP/b10-private-check-XXXXXX")"
-          trap 'rm -rf "$private_dir"' EXIT
-          private_rom="$private_dir/follower-private.gba"
-          python3 tools/build_follower_diagnostic.py --download-pinned --output "$private_rom"
-          python3 - "$private_rom" "$GITHUB_SHA" <<'PY'
-          import hashlib
-          import json
-          import sys
-          from pathlib import Path
-
-          rom = Path(sys.argv[1])
-          sha = sys.argv[2]
-          manifest = rom.with_suffix(".diagnostic.json")
-          assert rom.is_file() and manifest.is_file()
-          report = json.loads(manifest.read_text())
-          contents = rom.read_bytes()
-          assert 0 < len(contents) <= 32 * 1024 * 1024
-          assert report["rom_bytes"] == len(contents)
-          assert report["rom_sha1"] == hashlib.sha1(contents).hexdigest()
-          assert report["rom_sha256"] == hashlib.sha256(contents).hexdigest()
-          assert report["project_git_sha"] == sha
-          assert report["national_species_count"] == 386
-          assert report["normal_shiny_variants"] == 2
-          assert report["runtime_qa"] == "NOT_EXECUTED"
-          assert report["asset_redistribution"] == "NOT_AUTHORIZED_BY_THIS_TOOL"
-          assert report["source"].startswith("teobz/pkmn-hgss-animated-overworld-sprites@")
-          print("PRIVATE_DIAGNOSTIC_E2E_PASS", "species=386", "sha1=" + report["rom_sha1"])
-          print("No runtime QA was performed; private ROM is deleted after validation.")
-          PY
-          after="$(git worktree list --porcelain)"
-          test "$before" = "$after"
-          echo "Private builder worktree registered state restored; no ROM or sprite upload."
 
       - name: Compile temporary ROM with all 386 real HGSS follower normal-shiny bindings
         run: |
