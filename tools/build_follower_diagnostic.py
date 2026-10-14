@@ -68,7 +68,7 @@ def check_environment():
             if top != root:
                 problems.append("Run this script from its original Git checkout.")
             if output_of("git", "status", "--porcelain", cwd=root):
-                problems.append("Working checkout has uncommitted changes; save or revert first.")
+                print("Note: uncommitted checkout changes are ignored; private build uses the committed HEAD in a detached worktree.")
         except (subprocess.CalledProcessError, OSError):
             problems.append("No usable Git checkout found.")
     if problems:
