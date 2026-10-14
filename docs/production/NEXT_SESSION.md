@@ -14,6 +14,8 @@ Use `docs/spec/` only for frozen historical design details.
 
 ## Current state
 
+- **Immediate B10 (2026-10-13, exact #54 triage):** #54 `38452060147` completed FAILURE at `generate_follower_graphics.py --self-test`: `AssertionError: unexpected overwrite`. Main FireRed compile and prior gates PASSED; experimental real-art installation/second ROM build DID NOT run. Narrow generator-only fix committed to `prototype/follower-runtime` at `a4a8cb19b69cd3e21b28075210637c6ed0b9eded`, replacing sentinel counting with per-registry emptiness checks before mutation. Exact CI for new technical SHA NOT yet confirmed; master documentation-only. Next fetch exact CI for `a4a8cb1`, trace any later failures, prove 3-species normal/shiny source-to-ROM build, then MyBoy runtime and 386 coverage after provenance review. No art permanently in repository; no runtime acceptance; no integration.
+
 - **B10 immediate (2026-10-13):** technical prototype HEAD `f7a99a3cd764844074a3faa1e848e6bef0a7c329`: source→temporary-checkout C graphics generator and runner-only HGSS three-species normal/shiny ROM build. #50 failed only wrong enum-define source gate after ROM success, #51 fixed gate exact CI SUCCESS; #54 run `38452060147` `in_progress` at checkpoint. Check exact #54 and logs, repair grounded errors, then MyBoy test. Do NOT report generated art in Git, general 386 runtime coverage or distribution clearance. Master remains documentary-only while B10 isolated.
 
 
