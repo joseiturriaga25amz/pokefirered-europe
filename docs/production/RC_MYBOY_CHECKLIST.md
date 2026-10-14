@@ -147,3 +147,20 @@ The RC may be called **v1.0 final** only when:
 - this checklist has no FAIL/BLOCKED item that affects acceptance;
 - any discovered regression is fixed and the affected block plus its adjacent regression checks are re-run;
 - the tested ROM checksum is recorded together with the MyBoy results.
+
+
+## B10 pre-integration diagnostic — 386 animated follower (not final RC acceptance)
+
+**Status:** NOT EXECUTED. Use only a legally obtained local ROM build with known exact source SHA and recorded ROM SHA-1. The GitHub #60 runner's ephemeral HGSS graphics compilation was not uploaded as a test ROM. Do not mark any case PASS from source checks or CI alone. A-001 requires MyBoy for runtime acceptance. Keep this diagnostic distinct from the consolidated final RC test.
+
+Record PASS / FAIL / BLOCKED for each numbered case, Pokémon identity/variant, location, save origin and exact ROM SHA-1. Capture only defects and concise repro evidence.
+
+1. **Sprite sizes and animated direction:** one 32×32 specimen (Bulbasaur), the internal→National key case (Treecko), and a 64×64 specimen (Rayquaza). Walk/turn in all four directions at slow and running pace. Verify visible distinct frames, correct positioning, no graphic corruption or phantom icons.
+2. **Normal/shiny transitions:** on the same species, switch between normal and shiny party leads without restarting. Verify the correct palette and graphics and no leftover previous color or duplicate companion after repeated swaps.
+3. **Dense OAM / VRAM and palette pressure:** walk through an NPC-heavy scene and a reflective surface with 32px and 64px followers. Trigger transient field effects; check retry after sprites/palettes are released, no NPC palette corruption, lost following tiles, flicker or crashes. Exercise repeated recall/respawn cycles.
+4. **Collisions and geometry:** narrow interior doors/corridors, stairs, NPC trainer sight, ledges, corners, edge-of-screen, map border and warp arrival. Large follower may need an approved safe recall rather than clipping or obstructing interaction.
+5. **Contextual recall and lifecycle:** switch bike/Surf/Fly states, invoke scripted cutscenes/trainer battles, use map reload and warp repeatedly. No stale sprite, lingering reflection, duplicate object, reserved palette leak or blocked NPC/player.
+6. **Party lifecycle and persistence:** reorder the party, test a fainted first member, egg, unsupported/invalid species fallback, save/close/reload with an existing compatible save and a new save. Follower is presentation-only and must not alter saved Pokémon identity.
+7. **Link/trade isolation:** in MyBoy test link and trades with ordinary save compatibility. No injected follower object should enter link/serialization or cause divergence. Repeat local field entry afterward.
+
+**Fail rules:** Any sprite corruption, clip/occlusion, palette pollution, OAM/VRAM instability, reproducible glitch or save/link alteration is a blocker for accepting B10; record the repro before attempting a narrow fix. **BLOCKED** is required when an appropriately built ROM or permission/provenance path is not ready. No substitution of CI-green for MyBoy PASS.
