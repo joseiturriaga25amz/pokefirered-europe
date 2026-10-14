@@ -934,6 +934,9 @@ jobs:
           print("Gen III internal species 277 != National Dex 252; registered follower maps safely PASS")
           PY
 
+      - name: Audit private MyBoy diagnostic build isolation (synthetic, no ROM upload)
+        run: python3 tools/build_follower_diagnostic.py --self-test
+
       - name: Compile temporary ROM with all 386 real HGSS follower normal-shiny bindings
         run: |
           set -euo pipefail
