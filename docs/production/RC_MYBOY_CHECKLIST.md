@@ -149,6 +149,37 @@ The RC may be called **v1.0 final** only when:
 - the tested ROM checksum is recorded together with the MyBoy results.
 
 
+### B10 first-play pass — Charmander chosen in Oak's lab
+
+**Status: NOT EXECUTED / BLOCKED until a private, identified diagnostic ROM can be opened in MyBoy.** User intends to choose **Charmander (#004)** as initial partner. This is a runtime QA scenario, **not** a gameplay change, starter-identity override, new asset requirement or claim that the build has been tested in an emulator. Keep the approved first-eligible-healthy-non-egg party logic intact.
+
+**Evidence header** (fill once for the ROM actually tested): exact Git HEAD; private .gba SHA-1 from its `.diagnostic.json` manifest; MyBoy version/device; new-game or pre-existing save; date. Do not substitute the ephemeral CI #63 ROM SHA-1 for the checksum of a different local diagnostic build.
+
+**Pass A — first accessible gameplay with Charmander, 10–20 minutes, priority HIGH.** Mark each item PASS / FAIL / BLOCKED; unperformed items remain NOT EXECUTED.
+
+- [ ] A01 — Boot new game on MyBoy; choose Charmander in Professor Oak's laboratory. The chosen Pokémon is correct in the party. Dialogue, initial rival battle, and script control are not blocked by a follower.
+- [ ] A02 — When normal field control resumes and the tile behind the player is safe/free, verify **exactly one Charmander** appears. A brief absence during Oak's script or when the rear tile is blocked is not automatically a defect; failure to appear later on a safe open tile **is**.
+- [ ] A03 — Outside Oak's laboratory and on Route 1, walk south, north, west and east; inspect real walking frames, direction changes, Charmander outline/tail flame colors and vertical placement. Reject a floating static icon, persistent incorrect facing, flicker or broken pixels.
+- [ ] A04 — Walk/run along a straight segment, turn consecutive corners and stop repeatedly. Charmander follows the player's vacated tiles naturally, never runs through walls, drifts further away indefinitely or duplicates.
+- [ ] A05 — Enter and leave Oak's laboratory, the player's house and one ordinary shop/center when available. Charmander should appear indoors on safe tiles, be safely recalled during scripted doorway/warp transitions and return without duplicates or stalled controls. Do **not** assume automatic hiding merely because a map is indoors.
+- [ ] A06 — Move past an NPC and through a narrow corridor/doorframe. No blocked movement, forced sprite overlap with NPCs, stuck tail or permanent disappearance after moving to a safe tile.
+- [ ] A07 — Start an ordinary trainer/wild battle and return to the overworld. No duplicate Charmander, sprite remnants, wrong palette, crash or broken field control.
+- [ ] A08 — Save **normally in-game**, close MyBoy, reopen that save, move to a free tile and verify Charmander returns with correct party identity/graphics. Keep an unmodified backup before any experimental ROM.
+- [ ] A09 — Report whether menus, dialogue/script transitions and walking continue operating normally; no incorrect graphical changes on other NPCs.
+
+**Pass B — later, when a suitable save/test environment exists (do not require a full playthrough now):**
+
+- [ ] B01 — Evolve the same starter to Charmeleon (#005, level 16) and subsequently Charizard (#006, level 36); compare species graphics, frames and facing before and after evolution, without a stale Charmander sprite.
+- [ ] B02 — Put another healthy Pokémon first, then move Charmander back to the first eligible position; follower switches correctly. Test fainted/egg lead: the first eligible healthy non-egg party Pokémon is selected; a party with no eligible Pokémon shows no follower.
+- [ ] B03 — Test normal/shiny variants with a controlled legitimate shiny test save or fixture. **Do not hunt a shiny solely for this test.** Validate correct palette during switches and after save/reload.
+- [ ] B04 — Test representative 32px (Treecko, including Gen III internal-to-National ID) and 64px (Rayquaza) companions. Check animations, collision/occlusion, narrow interiors, OAM/OBJ-VRAM capacity and sprite/terrain effects.
+- [ ] B05 — Bicycle, Surf, Fly, ledge jumping, cutscenes, reflections/water and map reload. Recall/reappearance must be safe; no duplicate sprites or palette changes in unrelated NPCs.
+- [ ] B06 — NPC-heavy maps, repeated field transitions, player saves and trade/link tests in MyBoy; use a backup save. No stale object events, corruption or link divergence.
+
+**Simple defect report (no technical expertise needed):** checklist ID (e.g. A03), location, action, expected appearance, actual appearance, reproducibility, and a screenshot or 10–20-second clip if useful. A short description is enough if no media is available. Do not mark the stage PASS until all applicable priority-A items pass on the exact ROM; full B10 and final RC gates remain separate.
+
+---
+
 ## B10 pre-integration diagnostic — 386 animated follower (not final RC acceptance)
 
 **Status:** NOT EXECUTED. Use only a legally obtained local ROM build with known exact source SHA and recorded ROM SHA-1. The GitHub #60 runner's ephemeral HGSS graphics compilation was not uploaded as a test ROM. Do not mark any case PASS from source checks or CI alone. A-001 requires MyBoy for runtime acceptance. Keep this diagnostic distinct from the consolidated final RC test.
