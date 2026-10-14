@@ -240,7 +240,7 @@ def pack_variant(source_dir, species=None):
 
 def locate_species(root, species):
     matches = [p for p in root.glob("%03d_*" % species)
-               if p.is_dir() and re.fullmatch(r"%03d_[a-z0-9_]+" % species, p.name)]
+               if p.is_dir() and re.fullmatch(r"%03d_[a-z0-9_-]+" % species, p.name)]
     if len(matches) != 1:
         raise ValueError("%03d: expected exactly one species folder, got %d" % (species, len(matches)))
     return matches[0]
@@ -321,6 +321,11 @@ def self_test():
     with tempfile.TemporaryDirectory() as tmp:
         root = Path(tmp) / "input"
         dest = Path(tmp) / "built"
+        # These names exist in the pinned HGSS archive: a dash is valid.
+        for dex, folder in ((29, "029_nidoran-f"), (32, "032_nidoran-m"),
+                            (122, "122_mr-mime"), (250, "250_ho-oh")):
+            (root / folder).mkdir(parents=True)
+            assert locate_species(root, dex).name == folder
         for variant in ("regular", "shiny"):
             for direction in DIRECTIONS:
                 path = root / "001_synthetic" / variant / (direction + ".png")
