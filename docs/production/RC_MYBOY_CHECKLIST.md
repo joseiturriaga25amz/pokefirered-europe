@@ -149,6 +149,29 @@ The RC may be called **v1.0 final** only when:
 - the tested ROM checksum is recorded together with the MyBoy results.
 
 
+### B10 Android-only private diagnostic setup (GitHub Codespaces; no PC)
+
+**Context:** Tester has only an Android phone with MyBoy and will choose Charmander (#004). **NOT EXECUTED** as of 2026-10-14. Do not ask to test before a verified private ROM exists. CI #63 proved ephemeral source-to-ROM compilation, but its ROM was deleted.
+
+**Preferred route (depends on account Codespaces access, mobile browser support and usage quota):**
+
+1. On Android **Chrome**, log into GitHub (use **Desktop site** if needed). Open `https://github.com/joseiturriaga25amz/pokefirered-europe`, select branch **prototype/follower-runtime**, then **Code → Codespaces → Create codespace** on that branch. Reference: `https://docs.github.com/en/codespaces/developing-in-a-codespace/creating-a-codespace-for-a-repository`.
+2. Open the Codespaces browser editor, then **Terminal → New Terminal**. The builder refuses master, a noncanonical checkout or uncommitted changes.
+3. Paste the commands below into the **Codespaces terminal**, not into Termux or the Chrome address bar:
+
+   ```sh
+   sudo apt-get update && sudo apt-get install -y git build-essential python3 gcc-arm-none-eabi binutils-arm-none-eabi libpng-dev pkg-config
+   python3 tools/build_follower_diagnostic.py --check-environment
+   python3 tools/build_follower_diagnostic.py --download-pinned --output /workspaces/b10-private/charmander-diagnostic.gba
+   ```
+
+4. In Codespaces VS Code select **File → Add Folder to Workspace**, select `/workspaces/b10-private`, and from Explorer use the file context menu **Download…** for both `charmander-diagnostic.gba` and `charmander-diagnostic.diagnostic.json`. If Android's long-press menu differs, use Chrome desktop mode. Reference: `https://docs.github.com/en/codespaces/troubleshooting/github-codespaces-logs` (documents the Explorer Download action). If unavailable, stop and seek assistance; never enable public access to the ROM.
+5. Open the downloaded `.gba` in MyBoy. Use **a separate new-game save**, backing up any existing saves. Record `project_git_sha` and `rom_sha1` from that ROM's local `.diagnostic.json`; do not substitute the deleted CI ROM SHA. Test A01–A09 with Charmander.
+6. Stop/delete the Codespace when finished to conserve usage. Do not upload or publish ROM/assets. Report only results and optional screenshots/clips.
+
+**No assumption of rights:** Nintendo HGSS art is not redistribution-cleared; this is a private diagnostic protocol, not permission for publication. Codespaces quota, mobile compatibility and possible charges depend on account settings. If Codespaces is inaccessible, mark the setup BLOCKED and investigate another Android-only option instead of guessing.
+
+---
 ### B10 first-play pass — Charmander chosen in Oak's lab
 
 **Status: NOT EXECUTED / BLOCKED until a private, identified diagnostic ROM can be opened in MyBoy.** User intends to choose **Charmander (#004)** as initial partner. This is a runtime QA scenario, **not** a gameplay change, starter-identity override, new asset requirement or claim that the build has been tested in an emulator. Keep the approved first-eligible-healthy-non-egg party logic intact.
