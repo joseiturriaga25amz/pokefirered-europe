@@ -24,7 +24,7 @@ def install(source, checkout, ids):
             raise ValueError("missing or ambiguous registry")
         start = original.index("= {", original.index(anchor)) + len("= {")
         end = original.index("};", start)
-        if original[start:end].strip() != SENTINEL:
+        if original[start:end].strip() != SENTINEL.strip():
             raise ValueError("registries not empty")
     declarations, gfx, pals, outputs = [], [], [], []
     for species in sorted(ids):
