@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Temporary ROM graphics installer; requires source-art clearance for redistribution."""
 import argparse
+import re
 import tempfile
 from pathlib import Path
 from convert_follower_apng import DIRECTIONS, pack_species, synthetic_apng
@@ -92,7 +93,65 @@ def install(source, checkout, ids):
         file.parent.mkdir(parents=True, exist_ok=True)
         file.write_bytes(data)
     hp.write_text(updated)
+    verify_installation(checkout, ids)
     print("Installed %d National Dex normal/shiny sprite pairs into temporary checkout" % len(ids))
+
+
+def verify_installation(checkout, ids):
+    """Audit the generated registry, palettes and per-frame bindings, not runtime visuals."""
+    header = (checkout / HEADER).read_text()
+    target = checkout / TARGET
+    expected = set(ids)
+    graphic_entries = re.findall(
+        r"^    \[(\d+)\] = \{ &sFullFollower(\d{3})NormalGraphics, &sFullFollower\2ShinyGraphics \},$",
+        header, re.M)
+    palette_entries = re.findall(
+        r"^    \[(\d+)\] = \{ sFullFollower(\d{3})NormalPalette, sFullFollower\2ShinyPalette \},$",
+        header, re.M)
+    for entries in (graphic_entries, palette_entries):
+        if len(entries) != len(expected) or {int(i) for i, _ in entries} != expected:
+            raise ValueError("generated species registry is incomplete or duplicated")
+        if any(int(i) != int(name) for i, name in entries):
+            raise ValueError("registry National ID does not match the graphics symbol")
+
+    for species in sorted(expected):
+        for variant in ("normal", "shiny"):
+            name = "sFullFollower%03d%s" % (species, variant.capitalize())
+            tiles = (target / ("%03d_%s.4bpp" % (species, variant))).read_bytes()
+            palette = (target / ("%03d_%s.gbapal" % (species, variant))).read_bytes()
+            if len(palette) != 32 or len(tiles) not in (8192, 32768):
+                raise ValueError("%03d %s: invalid packed size" % (species, variant))
+            frame_size = len(tiles) // 16
+            dimension = 32 if frame_size == 512 else 64
+            images = re.search(
+                r"static const struct SpriteFrameImage " + name + r"Images\[\] = \{(.*?)\n\};",
+                header, re.S)
+            graphics = re.search(
+                r"static const struct ObjectEventGraphicsInfo " + name + r"Graphics = \{(.*?)\n\};",
+                header, re.S)
+            if images is None or graphics is None:
+                raise ValueError("%03d %s: missing generated declaration" % (species, variant))
+            frames = re.findall(
+                r"\{ \(const u8 \*\)" + name + r"Pixels \+ (\d+), (\d+) \}",
+                images.group(1))
+            if frames != [(str(i * frame_size), str(frame_size)) for i in range(16)]:
+                raise ValueError("%03d %s: wrong animation frame offsets" % (species, variant))
+            body = graphics.group(1)
+            required = (
+                ".size = %d," % frame_size,
+                ".width = %d," % dimension,
+                ".height = %d," % dimension,
+                ".oam = &gObjectEventBaseOam_%dx%d," % (dimension, dimension),
+                ".subspriteTables = gObjectEventSpriteOamTables_%dx%d," % (dimension, dimension),
+                ".images = %sImages," % name,
+                ".anims = sFollowerPilotAnims,",
+            )
+            if any(field not in body for field in required):
+                raise ValueError("%03d %s: inconsistent graphics geometry/animation" % (species, variant))
+    if (len(list(target.glob("*.4bpp"))) != 2 * len(expected)
+            or len(list(target.glob("*.gbapal"))) != 2 * len(expected)):
+        raise ValueError("generated graphics file count mismatch")
+    print("Generated registry/frame/OAM/palette bindings verified: %d normal+shiny species" % len(expected))
 
 def self_test():
     with tempfile.TemporaryDirectory() as folder:
@@ -120,6 +179,17 @@ def self_test():
         assert "[1] = { &sFullFollower001NormalGraphics" in contents
         assert "sFullFollower252ShinyPalette" in contents
         assert (checkout / TARGET / "252_shiny.4bpp").stat().st_size == 8192
+        bad_palette = checkout / TARGET / "252_shiny.gbapal"
+        original_palette = bad_palette.read_bytes()
+        bad_palette.write_bytes(original_palette[:-2])
+        try:
+            verify_installation(checkout, [1, 252])
+        except ValueError:
+            pass
+        else:
+            raise AssertionError("truncated generated shiny palette accepted")
+        bad_palette.write_bytes(original_palette)
+        verify_installation(checkout, [1, 252])
         try:
             install(source, checkout, [1])
         except ValueError:
