@@ -14,8 +14,18 @@ def install(source, checkout, ids):
         raise ValueError("bad National Dex ID(s)")
     hp = checkout / HEADER
     original = hp.read_text()
-    if original.count(SENTINEL) != 2:
-        raise ValueError("registries not empty")
+    # The invalid-species sentinel remains after import. Check that both
+    # registry bodies contain only that sentinel before writing anything.
+    for anchor in (
+        "sFollowerRegisteredGraphics[FOLLOWER_GRAPHICS_SPECIES_COUNT + 1][2]",
+        "sFollowerRegisteredPalettes[FOLLOWER_GRAPHICS_SPECIES_COUNT + 1][2]",
+    ):
+        if original.count(anchor) != 1:
+            raise ValueError("missing or ambiguous registry")
+        start = original.index("= {", original.index(anchor)) + len("= {")
+        end = original.index("};", start)
+        if original[start:end].strip() != SENTINEL:
+            raise ValueError("registries not empty")
     declarations, gfx, pals, outputs = [], [], [], []
     for species in sorted(ids):
         size, variants = pack_species(source, species)
