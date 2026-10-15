@@ -8,6 +8,28 @@
 
 For each block record **PASS / FAIL / BLOCKED**, the exact commit SHA, save used, and only the screenshot/video needed to prove the branch being tested. A compile/static pass never substitutes a MyBoy pass.
 
+## B10 MyBoy first-play runtime checkpoint — 2026-10-15 (diagnostic prototype only)
+
+**Tester evidence:** user successfully built local `rojo-fuego-full-diagnostico.gba` from `prototype/follower-runtime` source HEAD `0774ebfdabbc28ed0796394a5451a06464e2e694` on Ubuntu/WSL; local build log SHA-1 `c8fc905eaaf290347646c784e2bf5dae4b6fe1dd`, pinned-source 386 normal/shiny build COMPLETE. User opened that ROM in My Boy on Android from a new game. My Boy version/device model not supplied. Ten screenshots supplied in conversation; findings below are verbal/visual runtime evidence, **not** independent automated runtime certification or final RC.
+
+- **A01 PASS (observed):** boots, normal player naming/starter selection, Charmander chosen in Oak's lab, first Gary battle playable/completable.
+- **A02 PASS (observed):** exactly one Charmander visibly appeared immediately after starter confirmation on clear tile.
+- **A03 PARTIAL/POSITIVE:** still screenshots show recognizable Charmander front/back/side views, readable normal tail-flame colors; user reports following in all four directions in lab and Pallet. Still images alone cannot verify frame cadence or every directional animation.
+- **A04 PARTIAL/POSITIVE:** user circled Pallet Town houses and reports continuous following without collision/duplication. Running and corner stress not separately documented.
+- **A05 PARTIAL/POSITIVE:** entering and leaving an ordinary Pallet Town house restores/maintains follower. Additional doorway/warp scenarios remain untested.
+- **A06 NOT EXECUTED:** narrow path / moving NPC pressure scenario not yet explicitly tested.
+- **A07 PARTIAL/PASS for initial Gary battle:** Charmander disappears during scripted prebattle dialog and returns after victory; the script-safe recall/reappearance is desirable. Ordinary wild battle still untested.
+- **A08 FAIL (repro):** after normal in-game save and loading saved game in My Boy, no follower appears even after walking on open tiles; entering a Pallet Town house causes it to reappear, and it persists on leaving. No claim of missing party data or corrupted save.
+- **A09 VISUAL FAIL (repro):** opening Start menu/Save hides follower even while the player remains visible in the background. User requests follower remain visible during normal field menu/save (not necessarily during cutscenes/fades). Menus and saving themselves appear functional; closing-menu behavior remains to check.
+
+**Source investigation — not yet corrected:** `src/full_follower.c::ShouldSuppressFollower` suppresses whenever `ArePlayerFieldControlsLocked()`; `src/start_menu.c::ShowStartMenu` explicitly locks controls. Distinguish field Start/Save menu from unsafe cutscene/control locks; do not bypass all locks globally. `FullFollower_OnLocalMapReady` returns without creating the follower task during `QL_IS_PLAYBACK_STATE`; normal saved-game resume can traverse FireRed Quest Log playback; `src/quest_log.c::Task_EndQuestLog` restores control without reinitializing the follower task. This is a strong source-level explanation for A08, **pending a narrowly scoped fix and exact-ROM My Boy retest**.
+
+**New user proposal (not automatically implemented):** show only Gary/Blue with his Squirtle → Wartortle → Blastoise lineage in story scenes; unlike the player's dynamic party follower, this must be designed as Gary-specific staged event presentation / controlled motion, with safe NPC collision and cutscene handling. Existing A-007 approves Gary signature companion staging, but this new moving-through-story behavior needs scoping. Do not mix it into A08/A09 lifecycle fixes.
+
+**State:** B10 OPEN; exact diagnostic ROM fails A08 and A09 desired visual behavior, no final RC acceptance, no master integration. **Next:** finish low-risk remaining A04–A07/A09 observations on same ROM and separately fix/revalidate Quest Log return and safe Start-menu persistence. Rebuild ROM at exact technical fix HEAD; preserve user's original save and avoid making claims from CI alone.
+
+---
+
 ## RC-01 — Boot, save compatibility and persistence
 **Covers:** QA-002, QA-004, QA-007, QA-008 plus regression around A-002.
 
