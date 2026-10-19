@@ -10,6 +10,7 @@
 #include "field_control_avatar.h"
 #include "field_fadetransition.h"
 #include "field_player_avatar.h"
+#include "full_follower.h"
 #include "field_poison.h"
 #include "field_specials.h"
 #include "item_menu.h"
