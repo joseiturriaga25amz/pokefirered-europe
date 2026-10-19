@@ -15,6 +15,10 @@ Read, in this order:
 
 Only consult `docs/spec/` when a frozen design detail is needed.
 
+## Active branch handoff — follower runtime (2026-10-19)
+
+If resuming the approved follower prototype, use branch `prototype/follower-runtime` and read `docs/production/RC_MYBOY_CHECKLIST.md`, section **Follower prototype — current corrective roadmap**. Verify branch/HEAD first; the last technical commit is `0dc16af7de44fcc5479576599858455ec8e20904` (guard against dynamic follower ID 254 NPC-script lookup), and the roadmap was recorded by docs-only commit `5e4ca95`. Technical fix is **IMPLEMENTED, not validated/CI-green/MyBoy-confirmed**. Current action: audit and validate interaction guard, then implement the approved A-button friendship-tier dialogue as a separate microblock. The user has stopped manual exploratory play: five of six checks done, Surf deferred to test fixture; do not request further story progression or repeat the known crashing A-interaction on the old ROM. Proceed through save/load restoration, contextual visibility, movement/presentation polish, exact technical CI, bundled new ROM/MyBoy regression, integration gates. Do not mistake the general RC audit section below for the next action on this follower branch.
+
 ## Current phase
 
 The project is in **Release Candidate final audit**, not broad implementation.
