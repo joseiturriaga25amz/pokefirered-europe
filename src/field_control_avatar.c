@@ -414,7 +414,7 @@ const u8 *GetInteractedLinkPlayerScript(struct MapPosition *position, u8 metatil
     else
         objectEventId = GetObjectEventIdByPosition(position->x + gDirectionToVectors[direction].x, position->y + gDirectionToVectors[direction].y, position->elevation);
 
-    if (objectEventId == OBJECT_EVENTS_COUNT || gObjectEvents[objectEventId].localId == LOCALID_PLAYER)
+    if (objectEventId == OBJECT_EVENTS_COUNT || gObjectEvents[objectEventId].localId == LOCALID_PLAYER || gObjectEvents[objectEventId].localId == OBJ_EVENT_ID_FULL_FOLLOWER)
         return NULL;
 
     for (i = 0; i < MAX_LINK_PLAYERS; i++)
@@ -435,16 +435,21 @@ static const u8 *GetInteractedObjectEventScript(struct MapPosition *position, u8
     const u8 *script;
 
     objectEventId = GetObjectEventIdByPosition(position->x, position->y, position->elevation);
-    if (objectEventId == OBJECT_EVENTS_COUNT || gObjectEvents[objectEventId].localId == LOCALID_PLAYER)
+    if (objectEventId == OBJECT_EVENTS_COUNT || gObjectEvents[objectEventId].localId == LOCALID_PLAYER || gObjectEvents[objectEventId].localId == OBJ_EVENT_ID_FULL_FOLLOWER)
     {
         if (MetatileBehavior_IsCounter(metatileBehavior) != TRUE)
             return NULL;
 
         // Look for an object event on the other side of the counter.
         objectEventId = GetObjectEventIdByPosition(position->x + gDirectionToVectors[direction].x, position->y + gDirectionToVectors[direction].y, position->elevation);
-        if (objectEventId == OBJECT_EVENTS_COUNT || gObjectEvents[objectEventId].localId == LOCALID_PLAYER)
+        if (objectEventId == OBJECT_EVENTS_COUNT || gObjectEvents[objectEventId].localId == LOCALID_PLAYER || gObjectEvents[objectEventId].localId == OBJ_EVENT_ID_FULL_FOLLOWER)
             return NULL;
     }
+
+    // The runtime follower has no map NPC template or script. Never resolve
+    // its local ID through the normal object-event script lookup.
+    if (gObjectEvents[objectEventId].localId == OBJ_EVENT_ID_FULL_FOLLOWER)
+        return NULL;
 
     if (InUnionRoom() == TRUE && !ObjectEventCheckHeldMovementStatus(&gObjectEvents[objectEventId]))
         return NULL;
