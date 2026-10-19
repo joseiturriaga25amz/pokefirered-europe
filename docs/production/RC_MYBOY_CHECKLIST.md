@@ -8,6 +8,22 @@
 
 For each block record **PASS / FAIL / BLOCKED**, the exact commit SHA, save used, and only the screenshot/video needed to prove the branch being tested. A compile/static pass never substitutes a MyBoy pass.
 
+## Follower prototype — current corrective roadmap (2026-10-19)
+
+**Branch:** `prototype/follower-runtime`. **Last technical commit:** `0dc16af7de44fcc5479576599858455ec8e20904` (transient follower A-interaction guard). **Status:** IMPLEMENTED, NOT YET VALIDATED; no exact-SHA Full Gameplay Core CI or MyBoy verification recorded. Never claim that guard fixes the freeze until tested. No merge to master or release closure is implied.
+
+**Diagnostic user session:** the tester voluntarily ended the exploratory playthrough after five of six planned checks. S.S. Anne stairs/cabins and Gary scenes completed with previously known temporary follower hiding/reappearance and no new freeze; bicycle hides companion while riding and restores it after dismount, with normal bicycle control; Fly hides follower already on Start menu entry, then follower reappears after landing at destination; NPC-rich areas checked without a newly reported defect. **Surf NOT TESTED**; defer to a focused test fixture/new validated ROM. These are observations on the older diagnostic ROM, not passes on the latest source HEAD. Do not ask user to progress the story to unlock Surf.
+
+**Approved execution order — small, separately audited microblocks:**
+1. **Critical interaction safety:** audit all transient local-ID 254 object-event script resolution paths (including link/Quest Log/counter cases), verify the `0dc16af` guard, address any remaining crash routes, run targeted checks and exact technical CI. Do not test the crashing old ROM again.
+2. **Friendship interaction:** pressing A facing the actual follower should show a safe qualitative response based on the actual eligible party member's Gen III friendship (0–255). Reuse the existing `GetLeadMonFriendship` tier logic only after checking that its lead-index selection matches the follower's first healthy, non-egg party choice. Safely handle dialogue closure, no eligible mon, party reordering, and no persistent NPC template or save/link ABI changes. Review messages in Spanish and interaction UX; validate technical HEAD.
+3. **Persistence:** repair missing follower after ordinary save/load without requiring a warp; preserve Quest Log playback isolation and save compatibility.
+4. **Contextual presentation:** keep follower visible during ordinary Start menu/sign/NPC dialogue where safe; handle battle lead-in, Gary, healing and scripted scenes with deliberate suppression/return rather than abrupt global removal. Audit field-control locks and transitions, including Fly and bike.
+5. **Movement/graphics polish:** ledge landing, initial warp placement, nonblocking NPC overlap, escalators, ambient in-place walking animation; protect palette/OAM and 386-species normal/shiny identity. Treat rideable Surf/Fly and portable PC as separate feasibility/design-gated work, not silently included in crash fix.
+6. **Integrated validation:** static audit and Full Gameplay Core on exact technical HEAD; then one reproducible diagnostic ROM/checksum and bounded MyBoy regression pass including A-interaction, save/load, menus, warps, bike, Fly, and Surf via test fixture. Only after acceptance consider integration and exact integrated HEAD CI; full release MyBoy QA remains distinct.
+
+**Next action:** inspect and validate `0dc16af` and its interaction lookup coverage; implement friendship interaction only in an isolated subsequent microblock. If Actions cannot be triggered/observed, mark BLOCKED on CI rather than asserting success. Persist each commit and remaining action here and in the appropriate existing continuity handoff. Do not require a new manual playthrough for every small fix.
+
 ## B10 MyBoy first-play runtime checkpoint — 2026-10-15 (diagnostic prototype only)
 
 **Tester evidence:** user successfully built local `rojo-fuego-full-diagnostico.gba` from `prototype/follower-runtime` source HEAD `0774ebfdabbc28ed0796394a5451a06464e2e694` on Ubuntu/WSL; local build log SHA-1 `c8fc905eaaf290347646c784e2bf5dae4b6fe1dd`, pinned-source 386 normal/shiny build COMPLETE. User opened that ROM in My Boy on Android from a new game. My Boy version/device model not supplied. Ten screenshots supplied in conversation; findings below are verbal/visual runtime evidence, **not** independent automated runtime certification or final RC.
