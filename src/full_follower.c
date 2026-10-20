@@ -240,31 +240,43 @@ static struct ObjectEvent *FindFollowerObject(void)
     return NULL;
 }
 
-// Only a single ordinary text message can keep an existing follower on-screen.
-// Reject all control-flow, movement, specials, gifts, trainer battles and
-// arbitrary RAM scripts. Compiled ROM is 0x08000000-0x09FFFFFF on the GBA.
+// Only straight-line text scripts may keep an existing follower on-screen.
+// Up to four consecutive messages are allowed; branches, movement, specials,
+// gifts and battle opcodes are rejected. The 64-byte margin keeps every read
+// in mapped ROM even if the script starts at the end of the cartridge.
+#define FOLLOWER_MAX_SAFE_MESSAGES 4
 static bool8 IsSafeFollowerDialogueScript(const u8 *script)
 {
     uintptr_t address = (uintptr_t)script;
     u8 i = 0;
+    u8 messages;
 
-    if (address < 0x08000000 || address > 0x09FFFFE0)
+    if (address < 0x08000000 || address > 0x09FFFFC0)
         return FALSE;
 
     if (script[i] == FOLLOWER_CMD_LOCK || script[i] == FOLLOWER_CMD_LOCKALL)
         i++;
     if (script[i] == FOLLOWER_CMD_FACEPLAYER)
         i++;
-    if (script[i++] != FOLLOWER_CMD_LOADWORD || script[i++] != 0)
+
+    for (messages = 0; messages < FOLLOWER_MAX_SAFE_MESSAGES; messages++)
+    {
+        if (script[i] != FOLLOWER_CMD_LOADWORD)
+            break;
+        if (script[i + 1] != 0)
+            return FALSE;
+        i += 6; // command, buffer slot and four-byte text pointer
+        if (script[i++] != FOLLOWER_CMD_CALLSTD)
+            return FALSE;
+        if (script[i] != FOLLOWER_MSGBOX_NPC
+         && script[i] != FOLLOWER_MSGBOX_SIGN
+         && script[i] != FOLLOWER_MSGBOX_DEFAULT)
+            return FALSE;
+        i++;
+    }
+
+    if (messages == 0)
         return FALSE;
-    i += 4; // message pointer (never dereferenced)
-    if (script[i++] != FOLLOWER_CMD_CALLSTD)
-        return FALSE;
-    if (script[i] != FOLLOWER_MSGBOX_NPC
-     && script[i] != FOLLOWER_MSGBOX_SIGN
-     && script[i] != FOLLOWER_MSGBOX_DEFAULT)
-        return FALSE;
-    i++;
     if (script[i] == FOLLOWER_CMD_RELEASE || script[i] == FOLLOWER_CMD_RELEASEALL)
         i++;
     return script[i] == FOLLOWER_CMD_END;
