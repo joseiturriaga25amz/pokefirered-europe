@@ -595,6 +595,7 @@ jobs:
           assert "ScriptContext_SetupScript(script);\n    FullFollower_BeginSafeDialogue(script);" in field
           assert "FullFollower_ClearSafeDialogue();" in function(script_impl, "void ScriptContext_SetupScript(const u8 *ptr)")
           assert "FullFollower_ClearSafeDialogue();" in function(script_impl, "void ScriptContext_Init(void)")
+          assert "FullFollower_ClearSafeDialogue();" in function(script_impl, "bool8 ScriptContext_RunScript(void)")
           for command in ("FOLLOWER_CMD_END", "FOLLOWER_CMD_LOADWORD", "FOLLOWER_CMD_CALLSTD",
                           "FOLLOWER_MSGBOX_NPC", "FOLLOWER_MSGBOX_SIGN", "FOLLOWER_MSGBOX_DEFAULT"):
               assert command in matcher
@@ -604,7 +605,7 @@ jobs:
           assert "!QL_IS_PLAYBACK_STATE" in begin
           assert "!gPaletteFade.active" in begin
           assert "IsSafeFollowerDialogueScript(script)" in begin
-          assert "if (sFollowerSafeDialogue && follower != NULL)\n        return;" in f
+          assert "if (sFollowerPresentationState == FOLLOWER_PRESENTATION_HOLD_VISIBLE)" in f
           for origin in ("void FullFollower_RecallForWarp(void)", "void FullFollower_DiscardForLocalReload(void)"):
               assert "FullFollower_ClearSafeDialogue();" in function(f, origin)
           for opcode, byte in (("FOLLOWER_CMD_END", "0x02"),
@@ -637,6 +638,19 @@ jobs:
                          [0x69,0x04,1,2,3,4,0x0F,0,1,2,3,4,0x09,4,0x6B,0x02],
                          [0x69,0x0F,0,1,2,3,4,0x09,4,0x16,0x6B,0x02]):
               assert not safe(unsafe)
+          # Scene-state milestones are exclusive and derived only at runtime.
+          enum_body = f[f.index("enum FollowerPresentationState"):f.index("\n};", f.index("enum FollowerPresentationState"))]
+          for state in ("FOLLOW", "HOLD_VISIBLE", "REPOSITION", "TRANSITION", "RECALLED"):
+              assert "FOLLOWER_PRESENTATION_" + state in enum_body
+          refresh = function(f, "static void RefreshFollower(void)")
+          hold = refresh[refresh.index("if (sFollowerPresentationState == FOLLOWER_PRESENTATION_HOLD_VISIBLE)"):refresh.index("graphicsId = GetPrototypeFollowerGraphicsId(species);")]
+          assert "sFollowerSpecies != species || sFollowerIsShiny != isShiny" in hold
+          assert "RemoveFullFollowerObjectEvent(follower);" in hold
+          assert "SpawnSpecialObjectEventParameterized" not in hold
+          assert "FollowRecordedPlayerSteps" not in hold
+          assert "sFollowerPresentationState = FOLLOWER_PRESENTATION_REPOSITION;" in refresh
+          assert "sFollowerPresentationState = FOLLOWER_PRESENTATION_TRANSITION;" in function(f,"void FullFollower_RecallForWarp(void)")
+          assert "sFollowerPresentationState = FOLLOWER_PRESENTATION_RECALLED;" in function(f,"void FullFollower_DiscardForLocalReload(void)")
           recall=function(f,"void FullFollower_RecallForWarp(void)")
           for item in ("sFollowerWarpTransition = TRUE;", "sFollowerExitLockObserved = FALSE;", "RemoveFullFollowerObjectEvent(follower);", "sFollowerSpecies = SPECIES_NONE;", "sTrailCount = 0;"):
               assert item in recall,item

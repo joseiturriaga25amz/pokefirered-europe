@@ -338,6 +338,7 @@ bool8 ScriptContext_RunScript(void)
     if (!RunScriptCommand(&sGlobalScriptContext))
     {
         sGlobalScriptContextStatus = CONTEXT_SHUTDOWN;
+        FullFollower_ClearSafeDialogue();
         UnlockPlayerFieldControls();
         return FALSE;
     }

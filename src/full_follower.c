@@ -24,6 +24,16 @@ extern const u8 EventScript_FullFollowerFriendship6[];
 #define FOLLOWER_TASK_PRIORITY 0x51
 #define FOLLOWER_TRAIL_CAPACITY 8
 
+// Runtime-only visual intent, never stored in the save or copied into link.
+enum FollowerPresentationState
+{
+    FOLLOWER_PRESENTATION_FOLLOW,
+    FOLLOWER_PRESENTATION_HOLD_VISIBLE,
+    FOLLOWER_PRESENTATION_REPOSITION,
+    FOLLOWER_PRESENTATION_TRANSITION,
+    FOLLOWER_PRESENTATION_RECALLED,
+};
+
 // Direct text-only script grammar, matching asm/macros/event.inc. Never
 // follow branches or calls; reject scripts with movement, flags or battles.
 #define FOLLOWER_CMD_END        0x02
@@ -56,6 +66,7 @@ static bool8 sFollowerWarpTransition;
 static bool8 sFollowerExitLockObserved;
 // Unsaved and valid only during a verified, single-message field interaction.
 static bool8 sFollowerSafeDialogue;
+static enum FollowerPresentationState sFollowerPresentationState = FOLLOWER_PRESENTATION_RECALLED;
 
 static void Task_FullFollower(u8 taskId);
 static struct ObjectEvent *FindFollowerObject(void);
@@ -475,6 +486,9 @@ static void RefreshFollower(void)
 
     if (ShouldSuppressFollower() || !sFollowerEnabled || species == SPECIES_NONE)
     {
+        sFollowerPresentationState = sFollowerWarpTransition
+                                   ? FOLLOWER_PRESENTATION_TRANSITION
+                                   : FOLLOWER_PRESENTATION_RECALLED;
         // Suppressed presentation must release its object slot AND sprite/OAM
         // allocation, not leave a hidden object behind through bike/Surf/scripts.
         // Remove the runtime-only object, never a saved map object or flag.
@@ -486,10 +500,25 @@ static void RefreshFollower(void)
         return;
     }
 
-    // Keep an existing, frozen follower at its tile while the text is open.
-    // Never spawn or update its trail under the script's lockall/lock state.
-    if (sFollowerSafeDialogue && follower != NULL)
+    // HOLD works for both the ordinary Start/Save UI and vetted text-only
+    // dialogue: preserve a live follower without advancing its tile trail.
+    // Never create one while the player is in a locked field interface.
+    sFollowerPresentationState = (StartMenu_IsSafeForFollower() || sFollowerSafeDialogue)
+                               ? FOLLOWER_PRESENTATION_HOLD_VISIBLE
+                               : FOLLOWER_PRESENTATION_FOLLOW;
+    if (sFollowerPresentationState == FOLLOWER_PRESENTATION_HOLD_VISIBLE)
+    {
+        // Do not retain a stale Pokémon or shiny variant if the party changes.
+        if (follower != NULL
+         && (sFollowerSpecies != species || sFollowerIsShiny != isShiny))
+        {
+            RemoveFullFollowerObjectEvent(follower);
+            sFollowerSpecies = SPECIES_NONE;
+            sFollowerIsShiny = FALSE;
+            sTrailCount = 0;
+        }
         return;
+    }
 
     graphicsId = GetPrototypeFollowerGraphicsId(species);
 
@@ -517,8 +546,8 @@ static void RefreshFollower(void)
         s16 spawnY;
         int objectEventId;
 
-        // This also covers safe indoor reappearance after doors/warps.
-        // If the tile behind the player is blocked, retry on a later frame.
+        // REPOSITION retries a legal unoccupied tile after a map return.
+        sFollowerPresentationState = FOLLOWER_PRESENTATION_REPOSITION;
         if (!GetSafeFollowerSpawnCoords(&spawnX, &spawnY))
             return;
 
@@ -536,6 +565,7 @@ static void RefreshFollower(void)
         follower = &gObjectEvents[objectEventId];
         PositionFollowerBehindPlayer(follower, spawnX, spawnY);
         ResetFollowerTrail(player);
+        sFollowerPresentationState = FOLLOWER_PRESENTATION_FOLLOW;
     }
 
     if (!FollowRecordedPlayerSteps(follower))
@@ -544,6 +574,7 @@ static void RefreshFollower(void)
         sFollowerSpecies = SPECIES_NONE;
         sFollowerIsShiny = FALSE;
         sTrailCount = 0;
+        sFollowerPresentationState = FOLLOWER_PRESENTATION_REPOSITION;
     }
 
     // The object-event engine owns sprite invisibility/off-screen culling.
@@ -564,6 +595,7 @@ void FullFollower_RecallForWarp(void)
 
     sFollowerWarpTransition = TRUE;
     sFollowerExitLockObserved = FALSE;
+    sFollowerPresentationState = FOLLOWER_PRESENTATION_TRANSITION;
     if (follower != NULL)
         RemoveFullFollowerObjectEvent(follower);
     sFollowerSpecies = SPECIES_NONE;
@@ -582,6 +614,7 @@ void FullFollower_DiscardForLocalReload(void)
     // cannot recreate a stale sprite. Preserve any pending warp entrance gate.
     if (follower != NULL)
         follower->active = FALSE;
+    sFollowerPresentationState = FOLLOWER_PRESENTATION_RECALLED;
     sFollowerSpecies = SPECIES_NONE;
     sFollowerIsShiny = FALSE;
     sTrailCount = 0;
