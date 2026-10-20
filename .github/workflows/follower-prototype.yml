@@ -615,7 +615,9 @@ jobs:
                                ("FOLLOWER_CMD_LOCK", "0x6A"),
                                ("FOLLOWER_CMD_RELEASEALL", "0x6B"),
                                ("FOLLOWER_CMD_RELEASE", "0x6C")):
-              assert f"#define {opcode}" in f and byte in f.split(f"#define {opcode}",1)[1].splitlines()[0]
+              import re
+              definition = re.search(r"^#define[ \\t]+" + re.escape(opcode) + r"[ \\t]+(0x[0-9A-Fa-f]+)[ \\t]*$", f, re.M)
+              assert definition is not None and definition.group(1) == byte, (opcode, byte)
           # Model the strict parser on safe sign, NPC and follower scripts and
           # reject an action appended after their text.
           def safe(seq):
