@@ -43,6 +43,13 @@ If resuming the approved follower prototype, use branch `prototype/follower-runt
 - **Scope:** Start/Save visibility only, **not** general NPC/sign dialogues, trainer sight, healing, battle lead-in, escalators, ledges or Surf. During generic scripts, the follower remains deliberately suppressed. This is a conservative first part of roadmap item 4, and must not be called complete contextual visibility.
 - New exact technical workflow run `39459203847` was IN PROGRESS when recorded. Inspect final result and logs and repair a real failure before advancing. No exact updated MyBoy test or master integration; final user QA on a bundled corrected ROM only. Next: audit any remaining menu lifecycle/fade risk and then separately classify ordinary sign/NPC dialogue without globally bypassing scripted field locks.
 
+
+### 2026-10-20 — B10 A09 text-only dialogue visibility
+
+- Verified Start/Save technical commit `2a9bbf264f729f0863b69e5535345864cfd33840`: Follower Prototype run `39459203847` SUCCESS for that exact SHA (and docs-only `530e0d2` run `39459279530` SUCCESS). MyBoy runtime is still NOT EXECUTED.
+- Technical commit `975a268d5b3671681f41f92f4f6ada3c72fe8f16` implements a narrow **text-only script** exemption for an already-existing follower. Direct A-interaction scripts must match a bounded, branch-free, single-message `loadword` + `callstd` grammar (optional lock/face/release). Other map scripts, gifts, trainer battles, warps, script replacements, menu fades, Quest Log and link play do NOT receive exemption. Follower stays frozen while text is displayed; no saved data changes. The existing Follower Prototype workflow now checks this safety contract and conservative command classification.
+- Run `39464979599` was **IN PROGRESS** when documented. Exact technical CI and independent runtime behavior review are required before VALIDATED; do not call B10 presentation complete. Important follow-up: audit message closure, bytecode parser bounds, state cancellation on competing non-script field activities and cross-target compilation before moving into trainer-specific battle staging. A08/Start fixes still require bundled new MyBoy ROM checks. Surf remains deferred to fixture.
+
 ## Current phase
 
 The project is in **Release Candidate final audit**, not broad implementation.
