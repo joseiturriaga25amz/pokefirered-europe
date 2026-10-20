@@ -621,7 +621,7 @@ jobs:
               assert definition is not None and definition.group(1) == byte, (opcode, byte)
           # Model the bounded grammar for one through four adjacent
           # messages; reject a fifth, control flow and gameplay side effects.
-          assert "#define FOLLOWER_MAX_SAFE_MESSAGES 4" in matcher
+          assert "#define FOLLOWER_MAX_SAFE_MESSAGES 4" in f
           assert "address > 0x09FFFFC0" in matcher
           assert "messages < FOLLOWER_MAX_SAFE_MESSAGES" in matcher
           assert "script[i + 1] != 0" in matcher
