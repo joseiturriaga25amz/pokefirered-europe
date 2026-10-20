@@ -565,8 +565,24 @@ jobs:
               end=src.index("\n}",start)
               return src[start:end]
           suppress=function(f,"static bool8 ShouldSuppressFollower(void)")
-          for item in ("if (sFollowerWarpTransition)", "sFollowerExitLockObserved = TRUE;", "if (!sFollowerExitLockObserved || ArePlayerFieldControlsLocked())", "sFollowerWarpTransition = FALSE;", "if (ArePlayerFieldControlsLocked())\n        return TRUE;", "if (ScriptContext_IsEnabled())"):
+          for item in ("if (sFollowerWarpTransition)", "sFollowerExitLockObserved = TRUE;", "if (!sFollowerExitLockObserved || ArePlayerFieldControlsLocked())", "sFollowerWarpTransition = FALSE;", "if (ArePlayerFieldControlsLocked() && !StartMenu_IsSafeForFollower())\n        return TRUE;", "if (ScriptContext_IsEnabled())"):
               assert item in suppress,item
+          # A narrow field Start/Save exception must not bypass unsafe scripts.
+          start_menu = Path("src/start_menu.c").read_text()
+          start_header = Path("include/start_menu.h").read_text()
+          gate = function(start_menu, "bool8 StartMenu_IsSafeForFollower(void)")
+          assert "bool8 StartMenu_IsSafeForFollower(void);" in start_header
+          for required in ("MenuHelpers_IsLinkActive()", "InUnionRoom()", "gPaletteFade.active",
+                           "FuncIsActiveTask(task50_startmenu)",
+                           "FuncIsActiveTask(Task_StartMenuHandleInput)",
+                           "sStartMenuCallback == StartCB_HandleInput",
+                           "sStartMenuCallback == StartCB_Save2"):
+              assert required in gate, required
+          for forbidden in ("StartMenuPokedexCallback", "StartMenuPokemonCallback", "StartMenuBagCallback"):
+              assert forbidden not in gate, forbidden
+          assert suppress.index("if (QL_IS_PLAYBACK_STATE)") < suppress.index("StartMenu_IsSafeForFollower()")
+          assert suppress.index("if (sFollowerWarpTransition)") < suppress.index("StartMenu_IsSafeForFollower()")
+          assert suppress.index("StartMenu_IsSafeForFollower()") < suppress.index("if (ScriptContext_IsEnabled())")
           recall=function(f,"void FullFollower_RecallForWarp(void)")
           for item in ("sFollowerWarpTransition = TRUE;", "sFollowerExitLockObserved = FALSE;", "RemoveFullFollowerObjectEvent(follower);", "sFollowerSpecies = SPECIES_NONE;", "sTrailCount = 0;"):
               assert item in recall,item

@@ -5,6 +5,7 @@
 #include "pokemon.h"
 #include "quest_log.h"
 #include "script.h"
+#include "start_menu.h"
 #include "strings.h"
 #include "task.h"
 #include "constants/event_object_movement.h"
@@ -230,7 +231,9 @@ static bool8 ShouldSuppressFollower(void)
         sFollowerExitLockObserved = FALSE;
     }
 
-    if (ArePlayerFieldControlsLocked())
+    // A normal field Start/Save menu is safe while its controls are locked.
+    // All script and warp suppression below remains strict.
+    if (ArePlayerFieldControlsLocked() && !StartMenu_IsSafeForFollower())
         return TRUE;
 
     // The caller separately checks the party lead and the on/off preference.
