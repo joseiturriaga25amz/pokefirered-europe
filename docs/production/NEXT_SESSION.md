@@ -35,6 +35,14 @@ If resuming the approved follower prototype, use branch `prototype/follower-runt
 - **A08 implementation:** technical commit `62fe6b448761b4f6ab05f2c81ff9ffa7ffc9e1fc` modifies only `src/quest_log.c`: at the final state of `Task_EndQuestLog`, after field controls are unlocked, call `FullFollower_OnLocalMapReady()` to re-arm the runtime-only companion task suppressed during Quest Log playback. The task itself handles eligible party, map controls, bike/Surf and safe spawning. No saved data or link serialization changes. This addresses the source-supported path where resume from Quest Log left no follower until the next map transition.
 - Follower Prototype CI run `39458289730` for `62fe6b4` was **IN PROGRESS when recorded**. Check its exact outcome and investigate any failure before calling this microblock validated. No MyBoy check or integration performed. Next: exact technical CI and targeted source audit, then B10 contextual visibility microblock. Surf remains deferred to a new diagnostic fixture, not story progression.
 
+
+### 2026-10-20 — B10 A09 Start/Save visibility (partial contextual presentation)
+
+- Exact technical HEAD `62fe6b448761b4f6ab05f2c81ff9ffa7ffc9e1fc` (Quest Log end restores transient follower task after save/load) passed Follower Prototype Actions run `39458289730`; subsequent docs-only HEAD `b1d4094481777091670d34d71dfedc62a49f33be` passed run `39458360974`. Compilation/static checks only; MyBoy A08 regression remains pending.
+- `2a9bbf264f729f0863b69e5535345864cfd33840` implements a narrow **Start/Save menu** presentation exception: `StartMenu_IsSafeForFollower()` recognizes live non-link, non-fading menu tasks and only the ordinary HandleInput/Save callbacks; `ShouldSuppressFollower()` retains strict Quest Log, warp, bike/Surf, jump and `ScriptContext_IsEnabled()` checks. Adds matching static assertions to the existing Follower Prototype workflow rather than weakening its previous field-lock validator.
+- **Scope:** Start/Save visibility only, **not** general NPC/sign dialogues, trainer sight, healing, battle lead-in, escalators, ledges or Surf. During generic scripts, the follower remains deliberately suppressed. This is a conservative first part of roadmap item 4, and must not be called complete contextual visibility.
+- New exact technical workflow run `39459203847` was IN PROGRESS when recorded. Inspect final result and logs and repair a real failure before advancing. No exact updated MyBoy test or master integration; final user QA on a bundled corrected ROM only. Next: audit any remaining menu lifecycle/fade risk and then separately classify ordinary sign/NPC dialogue without globally bypassing scripted field locks.
+
 ## Current phase
 
 The project is in **Release Candidate final audit**, not broad implementation.
