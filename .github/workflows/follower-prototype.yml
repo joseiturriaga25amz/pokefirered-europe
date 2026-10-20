@@ -565,7 +565,7 @@ jobs:
               end=src.index("\n}",start)
               return src[start:end]
           suppress=function(f,"static bool8 ShouldSuppressFollower(void)")
-          for item in ("if (sFollowerWarpTransition)", "sFollowerExitLockObserved = TRUE;", "if (!sFollowerExitLockObserved || ArePlayerFieldControlsLocked())", "sFollowerWarpTransition = FALSE;", "if (ArePlayerFieldControlsLocked() && !StartMenu_IsSafeForFollower())\n        return TRUE;", "if (ScriptContext_IsEnabled())"):
+          for item in ("if (sFollowerWarpTransition)", "sFollowerExitLockObserved = TRUE;", "if (!sFollowerExitLockObserved || ArePlayerFieldControlsLocked())", "sFollowerWarpTransition = FALSE;", "if (ArePlayerFieldControlsLocked()\n     && !StartMenu_IsSafeForFollower()\n     && !sFollowerSafeDialogue)\n        return TRUE;", "if (ScriptContext_IsEnabled())"):
               assert item in suppress,item
           # A narrow field Start/Save exception must not bypass unsafe scripts.
           start_menu = Path("src/start_menu.c").read_text()
@@ -583,6 +583,58 @@ jobs:
           assert suppress.index("if (QL_IS_PLAYBACK_STATE)") < suppress.index("StartMenu_IsSafeForFollower()")
           assert suppress.index("if (sFollowerWarpTransition)") < suppress.index("StartMenu_IsSafeForFollower()")
           assert suppress.index("StartMenu_IsSafeForFollower()") < suppress.index("if (ScriptContext_IsEnabled())")
+          # Only a compiled single-msgbox script from direct A interaction is
+          # eligible. Unsafe scripted actions cannot pass this bytecode grammar.
+          field = Path("src/field_control_avatar.c").read_text()
+          script_impl = Path("src/script.c").read_text()
+          header = Path("include/full_follower.h").read_text()
+          matcher = function(f, "static bool8 IsSafeFollowerDialogueScript(const u8 *script)")
+          begin = function(f, "void FullFollower_BeginSafeDialogue(const u8 *script)")
+          assert "void FullFollower_BeginSafeDialogue(const u8 *script);" in header
+          assert "void FullFollower_ClearSafeDialogue(void);" in header
+          assert "ScriptContext_SetupScript(script);\n    FullFollower_BeginSafeDialogue(script);" in field
+          assert "FullFollower_ClearSafeDialogue();" in function(script_impl, "void ScriptContext_SetupScript(const u8 *ptr)")
+          assert "FullFollower_ClearSafeDialogue();" in function(script_impl, "void ScriptContext_Init(void)")
+          for command in ("FOLLOWER_CMD_END", "FOLLOWER_CMD_LOADWORD", "FOLLOWER_CMD_CALLSTD",
+                          "FOLLOWER_MSGBOX_NPC", "FOLLOWER_MSGBOX_SIGN", "FOLLOWER_MSGBOX_DEFAULT"):
+              assert command in matcher
+          for forbidden in ("FOLLOWER_CMD_GOTO", "FOLLOWER_CMD_SPECIAL", "FOLLOWER_CMD_TRAINERBATTLE"):
+              assert forbidden not in matcher
+          assert "FindFollowerObject() != NULL" in begin
+          assert "!QL_IS_PLAYBACK_STATE" in begin
+          assert "!gPaletteFade.active" in begin
+          assert "IsSafeFollowerDialogueScript(script)" in begin
+          assert "if (sFollowerSafeDialogue && follower != NULL)\n        return;" in f
+          for origin in ("void FullFollower_RecallForWarp(void)", "void FullFollower_DiscardForLocalReload(void)"):
+              assert "FullFollower_ClearSafeDialogue();" in function(f, origin)
+          for opcode, byte in (("FOLLOWER_CMD_END", "0x02"),
+                               ("FOLLOWER_CMD_LOADWORD", "0x0F"),
+                               ("FOLLOWER_CMD_CALLSTD", "0x09"),
+                               ("FOLLOWER_CMD_FACEPLAYER", "0x5A"),
+                               ("FOLLOWER_CMD_LOCKALL", "0x69"),
+                               ("FOLLOWER_CMD_LOCK", "0x6A"),
+                               ("FOLLOWER_CMD_RELEASEALL", "0x6B"),
+                               ("FOLLOWER_CMD_RELEASE", "0x6C")):
+              assert f"#define {opcode}" in f and byte in f.split(f"#define {opcode}",1)[1].splitlines()[0]
+          # Model the strict parser on safe sign, NPC and follower scripts and
+          # reject an action appended after their text.
+          def safe(seq):
+              p = 0
+              if seq[p] in (0x69, 0x6A): p += 1
+              if seq[p] == 0x5A: p += 1
+              if seq[p:p+2] != [0x0F,0]: return False
+              p += 6
+              if seq[p] != 0x09 or seq[p+1] not in (2,3,4): return False
+              p += 2
+              if seq[p] in (0x6B,0x6C): p += 1
+              return seq[p] == 0x02
+          for std in (2,3,4):
+              assert safe([0x69,0x0F,0,1,2,3,4,0x09,std,0x6B,0x02])
+              assert safe([0x0F,0,1,2,3,4,0x09,std,0x02])
+          for unsafe in ([0x69,0x0F,0,1,2,3,4,0x09,4,0x6B,0x05,0x02],
+                         [0x69,0x04,1,2,3,4,0x0F,0,1,2,3,4,0x09,4,0x6B,0x02],
+                         [0x69,0x0F,0,1,2,3,4,0x09,4,0x16,0x6B,0x02]):
+              assert not safe(unsafe)
           recall=function(f,"void FullFollower_RecallForWarp(void)")
           for item in ("sFollowerWarpTransition = TRUE;", "sFollowerExitLockObserved = FALSE;", "RemoveFullFollowerObjectEvent(follower);", "sFollowerSpecies = SPECIES_NONE;", "sTrailCount = 0;"):
               assert item in recall,item

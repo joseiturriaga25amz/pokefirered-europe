@@ -1,4 +1,5 @@
 #include "global.h"
+#include "gflib.h"
 #include "event_object_movement.h"
 #include "field_player_avatar.h"
 #include "full_follower.h"
@@ -23,6 +24,20 @@ extern const u8 EventScript_FullFollowerFriendship6[];
 #define FOLLOWER_TASK_PRIORITY 0x51
 #define FOLLOWER_TRAIL_CAPACITY 8
 
+// Direct text-only script grammar, matching asm/macros/event.inc. Never
+// follow branches or calls; reject scripts with movement, flags or battles.
+#define FOLLOWER_CMD_END        0x02
+#define FOLLOWER_CMD_LOADWORD   0x0F
+#define FOLLOWER_CMD_CALLSTD    0x09
+#define FOLLOWER_CMD_FACEPLAYER 0x5A
+#define FOLLOWER_CMD_LOCKALL    0x69
+#define FOLLOWER_CMD_LOCK      0x6A
+#define FOLLOWER_CMD_RELEASEALL 0x6B
+#define FOLLOWER_CMD_RELEASE    0x6C
+#define FOLLOWER_MSGBOX_NPC     2
+#define FOLLOWER_MSGBOX_SIGN    3
+#define FOLLOWER_MSGBOX_DEFAULT 4
+
 static bool8 sFollowerEnabled = TRUE;
 static u16 sFollowerSpecies = SPECIES_NONE;
 // Visual variant comes from the actual first eligible party Pokémon.
@@ -39,6 +54,8 @@ static u8 sTrailCount;
 // Transient gate: source warp -> locked destination entrance -> player control.
 static bool8 sFollowerWarpTransition;
 static bool8 sFollowerExitLockObserved;
+// Unsaved and valid only during a verified, single-message field interaction.
+static bool8 sFollowerSafeDialogue;
 
 static void Task_FullFollower(u8 taskId);
 static struct ObjectEvent *FindFollowerObject(void);
@@ -212,6 +229,51 @@ static struct ObjectEvent *FindFollowerObject(void)
     return NULL;
 }
 
+// Only a single ordinary text message can keep an existing follower on-screen.
+// Reject all control-flow, movement, specials, gifts, trainer battles and
+// arbitrary RAM scripts. Compiled ROM is 0x08000000-0x09FFFFFF on the GBA.
+static bool8 IsSafeFollowerDialogueScript(const u8 *script)
+{
+    uintptr_t address = (uintptr_t)script;
+    u8 i = 0;
+
+    if (address < 0x08000000 || address > 0x09FFFFE0)
+        return FALSE;
+
+    if (script[i] == FOLLOWER_CMD_LOCK || script[i] == FOLLOWER_CMD_LOCKALL)
+        i++;
+    if (script[i] == FOLLOWER_CMD_FACEPLAYER)
+        i++;
+    if (script[i++] != FOLLOWER_CMD_LOADWORD || script[i++] != 0)
+        return FALSE;
+    i += 4; // message pointer (never dereferenced)
+    if (script[i++] != FOLLOWER_CMD_CALLSTD)
+        return FALSE;
+    if (script[i] != FOLLOWER_MSGBOX_NPC
+     && script[i] != FOLLOWER_MSGBOX_SIGN
+     && script[i] != FOLLOWER_MSGBOX_DEFAULT)
+        return FALSE;
+    i++;
+    if (script[i] == FOLLOWER_CMD_RELEASE || script[i] == FOLLOWER_CMD_RELEASEALL)
+        i++;
+    return script[i] == FOLLOWER_CMD_END;
+}
+
+void FullFollower_ClearSafeDialogue(void)
+{
+    sFollowerSafeDialogue = FALSE;
+}
+
+void FullFollower_BeginSafeDialogue(const u8 *script)
+{
+    // Called exclusively after a player A-button interaction starts.
+    // An absent follower must never materialize just for a message.
+    sFollowerSafeDialogue = FindFollowerObject() != NULL
+                         && !QL_IS_PLAYBACK_STATE
+                         && !gPaletteFade.active
+                         && IsSafeFollowerDialogueScript(script);
+}
+
 static bool8 ShouldSuppressFollower(void)
 {
     // Quest Log playback uses a fixed NPC movement table; follower ID 254
@@ -233,7 +295,9 @@ static bool8 ShouldSuppressFollower(void)
 
     // A normal field Start/Save menu is safe while its controls are locked.
     // All script and warp suppression below remains strict.
-    if (ArePlayerFieldControlsLocked() && !StartMenu_IsSafeForFollower())
+    if (ArePlayerFieldControlsLocked()
+     && !StartMenu_IsSafeForFollower()
+     && !sFollowerSafeDialogue)
         return TRUE;
 
     // The caller separately checks the party lead and the on/off preference.
@@ -251,7 +315,12 @@ static bool8 ShouldSuppressFollower(void)
 
     // The prototype suppresses presentation during scripted field control.
     // This keeps follower state out of cutscenes/trainer-sight/link-sensitive scripts.
-    if (ScriptContext_IsEnabled())
+    if (ScriptContext_IsEnabled() && !sFollowerSafeDialogue)
+        return TRUE;
+
+    // Text-only scripts do not perform fades. If an independent transition
+    // starts, abandon the exception rather than retain an unsafe sprite.
+    if (gPaletteFade.active && sFollowerSafeDialogue)
         return TRUE;
 
     return FALSE;
@@ -399,6 +468,11 @@ static void RefreshFollower(void)
     u16 species = GetEligiblePrototypeFollowerSpecies(&isShiny);
     u8 graphicsId;
 
+    if (sFollowerSafeDialogue
+     && !ArePlayerFieldControlsLocked()
+     && !ScriptContext_IsEnabled())
+        sFollowerSafeDialogue = FALSE;
+
     if (ShouldSuppressFollower() || !sFollowerEnabled || species == SPECIES_NONE)
     {
         // Suppressed presentation must release its object slot AND sprite/OAM
@@ -411,6 +485,11 @@ static void RefreshFollower(void)
         sTrailCount = 0;
         return;
     }
+
+    // Keep an existing, frozen follower at its tile while the text is open.
+    // Never spawn or update its trail under the script's lockall/lock state.
+    if (sFollowerSafeDialogue && follower != NULL)
+        return;
 
     graphicsId = GetPrototypeFollowerGraphicsId(species);
 
@@ -481,6 +560,8 @@ void FullFollower_RecallForWarp(void)
 {
     struct ObjectEvent *follower = FindFollowerObject();
 
+    FullFollower_ClearSafeDialogue();
+
     sFollowerWarpTransition = TRUE;
     sFollowerExitLockObserved = FALSE;
     if (follower != NULL)
@@ -493,6 +574,8 @@ void FullFollower_RecallForWarp(void)
 void FullFollower_DiscardForLocalReload(void)
 {
     struct ObjectEvent *follower = FindFollowerObject();
+
+    FullFollower_ClearSafeDialogue();
 
     // ResumeMap resets sprite memory before rebuilding surviving objects.
     // Invalidate the transient follower so that the object reconstruction

@@ -381,6 +381,7 @@ static bool8 TryStartInteractionScript(struct MapPosition *position, u16 metatil
         PlaySE(SE_SELECT);
 
     ScriptContext_SetupScript(script);
+    FullFollower_BeginSafeDialogue(script);
     return TRUE;
 }
 

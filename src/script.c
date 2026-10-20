@@ -1,6 +1,7 @@
 #include "global.h"
 #include "script.h"
 #include "event_data.h"
+#include "full_follower.h"
 #include "quest_log.h"
 #include "mystery_gift.h"
 #include "constants/maps.h"
@@ -315,6 +316,7 @@ bool8 ScriptContext_IsEnabled(void)
 // Re-initializes the global script context to zero.
 void ScriptContext_Init(void)
 {
+    FullFollower_ClearSafeDialogue();
     InitScriptContext(&sGlobalScriptContext, gScriptCmdTable, gScriptCmdTableEnd);
     sGlobalScriptContextStatus = CONTEXT_SHUTDOWN;
 }
@@ -346,6 +348,8 @@ bool8 ScriptContext_RunScript(void)
 // Sets up a new script in the global context and enables the context
 void ScriptContext_SetupScript(const u8 *ptr)
 {
+    // Any forced scene or replacement script revokes the field text exemption.
+    FullFollower_ClearSafeDialogue();
     ClearMsgBoxCancelableState();
     EnableMsgBoxWalkaway();
     ClearQuestLogInputIsDpadFlag();
