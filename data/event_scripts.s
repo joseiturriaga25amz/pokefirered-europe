@@ -2123,46 +2123,46 @@ EventScript_FullFollowerFriendship6::
 
 .if GAME_LANGUAGE == LANGUAGE_SPANISH
 Text_FullFollowerFriendship0::
-	.string "{STR_VAR_1} parece receloso.\\nAún no confía mucho en ti.$"
+	.string "{STR_VAR_1} parece receloso.\nAún no confía mucho en ti.$"
 
 Text_FullFollowerFriendship1::
-	.string "{STR_VAR_1} te mira de reojo.\\nParece algo reservado.$"
+	.string "{STR_VAR_1} te mira de reojo.\nParece algo reservado.$"
 
 Text_FullFollowerFriendship2::
-	.string "{STR_VAR_1} se acerca curioso.\\nEmpieza a confiar en ti.$"
+	.string "{STR_VAR_1} se acerca curioso.\nEmpieza a confiar en ti.$"
 
 Text_FullFollowerFriendship3::
-	.string "{STR_VAR_1} camina a tu lado.\\nSe siente a gusto contigo.$"
+	.string "{STR_VAR_1} camina a tu lado.\nSe siente a gusto contigo.$"
 
 Text_FullFollowerFriendship4::
-	.string "{STR_VAR_1} te mira alegre.\\nDisfruta de tu compañía.$"
+	.string "{STR_VAR_1} te mira alegre.\nDisfruta de tu compañía.$"
 
 Text_FullFollowerFriendship5::
-	.string "{STR_VAR_1} salta de alegría.\\nTe tiene mucho cariño.$"
+	.string "{STR_VAR_1} salta de alegría.\nTe tiene mucho cariño.$"
 
 Text_FullFollowerFriendship6::
-	.string "{STR_VAR_1} se pega a ti.\\n¡Vuestra amistad es enorme!$"
+	.string "{STR_VAR_1} se pega a ti.\n¡Vuestra amistad es enorme!$"
 .else
 Text_FullFollowerFriendship0::
-	.string "{STR_VAR_1} seems wary.\\nIt does not trust you much yet.$"
+	.string "{STR_VAR_1} seems wary.\nIt does not trust you much yet.$"
 
 Text_FullFollowerFriendship1::
-	.string "{STR_VAR_1} gives you a shy look.\\nIt still seems reserved.$"
+	.string "{STR_VAR_1} gives you a shy look.\nIt still seems reserved.$"
 
 Text_FullFollowerFriendship2::
-	.string "{STR_VAR_1} comes closer.\\nIt is beginning to trust you.$"
+	.string "{STR_VAR_1} comes closer.\nIt is beginning to trust you.$"
 
 Text_FullFollowerFriendship3::
-	.string "{STR_VAR_1} walks at your side.\\nIt feels at ease with you.$"
+	.string "{STR_VAR_1} walks at your side.\nIt feels at ease with you.$"
 
 Text_FullFollowerFriendship4::
-	.string "{STR_VAR_1} looks very happy.\\nIt enjoys your company.$"
+	.string "{STR_VAR_1} looks very happy.\nIt enjoys your company.$"
 
 Text_FullFollowerFriendship5::
-	.string "{STR_VAR_1} jumps for joy.\\nIt cares for you deeply.$"
+	.string "{STR_VAR_1} jumps for joy.\nIt cares for you deeply.$"
 
 Text_FullFollowerFriendship6::
-	.string "{STR_VAR_1} stays close to you.\\nYour bond is unbreakable!$"
+	.string "{STR_VAR_1} stays close to you.\nYour bond is unbreakable!$"
 .endif
 
 EventScript_ResetAllMapFlags::
