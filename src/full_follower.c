@@ -5,10 +5,19 @@
 #include "pokemon.h"
 #include "quest_log.h"
 #include "script.h"
+#include "strings.h"
 #include "task.h"
 #include "constants/event_object_movement.h"
 #include "constants/event_objects.h"
 #include "constants/pokemon.h"
+
+extern const u8 EventScript_FullFollowerFriendship0[];
+extern const u8 EventScript_FullFollowerFriendship1[];
+extern const u8 EventScript_FullFollowerFriendship2[];
+extern const u8 EventScript_FullFollowerFriendship3[];
+extern const u8 EventScript_FullFollowerFriendship4[];
+extern const u8 EventScript_FullFollowerFriendship5[];
+extern const u8 EventScript_FullFollowerFriendship6[];
 
 #define FOLLOWER_TASK_PRIORITY 0x51
 #define FOLLOWER_TRAIL_CAPACITY 8
@@ -127,6 +136,65 @@ static u16 GetEligiblePrototypeFollowerSpecies(bool8 *isShiny)
     }
 
     return SPECIES_NONE;
+}
+
+// This is evaluated on A press, before the dialogue locks field controls.
+// Read the same first healthy, non-egg Pokémon that selected the visible
+// follower; GetLeadMonFriendship would incorrectly use a fainted lead.
+const u8 *FullFollower_GetFriendshipInteractionScript(void)
+{
+    static const u8 *const sFriendshipScripts[] = {
+        EventScript_FullFollowerFriendship0,
+        EventScript_FullFollowerFriendship1,
+        EventScript_FullFollowerFriendship2,
+        EventScript_FullFollowerFriendship3,
+        EventScript_FullFollowerFriendship4,
+        EventScript_FullFollowerFriendship5,
+        EventScript_FullFollowerFriendship6,
+    };
+    bool8 isShiny = FALSE;
+    u16 species = GetEligiblePrototypeFollowerSpecies(&isShiny);
+    u32 i;
+
+    // Never open a dialog for a stale sprite after a party/variant switch.
+    if (!sFollowerEnabled || species == SPECIES_NONE
+     || species != sFollowerSpecies || isShiny != sFollowerIsShiny)
+        return NULL;
+
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        struct Pokemon *mon = &gPlayerParty[i];
+        u16 monSpecies = GetMonData(mon, MON_DATA_SPECIES);
+
+        if (monSpecies != SPECIES_NONE
+         && GetMonData(mon, MON_DATA_HP) != 0
+         && !GetMonData(mon, MON_DATA_IS_EGG))
+        {
+            u8 friendship;
+            u8 tier;
+
+            if (monSpecies != species)
+                return NULL;
+            GetMonData(mon, MON_DATA_NICKNAME, gStringVar1);
+            friendship = GetMonData(mon, MON_DATA_FRIENDSHIP);
+            if (friendship == 255)
+                tier = 6;
+            else if (friendship >= 200)
+                tier = 5;
+            else if (friendship >= 150)
+                tier = 4;
+            else if (friendship >= 100)
+                tier = 3;
+            else if (friendship >= 50)
+                tier = 2;
+            else if (friendship > 0)
+                tier = 1;
+            else
+                tier = 0;
+            return sFriendshipScripts[tier];
+        }
+    }
+    return NULL;
 }
 
 static struct ObjectEvent *FindFollowerObject(void)

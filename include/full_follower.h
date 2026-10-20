@@ -12,6 +12,8 @@ void FullFollower_RecallForWarp(void);
 void FullFollower_OnCameraCoordsShift(s16 dx, s16 dy);
 void FullFollower_SetEnabled(bool8 enabled);
 bool8 FullFollower_IsEnabled(void);
+// Returns a script only for the actual current, healthy party follower.
+const u8 *FullFollower_GetFriendshipInteractionScript(void);
 u8 FullFollower_GetSpriteGraphicsId(void);
 // Runtime-only variant key for future registered normal/shiny overworld graphics.
 bool8 FullFollower_IsShiny(void);

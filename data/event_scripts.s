@@ -2078,6 +2078,93 @@ gStdScriptsEnd::
 	.include "data/text/legendary_cry.inc"
 .endif
 
+@ Runtime-only follower friendship dialogue. Local ID 254 is not an NPC template.
+EventScript_FullFollowerFriendship0::
+	lockall
+	msgbox Text_FullFollowerFriendship0
+	releaseall
+	end
+
+EventScript_FullFollowerFriendship1::
+	lockall
+	msgbox Text_FullFollowerFriendship1
+	releaseall
+	end
+
+EventScript_FullFollowerFriendship2::
+	lockall
+	msgbox Text_FullFollowerFriendship2
+	releaseall
+	end
+
+EventScript_FullFollowerFriendship3::
+	lockall
+	msgbox Text_FullFollowerFriendship3
+	releaseall
+	end
+
+EventScript_FullFollowerFriendship4::
+	lockall
+	msgbox Text_FullFollowerFriendship4
+	releaseall
+	end
+
+EventScript_FullFollowerFriendship5::
+	lockall
+	msgbox Text_FullFollowerFriendship5
+	releaseall
+	end
+
+EventScript_FullFollowerFriendship6::
+	lockall
+	msgbox Text_FullFollowerFriendship6
+	releaseall
+	end
+
+.if GAME_LANGUAGE == LANGUAGE_SPANISH
+Text_FullFollowerFriendship0::
+	.string "{STR_VAR_1} parece receloso.\\nAún no confía mucho en ti.$"
+
+Text_FullFollowerFriendship1::
+	.string "{STR_VAR_1} te mira de reojo.\\nParece algo reservado.$"
+
+Text_FullFollowerFriendship2::
+	.string "{STR_VAR_1} se acerca curioso.\\nEmpieza a confiar en ti.$"
+
+Text_FullFollowerFriendship3::
+	.string "{STR_VAR_1} camina a tu lado.\\nSe siente a gusto contigo.$"
+
+Text_FullFollowerFriendship4::
+	.string "{STR_VAR_1} te mira alegre.\\nDisfruta de tu compañía.$"
+
+Text_FullFollowerFriendship5::
+	.string "{STR_VAR_1} salta de alegría.\\nTe tiene mucho cariño.$"
+
+Text_FullFollowerFriendship6::
+	.string "{STR_VAR_1} se pega a ti.\\n¡Vuestra amistad es enorme!$"
+.else
+Text_FullFollowerFriendship0::
+	.string "{STR_VAR_1} seems wary.\\nIt does not trust you much yet.$"
+
+Text_FullFollowerFriendship1::
+	.string "{STR_VAR_1} gives you a shy look.\\nIt still seems reserved.$"
+
+Text_FullFollowerFriendship2::
+	.string "{STR_VAR_1} comes closer.\\nIt is beginning to trust you.$"
+
+Text_FullFollowerFriendship3::
+	.string "{STR_VAR_1} walks at your side.\\nIt feels at ease with you.$"
+
+Text_FullFollowerFriendship4::
+	.string "{STR_VAR_1} looks very happy.\\nIt enjoys your company.$"
+
+Text_FullFollowerFriendship5::
+	.string "{STR_VAR_1} jumps for joy.\\nIt cares for you deeply.$"
+
+Text_FullFollowerFriendship6::
+	.string "{STR_VAR_1} stays close to you.\\nYour bond is unbreakable!$"
+.endif
+
 EventScript_ResetAllMapFlags::
 	setflag FLAG_HIDE_OAK_IN_HIS_LAB
 	setflag FLAG_HIDE_OAK_IN_PALLET_TOWN

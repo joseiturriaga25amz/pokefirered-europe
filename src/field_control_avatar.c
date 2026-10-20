@@ -436,6 +436,16 @@ static const u8 *GetInteractedObjectEventScript(struct MapPosition *position, u8
     const u8 *script;
 
     objectEventId = GetObjectEventIdByPosition(position->x, position->y, position->elevation);
+    // ID 254 is a live projection of the party, never a map NPC template.
+    // Handle its own A-button dialogue before any NPC script lookup. Keep
+    // counter, link-room and Quest Log interaction paths unchanged.
+    if (objectEventId < OBJECT_EVENTS_COUNT
+     && gObjectEvents[objectEventId].localId == OBJ_EVENT_ID_FULL_FOLLOWER
+     && !MetatileBehavior_IsCounter(metatileBehavior)
+     && !QL_IS_PLAYBACK_STATE
+     && !InUnionRoom())
+        return FullFollower_GetFriendshipInteractionScript();
+
     if (objectEventId == OBJECT_EVENTS_COUNT || gObjectEvents[objectEventId].localId == LOCALID_PLAYER || gObjectEvents[objectEventId].localId == OBJ_EVENT_ID_FULL_FOLLOWER)
     {
         if (MetatileBehavior_IsCounter(metatileBehavior) != TRUE)
