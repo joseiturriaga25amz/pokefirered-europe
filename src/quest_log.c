@@ -12,6 +12,7 @@
 #include "event_object_movement.h"
 #include "event_object_lock.h"
 #include "field_player_avatar.h"
+#include "full_follower.h"
 #include "item.h"
 #include "region_map.h"
 #include "map_name_popup.h"
@@ -1235,6 +1236,10 @@ static void Task_EndQuestLog(u8 taskId)
         gGlobalFieldTintMode = QL_TINT_NONE;
         DisableWildEncounters(FALSE);
         gHelpSystemEnabled = TRUE;
+        // Playback loaded the saved map with follower creation suppressed.
+        // Re-arm its transient task only after normal local controls return;
+        // the task itself checks the party and safe presentation state.
+        FullFollower_OnLocalMapReady();
         DestroyTask(taskId);
         break;
     }
