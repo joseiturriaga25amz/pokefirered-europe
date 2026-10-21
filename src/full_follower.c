@@ -9,6 +9,7 @@
 #include "start_menu.h"
 #include "strings.h"
 #include "task.h"
+#include "trainer_see.h"
 #include "constants/event_object_movement.h"
 #include "constants/event_objects.h"
 #include "constants/pokemon.h"
@@ -316,11 +317,13 @@ static bool8 ShouldSuppressFollower(void)
         sFollowerExitLockObserved = FALSE;
     }
 
-    // A normal field Start/Save menu is safe while its controls are locked.
-    // All script and warp suppression below remains strict.
+    // A verified trainer-sight task may freeze an existing follower while
+    // the exclamation mark and approach play. A script or battle transition
+    // revokes that exception; normal field locks still suppress otherwise.
     if (ArePlayerFieldControlsLocked()
      && !StartMenu_IsSafeForFollower()
-     && !sFollowerSafeDialogue)
+     && !sFollowerSafeDialogue
+     && !TrainerSee_IsApproachActive())
         return TRUE;
 
     // The caller separately checks the party lead and the on/off preference.
@@ -512,10 +515,12 @@ static void RefreshFollower(void)
         return;
     }
 
-    // HOLD works for both the ordinary Start/Save UI and vetted text-only
-    // dialogue: preserve a live follower without advancing its tile trail.
+    // HOLD works for Start/Save, vetted text dialogue and the local trainer
+    // approach: preserve a live follower without advancing its tile trail.
     // Never create one while the player is in a locked field interface.
-    sFollowerPresentationState = (StartMenu_IsSafeForFollower() || sFollowerSafeDialogue)
+    sFollowerPresentationState = (StartMenu_IsSafeForFollower()
+                               || sFollowerSafeDialogue
+                               || TrainerSee_IsApproachActive())
                                ? FOLLOWER_PRESENTATION_HOLD_VISIBLE
                                : FOLLOWER_PRESENTATION_FOLLOW;
     if (sFollowerPresentationState == FOLLOWER_PRESENTATION_HOLD_VISIBLE)

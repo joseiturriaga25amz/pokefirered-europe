@@ -4,6 +4,7 @@
 #include "field_effect.h"
 #include "field_player_avatar.h"
 #include "quest_log.h"
+#include "trainer_see.h"
 #include "script.h"
 #include "task.h"
 #include "util.h"
@@ -242,6 +243,17 @@ static u8 CheckPathBetweenTrainerAndPlayer(struct ObjectEvent *trainerObj, u8 ap
 #define TaskGetTrainerObj(dest, task) do { \
     (dest) = (struct ObjectEvent *)(((task)->tTrainerObjHi << 16) | ((u16)(task)->tTrainerObjLo)); \
 } while (0)
+
+// The trainer-sight task has no battle or map-teardown ownership.
+// Do not claim the hold during link play, Quest Log or another active script.
+// Other presentation gates (warp, riding and fades) remain authoritative.
+bool8 TrainerSee_IsApproachActive(void)
+{
+    return FuncIsActiveTask(Task_RunTrainerSeeFuncList)
+        && !QL_IS_PLAYBACK_STATE
+        && !IsUpdateLinkStateCBActive()
+        && !ScriptContext_IsEnabled();
+}
 
 static void TrainerApproachPlayer(struct ObjectEvent * trainerObj, u8 approachDistance)
 {

@@ -4,6 +4,8 @@
 #include "global.h"
 
 bool8 CheckForTrainersWantingBattle(void);
+// A live, local trainer-sight approach is safe for an existing follower to hold.
+bool8 TrainerSee_IsApproachActive(void);
 void MovementAction_RevealTrainer_RunTrainerSeeFuncList(struct ObjectEvent *var);
 u8 FldEff_ExclamationMarkIcon1(void);
 u8 FldEff_DoubleExclMarkIcon(void);
