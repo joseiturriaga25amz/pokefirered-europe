@@ -67,6 +67,10 @@ static bool8 sFollowerWarpTransition;
 static bool8 sFollowerExitLockObserved;
 // Unsaved and valid only during a verified, single-message field interaction.
 static bool8 sFollowerSafeDialogue;
+// An explicit trainer-intro speech owns this hold, not arbitrary script locks.
+static bool8 sFollowerTrainerIntro;
+// Battle graphics teardown must not respawn the follower before field return.
+static bool8 sFollowerBattleTransition;
 static enum FollowerPresentationState sFollowerPresentationState = FOLLOWER_PRESENTATION_RECALLED;
 
 static void Task_FullFollower(u8 taskId);
@@ -286,6 +290,37 @@ static bool8 IsSafeFollowerDialogueScript(const u8 *script)
 void FullFollower_ClearSafeDialogue(void)
 {
     sFollowerSafeDialogue = FALSE;
+    sFollowerTrainerIntro = FALSE;
+}
+
+// Only the engine's trainer intro speech can open this presentation window.
+// Retain an existing follower; never allocate one in the middle of a script.
+void FullFollower_BeginTrainerIntro(void)
+{
+    sFollowerTrainerIntro = sFollowerEnabled
+                         && FindFollowerObject() != NULL
+                         && !sFollowerWarpTransition
+                         && !sFollowerBattleTransition
+                         && !QL_IS_PLAYBACK_STATE
+                         && !IsUpdateLinkStateCBActive()
+                         && !InUnionRoom()
+                         && !gPaletteFade.active;
+}
+
+// The battle scene does not own field sprites or local-ID 254. Remove it
+// before the transition effect allocates graphics/OAM; no warp lock needed.
+void FullFollower_RecallForBattle(void)
+{
+    struct ObjectEvent *follower = FindFollowerObject();
+
+    FullFollower_ClearSafeDialogue();
+    sFollowerBattleTransition = TRUE;
+    sFollowerPresentationState = FOLLOWER_PRESENTATION_TRANSITION;
+    if (follower != NULL)
+        RemoveFullFollowerObjectEvent(follower);
+    sFollowerSpecies = SPECIES_NONE;
+    sFollowerIsShiny = FALSE;
+    sTrailCount = 0;
 }
 
 void FullFollower_BeginSafeDialogue(const u8 *script)
@@ -303,6 +338,8 @@ static bool8 ShouldSuppressFollower(void)
     // Quest Log playback uses a fixed NPC movement table; follower ID 254
     // is never a map-template NPC and must not enter that playback path.
     if (QL_IS_PLAYBACK_STATE)
+        return TRUE;
+    if (sFollowerBattleTransition)
         return TRUE;
 
     // A warp is not finished until destination entrance controls unlock.
@@ -323,6 +360,7 @@ static bool8 ShouldSuppressFollower(void)
     if (ArePlayerFieldControlsLocked()
      && !StartMenu_IsSafeForFollower()
      && !sFollowerSafeDialogue
+     && !sFollowerTrainerIntro
      && !TrainerSee_IsApproachActive())
         return TRUE;
 
@@ -341,12 +379,14 @@ static bool8 ShouldSuppressFollower(void)
 
     // The prototype suppresses presentation during scripted field control.
     // This keeps follower state out of cutscenes/trainer-sight/link-sensitive scripts.
-    if (ScriptContext_IsEnabled() && !sFollowerSafeDialogue)
+    if (ScriptContext_IsEnabled()
+     && !sFollowerSafeDialogue
+     && !sFollowerTrainerIntro)
         return TRUE;
 
     // Text-only scripts do not perform fades. If an independent transition
     // starts, abandon the exception rather than retain an unsafe sprite.
-    if (gPaletteFade.active && sFollowerSafeDialogue)
+    if (gPaletteFade.active && (sFollowerSafeDialogue || sFollowerTrainerIntro))
         return TRUE;
 
     return FALSE;
@@ -515,11 +555,12 @@ static void RefreshFollower(void)
         return;
     }
 
-    // HOLD works for Start/Save, vetted text dialogue and the local trainer
-    // approach: preserve a live follower without advancing its tile trail.
+    // HOLD works for Start/Save, vetted text dialogue, local trainer
+    // approach and its engine-owned intro speech. Never advance the trail.
     // Never create one while the player is in a locked field interface.
     sFollowerPresentationState = (StartMenu_IsSafeForFollower()
                                || sFollowerSafeDialogue
+                               || sFollowerTrainerIntro
                                || TrainerSee_IsApproachActive())
                                ? FOLLOWER_PRESENTATION_HOLD_VISIBLE
                                : FOLLOWER_PRESENTATION_FOLLOW;
@@ -640,12 +681,16 @@ void FullFollower_DiscardForLocalReload(void)
 void FullFollower_DiscardForLink(void)
 {
     FullFollower_DiscardForLocalReload();
+    sFollowerBattleTransition = FALSE;
     sFollowerWarpTransition = FALSE;
     sFollowerExitLockObserved = FALSE;
 }
 
 void FullFollower_OnLocalMapReady(void)
 {
+    // Restore presentation only after the field returns from battle; scene
+    // sprites and object-events are already reconstructed by map loading.
+    sFollowerBattleTransition = FALSE;
     // Local map loading can run during Quest Log playback.
     if (QL_IS_PLAYBACK_STATE)
         return;

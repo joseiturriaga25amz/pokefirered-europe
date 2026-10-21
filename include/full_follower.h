@@ -9,6 +9,9 @@ void FullFollower_OnLocalMapReady(void);
 void FullFollower_DiscardForLink(void);
 void FullFollower_DiscardForLocalReload(void);
 void FullFollower_RecallForWarp(void);
+// Bounded trainer-intro presentation and battle-scene sprite teardown.
+void FullFollower_BeginTrainerIntro(void);
+void FullFollower_RecallForBattle(void);
 void FullFollower_OnCameraCoordsShift(s16 dx, s16 dy);
 void FullFollower_SetEnabled(bool8 enabled);
 bool8 FullFollower_IsEnabled(void);

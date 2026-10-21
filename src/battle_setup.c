@@ -20,6 +20,7 @@
 #include "fieldmap.h"
 #include "field_control_avatar.h"
 #include "field_player_avatar.h"
+#include "full_follower.h"
 #include "field_screen_effect.h"
 #include "field_message_box.h"
 #include "vs_seeker.h"
@@ -192,6 +193,9 @@ static void Task_BattleStart(u8 taskId)
         if (!FldEffPoison_IsActive())
         {
             HelpSystem_Disable();
+            // Keep the companion through trainer speech, but never into
+            // battle transition graphics/OAM ownership (also covers wilds).
+            FullFollower_RecallForBattle();
             BattleTransition_StartOnField(tTransition);
             ++tState;
         }
@@ -984,6 +988,7 @@ void StartRematchBattle(void)
 
 void ShowTrainerIntroSpeech(void)
 {
+    FullFollower_BeginTrainerIntro();
     ShowFieldMessage(GetIntroSpeechOfApproachingTrainer());
 }
 
