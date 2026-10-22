@@ -690,7 +690,7 @@ jobs:
           assert suppress.index("if (QL_IS_PLAYBACK_STATE)") < suppress.index("TrainerSee_IsApproachActive()")
           assert suppress.index("if (ScriptContext_IsEnabled()\n     && !sFollowerSafeDialogue\n     && !sFollowerTrainerIntro\n     && !sFollowerGaryTowerHold\n     && !TrainerSee_IsApproachActive())") > suppress.index("TrainerSee_IsApproachActive()")
           assert "sFollowerPresentationState == FOLLOWER_PRESENTATION_HOLD_VISIBLE" in f
-          assert "if (gPaletteFade.active\n     && (sFollowerSafeDialogue || sFollowerTrainerIntro || TrainerSee_IsApproachActive()))" in suppress
+          assert "if (gPaletteFade.active\n     && (sFollowerSafeDialogue || sFollowerTrainerIntro || sFollowerGaryTowerHold || TrainerSee_IsApproachActive()))" in suppress
           assert suppress.index("if (sFollowerBattleTransition)") < suppress.index("TrainerSee_IsApproachActive()")
           # Trainer intro is a narrowly scoped script exception: the native
           # speech special starts it, and the battle transition recalls it
