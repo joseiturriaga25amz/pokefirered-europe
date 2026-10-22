@@ -10,6 +10,9 @@ For each block record **PASS / FAIL / BLOCKED**, the exact commit SHA, save used
 
 ## Follower prototype — current corrective roadmap (2026-10-19)
 
+**Gary Tower CI correction (2026-10-22):** The initial `bb6777e` and docs `c00fa48` runs FAILED despite Spanish ROM compile success. Stale exact fade assertion fixed in workflow-only `7864f38`; run `39792302159` queued at checkpoint. Until exact success and audit, Gary Tower scene is NOT CI-GREEN or MyBoy-verified. See `NEXT_SESSION.md`.
+
+
 **Gary Tower 2F pilot (2026-10-22):** Exact technical commit `bb6777e` adds a bounded already-present follower HOLD during the scripted Rival coordinate triggers on Tower 2F. CI run `39790987988` is IN PROGRESS at checkpoint; no MyBoy/Full Gameplay Core/merge. Other Gary scenes remain strictly gated pending scene-by-scene audit. See `NEXT_SESSION.md`.
 
 
