@@ -23,6 +23,7 @@ extern const u8 EventScript_FullFollowerFriendship5[];
 extern const u8 EventScript_FullFollowerFriendship6[];
 extern const u8 PokemonTower_2F_EventScript_RivalTriggerRight[];
 extern const u8 PokemonTower_2F_EventScript_RivalTriggerDown[];
+extern const u8 SilphCo_7F_EventScript_RivalTriggerBottom[];
 
 #define FOLLOWER_TASK_PRIORITY 0x51
 #define FOLLOWER_TRAIL_CAPACITY 8
@@ -71,8 +72,8 @@ static bool8 sFollowerExitLockObserved;
 static bool8 sFollowerSafeDialogue;
 // An explicit trainer-intro speech owns this hold, not arbitrary script locks.
 static bool8 sFollowerTrainerIntro;
-// Only the Tower 2F Gary scene owns this unsaved stationary presentation hold.
-static bool8 sFollowerGaryTowerHold;
+// Only explicitly vetted, stationary Gary scenes own this unsaved presentation hold.
+static bool8 sFollowerGarySceneHold;
 // Battle graphics teardown must not respawn the follower before field return.
 static bool8 sFollowerBattleTransition;
 static enum FollowerPresentationState sFollowerPresentationState = FOLLOWER_PRESENTATION_RECALLED;
@@ -295,16 +296,18 @@ void FullFollower_ClearSafeDialogue(void)
 {
     sFollowerSafeDialogue = FALSE;
     sFollowerTrainerIntro = FALSE;
-    sFollowerGaryTowerHold = FALSE;
+    sFollowerGarySceneHold = FALSE;
 }
 
-// Gary's Tower 2F encounter turns only the player in place before battle.
-// Permit HOLD for its two exact coordinate-trigger entry scripts, not for
-// arbitrary cutscenes or NPC scripts. No spawn occurs inside a field lock.
+// Permit HOLD for exactly vetted Gary coordinate-trigger scripts where the
+// player stays put and the rival cannot enter the follower's trailing tile.
+// Silph 7F TOP is intentionally excluded: Gary walks into the possible trail.
+// Never spawn a follower under an active field script lock.
 void FullFollower_BeginScriptedGaryScene(const u8 *script)
 {
-    sFollowerGaryTowerHold = (script == PokemonTower_2F_EventScript_RivalTriggerRight
-                           || script == PokemonTower_2F_EventScript_RivalTriggerDown)
+    sFollowerGarySceneHold = (script == PokemonTower_2F_EventScript_RivalTriggerRight
+                           || script == PokemonTower_2F_EventScript_RivalTriggerDown
+                           || script == SilphCo_7F_EventScript_RivalTriggerBottom)
                           && sFollowerEnabled
                           && FindFollowerObject() != NULL
                           && !sFollowerWarpTransition
@@ -383,7 +386,7 @@ static bool8 ShouldSuppressFollower(void)
      && !StartMenu_IsSafeForFollower()
      && !sFollowerSafeDialogue
      && !sFollowerTrainerIntro
-     && !sFollowerGaryTowerHold
+     && !sFollowerGarySceneHold
      && !TrainerSee_IsApproachActive())
         return TRUE;
 
@@ -405,14 +408,14 @@ static bool8 ShouldSuppressFollower(void)
     if (ScriptContext_IsEnabled()
      && !sFollowerSafeDialogue
      && !sFollowerTrainerIntro
-     && !sFollowerGaryTowerHold
+     && !sFollowerGarySceneHold
      && !TrainerSee_IsApproachActive())
         return TRUE;
 
     // Text-only scripts do not perform fades. If an independent transition
     // starts, abandon the exception rather than retain an unsafe sprite.
     if (gPaletteFade.active
-     && (sFollowerSafeDialogue || sFollowerTrainerIntro || sFollowerGaryTowerHold || TrainerSee_IsApproachActive()))
+     && (sFollowerSafeDialogue || sFollowerTrainerIntro || sFollowerGarySceneHold || TrainerSee_IsApproachActive()))
         return TRUE;
 
     return FALSE;
@@ -587,7 +590,7 @@ static void RefreshFollower(void)
     sFollowerPresentationState = (StartMenu_IsSafeForFollower()
                                || sFollowerSafeDialogue
                                || sFollowerTrainerIntro
-                               || sFollowerGaryTowerHold
+                               || sFollowerGarySceneHold
                                || TrainerSee_IsApproachActive())
                                ? FOLLOWER_PRESENTATION_HOLD_VISIBLE
                                : FOLLOWER_PRESENTATION_FOLLOW;

@@ -565,7 +565,7 @@ jobs:
               end=src.index("\n}",start)
               return src[start:end]
           suppress=function(f,"static bool8 ShouldSuppressFollower(void)")
-          for item in ("if (sFollowerWarpTransition)", "sFollowerExitLockObserved = TRUE;", "if (!sFollowerExitLockObserved || ArePlayerFieldControlsLocked())", "sFollowerWarpTransition = FALSE;", "if (ArePlayerFieldControlsLocked()\n     && !StartMenu_IsSafeForFollower()\n     && !sFollowerSafeDialogue\n     && !sFollowerTrainerIntro\n     && !sFollowerGaryTowerHold\n     && !TrainerSee_IsApproachActive())\n        return TRUE;", "if (ScriptContext_IsEnabled()\n     && !sFollowerSafeDialogue\n     && !sFollowerTrainerIntro\n     && !sFollowerGaryTowerHold\n     && !TrainerSee_IsApproachActive())"):
+          for item in ("if (sFollowerWarpTransition)", "sFollowerExitLockObserved = TRUE;", "if (!sFollowerExitLockObserved || ArePlayerFieldControlsLocked())", "sFollowerWarpTransition = FALSE;", "if (ArePlayerFieldControlsLocked()\n     && !StartMenu_IsSafeForFollower()\n     && !sFollowerSafeDialogue\n     && !sFollowerTrainerIntro\n     && !sFollowerGarySceneHold\n     && !TrainerSee_IsApproachActive())\n        return TRUE;", "if (ScriptContext_IsEnabled()\n     && !sFollowerSafeDialogue\n     && !sFollowerTrainerIntro\n     && !sFollowerGarySceneHold\n     && !TrainerSee_IsApproachActive())"):
               assert item in suppress,item
           # A narrow field Start/Save exception must not bypass unsafe scripts.
           start_menu = Path("src/start_menu.c").read_text()
@@ -582,7 +582,7 @@ jobs:
               assert forbidden not in gate, forbidden
           assert suppress.index("if (QL_IS_PLAYBACK_STATE)") < suppress.index("StartMenu_IsSafeForFollower()")
           assert suppress.index("if (sFollowerWarpTransition)") < suppress.index("StartMenu_IsSafeForFollower()")
-          assert suppress.index("StartMenu_IsSafeForFollower()") < suppress.index("if (ScriptContext_IsEnabled()\n     && !sFollowerSafeDialogue\n     && !sFollowerTrainerIntro\n     && !sFollowerGaryTowerHold\n     && !TrainerSee_IsApproachActive())")
+          assert suppress.index("StartMenu_IsSafeForFollower()") < suppress.index("if (ScriptContext_IsEnabled()\n     && !sFollowerSafeDialogue\n     && !sFollowerTrainerIntro\n     && !sFollowerGarySceneHold\n     && !TrainerSee_IsApproachActive())")
           # Only a compiled single-msgbox script from direct A interaction is
           # eligible. Unsafe scripted actions cannot pass this bytecode grammar.
           field = Path("src/field_control_avatar.c").read_text()
@@ -688,9 +688,9 @@ jobs:
           assert "|| TrainerSee_IsApproachActive()" in function(f,"static void RefreshFollower(void)")
           assert suppress.index("if (sFollowerWarpTransition)") < suppress.index("TrainerSee_IsApproachActive()")
           assert suppress.index("if (QL_IS_PLAYBACK_STATE)") < suppress.index("TrainerSee_IsApproachActive()")
-          assert suppress.index("if (ScriptContext_IsEnabled()\n     && !sFollowerSafeDialogue\n     && !sFollowerTrainerIntro\n     && !sFollowerGaryTowerHold\n     && !TrainerSee_IsApproachActive())") > suppress.index("TrainerSee_IsApproachActive()")
+          assert suppress.index("if (ScriptContext_IsEnabled()\n     && !sFollowerSafeDialogue\n     && !sFollowerTrainerIntro\n     && !sFollowerGarySceneHold\n     && !TrainerSee_IsApproachActive())") > suppress.index("TrainerSee_IsApproachActive()")
           assert "sFollowerPresentationState == FOLLOWER_PRESENTATION_HOLD_VISIBLE" in f
-          assert "if (gPaletteFade.active\n     && (sFollowerSafeDialogue || sFollowerTrainerIntro || sFollowerGaryTowerHold || TrainerSee_IsApproachActive()))" in suppress
+          assert "if (gPaletteFade.active\n     && (sFollowerSafeDialogue || sFollowerTrainerIntro || sFollowerGarySceneHold || TrainerSee_IsApproachActive()))" in suppress
           assert suppress.index("if (sFollowerBattleTransition)") < suppress.index("TrainerSee_IsApproachActive()")
           # Trainer intro is a narrowly scoped script exception: the native
           # speech special starts it, and the battle transition recalls it
@@ -793,7 +793,7 @@ jobs:
           print("Entrances recall immediately; no respawn until observed lock release")
           PY
 
-      - name: Audit bounded Gary Tower scene presentation
+      - name: Audit bounded Gary stationary scenes and collision isolation
         run: |
           python3 - <<'PY'
           import json
@@ -803,6 +803,9 @@ jobs:
           script=Path("src/script.c").read_text()
           tower=Path("data/maps/PokemonTower_2F/scripts.inc").read_text()
           mapping=json.loads(Path("data/maps/PokemonTower_2F/map.json").read_text())
+          silph=Path("data/maps/SilphCo_7F/scripts.inc").read_text()
+          silph_map=json.loads(Path("data/maps/SilphCo_7F/map.json").read_text())
+          collisions=Path("src/event_object_movement.c").read_text()
           inclusion=Path("data/event_scripts.s").read_text()
           def body(src,name):
               i=src.index(name+"\n{")
@@ -822,22 +825,59 @@ jobs:
           scene=tower[tower.index("PokemonTower_2F_EventScript_Rival::"):tower.index("PokemonTower_2F_EventScript_RivalSquirtle::")]
           assert "applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFaster" in scene
           assert "trainerbattle_no_intro TRAINER_RIVAL_POKEMON_TOWER_SQUIRTLE" in tower
+          # Restrict Silph Co. 7F to the lower coordinate trigger; its rival
+          # remains at (2,6) and player at (2,5) until battle. Upper trigger
+          # (2,4) makes the rival walk onto (2,5), a possible follower tile.
+          allowed="SilphCo_7F_EventScript_RivalTriggerBottom"
+          excluded="SilphCo_7F_EventScript_RivalTriggerTop"
+          assert {e["script"] for e in silph_map["coord_events"]}=={allowed,excluded}
+          silph_positions={e["script"]:(e["x"],e["y"]) for e in silph_map["coord_events"]}
+          assert silph_positions[allowed]==(2,5) and silph_positions[excluded]==(2,4)
+          rivals=[o for o in silph_map["object_events"] if o.get("local_id")=="LOCALID_SILPH_CO_RIVAL"]
+          assert len(rivals)==1 and (rivals[0]["x"],rivals[0]["y"])==(2,6)
+          assert "script == "+allowed in feature
+          assert "script == "+excluded not in feature
+          assert allowed+"::\n\tlockall" in silph
+          assert excluded+"::\n\tlockall" in silph
+          lower=silph[silph.index("SilphCo_7F_EventScript_RivalApproachBottom::"):silph.index("SilphCo_7F_EventScript_RivalSquirtle::")]
+          upper=silph[silph.index("SilphCo_7F_EventScript_RivalApproachTop::"):silph.index("SilphCo_7F_EventScript_RivalApproachBottom::")]
+          assert "applymovement" not in lower and "\treturn" in lower
+          assert "applymovement LOCALID_SILPH_CO_RIVAL" in upper
+          assert "walk_up\n\tstep_end" in silph
+          scene_silph=silph[silph.index("SilphCo_7F_EventScript_RivalScene::"):silph.index("SilphCo_7F_EventScript_RivalApproachTop::")]
+          moving_player=[line.strip() for line in scene_silph.splitlines() if line.strip().startswith("applymovement LOCALID_PLAYER")]
+          assert moving_player==["applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterDown"]
+          assert "trainerbattle_no_intro TRAINER_RIVAL_SILPH_SQUIRTLE" in silph
+          assert '.include "data/maps/SilphCo_7F/scripts.inc"' in inclusion
+          # Field spawning checks adjacent NPC occupancy; active follower is
+          # nonblocking to other events. No additional OAM is allocated in HOLD.
+          object_guard=body(collisions,"static bool8 DoesObjectCollideWithObjectAt(struct ObjectEvent *objectEvent, s16 x, s16 y)")
+          assert "if (curObject->localId == OBJ_EVENT_ID_FULL_FOLLOWER)" in object_guard
+          assert "continue;" in object_guard
+          safe_spawn=body(f,"static bool8 GetSafeFollowerSpawnCoords(s16 *x, s16 *y)")
+          assert "GetCollisionAtCoords(player, *x, *y, direction) == COLLISION_NONE" in safe_spawn
+          refresh=body(f,"static void RefreshFollower(void)")
+          hold=refresh[refresh.index("if (sFollowerPresentationState == FOLLOWER_PRESENTATION_HOLD_VISIBLE)"):refresh.index("graphicsId = GetPrototypeFollowerGraphicsId(species);")]
+          assert "SpawnSpecialObjectEventParameterized(" not in hold
+          assert "FollowRecordedPlayerSteps(" not in hold
+          assert "RemoveFullFollowerObjectEvent(follower);" in hold
+          print("Silph 7F bottom scripted Gary scene retained; top encounter remains suppressed")
           setup=body(script,"void ScriptContext_SetupScript(const u8 *ptr)")
           assert setup.index("FullFollower_ClearSafeDialogue();")<setup.index("FullFollower_BeginScriptedGaryScene(ptr);")<setup.index("LockPlayerFieldControls();")
           clear=body(f,"void FullFollower_ClearSafeDialogue(void)")
-          assert "sFollowerGaryTowerHold = FALSE;" in clear
+          assert "sFollowerGarySceneHold = FALSE;" in clear
           suppress=body(f,"static bool8 ShouldSuppressFollower(void)")
-          assert suppress.count("&& !sFollowerGaryTowerHold")==2
-          assert "|| sFollowerGaryTowerHold || TrainerSee_IsApproachActive()" in suppress
-          assert suppress.index("if (QL_IS_PLAYBACK_STATE)")<suppress.index("sFollowerGaryTowerHold")
-          assert suppress.index("if (sFollowerBattleTransition)")<suppress.index("sFollowerGaryTowerHold")
+          assert suppress.count("&& !sFollowerGarySceneHold")==2
+          assert "|| sFollowerGarySceneHold || TrainerSee_IsApproachActive()" in suppress
+          assert suppress.index("if (QL_IS_PLAYBACK_STATE)")<suppress.index("sFollowerGarySceneHold")
+          assert suppress.index("if (sFollowerBattleTransition)")<suppress.index("sFollowerGarySceneHold")
           refresh=body(f,"static void RefreshFollower(void)")
-          assert "|| sFollowerGaryTowerHold" in refresh
+          assert "|| sFollowerGarySceneHold" in refresh
           assert "sFollowerSpecies != species || sFollowerIsShiny != isShiny" in refresh
           assert "FullFollower_ClearSafeDialogue();" in body(f,"void FullFollower_RecallForBattle(void)")
           assert "FullFollower_ClearSafeDialogue();" in body(f,"void FullFollower_RecallForWarp(void)")
-          print("Gary Tower 2F: stationary companion HOLD in exact scripted scene, guards PASS")
-          print("No MyBoy verification; no other Gary scene is in scope")
+          print("Gary Tower 2F + Silph 7F bottom HOLD: explicit bounded scripts; safe lifecycle guards PASS")
+          print("No MyBoy verification; no unlisted scripted encounter is enabled")
           PY
 
       - name: Audit whiteout follower cleanup and local recovery
