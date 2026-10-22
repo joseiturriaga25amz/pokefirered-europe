@@ -497,6 +497,42 @@ jobs:
               touched_by_expected ^ approved_changed_tables
           )
 
+          # B11 EV training zones (FireRed only; keep LeafGreen unchanged).
+          # The land-slot weighting is 20/20/10/10/10/10/5/5/4/4/1/1.
+          # All Route 1 land encounters give Speed; all Route 22 give Attack.
+          from_stat = {
+              "SPECIES_PIDGEY": "Speed", "SPECIES_RATTATA": "Speed",
+              "SPECIES_SPEAROW": "Speed", "SPECIES_MANKEY": "Attack",
+              "SPECIES_NIDORAN_M": "Attack",
+          }
+          def audit_early_route(label, expected_dist, expected_ev):
+              mons = encounters[label]["land_mons"]["mons"]
+              assert len(mons) == len(rates["land_mons"]) == 12
+              dist = {}
+              for mon, rate in zip(mons, rates["land_mons"]):
+                  assert 2 <= mon["min_level"] <= mon["max_level"] <= 5, (label, mon)
+                  species = mon["species"]
+                  assert from_stat[species] == expected_ev, (label, species)
+                  dist[species] = dist.get(species, 0) + rate
+              assert dist == expected_dist, (label, dist, expected_dist)
+          audit_early_route("sRoute1_FireRed", {
+              "SPECIES_PIDGEY": 35, "SPECIES_RATTATA": 35,
+              "SPECIES_SPEAROW": 30,
+          }, "Speed")
+          audit_early_route("sRoute22_FireRed", {
+              "SPECIES_MANKEY": 55, "SPECIES_NIDORAN_M": 45,
+          }, "Attack")
+          # The untouched version-specific tables must not drift.
+          for label, expected_dist in (
+              ("sRoute1_LeafGreen", {"SPECIES_PIDGEY": 50, "SPECIES_RATTATA": 50}),
+              ("sRoute22_LeafGreen", {"SPECIES_RATTATA": 45, "SPECIES_MANKEY": 45, "SPECIES_SPEAROW": 10}),
+          ):
+              dist = {}
+              for mon, rate in zip(encounters[label]["land_mons"]["mons"], rates["land_mons"]):
+                  dist[mon["species"]] = dist.get(mon["species"], 0) + rate
+              assert dist == expected_dist, (label, dist)
+          print("FireRed pre-Brock Route 1/22 EV-pure encounter gates PASS")
+
           print(f"Validated {len(expected)} approved encounter rates")
           PY
 
