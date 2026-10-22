@@ -10,6 +10,9 @@ For each block record **PASS / FAIL / BLOCKED**, the exact commit SHA, save used
 
 ## Follower prototype — current corrective roadmap (2026-10-19)
 
+**Gary scene extension (2026-10-22):** CI `39792302159` and `39792425194` SUCCESS for the preceding gate/doc heads. Technical `69e2197` adds only Silph Co. 7F lower trigger HOLD; upper approach explicitly excluded. Exact run `39794777955` QUEUED at checkpoint, so new feature not CI-GREEN or MyBoy-verified. Details in `NEXT_SESSION.md`.
+
+
 **Gary Tower CI correction (2026-10-22):** The initial `bb6777e` and docs `c00fa48` runs FAILED despite Spanish ROM compile success. Stale exact fade assertion fixed in workflow-only `7864f38`; run `39792302159` queued at checkpoint. Until exact success and audit, Gary Tower scene is NOT CI-GREEN or MyBoy-verified. See `NEXT_SESSION.md`.
 
 
