@@ -299,17 +299,42 @@ void FullFollower_ClearSafeDialogue(void)
     sFollowerGarySceneHold = FALSE;
 }
 
-// Permit HOLD for exactly vetted Gary coordinate-trigger scripts where the
-// player stays put and the rival cannot enter the follower's trailing tile.
-// Silph 7F TOP is intentionally excluded: Gary walks into the possible trail.
-// Never spawn a follower under an active field script lock.
+// Silph Co. 7F upper trigger: Gary walks one tile north toward the player.
+// The sprite may only be held if neither endpoint of the follower's current
+// movement intersects Gary's starting or destination tile. The player never
+// changes tile during this scripted scene. Other moving scenes remain gated.
+static bool8 CanHoldThroughSilphGaryTopApproach(const struct ObjectEvent *follower)
+{
+    const struct ObjectEvent *player = &gObjectEvents[gPlayerAvatar.objectEventId];
+    s16 pathX = player->currentCoords.x;
+    s16 destinationY = player->currentCoords.y + 1;
+
+    if (follower->currentCoords.x == pathX
+     && (follower->currentCoords.y == destinationY
+      || follower->currentCoords.y == destinationY + 1))
+        return FALSE;
+    if (follower->previousCoords.x == pathX
+     && (follower->previousCoords.y == destinationY
+      || follower->previousCoords.y == destinationY + 1))
+        return FALSE;
+    return TRUE;
+}
+
+// Retain only a currently active sprite in an audited, non-overlapping Gary
+// encounter. This is runtime-only; no scripts, NPC flags or saves are changed.
 void FullFollower_BeginScriptedGaryScene(const u8 *script)
 {
-    sFollowerGarySceneHold = (script == PokemonTower_2F_EventScript_RivalTriggerRight
-                           || script == PokemonTower_2F_EventScript_RivalTriggerDown
-                           || script == SilphCo_7F_EventScript_RivalTriggerBottom)
+    struct ObjectEvent *follower = FindFollowerObject();
+    bool8 sceneAllowed = (script == PokemonTower_2F_EventScript_RivalTriggerRight
+                       || script == PokemonTower_2F_EventScript_RivalTriggerDown
+                       || script == SilphCo_7F_EventScript_RivalTriggerBottom);
+
+    if (script == SilphCo_7F_EventScript_RivalTriggerTop && follower != NULL)
+        sceneAllowed = CanHoldThroughSilphGaryTopApproach(follower);
+
+    sFollowerGarySceneHold = sceneAllowed
                           && sFollowerEnabled
-                          && FindFollowerObject() != NULL
+                          && follower != NULL
                           && !sFollowerWarpTransition
                           && !sFollowerBattleTransition
                           && !QL_IS_PLAYBACK_STATE

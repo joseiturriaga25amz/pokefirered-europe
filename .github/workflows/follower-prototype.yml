@@ -818,27 +818,28 @@ jobs:
           for label in start:
               assert label+"::\n\tlockall" in tower
               assert "script == "+label in feature
-          for gate in ("sFollowerEnabled","FindFollowerObject() != NULL","!sFollowerWarpTransition",
+          for gate in ("sFollowerEnabled","follower != NULL","!sFollowerWarpTransition",
                        "!sFollowerBattleTransition","!QL_IS_PLAYBACK_STATE","!IsUpdateLinkStateCBActive()",
                        "!InUnionRoom()","!gPaletteFade.active"):
               assert gate in feature,gate
           scene=tower[tower.index("PokemonTower_2F_EventScript_Rival::"):tower.index("PokemonTower_2F_EventScript_RivalSquirtle::")]
           assert "applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFaster" in scene
           assert "trainerbattle_no_intro TRAINER_RIVAL_POKEMON_TOWER_SQUIRTLE" in tower
-          # Restrict Silph Co. 7F to the lower coordinate trigger; its rival
-          # remains at (2,6) and player at (2,5) until battle. Upper trigger
-          # (2,4) makes the rival walk onto (2,5), a possible follower tile.
+          # Lower trigger has stationary rival; upper trigger allows HOLD
+          # only if both endpoints of the follower's movement are outside
+          # the rival's initial (2,6) and approached (2,5) tiles.
           allowed="SilphCo_7F_EventScript_RivalTriggerBottom"
-          excluded="SilphCo_7F_EventScript_RivalTriggerTop"
-          assert {e["script"] for e in silph_map["coord_events"]}=={allowed,excluded}
+          conditional="SilphCo_7F_EventScript_RivalTriggerTop"
+          assert {e["script"] for e in silph_map["coord_events"]}=={allowed,conditional}
           silph_positions={e["script"]:(e["x"],e["y"]) for e in silph_map["coord_events"]}
-          assert silph_positions[allowed]==(2,5) and silph_positions[excluded]==(2,4)
+          assert silph_positions[allowed]==(2,5) and silph_positions[conditional]==(2,4)
           rivals=[o for o in silph_map["object_events"] if o.get("local_id")=="LOCALID_SILPH_CO_RIVAL"]
           assert len(rivals)==1 and (rivals[0]["x"],rivals[0]["y"])==(2,6)
           assert "script == "+allowed in feature
-          assert "script == "+excluded not in feature
+          assert "script == "+conditional in feature
+          assert "CanHoldThroughSilphGaryTopApproach(follower)" in feature
           assert allowed+"::\n\tlockall" in silph
-          assert excluded+"::\n\tlockall" in silph
+          assert conditional+"::\n\tlockall" in silph
           lower=silph[silph.index("SilphCo_7F_EventScript_RivalApproachBottom::"):silph.index("SilphCo_7F_EventScript_RivalSquirtle::")]
           upper=silph[silph.index("SilphCo_7F_EventScript_RivalApproachTop::"):silph.index("SilphCo_7F_EventScript_RivalApproachBottom::")]
           assert "applymovement" not in lower and "\treturn" in lower
@@ -849,6 +850,36 @@ jobs:
           assert moving_player==["applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterDown"]
           assert "trainerbattle_no_intro TRAINER_RIVAL_SILPH_SQUIRTLE" in silph
           assert '.include "data/maps/SilphCo_7F/scripts.inc"' in inclusion
+          # The approach footprint is derived from the real player's
+          # current tile and both object-event coordinate endpoints. No
+          # extra sprite/OAM slot or map-template NPC is created.
+          envelope=body(f,"static bool8 CanHoldThroughSilphGaryTopApproach(const struct ObjectEvent *follower)")
+          assert "player->currentCoords.x" in envelope
+          assert "player->currentCoords.y + 1" in envelope
+          for guard in ("follower->currentCoords.x == pathX",
+                        "follower->previousCoords.x == pathX",
+                        "follower->currentCoords.y == destinationY",
+                        "follower->previousCoords.y == destinationY",
+                        "follower->currentCoords.y == destinationY + 1",
+                        "follower->previousCoords.y == destinationY + 1"):
+              assert guard in envelope, guard
+          assert envelope.count("return FALSE;")==2
+          assert envelope.index("return TRUE;")>envelope.rindex("return FALSE;")
+          def can_hold(player, cur, prev):
+              dest=(player[0],player[1]+1)
+              start=(player[0],player[1]+2)
+              return cur not in (dest,start) and prev not in (dest,start)
+          for location in ((2,5),(2,6)):
+              assert not can_hold((2,4),location,(1,4))
+              assert not can_hold((2,4),(1,4),location)
+          for cur,prev in (((2,3),(2,3)),((1,4),(1,4)),((3,4),(3,4)),
+                           ((1,5),(1,4)),((3,5),(3,4))):
+              assert can_hold((2,4),cur,prev)
+          # Reject any future unreviewed generic bypass of rival scripts.
+          for forbidden in ("Route22_EventScript_", "CeruleanCity_EventScript_",
+                            "SSAnne_2F_Corridor_EventScript_", "PalletTown_ProfessorOaksLab_EventScript_",
+                            "PokemonLeague_ChampionsRoom_EventScript_"):
+              assert forbidden not in feature
           # Field spawning checks adjacent NPC occupancy; active follower is
           # nonblocking to other events. No additional OAM is allocated in HOLD.
           object_guard=body(collisions,"static bool8 DoesObjectCollideWithObjectAt(struct ObjectEvent *objectEvent, s16 x, s16 y)")
@@ -861,7 +892,7 @@ jobs:
           assert "SpawnSpecialObjectEventParameterized(" not in hold
           assert "FollowRecordedPlayerSteps(" not in hold
           assert "RemoveFullFollowerObjectEvent(follower);" in hold
-          print("Silph 7F bottom scripted Gary scene retained; top encounter remains suppressed")
+          print("Silph 7F: lower HOLD, upper HOLD only outside rival movement footprint")
           setup=body(script,"void ScriptContext_SetupScript(const u8 *ptr)")
           assert setup.index("FullFollower_ClearSafeDialogue();")<setup.index("FullFollower_BeginScriptedGaryScene(ptr);")<setup.index("LockPlayerFieldControls();")
           clear=body(f,"void FullFollower_ClearSafeDialogue(void)")
@@ -876,7 +907,7 @@ jobs:
           assert "sFollowerSpecies != species || sFollowerIsShiny != isShiny" in refresh
           assert "FullFollower_ClearSafeDialogue();" in body(f,"void FullFollower_RecallForBattle(void)")
           assert "FullFollower_ClearSafeDialogue();" in body(f,"void FullFollower_RecallForWarp(void)")
-          print("Gary Tower 2F + Silph 7F bottom HOLD: explicit bounded scripts; safe lifecycle guards PASS")
+          print("Gary Tower 2F + Silph 7F bounded scene holds: guards PASS")
           print("No MyBoy verification; no unlisted scripted encounter is enabled")
           PY
 
