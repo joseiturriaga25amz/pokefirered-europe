@@ -10,6 +10,9 @@ For each block record **PASS / FAIL / BLOCKED**, the exact commit SHA, save used
 
 ## Follower prototype — current corrective roadmap (2026-10-19)
 
+**Route 22 early TOP pilot (2026-10-22):** `45f1148` PASS on exact Full Gameplay Core and Follower Prototype. New technical `570fe60` bounds existing follower HOLD outside Gary's seven-tile early TOP path; technical Full Core run `39821478334` and Follower Prototype `39821478411` IN PROGRESS at checkpoint. No MyBoy/merge; see `NEXT_SESSION.md`.
+
+
 **Full Gameplay Core prototype CI gate (2026-10-22):** Following `e23e6b9` Follower Prototype SUCCESS, workflow-only technical `e5095c2` enables Full Gameplay Core on the follower prototype branch while gating RC packaging to `feature/full-gameplay-core`. Exact CI for new workflow commit NOT YET VERIFIED. See `NEXT_SESSION.md`.
 
 
