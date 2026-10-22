@@ -1,5 +1,18 @@
 # Next Session — Pokémon Rojo Fuego Full v1.0
 
+
+## CURRENT NEXT STEP (2026-10-22)
+
+**Current stream: PHASE 0 project-wide pre-RC audit, not gameplay implementation.** Read CURRENT ACTIVE ROADMAP at the TOP of PROJECT_CONTINUITY.md before old dated notes. This snapshot supersedes older tentative next-action suggestions. No separate new backlog file.
+
+- Verified pre-note HEAD 617367ea3457969ccde70e1b748e45a8e0b3881c on prototype/follower-runtime; master 8d89f2b4 separate; last TECHNICAL SHA fdf710c116d4bb6a347f7a81caf3cb62b2b22996 exact Full Gameplay Core 39851490790 SUCCESS + Follower Prototype 39851490652 SUCCESS. On docs-only 617367e, Full Core 39851709696 IN PROGRESS and follower 39851709892 SUCCESS at audit. Recheck branch HEAD + runs. B10 open, not merged, no MyBoy.
+- **NEXT bounded microblock:** identify actual nine NPC trade scene map/script locations and timing, verify requested species become catchable before the NPC; propose replacement pairs for Nidoran male->female, Nidorino->Nidorina, Raichu->Electrode and Venonat->Tangela; review Jynx earlier/less onerous request, Mr Mime/Farfetch'd/Seel/Lickitung. Do not write NPC trade data until exact choices approved.
+- Independently verify final starter wild rates 15% basic/5% intermediate/4% final and consider user-preferred 1% final direct catch; check Eeveelutions 4% with Eevee 15% and other added/baseline rarities. Do not rewrite all 1% encounters indiscriminately. Viridian Forest south-east Oddish-only training near (45,58) still requires metatile and follower safety audit before implementation.
+- Complete the cross-block feasibility/status matrix in the global continuity for existing unimplemented EV/nature, battle display, R-ball, PC from START, capture summary, Dex routes, postgame six-trainer EV hub, repeated medicines, journal, boss registry, leader texts, Gary/follower and MyBoy. Keep proposals separate from final-approved items; preserve revoked guaranteed shiny and revoked 100/200 EV alerts.
+- Only after Phase 0 reconciliation, take one approved feature at a time: inspect -> delimit -> edit -> semantic validator -> adversarial audit -> exact Full Gameplay Core/Follower Prototype -> commit/HEAD evidence -> controlled integration -> MyBoy candidate QA. Avoid creating more docs and avoid new gameplay while prerequisites unknown.
+
+---
+
 Resume the project from the repository, not from chat memory.
 
 ## Required first reads

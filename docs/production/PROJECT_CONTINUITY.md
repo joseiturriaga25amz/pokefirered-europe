@@ -1,5 +1,71 @@
 # Pokémon Rojo Fuego Full v1.0 — Project Continuity
 
+
+## CURRENT ACTIVE ROADMAP (2026-10-22)
+
+This is the operative source-of-truth snapshot. Historical dated entries below remain evidence, but do not define competing active task queues. Recheck GitHub branch, HEAD, CI and amendments at each session. NO GAMEPLAY MODIFIED BY THIS AUDIT.
+
+**Repository state:** prototype/follower-runtime HEAD 617367ea3457969ccde70e1b748e45a8e0b3881c at audit; master 8d89f2b444a6e25ef47716861a53f2e4f6920d07 separate/diverged. Last technical SHA fdf710c116d4bb6a347f7a81caf3cb62b2b22996: exact Full Gameplay Core run 39851490790 SUCCESS and Follower Prototype run 39851490652 SUCCESS. Last docs-only 617367e: Full Core run 39851709696 IN PROGRESS, Follower run 39851709892 SUCCESS when inspected. B10 follower OPEN; no merge, no MyBoy final QA. Do not treat a passing older SHA as CI proof for a new technical HEAD.
+
+### Rarity policy and cross-map evidence
+
+Current branch compared directly with tag baseline-spanish-vanilla, using FireRed land/water/rock encounter tables: 24 changed maps, 91 species/map/method percentage differences (including newly changed Route1/Route22/Route3/MtMoon). Fishing and all reward/gift methods still require separate contextual review; changed means changed from baseline, not necessarily broken.
+
+- **Starter families (actual wild odds):** Charmander/Charmeleon/Charizard at Mt Ember 15%/5%/4%; Squirtle/Wartortle/Blastoise at Seafoam B1F 15%/5%/4%; Bulbasaur/Ivysaur/Venusaur at Berry Forest 15%/5%/4%. The user wants directly caught final evolutions to feel **exceptionally rare** because their basic forms can be evolved. Candidate: final Charizard/Blastoise/Venusaur 1% each, preserving basics at 15% and middle stages at 5%. This exact numeric candidate is NOT YET APPROVED NOR IMPLEMENTED.
+- Eevee on Route7 is 15%; Vaporeon/Jolteon/Flareon each 4% in their special habitats. Review stone-evolution availability and whether final forms merit rarer direct encounters. Do not automatically apply the 1% rule to every species or final.
+- LeafGreen-type inclusions checked: Bellsprout Route5 25%, Sandshrew and Vulpix Route8 20% each, Slowpoke Route6 surfing 100%; Safari Pinsir/Scyther, Chansey, Kangaskhan and Tauros in designated sites 15%. Basic/unique species should remain reasonably obtainable. All were consciously incorporated by earlier approved encounter constraints; modifications require own justification and semantic validator updates.
+- Rare encounters examined across FireRed land/surf/rock/fishing methods: 49 individual map+method+species results at exactly 1%, representing only 14 species; most have an easier alternative via another map, evolution or gift. Do not globally raise them. Route3 Nidoran female 14% and male 11%, and MtMoon 1F/B2F Clefairy 10%, were separately IMPLEMENTED in fdf710c with exact CI success. Route1 Speed-only 35% Pidgey / 35% Rattata / 30% Spearow and Route22 Attack-only 55% Mankey / 45% Nidoran male also implemented and validated on preceding 0a3d026.
+- Viridian Forest southeast clearing near **non-trainer boy at (45,58)** is user-selected for Oddish-only (+1 SpAttack). NOT IMPLEMENTED. Bellsprout gives +1 Attack and must not be included. Wild headers are per map, so a safe bounded encounter patch needs grass metatile/collision/item/warp/follower audit or a separately connected micro-map. Preserve remainder of Forest unchanged and check early Oddish effect on Brock.
+
+**Working rarity principle (proposed):** early basic species obtainable; evolved alternatives uncommon; final stages directly catchable at genuinely special odds only when their basic evolution path is already accessible. Balance species-wide encounter access, route ecology, version identity, percent arithmetic, capture chance, gifts and trades. Actual numeric changes remain separate technical microblocks; preserve audited data blob hashes and frozen 21-map invariants.
+
+### Nine NPC trades: player-value audit / design direction
+
+Actual FireRed source trade roster in src/data/ingame_trades.h:
+1. Abra to Mr. Mime — candidate retain.
+2. Poliwhirl to Jynx — user wants Jynx **earlier**; audit NPC location, acquisition timing and whether a less burdensome species request is better. No selected substitute yet.
+3. Nidoran male to Nidoran female — USER WANTS REPLACEMENT (female now 14% Route3); new request/reward pair not decided.
+4. Spearow to Farfetch'd (held Stick) — candidate retain, Spearow now normally found Route1.
+5. Nidorino to Nidorina — USER WANTS REPLACEMENT; new request/reward not decided.
+6. Golduck to Lickitung — assess late acquisition and trade value.
+7. Raichu to Electrode — user finds Electrode reward poor; evaluate an improved trade, not yet selected.
+8. Venonat to Tangela (held Stardust) — user finds Tangela reward poor; evaluate an improved trade, not yet selected.
+9. Ponyta to Seel — user finds this plausible; check actual site and stage.
+
+All nine preserve a source-defined fixed personality/OT/nickname/IV/item. Before editing verify script placement, NPC timing and dialogue, reward rarity and usefulness, party/box and link safety, species availability and required trade evolution. NPC trades are distinct from link exchange. No replacements are approved by exact pair and none has been changed.
+
+### Remaining feature feasibility inventory and gates
+
+| Feature | Real status | Main risk and next evidence |
+| --- | --- | --- |
+| Follower 386 sprites normal/shiny, interactions, Gary scenes, all Gym/League/story contexts, save/bike/Surf/link | B10 PARTIAL; diagnostic builder compiles privately, removes ROM afterward; MyBoy incomplete, no master merge | HIGH graphics/OAM/script runtime. Gary's own separate visible follower unverified; A-007 citation contradicts current formal A-001..A-006. |
+| Eight leader-specific rematch conversations | A-005 APPROVED, all eight still share four generic scripts | LOW-MED script/Spanish/QA. Keep all already-approved boss parties unchanged. |
+| Koichi Dojo fix | source implemented and validated statically | MyBoy regression still pending. |
+| EV summary numbers, no bars; blue boosted / red reduced nature | six numeric EV values and total exist, bars persist; nature colors not built, 252 useful vs actual 255/stat cap label wrong | LOW-MED summary/palette/screen QA; no EV game rule change. |
+| 252-useful-EV-only notice after battle | preferred, not implemented, never 100/200 | MED gain recipient/threshold aggregation and battle callback. |
+| Live enemy EV yield; move contact, category, STAB, type/resistance; healthbox type icons | data exist, display not implemented | MED-HIGH battle UI layout, dual types, special type changes and move immunity/abilities. |
+| Hold-R wild-only ball quick select with left/right/release | NOT IMPLEMENTED | HIGH battle input/catch/cancel; MyBoy touch and Safari/link safe. |
+| PC from START, postcatch nature/ability/moves inspection | requested, NOT IMPLEMENTED | HIGH storage/capture/save/script state restrictions. |
+| Dex route completion, postgame journal, boss registry | user-preferred, NOT IMPLEMENTED | MED-HIGH discovery/spoiler/flags and storage budget. |
+| Repeated medicine use; postgame six-EV-specialist trainer row | user-preferred, not verified implemented | MED-HIGH inventory or map/XP/money/economy/battle data. |
+| Legendary narrative, special Balls, EV/Dex polish, follower friendships, early game/Gary/Liga/Dojo, MyBoy | A-005/A-006 and historical freeze, MIXED partial and tests | Must reconcile source against approved decisions and complete all critical regressions before candidate. Guaranteed shiny Charmander is explicitly REVOKED. |
+
+### Controlled project work order (one active stream, no monolithic changes)
+
+**PHASE 0 (ACTIVE):** finish full rarity + acquire-by-evolution/trade/gift audit (not blanket odds); map all nine NPC trade scripts and availability, propose exact replacement pairs; technical feasibility/priority of all user-endorsed QoL above. No additional feature source edits in this phase. Treat previous chronology as historical, not instructions to resume outdated early-NPC trainers or 100/200 EV alerts.
+
+**PHASE 1:** after any material design approvals, separate controlled microblocks for (a) optional final-stage encounter odds, (b) NPC trade rewards/request/dialogue, (c) Oddish-only southeast Forest patch. Distinct commits and exact validator + hash-lock + full game CI, audit after implementation. Do not mix them.
+
+**PHASE 2:** highest-value approved UI and quality improvements first: EV numbers-only and nature colors, leader-specific rematch dialogs, EV yield battle info, 252 milestone, then risky control/storage/capture/PC work only after reviewed callback/state design; schedule postgame EV hub, journals, history and medicines independently. Features proposed but not prioritized for this release must stay visible rather than silently becoming blockers or silently removed.
+
+**PHASE 3:** finish B10 follower, Gary's own companion design traceability, story-script/Gym/League/Dojo and legendary/roster integration audit, preserve original saves and link ABI. MyBoy QA is a separate layer.
+
+**PHASE 4:** deliberate integration of diverged branch with master, exact technical + integrated HEAD CI, safe asset/license provenance and verified MyBoy patch/ROM delivery followed by full acceptance. Never declare release only on workflow green.
+
+Continuity ownership: THIS file is global current state + decision/feasibility evidence; NEXT_SESSION.md contains **only** next action and checkpoint; DECISION_AMENDMENTS.md has approved postfreeze architectural/design overrides; RC_MYBOY_CHECKLIST.md is runtime testing; frozen docs/spec/ never overrule amendments. Referenced REPOSITORY_GUARDRAILS.md and POLISH_IMPLEMENTATION_MATRIX.md do not exist in this branch; do NOT recreate duplicate documents without need.
+
+---
+
 **Purpose:** make the repository sufficient to resume the project without relying on any previous chat.
 
 ## 1. Start here in every new session
