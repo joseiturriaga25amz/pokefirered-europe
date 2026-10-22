@@ -10,6 +10,9 @@ For each block record **PASS / FAIL / BLOCKED**, the exact commit SHA, save used
 
 ## Follower prototype — current corrective roadmap (2026-10-19)
 
+**EV/nature user direction supersession (2026-10-22):** EV screen should contain six actual numeric EV counters and total **without bars**. **ONLY postbattle 252 useful-EV threshold crossing** deserves a discreet notice; earlier 100 and 200 milestones are withdrawn. Nature indicators: **BLUE = boosted stat, RED = reduced stat** (previous inverted example superseded); prefer stat text or subtle dot with NO arrows or ±10% text. Preserve Gen III storage caps 255/stat and 510 total; avoid inaccurate 'raw 252' if postbattle actual EV is >252. No changes implemented by this documentation checkpoint. Generic external hacks suggestions not accepted for roadmap. See `PROJECT_CONTINUITY.md`.
+
+
 **EV/nature polish audit — proposal only (2026-10-22):** SELECT on the current Pokémon Skills summary already shows six EV numbers and EV total. `PrintFullEvValue` still draws per-stat 28px bars, contrary to user-preferred numbers-only display; current UI 'MAX. STAT 252' conflicts with actual Gen III 255/stat cap (510 total). Future review: remove graphic without losing counters; assess optional afterbattle 100/200/252 effective EV milestone notifications and subtle nature +/- coloration (neutral natures unchanged), preserve ROM mechanics/Gen III saves. These are NOT implemented/approved by this note. See `PROJECT_CONTINUITY.md`.
 
 
