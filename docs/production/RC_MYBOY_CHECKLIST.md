@@ -10,6 +10,9 @@ For each block record **PASS / FAIL / BLOCKED**, the exact commit SHA, save used
 
 ## Follower prototype — current corrective roadmap (2026-10-19)
 
+**Silph upper compile correction (2026-10-22):** `6980d28` and docs `6635400` exact Follower Prototype CI failed on undeclared top-event symbol in diagnostic Spanish compile. `e23e6b9` adds missing declaration and exact validator assertion; run `39810930827` in progress when recorded. Still no MyBoy/Full Gameplay Core/master integration. See `NEXT_SESSION.md`.
+
+
 **Silph 7F upper movement guard (2026-10-22):** Technical `6980d28` adds conditional existing-follower HOLD only when current/previous follower positions cannot intersect Gary's top-trigger approach path. Exact Follower Prototype run `39809423667` IN PROGRESS at checkpoint. No Full Gameplay Core/MyBoy/merge. Continue from `NEXT_SESSION.md`.
 
 
