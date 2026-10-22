@@ -10,6 +10,9 @@ For each block record **PASS / FAIL / BLOCKED**, the exact commit SHA, save used
 
 ## Follower prototype — current corrective roadmap (2026-10-19)
 
+**Full Gameplay Core prototype CI gate (2026-10-22):** Following `e23e6b9` Follower Prototype SUCCESS, workflow-only technical `e5095c2` enables Full Gameplay Core on the follower prototype branch while gating RC packaging to `feature/full-gameplay-core`. Exact CI for new workflow commit NOT YET VERIFIED. See `NEXT_SESSION.md`.
+
+
 **Silph upper compile correction (2026-10-22):** `6980d28` and docs `6635400` exact Follower Prototype CI failed on undeclared top-event symbol in diagnostic Spanish compile. `e23e6b9` adds missing declaration and exact validator assertion; run `39810930827` in progress when recorded. Still no MyBoy/Full Gameplay Core/master integration. See `NEXT_SESSION.md`.
 
 
