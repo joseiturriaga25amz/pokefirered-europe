@@ -3,6 +3,7 @@
 #include "event_object_movement.h"
 #include "field_effect.h"
 #include "field_player_avatar.h"
+#include "full_follower.h"
 #include "quest_log.h"
 #include "trainer_see.h"
 #include "script.h"
@@ -562,6 +563,11 @@ void EndTrainerApproach(void)
 
 static void Task_DestroyTrainerApproachTask(u8 taskId)
 {
+    // Overworld scripts run before tasks. Preserve the visible companion across
+    // the one-frame gap between trainer approach and the resumed intro script.
+    // The same gated hold is refreshed by ShowTrainerIntroSpeech and cleared
+    // at battle transition or script shutdown.
+    FullFollower_BeginTrainerIntro();
     DestroyTask(taskId);
     ScriptContext_Enable();
 }

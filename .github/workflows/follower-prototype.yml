@@ -710,6 +710,13 @@ jobs:
                             "!InUnionRoom()", "!gPaletteFade.active"):
               assert invariant in intro, invariant
           assert speech.index("FullFollower_BeginTrainerIntro();") < speech.index("ShowFieldMessage(")
+          # The trainer task ends after the script runner tick. Transfer its
+          # visibility hold before DestroyTask so no frame recalls the sprite.
+          trainer_see = Path("src/trainer_see.c").read_text()
+          handoff = function(trainer_see, "static void Task_DestroyTrainerApproachTask(u8 taskId)")
+          basic = function(Path("src/overworld.c").read_text(), "static void OverworldBasic(void)")
+          assert basic.index("ScriptContext_RunScript();") < basic.index("RunTasks();")
+          assert handoff.index("FullFollower_BeginTrainerIntro();") < handoff.index("DestroyTask(taskId);") < handoff.index("ScriptContext_Enable();")
           assert starter.index("FullFollower_RecallForBattle();") < starter.index("BattleTransition_StartOnField(tTransition);")
           for invariant in ("FullFollower_ClearSafeDialogue();", "sFollowerBattleTransition = TRUE;",
                             "sFollowerPresentationState = FOLLOWER_PRESENTATION_TRANSITION;",
