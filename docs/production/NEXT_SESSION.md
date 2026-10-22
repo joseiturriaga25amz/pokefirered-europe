@@ -145,3 +145,11 @@ Do **not** ask the user to repeat earlier decisions or reconstruct deleted chats
 - MyBoy, not mGBA, is the required runtime QA environment.
 - Normal Items pocket remains vanilla 42 slots; never restore the abandoned 142-slot bag.
 - Chats are disposable; GitHub is the continuity authority.
+
+
+### 2026-10-22 — B10 trainer approach-to-speech handoff
+
+- Rechecked technical `beaa79b01a3d4ae40ae40e88b236295a9f423164`: Follower Prototype Actions run `39750050982` completed **SUCCESS** for its exact SHA; this is a build/static PASS, **not MyBoy QA or Full Gameplay Core**. Documentation HEAD `1b6c560` was predecessor to the following change.
+- Targeted source inspection revealed a one-frame handoff exposure: `OverworldBasic()` executes `ScriptContext_RunScript()` before `RunTasks()`; `Task_DestroyTrainerApproachTask()` destroys the native approach task and enables its script in the same task tick. Previously `TrainerSee_IsApproachActive()` could become false for one frame before `ShowTrainerIntroSpeech()` activated the explicit intro hold; follower task could recall the sprite.
+- Technical commit `ecdf887b15d72d06a15e2f9272bd4713b647852a` invokes existing gated `FullFollower_BeginTrainerIntro()` immediately before the approach task is destroyed, preserving the already-present companion across that handoff. It adds `full_follower.h` in `src/trainer_see.c` and a new source/order check in the existing Follower Prototype workflow; no save, Pokemon, link or graphics-ABI changes. The companion still recalls before battle via `Task_BattleStart` and is not inserted into arbitrary cutscenes.
+- Exact technical Follower Prototype run `39754517699` for `ecdf887` was **IN PROGRESS on inspection**, not yet CI-GREEN. Verify run outcome and its validator steps before progressing. MyBoy regression and Full Gameplay Core still pending. Next source audit: battle whiteout map-load recovery and state cleanup; then separately investigate scripted Gary choreography without global script-lock bypass. Surf stays deferred to a focused fixture.
