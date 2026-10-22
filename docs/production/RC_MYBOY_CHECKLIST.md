@@ -10,6 +10,9 @@ For each block record **PASS / FAIL / BLOCKED**, the exact commit SHA, save used
 
 ## Follower prototype — current corrective roadmap (2026-10-19)
 
+**EV/nature polish audit — proposal only (2026-10-22):** SELECT on the current Pokémon Skills summary already shows six EV numbers and EV total. `PrintFullEvValue` still draws per-stat 28px bars, contrary to user-preferred numbers-only display; current UI 'MAX. STAT 252' conflicts with actual Gen III 255/stat cap (510 total). Future review: remove graphic without losing counters; assess optional afterbattle 100/200/252 effective EV milestone notifications and subtle nature +/- coloration (neutral natures unchanged), preserve ROM mechanics/Gen III saves. These are NOT implemented/approved by this note. See `PROJECT_CONTINUITY.md`.
+
+
 **Route 22 early MID pilot (2026-10-22):** Last exact head `e728c4f` PASS (Full Gameplay Core / Follower Prototype). Technical `6df73cb` enables MID only when the existing follower is outside the seven-step row; exact core `39835138623` and follower `39835138594` IN PROGRESS when recorded. Full 386 normal+shiny ROM build is private/ephemeral in Actions, **not** a downloadable MyBoy `.gba`. Remaining scene audit/integration/delivery gates in `NEXT_SESSION.md`.
 
 
