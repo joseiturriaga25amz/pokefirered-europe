@@ -533,6 +533,42 @@ jobs:
               assert dist == expected_dist, (label, dist)
           print("FireRed pre-Brock Route 1/22 EV-pure encounter gates PASS")
 
+          # FireRed-only early-dex catchability: keep all original Route 3
+          # species, retain Paras/Geodude in Mt Moon, avoid blanket rarity buffs.
+          def audit_rarity(label, expected, priority):
+              mons = encounters[label]["land_mons"]["mons"]
+              got = {}
+              for mon, chance in zip(mons, rates["land_mons"]):
+                  assert mon["min_level"] <= mon["max_level"]
+                  sp = mon["species"]
+                  got[sp] = got.get(sp, 0) + chance
+              assert got == expected, (label, got)
+              assert got[priority] >= 10, (label, priority, got)
+          audit_rarity("sRoute3_FireRed", {
+              "SPECIES_SPEAROW": 35, "SPECIES_PIDGEY": 20,
+              "SPECIES_MANKEY": 10, "SPECIES_JIGGLYPUFF": 10,
+              "SPECIES_NIDORAN_F": 14, "SPECIES_NIDORAN_M": 11,
+          }, "SPECIES_NIDORAN_F")
+          audit_rarity("sMtMoon1F_FireRed", {
+              "SPECIES_ZUBAT": 60, "SPECIES_GEODUDE": 25,
+              "SPECIES_PARAS": 5, "SPECIES_CLEFAIRY": 10,
+          }, "SPECIES_CLEFAIRY")
+          audit_rarity("sMtMoonB2F_FireRed", {
+              "SPECIES_ZUBAT": 45, "SPECIES_GEODUDE": 30,
+              "SPECIES_PARAS": 15, "SPECIES_CLEFAIRY": 10,
+          }, "SPECIES_CLEFAIRY")
+          for label, name, want in (
+              ("sRoute3_LeafGreen", "SPECIES_NIDORAN_F", 14),
+              ("sRoute3_LeafGreen", "SPECIES_NIDORAN_M", 1),
+              ("sMtMoon1F_LeafGreen", "SPECIES_CLEFAIRY", 1),
+              ("sMtMoonB2F_LeafGreen", "SPECIES_CLEFAIRY", 6),
+          ):
+              got = sum(rate for mon, rate in zip(encounters[label]["land_mons"]["mons"], rates["land_mons"])
+                        if mon["species"] == name)
+              assert got == want, (label, name, got)
+          print("FireRed Route 3 and Mt Moon rarity gates PASS")
+
+
           print(f"Validated {len(expected)} approved encounter rates")
           PY
 
