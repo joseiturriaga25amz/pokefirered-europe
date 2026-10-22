@@ -24,6 +24,7 @@ extern const u8 EventScript_FullFollowerFriendship6[];
 extern const u8 PokemonTower_2F_EventScript_RivalTriggerRight[];
 extern const u8 PokemonTower_2F_EventScript_RivalTriggerDown[];
 extern const u8 SilphCo_7F_EventScript_RivalTriggerBottom[];
+extern const u8 SilphCo_7F_EventScript_RivalTriggerTop[];
 
 #define FOLLOWER_TASK_PRIORITY 0x51
 #define FOLLOWER_TRAIL_CAPACITY 8

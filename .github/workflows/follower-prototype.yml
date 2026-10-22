@@ -837,6 +837,8 @@ jobs:
           assert len(rivals)==1 and (rivals[0]["x"],rivals[0]["y"])==(2,6)
           assert "script == "+allowed in feature
           assert "script == "+conditional in feature
+          for name in (allowed, conditional):
+              assert "extern const u8 " + name + "[];" in f
           assert "CanHoldThroughSilphGaryTopApproach(follower)" in feature
           assert allowed+"::\n\tlockall" in silph
           assert conditional+"::\n\tlockall" in silph
