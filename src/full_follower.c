@@ -25,6 +25,7 @@ extern const u8 PokemonTower_2F_EventScript_RivalTriggerRight[];
 extern const u8 PokemonTower_2F_EventScript_RivalTriggerDown[];
 extern const u8 SilphCo_7F_EventScript_RivalTriggerBottom[];
 extern const u8 SilphCo_7F_EventScript_RivalTriggerTop[];
+extern const u8 Route22_EventScript_EarlyRivalTriggerTop[];
 
 #define FOLLOWER_TASK_PRIORITY 0x51
 #define FOLLOWER_TRAIL_CAPACITY 8
@@ -321,6 +322,27 @@ static bool8 CanHoldThroughSilphGaryTopApproach(const struct ObjectEvent *follow
     return TRUE;
 }
 
+// Route 22's first TOP encounter places the player at (33,4) while Gary
+// walks east from (25,4) to (32,4). Do not HOLD a follower whose current
+// or previous position intersects any tile of that seven-step approach.
+static bool8 CanHoldThroughRoute22EarlyTopApproach(const struct ObjectEvent *follower)
+{
+    const struct ObjectEvent *player = &gObjectEvents[gPlayerAvatar.objectEventId];
+    s16 pathLeft = player->currentCoords.x - 8;
+    s16 pathRight = player->currentCoords.x - 1;
+    s16 pathY = player->currentCoords.y;
+
+    if (follower->currentCoords.y == pathY
+     && follower->currentCoords.x >= pathLeft
+     && follower->currentCoords.x <= pathRight)
+        return FALSE;
+    if (follower->previousCoords.y == pathY
+     && follower->previousCoords.x >= pathLeft
+     && follower->previousCoords.x <= pathRight)
+        return FALSE;
+    return TRUE;
+}
+
 // Retain only a currently active sprite in an audited, non-overlapping Gary
 // encounter. This is runtime-only; no scripts, NPC flags or saves are changed.
 void FullFollower_BeginScriptedGaryScene(const u8 *script)
@@ -332,6 +354,8 @@ void FullFollower_BeginScriptedGaryScene(const u8 *script)
 
     if (script == SilphCo_7F_EventScript_RivalTriggerTop && follower != NULL)
         sceneAllowed = CanHoldThroughSilphGaryTopApproach(follower);
+    if (script == Route22_EventScript_EarlyRivalTriggerTop && follower != NULL)
+        sceneAllowed = CanHoldThroughRoute22EarlyTopApproach(follower);
 
     sFollowerGarySceneHold = sceneAllowed
                           && sFollowerEnabled

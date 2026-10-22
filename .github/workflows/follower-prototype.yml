@@ -793,7 +793,7 @@ jobs:
           print("Entrances recall immediately; no respawn until observed lock release")
           PY
 
-      - name: Audit bounded Gary stationary scenes and collision isolation
+      - name: Audit bounded Gary scene footprints and collision isolation
         run: |
           python3 - <<'PY'
           import json
@@ -877,8 +877,56 @@ jobs:
           for cur,prev in (((2,3),(2,3)),((1,4),(1,4)),((3,4),(3,4)),
                            ((1,5),(1,4)),((3,5),(3,4))):
               assert can_hold((2,4),cur,prev)
+          # Route 22 first (early) upper approach: the original Gary object
+          # starts (25,4), walks 7x east and stops at (32,4) facing a player
+          # at (33,4). Hold only if both follower endpoints are off x=25..32
+          # on y=4. Early MID/BOTTOM and all LATE variants are unchanged.
+          route=Path("data/maps/Route22/scripts.inc").read_text()
+          route_map=json.loads(Path("data/maps/Route22/map.json").read_text())
+          route_label="Route22_EventScript_EarlyRivalTriggerTop"
+          assert "extern const u8 "+route_label+"[];" in f
+          assert "script == "+route_label in feature
+          assert "CanHoldThroughRoute22EarlyTopApproach(follower)" in feature
+          route_triggers=[e for e in route_map["coord_events"] if e["script"]==route_label]
+          assert len(route_triggers)==1 and (route_triggers[0]["x"],route_triggers[0]["y"])==(33,4)
+          route_rivals=[o for o in route_map["object_events"] if o.get("local_id")=="LOCALID_ROUTE22_RIVAL"]
+          assert len(route_rivals)==1 and (route_rivals[0]["x"],route_rivals[0]["y"])==(25,4)
+          entry=route[route.index(route_label+"::"):route.index("Route22_EventScript_EarlyRivalTriggerMid::")]
+          assert "\tlockall" in entry and "setvar VAR_TEMP_1, 0" in entry
+          assert "setobjectxyperm" not in entry
+          approach=route[route.index("Route22_Movement_RivalApproach::"):route.index("Route22_Movement_RivalApproachBottom::")]
+          assert [l.strip() for l in approach.splitlines() if l.strip().startswith("walk_")]==["walk_right"]*7
+          early=route[route.index("Route22_EventScript_EarlyRival::"):route.index("Route22_EventScript_EarlyRivalApproach::")]
+          assert "addobject LOCALID_ROUTE22_RIVAL" in early
+          assert "call_if_eq VAR_TEMP_1, 0, Route22_EventScript_EarlyRivalApproach" in early
+          assert "trainerbattle_earlyrival TRAINER_RIVAL_ROUTE22_EARLY_SQUIRTLE" in route
+          guard=body(f,"static bool8 CanHoldThroughRoute22EarlyTopApproach(const struct ObjectEvent *follower)")
+          for token in ("player->currentCoords.x - 8", "player->currentCoords.x - 1",
+                        "player->currentCoords.y", "follower->currentCoords.y == pathY",
+                        "follower->previousCoords.y == pathY",
+                        "follower->currentCoords.x >= pathLeft",
+                        "follower->currentCoords.x <= pathRight",
+                        "follower->previousCoords.x >= pathLeft",
+                        "follower->previousCoords.x <= pathRight"):
+              assert token in guard,token
+          assert guard.count("return FALSE;")==2 and "return TRUE;" in guard
+          def route_can_hold(pos, old, player=(33,4)):
+              blocked=lambda p: p[1]==player[1] and player[0]-8<=p[0]<=player[0]-1
+              return not (blocked(pos) or blocked(old))
+          for x in range(25,33):
+              assert not route_can_hold((x,4),(33,3))
+              assert not route_can_hold((33,3),(x,4))
+          for pos,prev in (((33,3),(33,3)),((34,4),(34,4)),((33,5),(33,5)),
+                           ((33,4),(33,3)),((24,4),(24,4)),((34,5),(34,4))):
+              assert route_can_hold(pos,prev), (pos,prev)
+          assert '.include "data/maps/Route22/scripts.inc"' in inclusion
           # Reject any future unreviewed generic bypass of rival scripts.
-          for forbidden in ("Route22_EventScript_", "CeruleanCity_EventScript_",
+          for forbidden in ("Route22_EventScript_EarlyRivalTriggerMid",
+                            "Route22_EventScript_EarlyRivalTriggerBottom",
+                            "Route22_EventScript_LateRivalTriggerTop",
+                            "Route22_EventScript_LateRivalTriggerMid",
+                            "Route22_EventScript_LateRivalTriggerBottom",
+                            "CeruleanCity_EventScript_",
                             "SSAnne_2F_Corridor_EventScript_", "PalletTown_ProfessorOaksLab_EventScript_",
                             "PokemonLeague_ChampionsRoom_EventScript_"):
               assert forbidden not in feature
@@ -909,7 +957,7 @@ jobs:
           assert "sFollowerSpecies != species || sFollowerIsShiny != isShiny" in refresh
           assert "FullFollower_ClearSafeDialogue();" in body(f,"void FullFollower_RecallForBattle(void)")
           assert "FullFollower_ClearSafeDialogue();" in body(f,"void FullFollower_RecallForWarp(void)")
-          print("Gary Tower 2F + Silph 7F bounded scene holds: guards PASS")
+          print("Gary Tower, Silph 7F and Route 22 early upper: explicit bounded footprint guards PASS")
           print("No MyBoy verification; no unlisted scripted encounter is enabled")
           PY
 
