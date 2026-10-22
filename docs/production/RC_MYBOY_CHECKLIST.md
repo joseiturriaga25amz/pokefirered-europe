@@ -10,6 +10,9 @@ For each block record **PASS / FAIL / BLOCKED**, the exact commit SHA, save used
 
 ## Follower prototype — current corrective roadmap (2026-10-19)
 
+**Whiteout static audit update (2026-10-22):** The local respawn chain after losing is source-audited, including Center/Mom recovery locks. New workflow-only test `86e0d40` added; exact Follower Prototype run `39769975602` was IN PROGRESS when noted; MyBoy visual outcome is unverified. Review `NEXT_SESSION.md` before the next Gary scene block.
+
+
 **Latest B10 handoff (2026-10-22):** `beaa79b` exact Follower Prototype CI run `39750050982` SUCCESS. Targeted audit revealed a one-frame trainer-approach/task-destruction to intro-script gap; isolated technical fix `ecdf887` transfers the existing gated intro hold before destroying the native task. Run `39754517699` for `ecdf887` IN PROGRESS when recorded; no MyBoy or Full Gameplay Core proof yet. Verify exact run, audit whiteout recovery, then address Gary scripted scenes separately. Details: `NEXT_SESSION.md`.
 
 
