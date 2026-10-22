@@ -244,15 +244,16 @@ static u8 CheckPathBetweenTrainerAndPlayer(struct ObjectEvent *trainerObj, u8 ap
     (dest) = (struct ObjectEvent *)(((task)->tTrainerObjHi << 16) | ((u16)(task)->tTrainerObjLo)); \
 } while (0)
 
-// The trainer-sight task has no battle or map-teardown ownership.
-// Do not claim the hold during link play, Quest Log or another active script.
-// Other presentation gates (warp, riding and fades) remain authoritative.
+// Only the native trainer-sight task owns this visibility exception.
+// ConfigureAndSetUpOneTrainerBattle starts the trainer script BEFORE the
+// approach task; the script may still be running while the trainer walks.
+// Do not reject that legitimate overlap. Warp, link, battle and fade gates
+// are enforced independently by the follower presentation state.
 bool8 TrainerSee_IsApproachActive(void)
 {
     return FuncIsActiveTask(Task_RunTrainerSeeFuncList)
         && !QL_IS_PLAYBACK_STATE
-        && !IsUpdateLinkStateCBActive()
-        && !ScriptContext_IsEnabled();
+        && !IsUpdateLinkStateCBActive();
 }
 
 static void TrainerApproachPlayer(struct ObjectEvent * trainerObj, u8 approachDistance)

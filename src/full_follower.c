@@ -354,9 +354,9 @@ static bool8 ShouldSuppressFollower(void)
         sFollowerExitLockObserved = FALSE;
     }
 
-    // A verified trainer-sight task may freeze an existing follower while
-    // the exclamation mark and approach play. A script or battle transition
-    // revokes that exception; normal field locks still suppress otherwise.
+    // A verified trainer-sight task may hold the existing follower through
+    // the exclamation mark and approach, even while its own script runs.
+    // An unrelated script without this task remains suppressed.
     if (ArePlayerFieldControlsLocked()
      && !StartMenu_IsSafeForFollower()
      && !sFollowerSafeDialogue
@@ -381,12 +381,14 @@ static bool8 ShouldSuppressFollower(void)
     // This keeps follower state out of cutscenes/trainer-sight/link-sensitive scripts.
     if (ScriptContext_IsEnabled()
      && !sFollowerSafeDialogue
-     && !sFollowerTrainerIntro)
+     && !sFollowerTrainerIntro
+     && !TrainerSee_IsApproachActive())
         return TRUE;
 
     // Text-only scripts do not perform fades. If an independent transition
     // starts, abandon the exception rather than retain an unsafe sprite.
-    if (gPaletteFade.active && (sFollowerSafeDialogue || sFollowerTrainerIntro))
+    if (gPaletteFade.active
+     && (sFollowerSafeDialogue || sFollowerTrainerIntro || TrainerSee_IsApproachActive()))
         return TRUE;
 
     return FALSE;
