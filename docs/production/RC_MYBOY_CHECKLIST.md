@@ -10,6 +10,9 @@ For each block record **PASS / FAIL / BLOCKED**, the exact commit SHA, save used
 
 ## Follower prototype — current corrective roadmap (2026-10-19)
 
+**Gary Tower 2F pilot (2026-10-22):** Exact technical commit `bb6777e` adds a bounded already-present follower HOLD during the scripted Rival coordinate triggers on Tower 2F. CI run `39790987988` is IN PROGRESS at checkpoint; no MyBoy/Full Gameplay Core/merge. Other Gary scenes remain strictly gated pending scene-by-scene audit. See `NEXT_SESSION.md`.
+
+
 **Whiteout static audit update (2026-10-22):** The local respawn chain after losing is source-audited, including Center/Mom recovery locks. New workflow-only test `86e0d40` added; exact Follower Prototype run `39769975602` was IN PROGRESS when noted; MyBoy visual outcome is unverified. Review `NEXT_SESSION.md` before the next Gary scene block.
 
 
