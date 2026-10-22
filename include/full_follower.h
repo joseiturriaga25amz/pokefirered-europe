@@ -11,6 +11,8 @@ void FullFollower_DiscardForLocalReload(void);
 void FullFollower_RecallForWarp(void);
 // Bounded trainer-intro presentation and battle-scene sprite teardown.
 void FullFollower_BeginTrainerIntro(void);
+// Keep an existing follower stationary during the vetted Gary Tower scene.
+void FullFollower_BeginScriptedGaryScene(const u8 *script);
 void FullFollower_RecallForBattle(void);
 void FullFollower_OnCameraCoordsShift(s16 dx, s16 dy);
 void FullFollower_SetEnabled(bool8 enabled);

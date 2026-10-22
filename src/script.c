@@ -351,6 +351,7 @@ void ScriptContext_SetupScript(const u8 *ptr)
 {
     // Any forced scene or replacement script revokes the field text exemption.
     FullFollower_ClearSafeDialogue();
+    FullFollower_BeginScriptedGaryScene(ptr);
     ClearMsgBoxCancelableState();
     EnableMsgBoxWalkaway();
     ClearQuestLogInputIsDpadFlag();
