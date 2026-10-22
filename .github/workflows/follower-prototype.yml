@@ -565,7 +565,7 @@ jobs:
               end=src.index("\n}",start)
               return src[start:end]
           suppress=function(f,"static bool8 ShouldSuppressFollower(void)")
-          for item in ("if (sFollowerWarpTransition)", "sFollowerExitLockObserved = TRUE;", "if (!sFollowerExitLockObserved || ArePlayerFieldControlsLocked())", "sFollowerWarpTransition = FALSE;", "if (ArePlayerFieldControlsLocked()\n     && !StartMenu_IsSafeForFollower()\n     && !sFollowerSafeDialogue\n     && !sFollowerTrainerIntro\n     && !TrainerSee_IsApproachActive())\n        return TRUE;", "if (ScriptContext_IsEnabled()\\n     && !sFollowerSafeDialogue\\n     && !sFollowerTrainerIntro)"):
+          for item in ("if (sFollowerWarpTransition)", "sFollowerExitLockObserved = TRUE;", "if (!sFollowerExitLockObserved || ArePlayerFieldControlsLocked())", "sFollowerWarpTransition = FALSE;", "if (ArePlayerFieldControlsLocked()\n     && !StartMenu_IsSafeForFollower()\n     && !sFollowerSafeDialogue\n     && !sFollowerTrainerIntro\n     && !TrainerSee_IsApproachActive())\n        return TRUE;", "if (ScriptContext_IsEnabled()\n     && !sFollowerSafeDialogue\n     && !sFollowerTrainerIntro)"):
               assert item in suppress,item
           # A narrow field Start/Save exception must not bypass unsafe scripts.
           start_menu = Path("src/start_menu.c").read_text()
@@ -582,7 +582,7 @@ jobs:
               assert forbidden not in gate, forbidden
           assert suppress.index("if (QL_IS_PLAYBACK_STATE)") < suppress.index("StartMenu_IsSafeForFollower()")
           assert suppress.index("if (sFollowerWarpTransition)") < suppress.index("StartMenu_IsSafeForFollower()")
-          assert suppress.index("StartMenu_IsSafeForFollower()") < suppress.index("if (ScriptContext_IsEnabled()\\n     && !sFollowerSafeDialogue\\n     && !sFollowerTrainerIntro)")
+          assert suppress.index("StartMenu_IsSafeForFollower()") < suppress.index("if (ScriptContext_IsEnabled()\n     && !sFollowerSafeDialogue\n     && !sFollowerTrainerIntro)")
           # Only a compiled single-msgbox script from direct A interaction is
           # eligible. Unsafe scripted actions cannot pass this bytecode grammar.
           field = Path("src/field_control_avatar.c").read_text()
@@ -681,7 +681,7 @@ jobs:
           assert "|| TrainerSee_IsApproachActive()" in function(f,"static void RefreshFollower(void)")
           assert suppress.index("if (sFollowerWarpTransition)") < suppress.index("TrainerSee_IsApproachActive()")
           assert suppress.index("if (QL_IS_PLAYBACK_STATE)") < suppress.index("TrainerSee_IsApproachActive()")
-          assert suppress.index("if (ScriptContext_IsEnabled()\\n     && !sFollowerSafeDialogue\\n     && !sFollowerTrainerIntro)") > suppress.index("TrainerSee_IsApproachActive()")
+          assert suppress.index("if (ScriptContext_IsEnabled()\n     && !sFollowerSafeDialogue\n     && !sFollowerTrainerIntro)") > suppress.index("TrainerSee_IsApproachActive()")
           assert "sFollowerPresentationState == FOLLOWER_PRESENTATION_HOLD_VISIBLE" in f
           # Trainer intro is a narrowly scoped script exception: the native
           # speech special starts it, and the battle transition recalls it
