@@ -234,3 +234,8 @@ Compatibility design for follower:
 5. Update validators/checklist to the approved V2 behavior.
 6. Build and freeze a new exact MyBoy RC/checksum only after current HEAD CI/static audit is green.
 7. Final runtime acceptance belongs to the new RC, not the old test ROM.
+
+
+### B10 checkpoint after Route 22 early MID (2026-10-22)
+
+The follower prototype remains on `prototype/follower-runtime`, **not on `master`**. The exact previous head `e728c4f` passed Full Gameplay Core run `39822343019` and Follower Prototype run `39822343251`. New technical commit `6df73cb` extends Route 22 early scripted Gary visibility to the MID trigger using a tested seven-tile path restriction; its exact CI must be verified before claiming CI-GREEN. Read the latest dated entry in `NEXT_SESSION.md` and the MyBoy checklist before any further work. The 386-species private ROM builder passes automated checks but deletes the ROM and is not a public downloadable MyBoy artifact. MyBoy visual QA, remaining scripted Gary encounters, integrated master CI and a legitimate deliverable format still require work.

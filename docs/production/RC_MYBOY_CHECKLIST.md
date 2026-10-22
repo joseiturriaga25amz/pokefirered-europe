@@ -10,6 +10,9 @@ For each block record **PASS / FAIL / BLOCKED**, the exact commit SHA, save used
 
 ## Follower prototype — current corrective roadmap (2026-10-19)
 
+**Route 22 early MID pilot (2026-10-22):** Last exact head `e728c4f` PASS (Full Gameplay Core / Follower Prototype). Technical `6df73cb` enables MID only when the existing follower is outside the seven-step row; exact core `39835138623` and follower `39835138594` IN PROGRESS when recorded. Full 386 normal+shiny ROM build is private/ephemeral in Actions, **not** a downloadable MyBoy `.gba`. Remaining scene audit/integration/delivery gates in `NEXT_SESSION.md`.
+
+
 **Route 22 early TOP pilot (2026-10-22):** `45f1148` PASS on exact Full Gameplay Core and Follower Prototype. New technical `570fe60` bounds existing follower HOLD outside Gary's seven-tile early TOP path; technical Full Core run `39821478334` and Follower Prototype `39821478411` IN PROGRESS at checkpoint. No MyBoy/merge; see `NEXT_SESSION.md`.
 
 
