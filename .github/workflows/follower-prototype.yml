@@ -793,6 +793,71 @@ jobs:
           print("Entrances recall immediately; no respawn until observed lock release")
           PY
 
+      - name: Audit whiteout follower cleanup and local recovery
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          battle = Path("src/battle_setup.c").read_text()
+          world = Path("src/overworld.c").read_text()
+          screen = Path("src/field_screen_effect.c").read_text()
+          script = Path("src/script.c").read_text()
+          follower = Path("src/full_follower.c").read_text()
+          def body(src, signature):
+              start = src.index(signature + "\n{")
+              end = src.index("\n}", start)
+              return src[start:end]
+
+          # Normal trainer, rematch, wild and scripted encounter losses route
+          # to the same whiteout map reload (not the local battle return).
+          for signature in (
+              "static void CB2_EndTrainerBattle(void)",
+              "static void CB2_EndRematchBattle(void)",
+              "static void CB2_EndWildBattle(void)",
+              "static void CB2_EndScriptedWildBattle(void)",
+              "static void CB2_EndMarowakBattle(void)",
+          ):
+              assert "SetMainCallback2(CB2_WhiteOut);" in body(battle, signature), signature
+          recall = body(follower, "void FullFollower_RecallForBattle(void)")
+          assert "sFollowerBattleTransition = TRUE;" in recall
+          assert "RemoveFullFollowerObjectEvent(follower);" in recall
+
+          # Whiteout heals and warps before loading the new local map.
+          whiteout = body(world, "void CB2_WhiteOut(void)")
+          do_whiteout = body(world, "static void DoWhiteOut(void)")
+          assert do_whiteout.index("HealPlayerParty();") < do_whiteout.index("WarpIntoMap();")
+          for name in ("ScriptContext_Init();", "UnlockPlayerFieldControls();",
+                       "gFieldCallback = FieldCB_RushInjuredPokemonToCenter;",
+                       "DoMapLoadLoop(&val);"):
+              assert name in whiteout, name
+          assert whiteout.index("gFieldCallback = FieldCB_RushInjuredPokemonToCenter;") < whiteout.index("DoMapLoadLoop(&val);")
+
+          # After sprite/task reset, the local map recreates a fresh follower
+          # task; it cannot spawn before the recovery callback locks controls.
+          resume = body(world, "static void ResumeMap(bool32 inLink)")
+          assert resume.index("FullFollower_DiscardForLocalReload();") < resume.index("ResetTasks();") < resume.index("ResetSpriteData();")
+          load = body(world, "static bool32 LoadMapInStepsLocal(u8 *state, bool32 inLink)")
+          assert load.index("ResumeMap(inLink);") < load.index("InitObjectEventsLocal();") < load.index("if (RunFieldCallback())")
+          init = body(world, "static void InitObjectEventsLocal(void)")
+          assert "FullFollower_OnLocalMapReady();" in init
+          ready = body(follower, "void FullFollower_OnLocalMapReady(void)")
+          assert ready.index("sFollowerBattleTransition = FALSE;") < ready.index("CreateTask(Task_FullFollower, FOLLOWER_TASK_PRIORITY);")
+          fieldcb = body(screen, "void FieldCB_RushInjuredPokemonToCenter(void)")
+          assert fieldcb.index("LockPlayerFieldControls();") < fieldcb.index("CreateTask(Task_RushInjuredPokemonToCenter, 10);")
+          recover = body(screen, "static void Task_RushInjuredPokemonToCenter(u8 taskId)")
+          for event in ("EventScript_AfterWhiteOutHeal", "EventScript_AfterWhiteOutMomHeal"):
+              assert "ScriptContext_SetupScript(" + event + ");" in recover
+          suppression = body(follower, "static bool8 ShouldSuppressFollower(void)")
+          assert "if (sFollowerBattleTransition)\n        return TRUE;" in suppression
+          assert "ArePlayerFieldControlsLocked()" in suppression
+          assert "ScriptContext_IsEnabled()" in suppression
+          refresh = body(follower, "static void RefreshFollower(void)")
+          assert "if (ShouldSuppressFollower() || !sFollowerEnabled || species == SPECIES_NONE)" in refresh
+          scripts = body(script, "bool8 ScriptContext_RunScript(void)")
+          assert "UnlockPlayerFieldControls();" in scripts
+          print("Whiteout local recovery and follower deferred-respawn source contract PASS")
+          print("MyBoy visual recovery is still NOT_EXECUTED")
+          PY
+
       - name: Audit follower-owned field effect lifetime
         run: |
           python3 - <<'PY'
