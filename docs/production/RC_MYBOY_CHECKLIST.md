@@ -10,6 +10,9 @@ For each block record **PASS / FAIL / BLOCKED**, the exact commit SHA, save used
 
 ## Follower prototype — current corrective roadmap (2026-10-19)
 
+**Silph 7F upper movement guard (2026-10-22):** Technical `6980d28` adds conditional existing-follower HOLD only when current/previous follower positions cannot intersect Gary's top-trigger approach path. Exact Follower Prototype run `39809423667` IN PROGRESS at checkpoint. No Full Gameplay Core/MyBoy/merge. Continue from `NEXT_SESSION.md`.
+
+
 **Gary scene extension (2026-10-22):** CI `39792302159` and `39792425194` SUCCESS for the preceding gate/doc heads. Technical `69e2197` adds only Silph Co. 7F lower trigger HOLD; upper approach explicitly excluded. Exact run `39794777955` QUEUED at checkpoint, so new feature not CI-GREEN or MyBoy-verified. Details in `NEXT_SESSION.md`.
 
 
