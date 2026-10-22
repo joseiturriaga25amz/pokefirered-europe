@@ -26,6 +26,7 @@ extern const u8 PokemonTower_2F_EventScript_RivalTriggerDown[];
 extern const u8 SilphCo_7F_EventScript_RivalTriggerBottom[];
 extern const u8 SilphCo_7F_EventScript_RivalTriggerTop[];
 extern const u8 Route22_EventScript_EarlyRivalTriggerTop[];
+extern const u8 Route22_EventScript_EarlyRivalTriggerMid[];
 
 #define FOLLOWER_TASK_PRIORITY 0x51
 #define FOLLOWER_TRAIL_CAPACITY 8
@@ -322,10 +323,11 @@ static bool8 CanHoldThroughSilphGaryTopApproach(const struct ObjectEvent *follow
     return TRUE;
 }
 
-// Route 22's first TOP encounter places the player at (33,4) while Gary
-// walks east from (25,4) to (32,4). Do not HOLD a follower whose current
-// or previous position intersects any tile of that seven-step approach.
-static bool8 CanHoldThroughRoute22EarlyTopApproach(const struct ObjectEvent *follower)
+// Route 22's early TOP/MID encounters place the player at (33,4)/(33,5).
+// Gary walks seven tiles east from (25,4)/(25,5) to (32,4)/(32,5).
+// MID first repositions Gary to (25,5), then shares the TOP movement.
+// Never HOLD a follower whose current or prior tile crosses that path.
+static bool8 CanHoldThroughRoute22EarlyStraightApproach(const struct ObjectEvent *follower)
 {
     const struct ObjectEvent *player = &gObjectEvents[gPlayerAvatar.objectEventId];
     s16 pathLeft = player->currentCoords.x - 8;
@@ -354,8 +356,9 @@ void FullFollower_BeginScriptedGaryScene(const u8 *script)
 
     if (script == SilphCo_7F_EventScript_RivalTriggerTop && follower != NULL)
         sceneAllowed = CanHoldThroughSilphGaryTopApproach(follower);
-    if (script == Route22_EventScript_EarlyRivalTriggerTop && follower != NULL)
-        sceneAllowed = CanHoldThroughRoute22EarlyTopApproach(follower);
+    if ((script == Route22_EventScript_EarlyRivalTriggerTop
+      || script == Route22_EventScript_EarlyRivalTriggerMid) && follower != NULL)
+        sceneAllowed = CanHoldThroughRoute22EarlyStraightApproach(follower);
 
     sFollowerGarySceneHold = sceneAllowed
                           && sFollowerEnabled
