@@ -1,3 +1,15 @@
+## CURRENT CHECKPOINT — 2026-10-23: Cerulean Jynx trade CI-GREEN (not integrated)
+
+**Active source branch:** `prototype/follower-runtime`. Exact technical HEAD `ecd3a73eca1bc58a08157a42a83b140edf0dd078`; master `8d89f2b4` remains separate and B10 follower OPEN. The source is IMPLEMENTED + static/compile VALIDATED + **CI-GREEN on prototype**, but NOT integrated/CERRADO and not accepted on MyBoy.
+
+- `5f64e11`: approved Cerulean `Clefairy -> Jynx` request; targeted Full Gameplay Core test and exact audited `src/data/ingame_trades.h` blob lock. `0b0177d` protects **LeafGreen's original Poliwhirl -> Jynx** request with existing preprocessor structure; FireRed only gets Clefairy. Original Jynx nickname ZYNX, OT, IVs, nature personality, mail, level inheritance, script and `FLAG_DID_ZYNX_TRADE` preserved. Source diff independently confirmed other eight NPC trades unchanged byte-for-byte; no SaveBlock/link layout changes or new ID. Clefairy wild in Mt Moon (10%) before Cerulean; generic text substitution needs no map/Spanish script edit.
+- Intermediate `5f64e11` Full Gameplay Core [39995000989](https://github.com/joseiturriaga25amz/pokefirered-europe/actions/runs/39995000989) **failed only at an obsolete one-save baby-obtainability validator after successful ROM compile and targeted Jynx test**: it expected unconditional Poliwhirl. `ecd3a73` updates `tools/validate_full_obtainability.py` to assert FireRed Clefairy availability, Jynx NPC/one-time flag and unchanged LeafGreen Poliwhirl + Poliwag path; does not weaken the Smoochum obtainable-in-one-save invariant. All other validator obligations unchanged.
+- **Exact technical CI success:** Full Gameplay Core [#39995711513](https://github.com/joseiturriaga25amz/pokefirered-europe/actions/runs/39995711513) SUCCESS (including reproducible Spanish ROM and complete static gameplay gates); Follower Prototype [#39995711582](https://github.com/joseiturriaga25amz/pokefirered-europe/actions/runs/39995711582) SUCCESS (including temporary 386 normal/shiny sprite ROM compilation). This does NOT establish MyBoy runtime acceptance, a distributable ROM or safe merging of the divergent follower branch into master.
+- Previous current rarity checkpoint and design inventory remain below as historical evidence. **NEXT:** small read-only feasibility/economy audit of proposed Meowth -> Shellder in UndergroundPath North Entrance. Do not implement other proposed pairs without complete decision; continue Drowzee -> Staryu, Doduo -> Lickitung, Raichu -> Magmar, Venonat -> Electabuzz, Koffing -> Seel individually. EV numbers-only/nature coloring, leader rematch dialogue and separate B10 follower runtime/integration remain scheduled.
+
+
+---
+
 ## CURRENT CHECKPOINT — 2026-10-23: approved rarity and Safari access
 
 This current operational checkpoint supersedes any earlier **proposal-only** status of the 1% Kanto wild finals or 5% Safari Dragonair below; the earlier notes remain dated historical evidence. Do not claim MyBoy success, follower integration or master gameplay integration from source-only changes.
@@ -14,18 +26,6 @@ This current operational checkpoint supersedes any earlier **proposal-only** sta
 ---
 
 # Pokémon Rojo Fuego Full v1.0 — Project Continuity
-
-## CURRENT CHECKPOINT — 2026-10-23: Cerulean Jynx trade (TECHNICAL CI PENDING)
-
-**Active branch** `prototype/follower-runtime`; master remains separate at `8d89f2b4`. This paragraph supersedes the older preliminary Jynx proposal status further down. No MyBoy tests or branch integration were executed in this microblock.
-
-- **Approved single NPC trade implemented** in `5f64e1113a964fe20cd95342c53205c567340b53`: Cerulean City House 3 asks for Clefairy and rewards the original Jynx. Diff: one `.requestedSpecies` line in `src/data/ingame_trades.h`, targeted Full Gameplay Core assertion and exact audited trade-data blob hash. The NPC script already obtains the requested species name dynamically, retains `FLAG_DID_ZYNX_TRADE` and one-use handling; Spanish text has no fixed Poliwhirl wording. `src/trade_scene.c` already creates Jynx at the same level as the traded Clefairy; Clefairy is catchable in Mt Moon before Cerulean (10% land encounter), and no Pokémon/save/link layout change was required.
-- **Independent version-scope audit** caught a real spillover: this trade data is shared with LeafGreen. Correction `0b0177d8c6c5764f7a524fb5993c1dcf6302cf4f` makes **FireRed: Clefairy -> Jynx; LeafGreen: original Poliwhirl -> Jynx**, preserving all 8 other trades, IVs, nickname, OT, held Fab Mail, one-time flag and existing engine. Its validator checks the FireRed/LeafGreen preprocessor guard; blob lock was refreshed. No map script or dialogue changes required.
-- Full Gameplay Core on intermediate `5f64e11` run [39995000989](https://github.com/joseiturriaga25amz/pokefirered-europe/actions/runs/39995000989) **FAILED after successful ROM build and new targeted Jynx validator**, specifically at `tools/validate_full_obtainability.py` line 260: obsolete unconditional request for `SPECIES_POLIWHIRL`. This was a real validator expectation mismatch after an approved gameplay change, **not evidence of a bad compiler build, nor grounds to revert Clefairy**. Technical validator-only correction `ecd3a73eca1bc58a08157a42a83b140edf0dd078` now confirms FireRed's Mt Moon Clefairy -> Cerulean Jynx -> Smoochum local route, original LeafGreen Poliwhirl path, native trade script/flag and unchanged baby requirements, not a blanket check removal.
-- **Latest technical HEAD `ecd3a73`**: Full Gameplay Core [39995711513](https://github.com/joseiturriaga25amz/pokefirered-europe/actions/runs/39995711513) and Follower Prototype [39995711582](https://github.com/joseiturriaga25amz/pokefirered-europe/actions/runs/39995711582) were **IN PROGRESS at checkpoint**, NOT CI-GREEN, NOT CERRADO. Review exact results and logs before declaring validation. Unrelated older CI runs of the Safari change sometimes remained in-progress during runner dependency installation; distinguish infrastructure from source logic. Do not compensate by altering gameplay.
-- **NEXT:** inspect both exact `ecd3a73` workflows and new obtainability assertion; fix narrowly if any actual failure. If green, finish adversarial review of old saves (already traded flag unchanged), traded Jynx level, script cancelling, version guard and semantically validate the eight unaffected trade slots, then record completed microblock and proceed to bounded **Meowth -> Shellder** candidate feasibility; no other NPC trade changes without definitive approved pairs. Keep B10 open and MyBoy later.
-
----
 
 
 
