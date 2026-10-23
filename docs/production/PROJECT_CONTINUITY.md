@@ -34,6 +34,40 @@ Actual FireRed source trade roster in src/data/ingame_trades.h:
 
 All nine preserve a source-defined fixed personality/OT/nickname/IV/item. Before editing verify script placement, NPC timing and dialogue, reward rarity and usefulness, party/box and link safety, species availability and required trade evolution. NPC trades are distinct from link exchange. No replacements are approved by exact pair and none has been changed.
 
+### Phase 0 source follow-up — 2026-10-23 (DOCUMENTATION ONLY; gameplay unchanged)
+
+Audit reference: branch `prototype/follower-runtime` pre-note HEAD `9cb858afc2bd179a1b89ce96080d667f6f30086a` (master remained `8d89f2b4`, NOT merged). Both exact-head workflows finished SUCCESS: Full Gameplay Core [39854853814](https://github.com/joseiturriaga25amz/pokefirered-europe/actions/runs/39854853814), Follower Prototype [39854853769](https://github.com/joseiturriaga25amz/pokefirered-europe/actions/runs/39854853769). This does **not** mean MyBoy acceptance, ROM delivery, integration, or B10 closure.
+
+**Encounter table verified in source**, `src/data/wild_encounters.json` against `baseline-spanish-vanilla`:
+- Mt Ember Exterior: Charmander 15% (level 30/32), Charmeleon 5% (36), Charizard 4% (40); Seafoam B1F: Squirtle 15% (26/28), Wartortle 5% (28), Blastoise 4% (36); Berry Forest: Bulbasaur 15% (30/35), Ivysaur 5% (31), Venusaur 4% (37). User's exceptional-direct-final concept supports *proposing* 1% for the three final evolutions only, not changing source now. Land table slots are 20/20/10/10/10/10/5/5/4/4/1/1: moving any final 4%-slot to 1% necessarily reassigns an existing slot (Mt Ember Rapidash/Magmar, Seafoam Golduck/Golbat, Berry Forest Venomoth/Hypno). Require an explicit ecology-neutral slot redistribution and semantic validator before approval/implementation; do not silently increase another rare's probability.
+- Eevee Route7 15%; Vaporeon Seafoam B1F 4%; Jolteon Power Plant 4%; Flareon Mansion 1F 4%. Default preliminary advice: keep 4% pending review of stone evolution and natural availability, no blanket final-stage rule.
+- FireRed Safari comparison, same specific land areas: Chansey North 4% -> Full 15%, Kangaskhan East 4% -> 15%, Tauros West 4% -> 15%, Scyther Center 4% -> 15%; Pinsir Center absent in original FireRed -> Full 15%. These deserve a Safari catch/flee/steps/economy study before selecting 5/10/15%, not an automatic nerf. Dratini Super Rod Safari 15% and Dragonair 1% remain unchanged in those fishing slots. Clefairy Mt Moon 1F 1% -> 10%; Mt Moon B2F 6% -> 10%. These increases were part of earlier encounter work; reopening is review, not revocation.
+- Other verified additions: Bellsprout Route5 25%, Sandshrew and Vulpix Route8 20% each, Magmar Mt Ember 5%, Electabuzz Power Plant 5%, Wild Eevee Route7 15%. The rarity policy should preserve basic-form usability and validate total player access via evolution/gift/trades, not simply count an isolated 1% slot.
+
+**Nine source NPC trade sites verified** against `src/data/ingame_trades.h` and the actual `data/maps/*/scripts.inc`:
+1. `Route2_House`: Abra -> Mr Mime (retain candidate; arrival through Route2 access still contextual).
+2. `CeruleanCity_House3`: Poliwhirl -> Jynx. NPC is early, but Poliwhirl acquisition is fishing/evolution-gated; Old Rod fish in relevant Route25/6 slots is Magikarp only, so NPC location alone does not make Jynx early.
+3. `UndergroundPath_NorthEntrance`: Nidoran M -> Nidoran F (must replace according to user).
+4. `VermilionCity_House2`: Spearow -> Farfetch'd with Stick (retain candidate).
+5. `Route11_EastEntrance_2F`: Nidorino -> Nidorina (must replace).
+6. `Route18_EastEntrance_2F`: Golduck -> Lickitung (Golduck acquisition is unnecessarily late for unique Lickitung; review request).
+7. `CinnabarIsland_PokemonLab_Lounge`: Raichu -> Electrode (user rejects reward).
+8. `CinnabarIsland_PokemonLab_Lounge`: Venonat -> Tangela (user rejects reward); note this NPC script invokes lower-level `CreateInGameTradePokemon` and `DoInGameTradeScene`, unlike most other trades, requiring dedicated script-equivalence audit.
+9. `CinnabarIsland_PokemonLab_ExperimentRoom`: Ponyta -> Seel. Ponyta wild at Mt Ember/Kindle Road, ordinarily accessible during the Sevii detour after Blaine; Seel is wild already in Seafoam. Candidate is to keep Seel but request a species reachable before/around Cinnabar instead.
+
+**Concrete candidate pairs for design discussion ONLY — NONE APPROVED OR IMPLEMENTED:**
+- Cerulean: Clefairy -> Jynx (10% Mt Moon Clefairy, available before Cerulean) instead of Poliwhirl; alternate easier Meowth/another early species, but weigh Jynx's early Ice/Psychic power and boosted traded EXP.
+- Underground North: Meowth -> Shellder instead of the Nidoran swap (Meowth Route5; Shellder otherwise later fishing).
+- Route11 gate: Drowzee -> Staryu instead of Nidorino/Nidorina (Drowzee Route11; Staryu Vermilion by later rod). Check if Staryu/Starmie pre-Celadon progression is too advantageous.
+- Route18 gate: Doduo -> Lickitung instead of Golduck (Doduo on Routes16–18; Lickitung not wild in current source).
+- Cinnabar lounge: Raichu -> Magmar instead of Electrode (trade cost/high-value rare; consider whether devalues Mt Ember 5% Magmar); Venonat -> Electabuzz instead of Tangela (Power Plant 5%; consider whether trade reward is too generous). These pair choices are not committed design.
+- Cinnabar lab: Koffing -> Seel instead of Ponyta (Koffing abundant in Mansion, avoids post-Blaine Ponyta prerequisite). Alternative retain existing pair after progression study.
+- Keep Abra -> Mr Mime and Spearow -> Farfetch'd candidates unchanged.
+
+**Pre-implementation trade safety gate:** no new species IDs or save/BoxPokemon/link layout; preserve each trade's existing one-time completion flag/slot for old save compatibility; review dynamic generic dialogue *and* hard-coded NPC text, Spanish names/nicknames/OT/item/mail, requested-species accessibility, traded-mon level and learnset, pre-National Kanto eligibility, trade cancellation/full party, player value, and scripts/warps before editing. Do not rename old flags merely for aesthetics. Separate encounter odds from trade changes and from Viridian Forest Oddish map work.
+
+**Cross-block idea feasibility status:** the current matrix below is an inventory, not proof of completion. Prior proposals requiring independent source-level assessment include (LOW-MED) EV summary bars removal/nature colors, leader rematch dialogue; (MED) 252-useful-EV battle milestone and displayed enemy EV yield; (MED-HIGH) battle move-type/STAB/category/contact information, repeated medicine, Dex route completion, six-EV training hub, journals/registry; (HIGH) Hold-R ball selector, START PC access, postcapture inspection and universal scene-aware follower/386 normal-shiny runtime. Audit data flow, battle callbacks, field-task controls, UI screen geometry, flags, player accessibility, save/link safety and tests before allocating microblocks. Existing user preferences are not universal implementation approval. Final MyBoy and private ROM delivery remain separate release blockers.
+
 ### Remaining feature feasibility inventory and gates
 
 | Feature | Real status | Main risk and next evidence |
