@@ -252,13 +252,23 @@ def main():
     require(item_balls, "ITEM_LAX_INCENSE", "item_ball_scripts.inc")
     require(item_balls, "ITEM_SEA_INCENSE", "item_ball_scripts.inc")
 
-    # Smoochum: Jynx is obtainable by the vanilla in-game trade; its requested
-    # Poliwhirl is itself reachable from catchable Poliwag.
+    # Smoochum: the FireRed Jynx NPC trade now requests catchable Clefairy
+    # from Mt Moon, before reaching the NPC in Cerulean City. LeafGreen retains
+    # its original Poliwhirl request, itself available via catchable Poliwag.
     trades = read("src/data/ingame_trades.h")
-    require(trades, "INGAME_TRADE_JYNX", "ingame_trades.h")
-    require(trades, ".species = SPECIES_JYNX", "ingame_trades.h")
-    require(trades, ".requestedSpecies = SPECIES_POLIWHIRL", "ingame_trades.h")
-    assert "SPECIES_POLIWAG" in wild, "Poliwag source missing for Jynx trade prerequisite"
+    require(trades, "[INGAME_TRADE_JYNX] =", "ingame_trades.h")
+    jynx = trades.split("[INGAME_TRADE_JYNX] =", 1)[1].split("[INGAME_TRADE_NIDORAN] =", 1)[0]
+    for token in (
+        ".species = SPECIES_JYNX",
+        "#if defined(FIRERED)\n        .requestedSpecies = SPECIES_CLEFAIRY",
+        "#elif defined(LEAFGREEN)\n        .requestedSpecies = SPECIES_POLIWHIRL",
+    ):
+        require(jynx, token, "ingame_trades.h Jynx")
+    assert "SPECIES_CLEFAIRY" in wild, "Clefairy wild source missing for FireRed Jynx trade"
+    cerulean = read("data/maps/CeruleanCity_House3/scripts.inc")
+    require(cerulean, "setvar VAR_0x8008, INGAME_TRADE_JYNX", "Cerulean trade script")
+    require(cerulean, "FLAG_DID_ZYNX_TRADE", "Cerulean one-time trade flag")
+    assert "SPECIES_POLIWAG" in wild, "Poliwag wild source missing for LeafGreen trade"
     require(evolution, "SPECIES_POLIWHIRL", "evolution.h")
 
     # Tyrogue: either original Dojo choice is obtainable, and the second trial
