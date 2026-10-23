@@ -599,7 +599,7 @@ jobs:
               ".mailNum = 0",
           ):
               assert required in trade, required
-          assert ".requestedSpecies = SPECIES_POLIWHIRL" not in trade
+          assert "#if defined(FIRERED)\n        .requestedSpecies = SPECIES_CLEFAIRY\n#elif defined(LEAFGREEN)\n        .requestedSpecies = SPECIES_POLIWHIRL\n#endif" in trade
           scene = Path("data/maps/CeruleanCity_House3/scripts.inc").read_text()
           assert "setvar VAR_0x8008, INGAME_TRADE_JYNX" in scene
           assert "call EventScript_GetInGameTradeSpeciesInfo" in scene
