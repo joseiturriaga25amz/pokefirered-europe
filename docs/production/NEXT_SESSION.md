@@ -1,5 +1,20 @@
 # Next Session — Pokémon Rojo Fuego Full v1.0
 
+## 2026-10-23 ACTIVE HANDOFF — encounter rarity microblocks and next trade
+
+**Use this header first; old dated entries below are historical.** Confirm canonical GitHub branch, HEAD, and CI before code edits. Prototype `prototype/follower-runtime` is separate from master `8d89f2b4`, and B10 is not integrated, not MyBoy accepted. Do not rotate back to repetitive follower-only scenes until the present approved encounter/trade thread is reconciled.
+
+1. **Technical data implemented:** `8ac55d1` Charizard/Blastoise/Venusaur wild direct encounter **1%** (with corresponding Rapidash/Golduck/Venomoth slot compensation to 4%, starters basic/intermediate unchanged). Exact Full Gameplay Core #39990435833 SUCCESS. `28ce8af` Safari four-area Super Rod Dragonair **5%** (Dratini 15%, Goldeen and Seaking 40% each), previous Super Rod Psyduck 4% slot replaced. Source levels remain 25–35 for Dragonair. Narrow diff, semantic slot checks and audited blob lock updated. **Verify Full Gameplay Core #39991224754 and Follower Prototype #39991224769 exact technical results**: pending at continuity checkpoint. Do not treat later docs-only commits as technical regression or certify them green absent actual job outcomes. Earlier follower job #39990436325 also pending when documented.
+2. **User-authorized policy and trade direction:** date-keyed section in `DECISION_AMENDMENTS.md` clarifies retain Safari land 15% special species, no step expiration / 30 ball supply, wild Magmar and Electabuzz 5%, approved Cerulean Clefairy -> Jynx trade *direction*, and other pairs as design candidates. Intrinsic Safari catch rates and flee scores confirmed, so encounter frequency is not capture success. No NPC trade implementation yet.
+3. **NEXT bounded technical/design microblock** after exact checks: read current `src/data/ingame_trades.h` + `data/maps/CeruleanCity_House3/scripts.inc`, Spanish scene text and existing validator, and audit feasibility of **Clefairy -> Jynx**; preserve NPC one-time flag, nick/OT/IVs/mail and generic trade handling, do not change other trade pairs or Safari. If sound, implement the one approved pair with targeted semantic validator, blob checks as applicable, technical CI and independent audit. Clarify whether pre-Misty level/traded-EXP advantage poses a serious challenge distortion. Otherwise STOP and explain concrete blocker before editing.
+4. **NEXT design audit after Jynx:** Meowth -> Shellder, Drowzee -> Staryu, Doduo -> Lickitung, Raichu -> Magmar, Venonat -> Electabuzz, Koffing -> Seel; check chronology (Mt Ember after Blaine vs Cinnabar Magmar earlier, Power Plant Electabuzz generally before Cinnabar), low effort vs value, old save flags, language text and normal Gen III link mechanics. These pairs are not final-approved just because received positively. No incidental item/capture engine changes.
+5. **Later work order:** separate EV summary numbers-only/blue boosted red lowered nature, unique leader rematch dialogue, EV yield UI; optional Oddish clearing with dedicated map/geometry audit; B10 follower 386 runtime, save/link/MyBoy, scene/Gary integration and asset rights; controlled master integration/RC. User does not need to repeat an old playthrough. Exact CI is not MyBoy QA.
+
+**Docs ownership:** `PROJECT_CONTINUITY.md` is global state and technical evidence, `NEXT_SESSION.md` is handoff, `DECISION_AMENDMENTS.md` records explicit user-authorized choices. No new planning files.
+
+---
+
+
 
 ## SOURCE-VERIFIED PHASE 0 HANDOFF (2026-10-23)
 
