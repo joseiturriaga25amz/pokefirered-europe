@@ -184,7 +184,7 @@ static const struct InGameTrade sInGameTrades[] = {
         .otName = TEXT_INGAME_TRADE_OTNAME_JYNX,
         .otGender = MALE,
         .sheen = 10,
-        .requestedSpecies = SPECIES_POLIWHIRL
+        .requestedSpecies = SPECIES_CLEFAIRY
     }, 
     [INGAME_TRADE_NIDORAN] = 
     {

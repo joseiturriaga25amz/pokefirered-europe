@@ -583,6 +583,38 @@ jobs:
           print(f"Validated {len(expected)} approved encounter rates")
           PY
 
+      - name: Validate Cerulean NPC Jynx trade and save flag
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          header = Path("src/data/ingame_trades.h").read_text()
+          assert header.count("[INGAME_TRADE_JYNX] =") == 1
+          trade = header.split("[INGAME_TRADE_JYNX] =", 1)[1].split("[INGAME_TRADE_NIDORAN] =", 1)[0]
+          for required in (
+              ".species = SPECIES_JYNX",
+              ".requestedSpecies = SPECIES_CLEFAIRY",
+              ".otId = 36728",
+              ".heldItem = ITEM_FAB_MAIL",
+              ".mailNum = 0",
+          ):
+              assert required in trade, required
+          assert ".requestedSpecies = SPECIES_POLIWHIRL" not in trade
+          scene = Path("data/maps/CeruleanCity_House3/scripts.inc").read_text()
+          assert "setvar VAR_0x8008, INGAME_TRADE_JYNX" in scene
+          assert "call EventScript_GetInGameTradeSpeciesInfo" in scene
+          assert "goto_if_set FLAG_DID_ZYNX_TRADE" in scene
+          assert "setflag FLAG_DID_ZYNX_TRADE" in scene
+          assert "call EventScript_DoInGameTrade" in scene
+          spanish = Path("data/maps/CeruleanCity_House3/text_es.inc").read_text()
+          assert "POLIWHIRL" not in spanish
+          assert "CLEFAIRY" not in spanish  # generic species substitution from source data
+          trade_engine = Path("src/trade_scene.c").read_text()
+          assert "u8 level = GetMonData(&gPlayerParty[playerSlot], MON_DATA_LEVEL);" in trade_engine
+          assert "CreateMon(tradeMon, inGameTrade->species, level," in trade_engine
+          print("Cerulean one-time Jynx NPC trade / dynamic request / level PASS")
+          PY
+
       - name: Lock semantically audited gameplay data blobs
         run: python3 tools/validate_audited_data_blobs.py
 
