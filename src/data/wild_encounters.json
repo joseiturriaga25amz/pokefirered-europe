@@ -2843,9 +2843,9 @@
                 "species": "SPECIES_WARTORTLE"
               },
               {
-                "min_level": 36,
-                "max_level": 36,
-                "species": "SPECIES_BLASTOISE"
+                "min_level": 35,
+                "max_level": 35,
+                "species": "SPECIES_GOLDUCK"
               },
               {
                 "min_level": 35,
@@ -2853,9 +2853,9 @@
                 "species": "SPECIES_VAPOREON"
               },
               {
-                "min_level": 35,
-                "max_level": 35,
-                "species": "SPECIES_GOLDUCK"
+                "min_level": 36,
+                "max_level": 36,
+                "species": "SPECIES_BLASTOISE"
               },
               {
                 "min_level": 30,
@@ -3703,9 +3703,9 @@
                 "species": "SPECIES_CHARMELEON"
               },
               {
-                "min_level": 40,
-                "max_level": 40,
-                "species": "SPECIES_CHARIZARD"
+                "min_level": 42,
+                "max_level": 42,
+                "species": "SPECIES_RAPIDASH"
               },
               {
                 "min_level": 39,
@@ -3718,9 +3718,9 @@
                 "species": "SPECIES_MAGMAR"
               },
               {
-                "min_level": 42,
-                "max_level": 42,
-                "species": "SPECIES_RAPIDASH"
+                "min_level": 40,
+                "max_level": 40,
+                "species": "SPECIES_CHARIZARD"
               }
             ]
           },
@@ -4633,9 +4633,9 @@
                 "species": "SPECIES_IVYSAUR"
               },
               {
-                "min_level": 37,
-                "max_level": 37,
-                "species": "SPECIES_VENUSAUR"
+                "min_level": 40,
+                "max_level": 40,
+                "species": "SPECIES_VENOMOTH"
               },
               {
                 "min_level": 37,
@@ -4643,9 +4643,9 @@
                 "species": "SPECIES_HYPNO"
               },
               {
-                "min_level": 40,
-                "max_level": 40,
-                "species": "SPECIES_VENOMOTH"
+                "min_level": 37,
+                "max_level": 37,
+                "species": "SPECIES_VENUSAUR"
               },
               {
                 "min_level": 40,
