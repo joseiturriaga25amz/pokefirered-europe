@@ -145,3 +145,21 @@ The project has spanned multiple long chats and conversation continuity is britt
 - The follower is a visual projection of an existing party Pokémon, never new persistent Pokémon data.
 - Preserve struct Pokemon, BoxPokemon, SaveBlock layouts and Link serialization.
 - Preserve original specialty-Ball IDs and caught-ball metadata so Pokémon traded to future Emerald Full remain normal Gen III Pokémon.
+
+
+## 2026-10-23 — Wild encounter rarity and NPC trade direction
+
+**Authority:** explicit user approval of Kanto final-starter 1% wild encounters, user-authorized Dragonair relaxation within the proposed 5%–10% range (engineering selects 5%), preference to retain current Safari land rarity and Magmar/Electabuzz availability, and approval of the Clefairy-for-Jynx replacement concept. This entry is date-keyed rather than numbered A-007 because historical production documents already use an A-007 cross-reference for a different major-trainer staging decision; avoid reusing that identifier without a separate authority reconciliation.
+
+### Approved / implementation-controlled
+
+- Direct wild catches of **Charizard**, **Blastoise** and **Venusaur** are 1% respectively at Mt Ember Exterior, Seafoam B1F and Three Island Berry Forest, with respective basic and middle stages staying **15% / 5%**. Do not raise their normal spawn probabilities elsewhere, globally change land-slot weighting, or apply the rule to Eeveelutions. The safe 4%-slot/1%-slot swaps change **Rapidash**, **Golduck** and **Venomoth** in the same zones from 1% to 4% while retaining those species' encounter levels and each map's 100% probability total.
+- Dragonair should be less punishing to encounter in Safari; use the lower preferred option, **5% with Super Rod across the four Safari sections**, preserving **Dratini at 15%**, Goldeen/Seaking at 40% each and no step-limit changes. The 4%-Super-Rod Psyduck slot converts to Dragonair; Psyduck remains catchable elsewhere. Do not infer that this improves Safari catch mechanics. Safari land odds (15% Chansey/Kangaskhan/Tauros/Scyther/Pinsir at their designated maps) remain untouched pending direct MyBoy balance; their poor catch/flee behavior is part of access balancing.
+- Keep wild **Magmar at 5% Mt Ember** and **Electabuzz at 5% Power Plant**. These remain separate from possible NPC trade rewards; avoid changes to species intrinsic catch rates unless there is a distinct approved balancing decision.
+- Approved direction for the **CeruleanCity_House3 NPC trade**: replace requested Poliwhirl with **Clefairy** for a Jynx reward, subject to specific data/script/text compatibility audit and separate technical validation. Jynx is useful earlier; trade availability must be checked around Mt Moon/Cerulean progression and traded bonus EXP. This decision does NOT by itself implement the trade.
+
+### Favorably considered; NOT exact-trade approval / NOT implemented
+
+Meowth -> Shellder, Drowzee -> Staryu, Doduo -> Lickitung, Raichu -> Magmar, Venonat -> Electabuzz and Koffing -> Seel are candidate pairs, not irrevocably approved. Audit progression (especially first Magmar sighting at Mt Ember after the Blaine/Sevii transition vs optional earlier Cinnabar trade, and Electabuzz at Power Plant before Cinnabar), reward-to-cost value, fixed trade metadata, old one-time trade flags, Spanish dialogue and link/save behavior before accepting exact pair configurations. Preserve existing acceptable Abra -> Mr Mime and Spearow -> Farfetch'd pending final review.
+
+**Release gates:** these are ROM-changing data decisions; semantic encounter/trade validation, audited blob locks, exact Full Gameplay Core CI and eventual MyBoy tests are required. They do not close B10, merge the prototype into master, or authorize ROM/art redistribution. A technical implementation state may be recorded separately in PROJECT_CONTINUITY.md with exact SHA evidence.
