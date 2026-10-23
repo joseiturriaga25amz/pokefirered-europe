@@ -1,6 +1,16 @@
 # Next Session — Pokémon Rojo Fuego Full v1.0
 
 
+## SOURCE-VERIFIED PHASE 0 HANDOFF (2026-10-23)
+
+The previous chat ended mid-analysis, **not** mid-gameplay mutation. On `prototype/follower-runtime`, pre-documentation HEAD `9cb858af` passed both exact-sha workflows: Full Gameplay Core #39854853814 and Follower Prototype #39854853769. A docs-only source-audit checkpoint was saved as `611cafe` in `PROJECT_CONTINUITY.md`. Check current branch/HEAD and current CI again before new edits; B10 NOT merged and MyBoy release acceptance incomplete. `REPOSITORY_GUARDRAILS.md` and `POLISH_IMPLEMENTATION_MATRIX.md` are absent on this branch; their active responsibilities are already assigned to existing continuity, decision log, validator/checklist and in-document matrix. Do not recreate redundant documents.
+
+**Completed this audit step:** directly checked `src/data/ingame_trades.h`, identified all nine corresponding `data/maps/.../scripts.inc` locations, cross-checked starter/Eeveelution/Safari/FireRed-LeafGreen encounter slots in `src/data/wild_encounters.json` against `baseline-spanish-vanilla`, and documented specific replacement-pair candidates, unapproved, in PROJECT_CONTINUITY. No NPC trades, wild rates, maps, or other gameplay changed. Notably the NPC for Jynx is already in Cerulean but requesting Poliwhirl delays availability; Ponyta -> Seel at the Cinnabar lab suffers a post-Blaine Ponyta requirement; Safari Chansey/Kangaskhan/Tauros/Scyther odds were raised from vanilla 4% to 15%; starters' final wild forms remain at 4%. Do not call proposed 1% finals or candidate trades implemented.
+
+**NEXT bounded Phase 0 microblock (still analysis, no gameplay):** adversarially assess the exact candidate pairs recorded in PROJECT_CONTINUITY for trade-off of early-game balance, learnsets, NPC text/nicknames/OT, one-time flag/save continuity, methods/rod access and National Dex gating; present user a final compact nine-trade table and 1% final-starter redistribution choices for approval. Assess whether current Safari 15% is too common once catch/flee/steps are factored in. In parallel, continue status/feasibility audit of previously endorsed but unimplemented QoL in the existing in-document matrix, in small source-backed groups; prioritize EV screen/nature colors, leader dialogues and battle EV yield before high-risk R-button/capture/storage/follower revisions. Keep Oddish-only Viridian Forest SE clearing on its own map-safe microblock. Only then implement approved, single-purpose technical changes with validators, exact CI, integration and MyBoy acceptance gates.
+
+---
+
 ## CURRENT NEXT STEP (2026-10-22)
 
 **Current stream: PHASE 0 project-wide pre-RC audit, not gameplay implementation.** Read CURRENT ACTIVE ROADMAP at the TOP of PROJECT_CONTINUITY.md before old dated notes. This snapshot supersedes older tentative next-action suggestions. No separate new backlog file.
