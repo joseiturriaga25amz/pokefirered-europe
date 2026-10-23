@@ -1618,9 +1618,9 @@
                 "species": "SPECIES_DRATINI"
               },
               {
-                "min_level": 15,
+                "min_level": 25,
                 "max_level": 35,
-                "species": "SPECIES_PSYDUCK"
+                "species": "SPECIES_DRAGONAIR"
               },
               {
                 "min_level": 25,
@@ -1772,9 +1772,9 @@
                 "species": "SPECIES_DRATINI"
               },
               {
-                "min_level": 15,
+                "min_level": 25,
                 "max_level": 35,
-                "species": "SPECIES_PSYDUCK"
+                "species": "SPECIES_DRAGONAIR"
               },
               {
                 "min_level": 25,
@@ -1926,9 +1926,9 @@
                 "species": "SPECIES_DRATINI"
               },
               {
-                "min_level": 15,
+                "min_level": 25,
                 "max_level": 35,
-                "species": "SPECIES_PSYDUCK"
+                "species": "SPECIES_DRAGONAIR"
               },
               {
                 "min_level": 25,
@@ -2080,9 +2080,9 @@
                 "species": "SPECIES_DRATINI"
               },
               {
-                "min_level": 15,
+                "min_level": 25,
                 "max_level": 35,
-                "species": "SPECIES_PSYDUCK"
+                "species": "SPECIES_DRAGONAIR"
               },
               {
                 "min_level": 25,

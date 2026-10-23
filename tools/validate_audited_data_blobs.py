@@ -10,7 +10,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 EXPECTED = {
-    "src/data/wild_encounters.json": "e9fdb85d26d3a5fda139d46951cb4bda23bfff30",
+    "src/data/wild_encounters.json": "8992f80d94fa04595609baa7684c2aab61122f0b",
     "src/data/items.json": "0da4e1b54b0e33e439215635621ccef3dd9a5c5a",
     "src/data/pokemon/level_up_learnsets.h": "111723e9856d26f2a8ce96d901bec89ccdb39e51",
     "src/data/pokemon/evolution.h": "503be88f5381f51718a9f269aa2ed854ca67fbb4",

@@ -465,6 +465,14 @@ jobs:
               ("sSafariZoneEast_FireRed","land_mons","SPECIES_KANGASKHAN",15),
               ("sSafariZoneNorth_FireRed","land_mons","SPECIES_CHANSEY",15),
               ("sSafariZoneWest_FireRed","land_mons","SPECIES_TAUROS",15),
+              ("sSafariZoneCenter_FireRed","fishing_mons","SPECIES_DRATINI",15),
+              ("sSafariZoneCenter_FireRed","fishing_mons","SPECIES_DRAGONAIR",5),
+              ("sSafariZoneEast_FireRed","fishing_mons","SPECIES_DRATINI",15),
+              ("sSafariZoneEast_FireRed","fishing_mons","SPECIES_DRAGONAIR",5),
+              ("sSafariZoneNorth_FireRed","fishing_mons","SPECIES_DRATINI",15),
+              ("sSafariZoneNorth_FireRed","fishing_mons","SPECIES_DRAGONAIR",5),
+              ("sSafariZoneWest_FireRed","fishing_mons","SPECIES_DRATINI",15),
+              ("sSafariZoneWest_FireRed","fishing_mons","SPECIES_DRAGONAIR",5),
           ]
           for label, kind, species, want in expected:
               mons = encounters[label][kind]["mons"]
