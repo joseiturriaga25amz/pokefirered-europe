@@ -1,5 +1,17 @@
 # Next Session — Pokémon Rojo Fuego Full v1.0
 
+## NEXT ACTIVE ACTION — 2026-10-23: verify Jynx trade
+
+**Current technical HEAD:** `ecd3a73eca1bc58a08157a42a83b140edf0dd078` on `prototype/follower-runtime`, with **Clefairy -> Jynx in FireRed and vanilla Poliwhirl -> Jynx unchanged in LeafGreen**. Last operational checkpoint in `PROJECT_CONTINUITY.md` has exact commits and why an obsolete baby-obtainability validator caused CI failure on intermediate `5f64e11` despite ROM compile success. The targeted test and comprehensive `tools/validate_full_obtainability.py` were corrected, **not removed or weakened**. The eight other in-game trades and Cerulean `FLAG_DID_ZYNX_TRADE`, nick/OT/IV/mail metadata and all save/link structs remain unchanged.
+
+**First action:** query GitHub Actions for exact technical `ecd3a73`: Full Gameplay Core [39995711513](https://github.com/joseiturriaga25amz/pokefirered-europe/actions/runs/39995711513), Follower Prototype [39995711582](https://github.com/joseiturriaga25amz/pokefirered-europe/actions/runs/39995711582). At checkpoint both in progress, so no CI-GREEN/CERRADO claim. If failure, inspect exact failed step/log before changing anything; distinguish unrelated runner apt/network issues and stale validators from actual gameplay regressions. Record exact result in continuity and only then close this microblock. Later docs-only HEAD does not change technical contents; identify it explicitly.
+
+**After CI success:** adversarially finalize Cerulean NPC one-time/save/level + FireRed vs LeafGreen scope. Then source-audit the candidate Meowth -> Shellder trade in UndergroundPath_NorthEntrance without implementing unapproved pairs. Review Drowzee -> Staryu, Doduo -> Lickitung, Raichu -> Magmar, Venonat -> Electabuzz and Koffing -> Seel for location, acquisition order, cost/reward, languages, nicknames and flags; their favorable reception is not unconditional final approval. Subsequently resume EV UI/nature, leader dialogue and B10 follower gate. No new planning files, no premature integration/master/ROM/MyBoy PASS claim.
+
+---
+
+
+
 ## 2026-10-23 ACTIVE HANDOFF — encounter rarity microblocks and next trade
 
 **Use this header first; old dated entries below are historical.** Confirm canonical GitHub branch, HEAD, and CI before code edits. Prototype `prototype/follower-runtime` is separate from master `8d89f2b4`, and B10 is not integrated, not MyBoy accepted. Do not rotate back to repetitive follower-only scenes until the present approved encounter/trade thread is reconciled.
