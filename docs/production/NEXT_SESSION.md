@@ -1,5 +1,24 @@
 # Next Session — Pokémon Rojo Fuego Full v1.0
 
+## ACTIVE HANDOFF — 2026-10-24: fifth NPC exchange exact CI gate
+
+**Verified `prototype/follower-runtime`**, technical SHA `79423cee780a069b52b95f57383f9635ad3752af`, which implements fifth approved FireRed NPC trade. Master `8d89f2b4` remains separate from B10 prototype. Dated approved nine-slot trade plan in `docs/production/DECISION_AMENDMENTS.md`. Do not claim master integration, public final ROM or MyBoy gameplay QA from Actions.
+
+**Approved exchange microblocks already exact CI-GREEN on prototype:**
+1. `4f9faf6` Meowth -> Shellder, Spanish PERLITA — Full #40071937495 SUCCESS / Follower #40071937490 SUCCESS.
+2. `840e002` Drowzee -> Staryu, Spanish ESTRELLA — Full #40072383187 SUCCESS / Follower #40072383184 SUCCESS.
+3. `baea8a9` Doduo -> Lickitung, original LICKITITO — Full #40077567451 SUCCESS / Follower #40077567460 SUCCESS.
+4. `bf397c4` Raichu -> Magmar, Spanish BRASAS — Full #40077986613 SUCCESS / Follower #40077986626 SUCCESS.
+
+**Fifth source implementation SHA `79423cee780a069b52b95f57383f9635ad3752af`:** FireRed `INGAME_TRADE_TANGELA` now `Venonat -> Electabuzz`, original LeafGreen Venonat->Tangela branch unchanged. Spanish CHISPA, Italian SCINTILLA, French ECLAIR, German FUNKE, English SPARK. Shared requested Venonat/OT/IV/personality/Stardust, original one-time `FLAG_DID_TANGENY_TRADE` and special in-game trade NPC script retained. Source audit: only new five macros and two version-split reward fields; all eight other trade slots unchanged. New targeted Full Gameplay Core validator and exact audited header blob lock in same three-file commit.
+
+**FIRST ACTION:** verify exact Full Gameplay Core [#40078362793](https://github.com/joseiturriaga25amz/pokefirered-europe/actions/runs/40078362793) and Follower Prototype [#40078362780](https://github.com/joseiturriaga25amz/pokefirered-europe/actions/runs/40078362780) on `79423cee780a069b52b95f57383f9635ad3752af`, **IN PROGRESS at checkpoint**. No next source mutation if failure/pending; diagnose actual failed step. Docs-only HEAD afterward doesn't alter technical SHA contents.
+
+**AFTER SUCCESS:** last approved `Koffing -> Seel` in `INGAME_TRADE_SEEL` Cinnabar Lab Experiment Room: add `#if defined(FIRERED)` for `.requestedSpecies = SPECIES_KOFFING` and `#elif defined(LEAFGREEN)` for original `.requestedSpecies = SPECIES_PONYTA`; keep Seel reward, original nickname/OT/IVs/flag, experiment room fossil script intact. Targeted validator + lock + exact Full/Follower CI, full nine-slot closure audit. Then return to approved EV/nature and dialogues work, B10 follower runtime/integration later with MyBoy QA separately.
+
+---
+
+
 ## ACTIVE HANDOFF — 2026-10-24: fourth NPC trade Magmar exact CI gate
 
 **Authoritative repository:** `prototype/follower-runtime`; master remains `8d89f2b4` and B10/RC MyBoy acceptance not complete. The six candidate FireRed trade pairs were approved for implementation in dated 2026-10-24 DECISION_AMENDMENTS; the repo, not chat history, defines actual source and validation status.
