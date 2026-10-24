@@ -295,7 +295,7 @@ static const struct InGameTrade sInGameTrades[] = {
         .otGender = MALE,
         .sheen = 10,
 #if defined(FIRERED)
-        .requestedSpecies = SPECIES_GOLDUCK
+        .requestedSpecies = SPECIES_DODUO
 #elif defined(LEAFGREEN)
         .requestedSpecies = SPECIES_SLOWBRO
 #endif
