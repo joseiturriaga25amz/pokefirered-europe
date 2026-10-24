@@ -765,6 +765,53 @@ jobs:
           print("Cinnabar FireRed Magmar / LeafGreen Electrode / old-save flag PASS")
           PY
 
+      - name: Validate FireRed Venonat for Electabuzz trade
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          header = Path("src/data/ingame_trades.h").read_text()
+          trade = header.split("[INGAME_TRADE_TANGELA] =", 1)[1].split("[INGAME_TRADE_SEEL] =", 1)[0]
+          assert trade.count("#if defined(FIRERED)") == 1
+          fr, lg = trade.split("#elif defined(LEAFGREEN)", 1)
+          for token in (
+              ".nickname = TEXT_INGAME_TRADE_NICKNAME_ELECTABUZZ_FR",
+              ".species = SPECIES_ELECTABUZZ",
+          ):
+              assert token in fr, token
+          for token in (
+              ".nickname = TEXT_INGAME_TRADE_NICKNAME_TANGELA",
+              ".species = SPECIES_TANGELA",
+          ):
+              assert token in lg, token
+          for token in (
+              ".requestedSpecies = SPECIES_VENONAT",
+              ".otId = 60042",
+              ".ivs = {22, 17, 25, 16, 23, 20}",
+              ".personality = 0x5c77ecfa",
+              ".heldItem = ITEM_STARDUST",
+              ".otName = TEXT_INGAME_TRADE_OTNAME_TANGELA",
+          ):
+              assert token in trade, token
+          assert header.count("#define TEXT_INGAME_TRADE_NICKNAME_ELECTABUZZ_FR") == 5
+          for nickname in ("CHISPA", "SCINTILLA", "ECLAIR", "FUNKE", "SPARK"):
+              assert f'_("{nickname}")' in header, nickname
+              assert len(nickname) <= 10
+          scene = Path("data/maps/CinnabarIsland_PokemonLab_Lounge/scripts.inc").read_text()
+          norma = scene.split("CinnabarIsland_PokemonLab_Lounge_EventScript_Norma::", 1)[1].split("CinnabarIsland_PokemonLab_Lounge_EventScript_NormaDeclineTrade::", 1)[0]
+          for token in (
+              "setvar VAR_0x8008, INGAME_TRADE_TANGELA",
+              "goto_if_set FLAG_DID_TANGENY_TRADE",
+              "setflag FLAG_DID_TANGENY_TRADE",
+              "special ChoosePartyMon",
+              "specialvar VAR_RESULT, GetTradeSpecies",
+              "special CreateInGameTradePokemon",
+              "special DoInGameTradeScene",
+          ):
+              assert token in norma, token
+          print("Cinnabar FireRed Electabuzz / LeafGreen Tangela / original Norma special script PASS")
+          PY
+
       - name: Lock semantically audited gameplay data blobs
         run: python3 tools/validate_audited_data_blobs.py
 
