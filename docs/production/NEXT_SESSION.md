@@ -1,5 +1,20 @@
 # Next Session — Pokémon Rojo Fuego Full v1.0
 
+## ACTIVE HANDOFF — 2026-10-24: final Seel trade CI and Magmar ability correction
+
+**Current technical SHA `6a46bffda8a249976958cfa157964146751d9148`**, branch `prototype/follower-runtime`. Original master `8d89f2b4` separate, follower B10 unmerged and MyBoy final runtime QA open. Six FireRed-only NPC exchange pair plan approved by user in dated 2026-10-24 DECISION_AMENDMENTS.
+
+**First five source trade commits IMPLEMENTED + VALIDATED + exact CI-GREEN ON PROTOTYPE:** `4f9faf6` Meowth->Shellder (Full #40071937495, Follower #40071937490); `840e002` Drowzee->Staryu (Full #40072383187, Follower #40072383184); `baea8a9` Doduo->Lickitung (Full #40077567451, Follower #40077567460); `bf397c4` Raichu->Magmar (Full #40077986613, Follower #40077986626) **BUT post-CI independent audit identified a real Magmar ability bug requiring follow-up**; `79423ce` Venonat->Electabuzz (Full #40078362793, Follower #40078362780). Green CI does not certify Magmar runtime behavior; see issue below.
+
+**Last approved sixth source commit `6a46bffda8a249976958cfa157964146751d9148`**: FireRed `Koffing -> Seel` requested species, LeafGreen original `Ponyta -> Seel` intact. Original `FLAG_DID_SEELOR_TRADE`, Seel nick/OT/IVs/personality/item, and fossil room script unchanged. Targeted semantic gate plus exact trade-header blob lock, three-file change; independent source audit PASS. **FIRST ACTION:** check exact Full Gameplay Core [#40078746793](https://github.com/joseiturriaga25amz/pokefirered-europe/actions/runs/40078746793) and Follower Prototype [#40078746790](https://github.com/joseiturriaga25amz/pokefirered-europe/actions/runs/40078746790), IN PROGRESS at checkpoint. Distinguish infrastructure from genuine source/test issues.
+
+**REQUIRED NEXT FIX BEFORE CLOSURE** (source-evidenced): Magmar from `INGAME_TRADE_ELECTRODE` currently inherits `.abilityNum = 1` from Electrode despite Magmar species-info slot1 being `ABILITY_NONE`, slot0 being `ABILITY_FLAME_BODY`. Trade engine sets that bit directly and GetAbilityBySpecies selects slot1 without fallback. **Make FireRed Magmar abilityNum 0 and retain LeafGreen Electrode abilityNum 1 under version guard**, same record `INGAME_TRADE_ELECTRODE`, no other changes. Add focused assert to existing Full Gameplay Core Magmar trade validator including species-info ability mapping, lock updated exact trade-data blob SHA, exact Full Core+Follower CI, independent diff audit. Do not pretend earlier green CI proves the ability is correct. Then audit all nine exchanges and record prototype verified status, still without master/ MyBoy acceptance.
+
+**After these gates:** EV numeric-only UI and nature tint, leader rematch dialogues, later B10 follower master integration MyBoy QA. Continue microblocks, do not add redundant docs or alter irrelevant gameplay.
+
+---
+
+
 ## ACTIVE HANDOFF — 2026-10-24: fifth NPC exchange exact CI gate
 
 **Verified `prototype/follower-runtime`**, technical SHA `79423cee780a069b52b95f57383f9635ad3752af`, which implements fifth approved FireRed NPC trade. Master `8d89f2b4` remains separate from B10 prototype. Dated approved nine-slot trade plan in `docs/production/DECISION_AMENDMENTS.md`. Do not claim master integration, public final ROM or MyBoy gameplay QA from Actions.
