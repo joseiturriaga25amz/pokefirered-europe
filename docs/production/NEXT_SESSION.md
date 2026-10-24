@@ -1,5 +1,17 @@
 # Next Session — Pokémon Rojo Fuego Full v1.0
 
+## ACTIVE HANDOFF — 2026-10-24: Doduo trade CI gate and next Magmar
+
+**Repository:** `prototype/follower-runtime`; technical source HEAD `baea8a9234bc3c81cbe12eecd492c32ac87b14af`. User-approved six replacement NPC trades documented in `docs/production/DECISION_AMENDMENTS.md` dated 2026-10-24. Do not interpret docs-only HEAD as new gameplay or merge divergent B10 into master. Last master observed `8d89f2b4`.
+
+- **Trade 1 Meowth -> Shellder** `4f9faf6`: exact Full Gameplay Core #40071937495 SUCCESS, Follower Prototype #40071937490 SUCCESS, unchanged LeafGreen and one-time flag; nick PERLITA in Spanish. **Trade 2 Drowzee -> Staryu** `840e002`: exact Full Gameplay Core #40072383187 SUCCESS, Follower Prototype #40072383184 SUCCESS; Spanish nick ESTRELLA, LeafGreen and NPC flag unchanged. Both CI-GREEN ON PROTOTYPE, not master-integrated/MyBoy-accepted.
+- **Trade 3 Doduo -> Lickitung IMPLEMENTED `baea8a9234bc3c81cbe12eecd492c32ac87b14af`**: only FireRed requested species in `INGAME_TRADE_LICKITUNG` changed from `SPECIES_GOLDUCK` to `SPECIES_DODUO`, original LG Slowbro and reward nick/IV/OT/item untouched; `FLAG_DID_MARC_TRADE` script preserved. Source diff independently audited. Targeted trade validator and audited trade header SHA refreshed. **FIRST ACTION** exact Full Gameplay Core [#40077567451](https://github.com/joseiturriaga25amz/pokefirered-europe/actions/runs/40077567451) and Follower Prototype [#40077567460](https://github.com/joseiturriaga25amz/pokefirered-europe/actions/runs/40077567460); pending when recorded. Inspect exact failed step if needed; don't claim CI-GREEN before both finish successfully.
+- **NEXT after gate:** trade 4 Raichu -> Magmar in Cinnabar Lab Lounge, `INGAME_TRADE_ELECTRODE`, original `FLAG_DID_ESPHERE_TRADE`. Current trade is shared FR/LG `RAICHU -> ELECTRODE`; version guard MUST retain original LeafGreen reward/nickname and request while FireRed offers `MAGMAR` in exchange for `RAICHU`. Spanish nickname BRASAS, all 5 locale names; keep OT CANEL, original IVs/personality, ITEM_NONE, level inherited, script unchanged. Validate exact Full Core+Follower on gameplay SHA, audited header blob and independent diff. Afterward fifth Venonat->Electabuzz and sixth Koffing->Seel as individual technical commits.
+- B10 follower MyBoy runtime/merging and approved EV/nature UI/leader rematch tasks remain later; branch isn't a final ROM or integrated `master`.
+
+---
+
+
 ## ACTIVE HANDOFF — 2026-10-24: second approved NPC trade CI gate
 
 **Canonical branch `prototype/follower-runtime`.** All six new FireRed-only in-game trade pairs approved for implementation by user after explicit design packet; `DECISION_AMENDMENTS.md` date-keyed section owns final decision. Source of truth is repo; previous doc-only/CI runs may be older than latest gameplay.
