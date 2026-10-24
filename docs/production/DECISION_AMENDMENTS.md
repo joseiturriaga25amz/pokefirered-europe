@@ -163,3 +163,20 @@ The project has spanned multiple long chats and conversation continuity is britt
 Meowth -> Shellder, Drowzee -> Staryu, Doduo -> Lickitung, Raichu -> Magmar, Venonat -> Electabuzz and Koffing -> Seel are candidate pairs, not irrevocably approved. Audit progression (especially first Magmar sighting at Mt Ember after the Blaine/Sevii transition vs optional earlier Cinnabar trade, and Electabuzz at Power Plant before Cinnabar), reward-to-cost value, fixed trade metadata, old one-time trade flags, Spanish dialogue and link/save behavior before accepting exact pair configurations. Preserve existing acceptable Abra -> Mr Mime and Spearow -> Farfetch'd pending final review.
 
 **Release gates:** these are ROM-changing data decisions; semantic encounter/trade validation, audited blob locks, exact Full Gameplay Core CI and eventual MyBoy tests are required. They do not close B10, merge the prototype into master, or authorize ROM/art redistribution. A technical implementation state may be recorded separately in PROJECT_CONTINUITY.md with exact SHA evidence.
+
+
+## 2026-10-24 — NPC trade plan accepted for implementation
+
+**Authorization:** after being presented with a nine-slot recommendation and explicitly asked for design approval to implement the six remaining candidate pairs, the user responded *«Perfecto continúa»*. Treat this as authorization to proceed with the **six exact previously recommended FireRed NPC exchange pairs**, in small testable commits, not authorization for unrelated gameplay changes, radically revised rewards, earlier unrestricted access, or new engine/save structures. Keep the 2026-10-23 proposal text above as historical decision progression, superseded in scope by this entry.
+
+**Approved FireRed target matrix** (trade partner -> received Pokémon):
+- `INGAME_TRADE_NIDORAN` at Underground Path North: **Meowth -> Shellder**, Spanish received nickname `PERLITA`.
+- `INGAME_TRADE_NIDORINOA` at Route11 East Entrance 2F: **Drowzee -> Staryu**, Spanish nickname `ESTRELLA`.
+- `INGAME_TRADE_LICKITUNG` at Route18 East Entrance 2F: **Doduo -> Lickitung**, preserve existing nicknames and original reward.
+- `INGAME_TRADE_ELECTRODE` at Cinnabar Lab Lounge: **Raichu -> Magmar**, Spanish nickname `BRASAS` (requires Pikachu->Raichu Thunder Stone investment; advances Magmar before Mt Ember).
+- `INGAME_TRADE_TANGELA` at Cinnabar Lab Lounge: **Venonat -> Electabuzz**, Spanish nickname `CHISPA` (an alternative to the Power Plant 5% encounter, normally available earlier).
+- `INGAME_TRADE_SEEL` at Cinnabar Lab Experiment Room: **Koffing -> Seel**, preserve existing `SEELÍN` Spanish nickname and species reward; Seel itself is naturally common at Seafoam Islands.
+
+**Unchanged:** `INGAME_TRADE_MR_MIME` Abra -> Mr Mime, `INGAME_TRADE_FARFETCHD` Spearow -> Farfetch'd, and already implemented `INGAME_TRADE_JYNX` FireRed Clefairy -> Jynx. All **LeafGreen original in-game trade species/request/nicknames** must be preserved, including shared slots that currently lack version-specific guards.
+
+**Non-negotiable implementation boundaries:** preserve nine original trade indexes, NPC event flag identities and old-save one-time completion, original partner OT/IVs/personality/held items/mail and inherited level, Gen III link/save layout and dynamic text system. Replace species/request data in `#if defined(FIRERED)` branches, add distinct EU-language nicknames only where the old name refers to a different Pokémon, keep LeafGreen data intact. Exact semantic and audited-blob CI on each technical SHA and an independent diff audit before claiming CI-GREEN; eventual MyBoy exchange/old-save QA is still separate. Do not merge divergent follower prototype into master merely to ship NPC trades.

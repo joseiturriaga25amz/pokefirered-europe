@@ -1,5 +1,17 @@
 # Next Session — Pokémon Rojo Fuego Full v1.0
 
+## ACTIVE HANDOFF — 2026-10-24: approved trade plan, first technical CI gate
+
+**Actual gameplay commit:** `4f9faf614cbf24371c9e1b4f625e5ce6e56a65de`, branch `prototype/follower-runtime`; six FireRed-only NPC trade pairs authorized by user's `Perfecto continúa` after the explicit six-pair approval request. Full list and release constraints in dated 2026-10-24 section of `DECISION_AMENDMENTS.md`. Only **Meowth -> Shellder** first implemented so far; no other proposed reward should be reported as changed yet.
+
+- Source `src/data/ingame_trades.h`: FR `INGAME_TRADE_NIDORAN` now `SPECIES_MEOWTH -> SPECIES_SHELLDER`, five localized received nicknames `PERLITA/PERLINA/PERLETTE/PERLE/PEARL`. The original LeafGreen `NidoranF -> NidoranM`, all other eight slots, scene `data/maps/UndergroundPath_NorthEntrance/scripts.inc`, `FLAG_DID_MS_NIDO_TRADE`, original OT/IVs/personality/Tiny Mushroom and party level inheritance remain unchanged. Targeted `.github/workflows/full-gameplay-core.yml` validator and exact audited trade-header blob lock updated; static diff review PASS.
+- **First action:** check exact Full Gameplay Core [#40071937495](https://github.com/joseiturriaga25amz/pokefirered-europe/actions/runs/40071937495) and Follower Prototype [#40071937490](https://github.com/joseiturriaga25amz/pokefirered-europe/actions/runs/40071937490) for technical SHA `4f9faf6`; both were **in progress when recorded**. If failure, inspect exact logs and distinguish outdated gate/runner from code. Do not mark CI-GREEN or start next source trade before verifying required gate. Doc-only HEAD commits after this source change do not invalidate source-sha results.
+- **After success:** next single technical microblock `Drowzee -> Staryu` in `INGAME_TRADE_NIDORINOA` on Route11 East Entrance 2F; preserve original LeafGreen Nidorina -> Nidorino, `FLAG_DID_NINA_TRADE`, OT, fixed IVs/personality, no held item. Spanish `ESTRELLA`, other four short EU nicknames. Test original Jynx/Shellder, all version guards and blob lock. Then Doduo->Lickitung, Raichu->Magmar, Venonat->Electabuzz, Koffing->Seel in distinct technical commits with CI.
+- **Explicitly OPEN:** `master` at `8d89f2b4` is not integrated with divergent B10; follower runtime MyBoy validation, final ROM and B10 release gating remain separate. Old B10/EV/UI/gym rematch backlog preserved in global continuity.
+
+---
+
+
 ## ACTIVE HANDOFF — 2026-10-24: trade design decision packet ready
 
 **Repository:** `prototype/follower-runtime`. Last technical SHA `ecd3a73` with Full Gameplay Core #39995711513 and Follower Prototype #39995711582 SUCCESS. Existing newer commits `b6eb140`, `7ba2ced`, `aa3310a` were docs-only audited trade proposals. **Do not infer a technical build regression from newer docs commits; verify changed paths / actual HEAD**. `master` still at `8d89f2b4`, follower B10 not integrated, MyBoy QA pending.
