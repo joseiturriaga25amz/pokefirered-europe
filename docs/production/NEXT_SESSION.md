@@ -1,5 +1,18 @@
 # Next Session — Pokémon Rojo Fuego Full v1.0
 
+## ACTIVE HANDOFF — 2026-10-24: second approved NPC trade CI gate
+
+**Canonical branch `prototype/follower-runtime`.** All six new FireRed-only in-game trade pairs approved for implementation by user after explicit design packet; `DECISION_AMENDMENTS.md` date-keyed section owns final decision. Source of truth is repo; previous doc-only/CI runs may be older than latest gameplay.
+
+1. **Meowth -> Shellder IMPLEMENTED + VALIDATED + CI-GREEN ON PROTOTYPE**, technical `4f9faf6`; exact Full Gameplay Core **#40071937495 SUCCESS**, Follower Prototype **#40071937490 SUCCESS**, independent diff audit PASS (other eight trade records and LeafGreen unaffected), continuity checkpoint `b58ab05`.
+2. **Drowzee -> Staryu IMPLEMENTED, NOT YET CI-GREEN**, technical `840e002d70d171de7b4e0d1ad09eac0d25f9c7ff`. Source `src/data/ingame_trades.h` FR `INGAME_TRADE_NIDORINOA` now `Drowzee -> Staryu`; Spanish nickname ESTRELLA, Italian STELLA, French ETOILE, German STERNCHEN, English STARLIGHT; original OT/IVs/item and `FLAG_DID_NINA_TRADE` preserved. LeafGreen original Nidorina -> Nidorino record unchanged. The other eight NPC records are byte-identical to parent, and no NPC scripts or save/link ABI touched. Full Gameplay Core targeted validator added and audited trade header blob refreshed.
+3. **FIRST ACTION:** verify exact Full Gameplay Core [#40072383187](https://github.com/joseiturriaga25amz/pokefirered-europe/actions/runs/40072383187) and Follower Prototype [#40072383184](https://github.com/joseiturriaga25amz/pokefirered-europe/actions/runs/40072383184) on `840e002`. At checkpoint both IN PROGRESS. Do not claim green if pending. If failures, inspect exact failed step before touching code. Later docs-only commits do not change ROM and must be verified as such.
+4. **AFTER SUCCESS:** independently close this specific technical branch CI gate, then implement **Doduo -> Lickitung** at Route18 2F in one bounded commit (replace FR `SPECIES_GOLDUCK` requirement with `SPECIES_DODUO` only, leave LeafGreen `SPECIES_SLOWBRO` intact, existing nickname LICKITITO/OT/IVs/held none and `FLAG_DID_MARC_TRADE` unchanged). Next three laboratory trades are separate technical commits: Raichu->Magmar, Venonat->Electabuzz, Koffing->Seel. Each exact Full Gameplay Core + follower CI, source diff, continuity.
+5. No B10 integration into master yet; MyBoy final acceptance separate. Already approved EV numeric-only/nature, leader rematch dialogue and other roadmap entries remain open.
+
+---
+
+
 ## ACTIVE HANDOFF — 2026-10-24: approved trade plan, first technical CI gate
 
 **Actual gameplay commit:** `4f9faf614cbf24371c9e1b4f625e5ce6e56a65de`, branch `prototype/follower-runtime`; six FireRed-only NPC trade pairs authorized by user's `Perfecto continúa` after the explicit six-pair approval request. Full list and release constraints in dated 2026-10-24 section of `DECISION_AMENDMENTS.md`. Only **Meowth -> Shellder** first implemented so far; no other proposed reward should be reported as changed yet.
