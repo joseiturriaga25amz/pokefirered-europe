@@ -1,6 +1,6 @@
 # Next Session — Pokémon Rojo Fuego Full v1.0
 
-## ACTIVE NEXT MICROBLOCK — 2026-10-24: Route18 Lickitung trade feasibility
+## ACTIVE NEXT MICROBLOCK — 2026-10-24: Cinnabar Lab NPC trades
 
 Repository source of truth: `prototype/follower-runtime`, last technical `ecd3a73` (Clefairy -> Jynx FireRed, original Poliwhirl -> Jynx LeafGreen) with exact Full Gameplay Core #39995711513 and Follower Prototype #39995711582 SUCCESS, master remains separate; final MyBoy/B10 integration not complete. The preceding `cf32aab` docs-only HEAD also had exact workflows Full #39996594294 and Follower #39996594163 SUCCESS. Recheck branch and HEAD after this docs checkpoint. No Jynx gameplay or NPC data changed by the most recent Meowth audit.
 
@@ -8,7 +8,9 @@ Repository source of truth: `prototype/follower-runtime`, last technical `ecd3a7
 
 **COMPLETED source-audit microblock (2026-10-24, docs-only):** Drowzee -> Staryu at Route11 East Entrance 2F, original `INGAME_TRADE_NIDORINOA` slot; Route11 Drowzee 25% levels 11–15, Staryu 40% on Vermilion Super Rod later, Water Stone -> Starmie at Celadon shop even before National Dex. Early Staryu is useful, but reward will match player's Drowzee level, not high-level. Preserve LG's Nidorina -> Nidorino, old `FLAG_DID_NINA_TRADE`, OT/IVs/held no item, new Spanish nickname suggested ESTRELLA and localization of remaining languages. **Favorable proposal, not approved or implemented.** Complete details atop PROJECT_CONTINUITY.md.
 
-**NEXT:** inspect **Doduo -> Lickitung** at `Route18_EastEntrance_2F`: Route16–18 Doduo access (including cycling-route and badge requirements), whether Lickitung has any non-trade source, natural reward value, original Golduck request, version split, nickname, item, flag, level, and save compatibility. Then individually Cinnabar Raichu -> Magmar, Venonat -> Electabuzz and Koffing -> Seel. Build one concise user approval packet before source edits; keep independently approved gameplay blocks (EV/nature polish, rematch dialogue, follower B10) on roadmap.
+**Completed source audit, no gameplay edits:** Doduo -> Lickitung at Route18 2F is technically recommended (Doduo 35% on Routes16–18; original Lickitung reward, same OT/nickname, FireRed current request Golduck while LeafGreen requests Slowbro). NPC, Bicycle-area travel and existing one-time `FLAG_DID_MARC_TRADE` were checked. **Not implemented / not finally approved.** Detailed evidence at the top of PROJECT_CONTINUITY.md.
+
+**NEXT one bounded read-only microblock:** audit the three Pokémon Lab exchanges at Cinnabar. User-favored `Raichu -> Magmar` (existing Electrode slot), `Venonat -> Electabuzz` (existing Tangela slot), `Koffing -> Seel` (existing Seel slot). Verify actual room scripts/flags, Route/PowerPlant/MtEmber/Seafoam chronology, encounter rates and input rarity, FR/LG version differences, nickname translations and items, one-save obtainability, and worth relative to natural wild catches. Present consolidated proposal for user approval rather than changing candidates blindly. After pair decisions, implement separate technical commits with CI + continuity; B10 remains unmerged and MyBoy gate separate.
 ---
 
 
