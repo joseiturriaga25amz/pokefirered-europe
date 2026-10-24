@@ -1,5 +1,16 @@
 # Next Session — Pokémon Rojo Fuego Full v1.0
 
+## ACTIVE NEXT MICROBLOCK — 2026-10-24: Route11 Staryu trade feasibility
+
+Repository source of truth: `prototype/follower-runtime`, last technical `ecd3a73` (Clefairy -> Jynx FireRed, original Poliwhirl -> Jynx LeafGreen) with exact Full Gameplay Core #39995711513 and Follower Prototype #39995711582 SUCCESS, master remains separate; final MyBoy/B10 integration not complete. The preceding `cf32aab` docs-only HEAD also had exact workflows Full #39996594294 and Follower #39996594163 SUCCESS. Recheck branch and HEAD after this docs checkpoint. No Jynx gameplay or NPC data changed by the most recent Meowth audit.
+
+**Completed bounded source audit (NO GAMEPLAY):** `Meowth -> Shellder` in UndergroundPath North Entrance is recommended but still **PROPOSED**, because the user has not given final unequivocal approval. Meowth Route5 15% before the NPC; Shellder later by Route12 Super Rod (40% in appropriate waters), Water Stone in Celadon shop, original NPC uses dynamic species names and `FLAG_DID_MS_NIDO_TRADE`. FireRed-only structure must preserve LeafGreen counterpart; rename FR reward Nidoran-specific nickname (Spanish suggested `PERLITA`, other languages checked in future implementation) without touching legacy one-time flag/OT/item/IV. Source-backed detail and risk in top of PROJECT_CONTINUITY.md. Do not commit speculative NPC changes solely on favorable reception.
+
+**NEXT:** bounded read-only audit of candidate **Drowzee -> Staryu** in `Route11_EastEntrance_2F`: check Route11 Drowzee %, stage of encounter and NPC access, Staryu wild Super Rod vs early NPC, pre-/post-Celadon Water Stone to Starmie, trainer/gym challenge, trade metadata/version split, one-time flag, language/localized nickname, route gates. Recommend exact balanced alternative if necessary, record in existing continuity; no gameplay edits until approved. Afterward review Doduo -> Lickitung, Raichu -> Magmar, Venonat -> Electabuzz and Koffing -> Seel each in bounded phases, then return to approved EV/nature UI, leader dialogues and B10 follower release gates.
+
+---
+
+
 ## NEXT ACTIVE ACTION — 2026-10-23: NPC trade feasibility after CI
 
 **Last technical SHA `ecd3a73eca1bc58a08157a42a83b140edf0dd078`**, branch `prototype/follower-runtime`. Full Gameplay Core #39995711513 **SUCCESS** and Follower Prototype #39995711582 **SUCCESS** on exact SHA. Docs-only follow-up changes do not invalidate these exact technical results. Clefairy -> Jynx in FireRed, original Poliwhirl -> Jynx preserved in LeafGreen. All eight other NPC trade entries and original Cerulean script/flag untouched; compiled/validated, but neither master-integrated nor MyBoy-tested. Intermediate `5f64e11` failure was obsolete `validate_full_obtainability.py` expectancy; fixed without weakening invariants in `ecd3a73`. Full audit and precise links at top of PROJECT_CONTINUITY.md.
