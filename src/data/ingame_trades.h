@@ -320,7 +320,11 @@ static const struct InGameTrade sInGameTrades[] = {
         .species = SPECIES_ELECTRODE,
 #endif
         .ivs = {19, 16, 18, 25, 25, 19},
+#if defined(FIRERED)
+        .abilityNum = 0,
+#elif defined(LEAFGREEN)
         .abilityNum = 1,
+#endif
         .otId = 50298,
         .conditions = {30, 5, 5, 5, 5},
         .personality = 0x06341016,

@@ -741,6 +741,14 @@ jobs:
           assert ".species = SPECIES_MAGMAR" in fr
           assert ".nickname = TEXT_INGAME_TRADE_NICKNAME_ELECTRODE" in lg
           assert ".species = SPECIES_ELECTRODE" in lg
+          assert "#if defined(FIRERED)\\n        .abilityNum = 0,\\n#elif defined(LEAFGREEN)\\n        .abilityNum = 1,\\n#endif" in trade
+          species_info = Path("src/data/pokemon/species_info.h").read_text()
+          magmar = species_info.split("[SPECIES_MAGMAR] =", 1)[1].split("[SPECIES_", 1)[0]
+          electrode = species_info.split("[SPECIES_ELECTRODE] =", 1)[1].split("[SPECIES_", 1)[0]
+          assert ".abilities = {ABILITY_FLAME_BODY, ABILITY_NONE}" in magmar
+          assert ".abilities = {ABILITY_SOUNDPROOF, ABILITY_STATIC}" in electrode
+          ability_code = Path("src/pokemon.c").read_text()
+          assert "gSpeciesInfo[species].abilities[1]" in ability_code
           for token in (
               ".requestedSpecies = SPECIES_RAICHU",
               ".otId = 50298",
