@@ -1,3 +1,38 @@
+## SOURCE AUDIT — 2026-10-24: Cinnabar Lab exchanges and trade approval packet
+
+**STATE: SOURCE-AUDITED / PROPOSED, NO GAMEPLAY IMPLEMENTATION.** Branch `prototype/follower-runtime`; last technical SHA `ecd3a73` (Jynx FireRed Clefairy, LeafGreen original Poliwhirl) passed Full Gameplay Core #39995711513 and Follower Prototype #39995711582, not merged into master. The Route18 trade audit is docs-only `aa3310a` and preceding Route5/Route11 audits docs-only. A subsequent doc commit never replaces exact-sha technical CI or MyBoy runtime acceptance.
+
+### Cinnabar laboratory original scripts / safe scope
+
+- Two shared in-game NPC trades in `data/maps/CinnabarIsland_PokemonLab_Lounge/scripts.inc`: `INGAME_TRADE_ELECTRODE`, `FLAG_DID_ESPHERE_TRADE` (Clifton), and `INGAME_TRADE_TANGELA`, `FLAG_DID_TANGENY_TRADE` (Norma). Their dialogue dynamically buffers offered/requested species; Norma's code uses the direct specials sequence rather than the shared wrapper, but checks selected species, completion and one-time flag. Source scripts are valid as-is for swapping species. Both NPC objects exist in Lounge `map.json`, reached through Lab Entrance (no story scene prerequisite in the trade scripts).
+- `data/maps/CinnabarIsland_PokemonLab_ExperimentRoom/scripts.inc` has the `INGAME_TRADE_SEEL` NPC (Garett) with `FLAG_DID_SEELOR_TRADE` and dynamic species names; this experiment room also contains fossil revival but the trade itself has no fossil prerequisite. Keep all original flags and IDs, including their obsolete nicknames: saves that have traded must continue showing completion.
+- All three legacy `INGAME_TRADE_ELECTRODE`, `INGAME_TRADE_TANGELA`, `INGAME_TRADE_SEEL` records currently **share their reward species, nickname and requested species across FireRed and LeafGreen**. Unlike Jynx/Nidoran, there is no pre-existing FR/LG split in these three entries. Any new FireRed request/reward must be explicitly `#if defined(FIRERED)` with original `#elif defined(LEAFGREEN)` in reward/nickname/request fields. Preserve original OT, IVs/personality and items unless a distinct approved reason arises. Never overwrite LeafGreen's original trade rewards.
+
+### Economics and chronology, source-verified
+
+1. **Raichu -> Magmar** (Lounge Clifton, replaces Raichu -> Electrode): Pikachu is 5% in Viridian Forest (4+1%), also **25%** in Power Plant (10+10+4+1%); Thunder Stone available Celadon Department Store before National Dex, so Raichu needs a deliberate item investment. FireRed wild Magmar **5%** (4+1%) at Mt Ember Exterior, typically reachable on Sevii after the Blaine ferry trigger. The Cinnabar Lab trade can bring Magmar earlier, before its natural wild site; this is the strongest chronology improvement among the three. Level of received Magmar equals offered Raichu from `src/trade_scene.c`; no fixed-level gift. Preserve original `FLAG_DID_ESPHERE_TRADE`, `ITEM_NONE`, OT `CANEL` (Spanish), fixed IVs `{19,16,18,25,25,19}` and fixed personality. Replace inherited Spanish Electrode nickname `BOLICHI` with a short Magmar-appropriate nickname, proposed **BRASAS** (localize for other EU languages; no user nickname approval yet).
+2. **Venonat -> Electabuzz** (Lounge Norma, replaces Venonat -> Tangela): Venonat FireRed **30%** across Routes12–15 (20+10%), **19%** Safari Center/West (10+4+4+1%), and a late Berry Forest presence. Wild FireRed Electabuzz **5%** (4+1%) at Power Plant, obtainable with Surf before Cinnabar for a prepared player. Thus Cinnabar NPC **does not advance the earliest natural Electabuzz area**, but rewards a common species in exchange for avoiding a rare 5% hunt and can offer trained-OT bonus EXP. Recommended as a convenience/collection trade, not a unique new Pokémon source; do not change intrinsic catches/flee or Power Plant rates. Preserve original `FLAG_DID_TANGENY_TRADE`, held `ITEM_STARDUST`, OT `DULCE` (Spanish), IVs `{22,17,25,16,23,20}`, fixed personality; change old Spanish `TANGELITO` nickname to appropriate **CHISPA** or comparable short Electric nickname (all languages to be checked).
+3. **Koffing -> Seel** (Experiment Room Garett, replaces Ponyta -> Seel): FireRed Koffing **30%** land (20+10%) in Pokémon Mansion 1F/2F/3F/B1F, same Cinnabar Island as the lab; input is directly farmable on arrival, levels28–30. FireRed Seel is obtainable naturally **20% Seafoam B2F, 40% B3F, 50% B4F** and 60% B3F/B4F Surf encounters; this NPC does **not** make Seel scarce, but helps a player who reached Cinnabar from Pallet without passing Seafoam. Seel evolves by level34 into Dewgong; traded reward inherits Koffing's level rather than free level34 evolution. Original reward nick `SEELÍN` is already fitting (keep all languages), OT `GOYO` (Spanish), `ITEM_NONE`, IVs `{24,15,22,16,23,22}`, original `FLAG_DID_SEELOR_TRADE`. **Only** request changes for FireRed `SPECIES_KOFFING`; keep LeafGreen `SPECIES_PONYTA` -> Seel without alteration.
+
+### Decision package for review (9 total NPC exchanges)
+
+| NPC slot | FireRed plan | Status |
+| --- | --- | --- |
+| MR_MIME | Abra -> Mr. Mime | keep original; unchanged |
+| JYNX | Clefairy -> Jynx | already implemented, exact technical CI-GREEN on prototype |
+| NIDORAN | Meowth -> Shellder | audited, recommended, needs explicit approval; rename new FR nickname e.g. PERLITA |
+| FARFETCHD | Spearow -> Farfetch'd | keep original; unchanged |
+| NIDORINOA | Drowzee -> Staryu | audited, recommended with earlier Starmie power trade-off, needs approval; e.g. ESTRELLA |
+| LICKITUNG | Doduo -> Lickitung | audited, recommended, needs approval; keep original LICKITITO |
+| ELECTRODE | Raichu -> Magmar | audited, recommended; costs Thunder Stone and advances pre-Sevii access; e.g. BRASAS |
+| TANGELA | Venonat -> Electabuzz | audited, recommended; Power Plant naturally earlier; e.g. CHISPA |
+| SEEL | Koffing -> Seel | audited, recommended; wild Seafoam already abundant; retain SEELÍN |
+
+**Scope**: all six further conversions are *candidate designs*, not automatically approved. On explicit consolidated approval use **one coherent NPC trade at a time**, each with bounded source + localized nickname + validators/obtaining-route test + exact trade data blob SHA + Full Gameplay Core and Follower Prototype exact SHA; keep original LeafGreen outputs in each. No new saves, flags, IDs or maps. Audit changed scripts only if necessary, avoid incidental boss/EV/follower changes. Trade QA in MyBoy remains future RC. No change to original Mr Mime, Farfetch'd or already completed Jynx. Approved design may require separate subsequent discussion if user rejects cost/reward or nicknames.
+
+
+---
+
 ## SOURCE AUDIT — 2026-10-24: Route18 Doduo for Lickitung
 
 **Read-only candidate assessment; no gameplay change or final pair approval.** Verified `prototype/follower-runtime` HEAD `7ba2ced79fc63cf00bb8d3eff54f4a3605dcd467`; the last gameplay SHA `ecd3a73` passed both exact workflows. Subsequent trade-audit commits are docs-only, not evidence that a new trade was implemented.
