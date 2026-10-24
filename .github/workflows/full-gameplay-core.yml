@@ -656,6 +656,48 @@ jobs:
           print("FireRed Shellder NPC trade / LeafGreen legacy / old-save flag PASS")
           PY
 
+      - name: Validate FireRed Drowzee for Staryu trade
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          text = Path("src/data/ingame_trades.h").read_text()
+          trade = text.split("[INGAME_TRADE_NIDORINOA] =", 1)[1].split("[INGAME_TRADE_LICKITUNG] =", 1)[0]
+          assert trade.count("#if defined(FIRERED)") == 1
+          fr, lg = trade.split("#elif defined(LEAFGREEN)", 1)
+          for token in (
+              ".nickname = TEXT_INGAME_TRADE_NICKNAME_STARYU_FR",
+              ".species = SPECIES_STARYU",
+              ".requestedSpecies = SPECIES_DROWZEE",
+              ".otId = 13637",
+              ".ivs = {22, 25, 18, 19, 22, 15}",
+              ".heldItem = ITEM_NONE",
+              ".personality = 0x00eeca15",
+          ):
+              assert token in fr, token
+          for token in (
+              ".nickname = TEXT_INGAME_TRADE_NICKNAME_NIDORINOA_LG",
+              ".species = SPECIES_NIDORINO",
+              ".requestedSpecies = SPECIES_NIDORINA",
+              ".otId = 13637",
+          ):
+              assert token in lg, token
+          assert text.count("#define TEXT_INGAME_TRADE_NICKNAME_STARYU_FR") == 5
+          for nickname in ("ESTRELLA", "STELLA", "ETOILE", "STERNCHEN", "STARLIGHT"):
+              assert f'_("{nickname}")' in text, nickname
+              assert len(nickname) <= 10
+          scene = Path("data/maps/Route11_EastEntrance_2F/scripts.inc").read_text()
+          for token in (
+              "setvar VAR_0x8008, INGAME_TRADE_NIDORINOA",
+              "call EventScript_GetInGameTradeSpeciesInfo",
+              "goto_if_set FLAG_DID_NINA_TRADE",
+              "setflag FLAG_DID_NINA_TRADE",
+              "call EventScript_DoInGameTrade",
+          ):
+              assert token in scene, token
+          print("Route11 FireRed Staryu / LeafGreen original / old-save flag PASS")
+          PY
+
       - name: Lock semantically audited gameplay data blobs
         run: python3 tools/validate_audited_data_blobs.py
 
