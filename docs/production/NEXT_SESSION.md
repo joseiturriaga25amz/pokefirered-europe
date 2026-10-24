@@ -1,5 +1,18 @@
 # Next Session — Pokémon Rojo Fuego Full v1.0
 
+## ACTIVE HANDOFF — 2026-10-24: fourth NPC trade Magmar exact CI gate
+
+**Authoritative repository:** `prototype/follower-runtime`; master remains `8d89f2b4` and B10/RC MyBoy acceptance not complete. The six candidate FireRed trade pairs were approved for implementation in dated 2026-10-24 DECISION_AMENDMENTS; the repo, not chat history, defines actual source and validation status.
+
+**Three trade microblocks source IMPLEMENTED + independently audited + exact CI-GREEN ON PROTOTYPE:** Meowth -> Shellder technical `4f9faf6` (Full #40071937495 and Follower #40071937490 SUCCESS); Drowzee -> Staryu `840e002` (Full #40072383187 and Follower #40072383184 SUCCESS); Doduo -> Lickitung `baea8a9` (Full #40077567451 and Follower #40077567460 SUCCESS). In each case originals preserved in LeafGreen, and all one-time flags/NPC scripts retained. Neither branch integrated into master nor MyBoy accepted.
+
+**FOURTH gameplay commit `bf397c4c8b44b4bca6b98cb35071d22ce8b68470`**: FireRed `Raichu -> Magmar` at Cinnabar Lab Lounge, original `INGAME_TRADE_ELECTRODE` slot; original LeafGreen Raichu -> Electrode exact species/nick untouched. Spanish nick BRASAS, Italian BRACE, French BRAISE, German GLUT, English EMBER. OT, IV/personality/ITEM_NONE, old `FLAG_DID_ESPHERE_TRADE` unchanged. Only trade header version guard + Full Gameplay Core validator + audited blob SHA changed; independent diff audit PASS. **FIRST ACTION** check exact Full [#40077986613](https://github.com/joseiturriaga25amz/pokefirered-europe/actions/runs/40077986613) and Follower [#40077986626](https://github.com/joseiturriaga25amz/pokefirered-europe/actions/runs/40077986626): both were IN PROGRESS when checkpoint written. If failure, inspect exact step/runner before modifying source. The docs-only HEAD immediately after this technical commit does not invalidate its source-sha CI.
+
+**AFTER both success:** fifth distinct technical NPC trade `Venonat -> Electabuzz` in `INGAME_TRADE_TANGELA`, Cinnabar Lab Lounge. Current shared `Venonat -> Tangela` must stay in LeafGreen; FR new reward `Electabuzz` with five localized names (Spanish CHISPA), preserve `FLAG_DID_TANGENY_TRADE` and special (not shared wrapper) NPC trade script, OT DULCE, original Stardust held item, IVs, personality and offered mon level. One focused semantic validator and audited header blob SHA, independent diff, exact Full+Follower runs, subsequent continuity. Sixth trade `Koffing -> Seel` after that, distinct. Do not mix EV/boss/follower gameplay changes or merge divergent B10 branch to master.
+
+---
+
+
 ## ACTIVE HANDOFF — 2026-10-24: Doduo trade CI gate and next Magmar
 
 **Repository:** `prototype/follower-runtime`; technical source HEAD `baea8a9234bc3c81cbe12eecd492c32ac87b14af`. User-approved six replacement NPC trades documented in `docs/production/DECISION_AMENDMENTS.md` dated 2026-10-24. Do not interpret docs-only HEAD as new gameplay or merge divergent B10 into master. Last master observed `8d89f2b4`.
