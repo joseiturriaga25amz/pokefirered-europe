@@ -741,7 +741,7 @@ jobs:
           assert ".species = SPECIES_MAGMAR" in fr
           assert ".nickname = TEXT_INGAME_TRADE_NICKNAME_ELECTRODE" in lg
           assert ".species = SPECIES_ELECTRODE" in lg
-          assert "#if defined(FIRERED)\\n        .abilityNum = 0,\\n#elif defined(LEAFGREEN)\\n        .abilityNum = 1,\\n#endif" in trade
+          assert "#if defined(FIRERED)\n        .abilityNum = 0,\n#elif defined(LEAFGREEN)\n        .abilityNum = 1,\n#endif" in trade
           species_info = Path("src/data/pokemon/species_info.h").read_text()
           magmar = species_info.split("[SPECIES_MAGMAR] =", 1)[1].split("[SPECIES_", 1)[0]
           electrode = species_info.split("[SPECIES_ELECTRODE] =", 1)[1].split("[SPECIES_", 1)[0]
