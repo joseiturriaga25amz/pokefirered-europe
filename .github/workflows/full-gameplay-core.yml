@@ -812,6 +812,36 @@ jobs:
           print("Cinnabar FireRed Electabuzz / LeafGreen Tangela / original Norma special script PASS")
           PY
 
+      - name: Validate FireRed Koffing for Seel trade
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          header = Path("src/data/ingame_trades.h").read_text()
+          trade = header.split("[INGAME_TRADE_SEEL] =", 1)[1].split("static const u16 sInGameTradeMailMessages", 1)[0]
+          for token in (
+              ".species = SPECIES_SEEL",
+              ".nickname = TEXT_INGAME_TRADE_NICKNAME_SEEL",
+              ".otId = 9853",
+              ".ivs = {24, 15, 22, 16, 23, 22}",
+              ".personality = 0x482cac89",
+              ".heldItem = ITEM_NONE",
+              "#if defined(FIRERED)\n        .requestedSpecies = SPECIES_KOFFING\n#elif defined(LEAFGREEN)\n        .requestedSpecies = SPECIES_PONYTA\n#endif",
+          ):
+              assert token in trade, token
+          scene = Path("data/maps/CinnabarIsland_PokemonLab_ExperimentRoom/scripts.inc").read_text()
+          for token in (
+              "setvar VAR_0x8008, INGAME_TRADE_SEEL",
+              "call EventScript_GetInGameTradeSpeciesInfo",
+              "goto_if_set FLAG_DID_SEELOR_TRADE",
+              "setflag FLAG_DID_SEELOR_TRADE",
+              "call EventScript_DoInGameTrade",
+              "CinnabarIsland_PokemonLab_ExperimentRoom_EventScript_FossilScientist::",
+          ):
+              assert token in scene, token
+          print("Cinnabar FireRed Koffing for Seel / LeafGreen Ponyta / fossil room PASS")
+          PY
+
       - name: Lock semantically audited gameplay data blobs
         run: python3 tools/validate_audited_data_blobs.py
 

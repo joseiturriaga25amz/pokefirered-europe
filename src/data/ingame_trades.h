@@ -366,7 +366,11 @@ static const struct InGameTrade sInGameTrades[] = {
         .otName = TEXT_INGAME_TRADE_OTNAME_SEEL,
         .otGender = MALE,
         .sheen = 10,
+#if defined(FIRERED)
+        .requestedSpecies = SPECIES_KOFFING
+#elif defined(LEAFGREEN)
         .requestedSpecies = SPECIES_PONYTA
+#endif
     }
 };
 
