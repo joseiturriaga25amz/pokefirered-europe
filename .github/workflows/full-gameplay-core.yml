@@ -728,6 +728,43 @@ jobs:
           print("Route18 FireRed Doduo for Lickitung / original LeafGreen / old-save flag PASS")
           PY
 
+      - name: Validate FireRed Raichu for Magmar trade
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          header = Path("src/data/ingame_trades.h").read_text()
+          trade = header.split("[INGAME_TRADE_ELECTRODE] =", 1)[1].split("[INGAME_TRADE_TANGELA] =", 1)[0]
+          fr, lg = trade.split("#elif defined(LEAFGREEN)", 1)
+          assert "#if defined(FIRERED)" in fr
+          assert ".nickname = TEXT_INGAME_TRADE_NICKNAME_MAGMAR_FR" in fr
+          assert ".species = SPECIES_MAGMAR" in fr
+          assert ".nickname = TEXT_INGAME_TRADE_NICKNAME_ELECTRODE" in lg
+          assert ".species = SPECIES_ELECTRODE" in lg
+          for token in (
+              ".requestedSpecies = SPECIES_RAICHU",
+              ".otId = 50298",
+              ".ivs = {19, 16, 18, 25, 25, 19}",
+              ".personality = 0x06341016",
+              ".heldItem = ITEM_NONE",
+              ".otName = TEXT_INGAME_TRADE_OTNAME_ELECTRODE",
+          ):
+              assert token in trade, token
+          assert header.count("#define TEXT_INGAME_TRADE_NICKNAME_MAGMAR_FR") == 5
+          for nickname in ("BRASAS", "BRACE", "BRAISE", "GLUT", "EMBER"):
+              assert f'_("{nickname}")' in header, nickname
+              assert len(nickname) <= 10
+          scene = Path("data/maps/CinnabarIsland_PokemonLab_Lounge/scripts.inc").read_text()
+          for token in (
+              "setvar VAR_0x8008, INGAME_TRADE_ELECTRODE",
+              "goto_if_set FLAG_DID_ESPHERE_TRADE",
+              "setflag FLAG_DID_ESPHERE_TRADE",
+              "call EventScript_DoInGameTrade",
+          ):
+              assert token in scene, token
+          print("Cinnabar FireRed Magmar / LeafGreen Electrode / old-save flag PASS")
+          PY
+
       - name: Lock semantically audited gameplay data blobs
         run: python3 tools/validate_audited_data_blobs.py
 
