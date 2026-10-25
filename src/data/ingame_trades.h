@@ -5,6 +5,7 @@
 #define TEXT_INGAME_TRADE_NICKNAME_JYNX         _("ZYNX")
 #define TEXT_INGAME_TRADE_OTNAME_JYNX           _("CELESTO")
 
+#define TEXT_INGAME_TRADE_NICKNAME_SHELLDER_FR _("PERLITA")
 #define TEXT_INGAME_TRADE_NICKNAME_NIDORAN_FR   _("NIDRANA")
 #define TEXT_INGAME_TRADE_NICKNAME_NIDORAN_LG   _("NIDRÁN")
 #define TEXT_INGAME_TRADE_OTNAME_NIDORAN        _("QUICA")
@@ -12,6 +13,7 @@
 #define TEXT_INGAME_TRADE_NICKNAME_FARFETCHD    _("FARFI")
 #define TEXT_INGAME_TRADE_OTNAME_FARFETCHD      _("CARMELA")
 
+#define TEXT_INGAME_TRADE_NICKNAME_STARYU_FR _("ESTRELLA")
 #define TEXT_INGAME_TRADE_NICKNAME_NIDORINOA_FR _("NIDRINA")
 #define TEXT_INGAME_TRADE_NICKNAME_NIDORINOA_LG _("NIDRINO")
 #define TEXT_INGAME_TRADE_OTNAME_NIDORINOA      _("ONZANO")
@@ -19,9 +21,11 @@
 #define TEXT_INGAME_TRADE_NICKNAME_LICKITUNG    _("LICKITITO")
 #define TEXT_INGAME_TRADE_OTNAME_LICKITUNG      _("DIOCHO")
 
+#define TEXT_INGAME_TRADE_NICKNAME_MAGMAR_FR _("BRASAS")
 #define TEXT_INGAME_TRADE_NICKNAME_ELECTRODE    _("BOLICHI")
 #define TEXT_INGAME_TRADE_OTNAME_ELECTRODE      _("CANEL")
 
+#define TEXT_INGAME_TRADE_NICKNAME_ELECTABUZZ_FR _("CHISPA")
 #define TEXT_INGAME_TRADE_NICKNAME_TANGELA      _("TANGELITO")
 #define TEXT_INGAME_TRADE_OTNAME_TANGELA        _("DULCE")
 
@@ -39,6 +43,7 @@
 #define TEXT_INGAME_TRADE_OTNAME_JYNX           _("DONTAE")
 #endif
 
+#define TEXT_INGAME_TRADE_NICKNAME_SHELLDER_FR _("PERLINA")
 #define TEXT_INGAME_TRADE_NICKNAME_NIDORAN_FR   _("MS. NIDO")
 #define TEXT_INGAME_TRADE_NICKNAME_NIDORAN_LG   _("MR. NIDO")
 #define TEXT_INGAME_TRADE_OTNAME_NIDORAN        _("SAIGE")
@@ -46,6 +51,7 @@
 #define TEXT_INGAME_TRADE_NICKNAME_FARFETCHD    _("CH'DING")
 #define TEXT_INGAME_TRADE_OTNAME_FARFETCHD      _("ELYSSA")
 
+#define TEXT_INGAME_TRADE_NICKNAME_STARYU_FR _("STELLA")
 #define TEXT_INGAME_TRADE_NICKNAME_NIDORINOA_FR _("NINA")
 #define TEXT_INGAME_TRADE_NICKNAME_NIDORINOA_LG _("NINO")
 #define TEXT_INGAME_TRADE_OTNAME_NIDORINOA      _("TURNER")
@@ -53,9 +59,11 @@
 #define TEXT_INGAME_TRADE_NICKNAME_LICKITUNG    _("MARC")
 #define TEXT_INGAME_TRADE_OTNAME_LICKITUNG      _("HADEN")
 
+#define TEXT_INGAME_TRADE_NICKNAME_MAGMAR_FR _("BRACE")
 #define TEXT_INGAME_TRADE_NICKNAME_ELECTRODE    _("ESPHERE")
 #define TEXT_INGAME_TRADE_OTNAME_ELECTRODE      _("CLIFTON")
 
+#define TEXT_INGAME_TRADE_NICKNAME_ELECTABUZZ_FR _("SCINTILLA")
 #define TEXT_INGAME_TRADE_NICKNAME_TANGELA      _("TANGENY")
 #define TEXT_INGAME_TRADE_OTNAME_TANGELA        _("NORMA")
 
@@ -69,6 +77,7 @@
 #define TEXT_INGAME_TRADE_NICKNAME_JYNX         _("LIPOUTI")
 #define TEXT_INGAME_TRADE_OTNAME_JYNX           _("JOHAN")
 
+#define TEXT_INGAME_TRADE_NICKNAME_SHELLDER_FR _("PERLETTE")
 #define TEXT_INGAME_TRADE_NICKNAME_NIDORAN_FR   _("MS. NIDO")
 #define TEXT_INGAME_TRADE_NICKNAME_NIDORAN_LG   _("MR. NIDO")
 #define TEXT_INGAME_TRADE_OTNAME_NIDORAN        _("FLORA")
@@ -76,6 +85,7 @@
 #define TEXT_INGAME_TRADE_NICKNAME_FARFETCHD    _("PTICHO")
 #define TEXT_INGAME_TRADE_OTNAME_FARFETCHD      _("ADELINE")
 
+#define TEXT_INGAME_TRADE_NICKNAME_STARYU_FR _("ETOILE")
 #define TEXT_INGAME_TRADE_NICKNAME_NIDORINOA_FR _("NINO")
 #define TEXT_INGAME_TRADE_NICKNAME_NIDORINOA_LG _("NINO")
 #define TEXT_INGAME_TRADE_OTNAME_NIDORINOA      _("ELIOTT")
@@ -83,9 +93,11 @@
 #define TEXT_INGAME_TRADE_NICKNAME_LICKITUNG    _("GLAVIOTEUR")
 #define TEXT_INGAME_TRADE_OTNAME_LICKITUNG      _("ISMAEL")
 
+#define TEXT_INGAME_TRADE_NICKNAME_MAGMAR_FR _("BRAISE")
 #define TEXT_INGAME_TRADE_NICKNAME_ELECTRODE    _("RODY")
 #define TEXT_INGAME_TRADE_OTNAME_ELECTRODE      _("ALBAN")
 
+#define TEXT_INGAME_TRADE_NICKNAME_ELECTABUZZ_FR _("ECLAIR")
 #define TEXT_INGAME_TRADE_NICKNAME_TANGELA      _("TISSAC")
 #define TEXT_INGAME_TRADE_OTNAME_TANGELA        _("PERRINE")
 
@@ -99,6 +111,7 @@
 #define TEXT_INGAME_TRADE_NICKNAME_JYNX         _("SCHMUSI")
 #define TEXT_INGAME_TRADE_OTNAME_JYNX           _("DANTE  ")
 
+#define TEXT_INGAME_TRADE_NICKNAME_SHELLDER_FR _("PERLE")
 #define TEXT_INGAME_TRADE_NICKNAME_NIDORAN_FR   _("NIEDOMAN")
 #define TEXT_INGAME_TRADE_NICKNAME_NIDORAN_LG   _("NIEDOMAN")
 #define TEXT_INGAME_TRADE_OTNAME_NIDORAN        _("WALTRAUD")
@@ -106,6 +119,7 @@
 #define TEXT_INGAME_TRADE_NICKNAME_FARFETCHD    _("POLENTE")
 #define TEXT_INGAME_TRADE_OTNAME_FARFETCHD      _("ELISA")
 
+#define TEXT_INGAME_TRADE_NICKNAME_STARYU_FR _("STERNCHEN")
 #define TEXT_INGAME_TRADE_NICKNAME_NIDORINOA_FR _("RIDONINO")
 #define TEXT_INGAME_TRADE_NICKNAME_NIDORINOA_LG _("RIDONINO")
 #define TEXT_INGAME_TRADE_OTNAME_NIDORINOA      _("THOMAS")
@@ -113,9 +127,11 @@
 #define TEXT_INGAME_TRADE_NICKNAME_LICKITUNG    _("MARK")
 #define TEXT_INGAME_TRADE_OTNAME_LICKITUNG      _("HELMUTH")
 
+#define TEXT_INGAME_TRADE_NICKNAME_MAGMAR_FR _("GLUT")
 #define TEXT_INGAME_TRADE_NICKNAME_ELECTRODE    _("LECKIBAL")
 #define TEXT_INGAME_TRADE_OTNAME_ELECTRODE      _("FRANZ")
 
+#define TEXT_INGAME_TRADE_NICKNAME_ELECTABUZZ_FR _("FUNKE")
 #define TEXT_INGAME_TRADE_NICKNAME_TANGELA      _("SPAJETTIE")
 #define TEXT_INGAME_TRADE_OTNAME_TANGELA        _("NORMA")
 
@@ -129,6 +145,7 @@
 #define TEXT_INGAME_TRADE_NICKNAME_JYNX         _("ZYNX")
 #define TEXT_INGAME_TRADE_OTNAME_JYNX           _("DONTAE")
 
+#define TEXT_INGAME_TRADE_NICKNAME_SHELLDER_FR _("PEARL")
 #define TEXT_INGAME_TRADE_NICKNAME_NIDORAN_FR   _("MS. NIDO")
 #define TEXT_INGAME_TRADE_NICKNAME_NIDORAN_LG   _("MR. NIDO")
 #define TEXT_INGAME_TRADE_OTNAME_NIDORAN        _("SAIGE")
@@ -136,6 +153,7 @@
 #define TEXT_INGAME_TRADE_NICKNAME_FARFETCHD    _("CH'DING")
 #define TEXT_INGAME_TRADE_OTNAME_FARFETCHD      _("ELYSSA")
 
+#define TEXT_INGAME_TRADE_NICKNAME_STARYU_FR _("STARLIGHT")
 #define TEXT_INGAME_TRADE_NICKNAME_NIDORINOA_FR _("NINA")
 #define TEXT_INGAME_TRADE_NICKNAME_NIDORINOA_LG _("NINO")
 #define TEXT_INGAME_TRADE_OTNAME_NIDORINOA      _("TURNER")
@@ -143,9 +161,11 @@
 #define TEXT_INGAME_TRADE_NICKNAME_LICKITUNG    _("MARC")
 #define TEXT_INGAME_TRADE_OTNAME_LICKITUNG      _("HADEN")
 
+#define TEXT_INGAME_TRADE_NICKNAME_MAGMAR_FR _("EMBER")
 #define TEXT_INGAME_TRADE_NICKNAME_ELECTRODE    _("ESPHERE")
 #define TEXT_INGAME_TRADE_OTNAME_ELECTRODE      _("CLIFTON")
 
+#define TEXT_INGAME_TRADE_NICKNAME_ELECTABUZZ_FR _("SPARK")
 #define TEXT_INGAME_TRADE_NICKNAME_TANGELA      _("TANGENY")
 #define TEXT_INGAME_TRADE_OTNAME_TANGELA        _("NORMA")
 
@@ -184,13 +204,17 @@ static const struct InGameTrade sInGameTrades[] = {
         .otName = TEXT_INGAME_TRADE_OTNAME_JYNX,
         .otGender = MALE,
         .sheen = 10,
+#if defined(FIRERED)
+        .requestedSpecies = SPECIES_CLEFAIRY
+#elif defined(LEAFGREEN)
         .requestedSpecies = SPECIES_POLIWHIRL
+#endif
     }, 
     [INGAME_TRADE_NIDORAN] = 
     {
 #if defined(FIRERED)
-        .nickname = TEXT_INGAME_TRADE_NICKNAME_NIDORAN_FR,
-        .species = SPECIES_NIDORAN_F,
+        .nickname = TEXT_INGAME_TRADE_NICKNAME_SHELLDER_FR,
+        .species = SPECIES_SHELLDER,
         .ivs = {22, 18, 25, 19, 15, 22},
         .abilityNum = 0,
         .otId = 63184,
@@ -201,7 +225,7 @@ static const struct InGameTrade sInGameTrades[] = {
         .otName = TEXT_INGAME_TRADE_OTNAME_NIDORAN,
         .otGender = FEMALE,
         .sheen = 10,
-        .requestedSpecies = SPECIES_NIDORAN_M
+        .requestedSpecies = SPECIES_MEOWTH
 #elif defined(LEAFGREEN)
         .nickname = TEXT_INGAME_TRADE_NICKNAME_NIDORAN_LG,
         .species = SPECIES_NIDORAN_M,
@@ -237,8 +261,8 @@ static const struct InGameTrade sInGameTrades[] = {
     [INGAME_TRADE_NIDORINOA] = 
     {
 #if defined(FIRERED)
-        .nickname = TEXT_INGAME_TRADE_NICKNAME_NIDORINOA_FR,
-        .species = SPECIES_NIDORINA,
+        .nickname = TEXT_INGAME_TRADE_NICKNAME_STARYU_FR,
+        .species = SPECIES_STARYU,
         .ivs = {22, 25, 18, 19, 22, 15},
         .abilityNum = 0,
         .otId = 13637,
@@ -249,7 +273,7 @@ static const struct InGameTrade sInGameTrades[] = {
         .otName = TEXT_INGAME_TRADE_OTNAME_NIDORINOA,
         .otGender = MALE,
         .sheen = 10,
-        .requestedSpecies = SPECIES_NIDORINO
+        .requestedSpecies = SPECIES_DROWZEE
 #elif defined(LEAFGREEN)
         .nickname = TEXT_INGAME_TRADE_NICKNAME_NIDORINOA_LG,
         .species = SPECIES_NIDORINO,
@@ -281,17 +305,26 @@ static const struct InGameTrade sInGameTrades[] = {
         .otGender = MALE,
         .sheen = 10,
 #if defined(FIRERED)
-        .requestedSpecies = SPECIES_GOLDUCK
+        .requestedSpecies = SPECIES_DODUO
 #elif defined(LEAFGREEN)
         .requestedSpecies = SPECIES_SLOWBRO
 #endif
     }, 
     [INGAME_TRADE_ELECTRODE] = 
     {
+#if defined(FIRERED)
+        .nickname = TEXT_INGAME_TRADE_NICKNAME_MAGMAR_FR,
+        .species = SPECIES_MAGMAR,
+#elif defined(LEAFGREEN)
         .nickname = TEXT_INGAME_TRADE_NICKNAME_ELECTRODE,
         .species = SPECIES_ELECTRODE,
+#endif
         .ivs = {19, 16, 18, 25, 25, 19},
+#if defined(FIRERED)
+        .abilityNum = 0,
+#elif defined(LEAFGREEN)
         .abilityNum = 1,
+#endif
         .otId = 50298,
         .conditions = {30, 5, 5, 5, 5},
         .personality = 0x06341016,
@@ -304,8 +337,13 @@ static const struct InGameTrade sInGameTrades[] = {
     }, 
     [INGAME_TRADE_TANGELA] = 
     {
+#if defined(FIRERED)
+        .nickname = TEXT_INGAME_TRADE_NICKNAME_ELECTABUZZ_FR,
+        .species = SPECIES_ELECTABUZZ,
+#elif defined(LEAFGREEN)
         .nickname = TEXT_INGAME_TRADE_NICKNAME_TANGELA,
         .species = SPECIES_TANGELA,
+#endif
         .ivs = {22, 17, 25, 16, 23, 20},
         .abilityNum = 0,
         .otId = 60042,
@@ -332,7 +370,11 @@ static const struct InGameTrade sInGameTrades[] = {
         .otName = TEXT_INGAME_TRADE_OTNAME_SEEL,
         .otGender = MALE,
         .sheen = 10,
+#if defined(FIRERED)
+        .requestedSpecies = SPECIES_KOFFING
+#elif defined(LEAFGREEN)
         .requestedSpecies = SPECIES_PONYTA
+#endif
     }
 };
 

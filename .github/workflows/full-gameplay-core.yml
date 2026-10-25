@@ -18,6 +18,7 @@ on:
       - feature/b8-signature-pokemon-staging
       - feature/b9-pokedex-usefulness
       - feature/b11-release-candidate
+      - feature/approved-npc-trade-integration
     paths-ignore:
       - 'docs/**'
       - '**/*.md'
@@ -519,6 +520,273 @@ jobs:
           )
 
           print(f"Validated {len(expected)} approved encounter rates")
+          PY
+
+      - name: Validate Cerulean NPC Jynx trade and save flag
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          header = Path("src/data/ingame_trades.h").read_text()
+          assert header.count("[INGAME_TRADE_JYNX] =") == 1
+          trade = header.split("[INGAME_TRADE_JYNX] =", 1)[1].split("[INGAME_TRADE_NIDORAN] =", 1)[0]
+          for required in (
+              ".species = SPECIES_JYNX",
+              ".requestedSpecies = SPECIES_CLEFAIRY",
+              ".otId = 36728",
+              ".heldItem = ITEM_FAB_MAIL",
+              ".mailNum = 0",
+          ):
+              assert required in trade, required
+          assert "#if defined(FIRERED)\n        .requestedSpecies = SPECIES_CLEFAIRY\n#elif defined(LEAFGREEN)\n        .requestedSpecies = SPECIES_POLIWHIRL\n#endif" in trade
+          scene = Path("data/maps/CeruleanCity_House3/scripts.inc").read_text()
+          assert "setvar VAR_0x8008, INGAME_TRADE_JYNX" in scene
+          assert "call EventScript_GetInGameTradeSpeciesInfo" in scene
+          assert "goto_if_set FLAG_DID_ZYNX_TRADE" in scene
+          assert "setflag FLAG_DID_ZYNX_TRADE" in scene
+          assert "call EventScript_DoInGameTrade" in scene
+          spanish = Path("data/maps/CeruleanCity_House3/text_es.inc").read_text()
+          assert "POLIWHIRL" not in spanish
+          assert "CLEFAIRY" not in spanish  # generic species substitution from source data
+          trade_engine = Path("src/trade_scene.c").read_text()
+          assert "u8 level = GetMonData(&gPlayerParty[playerSlot], MON_DATA_LEVEL);" in trade_engine
+          assert "CreateMon(tradeMon, inGameTrade->species, level," in trade_engine
+          print("Cerulean one-time Jynx NPC trade / dynamic request / level PASS")
+          PY
+
+      - name: Validate FireRed Meowth for Shellder trade
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          text = Path("src/data/ingame_trades.h").read_text()
+          trade = text.split("[INGAME_TRADE_NIDORAN] =", 1)[1].split("[INGAME_TRADE_FARFETCHD] =", 1)[0]
+          assert trade.count("#if defined(FIRERED)") == 1
+          fr, lg = trade.split("#elif defined(LEAFGREEN)", 1)
+          for token in (
+              ".nickname = TEXT_INGAME_TRADE_NICKNAME_SHELLDER_FR",
+              ".species = SPECIES_SHELLDER",
+              ".requestedSpecies = SPECIES_MEOWTH",
+              ".otId = 63184",
+              ".ivs = {22, 18, 25, 19, 15, 22}",
+              ".heldItem = ITEM_TINY_MUSHROOM",
+          ):
+              assert token in fr, token
+          for token in (
+              ".nickname = TEXT_INGAME_TRADE_NICKNAME_NIDORAN_LG",
+              ".species = SPECIES_NIDORAN_M",
+              ".requestedSpecies = SPECIES_NIDORAN_F",
+              ".otId = 63184",
+          ):
+              assert token in lg, token
+          assert text.count("#define TEXT_INGAME_TRADE_NICKNAME_SHELLDER_FR") == 5
+          for nickname in ("PERLITA", "PERLINA", "PERLETTE", "PERLE", "PEARL"):
+              assert f'_("{nickname}")' in text, nickname
+              assert len(nickname) <= 10
+          npc = Path("data/maps/UndergroundPath_NorthEntrance/scripts.inc").read_text()
+          for token in (
+              "setvar VAR_0x8008, INGAME_TRADE_NIDORAN",
+              "call EventScript_GetInGameTradeSpeciesInfo",
+              "goto_if_set FLAG_DID_MS_NIDO_TRADE",
+              "setflag FLAG_DID_MS_NIDO_TRADE",
+              "call EventScript_DoInGameTrade",
+          ):
+              assert token in npc, token
+          print("FireRed Shellder NPC trade / LeafGreen legacy / old-save flag PASS")
+          PY
+
+      - name: Validate FireRed Drowzee for Staryu trade
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          text = Path("src/data/ingame_trades.h").read_text()
+          trade = text.split("[INGAME_TRADE_NIDORINOA] =", 1)[1].split("[INGAME_TRADE_LICKITUNG] =", 1)[0]
+          assert trade.count("#if defined(FIRERED)") == 1
+          fr, lg = trade.split("#elif defined(LEAFGREEN)", 1)
+          for token in (
+              ".nickname = TEXT_INGAME_TRADE_NICKNAME_STARYU_FR",
+              ".species = SPECIES_STARYU",
+              ".requestedSpecies = SPECIES_DROWZEE",
+              ".otId = 13637",
+              ".ivs = {22, 25, 18, 19, 22, 15}",
+              ".heldItem = ITEM_NONE",
+              ".personality = 0x00eeca15",
+          ):
+              assert token in fr, token
+          for token in (
+              ".nickname = TEXT_INGAME_TRADE_NICKNAME_NIDORINOA_LG",
+              ".species = SPECIES_NIDORINO",
+              ".requestedSpecies = SPECIES_NIDORINA",
+              ".otId = 13637",
+          ):
+              assert token in lg, token
+          assert text.count("#define TEXT_INGAME_TRADE_NICKNAME_STARYU_FR") == 5
+          for nickname in ("ESTRELLA", "STELLA", "ETOILE", "STERNCHEN", "STARLIGHT"):
+              assert f'_("{nickname}")' in text, nickname
+              assert len(nickname) <= 10
+          scene = Path("data/maps/Route11_EastEntrance_2F/scripts.inc").read_text()
+          for token in (
+              "setvar VAR_0x8008, INGAME_TRADE_NIDORINOA",
+              "call EventScript_GetInGameTradeSpeciesInfo",
+              "goto_if_set FLAG_DID_NINA_TRADE",
+              "setflag FLAG_DID_NINA_TRADE",
+              "call EventScript_DoInGameTrade",
+          ):
+              assert token in scene, token
+          print("Route11 FireRed Staryu / LeafGreen original / old-save flag PASS")
+          PY
+
+      - name: Validate FireRed Doduo for Lickitung trade
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          header = Path("src/data/ingame_trades.h").read_text()
+          trade = header.split("[INGAME_TRADE_LICKITUNG] =", 1)[1].split("[INGAME_TRADE_ELECTRODE] =", 1)[0]
+          assert trade.count("#if defined(FIRERED)") == 1
+          for token in (
+              ".species = SPECIES_LICKITUNG",
+              ".nickname = TEXT_INGAME_TRADE_NICKNAME_LICKITUNG",
+              ".otId = 1239",
+              ".ivs = {24, 19, 21, 15, 23, 21}",
+              ".personality = 0x451308ab",
+              ".heldItem = ITEM_NONE",
+              "#if defined(FIRERED)\n        .requestedSpecies = SPECIES_DODUO\n#elif defined(LEAFGREEN)\n        .requestedSpecies = SPECIES_SLOWBRO\n#endif",
+          ):
+              assert token in trade, token
+          scene = Path("data/maps/Route18_EastEntrance_2F/scripts.inc").read_text()
+          for token in (
+              "setvar VAR_0x8008, INGAME_TRADE_LICKITUNG",
+              "call EventScript_GetInGameTradeSpeciesInfo",
+              "goto_if_set FLAG_DID_MARC_TRADE",
+              "setflag FLAG_DID_MARC_TRADE",
+              "call EventScript_DoInGameTrade",
+          ):
+              assert token in scene, token
+          print("Route18 FireRed Doduo for Lickitung / original LeafGreen / old-save flag PASS")
+          PY
+
+      - name: Validate FireRed Raichu for Magmar trade
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          header = Path("src/data/ingame_trades.h").read_text()
+          trade = header.split("[INGAME_TRADE_ELECTRODE] =", 1)[1].split("[INGAME_TRADE_TANGELA] =", 1)[0]
+          fr, lg = trade.split("#elif defined(LEAFGREEN)", 1)
+          assert "#if defined(FIRERED)" in fr
+          assert ".nickname = TEXT_INGAME_TRADE_NICKNAME_MAGMAR_FR" in fr
+          assert ".species = SPECIES_MAGMAR" in fr
+          assert ".nickname = TEXT_INGAME_TRADE_NICKNAME_ELECTRODE" in lg
+          assert ".species = SPECIES_ELECTRODE" in lg
+          assert "#if defined(FIRERED)\n        .abilityNum = 0,\n#elif defined(LEAFGREEN)\n        .abilityNum = 1,\n#endif" in trade
+          species_info = Path("src/data/pokemon/species_info.h").read_text()
+          magmar = species_info.split("[SPECIES_MAGMAR] =", 1)[1].split("[SPECIES_", 1)[0]
+          electrode = species_info.split("[SPECIES_ELECTRODE] =", 1)[1].split("[SPECIES_", 1)[0]
+          assert ".abilities = {ABILITY_FLAME_BODY, ABILITY_NONE}" in magmar
+          assert ".abilities = {ABILITY_SOUNDPROOF, ABILITY_STATIC}" in electrode
+          ability_code = Path("src/pokemon.c").read_text()
+          assert "gSpeciesInfo[species].abilities[1]" in ability_code
+          for token in (
+              ".requestedSpecies = SPECIES_RAICHU",
+              ".otId = 50298",
+              ".ivs = {19, 16, 18, 25, 25, 19}",
+              ".personality = 0x06341016",
+              ".heldItem = ITEM_NONE",
+              ".otName = TEXT_INGAME_TRADE_OTNAME_ELECTRODE",
+          ):
+              assert token in trade, token
+          assert header.count("#define TEXT_INGAME_TRADE_NICKNAME_MAGMAR_FR") == 5
+          for nickname in ("BRASAS", "BRACE", "BRAISE", "GLUT", "EMBER"):
+              assert f'_("{nickname}")' in header, nickname
+              assert len(nickname) <= 10
+          scene = Path("data/maps/CinnabarIsland_PokemonLab_Lounge/scripts.inc").read_text()
+          for token in (
+              "setvar VAR_0x8008, INGAME_TRADE_ELECTRODE",
+              "goto_if_set FLAG_DID_ESPHERE_TRADE",
+              "setflag FLAG_DID_ESPHERE_TRADE",
+              "call EventScript_DoInGameTrade",
+          ):
+              assert token in scene, token
+          print("Cinnabar FireRed Magmar / LeafGreen Electrode / old-save flag PASS")
+          PY
+
+      - name: Validate FireRed Venonat for Electabuzz trade
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          header = Path("src/data/ingame_trades.h").read_text()
+          trade = header.split("[INGAME_TRADE_TANGELA] =", 1)[1].split("[INGAME_TRADE_SEEL] =", 1)[0]
+          assert trade.count("#if defined(FIRERED)") == 1
+          fr, lg = trade.split("#elif defined(LEAFGREEN)", 1)
+          for token in (
+              ".nickname = TEXT_INGAME_TRADE_NICKNAME_ELECTABUZZ_FR",
+              ".species = SPECIES_ELECTABUZZ",
+          ):
+              assert token in fr, token
+          for token in (
+              ".nickname = TEXT_INGAME_TRADE_NICKNAME_TANGELA",
+              ".species = SPECIES_TANGELA",
+          ):
+              assert token in lg, token
+          for token in (
+              ".requestedSpecies = SPECIES_VENONAT",
+              ".otId = 60042",
+              ".ivs = {22, 17, 25, 16, 23, 20}",
+              ".personality = 0x5c77ecfa",
+              ".heldItem = ITEM_STARDUST",
+              ".otName = TEXT_INGAME_TRADE_OTNAME_TANGELA",
+          ):
+              assert token in trade, token
+          assert header.count("#define TEXT_INGAME_TRADE_NICKNAME_ELECTABUZZ_FR") == 5
+          for nickname in ("CHISPA", "SCINTILLA", "ECLAIR", "FUNKE", "SPARK"):
+              assert f'_("{nickname}")' in header, nickname
+              assert len(nickname) <= 10
+          scene = Path("data/maps/CinnabarIsland_PokemonLab_Lounge/scripts.inc").read_text()
+          norma = scene.split("CinnabarIsland_PokemonLab_Lounge_EventScript_Norma::", 1)[1].split("CinnabarIsland_PokemonLab_Lounge_EventScript_NormaDeclineTrade::", 1)[0]
+          for token in (
+              "setvar VAR_0x8008, INGAME_TRADE_TANGELA",
+              "goto_if_set FLAG_DID_TANGENY_TRADE",
+              "setflag FLAG_DID_TANGENY_TRADE",
+              "special ChoosePartyMon",
+              "specialvar VAR_RESULT, GetTradeSpecies",
+              "special CreateInGameTradePokemon",
+              "special DoInGameTradeScene",
+          ):
+              assert token in norma, token
+          print("Cinnabar FireRed Electabuzz / LeafGreen Tangela / original Norma special script PASS")
+          PY
+
+      - name: Validate FireRed Koffing for Seel trade
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          header = Path("src/data/ingame_trades.h").read_text()
+          trade = header.split("[INGAME_TRADE_SEEL] =", 1)[1].split("static const u16 sInGameTradeMailMessages", 1)[0]
+          for token in (
+              ".species = SPECIES_SEEL",
+              ".nickname = TEXT_INGAME_TRADE_NICKNAME_SEEL",
+              ".otId = 9853",
+              ".ivs = {24, 15, 22, 16, 23, 22}",
+              ".personality = 0x482cac89",
+              ".heldItem = ITEM_NONE",
+              "#if defined(FIRERED)\n        .requestedSpecies = SPECIES_KOFFING\n#elif defined(LEAFGREEN)\n        .requestedSpecies = SPECIES_PONYTA\n#endif",
+          ):
+              assert token in trade, token
+          scene = Path("data/maps/CinnabarIsland_PokemonLab_ExperimentRoom/scripts.inc").read_text()
+          for token in (
+              "setvar VAR_0x8008, INGAME_TRADE_SEEL",
+              "call EventScript_GetInGameTradeSpeciesInfo",
+              "goto_if_set FLAG_DID_SEELOR_TRADE",
+              "setflag FLAG_DID_SEELOR_TRADE",
+              "call EventScript_DoInGameTrade",
+              "CinnabarIsland_PokemonLab_ExperimentRoom_EventScript_FossilScientist::",
+          ):
+              assert token in scene, token
+          print("Cinnabar FireRed Koffing for Seel / LeafGreen Ponyta / fossil room PASS")
           PY
 
       - name: Lock semantically audited gameplay data blobs
