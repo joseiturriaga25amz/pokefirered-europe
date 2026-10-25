@@ -1,5 +1,18 @@
 # Next Session — Pokémon Rojo Fuego Full v1.0
 
+## ACTIVE HANDOFF — 2026-10-25: nine NPC trades exact CI-GREEN on prototype, integration pending
+
+**Read this verified checkpoint first; older 2026-10-24 handoffs below are historical and their pending Magmar/CI instructions are superseded.**
+
+- Repo `joseiturriaga25amz/pokefirered-europe`, branch `prototype/follower-runtime`; last technical HEAD `88ee32b8c45a9bbea4dd1c7582e93bae03a6a5a2`. `master` `8d89f2b4` remains separate. Do not merge entire B10 prototype (194 commits ahead / 736 behind in the comparison at this checkpoint).
+- Technical `559deef`: FireRed Magmar `abilityNum = 0` gives Flame Body; LeafGreen Electrode `abilityNum = 1` retains Static. `88ee32b` repaired only the focused validator's newline assertion. No new gameplay fix is pending for this issue.
+- **EXACT CI success at technical SHA:** [Full Gameplay Core #769 (40079264786)](https://github.com/joseiturriaga25amz/pokefirered-europe/actions/runs/40079264786) and [Follower Prototype #190 (40079264753)](https://github.com/joseiturriaga25amz/pokefirered-europe/actions/runs/40079264753); all relevant trade and reproducible-ROM job steps SUCCESS.
+- **Nine FireRed trade slots reconciled in source:** Abra/Mr. Mime; Clefairy/Jynx; Meowth/Shellder; Spearow/Farfetch'd; Drowzee/Staryu; Doduo/Lickitung; Raichu/Magmar; Venonat/Electabuzz; Koffing/Seel. All six additional approved pairs implemented; old LeafGreen source data, save flags, NPC flows and original exchange metadata source-audited. No LeafGreen ROM/runtime test or MyBoy QA performed.
+- **Result:** IMPLEMENTED + VALIDATED + CI-GREEN on `prototype/follower-runtime`; **NOT CERRADO** because gameplay is not integrated to `master` and Android MyBoy QA is outstanding. Follower B10 is not merged and no final user-playable ROM has been supplied.
+- **Next action:** carefully assess trade-only extraction/integration onto the real `master` without importing B10 follower engine. Check guardrails and parentage before any mutation. Do not start EV/nature or leader dialogue changes on another production branch while this is unresolved. Avoid repeating Full Core or chasing already-fixed Magmar validator errors unless source/head changes.
+
+---
+
 ## ACTIVE HANDOFF — 2026-10-24: final Seel trade CI and Magmar ability correction
 
 **Current technical SHA `6a46bffda8a249976958cfa157964146751d9148`**, branch `prototype/follower-runtime`. Original master `8d89f2b4` separate, follower B10 unmerged and MyBoy final runtime QA open. Six FireRed-only NPC exchange pair plan approved by user in dated 2026-10-24 DECISION_AMENDMENTS.
