@@ -1399,3 +1399,37 @@ Internal identifiers and references (`LORELEI` trainer constants, map/script lab
 - Follow-up documentation-only commits did not change ROM, validators, workflow or runtime since the integrated SHA.
 - **Microblock CLOSED**, while hands-on MyBoy runtime QA remains a distinct release-acceptance requirement. No claim of final runtime certification.
 - **Next production action:** Lance first and strengthened League roster review; changes require separate approval. The trainer AI improvement idea remains independently PROPOSED.
+
+## 2026-10-23 — Wild encounter rarity and NPC trade direction
+
+**Authority:** explicit user approval of Kanto final-starter 1% wild encounters, user-authorized Dragonair relaxation within the proposed 5%–10% range (engineering selects 5%), preference to retain current Safari land rarity and Magmar/Electabuzz availability, and approval of the Clefairy-for-Jynx replacement concept. This entry is date-keyed rather than numbered A-007 because historical production documents already use an A-007 cross-reference for a different major-trainer staging decision; avoid reusing that identifier without a separate authority reconciliation.
+
+### Approved / implementation-controlled
+
+- Direct wild catches of **Charizard**, **Blastoise** and **Venusaur** are 1% respectively at Mt Ember Exterior, Seafoam B1F and Three Island Berry Forest, with respective basic and middle stages staying **15% / 5%**. Do not raise their normal spawn probabilities elsewhere, globally change land-slot weighting, or apply the rule to Eeveelutions. The safe 4%-slot/1%-slot swaps change **Rapidash**, **Golduck** and **Venomoth** in the same zones from 1% to 4% while retaining those species' encounter levels and each map's 100% probability total.
+- Dragonair should be less punishing to encounter in Safari; use the lower preferred option, **5% with Super Rod across the four Safari sections**, preserving **Dratini at 15%**, Goldeen/Seaking at 40% each and no step-limit changes. The 4%-Super-Rod Psyduck slot converts to Dragonair; Psyduck remains catchable elsewhere. Do not infer that this improves Safari catch mechanics. Safari land odds (15% Chansey/Kangaskhan/Tauros/Scyther/Pinsir at their designated maps) remain untouched pending direct MyBoy balance; their poor catch/flee behavior is part of access balancing.
+- Keep wild **Magmar at 5% Mt Ember** and **Electabuzz at 5% Power Plant**. These remain separate from possible NPC trade rewards; avoid changes to species intrinsic catch rates unless there is a distinct approved balancing decision.
+- Approved direction for the **CeruleanCity_House3 NPC trade**: replace requested Poliwhirl with **Clefairy** for a Jynx reward, subject to specific data/script/text compatibility audit and separate technical validation. Jynx is useful earlier; trade availability must be checked around Mt Moon/Cerulean progression and traded bonus EXP. This decision does NOT by itself implement the trade.
+
+### Favorably considered; NOT exact-trade approval / NOT implemented
+
+Meowth -> Shellder, Drowzee -> Staryu, Doduo -> Lickitung, Raichu -> Magmar, Venonat -> Electabuzz and Koffing -> Seel are candidate pairs, not irrevocably approved. Audit progression (especially first Magmar sighting at Mt Ember after the Blaine/Sevii transition vs optional earlier Cinnabar trade, and Electabuzz at Power Plant before Cinnabar), reward-to-cost value, fixed trade metadata, old one-time trade flags, Spanish dialogue and link/save behavior before accepting exact pair configurations. Preserve existing acceptable Abra -> Mr Mime and Spearow -> Farfetch'd pending final review.
+
+**Release gates:** these are ROM-changing data decisions; semantic encounter/trade validation, audited blob locks, exact Full Gameplay Core CI and eventual MyBoy tests are required. They do not close B10, merge the prototype into master, or authorize ROM/art redistribution. A technical implementation state may be recorded separately in PROJECT_CONTINUITY.md with exact SHA evidence.
+
+
+## 2026-10-24 — NPC trade plan accepted for implementation
+
+**Authorization:** after being presented with a nine-slot recommendation and explicitly asked for design approval to implement the six remaining candidate pairs, the user responded *«Perfecto continúa»*. Treat this as authorization to proceed with the **six exact previously recommended FireRed NPC exchange pairs**, in small testable commits, not authorization for unrelated gameplay changes, radically revised rewards, earlier unrestricted access, or new engine/save structures. Keep the 2026-10-23 proposal text above as historical decision progression, superseded in scope by this entry.
+
+**Approved FireRed target matrix** (trade partner -> received Pokémon):
+- `INGAME_TRADE_NIDORAN` at Underground Path North: **Meowth -> Shellder**, Spanish received nickname `PERLITA`.
+- `INGAME_TRADE_NIDORINOA` at Route11 East Entrance 2F: **Drowzee -> Staryu**, Spanish nickname `ESTRELLA`.
+- `INGAME_TRADE_LICKITUNG` at Route18 East Entrance 2F: **Doduo -> Lickitung**, preserve existing nicknames and original reward.
+- `INGAME_TRADE_ELECTRODE` at Cinnabar Lab Lounge: **Raichu -> Magmar**, Spanish nickname `BRASAS` (requires Pikachu->Raichu Thunder Stone investment; advances Magmar before Mt Ember).
+- `INGAME_TRADE_TANGELA` at Cinnabar Lab Lounge: **Venonat -> Electabuzz**, Spanish nickname `CHISPA` (an alternative to the Power Plant 5% encounter, normally available earlier).
+- `INGAME_TRADE_SEEL` at Cinnabar Lab Experiment Room: **Koffing -> Seel**, preserve existing `SEELÍN` Spanish nickname and species reward; Seel itself is naturally common at Seafoam Islands.
+
+**Unchanged:** `INGAME_TRADE_MR_MIME` Abra -> Mr Mime, `INGAME_TRADE_FARFETCHD` Spearow -> Farfetch'd, and already implemented `INGAME_TRADE_JYNX` FireRed Clefairy -> Jynx. All **LeafGreen original in-game trade species/request/nicknames** must be preserved, including shared slots that currently lack version-specific guards.
+
+**Non-negotiable implementation boundaries:** preserve nine original trade indexes, NPC event flag identities and old-save one-time completion, original partner OT/IVs/personality/held items/mail and inherited level, Gen III link/save layout and dynamic text system. Replace species/request data in `#if defined(FIRERED)` branches, add distinct EU-language nicknames only where the old name refers to a different Pokémon, keep LeafGreen data intact. Exact semantic and audited-blob CI on each technical SHA and an independent diff audit before claiming CI-GREEN; eventual MyBoy exchange/old-save QA is still separate. Do not merge divergent follower prototype into master merely to ship NPC trades.
