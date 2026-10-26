@@ -18,6 +18,7 @@ on:
       - feature/b8-signature-pokemon-staging
       - feature/b9-pokedex-usefulness
       - feature/b11-release-candidate
+      - feature/ui-nature-stat-tint
       - feature/approved-npc-trade-integration
     paths-ignore:
       - 'docs/**'
@@ -432,6 +433,45 @@ jobs:
           assert "CB2_GiveHoldItem" not in give_party
 
           print("Reusable unique TM invariants validated")
+          PY
+
+      - name: Validate nature stat tint and neutral behavior
+        run: |
+          python3 - <<'PY'
+          import re
+          from pathlib import Path
+
+          summary = Path("src/pokemon_summary_screen.c").read_text()
+          engine = Path("src/pokemon.c").read_text()
+          natures = Path("include/constants/pokemon.h").read_text()
+          assert "STAT_ATK, STAT_DEF, STAT_SPEED, STAT_SPATK, STAT_SPDEF" in summary
+          assert "u8 raised = nature / NUM_NATURE_STATS;" in summary
+          assert "u8 lowered = nature % NUM_NATURE_STATS;" in summary
+          assert "if (raised == lowered)" in summary
+          assert "return sLevelNickTextColors[3];" in summary
+          assert "return sLevelNickTextColors[2];" in summary
+          assert "return sLevelNickTextColors[0];" in summary
+
+          skills = summary.split("static void PrintSkillsPage(void)\\n{", 1)[1].split("\\n}\\n", 1)[0]
+          for name, stat in (("atkStr", "STAT_ATK"), ("defStr", "STAT_DEF"),
+                             ("spAStr", "STAT_SPATK"), ("spDStr", "STAT_SPDEF"),
+                             ("speStr", "STAT_SPEED")):
+              assert f"PokeSum_GetNatureStatTextColors({stat})" in skills, (name, stat)
+          assert "PrintFullEvSkillsPage();" in skills
+          ev = summary.split("static void PrintFullEvValue(u8 ev, u8 y)\\n{", 1)[1].split("\\n}\\n", 1)[0]
+          assert "sLevelNickTextColors[0]" in ev and "PokeSum_GetNatureStatTextColors" not in ev
+
+          table = engine.split("static const s8 sNatureStatTable", 1)[1].split("\\n};", 1)[0]
+          rows = re.findall(r"\\[NATURE_([A-Z]+)\\]\\s*=\\s*\\{([^}]+)\\}", table)
+          constants = re.findall(r"#define NATURE_([A-Z]+)\\s+(\\d+)\\b", natures)
+          assert len(rows) == 25 and len(constants) == 25
+          assert [name for name, _ in rows] == [name for name, _ in constants]
+          for index, (_, values) in enumerate(rows):
+              actual = [int(part.strip()) for part in values.split(",") if part.strip()]
+              assert len(actual) == 5
+              expected = [int(j == index // 5) - int(j == index % 5) for j in range(5)]
+              assert actual == expected, (index, actual, expected)
+          print("25 Gen III nature modifiers, neutral cases and stat-only tint PASS")
           PY
 
       - name: Validate approved wild encounter rates
