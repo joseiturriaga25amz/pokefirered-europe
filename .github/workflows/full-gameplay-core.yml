@@ -452,18 +452,18 @@ jobs:
           assert "return sLevelNickTextColors[2];" in summary
           assert "return sLevelNickTextColors[0];" in summary
 
-          skills = summary.split("static void PrintSkillsPage(void)\\n{", 1)[1].split("\\n}\\n", 1)[0]
+          skills = summary.split("static void PrintSkillsPage(void)\n{", 1)[1].split("\n}\n", 1)[0]
           for name, stat in (("atkStr", "STAT_ATK"), ("defStr", "STAT_DEF"),
                              ("spAStr", "STAT_SPATK"), ("spDStr", "STAT_SPDEF"),
                              ("speStr", "STAT_SPEED")):
               assert f"PokeSum_GetNatureStatTextColors({stat})" in skills, (name, stat)
           assert "PrintFullEvSkillsPage();" in skills
-          ev = summary.split("static void PrintFullEvValue(u8 ev, u8 y)\\n{", 1)[1].split("\\n}\\n", 1)[0]
+          ev = summary.split("static void PrintFullEvValue(u8 ev, u8 y)\n{", 1)[1].split("\n}\n", 1)[0]
           assert "sLevelNickTextColors[0]" in ev and "PokeSum_GetNatureStatTextColors" not in ev
 
-          table = engine.split("static const s8 sNatureStatTable", 1)[1].split("\\n};", 1)[0]
-          rows = re.findall(r"\\[NATURE_([A-Z]+)\\]\\s*=\\s*\\{([^}]+)\\}", table)
-          constants = re.findall(r"#define NATURE_([A-Z]+)\\s+(\\d+)\\b", natures)
+          table = engine.split("static const s8 sNatureStatTable", 1)[1].split("\n};", 1)[0]
+          rows = re.findall(r"\[NATURE_([A-Z]+)\]\s*=\s*\{([^}]+)\}", table)
+          constants = re.findall(r"#define NATURE_([A-Z]+)\s+(\d+)\b", natures)
           assert len(rows) == 25 and len(constants) == 25
           assert [name for name, _ in rows] == [name for name, _ in constants]
           for index, (_, values) in enumerate(rows):

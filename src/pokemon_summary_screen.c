@@ -2554,7 +2554,7 @@ static void PrintFullEvSkillsPage(void)
 }
 
 // Read-only nature presentation. The Gen III 5x5 nature order is:
- // raised stat = nature / 5; lowered stat = nature % 5.
+// raised stat = nature / 5; lowered stat = nature % 5.
 static const u8 sNatureStatOrder[NUM_NATURE_STATS] =
 {
     STAT_ATK, STAT_DEF, STAT_SPEED, STAT_SPATK, STAT_SPDEF,
