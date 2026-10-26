@@ -34,6 +34,7 @@
 #include "mon_markings.h"
 #include "pokemon_storage_system.h"
 #include "constants/sound.h"
+#include "constants/rgb.h"
 
 // needs conflicting header to match (curIndex is s8 in the function, but has to be defined as u8 here)
 extern s16 SeekToNextMonInBox(struct BoxPokemon * boxMons, u8 curIndex, u8 maxIndex, u8 flags);
@@ -837,7 +838,7 @@ static const struct WindowTemplate sWindowTemplates_Skills[] =
         .tilemapTop = 2,
         .width = 10,
         .height = 14,
-        .paletteNum = 6,
+        .paletteNum = 9,
         .baseBlock = 0x0001
     },
     [POKESUM_WIN_SKILLS_4 - 3] = {
@@ -932,6 +933,16 @@ static const u8 sLevelNickTextColors[][3] =
     {0, 2, 3},
     {0, 11, 10},
 };
+
+// Dedicated Skills-page text palette keeps original labels and EVs unchanged.
+static const u16 sNatureHighlightColors[] =
+{
+    RGB(4, 20, 7),  // Increased by nature: dark green.
+    RGB(25, 5, 5),  // Reduced by nature: dark red.
+};
+
+static const u8 sNatureRaisedTextColors[] = {0, 12, 10};
+static const u8 sNatureLoweredTextColors[] = {0, 13, 10};
 
 static const u8 ALIGNED(4) sMultiBattlePartyOrder[] =
 {
@@ -2058,6 +2069,9 @@ static u8 PokeSum_HandleLoadBgGfx(void)
         break;
     case 1:
         ListMenuLoadStdPalAt(BG_PLTT_ID(6), 1);
+        // Copy standard text palette; specialize only two Skills-text colors.
+        ListMenuLoadStdPalAt(BG_PLTT_ID(9), 1);
+        LoadPalette(sNatureHighlightColors, BG_PLTT_ID(9) + 12, sizeof(sNatureHighlightColors));
         LoadPalette(sTextHeaderPalette, BG_PLTT_ID(7), PLTT_SIZE_4BPP);
         break;
     case 2:
@@ -2571,9 +2585,9 @@ static const u8 *PokeSum_GetNatureStatTextColors(u8 stat)
         return sLevelNickTextColors[0];
 
     if (stat == sNatureStatOrder[raised])
-        return sLevelNickTextColors[3]; // Existing female pink / warm highlight.
+        return sNatureRaisedTextColors; // Green: stat increased.
     if (stat == sNatureStatOrder[lowered])
-        return sLevelNickTextColors[2]; // Existing male blue / cool highlight.
+        return sNatureLoweredTextColors; // Red: stat reduced.
 
     return sLevelNickTextColors[0];
 }

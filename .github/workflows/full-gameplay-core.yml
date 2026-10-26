@@ -448,9 +448,18 @@ jobs:
           assert "u8 raised = nature / NUM_NATURE_STATS;" in summary
           assert "u8 lowered = nature % NUM_NATURE_STATS;" in summary
           assert "if (raised == lowered)" in summary
-          assert "return sLevelNickTextColors[3];" in summary
-          assert "return sLevelNickTextColors[2];" in summary
+          assert "return sNatureRaisedTextColors;" in summary
+          assert "return sNatureLoweredTextColors;" in summary
           assert "return sLevelNickTextColors[0];" in summary
+          assert "RGB(4, 20, 7)" in summary
+          assert "RGB(25, 5, 5)" in summary
+          assert "sNatureRaisedTextColors[] = {0, 12, 10}" in summary
+          assert "sNatureLoweredTextColors[] = {0, 13, 10}" in summary
+          assert "ListMenuLoadStdPalAt(BG_PLTT_ID(9), 1);" in summary
+          assert "LoadPalette(sNatureHighlightColors, BG_PLTT_ID(9) + 12, sizeof(sNatureHighlightColors));" in summary
+          skills_template = summary.split("static const struct WindowTemplate sWindowTemplates_Skills[]", 1)[1].split("static const struct WindowTemplate sWindowTemplates_Moves[]", 1)[0]
+          assert skills_template.count(".paletteNum = 9") == 1
+          assert skills_template.count(".paletteNum = 6") == 2
 
           skills = summary.split("static void PrintSkillsPage(void)\n{", 1)[1].split("\n}\n", 1)[0]
           for name, stat in (("atkStr", "STAT_ATK"), ("defStr", "STAT_DEF"),
