@@ -34,6 +34,7 @@
 #include "mon_markings.h"
 #include "pokemon_storage_system.h"
 #include "constants/sound.h"
+#include "constants/rgb.h"
 
 // needs conflicting header to match (curIndex is s8 in the function, but has to be defined as u8 here)
 extern s16 SeekToNextMonInBox(struct BoxPokemon * boxMons, u8 curIndex, u8 maxIndex, u8 flags);
@@ -837,7 +838,7 @@ static const struct WindowTemplate sWindowTemplates_Skills[] =
         .tilemapTop = 2,
         .width = 10,
         .height = 14,
-        .paletteNum = 6,
+        .paletteNum = 9,
         .baseBlock = 0x0001
     },
     [POKESUM_WIN_SKILLS_4 - 3] = {
@@ -932,6 +933,16 @@ static const u8 sLevelNickTextColors[][3] =
     {0, 2, 3},
     {0, 11, 10},
 };
+
+// Dedicated Skills-page text palette keeps original labels and EVs unchanged.
+static const u16 sNatureHighlightColors[] =
+{
+    RGB(4, 20, 7),  // Increased by nature: dark green.
+    RGB(25, 5, 5),  // Reduced by nature: dark red.
+};
+
+static const u8 sNatureRaisedTextColors[] = {0, 12, 10};
+static const u8 sNatureLoweredTextColors[] = {0, 13, 10};
 
 static const u8 ALIGNED(4) sMultiBattlePartyOrder[] =
 {
@@ -2058,6 +2069,9 @@ static u8 PokeSum_HandleLoadBgGfx(void)
         break;
     case 1:
         ListMenuLoadStdPalAt(BG_PLTT_ID(6), 1);
+        // Copy standard text palette; specialize only two Skills-text colors.
+        ListMenuLoadStdPalAt(BG_PLTT_ID(9), 1);
+        LoadPalette(sNatureHighlightColors, BG_PLTT_ID(9) + 12, sizeof(sNatureHighlightColors));
         LoadPalette(sTextHeaderPalette, BG_PLTT_ID(7), PLTT_SIZE_4BPP);
         break;
     case 2:
@@ -2553,6 +2567,31 @@ static void PrintFullEvSkillsPage(void)
     PrintFullEvValue(GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_SPEED_EV), 74);
 }
 
+// Read-only nature presentation. The Gen III 5x5 nature order is:
+// raised stat = nature / 5; lowered stat = nature % 5.
+static const u8 sNatureStatOrder[NUM_NATURE_STATS] =
+{
+    STAT_ATK, STAT_DEF, STAT_SPEED, STAT_SPATK, STAT_SPDEF,
+};
+
+static const u8 *PokeSum_GetNatureStatTextColors(u8 stat)
+{
+    u8 nature = GetNature(&sMonSummaryScreen->currentMon);
+    u8 raised = nature / NUM_NATURE_STATS;
+    u8 lowered = nature % NUM_NATURE_STATS;
+
+    // Neutral natures have no highlighted stat.
+    if (raised == lowered)
+        return sLevelNickTextColors[0];
+
+    if (stat == sNatureStatOrder[raised])
+        return sNatureRaisedTextColors; // Green: stat increased.
+    if (stat == sNatureStatOrder[lowered])
+        return sNatureLoweredTextColors; // Red: stat reduced.
+
+    return sLevelNickTextColors[0];
+}
+
 static void PrintSkillsPage(void)
 {
     if (sMonSummaryScreen->showFullEvView && !sMonSummaryScreen->isEgg)
@@ -2562,11 +2601,11 @@ static void PrintSkillsPage(void)
     }
 
     AddTextPrinterParameterized3(sMonSummaryScreen->windowIds[POKESUM_WIN_RIGHT_PANE], FONT_NORMAL, 14 + sMonSkillsPrinterXpos->curHpStr, 4, sLevelNickTextColors[0], TEXT_SKIP_DRAW, sMonSummaryScreen->summary.curHpStrBuf);
-    AddTextPrinterParameterized3(sMonSummaryScreen->windowIds[POKESUM_WIN_RIGHT_PANE], FONT_NORMAL, 50 + sMonSkillsPrinterXpos->atkStr, 22, sLevelNickTextColors[0], TEXT_SKIP_DRAW, sMonSummaryScreen->summary.statValueStrBufs[PSS_STAT_ATK]);
-    AddTextPrinterParameterized3(sMonSummaryScreen->windowIds[POKESUM_WIN_RIGHT_PANE], FONT_NORMAL, 50 + sMonSkillsPrinterXpos->defStr, 35, sLevelNickTextColors[0], TEXT_SKIP_DRAW, sMonSummaryScreen->summary.statValueStrBufs[PSS_STAT_DEF]);
-    AddTextPrinterParameterized3(sMonSummaryScreen->windowIds[POKESUM_WIN_RIGHT_PANE], FONT_NORMAL, 50 + sMonSkillsPrinterXpos->spAStr, 48, sLevelNickTextColors[0], TEXT_SKIP_DRAW, sMonSummaryScreen->summary.statValueStrBufs[PSS_STAT_SPA]);
-    AddTextPrinterParameterized3(sMonSummaryScreen->windowIds[POKESUM_WIN_RIGHT_PANE], FONT_NORMAL, 50 + sMonSkillsPrinterXpos->spDStr, 61, sLevelNickTextColors[0], TEXT_SKIP_DRAW, sMonSummaryScreen->summary.statValueStrBufs[PSS_STAT_SPD]);
-    AddTextPrinterParameterized3(sMonSummaryScreen->windowIds[POKESUM_WIN_RIGHT_PANE], FONT_NORMAL, 50 + sMonSkillsPrinterXpos->speStr, 74, sLevelNickTextColors[0], TEXT_SKIP_DRAW, sMonSummaryScreen->summary.statValueStrBufs[PSS_STAT_SPE]);
+    AddTextPrinterParameterized3(sMonSummaryScreen->windowIds[POKESUM_WIN_RIGHT_PANE], FONT_NORMAL, 50 + sMonSkillsPrinterXpos->atkStr, 22, PokeSum_GetNatureStatTextColors(STAT_ATK), TEXT_SKIP_DRAW, sMonSummaryScreen->summary.statValueStrBufs[PSS_STAT_ATK]);
+    AddTextPrinterParameterized3(sMonSummaryScreen->windowIds[POKESUM_WIN_RIGHT_PANE], FONT_NORMAL, 50 + sMonSkillsPrinterXpos->defStr, 35, PokeSum_GetNatureStatTextColors(STAT_DEF), TEXT_SKIP_DRAW, sMonSummaryScreen->summary.statValueStrBufs[PSS_STAT_DEF]);
+    AddTextPrinterParameterized3(sMonSummaryScreen->windowIds[POKESUM_WIN_RIGHT_PANE], FONT_NORMAL, 50 + sMonSkillsPrinterXpos->spAStr, 48, PokeSum_GetNatureStatTextColors(STAT_SPATK), TEXT_SKIP_DRAW, sMonSummaryScreen->summary.statValueStrBufs[PSS_STAT_SPA]);
+    AddTextPrinterParameterized3(sMonSummaryScreen->windowIds[POKESUM_WIN_RIGHT_PANE], FONT_NORMAL, 50 + sMonSkillsPrinterXpos->spDStr, 61, PokeSum_GetNatureStatTextColors(STAT_SPDEF), TEXT_SKIP_DRAW, sMonSummaryScreen->summary.statValueStrBufs[PSS_STAT_SPD]);
+    AddTextPrinterParameterized3(sMonSummaryScreen->windowIds[POKESUM_WIN_RIGHT_PANE], FONT_NORMAL, 50 + sMonSkillsPrinterXpos->speStr, 74, PokeSum_GetNatureStatTextColors(STAT_SPEED), TEXT_SKIP_DRAW, sMonSummaryScreen->summary.statValueStrBufs[PSS_STAT_SPE]);
     AddTextPrinterParameterized3(sMonSummaryScreen->windowIds[POKESUM_WIN_RIGHT_PANE], FONT_NORMAL, 15 + sMonSkillsPrinterXpos->expStr, 87, sLevelNickTextColors[0], TEXT_SKIP_DRAW, sMonSummaryScreen->summary.expPointsStrBuf);
     AddTextPrinterParameterized3(sMonSummaryScreen->windowIds[POKESUM_WIN_RIGHT_PANE], FONT_NORMAL, 15 + sMonSkillsPrinterXpos->toNextLevel, 100, sLevelNickTextColors[0], TEXT_SKIP_DRAW, sMonSummaryScreen->summary.expToNextLevelStrBuf);
 }
