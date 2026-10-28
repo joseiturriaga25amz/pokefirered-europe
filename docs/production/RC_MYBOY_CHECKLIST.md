@@ -150,6 +150,8 @@ The RC may be called **v1.0 final** only when:
 
 
 ### B10 current Android delivery gate — 2026-10-28: BLOCKED
+**User clarification (2026-10-28):** This ROM is only for the owner's own MyBoy testing, not for publication. The priority is a directly downloadable personal `.gba` or ZIP, not designing public distribution. Do not require the player to compile, use Codespaces or execute Git commands. The public visibility of the source repository must not be confused with a release intention: no binary or imported art should be put in the public repository. Personal use does not establish public-redistribution permission. Technical delivery remains blocked because temporary CI files are deleted; A01–A09 are not executed.
+
 
 **Required outcome:** a direct, private download of an identified MyBoy-readable .gba (or ordinary ZIP containing it), with no terminal, Codespaces, Git operations or compilation by the player. **No such delivered file is available yet.** The exact successful prototype Full Gameplay Core run 40217318202 and Follower Prototype run 40217318219 retained zero artifacts. CI deliberately deletes its temporary 386 regular/shiny build. Repository visibility is PUBLIC; do not upload third-party Nintendo/HGSS-derived sprites or a compiled game into public Actions artifacts/releases as a shortcut. Available local private builder produces a manifest with exact Git SHA, SHA-1 and SHA-256, but there is not yet an authorized private delivery channel and source asset redistribution clearance remains unresolved. Do not ask the player to execute manual Codespaces/build instructions.
 

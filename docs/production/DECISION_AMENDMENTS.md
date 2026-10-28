@@ -327,6 +327,10 @@ The user approves this general policy for the intended 386-species follower syst
 
 This amends A-006/A-012 presentation intent without retroactively declaring B10 integrated, fully animated or release-ready.
 
+### B10 scope clarification — personal use (2026-10-28)
+
+**User-confirmed:** Pokémon Rojo Fuego Full is for the owner's personal Android/MyBoy play only, not for publication. Deliverable target is an immediately playable `.gba` or ordinary ZIP, directly downloadable with no user compilation, GitHub, Codespaces or patching. Do not impose hypothetical **public distribution** requirements as a prerequisite for private diagnostic engineering. This does not assert any public redistribution license for Nintendo/HGSS-derived assets. The canonical repository currently has public visibility, so keep ROM/assets out of its public artifacts and releases; obtain a truly personal handoff instead. B10's animation and save/link/real MyBoy runtime verification gates still apply.
+
 ## A-013 — Major-trainer roster research method and Brock roster identity
 
 **Date:** 2026-09-30  
