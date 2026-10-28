@@ -149,11 +149,17 @@ The RC may be called **v1.0 final** only when:
 - the tested ROM checksum is recorded together with the MyBoy results.
 
 
-### B10 Android-only private diagnostic setup (GitHub Codespaces; no PC)
+### B10 current Android delivery gate — 2026-10-28: BLOCKED
+
+**Required outcome:** a direct, private download of an identified MyBoy-readable .gba (or ordinary ZIP containing it), with no terminal, Codespaces, Git operations or compilation by the player. **No such delivered file is available yet.** The exact successful prototype Full Gameplay Core run 40217318202 and Follower Prototype run 40217318219 retained zero artifacts. CI deliberately deletes its temporary 386 regular/shiny build. Repository visibility is PUBLIC; do not upload third-party Nintendo/HGSS-derived sprites or a compiled game into public Actions artifacts/releases as a shortcut. Available local private builder produces a manifest with exact Git SHA, SHA-1 and SHA-256, but there is not yet an authorized private delivery channel and source asset redistribution clearance remains unresolved. Do not ask the player to execute manual Codespaces/build instructions.
+
+Before any A01-A09 runtime test: obtain the authorized private file via an actually accessible direct-download route; verify bytes and hash manifest; open the exact ROM in MyBoy. A successful CI job is not evidence of MyBoy acceptance.
+
+### Historical manual Codespaces procedure — developer reference only (NOT the player's approved delivery route)
 
 **Context:** Tester has only an Android phone with MyBoy and will choose Charmander (#004). **NOT EXECUTED** as of 2026-10-14. Do not ask to test before a verified private ROM exists. CI #63 proved ephemeral source-to-ROM compilation, but its ROM was deleted.
 
-**Preferred route (depends on account Codespaces access, mobile browser support and usage quota):**
+**Historical manual fallback, not authorized as the user-facing solution:** The following steps are kept only for developers; they require manual environment setup, commands and file downloads, and are not to be requested of the player.
 
 1. On Android **Chrome**, log into GitHub (use **Desktop site** if needed). Open `https://github.com/joseiturriaga25amz/pokefirered-europe`, select branch **prototype/follower-runtime**, then **Code → Codespaces → Create codespace** on that branch. Reference: `https://docs.github.com/en/codespaces/developing-in-a-codespace/creating-a-codespace-for-a-repository`.
 2. Open the Codespaces browser editor, then **Terminal → New Terminal**. The builder refuses master, a noncanonical checkout or uncommitted changes.
