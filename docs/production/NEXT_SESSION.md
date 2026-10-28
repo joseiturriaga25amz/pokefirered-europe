@@ -13,6 +13,9 @@ Resume from the repository, never from chat memory.
 Use `docs/spec/` only for frozen historical design details.
 
 ## Current state
+
+- **2026-10-28 — CURRENT B10 ROUTE: assisted private compilation is user-accepted; repository stays as-is.** Do **not** migrate, privatize or detach canonical public fork; this was expressly declined as overcomplicated. User has previously built a playable diagnostic with guidance and accepts repeating that method. Earlier *direct-download only, no player compilation/Codespaces* instructions are superseded **for this diagnostic test**, not for eventual easy final-game delivery. Reuse `prototype/follower-runtime` (last verified `505e7a3d2e35e96ba83d4ab25cfad272dd21e13f`) private builder; work through one concise phone-appropriate step at a time and ensure `.gba`/manifest stay **outside public repository**. Existing CI passes but retained no `.gba`: do not assert delivery until actual private output exists, checksum matches and MyBoy boots. Begin A01–A09 only after that. No follower merge or unrelated gameplay modifications.
+
 - **2026-10-28 — User confirmed B10 personal-only goal:** build for the owner's Android MyBoy, **not public distribution**. Stop treating theoretical publication as a blocker to private diagnostic work. Repo visibility is technically PUBLIC, so never store ROM/sprites there. Next actual task: arrange a real private direct-download `.gba`/ZIP from isolated successful prototype build and verify its SHA/MyBoy boot, without requiring the player to operate GitHub, Codespaces or compile. No binary available yet; B10 not merged/MyBoy tested. Publication licensing is a different, nonrequested concern; provenance and runtime gates remain.
 
 

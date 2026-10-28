@@ -150,6 +150,9 @@ The RC may be called **v1.0 final** only when:
 
 
 ### B10 current Android delivery gate — 2026-10-28: BLOCKED
+
+**Updated user-approved approach (2026-10-28):** keep the existing GitHub repository unchanged, and guide the user through a personal diagnostic compilation as was done successfully before. The earlier requirement for a one-tap download *without any assisted build steps* is relaxed **for the prototype test**, not for the final user-friendly release. The Codespaces procedure below may again be used **voluntarily with live step-by-step assistance** if the user's earlier working route is available; it is no longer forbidden to offer it. Work on branch `prototype/follower-runtime`; do not put proprietary `.gba`, converted artwork or manifests inside public GitHub; keep the output outside the checkout. Record actual commit, ROM size and SHA-1/SHA-256 from the generated manifest, test boot in Android MyBoy and then A01–A09. Never equate historical successful CI with a present downloaded file.
+
 **User clarification (2026-10-28):** This ROM is only for the owner's own MyBoy testing, not for publication. The priority is a directly downloadable personal `.gba` or ZIP, not designing public distribution. Do not require the player to compile, use Codespaces or execute Git commands. The public visibility of the source repository must not be confused with a release intention: no binary or imported art should be put in the public repository. Personal use does not establish public-redistribution permission. Technical delivery remains blocked because temporary CI files are deleted; A01–A09 are not executed.
 
 
