@@ -200,6 +200,9 @@ Before any A01-A09 runtime test: obtain the authorized private file via an actua
 - [ ] A07 — Start an ordinary trainer/wild battle and return to the overworld. No duplicate Charmander, sprite remnants, wrong palette, crash or broken field control.
 - [ ] A08 — Save **normally in-game**, close MyBoy, reopen that save, move to a free tile and verify Charmander returns with correct party identity/graphics. Keep an unmodified backup before any experimental ROM.
 - [ ] A09 — Report whether menus, dialogue/script transitions and walking continue operating normally; no incorrect graphical changes on other NPCs.
+- [ ] **A10 — CRITICAL: talk to the actual follower with A** on safe open ground; verify the correct Pokémon nickname and a friendship-based message, close it, repeat A many times, move/turn, interact with an ordinary NPC/sign and enter a building. No frozen controls, misrouted NPC script, duplicated follower or persistent dialogue. This specifically retests the previously reported A-button freeze on the **current** ROM, not the obsolete crashing diagnostic.
+- [ ] **A11 — CRITICAL: follower during Start/Save and ordinary interactions.** Open/close Start, party, bag, ordinary NPC text, then save/reload, ensuring the follower stays visible where safe or returns normally; no stuck camera/control/task or stale sprite. In-game save must use an isolated backed-up test slot.
+
 
 **Pass B — later, when a suitable save/test environment exists (do not require a full playthrough now):**
 
@@ -209,12 +212,18 @@ Before any A01-A09 runtime test: obtain the authorized private file via an actua
 - [ ] B04 — Test representative 32px (Treecko, including Gen III internal-to-National ID) and 64px (Rayquaza) companions. Check animations, collision/occlusion, narrow interiors, OAM/OBJ-VRAM capacity and sprite/terrain effects.
 - [ ] B05 — Bicycle, Surf, Fly, ledge jumping, cutscenes, reflections/water and map reload. Recall/reappearance must be safe; no duplicate sprites or palette changes in unrelated NPCs.
 - [ ] B06 — NPC-heavy maps, repeated field transitions, player saves and trade/link tests in MyBoy; use a backup save. No stale object events, corruption or link divergence.
+- [ ] **B07 — Friendship edge tiers and party identity using controlled private fixtures if necessary.** Verify 0, 1–49, 50–99, 100–149, 150–199, 200–254 and 255 friendship tiers from the actual first eligible healthy non-Egg Pokémon; test two Pokémon with same species but different friendship, party reordering, fainting, Egg and no eligible lead. No player grind required.
+- [ ] **B08 — Script/recovery critical paths using controlled private fixtures where feasible.** Early Route 22 Gary TOP/MID, Pokémon Tower 2F and Silph Co 7F rival approaches; a normal whiteout through Center/Mom recovery; door/stair/escalator/water transitions; repeat A/menus before and after. Test Surf and Fly directly from suitable fixture/safe compatible save, not by demanding campaign progression.
 
-**Simple defect report (no technical expertise needed):** checklist ID (e.g. A03), location, action, expected appearance, actual appearance, reproducibility, and a screenshot or 10–20-second clip if useful. A short description is enough if no media is available. Do not mark the stage PASS until all applicable priority-A items pass on the exact ROM; full B10 and final RC gates remain separate.
+
+**Simple defect report (no technical expertise needed):** checklist ID (e.g. A03), location, action, expected appearance, actual appearance, reproducibility, and a screenshot or 10–20-second clip if useful. A short description is enough if no media is available. Do not mark the stage PASS until all applicable priority-A items **A01–A11** pass on the exact ROM; full B10 and final RC gates remain separate.
 
 ---
 
 ## B10 pre-integration diagnostic — 386 animated follower (not final RC acceptance)
+
+**2026-10-28 pre-ROM audit gate:** `prototype/follower-runtime` source and Full+Follower CI have been checked, but NOT exhaustively proven at runtime. A10/A11 and B07/B08 above are newly explicit after comparing the friendship/field-interaction implementation and Gary/whiteout source validators with the earlier checklist. **No tester should be asked to play the full story, hunt a shiny or progress just to unlock Surf.** Prepare source-verified, disposable, private QA saves/fixtures (not production gameplay changes) if feasible for friendship tiers, shiny, 32/64px, Surf/Fly and late Gary. Validate any fixture's source/save compatibility and keep a clean new-game Charmander baseline. No fixture implemented or runtime scene verified by this documentation change. `master` and follower prototype are divergent, so a prototype ROM does not certify newly integrated master UI, notably nature green/red tint; check those only in the later integrated Full RC. Prioritize static source/semantic audit of A-button scripts, then generate full 386 normal/shiny temporary diagnostic ROM and hash manifest, small A01–A11 smoke, targeted B-series, and finally a separate, controlled integration cycle.
+
 
 **Status:** NOT EXECUTED. Use only a legally obtained local ROM build with known exact source SHA and recorded ROM SHA-1. The GitHub #60 runner's ephemeral HGSS graphics compilation was not uploaded as a test ROM. Do not mark any case PASS from source checks or CI alone. A-001 requires MyBoy for runtime acceptance. Keep this diagnostic distinct from the consolidated final RC test.
 
