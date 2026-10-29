@@ -14,6 +14,10 @@ Use `docs/spec/` only for frozen historical design details.
 
 ## Current state
 
+- **2026-10-29 — ACTIVE NEXT: TEST CONTROLLED `C.UTF-8` COLAB PREFLIGHT ONCE; DO NOT REPEAT OLD NOTEBOOK.** Read actual uploaded V1 JSON: pinned `e94824c`, Full local build SHA-1 `d7f51d20cbf06f205099262379ed93121aefafe6` twice, exact CI `511f902a9f14f318e62623caa54d82af89ec48d0`; ARM gcc 13.2.1 / binutils 2.42 at `/usr/bin` and apt packages match CI. Colab `LANG=LC_ALL=en_US.UTF-8` differs from possible CI collation; core Makefile uses `$(wildcard ...)` to enumerate linked objects, making locale-sensitive input order a plausible—not yet verified—root cause. Candidate notebook updated in `4e9db2d` to force C.UTF-8 only in private Colab build and report initial/effective locale + host g++; exact Full/B10 SHA protections preserved. Readback 14/14 structural controls PASS, **no external execution yet**. Next one clean private Colab run from updated GitHub notebook. If baseline exact checksum matches, proceeds to pinned 386 B10 builder and SHA gate. If mismatch, final cell downloads diagnostic V2 JSON only; inspect before any further change, no gameplay modifications or blind retries. B10 handoff BLOCKED, no ROM/MyBoy QA, master unchanged, original exact technical CI still green.
+
+
+
 - **2026-10-29 — ACTIVE NEXT: COLLECT REVISED COLAB JSON REPORT; DO NOT REBUILD.** User's revised notebook preflight reached fail-closed `BLOCKED_BASELINE_SHA_MISMATCH`: local clean Full build #1 and #2 **both** SHA-1 `d7f51d20cbf06f205099262379ed93121aefafe6`, versus two identical CI builds `511f902a9f14f318e62623caa54d82af89ec48d0` on exact `e94824c`. Local Colab reproducibility established; cross-host difference unresolved. No B10 sprite download or integrated ROM. Next action is user clicks **only last Colab code cell** (already inspected), which conditionally downloads `diagnostico_compilacion.json` when status is not `B10_CI_VERIFIED`; user uploads that small report here. Evaluate real binary paths, apt packages, locale and source pin from report before any more builds or repo technical changes. B10 remains open, master isolated, original feature CI still exact-SHA GREEN.
 
 
