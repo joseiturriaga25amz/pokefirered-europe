@@ -1,0 +1,45 @@
+name: Offsite Git Bundle Snapshot
+on:
+  push:
+    branches:
+      - backup/git-offsite-2026-10-28
+permissions:
+  contents: read
+jobs:
+  snapshot:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Clone all repository refs and make restorable Git bundle
+        env:
+          GH_REPOSITORY: ${{ github.repository }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p snapshot
+          git clone --mirror "https://github.com/${GH_REPOSITORY}.git" backup-repo.git
+          git -C backup-repo.git show-ref --head | LC_ALL=C sort > snapshot/git-refs.txt
+          git -C backup-repo.git bundle create "$PWD/snapshot/pokefirered-europe-full.bundle" --all
+          git -C backup-repo.git bundle verify "$PWD/snapshot/pokefirered-europe-full.bundle"
+          git -C backup-repo.git fsck --full --no-reflogs
+          sha256sum snapshot/pokefirered-europe-full.bundle > snapshot/sha256sum.txt
+          git -C backup-repo.git for-each-ref --format='%(refname) %(objectname)' refs/heads refs/tags > snapshot/branch-tag-manifest.txt
+          for ref in master prototype/follower-runtime diagnostic/b10-full-integrated-candidate audit/b10-friendship-validator; do
+            git -C backup-repo.git show-ref --verify "refs/heads/$ref"
+          done
+          {
+            echo "BACKUP_SOURCE=${GH_REPOSITORY}"
+            echo "BACKUP_TYPE=Git bundle --all, with branch/tag refs"
+            echo "BACKUP_RUN_SHA=${GITHUB_SHA}"
+            echo "BACKUP_RUNTIME_QA=NOT_EXECUTED"
+            echo "BACKUP_RESTORE=git clone pokefirered-europe-full.bundle restored-repo"
+            echo "BACKUP_VALIDATION=bundle verify and git fsck on GitHub Actions"
+          } > snapshot/README-restore.txt
+          ls -lh snapshot/
+      - name: Upload backup for external Drive transfer
+        uses: actions/upload-artifact@v4
+        with:
+          name: pokefirered-europe-git-backup-2026-10-28
+          path: snapshot/
+          if-no-files-found: error
+          retention-days: 3
+          compression-level: 0
