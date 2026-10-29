@@ -1,0 +1,99 @@
+# B10 integrated-candidate pre-build gate. Source-only by design:
+# no ARM compiler, real HGSS art fetch, ROM generation or artifact upload.
+name: B10 Integrated Source Audit
+
+on:
+  push:
+    branches:
+      - diagnostic/b10-full-integrated-candidate
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  source-contracts:
+    name: Full + follower source contracts (no ROM)
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify Python tool syntax
+        run: |
+          python3 -m py_compile \
+            tools/audit_follower_source_samples.py \
+            tools/build_follower_diagnostic.py \
+            tools/convert_follower_apng.py \
+            tools/generate_follower_graphics.py \
+            tools/validate_follower_graphics.py \
+            tools/validate_follower_interaction.py
+
+      - name: Verify follower A-button and friendship semantics
+        run: python3 tools/validate_follower_interaction.py
+
+      - name: Verify synthetic graphics conversion and registry contracts
+        run: |
+          python3 tools/convert_follower_apng.py --self-test
+          python3 tools/generate_follower_graphics.py --self-test
+          python3 tools/validate_follower_graphics.py --self-test
+          python3 tools/build_follower_diagnostic.py --self-test
+
+      - name: Preserve critical Full gameplay and follower ABI contracts
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          def source(name):
+              return Path(name).read_text(encoding="utf-8")
+
+          constants = source("include/constants/event_objects.h")
+          movement = source("src/event_object_movement.c")
+          avatar = source("src/field_control_avatar.c")
+          summary = source("src/pokemon_summary_screen.c")
+          follower = source("src/full_follower.c")
+          builder = source("tools/build_follower_diagnostic.py")
+          fieldmap = source("include/global.fieldmap.h")
+
+          checks = {
+              "8-bit dedicated graphics slot": (
+                  "#define NUM_OBJ_EVENT_GFX     172" in constants
+                  and "#define OBJ_EVENT_GFX_FULL_FOLLOWER NUM_OBJ_EVENT_GFX" in constants
+                  and "#define OBJ_EVENT_GFX_VARS   240" in constants
+                  and "u8 graphicsId;" in fieldmap
+                  and "u16 graphicsId;" not in fieldmap
+              ),
+              "Full extra NPC icon palettes": all(
+                  f"gMonIconPalettes[{i}]" in movement for i in range(3)
+              ),
+              "Full Surf HM possession and badge": (
+                  "CheckBagHasItem(ITEM_HM03_SURF, 1)" in avatar
+                  and "FLAG_BADGE05_GET" in avatar
+              ),
+              "Full numeric EV summary": (
+                  "PrintFullEvSkillsPage();" in summary
+                  and "sText_FullEvTotal" in summary
+                  and "showFullEvView" in summary
+              ),
+              "Runtime-only follower graphics and objects": (
+                  "OBJ_EVENT_ID_FULL_FOLLOWER 254" in source("include/full_follower.h")
+                  and "RemoveFullFollowerObjectEvent(follower);" in follower
+                  and "FullFollower_DiscardForLink();" in source("src/overworld.c")
+                  and "FullFollower_OnCameraCoordsShift(dx, dy);" in movement
+              ),
+              "Private builder bound to candidate branch": (
+                  'BRANCH = "diagnostic/b10-full-integrated-candidate"' in builder
+                  and "git\", \"worktree\", \"add\"" in builder
+                  and 'ROM_LIMIT = 32 * 1024 * 1024' in builder
+              ),
+          }
+          for name, ok in checks.items():
+              print(("PASS" if ok else "FAIL"), name)
+          if not all(checks.values()):
+              raise SystemExit("integrated source contract failed")
+          PY
+
+      - name: Preserve audited global Full data and save state
+        run: |
+          python3 tools/validate_audited_data_blobs.py
+          python3 tools/validate_full_obtainability.py
+          python3 tools/validate_full_save_namespace.py
