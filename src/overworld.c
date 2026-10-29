@@ -12,6 +12,7 @@
 #include "field_fadetransition.h"
 #include "field_message_box.h"
 #include "field_player_avatar.h"
+#include "full_follower.h"
 #include "field_screen_effect.h"
 #include "field_specials.h"
 #include "field_tasks.h"
@@ -155,7 +156,7 @@ static void InitOverworldGraphicsRegisters(void);
 static void ResumeMap(bool32 inLink);
 static void InitObjectEventsLink(void);
 static void InitObjectEventsLocal(void);
-static void ReloadObjectsAndRunReturnToFieldMapScript(void);
+static void ReloadObjectsAndRunReturnToFieldMapScript(bool8 allowFollower);
 static void SetCameraToTrackPlayer(void);
 static void SetCameraToTrackGuestPlayer(void);
 static void SetCameraToTrackGuestPlayer_2(void);
@@ -1942,7 +1943,7 @@ static bool32 ReturnToFieldLocal(u8 *state)
         InitOverworldBgs();
         QuestLog_InitPalettesBackup();
         ResumeMap(FALSE);
-        ReloadObjectsAndRunReturnToFieldMapScript();
+        ReloadObjectsAndRunReturnToFieldMapScript(TRUE);
         SetCameraToTrackPlayer();
         (*state)++;
         break;
@@ -1980,7 +1981,7 @@ static bool32 ReturnToFieldLink(u8 *state)
         break;
     case 2:
         CreateLinkPlayerSprites();
-        ReloadObjectsAndRunReturnToFieldMapScript();
+        ReloadObjectsAndRunReturnToFieldMapScript(FALSE);
         SetCameraToTrackGuestPlayer_2();
         SetHelpContextForMap();
         (*state)++;
@@ -2103,6 +2104,12 @@ static void InitOverworldGraphicsRegisters(void)
 
 static void ResumeMap(bool32 inLink)
 {
+    // This return path can reuse active local object events. Strip the
+    // runtime follower before sprite reset so it cannot reappear in link play.
+    if (inLink || QL_IS_PLAYBACK_STATE)
+        FullFollower_DiscardForLink();
+    else
+        FullFollower_DiscardForLocalReload();
     ResetTasks();
     ResetSpriteData();
     ResetPaletteFade();
@@ -2147,12 +2154,15 @@ static void InitObjectEventsLocal(void)
     ResetInitialPlayerAvatarState();
     TrySpawnObjectEvents(0, 0);
     TryRunOnWarpIntoMapScript();
+    FullFollower_OnLocalMapReady();
 }
 
-static void ReloadObjectsAndRunReturnToFieldMapScript(void)
+static void ReloadObjectsAndRunReturnToFieldMapScript(bool8 allowFollower)
 {
     SpawnObjectEventsOnReturnToField(0, 0);
     RunOnReturnToFieldMapScript();
+    if (allowFollower)
+        FullFollower_OnLocalMapReady();
 }
 
 static void SetCameraToTrackPlayer(void)
@@ -2275,7 +2285,7 @@ static bool32 LoadMap_QLPlayback(u8 *state)
         (*state)++;
         break;
     case 3:
-        ReloadObjectsAndRunReturnToFieldMapScript();
+        ReloadObjectsAndRunReturnToFieldMapScript(FALSE);
         SetCameraToTrackPlayer();
         (*state)++;
         break;
