@@ -39,6 +39,7 @@ jobs:
           python3 tools/convert_follower_apng.py --self-test
           python3 tools/generate_follower_graphics.py --self-test
           python3 tools/validate_follower_graphics.py --self-test
+          python3 tools/audit_follower_source_samples.py --self-test-all
           python3 tools/build_follower_diagnostic.py --self-test
 
       - name: Preserve critical Full gameplay and follower ABI contracts
@@ -1359,6 +1360,8 @@ jobs:
           assert report["project_git_sha"] == sha
           assert report["national_species_count"] == 386
           assert report["normal_shiny_variants"] == 2
+          assert report["source_feasible_species"] == 386
+          assert report["source_blocked_species"] == 0
           assert report["runtime_qa"] == "NOT_EXECUTED"
           assert report["asset_redistribution"] == "NOT_AUTHORIZED_BY_THIS_TOOL"
           assert report["source"] == "teobz/pkmn-hgss-animated-overworld-sprites@f9ee9f83d0f53b196b64d65f7bb70369b196f33b"

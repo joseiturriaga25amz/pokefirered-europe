@@ -17,7 +17,7 @@ import tempfile
 import zipfile
 from pathlib import Path
 
-from audit_follower_source_samples import SOURCE_REPO, SOURCE_REVISION, download_archive
+from audit_follower_source_samples import SOURCE_REPO, SOURCE_REVISION, download_archive, audit_complete_gen3
 from convert_follower_apng import DIRECTIONS, synthetic_apng
 from generate_follower_graphics import HEADER, SENTINEL, install
 
@@ -135,7 +135,7 @@ def build_private(args):
     if Path(output_of("git", "rev-parse", "--show-toplevel", cwd=root)).resolve() != root:
         raise ValueError("run the builder from its canonical Git checkout")
     if output_of("git", "branch", "--show-current", cwd=root) != BRANCH:
-        raise ValueError("switch to prototype/follower-runtime before building")
+        raise ValueError("switch to " + BRANCH + " before building")
     exact_sha = output_of("git", "rev-parse", "HEAD", cwd=root)
     selected = args.species if args.species is not None else list(range(1, 387))
     if (not selected or len(set(selected)) != len(selected)
@@ -151,6 +151,19 @@ def build_private(args):
         archive = download_archive()  # pinned SOURCE_REPO/SOURCE_REVISION
         source_label = "%s@%s" % (SOURCE_REPO, SOURCE_REVISION)
     source_digest = hashlib.sha256(archive).hexdigest()
+    # The complete normal/shiny source feasibility contract was exercised in
+    # the original follower gate, but must also hold for the integrated ROM.
+    # Reuse the exact pinned archive already downloaded by this build.
+    full_source_report = None
+    if len(selected) == 386:
+        full_source_report = audit_complete_gen3(archive)
+        if (full_source_report["expected_species"] != 386
+                or full_source_report["source_feasible_species"] != 386
+                or full_source_report["blocked_species_count"] != 0
+                or full_source_report["feasible_ids"] != list(range(1, 387))):
+            raise ValueError("pinned 386 normal/shiny source audit blocked: "
+                             + str(full_source_report["blocked"][:3]))
+        print("Pinned source normal/shiny color, animation and transparency: 386/386 PASS")
 
     with tempfile.TemporaryDirectory(prefix="firered-b10-private-") as temp:
         working = Path(temp)
@@ -178,6 +191,8 @@ def build_private(args):
                 "target": "firered_es_modern",
                 "national_species_count": len(selected),
                 "normal_shiny_variants": 2,
+                "source_feasible_species": full_source_report["source_feasible_species"] if full_source_report is not None else None,
+                "source_blocked_species": full_source_report["blocked_species_count"] if full_source_report is not None else None,
                 "source_archive_sha256": source_digest,
                 "source": source_label,
                 "rom_bytes": rom.stat().st_size,
