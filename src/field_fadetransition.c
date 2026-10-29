@@ -1,6 +1,7 @@
 #include "global.h"
 #include "gflib.h"
 #include "field_fadetransition.h"
+#include "full_follower.h"
 #include "overworld.h"
 #include "fldeff.h"
 #include "field_weather.h"
@@ -534,6 +535,7 @@ bool32 FieldFadeTransitionBackgroundEffectIsFinished(void)
 
 void DoWarp(void)
 {
+    FullFollower_RecallForWarp();
     LockPlayerFieldControls();
     TryFadeOutOldMapMusic();
     WarpFadeOutScreen();
@@ -545,6 +547,7 @@ void DoWarp(void)
 
 void DoDiveWarp(void)
 {
+    FullFollower_RecallForWarp();
     LockPlayerFieldControls();
     TryFadeOutOldMapMusic();
     WarpFadeOutScreen();
@@ -556,6 +559,7 @@ void DoDiveWarp(void)
 void DoStairWarp(u16 metatileBehavior, u16 delay)
 {
     u8 taskId = CreateTask(Task_StairWarp, 10);
+    FullFollower_RecallForWarp();
     gTasks[taskId].data[1] = metatileBehavior;
     gTasks[taskId].data[15] = delay;
     Task_StairWarp(taskId);
@@ -563,6 +567,7 @@ void DoStairWarp(u16 metatileBehavior, u16 delay)
 
 void DoDoorWarp(void)
 {
+    FullFollower_RecallForWarp();
     LockPlayerFieldControls();
     gFieldCallback = FieldCB_DefaultWarpExit;
     CreateTask(Task_DoorWarp, 10);
@@ -570,6 +575,7 @@ void DoDoorWarp(void)
 
 void DoTeleport2Warp(void)
 {
+    FullFollower_RecallForWarp();
     LockPlayerFieldControls();
     CreateTask(Task_Teleport2Warp, 10);
     gFieldCallback = FieldCB_TeleportWarpIn;
@@ -577,6 +583,7 @@ void DoTeleport2Warp(void)
 
 void DoUnionRoomWarp(void)
 {
+    FullFollower_RecallForWarp();
     LockPlayerFieldControls();
     gFieldCallback = FieldCB_DefaultWarpExit;
     CreateTask(Task_TeleportWarp, 10);
@@ -590,24 +597,28 @@ void DoFallWarp(void)
 
 void DoEscalatorWarp(u8 metatileBehavior)
 {
+    FullFollower_RecallForWarp();
     LockPlayerFieldControls();
     StartEscalatorWarp(metatileBehavior, 10);
 }
 
 void DoLavaridgeGymB1FWarp(void)
 {
+    FullFollower_RecallForWarp();
     LockPlayerFieldControls();
     StartLavaridgeGymB1FWarp(10);
 }
 
 void DoLavaridgeGym1FWarp(void)
 {
+    FullFollower_RecallForWarp();
     LockPlayerFieldControls();
     StartLavaridgeGym1FWarp(10);
 }
 
 void DoTeleportWarp(void)
 {
+    FullFollower_RecallForWarp();
     LockPlayerFieldControls();
     TryFadeOutOldMapMusic();
     CreateTask(Task_TeleportWarp, 10);
@@ -645,6 +656,7 @@ static void Task_CableClubWarp(u8 taskId)
 
 void DoCableClubWarp(void)
 {
+    FullFollower_RecallForWarp();
     LockPlayerFieldControls();
     TryFadeOutOldMapMusic();
     WarpFadeOutScreen();
