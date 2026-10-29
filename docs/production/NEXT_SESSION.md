@@ -14,6 +14,10 @@ Use `docs/spec/` only for frozen historical design details.
 
 ## Current state
 
+- **2026-10-29 — ACTIVE NEXT: COLAB ISOLATED PLAIN-FULL SHA TEST TO LOCALIZE PRIVATE 386-ROM DRIFT.** User's Colab Ubuntu 24.04.5, `gcc-arm-none-eabi=15:13.2.rel1-2`, `binutils-arm-none-eabi=2.42-1ubuntu1+23`, `libpng-dev=1.6.43-5ubuntu0.7` match relevant CI package versions. Private Full+386 SHA-1 is `369525f52eb9be2345ddab461c96d3fad3d4a433` vs CI `6fed3237225dc6146649d85c969b1e9da4352126`. Exact CI plain Full core reproducible SHA-1 is `511f902a9f14f318e62623caa54d82af89ec48d0` from run #40884459812. Ask user to execute a *separate temporary worktree `firered_es_modern` build without B10 HGSS sprites* in existing Colab runtime; compare hash with `511f902...` to localize discrepancy. Preserve existing Colab build, no verified ROM download, no master/asset/gameplay change, no B10 closure. Debug only after observed comparison.
+
+
+
 - **2026-10-29 — PRIVATE COLAB SHA MISMATCH: OBTAIN READ-ONLY TOOLCHAIN VERSIONS NEXT.** User's actual locally built ROM SHA-1 is `369525f52eb9be2345ddab461c96d3fad3d4a433`, different from CI `6fed3237225dc6146649d85c969b1e9da4352126`; all prior notebook ROM/manifest/386 checks succeeded. CI original: Ubuntu 24.04, ARM GCC package 15:13.2.rel1-2, binutils 2.42-1ubuntu1+23. Colab versions **NOT YET COLLECTED**. Have user run a read-only cell printing `/etc/os-release`, ARM GCC/binutils and host gcc/libpng versions (no rerun of ~4-minute build), then decide whether a pinned toolchain build is necessary. Guard remains strict; no ROM downloaded/accepted and no MyBoy QA. Keep `master` unchanged; do not label B10 closed.
 
 
