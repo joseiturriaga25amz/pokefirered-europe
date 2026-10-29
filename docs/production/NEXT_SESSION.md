@@ -14,6 +14,10 @@ Use `docs/spec/` only for frozen historical design details.
 
 ## Current state
 
+- **2026-10-29 — NEXT FIRST ACTION: CHECK WHETHER COLAB RUNTIME WAS RESET, NO REBUILD.** The user now reports `shutil.which(...) == None` for ARM compiler, preprocessor, assembler and linker even though prior ROM and plain-Full builds completed. Host gcc/make exist; DEVKITARM and CC unset. Earlier package checks showed ARM packages installed; active runtime may have reset or PATH/packages changed. Do not claim that this explains earlier SHA mismatches. Ask user to run one read-only cell checking old `/content` source and `.gba` presence, `/usr/bin/arm-none-eabi-gcc` and `dpkg-query` package status; preserve strict CI SHA-1 check and do not download mismatched ROM. Original B10 and Full exact CI at `e94824c` remain GREEN, master untouched, B10 OPEN.
+
+
+
 - **2026-10-29 — COLAB PLAIN-FULL BASELINE ALSO HASH-MISMATCHED; NEXT CHECK ACTUAL TOOL EXECUTABLE PATHS (NO REBUILD):** User's temporary clean `firered_es_modern` compile at pinned `e94824c` produced `d7f51d20cbf06f205099262379ed93121aefafe6`, whereas CI full gameplay run #40884459812 produced `511f902a9f14f318e62623caa54d82af89ec48d0` twice. Thus difference predates B10 HGSS import. Colab integrated 386 ROM is still `369525f52eb9be2345ddab461c96d3fad3d4a433` against CI `6fed3237225dc6146649d85c969b1e9da4352126`. Ubuntu and main installed compiler/PNG packages match CI, but root cause unconfirmed. **NEXT:** in same Colab runtime run a read-only cell printing actual compiler/linker executable paths and version, `DEVKITARM`, `PATH`, `LC_ALL`, `LANG`. Do not rerun/re-download full graphics or weaken expected checksum. If identities match, investigate path-dependent or nondeterministic host generated tools in separate bounded microblock. Original source CI green stands; no download, no MyBoy QA, no master changes, B10 open.
 
 
