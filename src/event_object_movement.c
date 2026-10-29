@@ -7,6 +7,7 @@
 #include "field_effect.h"
 #include "field_effect_helpers.h"
 #include "field_player_avatar.h"
+#include "full_follower.h"
 #include "fieldmap.h"
 #include "metatile_behavior.h"
 #include "overworld.h"
@@ -481,6 +482,8 @@ static const u8 gInitialMovementTypeFacingDirections[MOVEMENT_TYPES_COUNT] = {
 #include "data/object_events/base_oam.h"
 #include "data/object_events/object_event_subsprites.h"
 #include "data/object_events/object_event_graphics_info.h"
+// Isolated diagnostic assets: 16 frames, 4 directions, 2 native palette slots.
+#include "data/object_events/follower_pilot_graphics.h"
 
 static const struct SpritePalette sObjectEventSpritePalettes[] = {
     {gObjectEventPal_NpcBlue,                 OBJ_EVENT_PAL_TAG_NPC_BLUE},
@@ -1520,8 +1523,18 @@ static bool8 GetAvailableObjectEventId(u16 localId, u8 mapNum, u8 mapGroup, u8 *
 
 static void RemoveObjectEvent(struct ObjectEvent *objectEvent)
 {
+    // Only the diagnostic follower uses a tagged, dynamic OBJ palette.
+    // Release field effects and main sprite first, then its palette tag.
+    bool8 pilotFollower = objectEvent->localId == OBJ_EVENT_ID_FULL_FOLLOWER
+                        && objectEvent->graphicsId == OBJ_EVENT_GFX_FULL_FOLLOWER
+                        && FullFollower_UsesPilotGraphics();
+
+    if (objectEvent->localId == OBJ_EVENT_ID_FULL_FOLLOWER)
+        RemoveFullFollowerFieldEffects(objectEvent);
     objectEvent->active = FALSE;
     RemoveObjectEventInternal(objectEvent);
+    if (pilotFollower)
+        FreeSpritePaletteByTag(FOLLOWER_PILOT_PALETTE_TAG);
 }
 
 void RemoveObjectEventByLocalIdAndMap(u8 localId, u8 mapNum, u8 mapGroup)
@@ -1532,6 +1545,16 @@ void RemoveObjectEventByLocalIdAndMap(u8 localId, u8 mapNum, u8 mapGroup)
         FlagSet(GetObjectEventFlagIdByObjectEventId(objectEventId));
         RemoveObjectEvent(&gObjectEvents[objectEventId]);
     }
+}
+
+// A transient follower must not call RemoveObjectEventByLocalIdAndMap:
+// that script-facing helper sets a persistent event flag.
+void RemoveFullFollowerObjectEvent(struct ObjectEvent *objectEvent)
+{
+    if (objectEvent != NULL
+     && objectEvent->active
+     && objectEvent->localId == OBJ_EVENT_ID_FULL_FOLLOWER)
+        RemoveObjectEvent(objectEvent);
 }
 
 static void RemoveObjectEventInternal(struct ObjectEvent *objectEvent)
@@ -1560,6 +1583,7 @@ static u8 TrySetupObjectEventSprite(const struct ObjectEventTemplate *objectEven
     struct Sprite *sprite;
     struct ObjectEvent *objectEvent;
     const struct ObjectEventGraphicsInfo *graphicsInfo;
+    u8 followerPaletteNum = 0xFF;
 
     objectEventId = InitObjectEventStateFromTemplate(objectEventTemplate, mapNum, mapGroup);
     if (objectEventId == OBJECT_EVENTS_COUNT)
@@ -1567,6 +1591,27 @@ static u8 TrySetupObjectEventSprite(const struct ObjectEventTemplate *objectEven
 
     objectEvent = &gObjectEvents[objectEventId];
     graphicsInfo = GetObjectEventGraphicsInfo(objectEvent->graphicsId);
+    if (objectEvent->localId == OBJ_EVENT_ID_FULL_FOLLOWER
+     && objectEvent->graphicsId == OBJ_EVENT_GFX_FULL_FOLLOWER
+     && FullFollower_UsesPilotGraphics())
+    {
+        // The 12 native reserved slots belong to player/NPC/reflections.
+        // LoadSpritePalette only allocates among remaining free slots (12-15).
+        const u16 *registeredPalette = GetFollowerRegisteredPalette(FullFollower_GetSpecies(), FullFollower_IsShiny());
+        struct SpritePalette palette = {
+            registeredPalette != NULL ? registeredPalette :
+                (FullFollower_IsShiny() ? sFollowerPilotShinyPalette : sFollowerPilotNormalPalette),
+            FOLLOWER_PILOT_PALETTE_TAG
+        };
+        followerPaletteNum = LoadSpritePalette(&palette);
+        if (followerPaletteNum == 0xFF)
+        {
+            // No spare OBJ palette: keep NPC colors intact and retry later.
+            objectEvent->active = FALSE;
+            return OBJECT_EVENTS_COUNT;
+        }
+        ApplyGlobalFieldPaletteTint(followerPaletteNum);
+    }
     if (graphicsInfo->paletteSlot == PALSLOT_PLAYER)
         LoadPlayerObjectReflectionPalette(graphicsInfo->paletteTag, graphicsInfo->paletteSlot);
     else if (graphicsInfo->paletteSlot == PALSLOT_NPC_SPECIAL)
@@ -1580,6 +1625,9 @@ static u8 TrySetupObjectEventSprite(const struct ObjectEventTemplate *objectEven
     spriteId = CreateSprite(spriteTemplate, 0, 0, 0);
     if (spriteId == MAX_SPRITES)
     {
+        // Release a transient palette if sprite slots were exhausted.
+        if (followerPaletteNum != 0xFF)
+            FreeSpritePaletteByTag(FOLLOWER_PILOT_PALETTE_TAG);
         gObjectEvents[objectEventId].active = FALSE;
         return OBJECT_EVENTS_COUNT;
     }
@@ -1590,7 +1638,7 @@ static u8 TrySetupObjectEventSprite(const struct ObjectEventTemplate *objectEven
     sprite->centerToCornerVecY = -(graphicsInfo->height >> 1);
     sprite->x += 8;
     sprite->y += 16 + sprite->centerToCornerVecY;
-    sprite->oam.paletteNum = graphicsInfo->paletteSlot;
+    sprite->oam.paletteNum = followerPaletteNum != 0xFF ? followerPaletteNum : graphicsInfo->paletteSlot;
     sprite->coordOffsetEnabled = TRUE;
     sprite->data[0] = objectEventId;
     objectEvent->spriteId = spriteId;
@@ -2044,10 +2092,37 @@ void PlayerObjectTurn(struct PlayerAvatar *playerAvatar, u8 direction)
     ObjectEventTurn(&gObjectEvents[playerAvatar->objectEventId], direction);
 }
 
+bool8 FullFollower_HasRegisteredGraphics(u16 nationalDexNum)
+{
+    // A complete pair is mandatory; never present normal-only art as shiny.
+    return GetFollowerRegisteredGraphicsInfo(nationalDexNum, FALSE) != NULL
+        && GetFollowerRegisteredGraphicsInfo(nationalDexNum, TRUE) != NULL;
+}
+
 const struct ObjectEventGraphicsInfo *GetObjectEventGraphicsInfo(u8 graphicsId)
 {
     if (graphicsId >= OBJ_EVENT_GFX_VARS)
         graphicsId = VarGetObjectEventGraphicsId(graphicsId - OBJ_EVENT_GFX_VARS);
+
+    // One 8-bit follower object ID can display different species without
+    // modifying ObjectEvent, saved templates or the global graphics pointer table.
+    if (graphicsId == OBJ_EVENT_GFX_FULL_FOLLOWER)
+    {
+        const struct ObjectEventGraphicsInfo *registered = GetFollowerRegisteredGraphicsInfo(
+            FullFollower_GetSpecies(), FullFollower_IsShiny());
+        if (registered != NULL)
+            return registered;
+        graphicsId = FullFollower_GetSpriteGraphicsId();
+        // Isolated size pilots: 16px Pikachu, 32px Snorlax, 64px Mew.
+        // Synthetic diagnostic tiles only, never presented as final art.
+        // Normal NPC graphics are unaffected by the follower-only ID.
+        if (graphicsId == OBJ_EVENT_GFX_PIKACHU)
+            return FullFollower_IsShiny() ? &sFollowerPilotShinyGraphics : &sFollowerPilotNormalGraphics;
+        if (graphicsId == OBJ_EVENT_GFX_SNORLAX)
+            return FullFollower_IsShiny() ? &sFollowerPilot32ShinyGraphics : &sFollowerPilot32NormalGraphics;
+        if (graphicsId == OBJ_EVENT_GFX_MEW)
+            return FullFollower_IsShiny() ? &sFollowerPilot64ShinyGraphics : &sFollowerPilot64NormalGraphics;
+    }
     
     if (graphicsId >= NUM_OBJ_EVENT_GFX)
         graphicsId = OBJ_EVENT_GFX_LITTLE_BOY;
@@ -2325,6 +2400,7 @@ void UpdateObjectEventCoordsForCameraUpdate(void)
                 gObjectEvents[i].previousCoords.y -= dy;
             }
         }
+        FullFollower_OnCameraCoordsShift(dx, dy);
     }
 }
 
@@ -4913,6 +4989,21 @@ static bool8 DoesObjectCollideWithObjectAt(struct ObjectEvent *objectEvent, s16 
         curObject = &gObjectEvents[i];
         if (curObject->active && curObject != objectEvent)
         {
+            // No event may collide with the cosmetic follower.
+            if (curObject->localId == OBJ_EVENT_ID_FULL_FOLLOWER)
+                continue;
+
+            // The follower must respect NPCs and the player's CURRENT tile.
+            // The player's previous tile is precisely the tile it should trail,
+            // so the follower alone may enter that already-vacated position.
+            if (objectEvent->localId == OBJ_EVENT_ID_FULL_FOLLOWER && curObject->isPlayer)
+            {
+                if (curObject->currentCoords.x == x && curObject->currentCoords.y == y
+                 && AreElevationsCompatible(objectEvent->currentElevation, curObject->currentElevation))
+                    return TRUE;
+                continue;
+            }
+
             if ((curObject->currentCoords.x == x && curObject->currentCoords.y == y) || (curObject->previousCoords.x == x && curObject->previousCoords.y == y))
             {
                 if (AreElevationsCompatible(objectEvent->currentElevation, curObject->currentElevation))
@@ -5276,7 +5367,10 @@ static void ObjectEventSetSingleMovement(struct ObjectEvent *objectEvent, struct
     objectEvent->movementActionId = movementActionId;
     sprite->data[2] = 0;
     
-    if (gQuestLogPlaybackState == QL_PLAYBACK_STATE_RECORDING)
+    // Follower localId 254 is runtime-only and outside Quest Log's fixed
+    // sMovementScripts[OBJECT_EVENT_TEMPLATES_COUNT] index range.
+    if (gQuestLogPlaybackState == QL_PLAYBACK_STATE_RECORDING
+     && objectEvent->localId != OBJ_EVENT_ID_FULL_FOLLOWER)
         QuestLogRecordNPCStep(objectEvent->localId, objectEvent->mapNum, objectEvent->mapGroup, movementActionId);
 }
 
