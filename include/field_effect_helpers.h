@@ -20,6 +20,7 @@ void StartAshFieldEffect(s16, s16, u16, s16);
 void StartRevealDisguise(struct ObjectEvent *);
 bool8 UpdateRevealDisguise(struct ObjectEvent *);
 void SetUpReflection(struct ObjectEvent *, struct Sprite *, u8);
+void RemoveFullFollowerFieldEffects(const struct ObjectEvent *follower);
 u32 StartFieldEffectForObjectEvent(u8, struct ObjectEvent *);
 u8 FindTallGrassFieldEffectSpriteId(u8 localId, u8 mapNum, u8 mapGroup, s16 x, s16 y);
 void ShowWarpArrowSprite(u8 spriteId, u8 direction, s16 x, s16 y);

@@ -4,6 +4,7 @@
 #include "field_camera.h"
 #include "field_effect.h"
 #include "field_effect_helpers.h"
+#include "full_follower.h"
 #include "field_weather.h"
 #include "fieldmap.h"
 #include "metatile_behavior.h"
@@ -33,11 +34,28 @@ static u32 ShowDisguiseFieldEffect(u8 fldEff, u8 templateIdx, u8 paletteNum);
 void SetUpReflection(struct ObjectEvent * objectEvent, struct Sprite *sprite, bool8 stillReflection)
 {
     struct Sprite *reflectionSprite;
+    u8 reflectionSpriteId;
 
-    reflectionSprite = &gSprites[CreateCopySpriteAt(sprite, sprite->x, sprite->y, 0x98)];
+    // Sprite slots are shared by NPCs, field effects and the follower.
+    // CreateCopySpriteAt returns MAX_SPRITES when all 64 are occupied.
+    reflectionSpriteId = CreateCopySpriteAt(sprite, sprite->x, sprite->y, 0x98);
+    if (reflectionSpriteId == MAX_SPRITES)
+    {
+        // The ground-effect engine already set hasReflection before calling
+        // us. Keep follower reflections retryable after sprite pressure drops.
+        // Ordinary NPC reflection behavior remains unchanged.
+        if (objectEvent->localId == OBJ_EVENT_ID_FULL_FOLLOWER)
+            objectEvent->hasReflection = FALSE;
+        return;
+    }
+    reflectionSprite = &gSprites[reflectionSpriteId];
     reflectionSprite->callback = UpdateObjectReflectionSprite;
     reflectionSprite->oam.priority = 3;
-    reflectionSprite->oam.paletteNum = gReflectionEffectPaletteMap[reflectionSprite->oam.paletteNum];
+    // Dynamic palette indices 12-15 are not in the vanilla reflection map.
+    // The pilot reflection shares its main palette rather than borrowing the
+    // player's reflection palette. Native NPC reflections remain unchanged.
+    if (objectEvent->localId != OBJ_EVENT_ID_FULL_FOLLOWER || !FullFollower_UsesPilotGraphics())
+        reflectionSprite->oam.paletteNum = gReflectionEffectPaletteMap[reflectionSprite->oam.paletteNum];
     reflectionSprite->usingSheet = TRUE;
     reflectionSprite->anims = gDummySpriteAnimTable;
     StartSpriteAnim(reflectionSprite, 0);
@@ -47,7 +65,8 @@ void SetUpReflection(struct ObjectEvent * objectEvent, struct Sprite *sprite, bo
     reflectionSprite->data[0] = sprite->data[0];
     reflectionSprite->data[1] = objectEvent->localId;
     reflectionSprite->data[7] = stillReflection;
-    LoadObjectReflectionPalette(objectEvent, reflectionSprite);
+    if (objectEvent->localId != OBJ_EVENT_ID_FULL_FOLLOWER || !FullFollower_UsesPilotGraphics())
+        LoadObjectReflectionPalette(objectEvent, reflectionSprite);
 
     if (!stillReflection)
         reflectionSprite->oam.affineMode = ST_OAM_AFFINE_NORMAL;
@@ -118,7 +137,10 @@ static void UpdateObjectReflectionSprite(struct Sprite *reflectionSprite)
     }
     else
     {
-        reflectionSprite->oam.paletteNum = gReflectionEffectPaletteMap[mainSprite->oam.paletteNum];
+        if (objectEvent->localId == OBJ_EVENT_ID_FULL_FOLLOWER && FullFollower_UsesPilotGraphics())
+            reflectionSprite->oam.paletteNum = mainSprite->oam.paletteNum;
+        else
+            reflectionSprite->oam.paletteNum = gReflectionEffectPaletteMap[mainSprite->oam.paletteNum];
         reflectionSprite->oam.shape = mainSprite->oam.shape;
         reflectionSprite->oam.size = mainSprite->oam.size;
         reflectionSprite->oam.matrixNum = mainSprite->oam.matrixNum | ST_OAM_VFLIP;
@@ -1416,6 +1438,60 @@ static void UpdateGrassFieldEffectSubpriority(struct Sprite *sprite, u8 z, u8 of
                     break;
                 }
             }
+        }
+    }
+}
+
+void RemoveFullFollowerFieldEffects(const struct ObjectEvent *follower)
+{
+    u8 i;
+    u8 objectEventId = follower - gObjectEvents;
+
+    // Only runtime-owned effects are removed. Reflections share their source
+    // sprite's tiles; native reflection teardown only invalidates the copy.
+    // Attached terrain effects use either (localId, mapNum, mapGroup) or
+    // the packed localId/mapNum used by the grass overlay callbacks.
+    for (i = 0; i < MAX_SPRITES; i++)
+    {
+        struct Sprite *sprite = &gSprites[i];
+
+        if (!sprite->inUse)
+            continue;
+
+        if (sprite->callback == UpdateObjectReflectionSprite)
+        {
+            if (sprite->data[0] == objectEventId
+             && sprite->data[1] == follower->localId)
+                sprite->inUse = FALSE;
+        }
+        else if (sprite->callback == UpdateTallGrassFieldEffect
+              || sprite->callback == UpdateLongGrassFieldEffect)
+        {
+            if ((u8)(sprite->data[3] >> 8) == follower->localId
+             && (u8)sprite->data[3] == follower->mapNum
+             && (u8)sprite->data[4] == follower->mapGroup)
+                FieldEffectStop(sprite, sprite->callback == UpdateTallGrassFieldEffect
+                                           ? FLDEFF_TALL_GRASS : FLDEFF_LONG_GRASS);
+        }
+        // Native StartFieldEffectForObjectEvent writes u8 IDs into u32
+        // arguments; pre-existing high bits can survive in sprite data.
+        // Match the same low-byte identity as native field-effect callbacks.
+        else if ((u8)sprite->data[0] == follower->localId
+              && (u8)sprite->data[1] == follower->mapNum
+              && (u8)sprite->data[2] == follower->mapGroup)
+        {
+            if (sprite->callback == UpdateShadowFieldEffect)
+                FieldEffectStop(sprite, FLDEFF_SHADOW);
+            else if (sprite->callback == UpdateShortGrassFieldEffect)
+                FieldEffectStop(sprite, FLDEFF_SHORT_GRASS);
+            else if (sprite->callback == UpdateSandPileFieldEffect)
+                FieldEffectStop(sprite, FLDEFF_SAND_PILE);
+            else if (sprite->callback == UpdateHotSpringsWaterFieldEffect)
+                FieldEffectStop(sprite, FLDEFF_HOT_SPRINGS_WATER);
+            else if (sprite->callback == UpdateFeetInFlowingWaterFieldEffect)
+                FieldEffectStop(sprite, FLDEFF_FEET_IN_FLOWING_WATER);
+            else if (sprite->callback == UpdateSplashFieldEffect)
+                FieldEffectStop(sprite, FLDEFF_SPLASH);
         }
     }
 }
