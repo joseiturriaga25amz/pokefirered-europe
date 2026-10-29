@@ -323,6 +323,225 @@ jobs:
           print("National 386 species registry, shiny lookup and 8-bit fallback ABI PASS")
           PY
 
+
+      # Original follower scene/link/QuestLog source assertions, checked
+      # against the integrated Full candidate before any C/GBA build.
+      - name: Audit follower graphics swap lifecycle
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          s = Path("src/full_follower.c").read_text()
+          cleanup = Path("src/event_object_movement.c").read_text()
+          start = s.index("static void RefreshFollower(void)\n{")
+          end = s.index("\nstatic void Task_FullFollower(", start)
+          body = s[start:end]
+          remove = body.index("RemoveFullFollowerObjectEvent(follower);", body.index("graphicsId = GetPrototypeFollowerGraphicsId(species);"))
+          update_species = body.index("sFollowerSpecies = species;")
+          update_graphics = body.index("sFollowerGraphicsId = graphicsId;")
+          spawn = body.index("SpawnSpecialObjectEventParameterized(")
+          assert remove < update_species < spawn and remove < update_graphics < spawn
+          assert "sFollowerSpecies != species" in body
+          assert "sFollowerGraphicsId != graphicsId" in body
+          assert "follower = NULL;" in body[remove:update_species]
+          assert "ObjectEventSetGraphicsId(" not in body
+          assert "if (objectEventId >= OBJECT_EVENTS_COUNT)" in body
+          assert "RemoveFullFollowerObjectEvent(follower);" in body[:body.index("graphicsId = GetPrototypeFollowerGraphicsId(species);")]
+          assert "FlagSet(" not in cleanup[cleanup.index("void RemoveFullFollowerObjectEvent("):cleanup.index("static void RemoveObjectEventInternal(")]
+          print("Follower sprite recreated on species change, old graphics cleaned up before slot switch")
+          PY
+
+      - name: Audit local/link/quest-log follower isolation
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          s = Path("src/overworld.c").read_text()
+          f = Path("src/full_follower.c").read_text()
+          header = Path("include/full_follower.h").read_text()
+          def implementation(name):
+              # Require the opening brace to skip forward declarations.
+              signature = "static bool32 " + name + "(u8 *state)\n{"
+              start = s.index(signature)
+              end = s.index("\nstatic ", start + len(signature))
+              return s[start:end]
+          local = implementation("ReturnToFieldLocal")
+          link = implementation("ReturnToFieldLink")
+          playback = implementation("LoadMap_QLPlayback")
+          assert "ReloadObjectsAndRunReturnToFieldMapScript(TRUE);" in local
+          assert "ReloadObjectsAndRunReturnToFieldMapScript(FALSE);" in link
+          assert "ReloadObjectsAndRunReturnToFieldMapScript(FALSE);" in playback
+          assert s.count("ReloadObjectsAndRunReturnToFieldMapScript(TRUE);") == 1
+          assert s.count("ReloadObjectsAndRunReturnToFieldMapScript(FALSE);") == 2
+          gate = s[s.index("static void ReloadObjectsAndRunReturnToFieldMapScript(bool8 allowFollower)\n{"):s.index("\nstatic void SetCameraToTrackPlayer(", s.index("static void ReloadObjectsAndRunReturnToFieldMapScript(bool8 allowFollower)\n{"))]
+          assert "if (allowFollower)\n        FullFollower_OnLocalMapReady();" in gate
+          resume = s[s.index("static void ResumeMap(bool32 inLink)\n{"):s.index("\nstatic void InitObjectEventsLink(", s.index("static void ResumeMap(bool32 inLink)\n{"))]
+          assert resume.index("if (inLink || QL_IS_PLAYBACK_STATE)\n        FullFollower_DiscardForLink();") < resume.index("ResetSpriteData();")
+          assert resume.index("else\n        FullFollower_DiscardForLocalReload();") < resume.index("ResetSpriteData();")
+          assert "void FullFollower_DiscardForLink(void);" in header
+          assert "void FullFollower_DiscardForLocalReload(void);" in header
+          local = f[f.index("void FullFollower_DiscardForLocalReload(void)\n{"):f.index("\nvoid FullFollower_DiscardForLink(void)", f.index("void FullFollower_DiscardForLocalReload(void)\n{"))]
+          discard = f[f.index("void FullFollower_DiscardForLink(void)\n{"):f.index("\nvoid FullFollower_OnLocalMapReady(void)", f.index("void FullFollower_DiscardForLink(void)\n{"))]
+          assert "follower->active = FALSE;" in local
+          assert "sFollowerSpecies = SPECIES_NONE;" in local and "sTrailCount = 0;" in local
+          assert "sFollowerWarpTransition = FALSE;" not in local
+          assert "sFollowerExitLockObserved = FALSE;" not in local
+          assert "FullFollower_DiscardForLocalReload();" in discard
+          assert "sFollowerWarpTransition = FALSE;" in discard
+          assert "sFollowerExitLockObserved = FALSE;" in discard
+          assert "DestroySprite(" not in local and "FlagSet(" not in local
+          assert "DestroySprite(" not in discard and "FlagSet(" not in discard
+          event = Path("src/event_object_movement.c").read_text()
+          rebuild = event[event.index("void SpawnObjectEventsOnReturnToField(s16 x, s16 y)\n{"):event.index("\nstatic void SpawnObjectEventOnReturnToField(", event.index("void SpawnObjectEventsOnReturnToField(s16 x, s16 y)\n{"))]
+          assert "if (gObjectEvents[i].active)" in rebuild
+          assert resume.index("FullFollower_DiscardForLocalReload();") < resume.index("ResetSpriteData();")
+          print("Local reload drops transient follower before sprite rebuild; link and Quest Log reset warp gate")
+          PY
+
+      - name: Audit follower Quest Log recording and playback isolation
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          f = Path("src/full_follower.c").read_text()
+          e = Path("src/event_object_movement.c").read_text()
+          q = Path("src/quest_log.c").read_text()
+          constants = Path("include/constants/quest_log.h").read_text()
+          assert '#include "quest_log.h"' in f
+          suppress = f[f.index("static bool8 ShouldSuppressFollower(void)\n{"):f.index("\nstatic void PositionFollowerBehindPlayer(", f.index("static bool8 ShouldSuppressFollower(void)\n{"))]
+          assert "if (QL_IS_PLAYBACK_STATE)\n        return TRUE;" in suppress
+          assert "QL_IS_PLAYBACK_STATE" in constants
+          refresh = f[f.index("static void RefreshFollower(void)\n{"):f.index("\nstatic void Task_FullFollower(", f.index("static void RefreshFollower(void)\n{"))]
+          assert "if (ShouldSuppressFollower() || !sFollowerEnabled || species == SPECIES_NONE)" in refresh
+          assert "RemoveFullFollowerObjectEvent(follower);" in refresh
+          record = e[e.index("static void ObjectEventSetSingleMovement(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 movementActionId)\n{"):e.index("\nstatic void FaceDirection(", e.index("static void ObjectEventSetSingleMovement(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 movementActionId)\n{"))]
+          assert "objectEvent->localId != OBJ_EVENT_ID_FULL_FOLLOWER" in record
+          assert record.index("objectEvent->localId != OBJ_EVENT_ID_FULL_FOLLOWER") < record.index("QuestLogRecordNPCStep(")
+          assert "sMovementScripts[OBJECT_EVENT_TEMPLATES_COUNT][2]" in q
+          assert "sMovementScripts[sCurSceneActions[gQuestLogCurActionIdx].data.a.localId][0]" in q
+          assert "MOVEMENT_TYPE_NONE" in f
+          print("Follower ID excluded from recorded NPC steps and Quest Log playback")
+          PY
+
+      - name: Audit safe indoor follower spawn tile
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          f = Path("src/full_follower.c").read_text()
+          event = Path("src/event_object_movement.c").read_text()
+          start = f.index("static bool8 GetSafeFollowerSpawnCoords(s16 *x, s16 *y)\n{")
+          end = f.index("\nstatic void PositionFollowerBehindPlayer(", start)
+          body = f[start:end]
+          assert "GetOppositeDirection(player->facingDirection)" in body
+          assert "MoveCoords(direction, x, y);" in body
+          assert "GetCollisionAtCoords(player, *x, *y, direction) == COLLISION_NONE" in body
+          assert "DIR_SOUTH" in body and "DIR_EAST" in body
+          start = f.index("static void RefreshFollower(void)\n{")
+          end = f.index("\nstatic void Task_FullFollower(", start)
+          refresh = f[start:end]
+          guard = refresh.index("if (!GetSafeFollowerSpawnCoords(&spawnX, &spawnY))\n            return;")
+          spawn = refresh.index("SpawnSpecialObjectEventParameterized(")
+          pos = refresh.index("PositionFollowerBehindPlayer(follower, spawnX, spawnY);")
+          assert guard < spawn < pos
+          assert "if (objectEventId >= OBJECT_EVENTS_COUNT)\n            return;" in refresh
+          assert "MoveObjectEventToMapCoords(follower, x, y);" in f
+          collision = event[event.index("u8 GetCollisionAtCoords(struct ObjectEvent *objectEvent, s16 x, s16 y, u32 dir)\n{"):event.index("\nu8 GetCollisionFlagsAtCoords(",event.index("u8 GetCollisionAtCoords(struct ObjectEvent *objectEvent, s16 x, s16 y, u32 dir)\n{"))]
+          assert "MapGridGetCollisionAt(x, y)" in collision
+          assert "DoesObjectCollideWithObjectAt(objectEvent, x, y)" in collision
+          assert "IsElevationMismatchAt(objectEvent->currentElevation, x, y)" in collision
+          # No blanket MAP_TYPE_INDOOR rejection: approved policy allows safe interiors.
+          assert "MAP_TYPE_INDOOR" not in body
+          print("Follower spawns only on passable unoccupied tile, indoors allowed")
+          PY
+
+      - name: Audit follower camera-coordinate synchronization
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          h=Path("include/full_follower.h").read_text()
+          f=Path("src/full_follower.c").read_text()
+          e=Path("src/event_object_movement.c").read_text()
+          assert "void FullFollower_OnCameraCoordsShift(s16 dx, s16 dy);" in h
+          camera=e[e.index("void UpdateObjectEventCoordsForCameraUpdate(void)\n{"):e.index("\nu8 GetObjectEventIdByPosition(")]
+          assert camera.index("gObjectEvents[i].previousCoords.y -= dy;") < camera.index("FullFollower_OnCameraCoordsShift(dx, dy);")
+          start=f.index("void FullFollower_OnCameraCoordsShift(s16 dx, s16 dy)\n{")
+          end=f.index("\nstatic bool8 FollowRecordedPlayerSteps(struct ObjectEvent *follower)\n{", start)
+          assert end > start
+          body=f[start:end]
+          for part in ("if (FindFollowerObject() == NULL)", "sLastPlayerX -= dx;", "sLastPlayerY -= dy;", "i < sTrailCount", "(sTrailHead + i) % FOLLOWER_TRAIL_CAPACITY", "sTrailX[index] -= dx;", "sTrailY[index] -= dy;"):
+              assert part in body
+          xs=list(range(8));ys=list(range(10,18));head,count,dx,dy=6,4,1,-2
+          for i in range(count):
+              p=(head+i)%8
+              xs[p]-=dx;ys[p]-=dy
+          assert xs==[-1,0,2,3,4,5,5,6]
+          assert ys==[12,13,12,13,14,15,18,19]
+          assert ((23-dx)-(22-dx),(13-dy)-(13-dy))==(1,0)
+          print("Camera-coordinates and ring-buffer trail stay aligned")
+          PY
+
+      - name: Audit whiteout follower cleanup and local recovery
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          battle = Path("src/battle_setup.c").read_text()
+          world = Path("src/overworld.c").read_text()
+          screen = Path("src/field_screen_effect.c").read_text()
+          script = Path("src/script.c").read_text()
+          follower = Path("src/full_follower.c").read_text()
+          def body(src, signature):
+              start = src.index(signature + "\n{")
+              end = src.index("\n}", start)
+              return src[start:end]
+
+          # Normal trainer, rematch, wild and scripted encounter losses route
+          # to the same whiteout map reload (not the local battle return).
+          for signature in (
+              "static void CB2_EndTrainerBattle(void)",
+              "static void CB2_EndRematchBattle(void)",
+              "static void CB2_EndWildBattle(void)",
+              "static void CB2_EndScriptedWildBattle(void)",
+              "static void CB2_EndMarowakBattle(void)",
+          ):
+              assert "SetMainCallback2(CB2_WhiteOut);" in body(battle, signature), signature
+          recall = body(follower, "void FullFollower_RecallForBattle(void)")
+          assert "sFollowerBattleTransition = TRUE;" in recall
+          assert "RemoveFullFollowerObjectEvent(follower);" in recall
+
+          # Whiteout heals and warps before loading the new local map.
+          whiteout = body(world, "void CB2_WhiteOut(void)")
+          do_whiteout = body(world, "static void DoWhiteOut(void)")
+          assert do_whiteout.index("HealPlayerParty();") < do_whiteout.index("WarpIntoMap();")
+          for name in ("ScriptContext_Init();", "UnlockPlayerFieldControls();",
+                       "gFieldCallback = FieldCB_RushInjuredPokemonToCenter;",
+                       "DoMapLoadLoop(&val);"):
+              assert name in whiteout, name
+          assert whiteout.index("gFieldCallback = FieldCB_RushInjuredPokemonToCenter;") < whiteout.index("DoMapLoadLoop(&val);")
+
+          # After sprite/task reset, the local map recreates a fresh follower
+          # task; it cannot spawn before the recovery callback locks controls.
+          resume = body(world, "static void ResumeMap(bool32 inLink)")
+          assert resume.index("FullFollower_DiscardForLocalReload();") < resume.index("ResetTasks();") < resume.index("ResetSpriteData();")
+          load = body(world, "static bool32 LoadMapInStepsLocal(u8 *state, bool32 inLink)")
+          assert load.index("ResumeMap(inLink);") < load.index("InitObjectEventsLocal();") < load.index("if (RunFieldCallback())")
+          init = body(world, "static void InitObjectEventsLocal(void)")
+          assert "FullFollower_OnLocalMapReady();" in init
+          ready = body(follower, "void FullFollower_OnLocalMapReady(void)")
+          assert ready.index("sFollowerBattleTransition = FALSE;") < ready.index("CreateTask(Task_FullFollower, FOLLOWER_TASK_PRIORITY);")
+          fieldcb = body(screen, "void FieldCB_RushInjuredPokemonToCenter(void)")
+          assert fieldcb.index("LockPlayerFieldControls();") < fieldcb.index("CreateTask(Task_RushInjuredPokemonToCenter, 10);")
+          recover = body(screen, "static void Task_RushInjuredPokemonToCenter(u8 taskId)")
+          for event in ("EventScript_AfterWhiteOutHeal", "EventScript_AfterWhiteOutMomHeal"):
+              assert "ScriptContext_SetupScript(" + event + ");" in recover
+          suppression = body(follower, "static bool8 ShouldSuppressFollower(void)")
+          assert "if (sFollowerBattleTransition)\n        return TRUE;" in suppression
+          assert "ArePlayerFieldControlsLocked()" in suppression
+          assert "ScriptContext_IsEnabled()" in suppression
+          refresh = body(follower, "static void RefreshFollower(void)")
+          assert "if (ShouldSuppressFollower() || !sFollowerEnabled || species == SPECIES_NONE)" in refresh
+          scripts = body(script, "bool8 ScriptContext_RunScript(void)")
+          assert "UnlockPlayerFieldControls();" in scripts
+          print("Whiteout local recovery and follower deferred-respawn source contract PASS")
+          print("MyBoy visual recovery is still NOT_EXECUTED")
+          PY
+
       - name: Preserve audited global Full data and save state
         run: |
           python3 tools/validate_audited_data_blobs.py
