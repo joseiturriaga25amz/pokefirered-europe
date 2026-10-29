@@ -178,6 +178,10 @@
 
 #define NUM_OBJ_EVENT_GFX     172
 
+// Runtime-only diagnostic follower graphics slot; never an NPC map template.
+// Stay after all current Full overworld graphics, before dynamic 240..255 IDs.
+#define OBJ_EVENT_GFX_FULL_FOLLOWER NUM_OBJ_EVENT_GFX
+
 // These are dynamic object gfx ids.
 // They correspond with the values of the VAR_OBJ_GFX_ID_X vars.
 // More info about them in include/constants/vars.h
