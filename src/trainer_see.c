@@ -3,7 +3,9 @@
 #include "event_object_movement.h"
 #include "field_effect.h"
 #include "field_player_avatar.h"
+#include "full_follower.h"
 #include "quest_log.h"
+#include "trainer_see.h"
 #include "script.h"
 #include "task.h"
 #include "util.h"
@@ -242,6 +244,18 @@ static u8 CheckPathBetweenTrainerAndPlayer(struct ObjectEvent *trainerObj, u8 ap
 #define TaskGetTrainerObj(dest, task) do { \
     (dest) = (struct ObjectEvent *)(((task)->tTrainerObjHi << 16) | ((u16)(task)->tTrainerObjLo)); \
 } while (0)
+
+// Only the native trainer-sight task owns this visibility exception.
+// ConfigureAndSetUpOneTrainerBattle starts the trainer script BEFORE the
+// approach task; the script may still be running while the trainer walks.
+// Do not reject that legitimate overlap. Warp, link, battle and fade gates
+// are enforced independently by the follower presentation state.
+bool8 TrainerSee_IsApproachActive(void)
+{
+    return FuncIsActiveTask(Task_RunTrainerSeeFuncList)
+        && !QL_IS_PLAYBACK_STATE
+        && !IsUpdateLinkStateCBActive();
+}
 
 static void TrainerApproachPlayer(struct ObjectEvent * trainerObj, u8 approachDistance)
 {
@@ -549,6 +563,11 @@ void EndTrainerApproach(void)
 
 static void Task_DestroyTrainerApproachTask(u8 taskId)
 {
+    // Overworld scripts run before tasks. Preserve the visible companion across
+    // the one-frame gap between trainer approach and the resumed intro script.
+    // The same gated hold is refreshed by ShowTrainerIntroSpeech and cleared
+    // at battle transition or script shutdown.
+    FullFollower_BeginTrainerIntro();
     DestroyTask(taskId);
     ScriptContext_Enable();
 }

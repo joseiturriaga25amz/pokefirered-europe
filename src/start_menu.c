@@ -405,6 +405,25 @@ void ShowStartMenu(void)
     LockPlayerFieldControls();
 }
 
+// Derive the safe-menu window from running tasks, never a persistent flag.
+// It ends automatically on field departure/task reset and excludes link UI.
+bool8 StartMenu_IsSafeForFollower(void)
+{
+    if (MenuHelpers_IsLinkActive() || InUnionRoom() || gPaletteFade.active)
+        return FALSE;
+
+    if (FuncIsActiveTask(task50_startmenu))
+        return TRUE;
+
+    if (!FuncIsActiveTask(Task_StartMenuHandleInput))
+        return FALSE;
+
+    return sStartMenuCallback == StartCB_HandleInput
+        || sStartMenuCallback == StartMenuSaveCallback
+        || sStartMenuCallback == StartCB_Save1
+        || sStartMenuCallback == StartCB_Save2;
+}
+
 static bool8 StartCB_HandleInput(void)
 {
     if (JOY_NEW(DPAD_UP))
