@@ -1267,6 +1267,50 @@ jobs:
           print("Gen III internal species 277 != National Dex 252; registered follower maps safely PASS")
           PY
 
+      # Original B10 sprite/OAM suppression and six native-graphics budgets.
+      # MAX_SPRITES and OBJECT_EVENTS_COUNT are checked elsewhere above.
+      - name: Audit follower sprite/OAM suppression and native graphics budget
+        run: |
+          python3 - <<'PY'
+          import re
+          from pathlib import Path
+          f = Path("src/full_follower.c").read_text()
+          e = Path("src/event_object_movement.c").read_text()
+          gfx = Path("src/data/object_events/object_event_graphics_info.h").read_text()
+          start = f.index("static void RefreshFollower(void)\n{")
+          end = f.index("\nstatic void Task_FullFollower(", start)
+          refresh = f[start:end]
+          suppress = f[f.index("static bool8 ShouldSuppressFollower(void)\n{"):f.index("\nstatic void PositionFollowerBehindPlayer(", f.index("static bool8 ShouldSuppressFollower(void)\n{"))]
+          guard = "if (ShouldSuppressFollower() || !sFollowerEnabled || species == SPECIES_NONE)"
+          assert guard in refresh
+          early = refresh[refresh.index(guard):refresh.index("graphicsId = GetPrototypeFollowerGraphicsId(species);")]
+          assert "RemoveFullFollowerObjectEvent(follower);" in early
+          assert "sFollowerSpecies = SPECIES_NONE;" in early
+          assert "return;" in early
+          assert "ScriptContext_IsEnabled()" in suppress
+          assert "PLAYER_AVATAR_FLAG_SURFING" in suppress
+          assert "PLAYER_AVATAR_FLAG_MACH_BIKE" in suppress
+          assert "PLAYER_AVATAR_FLAG_ACRO_BIKE" in suppress
+          assert "sFollowerSpecies == SPECIES_NONE" not in suppress
+          assert "gSprites[follower->spriteId].invisible =" not in refresh
+          assert "UpdateObjEventSpriteVisibility(objectEvent, sprite);" in e
+          assert "sprite->invisible = TRUE;" in e[e.index("static void UpdateObjEventSpriteVisibility(struct ObjectEvent *objectEvent, struct Sprite *sprite)\n{"):]
+          names = ("Pikachu", "Snorlax", "Mew", "Suicune", "Pidgey", "Spearow")
+          for name in names:
+              m = re.search(r"const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_" + name + r" = \{(.*?)\n\};", gfx, re.S)
+              assert m, f"Missing native graphics info: {name}"
+              data = m.group(1)
+              size = int(re.search(r"\.size = (\d+)", data).group(1))
+              width = int(re.search(r"\.width = (\d+)", data).group(1))
+              height = int(re.search(r"\.height = (\d+)", data).group(1))
+              assert size == width * height // 2, (name, size, width, height)
+              assert (width, height) in ((16, 16), (32, 32)), (name, width, height)
+              assert re.search(r"\.paletteSlot = PALSLOT_NPC_[1-4],", data), name
+              assert re.search(r"\.paletteTag = OBJ_EVENT_PAL_TAG_NPC_(BLUE|PINK|GREEN|WHITE),", data), name
+              print(f"{name}: {width}x{height}, {size // 32} 4bpp tiles, standard shared NPC palette")
+          print("Suppression frees runtime object; visibility remains engine-owned; native 6-species budget PASS")
+          PY
+
       - name: Preserve audited global Full data and save state
         run: |
           python3 tools/validate_audited_data_blobs.py
