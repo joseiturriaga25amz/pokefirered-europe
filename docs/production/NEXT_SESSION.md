@@ -14,6 +14,10 @@ Use `docs/spec/` only for frozen historical design details.
 
 ## Current state
 
+- **2026-10-29 — COLAB RESET CONFIRMED; DIAGNOSE BUILD REPRODUCIBILITY BEFORE ANOTHER USER RUN.** User checked and found `/content/b10-full-source`, previous private `.gba` and `/usr/bin/arm-none-eabi-gcc` absent; neither ARM package is installed anymore. Previous Colab runtime's ephemeral files and toolchain are gone; not a loss of canonical git/Drive backup. This **does not explain** the earlier SHA-1 mismatches; CI version of Full and B10 remain validated at exact `e94824c`, but no delivered MyBoy ROM or runtime QA. **NEXT ACTION:** inspect potential build-determinism differences in source/tool scripts, locale and PATH; avoid another identical user compilation. If another private build is needed, enhance existing handoff with preflight/version/source/input hashes, explicit failure retention of diagnostics and controlled exact-CI SHA acceptance; do not publish ROM/art and do not weaken safeguards. `master` protected, B10 open.
+
+
+
 - **2026-10-29 — NEXT FIRST ACTION: CHECK WHETHER COLAB RUNTIME WAS RESET, NO REBUILD.** The user now reports `shutil.which(...) == None` for ARM compiler, preprocessor, assembler and linker even though prior ROM and plain-Full builds completed. Host gcc/make exist; DEVKITARM and CC unset. Earlier package checks showed ARM packages installed; active runtime may have reset or PATH/packages changed. Do not claim that this explains earlier SHA mismatches. Ask user to run one read-only cell checking old `/content` source and `.gba` presence, `/usr/bin/arm-none-eabi-gcc` and `dpkg-query` package status; preserve strict CI SHA-1 check and do not download mismatched ROM. Original B10 and Full exact CI at `e94824c` remain GREEN, master untouched, B10 OPEN.
 
 
