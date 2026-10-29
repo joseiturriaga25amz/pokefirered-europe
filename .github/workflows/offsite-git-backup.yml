@@ -38,7 +38,7 @@ jobs:
       - name: Upload backup for external Drive transfer
         uses: actions/upload-artifact@v4
         with:
-          name: pokefirered-europe-git-backup-2026-10-28
+          name: pokefirered-europe-git-backup-2026-10-29
           path: snapshot/
           if-no-files-found: error
           retention-days: 3
