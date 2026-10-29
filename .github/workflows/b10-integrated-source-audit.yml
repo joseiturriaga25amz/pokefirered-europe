@@ -1136,6 +1136,137 @@ jobs:
           print("Running and follower fast walk both 8 frames; active ledge jumps suppress follower")
           PY
 
+      # Recover original prototype safety checks missing from the integrated
+      # source gate; the first eligible lead is already checked exhaustively by
+      # tools/validate_follower_interaction.py, so avoid duplicating it here.
+      - name: Audit follower slot cleanup on ineligible lead
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          follower = Path("src/full_follower.c").read_text()
+          movement = Path("src/event_object_movement.c").read_text()
+          header = Path("include/event_object_movement.h").read_text()
+          assert "if (ShouldSuppressFollower() || !sFollowerEnabled || species == SPECIES_NONE)" in follower
+          assert "RemoveFullFollowerObjectEvent(follower);" in follower
+          assert "void RemoveFullFollowerObjectEvent(struct ObjectEvent *objectEvent);" in header
+          start = movement.index("void RemoveFullFollowerObjectEvent(struct ObjectEvent *objectEvent)")
+          end = movement.index("\nstatic void RemoveObjectEventInternal(", start)
+          helper = movement[start:end]
+          assert "objectEvent->active" in helper
+          assert "objectEvent->localId == OBJ_EVENT_ID_FULL_FOLLOWER" in helper
+          assert "RemoveObjectEvent(objectEvent);" in helper
+          assert "FlagSet(" not in helper
+          assert "RemoveObjectEventByLocalIdAndMap(" not in helper
+          print("Runtime follower frees object slot without modifying event flags")
+          PY
+
+      - name: Audit Quest Log follower task gate
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          f = Path("src/full_follower.c").read_text()
+          s = Path("src/overworld.c").read_text()
+          start = f.index("void FullFollower_OnLocalMapReady(void)\n{")
+          ready = f[start:]
+          assert ready.index("if (QL_IS_PLAYBACK_STATE)\n        return;") < ready.index("CreateTask(")
+          begin = s.index("static void ResumeMap(bool32 inLink)\n{")
+          resume = s[begin:s.index("\nstatic void InitObjectEventsLink(", begin)]
+          assert resume.index("if (inLink || QL_IS_PLAYBACK_STATE)") < resume.index("ResetSpriteData();")
+          print("Quest Log follower excluded before sprite reset and task creation")
+          PY
+
+      - name: Audit follower shiny variant identity across slot lifecycle
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          f = Path("src/full_follower.c").read_text()
+          h = Path("include/full_follower.h").read_text()
+          p = Path("include/pokemon.h").read_text()
+          assert "bool8 IsMonShiny(struct Pokemon *mon);" in p
+          assert "bool8 FullFollower_IsShiny(void);" in h
+          assert "static bool8 sFollowerIsShiny = FALSE;" in f
+          lead = f.split("static u16 GetEligiblePrototypeFollowerSpecies(bool8 *isShiny)\n{",1)[1].split("\nstatic struct ObjectEvent *FindFollowerObject(",1)[0]
+          assert "*isShiny = FALSE;" in lead
+          assert "species != SPECIES_NONE && hp != 0 && !isEgg" in lead
+          assert "if (GetPrototypeFollowerGraphicsId(species) == 0xFF)" in lead
+          assert "return SPECIES_NONE;" in lead
+          assert "*isShiny = IsMonShiny(&gPlayerParty[i]);" in lead
+          assert lead.index("if (GetPrototypeFollowerGraphicsId(species) == 0xFF)") < lead.index("IsMonShiny(&gPlayerParty[i])")
+          refresh = f.split("static void RefreshFollower(void)\n{",1)[1].split("\nstatic void Task_FullFollower(",1)[0]
+          assert "GetEligiblePrototypeFollowerSpecies(&isShiny)" in refresh
+          assert "sFollowerIsShiny != isShiny" in refresh
+          assert refresh.index("RemoveFullFollowerObjectEvent(follower);") < refresh.index("sFollowerIsShiny = isShiny;")
+          assert "sFollowerIsShiny = isShiny;" in refresh
+          assert refresh.count("sFollowerIsShiny = FALSE;") >= 2
+          for name in ("FullFollower_RecallForWarp", "FullFollower_DiscardForLocalReload"):
+              body = f.split("void " + name + "(void)\n{",1)[1].split("\n}",1)[0]
+              assert "sFollowerIsShiny = FALSE;" in body
+          # This gate proves identity/teardown sequencing, not visible
+          # shiny sprites; graphics remain six native prototype OW sheets.
+          print("Follower runtime shiny identity selection/swap/recall PASS")
+          PY
+
+      - name: Audit diagnostic follower four-direction palette rendering pilot
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          src = Path("src/event_object_movement.c").read_text()
+          images = Path("src/data/object_events/follower_pilot_graphics.h").read_text()
+          follower = Path("src/full_follower.c").read_text()
+          assert '#include "data/object_events/follower_pilot_graphics.h"' in src
+          assert "if (graphicsId == OBJ_EVENT_GFX_PIKACHU)" in src
+          assert "FullFollower_IsShiny() ? &sFollowerPilotShinyGraphics : &sFollowerPilotNormalGraphics" in src
+          assert "sFollowerIsShiny != isShiny" in follower
+          assert "sFollowerIsShiny = isShiny;" in follower
+          assert "static const u32 sFollowerPilotPixels[16][32]" in images
+          assert len(re.findall(r'\{ \(const u8 \*\)sFollowerPilotPixels\[\d+\], 16 \* 16 / 2 \}', images)) == 16
+          for label in ("South", "North", "West", "East"):
+              for prefix in ("Face", "Walk", "Fast", "Faster", "Fastest"):
+                  assert "sFollowerPilot" + prefix + label + "[]" in images
+              for enum in ("FACE", "GO", "GO_FAST", "GO_FASTER", "GO_FASTEST"):
+                  assert "ANIM_STD_" + enum + "_" + label.upper() in images
+          assert "[ANIM_RAISE_HAND] = sFollowerPilotFaceSouth" in images
+          assert "#define FOLLOWER_PILOT_PALETTE_TAG 0xF0A0" in images
+          assert "sFollowerPilotNormalPalette[16]" in images
+          assert "sFollowerPilotShinyPalette[16]" in images
+          assert images.count(".paletteTag = TAG_NONE,") == 6
+          for name in ("Normal","Shiny"):
+              assert "static const struct ObjectEventGraphicsInfo sFollowerPilot" + name + "Graphics" in images
+              assert ".size = 16 * 16 / 2" in images
+              assert ".images = sFollowerPilotImages" in images
+              assert ".anims = sFollowerPilotAnims" in images
+          assert "#define OBJ_EVENT_GFX_FULL_FOLLOWER NUM_OBJ_EVENT_GFX" in Path("include/constants/event_objects.h").read_text()
+          print("16 distinct diagnostic pilot frame slots, four directions, variant palettes PASS")
+          PY
+
+      - name: Audit Gen III internal species to National Dex follower key
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          follower = Path("src/full_follower.c").read_text()
+          header = Path("include/full_follower.h").read_text()
+          movement = Path("src/event_object_movement.c").read_text()
+          species = Path("include/constants/species.h").read_text()
+          pokedex = Path("include/constants/pokedex.h").read_text()
+          pokemon_h = Path("include/pokemon.h").read_text()
+          assert "#define SPECIES_TREECKO 277" in species
+          # National Dex IDs are enum positions, not #define constants.
+          assert "NATIONAL_DEX_CELEBI,\n    // Hoenn\n    NATIONAL_DEX_TREECKO," in pokedex
+          assert "u16 SpeciesToNationalPokedexNum(u16 species);" in pokemon_h
+          getter = follower.split("u16 FullFollower_GetSpecies(void)\n{",1)[1].split("\n}",1)[0]
+          assert "sFollowerSpecies == SPECIES_NONE" in getter
+          assert "return SpeciesToNationalPokedexNum(sFollowerSpecies);" in getter
+          guard = follower.split("static u8 GetPrototypeFollowerGraphicsId(u16 species)\n{",1)[1].split("\n}",1)[0]
+          assert "FullFollower_HasRegisteredGraphics(SpeciesToNationalPokedexNum(species))" in guard
+          assert "bool8 FullFollower_HasRegisteredGraphics(u16 nationalDexNum)" in movement
+          assert "bool8 FullFollower_HasRegisteredGraphics(u16 nationalDexNum);" in header
+          assert "GetFollowerRegisteredGraphicsInfo(nationalDexNum, FALSE) != NULL" in movement
+          assert "GetFollowerRegisteredGraphicsInfo(nationalDexNum, TRUE) != NULL" in movement
+          assert "FullFollower_HasRegisteredGraphics(FullFollower_GetSpecies())" in follower
+          print("Gen III internal species 277 != National Dex 252; registered follower maps safely PASS")
+          PY
+
       - name: Preserve audited global Full data and save state
         run: |
           python3 tools/validate_audited_data_blobs.py
