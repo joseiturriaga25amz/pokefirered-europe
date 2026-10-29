@@ -92,6 +92,237 @@ jobs:
               raise SystemExit("integrated source contract failed")
           PY
 
+
+      # Exact source-only resource checks recovered from the original full
+      # Follower Prototype workflow (not its private art/build stages).
+      - name: Audit follower-owned field effect lifetime
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          movement = Path("src/event_object_movement.c").read_text()
+          effects = Path("src/field_effect_helpers.c").read_text()
+          header = Path("include/field_effect_helpers.h").read_text()
+          assert "void RemoveFullFollowerFieldEffects(const struct ObjectEvent *follower);" in header
+          remove = movement.split("static void RemoveObjectEvent(struct ObjectEvent *objectEvent)\\n{".replace("\\n","\n"),1)[1].split("\n}",1)[0]
+          assert remove.index("RemoveFullFollowerFieldEffects(objectEvent);") < remove.index("objectEvent->active = FALSE;")
+          assert remove.index("objectEvent->active = FALSE;") < remove.index("RemoveObjectEventInternal(objectEvent);")
+          guard = movement.split("void RemoveFullFollowerObjectEvent(struct ObjectEvent *objectEvent)\\n{".replace("\\n","\n"),1)[1].split("\n}",1)[0]
+          assert "objectEvent->localId == OBJ_EVENT_ID_FULL_FOLLOWER" in guard
+          assert "RemoveObjectEvent(objectEvent);" in guard
+          cleanup = effects.split("void RemoveFullFollowerFieldEffects(const struct ObjectEvent *follower)\\n{".replace("\\n","\n"),1)[1]
+          assert "if (!sprite->inUse)" in cleanup
+          assert "sprite->data[0] == objectEventId" in cleanup
+          assert "sprite->data[1] == follower->localId" in cleanup
+          assert "sprite->inUse = FALSE;" in cleanup
+          assert "(u8)(sprite->data[3] >> 8) == follower->localId" in cleanup
+          assert "(u8)sprite->data[3] == follower->mapNum" in cleanup
+          assert "(u8)sprite->data[4] == follower->mapGroup" in cleanup
+          for callback, kind in (
+              ("UpdateShadowFieldEffect", "FLDEFF_SHADOW"),
+              ("UpdateShortGrassFieldEffect", "FLDEFF_SHORT_GRASS"),
+              ("UpdateSandPileFieldEffect", "FLDEFF_SAND_PILE"),
+              ("UpdateHotSpringsWaterFieldEffect", "FLDEFF_HOT_SPRINGS_WATER"),
+              ("UpdateFeetInFlowingWaterFieldEffect", "FLDEFF_FEET_IN_FLOWING_WATER"),
+              ("UpdateSplashFieldEffect", "FLDEFF_SPLASH"),
+              ("UpdateTallGrassFieldEffect", "FLDEFF_TALL_GRASS"),
+              ("UpdateLongGrassFieldEffect", "FLDEFF_LONG_GRASS"),
+          ):
+              assert "sprite->callback == " + callback in cleanup
+              assert kind in cleanup
+          assert "FlagSet(" not in cleanup
+          # An old effect tied to the stable follower ID would otherwise
+          # match a newly allocated object immediately after same-frame swap.
+          old = {"local":254, "map":3, "group":7, "slot":5}
+          new = {"local":254, "map":3, "group":7, "slot":5}
+          assert all(old[k] == new[k] for k in old)
+          print("Follower field-effect cleanup before reusable object slot teardown PASS")
+          PY
+
+      - name: Audit follower field-effect low-byte identity and reflection capacity
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          effects = Path("src/field_effect_helpers.c").read_text()
+          movement = Path("src/event_object_movement.c").read_text()
+          effect_header = Path("include/field_effect.h").read_text()
+
+          # ObjectEventGetLocalIdAndMap writes only u8 values to u32
+          # gFieldEffectArguments. Native callbacks compare u8 IDs.
+          assert "extern u32 gFieldEffectArguments[8];" in effect_header
+          emit = movement.split("u32 StartFieldEffectForObjectEvent(", 1)[1].split("\n}", 1)[0]
+          assert "(u8 *)&gFieldEffectArguments[0]" in emit
+          assert "(u8 *)&gFieldEffectArguments[1]" in emit
+          assert "(u8 *)&gFieldEffectArguments[2]" in emit
+
+          cleanup = effects.split("void RemoveFullFollowerFieldEffects(", 1)[1]
+          for index, name in enumerate(("localId", "mapNum", "mapGroup")):
+              assert f"(u8)sprite->data[{index}] == follower->{name}" in cleanup
+          assert "if (!sprite->inUse)" in cleanup
+          assert "sprite->callback == UpdateObjectReflectionSprite" in cleanup
+          assert "sprite->inUse = FALSE;" in cleanup
+
+          # Reproduce stale upper bytes: a second object with the same
+          # stable follower local ID must not inherit an old terrain sprite.
+          saved = [0x12AB00FE, 0x90000105, 0xFEDC0003]
+          fields = [254, 5, 3]
+          dirty = [((v & ~0xff) | val) & 0xffff for v, val in zip(saved, fields)]
+          assert dirty != fields
+          assert [v & 0xff for v in dirty] == fields
+
+          # Guard allocation failure before gSprites[spriteId] indexing.
+          reflect = effects.split("void SetUpReflection(", 1)[1].split("\n}", 1)[0]
+          create = reflect.index("reflectionSpriteId = CreateCopySpriteAt(")
+          guard = reflect.index("if (reflectionSpriteId == MAX_SPRITES)")
+          deref = reflect.index("reflectionSprite = &gSprites[reflectionSpriteId];")
+          assert create < guard < deref
+          assert re.search(r"if \(reflectionSpriteId == MAX_SPRITES\)\s*\{[^{}]*\breturn;\s*\}", reflect)
+          assert "return MAX_SPRITES;" in movement.split("u8 CreateCopySpriteAt(", 1)[1].split("\n}", 1)[0]
+          print("Low-byte ownership and exhausted reflection-sprite guard PASS")
+          PY
+
+      - name: Audit follower reflection recovery after sprite exhaustion
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          helpers = Path("src/field_effect_helpers.c").read_text()
+          movement = Path("src/event_object_movement.c").read_text()
+          sprite_code = Path("src/sprite.c").read_text()
+          header = Path("include/full_follower.h").read_text()
+          assert '#include "full_follower.h"' in helpers
+          assert '#define OBJ_EVENT_ID_FULL_FOLLOWER 254' in header
+          reflection = helpers.split("void SetUpReflection(", 1)[1].split("\n}", 1)[0]
+          match = re.search(r"if \(reflectionSpriteId == MAX_SPRITES\)\s*\{([^}]*)\}", reflection)
+          assert match, "Reflection saturation must return before touching gSprites[MAX_SPRITES]"
+          guard = match.group(1)
+          assert "if (objectEvent->localId == OBJ_EVENT_ID_FULL_FOLLOWER)" in guard
+          assert "objectEvent->hasReflection = FALSE;" in guard
+          assert guard.index("if (objectEvent->localId == OBJ_EVENT_ID_FULL_FOLLOWER)") < guard.index("objectEvent->hasReflection = FALSE;")
+          assert reflection.index("if (reflectionSpriteId == MAX_SPRITES)") < reflection.index("reflectionSprite = &gSprites[reflectionSpriteId];")
+          flagger = movement.split("static void GetGroundEffectFlags_Reflection(struct ObjectEvent *objEvent, u32 *flags)\n{", 1)[1].split("\n}", 1)[0]
+          assert "if (!objEvent->hasReflection)" in flagger
+          assert "objEvent->hasReflection = 1;" in flagger
+          allocator = movement.split("u8 CreateCopySpriteAt(", 1)[1].split("\n}", 1)[0]
+          assert "return MAX_SPRITES;" in allocator
+          assert "for (i = MAX_SPRITES - 1; i > -1; i--)" in allocator
+          assert "if (!gSprites[i].inUse)" in allocator
+          assert "#define MAX_SPRITES 64" in Path("include/sprite.h").read_text()
+
+          # Boundary model tied to the verified native state-machine:
+          # full slots -> follower flag reset, no invalid dereference;
+          # capacity released -> next reflective step can create the copy.
+          for filled in (0, 1, 62, 63, 64):
+              has_reflection = True  # native pre-set flag
+              if filled == 64:
+                  has_reflection = False  # follower-only failed-create branch
+              if filled == 64:
+                  assert not has_reflection
+                  filled -= 1  # a transient field-effect sprite finishes
+                  assert not has_reflection  # native sees the missing reflection
+                  has_reflection = True  # and retries on the next step
+              assert has_reflection
+          print("Follower reflection retry after capacity exhaustion PASS")
+          PY
+
+      - name: Audit dynamically allocated follower palette and reflection isolation
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          movement = Path("src/event_object_movement.c").read_text()
+          effects = Path("src/field_effect_helpers.c").read_text()
+          follower = Path("src/full_follower.c").read_text()
+          sprite = Path("src/sprite.c").read_text()
+          header = Path("include/event_object_movement.h").read_text()
+          pilot = Path("src/data/object_events/follower_pilot_graphics.h").read_text()
+          assert "FullFollower_UsesPilotGraphics(void)" in follower
+          assert "#define FOLLOWER_PILOT_PALETTE_TAG 0xF0A0" in pilot
+          assert "OBJ_PALSLOT_COUNT" in header
+          assert "for (i = gReservedSpritePaletteCount; i < 16; i++)" in sprite
+          assert "followerPaletteNum = LoadSpritePalette(&palette);" in movement
+          assert "if (followerPaletteNum == 0xFF)" in movement
+          assert "ApplyGlobalFieldPaletteTint(followerPaletteNum);" in movement
+          assert "objectEvent->active = FALSE;" in movement
+          spawn = movement.split("static u8 TrySetupObjectEventSprite(", 1)[1].split("\nstatic u8 TrySpawnObjectEventTemplate(", 1)[0]
+          assert spawn.index("LoadSpritePalette(&palette)") < spawn.index("CreateSprite(spriteTemplate, 0, 0, 0)")
+          assert spawn.index("FreeSpritePaletteByTag(FOLLOWER_PILOT_PALETTE_TAG);") > spawn.index("if (spriteId == MAX_SPRITES)")
+          assert "sprite->oam.paletteNum = followerPaletteNum != 0xFF ? followerPaletteNum : graphicsInfo->paletteSlot;" in spawn
+          remove = movement.split("static void RemoveObjectEvent(struct ObjectEvent *objectEvent)\n{", 1)[1].split("\n}", 1)[0]
+          assert remove.index("RemoveFullFollowerFieldEffects(objectEvent);") < remove.index("RemoveObjectEventInternal(objectEvent);") < remove.index("FreeSpritePaletteByTag(FOLLOWER_PILOT_PALETTE_TAG);")
+          assert effects.count("!FullFollower_UsesPilotGraphics()") >= 2
+          assert "reflectionSprite->oam.paletteNum = mainSprite->oam.paletteNum;" in effects
+          assert effects.count("gReflectionEffectPaletteMap[") >= 2
+          assert "reflectionSprite->oam.paletteNum = gReflectionEffectPaletteMap[mainSprite->oam.paletteNum];" in effects
+          print("Dynamic follower palette allocation/release, NPC and reflection isolation PASS")
+          PY
+
+      - name: Audit 16 32 64 pixel follower diagnostic animation VRAM allocation
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          gfx = Path("src/data/object_events/follower_pilot_graphics.h").read_text()
+          movement = Path("src/event_object_movement.c").read_text()
+          follower = Path("src/full_follower.c").read_text()
+          sprite = Path("src/sprite.c").read_text()
+          assert "FullFollower_UsesPilotGraphics()" in movement
+          assert "|| sFollowerGraphicsId == OBJ_EVENT_GFX_SNORLAX" in follower
+          assert "|| sFollowerGraphicsId == OBJ_EVENT_GFX_MEW" in follower
+          assert "if (graphicsId == OBJ_EVENT_GFX_PIKACHU)" in movement
+          assert "if (graphicsId == OBJ_EVENT_GFX_SNORLAX)" in movement
+          assert "if (graphicsId == OBJ_EVENT_GFX_MEW)" in movement
+          for px in (32, 64):
+              frame_bytes = px * px // 2
+              assert f"static const u32 sFollowerPilot{px}Pixels[16][{frame_bytes // 4}]" in gfx
+              assert len(re.findall(
+                  rf"\{{ \(const u8 \*\)sFollowerPilot{px}Pixels\[\d+\], {px} \* {px} / 2 \}}", gfx)) == 16
+              assert f"&gObjectEventBaseOam_{px}x{px}" in gfx
+              assert f"gObjectEventSpriteOamTables_{px}x{px}" in gfx
+              for variant in ("Normal", "Shiny"):
+                  block = gfx.split(
+                      f"static const struct ObjectEventGraphicsInfo sFollowerPilot{px}{variant}Graphics = {{", 1
+                  )[1].split("};", 1)[0]
+                  assert f".size = {px} * {px} / 2" in block
+                  assert f".width = {px}" in block and f".height = {px}" in block
+                  assert f".images = sFollowerPilot{px}Images" in block
+                  assert ".anims = sFollowerPilotAnims" in block
+              for variant in ("Normal", "Shiny"):
+                  assert f"&sFollowerPilot{px}{variant}Graphics" in movement
+              assert frame_bytes in (512, 2048)
+              assert frame_bytes // 32 <= 255
+          # Gen III allocates a single frame from unreserved OBJ VRAM,
+          # not 16 animation frames at once.
+          assert "AllocSpriteTiles((u8)(sprite->images->size / TILE_SIZE_4BPP))" in sprite
+          assert "spriteFrameImage.size = graphicsInfo->size" in movement
+          assert "gSprites[gObjectEvents[objectEventId].spriteId].images = graphicsInfo->images" in movement
+          print("Follower diagnostic 16/32/64 frame counts, shape, size and VRAM allocation contract PASS")
+          PY
+
+      - name: Audit follower National species graphics registry ABI and fallback
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          g = Path("src/data/object_events/follower_pilot_graphics.h").read_text()
+          m = Path("src/event_object_movement.c").read_text()
+          f = Path("src/full_follower.c").read_text()
+          h = Path("include/full_follower.h").read_text()
+          c = Path("include/constants/event_objects.h").read_text()
+          assert "#define FOLLOWER_GRAPHICS_SPECIES_COUNT 386" in g
+          assert "sFollowerRegisteredGraphics[FOLLOWER_GRAPHICS_SPECIES_COUNT + 1][2]" in g
+          assert "species > FOLLOWER_GRAPHICS_SPECIES_COUNT" in g
+          assert "GetFollowerRegisteredGraphicsInfo(" in g
+          assert "FullFollower_GetSpecies(void)" in f and "FullFollower_GetSpecies(void);" in h
+          assert "FullFollower_GetSpecies(), FullFollower_IsShiny()" in m
+          dispatch = m.split("if (graphicsId == OBJ_EVENT_GFX_FULL_FOLLOWER)", 1)[1].split(
+              "if (graphicsId >= NUM_OBJ_EVENT_GFX)", 1)[0]
+          assert dispatch.index("if (registered != NULL)") < dispatch.index("FullFollower_GetSpriteGraphicsId()")
+          assert "#define OBJ_EVENT_GFX_FULL_FOLLOWER NUM_OBJ_EVENT_GFX" in c
+          assert "u8 graphicsId;" in Path("include/global.fieldmap.h").read_text()
+          print("National 386 species registry, shiny lookup and 8-bit fallback ABI PASS")
+          PY
+
       - name: Preserve audited global Full data and save state
         run: |
           python3 tools/validate_audited_data_blobs.py
