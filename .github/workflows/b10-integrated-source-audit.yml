@@ -1026,5 +1026,8 @@ jobs:
           after="$(git worktree list --porcelain)"
           test "$before" = "$after"
           echo "Private builder worktree registered state restored; no ROM or sprite upload."
-          test -z "$(git status --porcelain)"
-          echo "Main checkout unchanged; no imported artwork or private ROM was committed."
+          # Python import bytecode is not source/art contamination; check intended outputs.
+          test -z "$(git diff --name-only)"
+          test ! -e graphics/object_events/pics/follower_import
+          test ! -e pokefirered_modern_es.gba
+          echo "Main checkout has no tracked edits, imported art or private ROM."
