@@ -10,6 +10,7 @@
 #include "field_control_avatar.h"
 #include "field_fadetransition.h"
 #include "field_player_avatar.h"
+#include "full_follower.h"
 #include "field_poison.h"
 #include "field_specials.h"
 #include "item.h"
@@ -382,6 +383,7 @@ static bool8 TryStartInteractionScript(struct MapPosition *position, u16 metatil
         PlaySE(SE_SELECT);
 
     ScriptContext_SetupScript(script);
+    FullFollower_BeginSafeDialogue(script);
     return TRUE;
 }
 
@@ -416,7 +418,7 @@ const u8 *GetInteractedLinkPlayerScript(struct MapPosition *position, u8 metatil
     else
         objectEventId = GetObjectEventIdByPosition(position->x + gDirectionToVectors[direction].x, position->y + gDirectionToVectors[direction].y, position->elevation);
 
-    if (objectEventId == OBJECT_EVENTS_COUNT || gObjectEvents[objectEventId].localId == LOCALID_PLAYER)
+    if (objectEventId == OBJECT_EVENTS_COUNT || gObjectEvents[objectEventId].localId == LOCALID_PLAYER || gObjectEvents[objectEventId].localId == OBJ_EVENT_ID_FULL_FOLLOWER)
         return NULL;
 
     for (i = 0; i < MAX_LINK_PLAYERS; i++)
@@ -437,16 +439,31 @@ static const u8 *GetInteractedObjectEventScript(struct MapPosition *position, u8
     const u8 *script;
 
     objectEventId = GetObjectEventIdByPosition(position->x, position->y, position->elevation);
-    if (objectEventId == OBJECT_EVENTS_COUNT || gObjectEvents[objectEventId].localId == LOCALID_PLAYER)
+    // ID 254 is a live projection of the party, never a map NPC template.
+    // Handle its own A-button dialogue before any NPC script lookup. Keep
+    // counter, link-room and Quest Log interaction paths unchanged.
+    if (objectEventId < OBJECT_EVENTS_COUNT
+     && gObjectEvents[objectEventId].localId == OBJ_EVENT_ID_FULL_FOLLOWER
+     && !MetatileBehavior_IsCounter(metatileBehavior)
+     && !QL_IS_PLAYBACK_STATE
+     && !InUnionRoom())
+        return FullFollower_GetFriendshipInteractionScript();
+
+    if (objectEventId == OBJECT_EVENTS_COUNT || gObjectEvents[objectEventId].localId == LOCALID_PLAYER || gObjectEvents[objectEventId].localId == OBJ_EVENT_ID_FULL_FOLLOWER)
     {
         if (MetatileBehavior_IsCounter(metatileBehavior) != TRUE)
             return NULL;
 
         // Look for an object event on the other side of the counter.
         objectEventId = GetObjectEventIdByPosition(position->x + gDirectionToVectors[direction].x, position->y + gDirectionToVectors[direction].y, position->elevation);
-        if (objectEventId == OBJECT_EVENTS_COUNT || gObjectEvents[objectEventId].localId == LOCALID_PLAYER)
+        if (objectEventId == OBJECT_EVENTS_COUNT || gObjectEvents[objectEventId].localId == LOCALID_PLAYER || gObjectEvents[objectEventId].localId == OBJ_EVENT_ID_FULL_FOLLOWER)
             return NULL;
     }
+
+    // The runtime follower has no map NPC template or script. Never resolve
+    // its local ID through the normal object-event script lookup.
+    if (gObjectEvents[objectEventId].localId == OBJ_EVENT_ID_FULL_FOLLOWER)
+        return NULL;
 
     if (InUnionRoom() == TRUE && !ObjectEventCheckHeldMovementStatus(&gObjectEvents[objectEventId]))
         return NULL;
