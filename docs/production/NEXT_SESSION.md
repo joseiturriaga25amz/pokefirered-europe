@@ -14,6 +14,10 @@ Use `docs/spec/` only for frozen historical design details.
 
 ## Current state
 
+- **2026-10-29 — PRIVATE COLAB SHA MISMATCH: OBTAIN READ-ONLY TOOLCHAIN VERSIONS NEXT.** User's actual locally built ROM SHA-1 is `369525f52eb9be2345ddab461c96d3fad3d4a433`, different from CI `6fed3237225dc6146649d85c969b1e9da4352126`; all prior notebook ROM/manifest/386 checks succeeded. CI original: Ubuntu 24.04, ARM GCC package 15:13.2.rel1-2, binutils 2.42-1ubuntu1+23. Colab versions **NOT YET COLLECTED**. Have user run a read-only cell printing `/etc/os-release`, ARM GCC/binutils and host gcc/libpng versions (no rerun of ~4-minute build), then decide whether a pinned toolchain build is necessary. Guard remains strict; no ROM downloaded/accepted and no MyBoy QA. Keep `master` unchanged; do not label B10 closed.
+
+
+
 - **2026-10-29 — NEXT FIRST ACTION: DIAGNOSE COLAB ROM SHA-1 MISMATCH; PRIVATE MYBOY HANDOFF BLOCKED.** User ran the private Colab notebook on Android; build reached the explicit comparison against CI ROM SHA-1 `6fed3237225dc6146649d85c969b1e9da4352126` and raised RuntimeError. All prior checks (manifest vs ROM bytes SHA-1/SHA-256, exact git `e94824c`, 386 normal/shiny, zero blockers, <=32 MiB) must have passed. User has NOT downloaded or tested a verified ROM. Original exact CI logs reconfirmed Ubuntu 24.04, ARM GCC 13.2.rel1, binutils 2.42, expected SHA-1. Root cause UNKNOWN; do not presume gameplay regression or relax hash guard. **Request a screenshot of `ROM SHA-1:` in the SAME first Colab output just before traceback (no rebuild), then inspect Colab `os-release` and compiler versions if needed.** Do not touch master, do not mark MyBoy PASS or B10 closed. Existing backup unchanged.
 
 
