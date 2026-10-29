@@ -14,6 +14,10 @@ Use `docs/spec/` only for frozen historical design details.
 
 ## Current state
 
+- **2026-10-29 — COLAB PLAIN-FULL BASELINE ALSO HASH-MISMATCHED; NEXT CHECK ACTUAL TOOL EXECUTABLE PATHS (NO REBUILD):** User's temporary clean `firered_es_modern` compile at pinned `e94824c` produced `d7f51d20cbf06f205099262379ed93121aefafe6`, whereas CI full gameplay run #40884459812 produced `511f902a9f14f318e62623caa54d82af89ec48d0` twice. Thus difference predates B10 HGSS import. Colab integrated 386 ROM is still `369525f52eb9be2345ddab461c96d3fad3d4a433` against CI `6fed3237225dc6146649d85c969b1e9da4352126`. Ubuntu and main installed compiler/PNG packages match CI, but root cause unconfirmed. **NEXT:** in same Colab runtime run a read-only cell printing actual compiler/linker executable paths and version, `DEVKITARM`, `PATH`, `LC_ALL`, `LANG`. Do not rerun/re-download full graphics or weaken expected checksum. If identities match, investigate path-dependent or nondeterministic host generated tools in separate bounded microblock. Original source CI green stands; no download, no MyBoy QA, no master changes, B10 open.
+
+
+
 - **2026-10-29 — ACTIVE NEXT: COLAB ISOLATED PLAIN-FULL SHA TEST TO LOCALIZE PRIVATE 386-ROM DRIFT.** User's Colab Ubuntu 24.04.5, `gcc-arm-none-eabi=15:13.2.rel1-2`, `binutils-arm-none-eabi=2.42-1ubuntu1+23`, `libpng-dev=1.6.43-5ubuntu0.7` match relevant CI package versions. Private Full+386 SHA-1 is `369525f52eb9be2345ddab461c96d3fad3d4a433` vs CI `6fed3237225dc6146649d85c969b1e9da4352126`. Exact CI plain Full core reproducible SHA-1 is `511f902a9f14f318e62623caa54d82af89ec48d0` from run #40884459812. Ask user to execute a *separate temporary worktree `firered_es_modern` build without B10 HGSS sprites* in existing Colab runtime; compare hash with `511f902...` to localize discrepancy. Preserve existing Colab build, no verified ROM download, no master/asset/gameplay change, no B10 closure. Debug only after observed comparison.
 
 
