@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - diagnostic/b10-full-integrated-candidate
       - feature/full-gameplay-core
       - feature/b0-baseline-validator-truth
       - feature/b1-low-risk-qol
@@ -1028,30 +1029,35 @@ jobs:
         run: sha1sum pokefirered_modern_es.gba
 
       - name: Checkout frozen Spanish baseline for RC patch
+        if: github.ref != 'refs/heads/diagnostic/b10-full-integrated-candidate'
         uses: actions/checkout@v4
         with:
           ref: e184c5cf898cd29efebd33bc1bfe5994277e21ab
           path: vanilla
 
       - name: Checkout agbcc for frozen baseline
+        if: github.ref != 'refs/heads/diagnostic/b10-full-integrated-candidate'
         uses: actions/checkout@v4
         with:
           repository: pret/agbcc
           path: vanilla/agbcc
 
       - name: Build agbcc for frozen baseline
+        if: github.ref != 'refs/heads/diagnostic/b10-full-integrated-candidate'
         working-directory: vanilla/agbcc
         run: |
           ./build.sh
           ./install.sh ../
 
       - name: Build and verify frozen Spanish baseline
+        if: github.ref != 'refs/heads/diagnostic/b10-full-integrated-candidate'
         working-directory: vanilla
         run: |
           make -j2 compare_firered_es
           echo "ab8f6bfe0ccdaf41188cd015c8c74c314d02296a  pokefirered_es.gba" | sha1sum -c -
 
       - name: Create exact RC IPS patch for MyBoy
+        if: github.ref != 'refs/heads/diagnostic/b10-full-integrated-candidate'
         run: |
           python3 - <<'PY'
           from pathlib import Path
@@ -1106,6 +1112,7 @@ jobs:
           PY
 
       - name: Record exact RC handoff manifest
+        if: github.ref != 'refs/heads/diagnostic/b10-full-integrated-candidate'
         run: |
           {
             echo "Pokemon Rojo Fuego Full v1.0 - MyBoy RC"
@@ -1120,6 +1127,7 @@ jobs:
           sha256sum Pokemon_Rojo_Fuego_Full_RC_MyBoy.ips > Pokemon_Rojo_Fuego_Full_RC_MyBoy.sha256
 
       - name: Upload exact MyBoy RC patch
+        if: github.ref != 'refs/heads/diagnostic/b10-full-integrated-candidate'
         uses: actions/upload-artifact@v4
         with:
           name: Pokemon_Rojo_Fuego_Full_RC_MyBoy
