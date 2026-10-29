@@ -969,6 +969,173 @@ jobs:
           print("No MyBoy verification; no unlisted scripted encounter is enabled")
           PY
 
+      # Original follower movement and obstacle-recovery assertions (source only).
+      - name: Audit bounded follower tile trail and corners
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          s = Path("src/full_follower.c").read_text()
+          e = Path("src/event_object_movement.c").read_text()
+          assert "#define FOLLOWER_TRAIL_CAPACITY 8" in s
+          assert "sTrailX[next] = sLastPlayerX;" in s
+          assert "sTrailY[next] = sLastPlayerY;" in s
+          assert "sTrailCount == FOLLOWER_TRAIL_CAPACITY" in s
+          assert "ObjectEventClearHeldMovementIfFinished(follower) == 0" in s
+          assert "collision = GetCollisionAtCoords(follower, x, y, direction);" in s
+          assert "if (collision == COLLISION_OBJECT_EVENT)" in s
+          assert "if (collision != COLLISION_NONE)" in s
+          assert "ObjectEventSetHeldMovement(follower, movementAction)" in s
+          assert "GetWalkFastMovementAction(direction)" in s
+          assert "GetWalkNormalMovementAction(direction)" in s
+          for name in ("DIR_NORTH", "DIR_SOUTH", "DIR_EAST", "DIR_WEST"):
+              assert "direction = " + name + ";" in s
+          assert "MOVEMENT_TYPE_NONE" in s and "MOVEMENT_TYPE_COPY_PLAYER," not in s
+          assert "PositionFollowerBehindPlayer(follower, spawnX, spawnY);\n        ResetFollowerTrail(player);" in s
+          assert "if (!FollowRecordedPlayerSteps(follower))" in s
+          assert "RemoveFullFollowerObjectEvent(follower);" in s
+          assert "movement_type_empty_callback(MovementType_None)" in e
+          assert "ObjectEventExecHeldMovementAction(objectEvent, sprite);" in e
+          # Deterministic model: every target must be a vacated tile, not a diagonal.
+          def follow(start, steps):
+              player=(0,0)
+              follower=start
+              for dx,dy in steps:
+                  old=player
+                  player=(player[0]+dx,player[1]+dy)
+                  assert abs(old[0]-follower[0])+abs(old[1]-follower[1])==1
+                  follower=old
+              return follower,player
+          assert follow((0,1),[(0,-1),(1,0),(1,0)])==((1,-1),(2,-1))
+          assert follow((-1,0),[(1,0),(0,1),(-1,0)])==((1,1),(0,1))
+          print("Bounded tile history; orthogonal corners; collision and reset gates")
+          PY
+
+      - name: Audit follower collision direction and vacated player tile
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          s = Path("src/event_object_movement.c").read_text()
+          f = Path("src/full_follower.c").read_text()
+          begin = s.index("static bool8 DoesObjectCollideWithObjectAt(struct ObjectEvent *objectEvent, s16 x, s16 y)\n{")
+          end = s.index("\nbool8 IsBerryTreeSparkling(", begin)
+          body = s[begin:end]
+          assert "if (curObject->localId == OBJ_EVENT_ID_FULL_FOLLOWER)\n                continue;" in body
+          assert "if (objectEvent->localId == OBJ_EVENT_ID_FULL_FOLLOWER && curObject->isPlayer)" in body
+          assert "curObject->currentCoords.x == x && curObject->currentCoords.y == y" in body
+          assert "curObject->previousCoords.x == x && curObject->previousCoords.y == y" in body
+          assert "AreElevationsCompatible(objectEvent->currentElevation, curObject->currentElevation)" in body
+          assert "objectEvent->localId == OBJ_EVENT_ID_FULL_FOLLOWER\n             || curObject->localId" not in body
+          assert "collision = GetCollisionAtCoords(follower, x, y, direction);" in f
+          assert body.index("if (curObject->localId == OBJ_EVENT_ID_FULL_FOLLOWER)") < body.index("if (objectEvent->localId == OBJ_EVENT_ID_FULL_FOLLOWER && curObject->isPlayer)") < body.index("if ((curObject->currentCoords.x == x")
+          # Contract model: follower is intangible as an obstacle, but respects
+          # current player tile and both occupied NPC tiles.
+          def blocked(mover_is_follower, target_is_follower, target_is_player, current, previous, dest):
+              if target_is_follower:
+                  return False
+              if mover_is_follower and target_is_player:
+                  return current == dest
+              return current == dest or previous == dest
+          assert not blocked(True, False, True, (1,0), (0,0), (0,0))
+          assert blocked(True, False, True, (1,0), (0,0), (1,0))
+          assert blocked(True, False, False, (0,0), (-1,0), (0,0))
+          assert blocked(True, False, False, (0,0), (-1,0), (-1,0))
+          assert not blocked(False, True, False, (0,0), (0,0), (0,0))
+          print("Follower yields to NPCs and current player tile, allows vacated player tile, remains nonblocking to world")
+          PY
+
+      - name: Audit follower trail collision recovery
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          f = Path("src/full_follower.c").read_text()
+          e = Path("src/event_object_movement.c").read_text()
+          constants = Path("include/global.fieldmap.h").read_text()
+          start = f.index("static bool8 FollowRecordedPlayerSteps(struct ObjectEvent *follower)\n{")
+          end = f.index("\nstatic void RefreshFollower(void)\n{", start)
+          body = f[start:end]
+          assert "COLLISION_NONE," in constants
+          assert "COLLISION_OBJECT_EVENT," in constants
+          assert "COLLISION_IMPASSABLE," in constants
+          assert "COLLISION_ELEVATION_MISMATCH," in constants
+          assert "COLLISION_OUTSIDE_RANGE," in constants
+          assert "collision = GetCollisionAtCoords(follower, x, y, direction);" in body
+          wait = body.index("if (collision == COLLISION_OBJECT_EVENT)\n        return TRUE;")
+          abort = body.index("if (collision != COLLISION_NONE)\n        return FALSE;")
+          # Collision recovery still precedes BOTH selectable movement speeds.
+          # The former single-speed assertion became obsolete with running.
+          speed = body.index("if (player->movementActionId >= MOVEMENT_ACTION_PLAYER_RUN_DOWN")
+          assert "movementAction = GetWalkFastMovementAction(direction);" in body
+          assert "movementAction = GetWalkNormalMovementAction(direction);" in body
+          step = body.index("if (!ObjectEventSetHeldMovement(follower, movementAction))")
+          assert wait < abort < speed < step
+          assert "if (GetCollisionAtCoords(follower, x, y, direction) != COLLISION_NONE)" not in body
+          refresh = f[f.index("static void RefreshFollower(void)\n{"):f.index("\nstatic void Task_FullFollower(",f.index("static void RefreshFollower(void)\n{"))]
+          assert "if (!FollowRecordedPlayerSteps(follower))" in refresh
+          assert "RemoveFullFollowerObjectEvent(follower);" in refresh
+          assert "sTrailCount = 0;" in refresh
+          assert "sTrailCount == FOLLOWER_TRAIL_CAPACITY" in body
+          collision_fn = e[e.index("u8 GetCollisionAtCoords(struct ObjectEvent *objectEvent, s16 x, s16 y, u32 dir)\n{"):e.index("\nu8 GetCollisionFlagsAtCoords(",e.index("u8 GetCollisionAtCoords(struct ObjectEvent *objectEvent, s16 x, s16 y, u32 dir)\n{"))]
+          assert "return COLLISION_OBJECT_EVENT;" in collision_fn
+          assert "return COLLISION_IMPASSABLE;" in collision_fn
+          assert "return COLLISION_ELEVATION_MISMATCH;" in collision_fn
+          def next_action(collision):
+              if collision == "object":
+                  return "wait"
+              if collision != "none":
+                  return "recall"
+              return "walk"
+          assert next_action("object") == "wait"
+          assert next_action("impassable") == "recall"
+          assert next_action("elevation") == "recall"
+          assert next_action("border") == "recall"
+          assert next_action("none") == "walk"
+          print("NPCs: wait; impassable/elevation/border: recall; unblocked: native held step")
+          PY
+
+      - name: Audit follower running pace and ledge jump recall
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          f = Path("src/full_follower.c").read_text()
+          e = Path("src/event_object_movement.c").read_text()
+          avatar = Path("src/field_player_avatar.c").read_text()
+          moves = Path("include/constants/event_object_movement.h").read_text()
+          suppress = f[f.index("static bool8 ShouldSuppressFollower(void)\n{"):f.index("\nstatic bool8 GetSafeFollowerSpawnCoords(",f.index("static bool8 ShouldSuppressFollower(void)\n{"))]
+          assert "PlayerGetCopyableMovement() == 8" in suppress
+          assert "ObjectEventCheckHeldMovementStatus(&gObjectEvents[gPlayerAvatar.objectEventId]) == 0" in suppress
+          assert "PlayerSetAnimId(GetJump2MovementAction(direction), 8);" in avatar
+          assert "PlayerSetAnimId(GetAcroWheelieJumpMovementAction(direction), 8);" in avatar
+          assert "if (objectEvent->heldMovementActive)" in e
+          assert "return objectEvent->heldMovementFinished;" in e
+          assert "return 16;" in e
+          trail = f[f.index("static bool8 FollowRecordedPlayerSteps(struct ObjectEvent *follower)\n{"):f.index("\nstatic void RefreshFollower(",f.index("static bool8 FollowRecordedPlayerSteps(struct ObjectEvent *follower)\n{"))]
+          assert "player->movementActionId >= MOVEMENT_ACTION_PLAYER_RUN_DOWN" in trail
+          assert "player->movementActionId <= MOVEMENT_ACTION_PLAYER_RUN_RIGHT" in trail
+          assert "movementAction = GetWalkFastMovementAction(direction);" in trail
+          assert "movementAction = GetWalkNormalMovementAction(direction);" in trail
+          assert "ObjectEventSetHeldMovement(follower, movementAction)" in trail
+          assert "GetWalkFasterMovementAction(direction)" not in trail
+          assert "StartRunningAnim(objectEvent, sprite, DIR_SOUTH);" in e
+          assert "InitNpcForMovement(objectEvent, sprite, direction, MOVE_SPEED_FAST_1);" in e
+          assert "InitMovementNormal(objectEvent, sprite, DIR_SOUTH, MOVE_SPEED_FAST_1);" in e
+          assert "InitMovementNormal(objectEvent, sprite, DIR_SOUTH, MOVE_SPEED_NORMAL);" in e
+          def nframes(name):
+              begin = e.index("static const SpriteStepFunc " + name + "[] = {")
+              end = e.index("\n};", begin)
+              # Sprite-step tables omit the final trailing comma; count whole entries.
+              return len(re.findall(r"(?m)^\s*Step[1-8]\s*,?\s*$", e[begin:end]))
+          assert nframes("sSpeedNormalStepFuncs") == 16
+          assert nframes("sSpeedFast1StepFuncs") == 8
+          assert "#define MOVEMENT_ACTION_PLAYER_RUN_DOWN" in moves
+          assert "#define MOVEMENT_ACTION_PLAYER_RUN_RIGHT" in moves
+          # A running player makes 10 steps / 80 frames; the fast follower
+          # can cover 10 tiles in that time, unlike a 16-frame normal follower.
+          assert 10 * nframes("sSpeedFast1StepFuncs") == 80
+          assert 10 * nframes("sSpeedNormalStepFuncs") == 160
+          print("Running and follower fast walk both 8 frames; active ledge jumps suppress follower")
+          PY
+
       - name: Preserve audited global Full data and save state
         run: |
           python3 tools/validate_audited_data_blobs.py
